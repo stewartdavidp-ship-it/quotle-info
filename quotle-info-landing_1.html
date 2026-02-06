@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotle.info — The Quote Context Engine</title>
+    <meta name="description" content="The only quote site that shows you not just what was said, but why it mattered, how it connected to other ideas, and the story behind it — verified and ready to use.">
+
+    <!-- Schema.org for site -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Quotle.info",
+        "url": "https://quotle.info",
+        "description": "Verified public domain quotes with rich context, source verification, and voice-assistant optimization.",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://quotle.info/who-said/{search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <style>
+        :root {
+            --bg-deep: #0f0f1e;
+            --bg-surface: #1a1a2e;
+            --bg-card: #252538;
+            --bg-card-hover: #2d2d45;
+            --bg-elevated: #30304a;
+
+            --text-primary: #e8e0f0;
+            --text-secondary: #a8b0c0;
+            --text-muted: #6b7280;
+
+            --burgundy: #d4627a;
+            --burgundy-deep: #8B2635;
+            --burgundy-glow: rgba(212, 98, 122, 0.15);
+            --gold: #ffd369;
+            --gold-dim: rgba(255, 211, 105, 0.12);
+            --sage: #7eb38b;
+            --sage-dim: rgba(126, 179, 139, 0.12);
+            --slate-blue: #667eea;
+            --purple: #764ba2;
+
+            --border: rgba(255,255,255,0.06);
+            --border-accent: rgba(212, 98, 122, 0.25);
+            --shadow: rgba(0,0,0,0.4);
+
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 22px;
+            --radius-xl: 32px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* === NOISE TEXTURE OVERLAY === */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* === HERO === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%; left: -20%;
+            width: 140%;
+            height: 160%;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(212, 98, 122, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(102, 126, 234, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255, 211, 105, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Floating quotation marks */
+        .hero-deco {
+            position: absolute;
+            font-family: 'Playfair Display', serif;
+            color: rgba(212, 98, 122, 0.04);
+            pointer-events: none;
+            user-select: none;
+        }
+        .hero-deco.left {
+            top: 8%; left: 5%;
+            font-size: clamp(180px, 25vw, 400px);
+            transform: rotate(-12deg);
+            animation: float-left 20s ease-in-out infinite;
+        }
+        .hero-deco.right {
+            bottom: 10%; right: 5%;
+            font-size: clamp(140px, 20vw, 320px);
+            transform: rotate(8deg);
+            animation: float-right 24s ease-in-out infinite;
+        }
+
+        @keyframes float-left {
+            0%, 100% { transform: rotate(-12deg) translateY(0); }
+            50% { transform: rotate(-10deg) translateY(-20px); }
+        }
+        @keyframes float-right {
+            0%, 100% { transform: rotate(8deg) translateY(0); }
+            50% { transform: rotate(10deg) translateY(15px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 780px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            animation: fadeUp 0.8s ease-out both;
+        }
+
+        .brand-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 20px rgba(212, 98, 122, 0.3);
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+        .brand-name span {
+            color: var(--burgundy);
+        }
+
+        .hero-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 6vw, 4.8rem);
+            font-weight: 900;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            animation: fadeUp 0.8s ease-out 0.15s both;
+        }
+        .hero-headline em {
+            font-style: italic;
+            color: var(--burgundy);
+            position: relative;
+        }
+        .hero-headline em::after {
+            content: '';
+            position: absolute;
+            bottom: 2px; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--burgundy), var(--gold));
+            border-radius: 2px;
+            opacity: 0.5;
+        }
+
+        .hero-sub {
+            font-family: 'Source Serif 4', serif;
+            font-size: clamp(1.05rem, 2vw, 1.3rem);
+            font-weight: 300;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            animation: fadeUp 0.8s ease-out 0.3s both;
+        }
+
+        /* === SEARCH BOX === */
+        .search-container {
+            width: 100%;
+            max-width: 580px;
+            margin: 0 auto;
+            animation: fadeUp 0.8s ease-out 0.45s both;
+        }
+
+        .search-box {
+            position: relative;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .search-box:focus-within {
+            border-color: var(--burgundy);
+            box-shadow: 0 0 0 4px var(--burgundy-glow), 0 8px 40px var(--shadow);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 20px 60px 20px 24px;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--text-primary);
+        }
+        .search-box input::placeholder {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px; top: 50%;
+            transform: translateY(-50%);
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep));
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 4px 16px rgba(212, 98, 122, 0.4);
+        }
+
+        .search-hint {
+            margin-top: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+        .search-hint kbd {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-family: inherit;
+            font-size: 0.78rem;
+        }
+
+        /* === SEARCH RESULTS DROPDOWN === */
+        .search-results {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0; right: 0;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-accent);
+            border-radius: var(--radius-md);
+            box-shadow: 0 20px 60px var(--shadow);
+            z-index: 100;
+            display: none;
+            overflow: hidden;
+        }
+        .search-results.active { display: block; }
+
+        .search-result-item {
+            padding: 16px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        .search-result-item:last-child { border-bottom: none; }
+        .search-result-item:hover { background: var(--bg-card-hover); }
+
+        .result-quote {
+            font-style: italic;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .result-author {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            color: var(--burgundy);
+            font-weight: 600;
+        }
+
+        /* === SCROLL CUE === */
+        .scroll-cue {
+            position: absolute;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            animation: fadeUp 0.8s ease-out 0.8s both;
+        }
+        .scroll-cue span {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+        }
+        .scroll-arrow {
+            width: 20px; height: 20px;
+            border-right: 2px solid var(--text-muted);
+            border-bottom: 2px solid var(--text-muted);
+            transform: rotate(45deg);
+            animation: bounce-down 2s infinite;
+        }
+
+        @keyframes bounce-down {
+            0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.4; }
+            50% { transform: rotate(45deg) translateY(6px); opacity: 1; }
+        }
+
+        /* === SECTION COMMON === */
+        section {
+            padding: 100px 24px;
+        }
+        .section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--burgundy);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+        .section-desc {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 56px;
+        }
+
+        /* === THREE LAYERS === */
+        .layers-section {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .layers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .layer-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 36px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        .layer-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-accent);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .layer-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+        .layer-card:nth-child(1)::before { background: linear-gradient(90deg, var(--burgundy), var(--gold)); }
+        .layer-card:nth-child(2)::before { background: linear-gradient(90deg, var(--gold), var(--sage)); }
+        .layer-card:nth-child(3)::before { background: linear-gradient(90deg, var(--sage), var(--slate-blue)); }
+
+        .layer-time {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .layer-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+
+        .layer-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .layer-desc {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+
+        .layer-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .layer-features li {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            padding-left: 20px;
+            position: relative;
+        }
+        .layer-features li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--burgundy);
+        }
+
+        /* === SAMPLE QUOTE PAGE (Interactive Demo) === */
+        .demo-section {
+            background: var(--bg-deep);
+        }
+
+        .demo-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+
+        .demo-text {
+            padding-top: 20px;
+        }
+
+        .demo-phone {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 16px;
+            max-width: 380px;
+            margin: 0 auto;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .demo-phone-notch {
+            width: 100px;
+            height: 6px;
+            background: var(--bg-card);
+            border-radius: 3px;
+            margin: 0 auto 16px;
+        }
+
+        .demo-phone-content {
+            background: var(--bg-card);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .demo-header {
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+        .demo-header-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .demo-header-brand span { color: var(--burgundy); }
+
+        .demo-page {
+            padding: 24px 18px;
+        }
+
+        .demo-question {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            line-height: 1.35;
+            margin-bottom: 20px;
+        }
+
+        .demo-answer-box {
+            background: linear-gradient(135deg, var(--burgundy-glow), var(--gold-dim));
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .demo-author-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+        .demo-source {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+        .demo-verified {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            color: var(--sage);
+            font-weight: 600;
+        }
+
+        .demo-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .demo-btn {
+            flex: 1;
+            padding: 10px 0;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .demo-btn:hover { background: var(--bg-card-hover); }
+        .demo-btn.primary {
+            background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep));
+            border-color: transparent;
+            color: white;
+        }
+
+        .demo-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0 0 20px;
+        }
+
+        .demo-context-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+        .demo-context-label .icon { margin-right: 4px; }
+
+        .demo-context-text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Layer indicators */
+        .demo-layer-tag {
+            position: absolute;
+            right: -12px;
+            background: var(--burgundy);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 4px 12px 4px 8px;
+            border-radius: 4px 0 0 4px;
+        }
+
+        /* === FEATURED QUOTES GRID === */
+        .quotes-section {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .quote-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 28px 24px;
+            position: relative;
+            transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+            cursor: pointer;
+        }
+        .quote-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-accent);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+        }
+        .quote-card:first-child {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 28px;
+            align-items: center;
+        }
+        .quote-card:first-child .quote-big-mark {
+            display: block;
+        }
+
+        .quote-big-mark {
+            display: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 6rem;
+            line-height: 1;
+            color: var(--burgundy);
+            opacity: 0.2;
+        }
+
+        .quote-card-text {
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 14px;
+            color: var(--text-primary);
+        }
+        .quote-card:first-child .quote-card-text {
+            font-size: 1.25rem;
+        }
+
+        .quote-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .quote-card-author {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--gold);
+        }
+        .quote-card-meta {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        .quote-card-badge {
+            position: absolute;
+            top: 12px; right: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.62rem;
+            color: var(--sage);
+            background: var(--sage-dim);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Skeleton loading */
+        .skeleton { background:linear-gradient(90deg,var(--bg-card) 25%,var(--bg-card-hover) 50%,var(--bg-card) 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:var(--radius-sm); }
+        @keyframes shimmer { 0%{background-position:200% 0;}100%{background-position:-200% 0;} }
+        .skeleton-text { height:16px; margin-bottom:8px; }
+        .skeleton-text.short { width:60%; }
+
+        /* DB status indicator */
+        .db-status { position:fixed; bottom:16px; left:16px; display:flex; align-items:center; gap:6px; font-family:'DM Sans',sans-serif; font-size:0.68rem; color:var(--text-muted); z-index:100; background:var(--bg-card); padding:6px 12px; border-radius:20px; border:1px solid var(--border); opacity:0.7; transition:opacity 0.2s; }
+        .db-status:hover { opacity:1; }
+        .db-dot { width:7px; height:7px; border-radius:50%; background:var(--text-muted); }
+        .db-dot.connected { background:var(--sage); }
+        .db-dot.error { background:var(--burgundy); }
+
+        /* === DIFFERENTIATORS === */
+        .diff-section {
+            background: var(--bg-deep);
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .diff-card {
+            text-align: center;
+            padding: 40px 24px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            transition: border-color 0.3s;
+        }
+        .diff-card:hover { border-color: var(--border-accent); }
+
+        .diff-icon {
+            font-size: 2.5rem;
+            margin-bottom: 18px;
+        }
+        .diff-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .diff-desc {
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* === QUOTLE GAME CTA === */
+        .game-cta {
+            background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-deep) 100%);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .game-cta-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--burgundy-glow), rgba(102, 126, 234, 0.08));
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-xl);
+            padding: 48px 40px;
+        }
+
+        .game-cta-emoji { font-size: 3rem; margin-bottom: 16px; }
+
+        .game-cta-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .game-cta-desc {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 28px;
+        }
+
+        .game-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 36px;
+            background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep));
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .game-cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 98, 122, 0.4);
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 32px;
+        }
+        .game-stat {
+            text-align: center;
+        }
+        .game-stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--gold);
+        }
+        .game-stat-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+        }
+
+        /* === FOOTER === */
+        footer {
+            padding: 60px 24px 40px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .footer-brand span { color: var(--burgundy); }
+
+        .footer-tagline {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        .footer-links a {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--burgundy); }
+
+        .footer-gs {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .footer-gs-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 700;
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .layers-grid { grid-template-columns: 1fr; }
+            .demo-container { grid-template-columns: 1fr; }
+            .demo-text { order: -1; }
+            .diff-grid { grid-template-columns: 1fr; }
+            .quotes-grid { grid-template-columns: 1fr; }
+            .quote-card:first-child {
+                grid-template-columns: 1fr;
+            }
+            .quote-big-mark { display: none !important; }
+        }
+
+        @media (max-width: 600px) {
+            section { padding: 64px 18px; }
+            .hero { padding: 32px 18px 64px; }
+            .game-cta-box { padding: 32px 24px; }
+            .game-stats { gap: 24px; }
+            .demo-phone { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =============== HERO =============== -->
+    <section class="hero">
+        <div class="hero-deco left">"</div>
+        <div class="hero-deco right">"</div>
+
+        <div class="hero-content">
+            <div class="brand">
+                <div class="brand-icon">📖</div>
+                <div class="brand-name">quotle<span>.info</span></div>
+            </div>
+
+            <h1 class="hero-headline">
+                Not just <em>who</em> said it.<br>
+                <em>Why</em> it mattered.
+            </h1>
+
+            <p class="hero-sub">
+                Verified public domain quotes with rich context, source verification, and the stories behind history's most powerful words.
+            </p>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <input
+                        type="text"
+                        id="quoteSearch"
+                        placeholder="Search a quote or author..."
+                        autocomplete="off"
+                    >
+                    <button class="search-btn" aria-label="Search">⌕</button>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <p class="search-hint">Try: "ask not what your country" or "Eleanor Roosevelt"</p>
+            </div>
+        </div>
+
+        <div class="scroll-cue">
+            <span>Explore</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- =============== THREE LAYERS =============== -->
+    <section class="layers-section" id="layers">
+        <div class="section-inner">
+            <div class="reveal">
+                <p class="section-label">The Experience</p>
+                <h2 class="section-title">Three layers of understanding</h2>
+                <p class="section-desc">
+                    Every quote page is designed as a progressive journey — from instant answer to deep context to connected exploration.
+                </p>
+            </div>
+
+            <div class="layers-grid">
+                <div class="layer-card reveal">
+                    <div class="layer-time">0 – 5 seconds</div>
+                    <div class="layer-icon">⚡</div>
+                    <h3 class="layer-title">The Answer</h3>
+                    <p class="layer-desc">
+                        Instant attribution. No scroll needed. Voice-assistant ready. Schema.org verified.
+                    </p>
+                    <ul class="layer-features">
+                        <li>Author name, date, source</li>
+                        <li>Public domain verification</li>
+                        <li>Featured snippet optimized</li>
+                        <li>Copy &amp; share ready</li>
+                    </ul>
+                </div>
+
+                <div class="layer-card reveal">
+                    <div class="layer-time">5 – 60 seconds</div>
+                    <div class="layer-icon">💡</div>
+                    <h3 class="layer-title">The Story</h3>
+                    <p class="layer-desc">
+                        Why the words were spoken. What was happening. Who was listening. Why it still resonates.
+                    </p>
+                    <ul class="layer-features">
+                        <li>Historical context</li>
+                        <li>Connected ideas across time</li>
+                        <li>Misattribution detective</li>
+                        <li>Curated collections</li>
+                    </ul>
+                </div>
+
+                <div class="layer-card reveal">
+                    <div class="layer-time">1+ minutes</div>
+                    <div class="layer-icon">🕳️</div>
+                    <h3 class="layer-title">The Rabbit Hole</h3>
+                    <p class="layer-desc">
+                        Follow the thread. See how ideas evolved across centuries. Discover unexpected connections.
+                    </p>
+                    <ul class="layer-features">
+                        <li>Quote constellations</li>
+                        <li>Timeline exploration</li>
+                        <li>Author deep dives</li>
+                        <li>Quotle game integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============== INTERACTIVE DEMO =============== -->
+    <section class="demo-section" id="demo">
+        <div class="section-inner">
+            <div class="demo-container">
+                <div class="demo-text reveal">
+                    <p class="section-label">See It in Action</p>
+                    <h2 class="section-title">One perfect quote page</h2>
+                    <p class="section-desc">
+                        Answer first, context second, rabbit holes third. Every page is mobile-first, voice-ready, and designed to load in under one second.
+                    </p>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 8px;">
+                        <div style="display: flex; gap: 12px; align-items: start;">
+                            <span style="font-size: 1.4rem;">🎯</span>
+                            <div>
+                                <div style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9rem; margin-bottom: 2px;">Voice-First Design</div>
+                                <div style="font-size: 0.88rem; color: var(--text-secondary); font-weight: 300;">Schema.org markup on every page. Optimized for Alexa, Siri, and Google Assistant.</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px; align-items: start;">
+                            <span style="font-size: 1.4rem;">✓</span>
+                            <div>
+                                <div style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9rem; margin-bottom: 2px;">Verified Sources</div>
+                                <div style="font-size: 0.88rem; color: var(--text-secondary); font-weight: 300;">Every quote traced to its original source. Public domain status confirmed.</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 12px; align-items: start;">
+                            <span style="font-size: 1.4rem;">🔗</span>
+                            <div>
+                                <div style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9rem; margin-bottom: 2px;">Connected Ideas</div>
+                                <div style="font-size: 0.88rem; color: var(--text-secondary); font-weight: 300;">See how quotes relate across time, themes, and authors.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-phone reveal">
+                    <div class="demo-phone-notch"></div>
+                    <div class="demo-phone-content">
+                        <div class="demo-header">
+                            <div class="demo-header-brand">quotle<span>.info</span></div>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">🔍</span>
+                        </div>
+                        <div class="demo-page">
+                            <div class="demo-question">
+                                Who said "No one can make you feel inferior without your consent"?
+                            </div>
+
+                            <div class="demo-answer-box">
+                                <div class="demo-author-name">ELEANOR ROOSEVELT</div>
+                                <div class="demo-source">This Is My Story, 1937</div>
+                                <div class="demo-verified">✓ Verified Public Domain</div>
+                            </div>
+
+                            <div class="demo-actions">
+                                <button class="demo-btn">📋 Copy</button>
+                                <button class="demo-btn">↗ Share</button>
+                                <button class="demo-btn primary">Learn More ↓</button>
+                            </div>
+
+                            <div class="demo-divider"></div>
+
+                            <div class="demo-context-label">
+                                <span class="icon">💡</span> WHY IT MATTERS
+                            </div>
+                            <p class="demo-context-text">
+                                Roosevelt shared this insight during a period when she faced intense public criticism as First Lady for her progressive stances on civil rights and women's equality — making it deeply personal.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============== FEATURED QUOTES =============== -->
+    <section class="quotes-section" id="quotes">
+        <div class="section-inner">
+            <div class="reveal">
+                <p class="section-label">From the Collection</p>
+                <h2 class="section-title"><span id="quoteCountTitle">—</span> verified quotes and counting</h2>
+                <p class="section-desc">Public domain quotes from ancient philosophers to modern pioneers — each one sourced, verified, and enriched with context.</p>
+            </div>
+            <div class="quotes-grid" id="quotesGrid">
+                <!-- Skeleton loaders while Firebase loads -->
+                <div class="quote-card" style="grid-column:1/-1;text-align:center;padding:40px;">
+                    <div class="skeleton skeleton-text" style="width:80%;height:20px;margin:0 auto 8px;"></div>
+                    <div class="skeleton skeleton-text" style="width:60%;height:20px;margin:0 auto 8px;"></div>
+                    <div class="skeleton skeleton-text short" style="width:30%;height:14px;margin:12px auto 0;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============== DIFFERENTIATORS =============== -->
+    <section class="diff-section" id="why">
+        <div class="section-inner">
+            <div style="text-align: center;" class="reveal">
+                <p class="section-label">Why Quotle.info</p>
+                <h2 class="section-title" style="max-width: 600px; margin-left: auto; margin-right: auto;">Quote sites are broken.<br>We're fixing them.</h2>
+                <p class="section-desc" style="margin-left: auto; margin-right: auto; margin-bottom: 56px;">
+                    No ads above the fold. No unverified attributions. No dead-end pages.
+                </p>
+            </div>
+
+            <div class="diff-grid">
+                <div class="diff-card reveal">
+                    <div class="diff-icon">🔍</div>
+                    <h3 class="diff-title">Source Verified</h3>
+                    <p class="diff-desc">Every quote traced to its original source document. No "attributed to" guesswork.</p>
+                </div>
+                <div class="diff-card reveal">
+                    <div class="diff-icon">🗣️</div>
+                    <h3 class="diff-title">Voice Ready</h3>
+                    <p class="diff-desc">Schema.org markup so Alexa, Siri, and Google can read answers to your questions.</p>
+                </div>
+                <div class="diff-card reveal">
+                    <div class="diff-icon">🌐</div>
+                    <h3 class="diff-title">Public Domain</h3>
+                    <p class="diff-desc">Every quote legally free to use. Verified Creative Commons and public domain status.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============== QUOTLE GAME CTA =============== -->
+    <section class="game-cta" id="play">
+        <div class="section-inner">
+            <div class="game-cta-box reveal">
+                <div class="game-cta-emoji">🎮</div>
+                <h2 class="game-cta-title">Think you know your quotes?</h2>
+                <p class="game-cta-desc">
+                    Quotle is a daily quote guessing game — identify the author in 4 tries. Powered by the same verified database.
+                </p>
+                <a href="https://quotle.game" class="game-cta-btn" target="_blank">
+                    Play Today's Quotle <span>→</span>
+                </a>
+                <div class="game-stats">
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="statQuotes">—</div>
+                        <div class="game-stat-label">Quotes</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-value" id="statAuthors">—</div>
+                        <div class="game-stat-label">Authors</div>
+                    </div>
+                    <div class="game-stat">
+                        <div class="game-stat-value">Daily</div>
+                        <div class="game-stat-label">Puzzle</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =============== FOOTER =============== -->
+    <footer>
+        <div class="footer-brand">quotle<span>.info</span></div>
+        <p class="footer-tagline">The Quote Context Engine — Verified. Connected. Voice-Ready.</p>
+        <div class="footer-links">
+            <a href="#layers">How It Works</a>
+            <a href="#quotes">Browse Quotes</a>
+            <a href="#play">Play Quotle</a>
+            <a href="https://gameshelf.club" target="_blank">Game Shelf</a>
+        </div>
+        <div class="footer-gs">
+            <span class="footer-gs-badge">GS</span>
+            Part of the Game Shelf ecosystem
+        </div>
+    </footer>
+
+    <!-- DB Status -->
+    <div class="db-status"><div class="db-dot" id="dbDot"></div><span id="dbStatusText">Connecting...</span></div>
+
+    <script>
+        // =============================================
+        // FIREBASE INIT
+        // =============================================
+        firebase.initializeApp({
+            apiKey: "AIzaSyBQVwn8vOrFTzLlm2MYIPBwgZV2xR9AuhM",
+            authDomain: "word-boxing.firebaseapp.com",
+            databaseURL: "https://word-boxing-default-rtdb.firebaseio.com",
+            projectId: "word-boxing",
+            storageBucket: "word-boxing.appspot.com",
+            messagingSenderId: "932356027174",
+            appId: "1:932356027174:web:0c1c9eeeca785cb49a0d8f"
+        });
+        const db = firebase.database();
+        let quotesCache = {};
+
+        function setDbStatus(ok, text) {
+            document.getElementById('dbDot').className = 'db-dot ' + (ok ? 'connected' : 'error');
+            document.getElementById('dbStatusText').textContent = text;
+        }
+
+        function escapeHtml(t) { if (!t) return ''; const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+        // =============================================
+        // SEARCH — client-side over cached quotes
+        // =============================================
+        const searchInput = document.getElementById('quoteSearch');
+        const searchResults = document.getElementById('searchResults');
+        let searchTimeout;
+
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            const query = searchInput.value.toLowerCase().trim();
+            if (query.length < 2) { searchResults.classList.remove('active'); return; }
+
+            searchTimeout = setTimeout(() => {
+                const matches = Object.values(quotesCache).filter(q =>
+                    (q.cleanText || q.text.toLowerCase()).includes(query) ||
+                    q.authorName.toLowerCase().includes(query)
+                ).sort((a, b) => (b.famousRating || 0) - (a.famousRating || 0)).slice(0, 5);
+
+                if (matches.length === 0) {
+                    searchResults.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);font-family:DM Sans,sans-serif;font-size:0.85rem;">No quotes found</div>';
+                    searchResults.classList.add('active');
+                    return;
+                }
+
+                searchResults.innerHTML = matches.map(q => {
+                    const src = q.source?.title ? `${q.source.title}, ${q.source.year || ''}` : (q.source?.year || q.gameData?.quotlePeriod || '');
+                    return `<div class="search-result-item" onclick="showInDemo('${q.id}')">
+                        <div class="result-quote">"${escapeHtml(q.text.length > 70 ? q.text.substring(0, 70) + '...' : q.text)}"</div>
+                        <div class="result-author">${escapeHtml(q.authorName)}${src ? ' · ' + escapeHtml(src) : ''}</div>
+                    </div>`;
+                }).join('');
+                searchResults.classList.add('active');
+            }, 150);
+        });
+
+        document.addEventListener('click', e => { if (!e.target.closest('.search-box')) searchResults.classList.remove('active'); });
+
+        // Show clicked quote in demo phone
+        function showInDemo(id) {
+            const q = quotesCache[id]; if (!q) return;
+            searchResults.classList.remove('active');
+            searchInput.value = '';
+            document.getElementById('demoQuestion').textContent = `Who said "${q.text}"?`;
+            document.getElementById('demoAuthor').textContent = q.authorName.toUpperCase();
+            document.getElementById('demoSource').textContent = q.source?.title ? `${q.source.title}, ${q.source.year || ''}` : (q.source?.year || q.gameData?.quotlePeriod || '');
+            document.getElementById('demoContext').textContent = q.context || q.historicalContext || 'Context enrichment in progress.';
+            document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // =============================================
+        // RENDER: Featured quotes grid from Firebase
+        // =============================================
+        function renderFeaturedQuotes(quotes) {
+            const sorted = [...quotes].sort((a, b) => (b.famousRating || 0) - (a.famousRating || 0));
+            const featured = []; const seen = new Set();
+            for (const q of sorted) { if (!seen.has(q.authorId)) { featured.push(q); seen.add(q.authorId); } if (featured.length >= 5) break; }
+            if (featured.length < 5) for (const q of sorted) { if (!featured.includes(q)) featured.push(q); if (featured.length >= 5) break; }
+
+            document.getElementById('quotesGrid').innerHTML = featured.map((q, i) => {
+                const src = q.source?.title ? `${q.source.title}, ${q.source.year || ''}` : (q.source?.year || q.gameData?.quotlePeriod || '');
+                return `<div class="quote-card${i === 0 ? '" style="grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center' : ''} reveal" onclick="showInDemo('${q.id}')">
+                    ${i === 0 ? '<span class="quote-big-mark">"</span>' : ''}
+                    <div>
+                        <p class="quote-card-text" ${i===0?'style="font-size:1.25rem"':''}>"${escapeHtml(q.text)}"</p>
+                        <div class="quote-card-footer">
+                            <span class="quote-card-author">${escapeHtml(q.authorName)}</span>
+                            <span class="quote-card-meta">${escapeHtml(src)}</span>
+                        </div>
+                    </div>
+                    ${q.source?.verified ? '<span class="quote-card-badge">✓ Verified</span>' : ''}
+                </div>`;
+            }).join('');
+
+            // Re-observe new elements for scroll reveal
+            document.querySelectorAll('#quotesGrid .reveal:not(.visible)').forEach(el => observer.observe(el));
+        }
+
+        function renderStats(quotes) {
+            const n = quotes.length;
+            const auth = new Set(quotes.map(q => q.authorId)).size;
+            document.getElementById('quoteCountTitle').textContent = n;
+            document.getElementById('statQuotes').textContent = n;
+            document.getElementById('statAuthors').textContent = auth + '+';
+        }
+
+        // =============================================
+        // SCROLL REVEAL
+        // =============================================
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // =============================================
+        // FIREBASE: Real-time listener
+        // =============================================
+        setDbStatus(false, 'Connecting...');
+
+        db.ref('quotle-info/quotes').on('value', snap => {
+            const data = snap.val();
+            if (data) {
+                quotesCache = data;
+                const quotes = Object.values(data);
+                renderFeaturedQuotes(quotes);
+                renderStats(quotes);
+                setDbStatus(true, `${quotes.length} quotes · live`);
+
+                // Update demo phone with a random enriched quote
+                const enriched = quotes.filter(q => q.context);
+                if (enriched.length > 0) {
+                    const q = enriched[Math.floor(Math.random() * enriched.length)];
+                    document.getElementById('demoQuestion').textContent = `Who said "${q.text}"?`;
+                    document.getElementById('demoAuthor').textContent = q.authorName.toUpperCase();
+                    document.getElementById('demoSource').textContent = q.source?.title ? `${q.source.title}, ${q.source.year || ''}` : '';
+                    document.getElementById('demoContext').textContent = q.context;
+                }
+            } else {
+                quotesCache = {};
+                setDbStatus(true, 'Empty — import via Manager');
+                document.getElementById('quoteCountTitle').textContent = '0';
+                document.getElementById('quotesGrid').innerHTML = '<div class="quote-card" style="grid-column:1/-1;text-align:center;padding:40px;"><p style="font-size:2rem;margin-bottom:12px;">📖</p><p style="font-style:normal;color:var(--text-secondary);font-family:DM Sans,sans-serif;">No quotes yet — open the Database Manager to import your Quotle quotes.</p></div>';
+            }
+        }, err => {
+            console.error('Firebase error:', err);
+            setDbStatus(false, 'Connection error');
+        });
+    </script>
+</body>
+</html>
