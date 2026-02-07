@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quotle.info — The Quote Context Engine</title>
+    <meta name="version" content="1.0.0">
+    <meta name="gs-app-id" content="quotle-info">
     <meta name="description" content="The only quote site that shows you not just what was said, but why it mattered, how it connected to other ideas, and the story behind it — verified and ready to use.">
 
     <!-- Schema.org for site -->
@@ -224,7 +226,7 @@
             background: var(--bg-card);
             border: 1.5px solid var(--border);
             border-radius: var(--radius-lg);
-            overflow: hidden;
+            overflow: visible;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
         .search-box:focus-within {
@@ -294,7 +296,7 @@
             border: 1.5px solid var(--border-accent);
             border-radius: var(--radius-md);
             box-shadow: 0 20px 60px var(--shadow);
-            z-index: 100;
+            z-index: 10000;
             display: none;
             overflow: hidden;
         }
