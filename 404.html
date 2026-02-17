@@ -7,7 +7,8 @@
         // GitHub Pages SPA redirect trick
         // When GitHub Pages can't find a file, it serves this 404.html.
         // We capture the original path and redirect to index.html with it encoded.
-        var pathSegmentsToKeep = 0; // quotle.info is at repo root, no prefix
+        // Auto-detect: 0 for custom domain (quotle.info), 1 for github.io/quotle-info/
+        var pathSegmentsToKeep = window.location.hostname.indexOf('github.io') !== -1 ? 1 : 0;
         var l = window.location;
         l.replace(
             l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +

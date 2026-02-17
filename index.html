@@ -1635,6 +1635,9 @@
         // =============================================
         // SPA ROUTER
         // =============================================
+        // Auto-detect base path: '/quotle-info' on github.io, '' on custom domain
+        const BASE_PATH = window.location.hostname.indexOf('github.io') !== -1 ? '/quotle-info' : '';
+
         const Router = {
             routes: [],
             currentView: null,
@@ -1644,7 +1647,11 @@
             },
 
             resolve() {
-                const path = window.location.pathname;
+                // Strip base path prefix so routes match against logical path
+                let path = window.location.pathname;
+                if (BASE_PATH && path.startsWith(BASE_PATH)) {
+                    path = path.slice(BASE_PATH.length) || '/';
+                }
                 for (const route of this.routes) {
                     const match = path.match(route.pattern);
                     if (match) return { handler: route.handler, match };
@@ -1653,7 +1660,7 @@
             },
 
             navigate(path) {
-                window.history.pushState(null, null, path);
+                window.history.pushState(null, null, BASE_PATH + path);
                 this.render();
             },
 
