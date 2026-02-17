@@ -4,9 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quotle.info — The Quote Context Engine</title>
-    <meta name="version" content="1.0.0">
+    <meta name="version" content="1.1.0">
     <meta name="gs-app-id" content="quotle-info">
     <meta name="description" content="The only quote site that shows you not just what was said, but why it mattered, how it connected to other ideas, and the story behind it — verified and ready to use.">
+
+    <!-- Open Graph (dynamically updated per view) -->
+    <meta property="og:title" content="Quotle.info — The Quote Context Engine" id="og-title">
+    <meta property="og:description" content="Verified public domain quotes with rich context, source verification, and voice-assistant optimization." id="og-desc">
+    <meta property="og:url" content="https://quotle.info" id="og-url">
+    <meta property="og:type" content="website" id="og-type">
 
     <!-- Schema.org for site -->
     <script type="application/ld+json">
@@ -18,7 +24,7 @@
         "description": "Verified public domain quotes with rich context, source verification, and voice-assistant optimization.",
         "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://quotle.info/who-said/{search_term_string}",
+            "target": "https://quotle.info/?q={search_term_string}",
             "query-input": "required name=search_term_string"
         }
     }
@@ -471,7 +477,7 @@
             position: relative;
         }
         .layer-features li::before {
-            content: '→';
+            content: '\2192';
             position: absolute;
             left: 0;
             color: var(--burgundy);
@@ -621,21 +627,6 @@
             font-weight: 300;
         }
 
-        /* Layer indicators */
-        .demo-layer-tag {
-            position: absolute;
-            right: -12px;
-            background: var(--burgundy);
-            color: white;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.62rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            padding: 4px 12px 4px 8px;
-            border-radius: 4px 0 0 4px;
-        }
-
         /* === FEATURED QUOTES GRID === */
         .quotes-section {
             background: var(--bg-surface);
@@ -663,16 +654,6 @@
             border-color: var(--border-accent);
             box-shadow: 0 12px 40px rgba(0,0,0,0.25);
         }
-        .quote-card:first-child {
-            grid-column: 1 / -1;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: 28px;
-            align-items: center;
-        }
-        .quote-card:first-child .quote-big-mark {
-            display: block;
-        }
 
         .quote-big-mark {
             display: none;
@@ -689,9 +670,6 @@
             line-height: 1.6;
             margin-bottom: 14px;
             color: var(--text-primary);
-        }
-        .quote-card:first-child .quote-card-text {
-            font-size: 1.25rem;
         }
 
         .quote-card-footer {
@@ -927,10 +905,6 @@
             .demo-text { order: -1; }
             .diff-grid { grid-template-columns: 1fr; }
             .quotes-grid { grid-template-columns: 1fr; }
-            .quote-card:first-child {
-                grid-template-columns: 1fr;
-            }
-            .quote-big-mark { display: none !important; }
         }
 
         @media (max-width: 600px) {
@@ -940,9 +914,421 @@
             .game-stats { gap: 24px; }
             .demo-phone { max-width: 100%; }
         }
+
+        /* ======================================================
+           SPA VIEW SYSTEM
+           ====================================================== */
+        .spa-view { display: none; }
+        .spa-view.active { display: block; }
+
+        /* === SPA NAVIGATION BAR === */
+        .spa-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 56px;
+            background: rgba(15, 15, 30, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 9000;
+        }
+        .spa-nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        .spa-nav-brand span { color: var(--burgundy); }
+        .spa-nav-brand .brand-icon {
+            width: 30px; height: 30px;
+            font-size: 15px;
+            border-radius: 8px;
+        }
+        .spa-nav-back {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
+        }
+        .spa-nav-back:hover { color: var(--burgundy); }
+
+        /* === QUOTE DETAIL PAGE === */
+        .quote-page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+        }
+
+        .quote-page-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 32px;
+            transition: color 0.2s;
+        }
+        .quote-page-back:hover { color: var(--burgundy); }
+
+        .qp-text {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.4;
+            letter-spacing: -0.01em;
+            margin-bottom: 32px;
+            position: relative;
+            padding-left: 24px;
+            border-left: 3px solid var(--burgundy);
+        }
+
+        .qp-answer {
+            background: linear-gradient(135deg, var(--burgundy-glow), var(--gold-dim));
+            border: 1px solid var(--border-accent);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .qp-author-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 900;
+            letter-spacing: 0.02em;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .qp-source {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+        .qp-verified {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            color: var(--sage);
+            font-weight: 600;
+            background: var(--sage-dim);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .qp-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+        .qp-action-btn {
+            flex: 1;
+            padding: 14px 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .qp-action-btn:hover { background: var(--bg-card-hover); border-color: var(--border-accent); }
+        .qp-action-btn.primary {
+            background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep));
+            border-color: transparent;
+            color: white;
+        }
+        .qp-action-btn.primary:hover { box-shadow: 0 4px 20px rgba(212, 98, 122, 0.4); }
+
+        .qp-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0 0 32px;
+        }
+
+        .qp-section-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .qp-section-text {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            font-weight: 300;
+            margin-bottom: 32px;
+        }
+        .qp-section-text.placeholder {
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .qp-author-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.25s;
+            margin-bottom: 32px;
+        }
+        .qp-author-card:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+        }
+        .qp-author-card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .qp-author-card-meta {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .qp-author-card-link {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--burgundy);
+            font-weight: 600;
+        }
+
+        .qp-related-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .qp-related-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 18px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .qp-related-item:hover {
+            border-color: var(--border-accent);
+            background: var(--bg-card-hover);
+        }
+        .qp-related-text {
+            font-style: italic;
+            font-size: 0.92rem;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+        .qp-related-meta {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .qp-game-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-bottom: 32px;
+        }
+        .qp-game-link:hover { border-color: var(--border-accent); color: var(--text-primary); }
+
+        /* === AUTHOR DETAIL PAGE === */
+        .author-page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+        }
+
+        .ap-hero {
+            margin-bottom: 40px;
+        }
+        .ap-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+        .ap-meta {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .ap-badge {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .ap-bio {
+            margin-bottom: 40px;
+        }
+        .ap-bio-text {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            font-weight: 300;
+        }
+        .ap-bio-text.placeholder {
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .ap-quotes-header {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        .ap-quote-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .ap-quote-item:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+        .ap-quote-text {
+            font-style: italic;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .ap-quote-source {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        /* === NOT FOUND PAGE === */
+        .not-found-page {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 120px 24px 60px;
+            text-align: center;
+        }
+        .nf-emoji { font-size: 4rem; margin-bottom: 24px; }
+        .nf-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+        .nf-desc {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        /* === TOAST NOTIFICATION === */
+        .share-toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--bg-card);
+            border: 1px solid var(--sage);
+            color: var(--sage);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+            z-index: 10001;
+            animation: toastIn 0.3s ease-out forwards;
+        }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* === LOADING SKELETON FOR VIEWS === */
+        .view-loading {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 80px 24px 60px;
+        }
+        .view-loading .skeleton { margin-bottom: 16px; }
+
+        /* === SPA RESPONSIVE ADDITIONS === */
+        @media (max-width: 600px) {
+            .spa-nav { padding: 0 14px; }
+            .quote-page, .author-page { padding: 72px 18px 40px; }
+            .qp-actions { flex-direction: column; }
+            .qp-actions .qp-action-btn { flex: none; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- =============== SPA NAVIGATION (non-home views) =============== -->
+    <nav class="spa-nav" id="spaNav" style="display:none;">
+        <a href="/" class="spa-nav-brand" onclick="navigateTo('/');return false;">
+            <div class="brand-icon">📖</div>
+            quotle<span>.info</span>
+        </a>
+        <a href="/" class="spa-nav-back" onclick="navigateTo('/');return false;">
+            ← Home
+        </a>
+    </nav>
+
+    <!-- =============== HOME VIEW =============== -->
+    <div id="homeView" class="spa-view active">
 
     <!-- =============== HERO =============== -->
     <section class="hero">
@@ -972,7 +1358,7 @@
                         placeholder="Search a quote or author..."
                         autocomplete="off"
                     >
-                    <button class="search-btn" aria-label="Search">⌕</button>
+                    <button class="search-btn" aria-label="Search">&#x2315;</button>
                     <div class="search-results" id="searchResults"></div>
                 </div>
                 <p class="search-hint">Try: "ask not what your country" or "Eleanor Roosevelt"</p>
@@ -999,7 +1385,7 @@
             <div class="layers-grid">
                 <div class="layer-card reveal">
                     <div class="layer-time">0 – 5 seconds</div>
-                    <div class="layer-icon">⚡</div>
+                    <div class="layer-icon">&#x26A1;</div>
                     <h3 class="layer-title">The Answer</h3>
                     <p class="layer-desc">
                         Instant attribution. No scroll needed. Voice-assistant ready. Schema.org verified.
@@ -1014,7 +1400,7 @@
 
                 <div class="layer-card reveal">
                     <div class="layer-time">5 – 60 seconds</div>
-                    <div class="layer-icon">💡</div>
+                    <div class="layer-icon">&#x1F4A1;</div>
                     <h3 class="layer-title">The Story</h3>
                     <p class="layer-desc">
                         Why the words were spoken. What was happening. Who was listening. Why it still resonates.
@@ -1029,7 +1415,7 @@
 
                 <div class="layer-card reveal">
                     <div class="layer-time">1+ minutes</div>
-                    <div class="layer-icon">🕳️</div>
+                    <div class="layer-icon">&#x1F573;&#xFE0F;</div>
                     <h3 class="layer-title">The Rabbit Hole</h3>
                     <p class="layer-desc">
                         Follow the thread. See how ideas evolved across centuries. Discover unexpected connections.
@@ -1058,21 +1444,21 @@
 
                     <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 8px;">
                         <div style="display: flex; gap: 12px; align-items: start;">
-                            <span style="font-size: 1.4rem;">🎯</span>
+                            <span style="font-size: 1.4rem;">&#x1F3AF;</span>
                             <div>
                                 <div style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9rem; margin-bottom: 2px;">Voice-First Design</div>
                                 <div style="font-size: 0.88rem; color: var(--text-secondary); font-weight: 300;">Schema.org markup on every page. Optimized for Alexa, Siri, and Google Assistant.</div>
                             </div>
                         </div>
                         <div style="display: flex; gap: 12px; align-items: start;">
-                            <span style="font-size: 1.4rem;">✓</span>
+                            <span style="font-size: 1.4rem;">&#x2713;</span>
                             <div>
                                 <div style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9rem; margin-bottom: 2px;">Verified Sources</div>
                                 <div style="font-size: 0.88rem; color: var(--text-secondary); font-weight: 300;">Every quote traced to its original source. Public domain status confirmed.</div>
                             </div>
                         </div>
                         <div style="display: flex; gap: 12px; align-items: start;">
-                            <span style="font-size: 1.4rem;">🔗</span>
+                            <span style="font-size: 1.4rem;">&#x1F517;</span>
                             <div>
                                 <div style="font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9rem; margin-bottom: 2px;">Connected Ideas</div>
                                 <div style="font-size: 0.88rem; color: var(--text-secondary); font-weight: 300;">See how quotes relate across time, themes, and authors.</div>
@@ -1086,7 +1472,7 @@
                     <div class="demo-phone-content">
                         <div class="demo-header">
                             <div class="demo-header-brand">quotle<span>.info</span></div>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">🔍</span>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">&#x1F50D;</span>
                         </div>
                         <div class="demo-page">
                             <div class="demo-question" id="demoQuestion">
@@ -1096,19 +1482,19 @@
                             <div class="demo-answer-box">
                                 <div class="demo-author-name" id="demoAuthor">ELEANOR ROOSEVELT</div>
                                 <div class="demo-source" id="demoSource">This Is My Story, 1937</div>
-                                <div class="demo-verified">✓ Verified Public Domain</div>
+                                <div class="demo-verified">&#x2713; Verified Public Domain</div>
                             </div>
 
                             <div class="demo-actions">
-                                <button class="demo-btn">📋 Copy</button>
-                                <button class="demo-btn">↗ Share</button>
-                                <button class="demo-btn primary">Learn More ↓</button>
+                                <button class="demo-btn">&#x1F4CB; Copy</button>
+                                <button class="demo-btn">&#x2197; Share</button>
+                                <button class="demo-btn primary">Learn More &#x2193;</button>
                             </div>
 
                             <div class="demo-divider"></div>
 
                             <div class="demo-context-label">
-                                <span class="icon">💡</span> WHY IT MATTERS
+                                <span class="icon">&#x1F4A1;</span> WHY IT MATTERS
                             </div>
                             <p class="demo-context-text" id="demoContext">
                                 Roosevelt shared this insight during a period when she faced intense public criticism as First Lady for her progressive stances on civil rights and women's equality — making it deeply personal.
@@ -1152,17 +1538,17 @@
 
             <div class="diff-grid">
                 <div class="diff-card reveal">
-                    <div class="diff-icon">🔍</div>
+                    <div class="diff-icon">&#x1F50D;</div>
                     <h3 class="diff-title">Source Verified</h3>
                     <p class="diff-desc">Every quote traced to its original source document. No "attributed to" guesswork.</p>
                 </div>
                 <div class="diff-card reveal">
-                    <div class="diff-icon">🗣️</div>
+                    <div class="diff-icon">&#x1F5E3;&#xFE0F;</div>
                     <h3 class="diff-title">Voice Ready</h3>
                     <p class="diff-desc">Schema.org markup so Alexa, Siri, and Google can read answers to your questions.</p>
                 </div>
                 <div class="diff-card reveal">
-                    <div class="diff-icon">🌐</div>
+                    <div class="diff-icon">&#x1F310;</div>
                     <h3 class="diff-title">Public Domain</h3>
                     <p class="diff-desc">Every quote legally free to use. Verified Creative Commons and public domain status.</p>
                 </div>
@@ -1174,7 +1560,7 @@
     <section class="game-cta" id="play">
         <div class="section-inner">
             <div class="game-cta-box reveal">
-                <div class="game-cta-emoji">🎮</div>
+                <div class="game-cta-emoji">&#x1F3AE;</div>
                 <h2 class="game-cta-title">Think you know your quotes?</h2>
                 <p class="game-cta-desc">
                     Quotle is a daily quote guessing game — identify the author in 4 tries. Powered by the same verified database.
@@ -1216,10 +1602,83 @@
         </div>
     </footer>
 
+    </div><!-- /homeView -->
+
+    <!-- =============== QUOTE DETAIL VIEW =============== -->
+    <div id="quoteView" class="spa-view"></div>
+
+    <!-- =============== AUTHOR DETAIL VIEW =============== -->
+    <div id="authorView" class="spa-view"></div>
+
+    <!-- =============== NOT FOUND VIEW =============== -->
+    <div id="notFoundView" class="spa-view"></div>
+
     <!-- DB Status -->
     <div class="db-status"><div class="db-dot" id="dbDot"></div><span id="dbStatusText">Connecting...</span></div>
 
     <script>
+        // =============================================
+        // SPA: Restore path from 404.html redirect
+        // =============================================
+        (function() {
+            var loc = window.location;
+            if (loc.search[1] === '/') {
+                var decoded = loc.search.slice(1).split('&')
+                    .map(function(s) { return s.replace(/~and~/g, '&'); })
+                    .join('?');
+                window.history.replaceState(null, null,
+                    loc.pathname.slice(0, -1) + decoded + loc.hash
+                );
+            }
+        })();
+
+        // =============================================
+        // SPA ROUTER
+        // =============================================
+        const Router = {
+            routes: [],
+            currentView: null,
+
+            add(pattern, handler) {
+                this.routes.push({ pattern, handler });
+            },
+
+            resolve() {
+                const path = window.location.pathname;
+                for (const route of this.routes) {
+                    const match = path.match(route.pattern);
+                    if (match) return { handler: route.handler, match };
+                }
+                return null;
+            },
+
+            navigate(path) {
+                window.history.pushState(null, null, path);
+                this.render();
+            },
+
+            render() {
+                // Hide all views
+                document.querySelectorAll('.spa-view').forEach(v => v.classList.remove('active'));
+
+                const result = this.resolve();
+                if (result) {
+                    result.handler(result.match);
+                } else {
+                    showNotFound();
+                }
+
+                window.scrollTo(0, 0);
+            }
+        };
+
+        function navigateTo(path) {
+            Router.navigate(path);
+            return false;
+        }
+
+        window.addEventListener('popstate', () => Router.render());
+
         // =============================================
         // FIREBASE INIT
         // =============================================
@@ -1233,7 +1692,23 @@
             appId: "1:932356027174:web:0c1c9eeeca785cb49a0d8f"
         });
         const db = firebase.database();
+        const DB_URL = 'https://word-boxing-default-rtdb.firebaseio.com';
+
         let quotesCache = {};
+        let authorsCache = {};
+        let dataReady = false;
+        let dataReadyCallbacks = [];
+
+        function whenDataReady(cb) {
+            if (dataReady) { cb(); return; }
+            dataReadyCallbacks.push(cb);
+        }
+
+        function onDataLoaded() {
+            dataReady = true;
+            dataReadyCallbacks.forEach(cb => cb());
+            dataReadyCallbacks = [];
+        }
 
         function setDbStatus(ok, text) {
             document.getElementById('dbDot').className = 'db-dot ' + (ok ? 'connected' : 'error');
@@ -1241,6 +1716,388 @@
         }
 
         function escapeHtml(t) { if (!t) return ''; const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+        function getSourceText(q) {
+            if (q.source?.title) return q.source.title + (q.source.year ? ', ' + q.source.year : '');
+            if (q.source?.year) return String(q.source.year);
+            if (q.gameData?.quotlePeriod) return q.gameData.quotlePeriod;
+            return '';
+        }
+
+        // =============================================
+        // OG META + SCHEMA.ORG
+        // =============================================
+        function updateOGMeta(title, desc, url) {
+            const t = document.getElementById('og-title');
+            const d = document.getElementById('og-desc');
+            const u = document.getElementById('og-url');
+            if (t) t.setAttribute('content', title || '');
+            if (d) d.setAttribute('content', desc || '');
+            if (u) u.setAttribute('content', url || '');
+        }
+
+        function injectQuoteSchema(q) {
+            let el = document.getElementById('dynamicSchemaOrg');
+            if (!el) {
+                el = document.createElement('script');
+                el.type = 'application/ld+json';
+                el.id = 'dynamicSchemaOrg';
+                document.head.appendChild(el);
+            }
+            const schema = {
+                "@context": "https://schema.org",
+                "@type": "Quotation",
+                "text": q.text,
+                "creator": {
+                    "@type": "Person",
+                    "name": q.authorName
+                },
+                "inLanguage": "en"
+            };
+            if (q.source?.title) {
+                schema.isPartOf = { "@type": "CreativeWork", "name": q.source.title };
+                if (q.source.year) schema.isPartOf.datePublished = String(q.source.year);
+            }
+            if (q.publicDomain) {
+                schema.copyrightNotice = "Public Domain";
+            }
+            el.textContent = JSON.stringify(schema);
+        }
+
+        function clearDynamicSchema() {
+            const el = document.getElementById('dynamicSchemaOrg');
+            if (el) el.remove();
+        }
+
+        // =============================================
+        // SHARE / COPY
+        // =============================================
+        function shareQuote(q) {
+            const text = '"' + q.text + '" \u2014 ' + q.authorName;
+            const url = 'https://quotle.info/quote/' + q.id;
+            if (navigator.share) {
+                navigator.share({ title: 'Quote by ' + q.authorName, text: text, url: url }).catch(() => {});
+            } else {
+                copyToClipboard(text + '\n' + url);
+            }
+        }
+
+        function copyQuote(q) {
+            copyToClipboard('"' + q.text + '" \u2014 ' + q.authorName);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Copied to clipboard');
+            }).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.cssText = 'position:fixed;left:-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast('Copied to clipboard');
+            });
+        }
+
+        function showToast(msg) {
+            document.querySelectorAll('.share-toast').forEach(t => t.remove());
+            const toast = document.createElement('div');
+            toast.className = 'share-toast';
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+
+        // =============================================
+        // VIEW: HOME
+        // =============================================
+        function showHome() {
+            Router.currentView = 'home';
+            document.getElementById('homeView').classList.add('active');
+            document.getElementById('spaNav').style.display = 'none';
+            document.title = 'Quotle.info \u2014 The Quote Context Engine';
+            updateOGMeta('Quotle.info \u2014 The Quote Context Engine', 'Verified public domain quotes with rich context, source verification, and voice-assistant optimization.', 'https://quotle.info');
+            clearDynamicSchema();
+            // Re-observe reveals
+            document.querySelectorAll('#homeView .reveal:not(.visible)').forEach(el => observer.observe(el));
+        }
+
+        // =============================================
+        // VIEW: QUOTE DETAIL
+        // =============================================
+        function showQuote(match) {
+            const id = decodeURIComponent(match[1]);
+            Router.currentView = 'quote';
+            document.getElementById('spaNav').style.display = 'flex';
+
+            const view = document.getElementById('quoteView');
+            view.classList.add('active');
+
+            if (!dataReady) {
+                view.innerHTML = '<div class="view-loading">' +
+                    '<div class="skeleton" style="height:24px;width:60%;margin-bottom:24px;"></div>' +
+                    '<div class="skeleton" style="height:60px;width:100%;margin-bottom:16px;"></div>' +
+                    '<div class="skeleton" style="height:60px;width:100%;margin-bottom:16px;"></div>' +
+                    '<div class="skeleton" style="height:120px;width:100%;margin-bottom:16px;"></div>' +
+                    '</div>';
+                whenDataReady(() => showQuote(match));
+                return;
+            }
+
+            const q = quotesCache[id];
+            if (!q) { showNotFound(); return; }
+
+            const src = getSourceText(q);
+            const ctx = q.context || q.historicalContext || '';
+            const hasContext = ctx.length > 0;
+
+            // Find more quotes by same author
+            const sameAuthor = Object.values(quotesCache)
+                .filter(oq => oq.authorId === q.authorId && oq.id !== q.id)
+                .sort((a, b) => (b.famousRating || 0) - (a.famousRating || 0))
+                .slice(0, 3);
+
+            // Author info
+            const author = authorsCache[q.authorId] || {};
+            const authorMeta = [author.era, author.timePeriod].filter(Boolean).join(' \u00B7 ');
+
+            let html = '<article class="quote-page">';
+
+            // Back link
+            html += '<a href="/" class="quote-page-back" onclick="navigateTo(\'/\');return false;">\u2190 All Quotes</a>';
+
+            // Layer 1: The Answer
+            html += '<div class="qp-text">\u201C' + escapeHtml(q.text) + '\u201D</div>';
+
+            html += '<div class="qp-answer">';
+            html += '<div class="qp-author-name">' + escapeHtml(q.authorName).toUpperCase() + '</div>';
+            if (src) html += '<div class="qp-source">' + escapeHtml(src) + '</div>';
+            if (q.publicDomain || q.source?.verified) {
+                html += '<div class="qp-verified">\u2713 Verified Public Domain</div>';
+            }
+            html += '</div>';
+
+            // Action buttons
+            html += '<div class="qp-actions">';
+            html += '<button class="qp-action-btn" id="btnCopy">\u{1F4CB} Copy</button>';
+            html += '<button class="qp-action-btn" id="btnShare">\u2197\uFE0F Share</button>';
+            html += '<button class="qp-action-btn primary" onclick="document.getElementById(\'quoteLayer2\').scrollIntoView({behavior:\'smooth\'})">Learn More \u2193</button>';
+            html += '</div>';
+
+            // Layer 2: The Story
+            html += '<div class="qp-divider" id="quoteLayer2"></div>';
+            html += '<div class="qp-section-label">\u{1F4A1} WHY IT MATTERS</div>';
+            if (hasContext) {
+                html += '<p class="qp-section-text">' + escapeHtml(ctx) + '</p>';
+            } else {
+                html += '<p class="qp-section-text placeholder">Context coming soon. We\'re enriching every quote with historical context and the story behind the words.</p>';
+            }
+
+            if (q.interpretation) {
+                html += '<div class="qp-section-label">\u{1F4D6} INTERPRETATION</div>';
+                html += '<p class="qp-section-text">' + escapeHtml(q.interpretation) + '</p>';
+            }
+
+            if (q.commonlyMisattributed) {
+                html += '<div class="qp-section-label">\u26A0\uFE0F COMMONLY MISATTRIBUTED</div>';
+                html += '<p class="qp-section-text">This quote is sometimes attributed to other authors. Our source verification confirms the attribution above.</p>';
+            }
+
+            // Layer 3: The Rabbit Hole
+            html += '<div class="qp-divider"></div>';
+
+            // Author card
+            html += '<div class="qp-section-label">\u{1F4D6} ABOUT THE AUTHOR</div>';
+            html += '<div class="qp-author-card" onclick="navigateTo(\'/author/' + encodeURIComponent(q.authorId) + '\')">';
+            html += '<div class="qp-author-card-name">' + escapeHtml(q.authorName) + '</div>';
+            if (authorMeta) html += '<div class="qp-author-card-meta">' + escapeHtml(authorMeta) + '</div>';
+            html += '<div class="qp-author-card-link">View all quotes \u2192</div>';
+            html += '</div>';
+
+            // More from this author
+            if (sameAuthor.length > 0) {
+                html += '<div class="qp-section-label">\u{1F4AC} MORE FROM ' + escapeHtml(q.authorName).toUpperCase() + '</div>';
+                html += '<div class="qp-related-grid">';
+                sameAuthor.forEach(oq => {
+                    const oSrc = getSourceText(oq);
+                    html += '<div class="qp-related-item" onclick="navigateTo(\'/quote/' + encodeURIComponent(oq.id) + '\')">';
+                    html += '<div class="qp-related-text">\u201C' + escapeHtml(oq.text.length > 100 ? oq.text.substring(0, 100) + '...' : oq.text) + '\u201D</div>';
+                    if (oSrc) html += '<div class="qp-related-meta">' + escapeHtml(oSrc) + '</div>';
+                    html += '</div>';
+                });
+                html += '</div>';
+            }
+
+            // Quotle game link
+            if (q.gameData?.usedInQuotle) {
+                html += '<div class="qp-section-label">\u{1F3AE} QUOTLE GAME</div>';
+                html += '<p class="qp-section-text">This quote was featured in Quotle. Think you could have guessed the author?</p>';
+                html += '<a href="https://quotle.game" class="qp-game-link" target="_blank">\u{1F3AE} Play Quotle \u2192</a>';
+            }
+
+            html += '</article>';
+
+            view.innerHTML = html;
+
+            // Wire buttons
+            document.getElementById('btnCopy')?.addEventListener('click', () => copyQuote(q));
+            document.getElementById('btnShare')?.addEventListener('click', () => shareQuote(q));
+
+            // Update page title and meta
+            const shortText = q.text.length > 60 ? q.text.substring(0, 60) + '...' : q.text;
+            document.title = '"' + shortText + '" \u2014 ' + q.authorName + ' | Quotle.info';
+            updateOGMeta(
+                'Quote by ' + q.authorName + ' | Quotle.info',
+                '\u201C' + shortText + '\u201D',
+                'https://quotle.info/quote/' + q.id
+            );
+            injectQuoteSchema(q);
+        }
+
+        // =============================================
+        // VIEW: AUTHOR DETAIL
+        // =============================================
+        function showAuthor(match) {
+            const id = decodeURIComponent(match[1]);
+            Router.currentView = 'author';
+            document.getElementById('spaNav').style.display = 'flex';
+
+            const view = document.getElementById('authorView');
+            view.classList.add('active');
+
+            if (!dataReady) {
+                view.innerHTML = '<div class="view-loading">' +
+                    '<div class="skeleton" style="height:36px;width:50%;margin-bottom:24px;"></div>' +
+                    '<div class="skeleton" style="height:20px;width:80%;margin-bottom:12px;"></div>' +
+                    '<div class="skeleton" style="height:80px;width:100%;margin-bottom:16px;"></div>' +
+                    '</div>';
+                whenDataReady(() => showAuthor(match));
+                return;
+            }
+
+            const author = authorsCache[id];
+            const displayName = author?.name || author?.fullName || id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+
+            // Get all quotes by this author
+            const authorQuotes = Object.values(quotesCache)
+                .filter(q => q.authorId === id)
+                .sort((a, b) => (b.famousRating || 0) - (a.famousRating || 0));
+
+            if (authorQuotes.length === 0 && !author) {
+                showNotFound();
+                return;
+            }
+
+            const meta = author ? [author.era, author.timePeriod].filter(Boolean) : [];
+
+            let html = '<div class="author-page">';
+
+            // Back link
+            html += '<a href="/" class="quote-page-back" onclick="navigateTo(\'/\');return false;">\u2190 All Quotes</a>';
+
+            // Hero
+            html += '<div class="ap-hero">';
+            html += '<h1 class="ap-name">' + escapeHtml(displayName) + '</h1>';
+            html += '<div class="ap-meta">';
+            meta.forEach(m => {
+                html += '<span class="ap-badge">' + escapeHtml(m) + '</span>';
+            });
+            html += '<span>' + authorQuotes.length + ' quote' + (authorQuotes.length !== 1 ? 's' : '') + '</span>';
+            html += '</div>';
+            html += '</div>';
+
+            // Bio
+            html += '<div class="ap-bio">';
+            html += '<p class="ap-bio-text placeholder">Author biography coming soon. We\'re enriching our author profiles with biographical context.</p>';
+            html += '</div>';
+
+            // Quotes list
+            html += '<div class="ap-quotes-header">QUOTES BY ' + escapeHtml(displayName).toUpperCase() + '</div>';
+            authorQuotes.forEach(q => {
+                const src = getSourceText(q);
+                html += '<div class="ap-quote-item" onclick="navigateTo(\'/quote/' + encodeURIComponent(q.id) + '\')">';
+                html += '<p class="ap-quote-text">\u201C' + escapeHtml(q.text) + '\u201D</p>';
+                if (src) html += '<div class="ap-quote-source">' + escapeHtml(src) + '</div>';
+                html += '</div>';
+            });
+
+            html += '</div>';
+
+            view.innerHTML = html;
+
+            document.title = displayName + ' Quotes | Quotle.info';
+            updateOGMeta(
+                displayName + ' Quotes | Quotle.info',
+                authorQuotes.length + ' verified public domain quotes by ' + displayName,
+                'https://quotle.info/author/' + id
+            );
+            clearDynamicSchema();
+        }
+
+        // =============================================
+        // VIEW: TODAY
+        // =============================================
+        function showToday() {
+            Router.currentView = 'today';
+            if (!dataReady) {
+                document.getElementById('spaNav').style.display = 'flex';
+                const view = document.getElementById('quoteView');
+                view.classList.add('active');
+                view.innerHTML = '<div class="view-loading">' +
+                    '<div class="skeleton" style="height:24px;width:40%;margin-bottom:24px;"></div>' +
+                    '<div class="skeleton" style="height:60px;width:100%;"></div></div>';
+                whenDataReady(() => showToday());
+                return;
+            }
+
+            // Calculate day of year
+            const now = new Date();
+            const start = new Date(now.getFullYear(), 0, 0);
+            const diff = now - start;
+            const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+            // Find quote by quotleIndex
+            const allQuotes = Object.values(quotesCache);
+            const quotleQuotes = allQuotes.filter(q => q.gameData?.quotleIndex != null)
+                .sort((a, b) => a.gameData.quotleIndex - b.gameData.quotleIndex);
+
+            if (quotleQuotes.length > 0) {
+                const idx = dayOfYear % quotleQuotes.length;
+                const todayQuote = quotleQuotes[idx];
+                Router.navigate('/quote/' + todayQuote.id);
+            } else {
+                // Fallback: random quote
+                if (allQuotes.length > 0) {
+                    const rq = allQuotes[dayOfYear % allQuotes.length];
+                    Router.navigate('/quote/' + rq.id);
+                } else {
+                    Router.navigate('/');
+                }
+            }
+        }
+
+        // =============================================
+        // VIEW: NOT FOUND
+        // =============================================
+        function showNotFound() {
+            Router.currentView = 'notfound';
+            document.getElementById('spaNav').style.display = 'flex';
+
+            const view = document.getElementById('notFoundView');
+            view.classList.add('active');
+            view.innerHTML = '<div class="not-found-page">' +
+                '<div class="nf-emoji">\u{1F50D}</div>' +
+                '<h1 class="nf-title">Quote Not Found</h1>' +
+                '<p class="nf-desc">This quote isn\'t in our collection yet. We have ' +
+                Object.keys(quotesCache).length + ' verified public domain quotes — try searching for one.</p>' +
+                '<a href="/" class="game-cta-btn" onclick="navigateTo(\'/\');return false;" style="display:inline-flex;">Browse All Quotes \u2192</a>' +
+                '</div>';
+
+            document.title = 'Not Found | Quotle.info';
+            clearDynamicSchema();
+        }
 
         // =============================================
         // SEARCH — client-side over cached quotes
@@ -1267,11 +2124,11 @@
                 }
 
                 searchResults.innerHTML = matches.map(q => {
-                    const src = q.source?.title ? `${q.source.title}, ${q.source.year || ''}` : (q.source?.year || q.gameData?.quotlePeriod || '');
-                    return `<div class="search-result-item" onclick="showInDemo('${q.id}')">
-                        <div class="result-quote">"${escapeHtml(q.text.length > 70 ? q.text.substring(0, 70) + '...' : q.text)}"</div>
-                        <div class="result-author">${escapeHtml(q.authorName)}${src ? ' · ' + escapeHtml(src) : ''}</div>
-                    </div>`;
+                    const src = getSourceText(q);
+                    return '<div class="search-result-item" onclick="navigateTo(\'/quote/' + encodeURIComponent(q.id) + '\')">' +
+                        '<div class="result-quote">\u201C' + escapeHtml(q.text.length > 70 ? q.text.substring(0, 70) + '...' : q.text) + '\u201D</div>' +
+                        '<div class="result-author">' + escapeHtml(q.authorName) + (src ? ' \u00B7 ' + escapeHtml(src) : '') + '</div>' +
+                    '</div>';
                 }).join('');
                 searchResults.classList.add('active');
             }, 150);
@@ -1279,16 +2136,13 @@
 
         document.addEventListener('click', e => { if (!e.target.closest('.search-box')) searchResults.classList.remove('active'); });
 
-        // Show clicked quote in demo phone
+        // Keep showInDemo for the home page demo phone
         function showInDemo(id) {
             const q = quotesCache[id]; if (!q) return;
-            searchResults.classList.remove('active');
-            searchInput.value = '';
-            document.getElementById('demoQuestion').textContent = `Who said "${q.text}"?`;
+            document.getElementById('demoQuestion').textContent = 'Who said "' + q.text + '"?';
             document.getElementById('demoAuthor').textContent = q.authorName.toUpperCase();
-            document.getElementById('demoSource').textContent = q.source?.title ? `${q.source.title}, ${q.source.year || ''}` : (q.source?.year || q.gameData?.quotlePeriod || '');
+            document.getElementById('demoSource').textContent = getSourceText(q);
             document.getElementById('demoContext').textContent = q.context || q.historicalContext || 'Context enrichment in progress.';
-            document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
         }
 
         // =============================================
@@ -1301,18 +2155,18 @@
             if (featured.length < 5) for (const q of sorted) { if (!featured.includes(q)) featured.push(q); if (featured.length >= 5) break; }
 
             document.getElementById('quotesGrid').innerHTML = featured.map((q, i) => {
-                const src = q.source?.title ? `${q.source.title}, ${q.source.year || ''}` : (q.source?.year || q.gameData?.quotlePeriod || '');
-                return `<div class="quote-card${i === 0 ? '" style="grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center' : ''} reveal" onclick="showInDemo('${q.id}')">
-                    ${i === 0 ? '<span class="quote-big-mark">"</span>' : ''}
-                    <div>
-                        <p class="quote-card-text" ${i===0?'style="font-size:1.25rem"':''}>"${escapeHtml(q.text)}"</p>
-                        <div class="quote-card-footer">
-                            <span class="quote-card-author">${escapeHtml(q.authorName)}</span>
-                            <span class="quote-card-meta">${escapeHtml(src)}</span>
-                        </div>
-                    </div>
-                    ${q.source?.verified ? '<span class="quote-card-badge">✓ Verified</span>' : ''}
-                </div>`;
+                const src = getSourceText(q);
+                return '<div class="quote-card' + (i === 0 ? '" style="grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center' : '') + ' reveal" onclick="navigateTo(\'/quote/' + encodeURIComponent(q.id) + '\')">' +
+                    (i === 0 ? '<span class="quote-big-mark" style="display:block">\u201C</span>' : '') +
+                    '<div>' +
+                        '<p class="quote-card-text" ' + (i===0?'style="font-size:1.25rem"':'') + '>\u201C' + escapeHtml(q.text) + '\u201D</p>' +
+                        '<div class="quote-card-footer">' +
+                            '<span class="quote-card-author">' + escapeHtml(q.authorName) + '</span>' +
+                            '<span class="quote-card-meta">' + escapeHtml(src) + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                    (q.source?.verified ? '<span class="quote-card-badge">\u2713 Verified</span>' : '') +
+                '</div>';
             }).join('');
 
             // Re-observe new elements for scroll reveal
@@ -1341,17 +2195,12 @@
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
         // =============================================
-        // FIREBASE: Real-time listener
+        // FIREBASE: Load data — SDK with REST fallback
         // =============================================
         setDbStatus(false, 'Connecting...');
-
-        // =============================================
-        // FIREBASE: Load quotes — SDK listener with REST fallback
-        // =============================================
-        const DB_URL = 'https://word-boxing-default-rtdb.firebaseio.com';
         let loadedViaSDK = false;
 
-        // Try SDK listener first
+        // Load quotes
         db.ref('quotle-info/quotes').on('value', snap => {
             loadedViaSDK = true;
             const data = snap.val();
@@ -1360,65 +2209,90 @@
                 const quotes = Object.values(data);
                 renderFeaturedQuotes(quotes);
                 renderStats(quotes);
-                setDbStatus(true, `${quotes.length} quotes · live`);
+                setDbStatus(true, quotes.length + ' quotes \u00B7 live');
 
                 // Update demo phone with a random enriched quote
                 const enriched = quotes.filter(q => q.context);
                 if (enriched.length > 0) {
                     const q = enriched[Math.floor(Math.random() * enriched.length)];
-                    document.getElementById('demoQuestion').textContent = `Who said "${q.text}"?`;
-                    document.getElementById('demoAuthor').textContent = q.authorName.toUpperCase();
-                    document.getElementById('demoSource').textContent = q.source?.title ? `${q.source.title}, ${q.source.year || ''}` : '';
-                    document.getElementById('demoContext').textContent = q.context;
+                    showInDemo(q.id);
                 }
+
+                onDataLoaded();
             } else {
                 quotesCache = {};
-                setDbStatus(true, 'Empty — import via Manager');
+                setDbStatus(true, 'Empty \u2014 import via Manager');
                 document.getElementById('quoteCountTitle').textContent = '0';
-                document.getElementById('quotesGrid').innerHTML = '<div class="quote-card" style="grid-column:1/-1;text-align:center;padding:40px;"><p style="font-size:2rem;margin-bottom:12px;">📖</p><p style="font-style:normal;color:var(--text-secondary);font-family:DM Sans,sans-serif;">No quotes yet — open the Database Manager to import your Quotle quotes.</p></div>';
+                document.getElementById('quotesGrid').innerHTML = '<div class="quote-card" style="grid-column:1/-1;text-align:center;padding:40px;"><p style="font-size:2rem;margin-bottom:12px;">📖</p><p style="font-style:normal;color:var(--text-secondary);font-family:DM Sans,sans-serif;">No quotes yet.</p></div>';
+                onDataLoaded();
             }
         }, err => {
             console.error('Firebase SDK error:', err);
-            setDbStatus(false, 'SDK error — trying REST...');
+            setDbStatus(false, 'SDK error \u2014 trying REST...');
             loadViaREST();
         });
 
-        // REST API fallback — works from file:// and any origin
+        // Load authors
+        db.ref('quotle-info/authors').on('value', snap => {
+            const data = snap.val();
+            if (data) authorsCache = data;
+        }, err => {
+            // REST fallback for authors
+            fetch(DB_URL + '/quotle-info/authors.json')
+                .then(r => r.json())
+                .then(data => { if (data) authorsCache = data; })
+                .catch(() => {});
+        });
+
+        // REST API fallback
         async function loadViaREST() {
             if (loadedViaSDK) return;
             try {
                 const [quotesRes, authorsRes] = await Promise.all([
-                    fetch(`${DB_URL}/quotle-info/quotes.json`),
-                    fetch(`${DB_URL}/quotle-info/authors.json`)
+                    fetch(DB_URL + '/quotle-info/quotes.json'),
+                    fetch(DB_URL + '/quotle-info/authors.json')
                 ]);
                 const quotesData = await quotesRes.json();
+                const authorsData = await authorsRes.json();
+                if (authorsData) authorsCache = authorsData;
                 if (quotesData) {
                     quotesCache = quotesData;
                     const quotes = Object.values(quotesData);
                     renderFeaturedQuotes(quotes);
                     renderStats(quotes);
-                    setDbStatus(true, `${quotes.length} quotes · REST`);
+                    setDbStatus(true, quotes.length + ' quotes \u00B7 REST');
 
                     const enriched = quotes.filter(q => q.context);
                     if (enriched.length > 0) {
                         const q = enriched[Math.floor(Math.random() * enriched.length)];
-                        document.getElementById('demoQuestion').textContent = `Who said "${q.text}"?`;
-                        document.getElementById('demoAuthor').textContent = q.authorName.toUpperCase();
-                        document.getElementById('demoSource').textContent = q.source?.title ? `${q.source.title}, ${q.source.year || ''}` : '';
-                        document.getElementById('demoContext').textContent = q.context;
+                        showInDemo(q.id);
                     }
+                    onDataLoaded();
                 } else {
-                    setDbStatus(true, 'Empty — import via Manager');
+                    setDbStatus(true, 'Empty \u2014 import via Manager');
                     document.getElementById('quoteCountTitle').textContent = '0';
+                    onDataLoaded();
                 }
             } catch (err) {
                 console.error('REST fallback error:', err);
                 setDbStatus(false, 'Connection failed');
+                onDataLoaded();
             }
         }
 
         // If SDK hasn't loaded after 3s, try REST
         setTimeout(() => { if (!loadedViaSDK) loadViaREST(); }, 3000);
+
+        // =============================================
+        // SPA: Register routes and render initial view
+        // =============================================
+        Router.add(/^\/$/, showHome);
+        Router.add(/^\/quote\/([^\/]+)\/?$/, showQuote);
+        Router.add(/^\/author\/([^\/]+)\/?$/, showAuthor);
+        Router.add(/^\/today\/?$/, showToday);
+
+        // Render initial route
+        Router.render();
     </script>
 </body>
 </html>
