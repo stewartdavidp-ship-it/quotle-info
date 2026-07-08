@@ -15,9 +15,29 @@
     <meta name="twitter:card" content="summary_large_image">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-deep:#0f0f1e; --bg-card:#252538; --bg-surface:#1a1a2e; --text-primary:#e8e0f0; --text-secondary:#a8b0c0; --text-muted:#9aa2b2; --burgundy:#d4627a; --burgundy-deep:#8B2635; --burgundy-glow:rgba(212,98,122,0.15); --gold:#ffd369; --sage:#7eb38b; --amber:#e0a24e; --caution:#9aa3d6; --border:rgba(255,255,255,0.07); }
+        :root {
+            /* Reading-depth surfaces — quotle.info extension (the game needs only --cream) */
+            --bg-deep: #0f0f1e; --cream: #1a1a2e; --bg-card: #252538;
+            --bg-card-hover: #2d2d45; --bg-elevated: #30304a;
+            /* Text — --ink / --slate are the Quotle game's dark tokens, exact */
+            --ink: #e8e0f0; --slate: #a8b0c0; --text-muted: #9aa2b2;
+            /* Brand accents — shared byte-for-byte with the Quotle game */
+            --burgundy: #d4627a;          /* brand + misattribution accent (large/decorative) */
+            --burgundy-link: #e08096;     /* lifted tone for small inline burgundy links (AA on cards) */
+            --burgundy-deep: #8B2635; --burgundy-glow: rgba(212, 98, 122, 0.15);
+            --gold: #ffd369;              /* authentic-voice accent: author name + pull-quote */
+            --gold-dim: rgba(255, 211, 105, 0.12);
+            --sage: #7eb38b;              /* verified / trust / source actions */
+            --sage-dim: rgba(126, 179, 139, 0.12);
+            /* Confidence-state + decorative extensions (quotle.info only) */
+            --amber: #e0a24e;             /* confidence: attributed / likely */
+            --caution: #9aa3d6;           /* confidence: disputed (AA headroom vs body grey + burgundy) */
+            --purple: #764ba2;            /* author-avatar gradient tail */
+            --border: rgba(255,255,255,0.06); --border-accent: rgba(212, 98, 122, 0.25);
+            --radius-sm: 8px; --radius-md: 14px; --radius-lg: 22px; --radius-xl: 32px;
+        }
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Source Serif 4',Georgia,serif; background:var(--bg-deep); color:var(--text-primary); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+        body { font-family:'Source Serif 4',Georgia,serif; background:var(--bg-deep); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
         a { color:inherit; }
         .topnav { display:flex; align-items:center; justify-content:space-between; max-width:1000px; margin:0 auto; padding:20px 24px 0; }
         .brand { display:inline-flex; align-items:center; gap:9px; text-decoration:none; font-family:'Playfair Display',serif; font-weight:900; font-size:1.05rem; }
@@ -27,8 +47,8 @@
         .hero { max-width:1000px; margin:0 auto; padding:52px 24px 12px; }
         .hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2.3rem,7vw,3.6rem); line-height:1.05; letter-spacing:-0.02em; text-wrap:balance; }
         .hero h1 em { font-style:italic; color:var(--burgundy); }
-        .hero .lede { font-size:1.12rem; color:var(--text-secondary); margin-top:20px; max-width:640px; }
-        .hero .lede strong { color:var(--text-primary); }
+        .hero .lede { font-size:1.12rem; color:var(--slate); margin-top:20px; max-width:640px; }
+        .hero .lede strong { color:var(--ink); }
         .hero .stat { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); margin-top:18px; letter-spacing:0.02em; }
         .hero .stat b { color:var(--sage); }
         main { max-width:1000px; margin:0 auto; padding:8px 24px 60px; }
@@ -38,7 +58,7 @@
         .feat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; }
         .feat { display:block; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:14px; padding:20px 22px; transition:transform 0.2s; }
         .feat:hover { transform:translateY(-3px); }
-        .feat-q { font-style:italic; font-size:1.02rem; color:var(--text-primary); }
+        .feat-q { font-style:italic; font-size:1.02rem; color:var(--ink); }
         .feat-swap { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:14px; font-family:'DM Sans',sans-serif; font-size:0.8rem; }
         .feat-no { color:var(--text-muted); text-decoration:line-through; }
         .feat-arrow { color:var(--burgundy); }
@@ -56,11 +76,11 @@
         .q-card { display:block; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--border); border-radius:12px; padding:18px 20px; transition:transform 0.2s,border-color 0.2s; }
         .q-card:hover { transform:translateY(-3px); }
         .q-card.verified { border-left-color:var(--sage); } .q-card.attributed { border-left-color:var(--amber); } .q-card.disputed { border-left-color:var(--caution); }
-        .q-text { font-style:italic; font-size:1rem; color:var(--text-primary); }
+        .q-text { font-style:italic; font-size:1rem; color:var(--ink); }
         .q-author { font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.82rem; color:var(--text-muted); margin-top:10px; }
         .game-cta { margin-top:56px; text-align:center; background:linear-gradient(135deg,var(--burgundy-glow),rgba(255,211,105,0.1)); border:1px solid rgba(212,98,122,0.25); border-radius:22px; padding:38px 28px; }
         .game-cta h2 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:8px; }
-        .game-cta p { color:var(--text-secondary); font-size:0.95rem; margin-bottom:20px; }
+        .game-cta p { color:var(--slate); font-size:0.95rem; margin-bottom:20px; }
         .game-cta a { display:inline-flex; align-items:center; gap:10px; padding:13px 30px; background:linear-gradient(135deg,var(--burgundy),var(--burgundy-deep)); border-radius:14px; font-family:'DM Sans',sans-serif; font-weight:600; color:#fff; text-decoration:none; }
         footer { max-width:1000px; margin:0 auto; padding:36px 24px 52px; border-top:1px solid var(--border); font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); }
         footer a { color:var(--burgundy); text-decoration:none; }
@@ -69,12 +89,12 @@
     </style>
     <style>
         :root[data-theme="light"] {
-            --bg-deep: #f5f1e8; --bg-surface: #ece5d7; --bg-card: #fffdf8;
+            --bg-deep: #f5f1e8; --cream: #fffdf8; --bg-card: #fffdf8;
             --bg-card-hover: #f8f3ea; --bg-elevated: #efe8d9;
-            --text-primary: #23202e; --text-secondary: #4b4658; --text-muted: #6a6577;
+            --ink: #23202e; --slate: #4b4658; --text-muted: #6a6577;
             --burgundy: #b23a54; --burgundy-link: #9c2c44; --burgundy-deep: #7a2130;
             --burgundy-glow: rgba(178,58,84,0.09);
-            --gold: #8f7218; --gold-dim: rgba(143,114,24,0.12);
+            --gold: #755f13; --gold-dim: rgba(143,114,24,0.12);
             --sage: #2f7048; --sage-dim: rgba(47,112,72,0.13);
             --amber: #965b12; --caution: #4a55a2;
             --border: rgba(35,32,46,0.12); --border-accent: rgba(178,58,84,0.28);
@@ -82,12 +102,71 @@
         /* .answer is the only element with a hardcoded dark gradient; retint for light. */
         :root[data-theme="light"] .answer { background: linear-gradient(180deg, #fffdf8, #f8f3ea); border-color: rgba(35,32,46,0.10); box-shadow: 0 16px 44px rgba(35,32,46,0.10); }
         :root[data-theme="light"] body::before { opacity: 0; }
+
+        /* ---- Header display control (theme + text size) ---- */
+        .nav-actions { display: flex; align-items: center; gap: 10px; }
+        .disp { position: relative; }
+        .disp-btn { font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: 0.01em; color: var(--slate); background: transparent; border: 1px solid var(--border-accent); border-radius: 999px; padding: 6px 12px; cursor: pointer; line-height: 1; display: inline-flex; align-items: baseline; transition: border-color 0.2s, color 0.2s; }
+        .disp-btn .a1 { font-size: 0.82rem; } .disp-btn .a2 { font-size: 1.04rem; }
+        .disp-btn:hover, .disp-btn[aria-expanded="true"] { color: var(--ink); border-color: var(--burgundy); }
+        .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
+        .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
+        .disp-panel.open { display: block; }
+        .disp-panel h3 { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
+        .disp-panel h3.mt { margin-top: 15px; }
+        .disp-row { display: flex; gap: 6px; }
+        .disp-row button { flex: 1; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--slate); font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; cursor: pointer; padding: 8px 0; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+        .disp-row button:hover { color: var(--ink); border-color: var(--border-accent); }
+        .disp-row button[aria-pressed="true"] { border-color: var(--sage); color: var(--sage); background: var(--sage-dim); }
+        .disp-row button:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
+        .disp-sizes { display: flex; gap: 6px; }
+        .disp-sizes button { flex: 1; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--slate); font-family: 'Playfair Display', serif; font-weight: 700; cursor: pointer; padding: 9px 0 7px; line-height: 1; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+        .disp-sizes button:hover { color: var(--ink); border-color: var(--border-accent); }
+        .disp-sizes button[aria-pressed="true"] { border-color: var(--sage); color: var(--sage); background: var(--sage-dim); }
+        .disp-sizes button:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
+        .disp-sizes button:nth-child(1) { font-size: 0.82rem; } .disp-sizes button:nth-child(2) { font-size: 1.02rem; } .disp-sizes button:nth-child(3) { font-size: 1.22rem; } .disp-sizes button:nth-child(4) { font-size: 1.46rem; }
+        .disp-note { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; color: var(--text-muted); margin-top: 12px; }
+        @media (prefers-reduced-motion: reduce) { .disp-btn, .disp-row button, .disp-sizes button { transition: none; } }
+        /* Print: the site resolves to dark by default, which would print as near-invisible ink on
+           white paper. Force a legible light palette (darkened accents) regardless of screen theme. */
+        @media print {
+            :root, :root[data-theme="dark"], :root[data-theme="light"] {
+                --bg-deep: #fff; --cream: #fff; --bg-card: #fff; --bg-card-hover: #fff; --bg-elevated: #fff;
+                --ink: #000; --slate: #222; --text-muted: #444;
+                --burgundy: #8a1f33; --burgundy-link: #8a1f33; --burgundy-deep: #6d1626;
+                --gold: #6b560f; --sage: #245c39; --amber: #7a4a0e; --caution: #2f3a86;
+                --border: rgba(0,0,0,0.25); --border-accent: rgba(0,0,0,0.25);
+            }
+            body::before { display: none !important; }
+            .disp { display: none !important; }
+        }
     </style>
 </head>
 <body>
     <nav class="topnav">
         <a class="brand" href="/"><span class="brand-icon" aria-hidden="true">📖</span>quotle<span>.info</span></a>
-        <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle →</a>
+        <div class="nav-actions">
+            <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle →</a>
+            <div class="disp">
+                <button class="disp-btn" id="dispBtn" type="button" aria-label="Display settings: theme and text size" aria-haspopup="dialog" aria-expanded="false" aria-controls="dispPanel"><span class="a1">A</span><span class="a2">a</span></button>
+                <div class="disp-panel" id="dispPanel" role="dialog" aria-label="Display settings">
+                    <h3>Theme</h3>
+                    <div class="disp-row" id="dispTheme">
+                        <button type="button" data-theme-choice="auto" aria-pressed="true" title="Match your device">Auto</button>
+                        <button type="button" data-theme-choice="light" aria-pressed="false" title="Light theme">Light</button>
+                        <button type="button" data-theme-choice="dark" aria-pressed="false" title="Dark theme">Dark</button>
+                    </div>
+                    <h3 class="mt">Text size</h3>
+                    <div class="disp-sizes">
+                        <button type="button" data-size="normal" aria-pressed="true" aria-label="Normal text size" title="Normal">A</button>
+                        <button type="button" data-size="large" aria-pressed="false" aria-label="Large text size" title="Large">A</button>
+                        <button type="button" data-size="xl" aria-pressed="false" aria-label="Extra-large text size" title="Extra large">A</button>
+                        <button type="button" data-size="xxl" aria-pressed="false" aria-label="Largest text size" title="Largest">A</button>
+                    </div>
+                    <p class="disp-note">Saved on this device.</p>
+                </div>
+            </div>
+        </div>
     </nav>
     <header class="hero">
         <h1>Who <em>really</em> said it?</h1>
@@ -163,7 +242,7 @@
                 </a>
                 <a class="q-card verified" href="/who-said/everyone-sees-what-you-appear-to-be-few-experience-what-you/">
                     <p class="q-text">&ldquo;Everyone sees what you appear to be, few experience what you really are&rdquo;</p>
-                    <p class="q-author">Niccol&amp;ograve; Machiavelli</p>
+                    <p class="q-author">Niccol&ograve; Machiavelli</p>
                 </a>
                 <a class="q-card verified" href="/who-said/happiness-lies-in-the-joy-of-achievement-and-the-thrill-of/">
                     <p class="q-text">&ldquo;Happiness lies in the joy of achievement and the thrill of creative effort&rdquo;</p>
@@ -195,7 +274,7 @@
                 </a>
                 <a class="q-card verified" href="/who-said/it-is-better-to-be-feared-than-loved-if-you-cannot-be-both/">
                     <p class="q-text">&ldquo;It is better to be feared than loved, if you cannot be both&rdquo;</p>
-                    <p class="q-author">Niccol&amp;ograve; Machiavelli</p>
+                    <p class="q-author">Niccol&ograve; Machiavelli</p>
                 </a>
                 <a class="q-card verified" href="/who-said/life-is-like-riding-a-bicycle-to-keep-your-balance-you-must/">
                     <p class="q-text">&ldquo;Life is like riding a bicycle. To keep your balance, you must keep moving&rdquo;</p>
@@ -532,53 +611,11 @@
     <footer>
         <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
     </footer>
-    <!-- ============ DISPLAY PREFERENCES: THEME + TEXT SIZE ============ -->
-    <style>
-        .a11y-fab { position: fixed; bottom: 20px; right: 20px; z-index: 600; width: 46px; height: 46px; border-radius: 50%; background: var(--bg-card); border: 1px solid var(--border-accent); color: var(--text-primary); font-family: 'Playfair Display', serif; font-weight: 900; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,0.28); display: grid; place-items: center; line-height: 1; transition: border-color 0.2s, transform 0.2s; }
-        .a11y-fab:hover { border-color: var(--burgundy); transform: translateY(-2px); }
-        .a11y-fab .a { font-size: 1rem; } .a11y-fab .aa { font-size: 0.68rem; margin-left: 1px; }
-        .a11y-fab:focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
-        .a11y-panel { position: fixed; bottom: 76px; right: 20px; z-index: 600; width: 228px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 12px 44px rgba(0,0,0,0.35); display: none; }
-        .a11y-panel.open { display: block; }
-        .a11y-panel h3 { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
-        .a11y-panel h3.mt { margin-top: 15px; }
-        .a11y-row { display: flex; gap: 6px; }
-        .a11y-row button { flex: 1; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-secondary); font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; cursor: pointer; padding: 8px 0; transition: border-color 0.15s, color 0.15s, background 0.15s; }
-        .a11y-row button:hover { color: var(--text-primary); border-color: var(--border-accent); }
-        .a11y-row button[aria-pressed="true"] { border-color: var(--sage); color: var(--sage); background: var(--sage-dim); }
-        .a11y-row button:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
-        .a11y-sizes { display: flex; gap: 6px; }
-        .a11y-sizes button { flex: 1; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-secondary); font-family: 'Playfair Display', serif; font-weight: 700; cursor: pointer; padding: 9px 0 7px; line-height: 1; transition: border-color 0.15s, color 0.15s, background 0.15s; }
-        .a11y-sizes button:hover { color: var(--text-primary); border-color: var(--border-accent); }
-        .a11y-sizes button[aria-pressed="true"] { border-color: var(--sage); color: var(--sage); background: var(--sage-dim); }
-        .a11y-sizes button:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
-        .a11y-sizes button:nth-child(1) { font-size: 0.82rem; } .a11y-sizes button:nth-child(2) { font-size: 1.02rem; } .a11y-sizes button:nth-child(3) { font-size: 1.22rem; } .a11y-sizes button:nth-child(4) { font-size: 1.46rem; }
-        .a11y-note { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; color: var(--text-muted); margin-top: 12px; }
-        @media (prefers-reduced-motion: reduce) { .a11y-fab, .a11y-row button, .a11y-sizes button { transition: none; } }
-        @media print { .a11y-fab, .a11y-panel { display: none !important; } }
-    </style>
-    <button class="a11y-fab" id="a11yFab" aria-label="Display settings: theme and text size" aria-expanded="false" aria-controls="a11yPanel" title="Display settings"><span class="a">A</span><span class="aa">A</span></button>
-    <div class="a11y-panel" id="a11yPanel" role="dialog" aria-label="Display settings">
-        <h3>Theme</h3>
-        <div class="a11y-row" id="a11yTheme">
-            <button type="button" data-theme-choice="auto" aria-pressed="true" title="Match your device">Auto</button>
-            <button type="button" data-theme-choice="light" aria-pressed="false" title="Light theme">Light</button>
-            <button type="button" data-theme-choice="dark" aria-pressed="false" title="Dark theme">Dark</button>
-        </div>
-        <h3 class="mt">Text size</h3>
-        <div class="a11y-sizes">
-            <button type="button" data-size="normal" aria-pressed="true" aria-label="Normal text size" title="Normal">A</button>
-            <button type="button" data-size="large" aria-pressed="false" aria-label="Large text size" title="Large">A</button>
-            <button type="button" data-size="xl" aria-pressed="false" aria-label="Extra-large text size" title="Extra large">A</button>
-            <button type="button" data-size="xxl" aria-pressed="false" aria-label="Largest text size" title="Largest">A</button>
-        </div>
-        <p class="a11y-note">Saved on this device.</p>
-    </div>
     <script>
         (function(){
             var d = document.documentElement;
-            var fab = document.getElementById('a11yFab'), panel = document.getElementById('a11yPanel');
-            if (!fab || !panel) return;
+            var btn = document.getElementById('dispBtn'), panel = document.getElementById('dispPanel');
+            if (!btn || !panel) return;
 
             // ---- Theme (Auto / Light / Dark) ----
             var THEME_KEY = 'quotle-theme';
@@ -609,10 +646,10 @@
             sizeBtns.forEach(function(b){ b.addEventListener('click', function(){ applySize(b.getAttribute('data-size'), true); }); });
 
             // ---- Panel open/close ----
-            function setOpen(o){ panel.classList.toggle('open', o); fab.setAttribute('aria-expanded', o ? 'true' : 'false'); }
-            fab.addEventListener('click', function(){ setOpen(!panel.classList.contains('open')); });
-            document.addEventListener('click', function(e){ if (panel.classList.contains('open') && !panel.contains(e.target) && !fab.contains(e.target)) setOpen(false); });
-            document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && panel.classList.contains('open')) { setOpen(false); fab.focus(); } });
+            function setOpen(o){ panel.classList.toggle('open', o); btn.setAttribute('aria-expanded', o ? 'true' : 'false'); }
+            btn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(!panel.classList.contains('open')); });
+            document.addEventListener('click', function(e){ if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) setOpen(false); });
+            document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && panel.classList.contains('open')) { setOpen(false); btn.focus(); } });
         })();
     </script>
 </body>
