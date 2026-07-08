@@ -97,6 +97,7 @@ function build() {
     fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 2) + '\n');
     console.log(`  ✓ data/manifest.json (${manifest.length} entries)`);
     require('./build-index'); // regenerate who-said/index.html browse directory
+    require('./build-static'); // regenerate standing content pages (how-we-verify)
   }
   console.log('Done.');
 }

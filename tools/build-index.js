@@ -10,11 +10,11 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { HEAD_SCRIPT, THEME_CSS, WIDGET } = require('./a11y-widget');
+const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
+const { ROOT_CSS } = require('./tokens');
+const { esc } = require('./esc'); // shared entity-aware escape (same helper template.js uses)
 const ROOT = path.resolve(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.json'), 'utf8'));
-
-const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const bySlug = Object.fromEntries(manifest.map((m) => [m.quoteSlug, m]));
 
 // Hand-picked marquee reattributions for the featured strip (skipped silently if not built yet).
@@ -90,9 +90,9 @@ ${HEAD_SCRIPT}
     <meta name="twitter:card" content="summary_large_image">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-deep:#0f0f1e; --bg-card:#252538; --bg-surface:#1a1a2e; --text-primary:#e8e0f0; --text-secondary:#a8b0c0; --text-muted:#9aa2b2; --burgundy:#d4627a; --burgundy-deep:#8B2635; --burgundy-glow:rgba(212,98,122,0.15); --gold:#ffd369; --sage:#7eb38b; --amber:#e0a24e; --caution:#9aa3d6; --border:rgba(255,255,255,0.07); }
+${ROOT_CSS}
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Source Serif 4',Georgia,serif; background:var(--bg-deep); color:var(--text-primary); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+        body { font-family:'Source Serif 4',Georgia,serif; background:var(--bg-deep); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
         a { color:inherit; }
         .topnav { display:flex; align-items:center; justify-content:space-between; max-width:1000px; margin:0 auto; padding:20px 24px 0; }
         .brand { display:inline-flex; align-items:center; gap:9px; text-decoration:none; font-family:'Playfair Display',serif; font-weight:900; font-size:1.05rem; }
@@ -102,8 +102,8 @@ ${HEAD_SCRIPT}
         .hero { max-width:1000px; margin:0 auto; padding:52px 24px 12px; }
         .hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2.3rem,7vw,3.6rem); line-height:1.05; letter-spacing:-0.02em; text-wrap:balance; }
         .hero h1 em { font-style:italic; color:var(--burgundy); }
-        .hero .lede { font-size:1.12rem; color:var(--text-secondary); margin-top:20px; max-width:640px; }
-        .hero .lede strong { color:var(--text-primary); }
+        .hero .lede { font-size:1.12rem; color:var(--slate); margin-top:20px; max-width:640px; }
+        .hero .lede strong { color:var(--ink); }
         .hero .stat { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); margin-top:18px; letter-spacing:0.02em; }
         .hero .stat b { color:var(--sage); }
         main { max-width:1000px; margin:0 auto; padding:8px 24px 60px; }
@@ -113,7 +113,7 @@ ${HEAD_SCRIPT}
         .feat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; }
         .feat { display:block; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:14px; padding:20px 22px; transition:transform 0.2s; }
         .feat:hover { transform:translateY(-3px); }
-        .feat-q { font-style:italic; font-size:1.02rem; color:var(--text-primary); }
+        .feat-q { font-style:italic; font-size:1.02rem; color:var(--ink); }
         .feat-swap { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:14px; font-family:'DM Sans',sans-serif; font-size:0.8rem; }
         .feat-no { color:var(--text-muted); text-decoration:line-through; }
         .feat-arrow { color:var(--burgundy); }
@@ -131,11 +131,11 @@ ${HEAD_SCRIPT}
         .q-card { display:block; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--border); border-radius:12px; padding:18px 20px; transition:transform 0.2s,border-color 0.2s; }
         .q-card:hover { transform:translateY(-3px); }
         .q-card.verified { border-left-color:var(--sage); } .q-card.attributed { border-left-color:var(--amber); } .q-card.disputed { border-left-color:var(--caution); }
-        .q-text { font-style:italic; font-size:1rem; color:var(--text-primary); }
+        .q-text { font-style:italic; font-size:1rem; color:var(--ink); }
         .q-author { font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.82rem; color:var(--text-muted); margin-top:10px; }
         .game-cta { margin-top:56px; text-align:center; background:linear-gradient(135deg,var(--burgundy-glow),rgba(255,211,105,0.1)); border:1px solid rgba(212,98,122,0.25); border-radius:22px; padding:38px 28px; }
         .game-cta h2 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:8px; }
-        .game-cta p { color:var(--text-secondary); font-size:0.95rem; margin-bottom:20px; }
+        .game-cta p { color:var(--slate); font-size:0.95rem; margin-bottom:20px; }
         .game-cta a { display:inline-flex; align-items:center; gap:10px; padding:13px 30px; background:linear-gradient(135deg,var(--burgundy),var(--burgundy-deep)); border-radius:14px; font-family:'DM Sans',sans-serif; font-weight:600; color:#fff; text-decoration:none; }
         footer { max-width:1000px; margin:0 auto; padding:36px 24px 52px; border-top:1px solid var(--border); font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); }
         footer a { color:var(--burgundy); text-decoration:none; }
@@ -147,7 +147,10 @@ ${THEME_CSS}
 <body>
     <nav class="topnav">
         <a class="brand" href="/"><span class="brand-icon" aria-hidden="true">📖</span>quotle<span>.info</span></a>
-        <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle →</a>
+        <div class="nav-actions">
+            <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle →</a>
+            ${CONTROL}
+        </div>
     </nav>
     <header class="hero">
         <h1>Who <em>really</em> said it?</h1>
@@ -166,7 +169,7 @@ ${GROUPS.map(section).join('\n')}
     <footer>
         <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
     </footer>
-${WIDGET}
+${SCRIPT}
 </body>
 </html>
 `;

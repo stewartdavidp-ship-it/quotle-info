@@ -1,5 +1,37 @@
 # CLAUDE.md — Quotle Info
 
+## Architecture — AS BUILT (authoritative, updated 2026-07-08)
+> This section reflects what the site actually is today and OVERRIDES the older
+> vision sections below wherever they conflict. The v1 sections (Firebase SPA,
+> single HTML file, 404.html path routing) describe an approach that was **abandoned**;
+> they are kept only for product context (personas, tone, no-ads, Schema.org — all still valid).
+
+**quotle.info is a static-site GENERATOR, not an SPA and not a single HTML file.**
+- **Source of truth:** `data/quotes/{slug}.json` records (one per quote). No Firebase, no runtime fetch.
+- **Generators (`tools/`):**
+  - `tokens.js` — the ONE `:root` design-token block (`ROOT_CSS`), injected into both generators
+    below so the palette can never drift. Brand tokens (`--burgundy/--gold/--sage/--ink/--slate/--cream`)
+    are byte-for-byte the **Quotle game's** dark theme, so the game + this site read as one product.
+    `--amber/--caution/--purple` + the `--bg-*` depth surfaces are quotle.info extensions.
+  - `a11y-widget.js` — shared display control: `HEAD_SCRIPT` (pre-paint theme+text-size),
+    `THEME_CSS` (light-theme overrides + header-control styles), `CONTROL` (the header "Aa" button +
+    dropdown, placed IN the topnav — **not** a floating button), `SCRIPT` (its wiring).
+  - `template.js` — renders each `who-said/{slug}/index.html` detail page from a record.
+  - `build-index.js` — renders the homepage `index.html` + `who-said/index.html` browse from the manifest.
+  - `build.js` — records → pages + `data/manifest.json`; `require`s build-index at the end. **Run `node tools/build.js` to regenerate everything.**
+- **Output = real prerendered files at real paths** (`who-said/{slug}/index.html`, root `index.html`).
+  Deployed to GitHub Pages (repo `stewartdavidp-ship-it/quotle-info`, branch `main`, custom domain quotle.info).
+- **URL contract (locked):** `https://quotle.info/who-said/{quoteSlug}` — one canonical string drives
+  canonical/og/Schema `@id`s/breadcrumb/cite/pager. quoteSlug is kebab-case of the quote text.
+- **Standards alignment (2026-07):** adopted the Game Shelf convention — settings live in a header
+  control (theme Auto/Light/Dark + 4-step text size), NOT a floating button; tokens follow the Quotle
+  game's semantic scheme via the shared `tokens.js`. localStorage keys `quotle-theme` / `quotle-text-size`
+  (distinct origin from the game, so no collision). Theme = `[data-theme]` on `<html>` + pre-paint script.
+- **NOT wired:** the full `gameshelf:` runtime IIFE (presence/complete events) — quotle.info is a content
+  site with no puzzle to complete; it carries only the static `<meta name="gs-app-id">` + outbound links.
+- **404 handling:** `404.html` is a plain static page (the old GitHub-Pages SPA-redirect trick was removed
+  once pages became prerendered at real paths).
+
 ## What This App Is
 Companion site for Quotle that provides author bios, quote historical context, thematic analysis, and daily deep-dives tied to the Quotle puzzle calendar
 
