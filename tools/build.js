@@ -98,6 +98,7 @@ function build() {
     console.log(`  ✓ data/manifest.json (${manifest.length} entries)`);
     require('./build-index'); // regenerate who-said/index.html browse directory
     require('./build-static'); // regenerate standing content pages (how-we-verify)
+    require('./build-authors'); // regenerate /authors/{slug} profiles + index
   }
   console.log('Done.');
 }
