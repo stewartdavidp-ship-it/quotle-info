@@ -19,6 +19,8 @@
  *   rights note    → per record.source.publicDomain (or explicit record.source.rightsNote)
  */
 
+const { HEAD_SCRIPT, WIDGET } = require('./a11y-widget');
+
 const ORIGIN = 'https://quotle.info';
 
 // ---- small helpers -------------------------------------------------------
@@ -51,6 +53,7 @@ function renderHead(q) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+${HEAD_SCRIPT}
     <title>${esc(q.meta.title)}</title>
     <meta name="version" content="${attr(q.meta.version)}">
     <meta name="gs-app-id" content="quotle-info">
@@ -414,6 +417,7 @@ function renderTail(q) {
             copy(el.textContent.trim(), 'Citation copied');
         }));
     </script>
+${WIDGET}
 </body>
 </html>`;
 }

@@ -10,6 +10,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { HEAD_SCRIPT, WIDGET } = require('./a11y-widget');
 const ROOT = path.resolve(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.json'), 'utf8'));
 
@@ -77,6 +78,7 @@ const html = `<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+${HEAD_SCRIPT}
     <title>Quotle.info — Who really said it? Verified quote provenance</title>
     <meta name="description" content="Every quote traced to its real source: who actually said it, the primary document, and the misattributions untangled with receipts. ${total} quotes verified.">
     <link rel="canonical" href="https://quotle.info/">
@@ -163,6 +165,7 @@ ${GROUPS.map(section).join('\n')}
     <footer>
         <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
     </footer>
+${WIDGET}
 </body>
 </html>
 `;
