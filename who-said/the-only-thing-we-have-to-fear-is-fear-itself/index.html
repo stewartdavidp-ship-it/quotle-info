@@ -175,6 +175,17 @@
         .trail a:hover { text-decoration-color: var(--sage); }
         .rights-note { margin-top: 20px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); background: var(--cream); border-left: 2px solid var(--amber); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 13px 16px; line-height: 1.6; }
         .rights-note strong { color: var(--ink); }
+        /* Rights status (separate claim from attribution): badge + honest note, accent per state. */
+        .rights { margin-top: 20px; background: var(--cream); border-left: 2px solid var(--border); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 16px 13px; }
+        .rights-public-domain { border-left-color: var(--sage); }
+        .rights-in-copyright { border-left-color: var(--amber); }
+        .rights-licensed { border-left-color: var(--sage); }
+        .rights-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.63rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.11em; margin-bottom: 6px; }
+        .rights-public-domain .rights-badge, .rights-licensed .rights-badge { color: var(--sage); }
+        .rights-in-copyright .rights-badge { color: var(--amber); }
+        .rights-mark { font-size: 0.9rem; line-height: 1; }
+        .rights-body { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); line-height: 1.6; margin: 0; }
+        .rights-body strong { color: var(--ink); }
 
         /* ===== MISATTRIBUTION ===== */
         .misattr { background: linear-gradient(135deg, var(--burgundy-glow), transparent); border: 1px solid var(--border-accent); border-radius: var(--radius-lg); padding: 30px 28px; }
@@ -422,10 +433,10 @@
                         <li>The aphorism's older lineage (Montaigne, Bacon, Thoreau) is traced by <a href="https://interestingliterature.com/2020/04/nothing-fear-except-fear-itself-quotation-origin/" target="_blank" rel="noopener">Interesting Literature</a>.</li>
                     </ul>
                 </div>
-                <p class="rights-note" style="border-left-color: var(--sage);">
-                    <strong>Usage &amp; rights:</strong> This quotation is in the <strong>public domain</strong> and free to reuse.
-                    On Quotle.info, &ldquo;attribution verified&rdquo; and &ldquo;free to reuse&rdquo; are separate claims — here, both hold.
-                </p>
+                <div class="rights rights-public-domain">
+                    <span class="rights-badge"><span class="rights-mark" aria-hidden="true">✓</span>Public domain</span>
+                    <p class="rights-body">This quotation is in the <strong>public domain</strong> and free to reuse. On Quotle.info, &ldquo;attribution verified&rdquo; and &ldquo;free to reuse&rdquo; are separate claims &mdash; here, both hold.</p>
+                </div>
             </div>
         </section>
         <!-- ============ OFTEN MISATTRIBUTED ============ -->
