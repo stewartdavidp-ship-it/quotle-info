@@ -42,6 +42,20 @@ const CONFIDENCE = {
   disputed:   { cls: 'disputed',   glyph: '?', text: 'Disputed',   label: 'Disputed attribution' },
 };
 
+// Rights status is a SEPARATE claim from attribution (who said it) — a quote can be firmly
+// attributed and still under copyright. Three states, each with an honest default note; a record's
+// own `source.rightsNote` prose, if present, replaces the default body but keeps the badge.
+// `{holder}` in a default note is filled from `source.rightsHolder`. Marking a quote "in-copyright"
+// is disclosure, not a licence: inclusion still rests on short-excerpt + commentary fair use.
+const RIGHTS = {
+  'public-domain': { label: 'Public domain', mark: '✓', accent: 'var(--sage)',
+    note: 'This quotation is in the <strong>public domain</strong> and free to reuse. On Quotle.info, &ldquo;attribution verified&rdquo; and &ldquo;free to reuse&rdquo; are separate claims &mdash; here, both hold.' },
+  'in-copyright':  { label: 'In copyright', mark: '©', accent: 'var(--amber)',
+    note: 'This line is still <strong>under copyright</strong>{holder}. It is quoted here for identification and commentary; the complete work remains protected &mdash; verifying who said it is not a grant of reuse rights.' },
+  'licensed':      { label: 'Used with permission', mark: '✓', accent: 'var(--sage)',
+    note: 'Quoted <strong>with permission</strong>{holder}. Reuse rights belong to the rightsholder, not to Quotle.info.' },
+};
+
 // ---- <head> --------------------------------------------------------------
 function renderHead(q) {
   const url = canonicalUrl(q.quoteSlug);
@@ -229,14 +243,18 @@ function renderArtifact(a) {
 }
 
 function renderRights(src) {
-  if (src.rightsNote) return `
-                <p class="rights-note">${src.rightsNote}</p>`;
-  if (src.publicDomain === true) return `
-                <p class="rights-note" style="border-left-color: var(--sage);">
-                    <strong>Usage &amp; rights:</strong> This quotation is in the <strong>public domain</strong> and free to reuse.
-                    On Quotle.info, &ldquo;attribution verified&rdquo; and &ldquo;free to reuse&rdquo; are separate claims — here, both hold.
-                </p>`;
-  return '';
+  // Structured state wins; `publicDomain: true` is legacy shorthand for 'public-domain'.
+  const state = src.rights || (src.publicDomain === true ? 'public-domain' : null);
+  const r = state && RIGHTS[state];
+  // No (recognized) state: fall back to legacy prose-only note for un-migrated records.
+  if (!r) return src.rightsNote ? `\n                <p class="rights-note">${src.rightsNote}</p>` : '';
+  const holder = src.rightsHolder ? ` of ${esc(src.rightsHolder)}` : '';
+  const body = src.rightsNote || r.note.replace('{holder}', holder);
+  return `
+                <div class="rights rights-${state}">
+                    <span class="rights-badge"><span class="rights-mark" aria-hidden="true">${r.mark}</span>${esc(r.label)}</span>
+                    <p class="rights-body">${body}</p>
+                </div>`;
 }
 
 // ---- Often misattributed (optional) --------------------------------------
@@ -452,6 +470,7 @@ function validate(q) {
   const need = ['quoteSlug', 'displayQuote', 'confidence', 'meta', 'answer', 'source', 'author'];
   for (const k of need) if (!q[k]) throw new Error(`record ${q.quoteSlug || '?'} missing required field: ${k}`);
   if (!CONFIDENCE[q.confidence]) throw new Error(`record ${q.quoteSlug}: bad confidence "${q.confidence}"`);
+  if (q.source.rights && !RIGHTS[q.source.rights]) throw new Error(`record ${q.quoteSlug}: bad rights "${q.source.rights}" (use public-domain|in-copyright|licensed)`);
   if (!/^[a-z0-9-]+$/.test(q.quoteSlug)) throw new Error(`record ${q.quoteSlug}: slug must be kebab-case`);
 }
 
@@ -545,6 +564,17 @@ const STYLE = `${ROOT_CSS}
         .trail a:hover { text-decoration-color: var(--sage); }
         .rights-note { margin-top: 20px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); background: var(--cream); border-left: 2px solid var(--amber); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 13px 16px; line-height: 1.6; }
         .rights-note strong { color: var(--ink); }
+        /* Rights status (separate claim from attribution): badge + honest note, accent per state. */
+        .rights { margin-top: 20px; background: var(--cream); border-left: 2px solid var(--border); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 16px 13px; }
+        .rights-public-domain { border-left-color: var(--sage); }
+        .rights-in-copyright { border-left-color: var(--amber); }
+        .rights-licensed { border-left-color: var(--sage); }
+        .rights-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.63rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.11em; margin-bottom: 6px; }
+        .rights-public-domain .rights-badge, .rights-licensed .rights-badge { color: var(--sage); }
+        .rights-in-copyright .rights-badge { color: var(--amber); }
+        .rights-mark { font-size: 0.9rem; line-height: 1; }
+        .rights-body { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); line-height: 1.6; margin: 0; }
+        .rights-body strong { color: var(--ink); }
 
         /* ===== MISATTRIBUTION ===== */
         .misattr { background: linear-gradient(135deg, var(--burgundy-glow), transparent); border: 1px solid var(--border-accent); border-radius: var(--radius-lg); padding: 30px 28px; }
