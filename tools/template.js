@@ -19,7 +19,7 @@
  *   rights note    → per record.source.publicDomain (or explicit record.source.rightsNote)
  */
 
-const { HEAD_SCRIPT, WIDGET } = require('./a11y-widget');
+const { HEAD_SCRIPT, THEME_CSS, WIDGET } = require('./a11y-widget');
 
 const ORIGIN = 'https://quotle.info';
 
@@ -80,6 +80,7 @@ ${HEAD_SCRIPT}
     <style>
 ${STYLE}
     </style>
+${THEME_CSS}
 </head>`;
 }
 

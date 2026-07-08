@@ -10,7 +10,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { HEAD_SCRIPT, WIDGET } = require('./a11y-widget');
+const { HEAD_SCRIPT, THEME_CSS, WIDGET } = require('./a11y-widget');
 const ROOT = path.resolve(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.json'), 'utf8'));
 
@@ -142,6 +142,7 @@ ${HEAD_SCRIPT}
         @media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
         @media (max-width:560px){ .hero{padding-top:36px;} }
     </style>
+${THEME_CSS}
 </head>
 <body>
     <nav class="topnav">
