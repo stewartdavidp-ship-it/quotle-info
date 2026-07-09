@@ -130,7 +130,7 @@ const benchCard = (c) => `                <article class="bench-card ${c.categor
                     </div>
                     <div class="bench-actions">
 ${INTERACTIVE ? `                        ${voteBtn(c)}` : ''}
-${c.documentedAt ? `                        <a class="bench-src" href="${esc(c.documentedAt)}" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>` : ''}
+${c.documentedAt ? `                        <a class="bench-src" href="/flagged/?q=${esc(c.slug)}">Why we flagged it <span aria-hidden="true">→</span></a>` : ''}
                     </div>
                 </article>`;
 const nomForm = `
@@ -147,7 +147,7 @@ const benchNote = INTERACTIVE
   ? nomForm
   : `            <p class="bench-note">Voting to prioritise these &mdash; and nominating new authors and quotes &mdash; is coming soon.</p>`;
 const benchBlock = benchTotal ? `
-        <section class="bench" aria-label="Quotes queued for verification">
+        <section class="bench" id="bench" aria-label="Quotes queued for verification">
             <p class="feat-kicker">On the research bench</p>
             <div class="sec-head-row"><h2 class="browse-h">Queued for verification</h2><p class="browse-sub">Lines we&rsquo;ve flagged as commonly misquoted or misattributed and queued for a full source trace. <strong>Not yet verified</strong> &mdash; each links to the catalog entry that put it on our list.${INTERACTIVE ? ' <strong>Tap ▲ to bump one up the queue.</strong>' : ''} ${benchTotal} in the queue${benchTotal > BENCH_SHOWN ? `, top ${BENCH_SHOWN} shown` : ''}.</p></div>
             <div class="bench-grid">
