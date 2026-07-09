@@ -34,6 +34,70 @@ const records = fs.readdirSync(QUOTES_DIR).filter((f) => f.endsWith('.json'))
   .map((f) => JSON.parse(fs.readFileSync(path.join(QUOTES_DIR, f), 'utf8')));
 const authors = aggregateAuthors(records);
 
+// ---- misattribution intelligence for author pages ----
+const kebab = (s) => String(s).toLowerCase().replace(/[’'‘`]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+// "Often misattributed to X": disputed records whose creditedTo (the magnet name) is X, real author ≠ X.
+const misattrBy = {};
+for (const r of records) {
+  if (r.confidence !== 'disputed' || !r.creditedTo) continue;
+  const credSlug = kebab(r.creditedTo);
+  const trueSlug = (r.author && r.author.slug) || kebab((r.answer && r.answer.authorName) || '');
+  if (!credSlug || credSlug === trueSlug) continue;
+  (misattrBy[credSlug] = misattrBy[credSlug] || []).push({ slug: r.quoteSlug, quote: r.displayQuote, real: (r.answer && r.answer.authorName) || 'Unknown' });
+}
+// "Under review — pinned on X": queued backlog candidates grouped by magnet author.
+const reviewBy = {};
+try {
+  const hq = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'harvest-queue.json'), 'utf8'));
+  for (const c of (hq.candidates || [])) {
+    // only questionable attributions belong under "commonly pinned on X" — genuine-famous
+    // candidates are real quotes by X awaiting a page, not misattributions.
+    if (c.status !== 'queued' || c.category === 'genuine-famous' || !c.magnetAuthor || !c.slug) continue;
+    const s = kebab(c.magnetAuthor);
+    (reviewBy[s] = reviewBy[s] || []).push({ slug: c.slug, quote: c.quote, category: c.category });
+  }
+} catch (_) { /* backlog optional */ }
+
+const misattrCard = (m) => `                <a class="mis-card" href="/who-said/${m.slug}/">
+                    <p class="mis-q">&ldquo;${esc(m.quote)}&rdquo;</p>
+                    <p class="mis-real"><span class="mis-lbl">actually</span> ${esc(m.real)}</p>
+                </a>`;
+const REV_LABEL = { misattributed: 'Likely misattributed', disputed: 'Disputed', 'genuine-famous': 'Verifying' };
+const reviewCard = (c) => `                <a class="rev-card" href="/flagged/?q=${esc(c.slug)}">
+                    <p class="rev-q">&ldquo;${esc(c.quote)}&rdquo;</p>
+                    <p class="rev-tag">${REV_LABEL[c.category] || 'Queued'} <span aria-hidden="true">→</span></p>
+                </a>`;
+
+const ASK_JS = `    <script>
+        (function(){
+            var sec=document.querySelector('.ask'); if(!sec) return;
+            var author=sec.getAttribute('data-author')||'';
+            var input=document.getElementById('ask-q'), out=document.getElementById('ask-out');
+            var idx=null, loading=false;
+            function load(cb){ if(idx){cb();return;} if(loading) return; loading=true;
+                fetch('/search.json').then(function(r){return r.json();}).then(function(d){ idx=d||[]; loading=false; cb(); }).catch(function(){ loading=false; }); }
+            function esc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':String(s)); return d.innerHTML; }
+            var TYPE={q:'Verified',a:'Author',b:'Under review'};
+            function wikiquote(){ return 'https://en.wikiquote.org/wiki/'+encodeURIComponent(author.replace(/ /g,'_')); }
+            function render(term){
+                var t=term.trim().toLowerCase();
+                if(t.length<4){ out.innerHTML=''; return; }
+                var hits=[];
+                for(var i=0;i<idx.length;i++){ var e=idx[i]; if((e.x+' '+(e.a||'')).toLowerCase().indexOf(t)>-1){ hits.push(e); if(hits.length>=6) break; } }
+                if(hits.length){
+                    out.innerHTML='<p class="ask-lead">We&rsquo;ve got this &mdash; here&rsquo;s what we know:</p>'+hits.map(function(e){
+                        return '<a class="ask-hit" href="'+esc(e.u)+'"><span class="ask-hx">'+(e.t==='a'?'':'&ldquo;')+esc(e.x)+(e.t==='a'?'':'&rdquo;')+'</span><span class="ask-ht">'+(TYPE[e.t]||'')+(e.a?' &middot; '+esc(e.a):'')+'</span></a>'; }).join('');
+                } else {
+                    out.innerHTML='<div class="ask-none"><p class="ask-lead">We haven&rsquo;t traced that one yet &mdash; here&rsquo;s where to look:</p>'+
+                        '<a class="ask-src" href="'+wikiquote()+'" target="_blank" rel="noopener nofollow">'+esc(author)+' on Wikiquote (Misattributed &amp; Disputed) <span aria-hidden="true">↗</span></a>'+
+                        '<a class="ask-src" href="https://quoteinvestigator.com/?s='+encodeURIComponent(term)+'" target="_blank" rel="noopener nofollow">Search Quote Investigator <span aria-hidden="true">↗</span></a>'+
+                        '<a class="ask-src ask-nom" href="/under-review/">Nominate it &mdash; we&rsquo;ll trace it <span aria-hidden="true">→</span></a></div>';
+                }
+            }
+            var deb; input.addEventListener('input', function(){ clearTimeout(deb); var v=input.value; deb=setTimeout(function(){ load(function(){ render(v); }); }, 160); });
+        })();
+    </script>`;
+
 // ---- shared chrome ----
 const { NAV: siteNav, CHROME_CSS, SEARCH_JS } = require('./chrome');
 const NAV = siteNav('authors');
@@ -77,6 +141,39 @@ const STYLE = `${ROOT_CSS}
         .q-card.verified .q-conf { color:var(--sage); } .q-card.verified .dot { background:var(--sage); }
         .q-card.attributed .q-conf { color:var(--amber); } .q-card.attributed .dot { background:var(--amber); }
         .q-card.disputed .q-conf { color:var(--caution); } .q-card.disputed .dot { background:var(--caution); }
+        .sec-sub { font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--text-muted); margin-top:8px; max-width:620px; }
+        /* often misattributed to X */
+        .mis-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+        .mis-card { display:flex; flex-direction:column; gap:12px; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:12px; padding:18px 20px; transition:transform 0.2s; }
+        .mis-card:hover { transform:translateY(-3px); }
+        .mis-q { font-style:italic; font-size:1rem; color:var(--ink); }
+        .mis-q::before, .mis-q::after { content:none; }
+        .mis-real { font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:600; color:var(--sage); margin-top:auto; }
+        .mis-lbl { color:var(--text-muted); font-weight:500; text-transform:uppercase; font-size:0.66rem; letter-spacing:0.12em; margin-right:6px; }
+        /* under review — pinned on X */
+        .rev-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+        .rev-card { display:flex; flex-direction:column; gap:12px; text-decoration:none; background:var(--bg-card); border:1px dashed var(--border-accent); border-radius:12px; padding:18px 20px; transition:transform 0.2s; }
+        .rev-card:hover { transform:translateY(-3px); }
+        .rev-q { font-style:italic; font-size:1rem; color:var(--ink); }
+        .rev-tag { font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:600; color:var(--burgundy); margin-top:auto; }
+        .rev-more { margin-top:16px; font-family:'DM Sans',sans-serif; font-size:0.85rem; }
+        .rev-more a { color:var(--burgundy); text-decoration:none; font-weight:600; }
+        .rev-more a:hover { text-decoration:underline; }
+        /* did they really say it? */
+        .ask { margin-top:44px; }
+        .ask-in { width:100%; max-width:620px; font-family:'DM Sans',sans-serif; font-size:1rem; color:var(--ink); background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:14px 18px; outline:none; transition:border-color 0.2s; }
+        .ask-in:focus { border-color:var(--burgundy); }
+        .ask-in::placeholder { color:var(--text-muted); }
+        .ask-out { max-width:620px; margin-top:14px; }
+        .ask-lead { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-bottom:10px; }
+        .ask-hit { display:flex; flex-direction:column; gap:3px; text-decoration:none; padding:12px 14px; border:1px solid var(--border); border-radius:11px; margin-bottom:8px; transition:border-color 0.2s,background 0.2s; }
+        .ask-hit:hover { border-color:var(--burgundy); background:var(--burgundy-glow); }
+        .ask-hx { font-style:italic; font-size:0.98rem; color:var(--ink); }
+        .ask-ht { font-family:'DM Sans',sans-serif; font-size:0.75rem; color:var(--text-muted); }
+        .ask-none { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:18px 20px; }
+        .ask-src { display:block; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:600; color:var(--burgundy); text-decoration:none; padding:8px 0; }
+        .ask-src:hover { text-decoration:underline; }
+        .ask-nom { color:var(--sage); }
         /* authors index */
         .idx-hero { padding:40px 0 4px; }
         .idx-hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2.1rem,6vw,3rem); line-height:1.05; letter-spacing:-0.02em; }
@@ -132,6 +229,8 @@ const quoteCard = (q) => {
 fs.mkdirSync(OUT, { recursive: true });
 for (const a of authors) {
   const n = a.quotes.length;
+  const mis = misattrBy[a.slug] || [];
+  const rev = reviewBy[a.slug] || [];
   const head = `    <title>${esc(a.name)} — quotes traced to source · Quotle.info</title>
     <meta name="description" content="${esc(a.name)}: ${n} quote${n === 1 ? '' : 's'} traced to a primary source, with attribution verified and misattributions untangled.">
     <link rel="canonical" href="${ORIGIN}/authors/${a.slug}">
@@ -173,7 +272,26 @@ for (const a of authors) {
 ${a.quotes.map(quoteCard).join('\n')}
             </div>
         </section>
-    </main>`;
+${mis.length ? `        <section aria-labelledby="mis-h">
+            <div class="sec-head"><p class="kicker">Not actually ${esc(a.name)}</p><h2 id="mis-h">Often misattributed to ${esc(a.name)}</h2><p class="sec-sub">Famous lines widely pinned on ${esc(a.name)} that we&rsquo;ve traced to someone else.</p></div>
+            <div class="mis-grid">
+${mis.map(misattrCard).join('\n')}
+            </div>
+        </section>` : ''}
+${rev.length ? `        <section aria-labelledby="rev-h">
+            <div class="sec-head"><p class="kicker">On the research bench</p><h2 id="rev-h">Commonly pinned on ${esc(a.name)} &mdash; under review</h2><p class="sec-sub">${rev.length} line${rev.length === 1 ? '' : 's'} flagged as pinned on ${esc(a.name)} and queued for a full source trace &mdash; not yet verified.</p></div>
+            <div class="rev-grid">
+${rev.slice(0, 12).map(reviewCard).join('\n')}
+            </div>
+${rev.length > 12 ? `            <p class="rev-more"><a href="/under-review/?q=${encodeURIComponent(a.name)}">See all ${rev.length} under review <span aria-hidden="true">→</span></a></p>` : ''}
+        </section>` : ''}
+        <section class="ask" data-author="${esc(a.name)}" aria-labelledby="ask-h">
+            <div class="sec-head"><p class="kicker">Did they really say it?</p><h2 id="ask-h">Thought ${esc(a.name)} said something else?</h2><p class="sec-sub">Type a quote you think ${esc(a.name)} said &mdash; we&rsquo;ll tell you what we know, or point you to the best sources.</p></div>
+            <input id="ask-q" class="ask-in" type="search" placeholder="Type or paste the quote&hellip;" autocomplete="off">
+            <div id="ask-out" class="ask-out"></div>
+        </section>
+    </main>
+${ASK_JS}`;
   const dir = path.join(OUT, a.slug);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, 'index.html'), page(inner, head));

@@ -58,7 +58,9 @@
         main { max-width:1000px; margin:0 auto; padding:8px 24px 60px; }
         .featured { margin-top:40px; }
         .feat-kicker { font-family:'DM Sans',sans-serif; text-transform:uppercase; font-size:0.7rem; font-weight:700; letter-spacing:0.2em; color:var(--burgundy); margin-bottom:16px; }
-        .feat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; }
+        .feat-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+        @media (max-width:820px){ .feat-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+        @media (max-width:520px){ .feat-grid { grid-template-columns:1fr; } }
         .feat { display:block; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:14px; padding:20px 22px; transition:transform 0.2s; }
         .feat:hover { transform:translateY(-3px); }
         .feat-q { font-style:italic; font-size:1.02rem; color:var(--ink); }
@@ -270,6 +272,14 @@
                 <a class="feat" href="/who-said/the-future-belongs-to-those-who-believe-in-the-beauty-of/">
                     <p class="feat-q">&ldquo;The future belongs to those who believe in the beauty of their dreams&rdquo;</p>
                     <p class="feat-swap"><span class="feat-no">Eleanor Roosevelt</span><span class="feat-arrow" aria-hidden="true">→</span><span class="feat-yes">Anonymous (1978)</span></p>
+                </a>
+                <a class="feat" href="/who-said/the-journey-of-a-thousand-miles-begins-with-a-single-step/">
+                    <p class="feat-q">&ldquo;The journey of a thousand miles begins with a single step&rdquo;</p>
+                    <p class="feat-swap"><span class="feat-no">Confucius</span><span class="feat-arrow" aria-hidden="true">→</span><span class="feat-yes">Lao Tzu</span></p>
+                </a>
+                <a class="feat" href="/who-said/whatever-you-are-be-a-good-one/">
+                    <p class="feat-q">&ldquo;Whatever you are, be a good one&rdquo;</p>
+                    <p class="feat-swap"><span class="feat-no">Abraham Lincoln</span><span class="feat-arrow" aria-hidden="true">→</span><span class="feat-yes">Thackeray</span></p>
                 </a>
             </div>
         </section>
