@@ -21,17 +21,20 @@ const authors = aggregateAuthors(records);
 
 const xmlEsc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 
-// ---- sitemap.xml ----
+// ---- sitemap.xml (with lastmod per URL so crawlers see freshness) ----
+const modOf = {};
+records.forEach((r) => { modOf[r.quoteSlug] = (r.schema && r.schema.dateModified) || null; });
+const latest = records.map((r) => r.schema && r.schema.dateModified).filter(Boolean).sort().pop() || null;
 const urls = [
-  `${ORIGIN}/`,
-  `${ORIGIN}/how-we-verify`,
-  `${ORIGIN}/authors/`,
-  ...authors.map((a) => `${ORIGIN}/authors/${a.slug}`),
-  ...manifest.map((m) => m.url),
+  { loc: `${ORIGIN}/`, lastmod: latest },
+  { loc: `${ORIGIN}/how-we-verify`, lastmod: latest },
+  { loc: `${ORIGIN}/authors/`, lastmod: latest },
+  ...authors.map((a) => ({ loc: `${ORIGIN}/authors/${a.slug}`, lastmod: latest })),
+  ...manifest.map((m) => ({ loc: m.url, lastmod: modOf[m.quoteSlug] || latest })),
 ];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map((u) => `  <url><loc>${xmlEsc(u)}</loc></url>`).join('\n')}
+${urls.map((u) => `  <url><loc>${xmlEsc(u.loc)}</loc>${u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ''}</url>`).join('\n')}
 </urlset>
 `;
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);

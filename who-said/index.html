@@ -13,6 +13,33 @@
     <meta property="og:url" content="https://quotle.info/">
     <meta property="og:site_name" content="Quotle.info">
     <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://quotle.info/#website",
+          "url": "https://quotle.info/",
+          "name": "Quotle.info",
+          "description": "Verified quote provenance — who really said it, traced to a primary source, with misattributions untangled.",
+          "publisher": { "@id": "https://quotle.info/#org" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": { "@type": "EntryPoint", "urlTemplate": "https://quotle.info/?q={search_term_string}" },
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://quotle.info/#org",
+          "name": "Quotle.info",
+          "url": "https://quotle.info/",
+          "description": "A verified-provenance fact-check companion to the Quotle game (Game Shelf). Every quote traced to a primary source and dated."
+        }
+      ]
+    }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -1204,6 +1231,8 @@
                 ch.classList.add('active'); ch.setAttribute('aria-selected','true');
                 filter=ch.getAttribute('data-f'); apply();
             }); });
+            // Deep-linkable search: /?q=term pre-fills and filters (shareable; enables SearchAction).
+            try { var pre=new URLSearchParams(location.search).get('q'); if(pre){ q.value=pre; apply(); } } catch(e){}
         })();
     </script>
     <script>

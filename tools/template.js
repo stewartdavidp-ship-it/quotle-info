@@ -37,6 +37,13 @@ const authorLinked = (slug) => AUTHORS_ENABLED && hasAuthorPage(slug);
 const attr = (s) => esc(s);
 const canonicalUrl = (slug) => `${ORIGIN}/who-said/${slug}`;
 const ogImageUrl = (slug) => `${ORIGIN}/og/${slug}.png`;
+// decode entities + strip tags → plain text for JSON-LD string values
+const plain = (x) => String(x || '').replace(/<[^>]+>/g, '')
+  .replace(/&mdash;/g, '—').replace(/&ndash;/g, '–').replace(/&middot;/g, '·')
+  .replace(/&ldquo;|&rdquo;/g, '"').replace(/&lsquo;|&rsquo;/g, "'").replace(/&hellip;/g, '…')
+  .replace(/&#(\d+);/g, (m, d) => String.fromCharCode(+d))
+  .replace(/&([a-z]+);/g, (m, e) => ({ amp: '&', quot: '"', lt: '<', gt: '>' }[e] || ' '))
+  .replace(/\s+/g, ' ').trim();
 
 const CONFIDENCE = {
   verified:   { cls: 'verified',   glyph: '✓', text: 'Verified',   label: 'Written by' },
@@ -123,6 +130,16 @@ function buildJsonLd(q, url) {
     if (b.pagination) quotation.isBasedOn.pagination = b.pagination;
     if (b.sameAs) quotation.isBasedOn.sameAs = b.sameAs;
   }
+  // Rights → structured, so agents get reuse status without scraping prose.
+  const rights = q.source && q.source.rights;
+  if (rights === 'public-domain') {
+    quotation.license = 'https://creativecommons.org/publicdomain/mark/1.0/';
+    quotation.isAccessibleForFree = true;
+  } else if (rights === 'in-copyright') {
+    quotation.copyrightNotice = 'In copyright' + (q.source.rightsHolder ? ' — ' + plain(q.source.rightsHolder) : '');
+  }
+  if (rights) quotation.usageInfo = `${ORIGIN}/how-we-verify`;
+
   const webpage = {
     '@type': 'WebPage',
     '@id': url,
@@ -131,7 +148,38 @@ function buildJsonLd(q, url) {
     publisher: { '@type': 'Organization', name: 'Quotle.info', url: ORIGIN },
     mainEntity: { '@id': `${url}#quotation` },
   };
-  return { '@context': 'https://schema.org', '@graph': [quotation, webpage] };
+
+  // ClaimReview — the canonical fact-check schema. Rates the claim "{who} said {quote}":
+  // verified → the true author, true (5/5); attributed → plausible/unproven (3); disputed →
+  // the popularly-credited (wrong) name, false (1). The Quotation.creator still names the REAL
+  // author, so a machine reads both "the claim about {who} is {rating}" and "actually by {creator}".
+  const RATING = { verified: [5, 'Verified'], attributed: [3, 'Attributed'], disputed: [1, 'Disputed'] };
+  const [ratingValue, ratingName] = RATING[q.confidence] || RATING.verified;
+  const trueAuthor = plain((q.answer && q.answer.authorName) || (s.creator && s.creator.name) || '');
+  const firstMisWho = q.misattribution && q.misattribution.items && q.misattribution.items[0] && plain(q.misattribution.items[0].who);
+  const claimant = (q.confidence === 'disputed' && firstMisWho) ? firstMisWho : trueAuthor;
+  const quoteText = plain(quotation.text);
+  const claimReview = {
+    '@type': 'ClaimReview',
+    '@id': `${url}#claimreview`,
+    url,
+    author: { '@type': 'Organization', name: 'Quotle.info', url: ORIGIN },
+    datePublished: s.dateModified,
+    claimReviewed: claimant ? `${claimant} said: "${quoteText}"` : `"${quoteText}"`,
+    itemReviewed: {
+      '@type': 'Claim',
+      author: claimant ? { '@type': 'Person', name: claimant } : undefined,
+      appearance: { '@id': `${url}#quotation` },
+    },
+    reviewRating: {
+      '@type': 'Rating',
+      ratingValue, bestRating: 5, worstRating: 1,
+      alternateName: ratingName,
+    },
+  };
+  if (!claimReview.itemReviewed.author) delete claimReview.itemReviewed.author;
+
+  return { '@context': 'https://schema.org', '@graph': [quotation, claimReview, webpage] };
 }
 
 // ---- top nav + breadcrumb ------------------------------------------------
