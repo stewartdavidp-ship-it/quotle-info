@@ -94,11 +94,14 @@ ${ROOT_CSS}
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Source Serif 4',Georgia,serif; background:var(--bg-deep); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
         a { color:inherit; }
-        .topnav { display:flex; align-items:center; justify-content:space-between; max-width:1000px; margin:0 auto; padding:20px 24px 0; }
+        .topnav { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px 10px; max-width:1000px; margin:0 auto; padding:20px 24px 0; }
+        .nav-actions { flex-wrap:wrap; justify-content:flex-end; }
         .brand { display:inline-flex; align-items:center; gap:9px; text-decoration:none; font-family:'Playfair Display',serif; font-weight:900; font-size:1.05rem; }
         .brand-icon { width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,var(--burgundy),var(--burgundy-deep)); display:grid; place-items:center; font-size:0.95rem; }
         .brand span { color:var(--burgundy); }
-        .nav-play { font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:600; color:var(--gold); text-decoration:none; padding:7px 14px; border:1px solid rgba(255,211,105,0.3); border-radius:999px; }
+        .nav-play { font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:600; color:var(--gold); text-decoration:none; padding:7px 14px; border:1px solid rgba(255,211,105,0.3); border-radius:999px; white-space:nowrap; }
+        .nav-authors { font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:500; color:var(--slate); text-decoration:none; padding:7px 12px; border:1px solid var(--border); border-radius:999px; white-space:nowrap; transition:color 0.2s,border-color 0.2s; }
+        .nav-authors:hover { color:var(--ink); border-color:var(--border-accent); }
         .hero { max-width:1000px; margin:0 auto; padding:52px 24px 12px; }
         .hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2.3rem,7vw,3.6rem); line-height:1.05; letter-spacing:-0.02em; text-wrap:balance; }
         .hero h1 em { font-style:italic; color:var(--burgundy); }
@@ -148,6 +151,7 @@ ${THEME_CSS}
     <nav class="topnav">
         <a class="brand" href="/"><span class="brand-icon" aria-hidden="true">📖</span>quotle<span>.info</span></a>
         <div class="nav-actions">
+            <a class="nav-authors" href="/authors/">Authors</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle →</a>
             ${CONTROL}
         </div>
