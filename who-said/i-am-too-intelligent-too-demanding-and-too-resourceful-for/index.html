@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function(){try{var d=document.documentElement,ls=localStorage;var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
+    <title>Who really said &quot;I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely&quot;? | Quotle.info</title>
+    <meta name="version" content="0.4.0-proto">
+    <meta name="gs-app-id" content="quotle-info">
+    <meta name="description" content="Genuinely Simone de Beauvoir — from her student diary, the Cahiers de jeunesse (1926–1930), not The Second Sex. The French original: 'trop intelligente, trop exigeante et trop riche.'">
+
+    <!-- Per-page canonical + social. Every identity field derives from ONE canonical string:
+         https://quotle.info/who-said/i-am-too-intelligent-too-demanding-and-too-resourceful-for  (quoteSlug = kebab-case of the quote text, keyed to the quote not the author). -->
+    <link rel="canonical" href="https://quotle.info/who-said/i-am-too-intelligent-too-demanding-and-too-resourceful-for">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://quotle.info/who-said/i-am-too-intelligent-too-demanding-and-too-resourceful-for">
+    <meta property="og:title" content="Who really said 'I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely'?">
+    <meta property="og:description" content="Real Beauvoir — but from her youthful Cahiers de jeunesse (1926–1930), not The Second Sex. Verified against the French original.">
+    <meta property="og:site_name" content="Quotle.info">
+    <meta property="og:image" content="https://quotle.info/og/i-am-too-intelligent-too-demanding-and-too-resourceful-for.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Quotation",
+          "@id": "https://quotle.info/who-said/i-am-too-intelligent-too-demanding-and-too-resourceful-for#quotation",
+          "text": "I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely. No one knows me or loves me completely. I have only myself.",
+          "creator": {
+            "@type": "Person",
+            "name": "Simone de Beauvoir",
+            "birthDate": "1908-01-09",
+            "jobTitle": "Philosopher and writer",
+            "sameAs": "https://en.wikipedia.org/wiki/Simone_de_Beauvoir"
+          },
+          "dateCreated": "1926/1930",
+          "isBasedOn": {
+            "@type": "CreativeWork",
+            "name": "Cahiers de jeunesse, 1926–1930",
+            "datePublished": "2008",
+            "sameAs": "https://www.goodreads.com/work/quotes/3213890-cahiers-de-jeunesse-1926-1930"
+          }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://quotle.info/who-said/i-am-too-intelligent-too-demanding-and-too-resourceful-for",
+          "name": "Who really said 'I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely'?",
+          "dateModified": "2026-07-08",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Quotle.info",
+            "url": "https://quotle.info"
+          },
+          "mainEntity": {
+            "@id": "https://quotle.info/who-said/i-am-too-intelligent-too-demanding-and-too-resourceful-for#quotation"
+          }
+        }
+      ]
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Reading-depth surfaces — quotle.info extension (the game needs only --cream) */
+            --bg-deep: #0f0f1e; --cream: #1a1a2e; --bg-card: #252538;
+            --bg-card-hover: #2d2d45; --bg-elevated: #30304a;
+            /* Text — --ink / --slate are the Quotle game's dark tokens, exact */
+            --ink: #e8e0f0; --slate: #a8b0c0; --text-muted: #9aa2b2;
+            /* Brand accents — shared byte-for-byte with the Quotle game */
+            --burgundy: #d4627a;          /* brand + misattribution accent (large/decorative) */
+            --burgundy-link: #e08096;     /* lifted tone for small inline burgundy links (AA on cards) */
+            --burgundy-deep: #8B2635; --burgundy-glow: rgba(212, 98, 122, 0.15);
+            --gold: #ffd369;              /* authentic-voice accent: author name + pull-quote */
+            --gold-dim: rgba(255, 211, 105, 0.12);
+            --sage: #7eb38b;              /* verified / trust / source actions */
+            --sage-dim: rgba(126, 179, 139, 0.12);
+            /* Confidence-state + decorative extensions (quotle.info only) */
+            --amber: #e0a24e;             /* confidence: attributed / likely */
+            --caution: #9aa3d6;           /* confidence: disputed (AA headroom vs body grey + burgundy) */
+            --purple: #764ba2;            /* author-avatar gradient tail */
+            --border: rgba(255,255,255,0.06); --border-accent: rgba(212, 98, 122, 0.25);
+            --radius-sm: 8px; --radius-md: 14px; --radius-lg: 22px; --radius-xl: 32px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        body { font-family: 'Source Serif 4', Georgia, serif; background: var(--bg-deep); color: var(--ink); line-height: 1.7; overflow-x: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
+        a { color: inherit; }
+        a:focus-visible, button:focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; border-radius: 4px; }
+        .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+        .topnav { display: flex; align-items: center; justify-content: space-between; max-width: 780px; margin: 0 auto; padding: 20px 24px 8px; }
+        .brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+        .brand-icon { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep)); display: grid; place-items: center; font-size: 0.95rem; }
+        .brand-name { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.05rem; }
+        .brand-name span { color: var(--burgundy); }
+        .nav-verify { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 500; color: var(--sage); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border: 1px solid rgba(126,179,139,0.3); border-radius: 999px; transition: background 0.2s; }
+        .nav-verify:hover { background: var(--sage-dim); }
+        .breadcrumb { max-width: 780px; margin: 0 auto; padding: 6px 24px 0; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; color: var(--text-muted); }
+        .breadcrumb a { text-decoration: none; }
+        .breadcrumb a:hover { color: var(--slate); }
+        .breadcrumb .sep { margin: 0 7px; opacity: 0.6; }
+
+        main { max-width: 700px; margin: 0 auto; padding: 8px 24px 60px; }
+        .kicker { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; color: var(--burgundy); margin-bottom: 14px; }
+        section { margin-top: 52px; }
+        .sec-head { margin-bottom: 20px; }
+        .sec-head .kicker { margin-bottom: 8px; }
+        .sec-head h2 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.7rem; letter-spacing: -0.015em; }
+
+        /* ===== LAYER 1 — THE ANSWER (sealed container) ===== */
+        .answer { margin-top: 18px; padding: 34px 32px 26px; background: linear-gradient(180deg, rgba(26,26,46,0.9), rgba(26,26,46,0.35)); border: 1px solid rgba(255,255,255,0.09); border-radius: var(--radius-lg); box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
+        .the-quote { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(1.9rem, 6vw, 2.8rem); line-height: 1.22; letter-spacing: -0.015em; margin: 4px 0 24px; text-wrap: balance; }
+        .the-quote::before { content: '\201C'; color: var(--burgundy); opacity: 0.4; margin-right: 2px; }
+        .the-quote::after { content: '\201D'; color: var(--burgundy); opacity: 0.35; margin-left: 3px; vertical-align: -0.15em; }
+
+        .attribution-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-bottom: 18px; }
+        .author-block { display: flex; flex-direction: column; }
+        .author-block .lbl { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--text-muted); }
+        .author-name { font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--gold); }
+        .author-name a { text-decoration: none; }
+        .author-name a:hover { text-decoration: underline; }
+        .author-dates { font-family: 'DM Sans', sans-serif; font-size: 0.76rem; color: var(--text-muted); }
+
+        /* 3-state confidence — distinct hue AND distinct glyph per state (not color alone) */
+        .confidence { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; padding: 7px 13px; border-radius: 999px; border: 1px solid; }
+        .confidence .dot { width: 16px; height: 16px; border-radius: 50%; display: grid; place-items: center; font-size: 0.68rem; font-weight: 700; color: var(--bg-deep); }
+        .confidence.verified   { color: var(--sage);   background: var(--sage-dim);            border-color: rgba(126,179,139,0.35); }
+        .confidence.verified .dot   { background: var(--sage); }
+        .confidence.attributed { color: var(--amber);  background: rgba(224,162,78,0.12);      border-color: rgba(224,162,78,0.35); }
+        .confidence.attributed .dot { background: var(--amber); }
+        .confidence.disputed   { color: var(--caution); background: rgba(138,147,201,0.14);    border-color: rgba(138,147,201,0.4); }
+        .confidence.disputed .dot   { background: var(--caution); }
+
+        .source-line { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--slate); padding-top: 16px; border-top: 1px solid var(--border); }
+        .source-line strong { color: var(--ink); font-weight: 600; }
+        .actions { display: flex; gap: 10px; margin-top: 20px; }
+        .act-btn { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; color: var(--slate); background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 9px 16px; cursor: pointer; transition: background 0.2s, color 0.2s; }
+        .act-btn:hover { background: var(--bg-card-hover); color: var(--ink); }
+        .answer-foot { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 0.74rem; color: var(--text-muted); display: flex; align-items: center; gap: 7px; }
+        .answer-foot a { color: var(--sage); text-decoration: none; }
+        .answer-foot a:hover { text-decoration: underline; }
+
+        /* ===== THE SOURCE ===== */
+        .source-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px 28px; position: relative; overflow: hidden; }
+        .source-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--sage); opacity: 0.7; }
+        .doc-meta { display: grid; grid-template-columns: auto 1fr; gap: 8px 18px; margin-bottom: 22px; }
+        .doc-meta dt { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); padding-top: 4px; }
+        .doc-meta dd { font-size: 0.98rem; }
+        .doc-meta dd.title { font-style: italic; }
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
+        .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
+        .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
+        .artifact-ic { width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--bg-elevated); display: grid; place-items: center; font-size: 1.2rem; flex-shrink: 0; }
+        .artifact-txt .a-kind { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+        .artifact-txt a { color: var(--sage); text-decoration: none; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9rem; }
+        .artifact-txt a:hover { text-decoration: underline; }
+        .source-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.88rem; color: var(--sage); background: var(--sage-dim); border: 1px solid rgba(126,179,139,0.35); padding: 11px 20px; border-radius: var(--radius-sm); text-decoration: none; transition: background 0.2s; }
+        .source-link:hover { background: rgba(126,179,139,0.2); }
+
+        /* Verification trail — block rows, hanging check, prose flow (no ragged flex columns) */
+        .trail { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--border); }
+        .trail-title { font-family: 'DM Sans', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--sage); font-weight: 600; margin-bottom: 14px; }
+        .trail ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .trail li { position: relative; padding-left: 24px; font-size: 0.92rem; color: var(--slate); line-height: 1.6; }
+        .trail li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--sage); font-weight: 700; }
+        .trail a { color: var(--ink); text-decoration: underline; text-decoration-color: rgba(126,179,139,0.55); text-underline-offset: 2px; }
+        .trail a:hover { text-decoration-color: var(--sage); }
+        .rights-note { margin-top: 20px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); background: var(--cream); border-left: 2px solid var(--amber); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 13px 16px; line-height: 1.6; }
+        .rights-note strong { color: var(--ink); }
+        /* Rights status (separate claim from attribution): badge + honest note, accent per state. */
+        .rights { margin-top: 20px; background: var(--cream); border-left: 2px solid var(--border); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 16px 13px; }
+        .rights-public-domain { border-left-color: var(--sage); }
+        .rights-in-copyright { border-left-color: var(--amber); }
+        .rights-licensed { border-left-color: var(--sage); }
+        .rights-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.63rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.11em; margin-bottom: 6px; }
+        .rights-public-domain .rights-badge, .rights-licensed .rights-badge { color: var(--sage); }
+        .rights-in-copyright .rights-badge { color: var(--amber); }
+        .rights-mark { font-size: 0.9rem; line-height: 1; }
+        .rights-body { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); line-height: 1.6; margin: 0; }
+        .rights-body strong { color: var(--ink); }
+
+        /* ===== MISATTRIBUTION ===== */
+        .misattr { background: linear-gradient(135deg, var(--burgundy-glow), transparent); border: 1px solid var(--border-accent); border-radius: var(--radius-lg); padding: 30px 28px; }
+        .misattr-intro { color: var(--slate); margin-bottom: 22px; }
+        .false-list { display: flex; flex-direction: column; gap: 16px; }
+        .false-item { display: flex; gap: 14px; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+        .false-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .false-x { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; background: rgba(212,98,122,0.15); color: var(--burgundy); display: grid; place-items: center; font-weight: 700; font-size: 0.85rem; margin-top: 2px; }
+        .false-who { font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--ink); }
+        .false-tag { font-family: 'DM Sans', sans-serif; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; }
+        .false-why { font-size: 0.92rem; color: var(--slate); margin-top: 2px; }
+        .false-why a { color: var(--burgundy-link); text-decoration: underline; text-underline-offset: 2px; }
+        .truth-line { margin-top: 24px; padding: 16px 18px; background: var(--sage-dim); border-radius: var(--radius-md); display: flex; gap: 12px; align-items: flex-start; }
+        .truth-line .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--sage); color: var(--bg-deep); display: grid; place-items: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+        .truth-line span { font-size: 0.94rem; }
+        .truth-line a { color: var(--sage); text-decoration: underline; text-underline-offset: 2px; }
+
+        /* ===== STORY ===== */
+        .story summary { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--burgundy-link); cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 8px; }
+        .story summary::-webkit-details-marker { display: none; }
+        .story summary::after { content: '↓'; transition: transform 0.2s; }
+        .story details[open] summary::after { transform: rotate(180deg); }
+        .story .body { margin-top: 16px; }
+        .story p { margin-bottom: 16px; color: var(--ink); }
+        .story .body p:last-child { margin-bottom: 0; }
+        .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
+
+        /* ===== RELATED ===== */
+        .connect-grid { display: flex; flex-direction: column; gap: 12px; }
+        .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
+        .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
+        .connect-quote { font-style: italic; font-size: 1.05rem; margin-bottom: 12px; color: var(--ink); }
+        .connect-foot { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+        .connect-author { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.85rem; color: var(--gold); }
+        .connect-rel { font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--text-muted); }
+
+        /* ===== DIG DEEPER ===== */
+        .research-intro { color: var(--slate); margin-bottom: 20px; }
+        .research-list { display: flex; flex-direction: column; gap: 8px; }
+        .research-item { display: block; text-decoration: none; padding: 15px 18px; border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--bg-card); transition: border-color 0.2s, transform 0.2s; }
+        .research-item:hover { border-color: var(--border-accent); transform: translateY(-2px); }
+        .research-top { display: flex; align-items: center; gap: 10px; }
+        .research-label { font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--ink); }
+        .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
+        .research-item:hover .research-arrow { transform: translateX(3px); }
+        .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
+
+        /* ===== AUTHOR ===== */
+        .author-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px 28px; display: flex; gap: 20px; align-items: flex-start; }
+        .author-avatar { width: 54px; height: 54px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg, var(--burgundy), var(--purple)); display: grid; place-items: center; font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.4rem; color: white; }
+        .author-card .a-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: 4px; }
+        .author-card .a-name a { text-decoration: none; }
+        .author-card .a-name a:hover { text-decoration: underline; }
+        .author-card .a-meta { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; }
+        .author-card p { font-size: 0.94rem; color: var(--slate); }
+
+        /* ===== CITE THIS ===== */
+        .cite { background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px 28px; }
+        .cite-block { margin-bottom: 18px; }
+        .cite-block:last-of-type { margin-bottom: 0; }
+        .cite-lbl { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; justify-content: space-between; }
+        .cite-copy { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 600; color: var(--sage); background: var(--sage-dim); border: 1px solid rgba(126,179,139,0.35); border-radius: var(--radius-sm); padding: 5px 11px; cursor: pointer; }
+        .cite-copy:hover { background: rgba(126,179,139,0.2); }
+        .cite-text { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--slate); line-height: 1.6; }
+        .cite-text code { color: var(--slate); word-break: break-all; font-size: 0.82rem; }
+
+        /* ===== PREV/NEXT ===== */
+        .pager { display: flex; gap: 12px; margin-top: 48px; }
+        .pager a { flex: 1; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px 18px; transition: border-color 0.2s; }
+        .pager a:hover { border-color: var(--border-accent); }
+        .pager .dir { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); }
+        .pager .pq { font-style: italic; font-size: 0.92rem; color: var(--ink); margin-top: 4px; }
+        .pager .next { text-align: right; }
+
+        /* ===== GAME CTA ===== */
+        .game-cta { margin-top: 56px; text-align: center; background: linear-gradient(135deg, var(--burgundy-glow), var(--gold-dim)); border: 1px solid var(--border-accent); border-radius: var(--radius-lg); padding: 38px 28px; }
+        .game-cta .cta-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 8px; }
+        .game-cta p { color: var(--slate); font-size: 0.95rem; margin-bottom: 20px; }
+        .game-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep)); border-radius: var(--radius-md); font-family: 'DM Sans', sans-serif; font-weight: 600; color: white; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+        .game-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,98,122,0.4); }
+
+        footer { text-align: center; padding: 40px 24px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 40px; }
+        footer a { color: var(--burgundy-link); text-decoration: none; }
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--sage); color: var(--bg-deep); font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.85rem; padding: 10px 22px; border-radius: 999px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 200; }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            * { transition: none !important; animation: none !important; }
+        }
+
+        @media (max-width: 560px) {
+            .the-quote { font-size: 1.9rem; }
+            .doc-meta { grid-template-columns: 1fr; gap: 2px; }
+            .doc-meta dt { padding-top: 12px; }
+            .attribution-row { flex-direction: column; align-items: flex-start; }
+            .source-card, .misattr, .author-card, .answer, .cite { padding: 22px 20px; }
+            .pager { flex-direction: column; }
+            .pager .next { text-align: left; }
+        }
+    </style>
+    <style>
+        :root[data-theme="light"] {
+            --bg-deep: #f5f1e8; --cream: #fffdf8; --bg-card: #fffdf8;
+            --bg-card-hover: #f8f3ea; --bg-elevated: #efe8d9;
+            --ink: #23202e; --slate: #4b4658; --text-muted: #6a6577;
+            --burgundy: #b23a54; --burgundy-link: #9c2c44; --burgundy-deep: #7a2130;
+            --burgundy-glow: rgba(178,58,84,0.09);
+            --gold: #755f13; --gold-dim: rgba(143,114,24,0.12);
+            --sage: #2f7048; --sage-dim: rgba(47,112,72,0.13);
+            --amber: #965b12; --caution: #4a55a2;
+            --border: rgba(35,32,46,0.12); --border-accent: rgba(178,58,84,0.28);
+        }
+        /* .answer is the only element with a hardcoded dark gradient; retint for light. */
+        :root[data-theme="light"] .answer { background: linear-gradient(180deg, #fffdf8, #f8f3ea); border-color: rgba(35,32,46,0.10); box-shadow: 0 16px 44px rgba(35,32,46,0.10); }
+        :root[data-theme="light"] body::before { opacity: 0; }
+
+        /* ---- Header display control (theme + text size) ---- */
+        .nav-actions { display: flex; align-items: center; gap: 10px; }
+        .disp { position: relative; }
+        .disp-btn { font-family: 'DM Sans', sans-serif; font-weight: 700; letter-spacing: 0.01em; color: var(--slate); background: transparent; border: 1px solid var(--border-accent); border-radius: 999px; padding: 6px 12px; cursor: pointer; line-height: 1; display: inline-flex; align-items: baseline; transition: border-color 0.2s, color 0.2s; }
+        .disp-btn .a1 { font-size: 0.82rem; } .disp-btn .a2 { font-size: 1.04rem; }
+        .disp-btn:hover, .disp-btn[aria-expanded="true"] { color: var(--ink); border-color: var(--burgundy); }
+        .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
+        .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
+        .disp-panel.open { display: block; }
+        .disp-panel h3 { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
+        .disp-panel h3.mt { margin-top: 15px; }
+        .disp-row { display: flex; gap: 6px; }
+        .disp-row button { flex: 1; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--slate); font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; cursor: pointer; padding: 8px 0; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+        .disp-row button:hover { color: var(--ink); border-color: var(--border-accent); }
+        .disp-row button[aria-pressed="true"] { border-color: var(--sage); color: var(--sage); background: var(--sage-dim); }
+        .disp-row button:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
+        .disp-sizes { display: flex; gap: 6px; }
+        .disp-sizes button { flex: 1; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--slate); font-family: 'Playfair Display', serif; font-weight: 700; cursor: pointer; padding: 9px 0 7px; line-height: 1; transition: border-color 0.15s, color 0.15s, background 0.15s; }
+        .disp-sizes button:hover { color: var(--ink); border-color: var(--border-accent); }
+        .disp-sizes button[aria-pressed="true"] { border-color: var(--sage); color: var(--sage); background: var(--sage-dim); }
+        .disp-sizes button:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
+        .disp-sizes button:nth-child(1) { font-size: 0.82rem; } .disp-sizes button:nth-child(2) { font-size: 1.02rem; } .disp-sizes button:nth-child(3) { font-size: 1.22rem; } .disp-sizes button:nth-child(4) { font-size: 1.46rem; }
+        .disp-note { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; color: var(--text-muted); margin-top: 12px; }
+        @media (prefers-reduced-motion: reduce) { .disp-btn, .disp-row button, .disp-sizes button { transition: none; } }
+        /* Print: the site resolves to dark by default, which would print as near-invisible ink on
+           white paper. Force a legible light palette (darkened accents) regardless of screen theme. */
+        @media print {
+            :root, :root[data-theme="dark"], :root[data-theme="light"] {
+                --bg-deep: #fff; --cream: #fff; --bg-card: #fff; --bg-card-hover: #fff; --bg-elevated: #fff;
+                --ink: #000; --slate: #222; --text-muted: #444;
+                --burgundy: #8a1f33; --burgundy-link: #8a1f33; --burgundy-deep: #6d1626;
+                --gold: #6b560f; --sage: #245c39; --amber: #7a4a0e; --caution: #2f3a86;
+                --border: rgba(0,0,0,0.25); --border-accent: rgba(0,0,0,0.25);
+            }
+            body::before { display: none !important; }
+            .disp { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="topnav" aria-label="Primary">
+        <a href="/" class="brand"><span class="brand-icon" aria-hidden="true">📖</span><span class="brand-name">quotle<span>.info</span></span></a>
+        <div class="nav-actions">
+            <a href="/how-we-verify" class="nav-verify">✓ How we verify</a>
+            <div class="disp">
+                <button class="disp-btn" id="dispBtn" type="button" aria-label="Display settings: theme and text size" aria-haspopup="dialog" aria-expanded="false" aria-controls="dispPanel"><span class="a1">A</span><span class="a2">a</span></button>
+                <div class="disp-panel" id="dispPanel" role="dialog" aria-label="Display settings">
+                    <h3>Theme</h3>
+                    <div class="disp-row" id="dispTheme">
+                        <button type="button" data-theme-choice="auto" aria-pressed="true" title="Match your device">Auto</button>
+                        <button type="button" data-theme-choice="light" aria-pressed="false" title="Light theme">Light</button>
+                        <button type="button" data-theme-choice="dark" aria-pressed="false" title="Dark theme">Dark</button>
+                    </div>
+                    <h3 class="mt">Text size</h3>
+                    <div class="disp-sizes">
+                        <button type="button" data-size="normal" aria-pressed="true" aria-label="Normal text size" title="Normal">A</button>
+                        <button type="button" data-size="large" aria-pressed="false" aria-label="Large text size" title="Large">A</button>
+                        <button type="button" data-size="xl" aria-pressed="false" aria-label="Extra-large text size" title="Extra large">A</button>
+                        <button type="button" data-size="xxl" aria-pressed="false" aria-label="Largest text size" title="Largest">A</button>
+                    </div>
+                    <p class="disp-note">Saved on this device.</p>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep" aria-hidden="true">›</span>
+        <a href="/authors/simone-de-beauvoir">Simone de Beauvoir</a><span class="sep" aria-hidden="true">›</span>
+        <span aria-current="page">I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely</span>
+    </nav>
+
+    <main>
+        <!-- ============ LAYER 1: THE ANSWER ============ -->
+        <article class="answer" aria-labelledby="quote-heading">
+            <p class="kicker">Who really said it</p>
+            <h1 class="the-quote" id="quote-heading">I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely</h1>
+            <div class="attribution-row">
+                <div class="author-block">
+                    <span class="lbl">Written by</span>
+                    <span class="author-name"><a href="/authors/simone-de-beauvoir">Simone de Beauvoir</a></span>
+                    <span class="author-dates">1908–1986 · French existentialist philosopher, novelist &amp; feminist theorist</span>
+                </div>
+                <span class="confidence verified">
+                    <span class="dot" aria-hidden="true">✓</span>
+                    <span><span class="visually-hidden">Attribution status: </span>Verified</span>
+                </span>
+            </div>
+            <p class="source-line">These are Beauvoir&rsquo;s own words, written in her student diary &mdash; the <em>Cahiers de jeunesse, 1926&ndash;1930</em>. The French original reads &lsquo;Je suis trop intelligente, trop exigeante et trop riche pour que personne puisse se charger de moi enti&egrave;rement&hellip; Je n&rsquo;ai que moi,&rsquo; and the popular English &lsquo;too resourceful&rsquo; renders her &lsquo;trop riche.&rsquo; The genuine attribution is often wrongly sourced to <em>The Second Sex</em>.</p>
+            <div class="actions">
+                <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
+                <button class="act-btn" id="shareBtn" type="button">Share</button>
+            </div>
+            <p class="answer-foot">
+                <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify">how we verify</a>
+            </p>
+        </article>
+        <!-- ============ THE SOURCE ============ -->
+        <section aria-labelledby="source-h">
+            <div class="sec-head"><p class="kicker">Provenance</p><h2 id="source-h">The source</h2></div>
+            <div class="source-card">
+                <dl class="doc-meta">
+                    <dt>Work</dt><dd class="title">Cahiers de jeunesse, 1926–1930</dd>
+                    <dt>Type</dt><dd>Student diary (written 1926–1930; first published Gallimard, 2008)</dd>
+                    <dt>Translation</dt><dd>English: the displayed wording is an uncredited popular translation of the French. A scholarly English edition of the early diary — Diary of a Philosophy Student, Vols. 1–2 (1926–29), trans. Barbara Klaw (Univ. of Illinois Press, 2006, 2019) — covers only 1926–29 and is not verified to contain this entry.</dd>
+                    <dt>Author</dt><dd>Simone de Beauvoir</dd>
+                </dl>
+                <p class="excerpt">
+                    I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely. No one knows me or loves me completely. I have only myself.
+                    <span class="cut-tag">diary</span>
+                </p>
+                <p class="excerpt-note">French original: &ldquo;Je suis trop intelligente, trop exigeante et trop riche pour que personne puisse se charger de moi enti&egrave;rement. Personne ne me conna&icirc;t ni ne m&rsquo;aime tout enti&egrave;re. Je n&rsquo;ai que moi&hellip;&rdquo;</p>
+                <a class="source-link" href="https://www.goodreads.com/work/quotes/3213890-cahiers-de-jeunesse-1926-1930" target="_blank" rel="noopener">Cahiers de jeunesse, 1926–1930 (source diary) <span aria-hidden="true">↗</span></a>
+                <div class="trail">
+                    <p class="trail-title">How we traced it</p>
+                    <ul>
+                        <li>The line is authentic Beauvoir: the French original appears among quotations from her diary <a href="https://www.goodreads.com/work/quotes/3213890-cahiers-de-jeunesse-1926-1930" target="_blank" rel="noopener">Cahiers de jeunesse, 1926&ndash;1930 ↗</a>.</li>
+                        <li>The <a href="https://www.goodreads.com/quotes/9571403-je-suis-trop-intelligente-trop-exigeante-et-trop-riche-pour" target="_blank" rel="noopener">full French passage ↗</a> is credited to that same student diary, ending &lsquo;Je n&rsquo;ai que moi.&rsquo;</li>
+                        <li>The diary was published in French by Gallimard (2008); the shown English is an uncredited popular translation of the French &lsquo;trop riche&rsquo; original, not a verified published rendering. A scholarly English edition covers only the early notebooks &mdash; <a href="https://www.press.uillinois.edu/books/?id=c031427" target="_blank" rel="noopener">Diary of a Philosophy Student ↗</a>, Vols. 1&ndash;2 (1926&ndash;29), trans. Barbara Klaw &mdash; and is not confirmed to contain this entry.</li>
+                    </ul>
+                </div>
+                <div class="rights rights-in-copyright">
+                    <span class="rights-badge"><span class="rights-mark" aria-hidden="true">©</span>In copyright</span>
+                    <p class="rights-body">Although Beauvoir wrote these lines as a student between 1926 and 1930, the diary was <em>first published</em> only in 2008 (Gallimard, <em>Cahiers de jeunesse</em>), and the English translation dates from 2006 onward &mdash; so both the French text and its translation are firmly in copyright, held by Gallimard/the Beauvoir estate and the University of Illinois Press respectively.</p>
+                </div>
+            </div>
+        </section>
+        <!-- ============ OFTEN MISATTRIBUTED ============ -->
+        <section aria-labelledby="misattr-h">
+            <div class="sec-head"><p class="kicker">Fact-check</p><h2 id="misattr-h">Genuine — but often mis-sourced</h2></div>
+            <div class="misattr">
+                <p class="misattr-intro">The words really are Beauvoir&rsquo;s, so this is not a fabrication. The recurring error is about <em>where</em> they come from: they are pinned to her famous feminist works rather than to the youthful diary that actually contains them.</p>
+                <div class="false-list">
+                    <div class="false-item">
+                        <span class="false-x" aria-hidden="true">✕</span>
+                        <div>
+                            <div class="false-who"><span class="visually-hidden">Wrong book</span>The Second Sex (1949) <span class="false-tag">mis-sourced</span></div>
+                            <p class="false-why">Aggregators and listicles routinely file the line among quotations from <em>The Second Sex</em>, but it predates that treatise by roughly two decades and appears in her student diary, the <a href="https://www.goodreads.com/quotes/9571403-je-suis-trop-intelligente-trop-exigeante-et-trop-riche-pour" target="_blank" rel="noopener">Cahiers de jeunesse ↗</a>.</p>
+                        </div>
+                    </div>
+                    <div class="false-item">
+                        <span class="false-x" aria-hidden="true">✕</span>
+                        <div>
+                            <div class="false-who"><span class="visually-hidden">No source at all</span>Quote-aggregator sites <span class="false-tag">unsourced</span></div>
+                            <p class="false-why">Most reposts (Goodreads, quote parks, Pinterest) give only the author&rsquo;s name with no citation &mdash; e.g. this <a href="https://quotepark.com/quotes/1410756-simone-de-beauvoir-i-am-too-intelligent-too-demanding-and-too-resou/" target="_blank" rel="noopener">quotepark entry ↗</a> lists no book, letter or date.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="truth-line">
+                    <span class="dot" aria-hidden="true">✓</span>
+                    <span>The passage comes from Beauvoir&rsquo;s <a href="https://www.goodreads.com/work/quotes/3213890-cahiers-de-jeunesse-1926-1930" target="_blank" rel="noopener">Cahiers de jeunesse, 1926&ndash;1930 ↗</a>, her Sorbonne-era diary, published by Gallimard in 2008 and translated into English as <em>Diary of a Philosophy Student</em>.</span>
+                </div>
+            </div>
+        </section>
+        <!-- ============ WHY IT MATTERED ============ -->
+        <section class="story" aria-labelledby="story-h">
+            <div class="sec-head"><p class="kicker">Context</p><h2 id="story-h">Why it resonates</h2></div>
+            <p>Written when Beauvoir was a philosophy student in her late teens and early twenties, the passage is a private declaration of self-sufficiency: too rich in inner life to be wholly possessed by anyone, resolved to live knowing &lsquo;no one will help me to live.&rsquo; It reads as an early sketch of the fiercely independent thinker she became.</p>
+            <p>Because the sentiment fits her later feminism so neatly, the line is frequently swept up into lists of quotations from <em>The Second Sex</em> &mdash; but it predates that book by two decades and belongs to the diaries, not the treatise.</p>
+            <p class="pull">&ldquo;I have only myself.&rdquo;</p>
+            <details>
+                <summary>A note on the wording</summary>
+                <div class="body">
+                    <p>The French &lsquo;trop riche&rsquo; (literally &lsquo;too rich&rsquo;) is usually Englished as &lsquo;too resourceful,&rsquo; and &lsquo;se charger de moi&rsquo; as &lsquo;take charge of me&rsquo; &mdash; both reasonable renderings, which is why the widely shared English text is a genuine translation rather than a fabrication.</p>
+                </div>
+            </details>
+        </section>
+        <!-- ============ DIG DEEPER ============ -->
+        <section aria-labelledby="research-h">
+            <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <div class="research-list">
+                <a class="research-item" href="https://www.goodreads.com/quotes/9571403-je-suis-trop-intelligente-trop-exigeante-et-trop-riche-pour" target="_blank" rel="noopener">
+                    <div class="research-top"><span class="research-label">Goodreads — French original &amp; source</span><span class="research-host">goodreads.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
+                    <p class="research-what">The full French passage, attributed to Cahiers de jeunesse: 1926-1930.</p>
+                </a>
+                <a class="research-item" href="https://www.goodreads.com/work/quotes/3213890-cahiers-de-jeunesse-1926-1930" target="_blank" rel="noopener">
+                    <div class="research-top"><span class="research-label">Goodreads — Cahiers de jeunesse quotes</span><span class="research-host">goodreads.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
+                    <p class="research-what">Quote collection from the source diary, containing this passage in French.</p>
+                </a>
+                <a class="research-item" href="https://www.press.uillinois.edu/books/?id=c031427" target="_blank" rel="noopener">
+                    <div class="research-top"><span class="research-label">Diary of a Philosophy Student (UI Press)</span><span class="research-host">press.uillinois.edu</span><span class="research-arrow" aria-hidden="true">→</span></div>
+                    <p class="research-what">The English translation of Beauvoir's 1926–27 student diary, trans. Barbara Klaw.</p>
+                </a>
+                <a class="research-item" href="https://en.wikipedia.org/wiki/Simone_de_Beauvoir" target="_blank" rel="noopener">
+                    <div class="research-top"><span class="research-label">Simone de Beauvoir — Wikipedia</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
+                    <p class="research-what">Biography and bibliography of the author.</p>
+                </a>
+                <a class="research-item" href="https://en.wikiquote.org/wiki/Simone_de_Beauvoir" target="_blank" rel="noopener">
+                    <div class="research-top"><span class="research-label">Simone de Beauvoir — Wikiquote</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
+                    <p class="research-what">Sourced and attributed quotations for cross-checking.</p>
+                </a>
+            </div>
+        </section>
+        <!-- ============ ABOUT THE AUTHOR ============ -->
+        <section aria-labelledby="author-h">
+            <div class="sec-head"><p class="kicker">The true author</p><h2 id="author-h">About the author</h2></div>
+            <div class="author-card">
+                <div class="author-avatar" aria-hidden="true">SB</div>
+                <div>
+                    <p class="a-name"><a href="/authors/simone-de-beauvoir">Simone de Beauvoir</a></p>
+                    <p class="a-meta">1908–1986 · French philosopher, novelist &amp; feminist theorist</p>
+                    <p><strong>Simone de Beauvoir</strong> (1908&ndash;1986) was a French existentialist philosopher and writer, best known for <em>The Second Sex</em> (1949), a founding text of modern feminism. Long before that, as a philosophy student at the Sorbonne in the late 1920s, she kept intimate diaries wrestling with independence, solitude and self-worth &mdash; the notebooks published posthumously as <em>Cahiers de jeunesse</em>. This line comes from those youthful pages.</p>
+                </div>
+            </div>
+        </section>
+        <!-- ============ CITE THIS PAGE ============ -->
+        <section aria-labelledby="cite-h">
+            <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
+            <div class="cite">
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeSrc">Simone de Beauvoir, <em>Cahiers de jeunesse, 1926&ndash;1930</em>, ed. Sylvie Le Bon de Beauvoir (Paris: Gallimard, 2008). The displayed English is an uncredited popular translation of the French; the early notebooks appear in English as <em>Diary of a Philosophy Student</em>, Vols. 1&ndash;2 (1926&ndash;29), trans. Barbara Klaw (Urbana: University of Illinois Press, 2006, 2019), which is not verified to contain this entry.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/i-am-too-intelligent-too-demanding-and-too-resourceful-for</code></p>
+                </div>
+            </div>
+        </section>
+        <!-- ============ GAME CTA ============ -->
+        <aside class="game-cta" aria-label="Related game">
+            <p class="cta-title">Think you know your quotes?</p>
+            <p>Quotle is a daily puzzle: guess the author from the words alone.</p>
+            <a class="game-cta-btn" href="https://gameshelf.co/quotle/" target="_blank" rel="noopener">Play today's Quotle <span aria-hidden="true">→</span></a>
+        </aside>
+    </main>
+
+    <footer>
+        <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+
+    <script>
+        const quoteText = document.getElementById('quote-heading').textContent.trim();
+        const copyAttribution = "Simone de Beauvoir, Cahiers de jeunesse, 1926–1930 (Gallimard, 2008); displayed English is an uncredited popular translation of the French";
+        function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
+        async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
+        document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));
+        document.getElementById('shareBtn').addEventListener('click', async () => {
+            const data = { title: 'Quotle.info', text: '"'+quoteText+'" '+copyAttribution, url: location.href };
+            if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
+        });
+        document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
+            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
+            copy(el.textContent.trim(), 'Citation copied');
+        }));
+    </script>
+    <script>
+        (function(){
+            var d = document.documentElement;
+            var btn = document.getElementById('dispBtn'), panel = document.getElementById('dispPanel');
+            if (!btn || !panel) return;
+
+            // ---- Theme (Auto / Light / Dark) ----
+            var THEME_KEY = 'quotle-theme';
+            var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+            var themeBtns = Array.prototype.slice.call(panel.querySelectorAll('[data-theme-choice]'));
+            function currentTheme(){ try { var t = localStorage.getItem(THEME_KEY); return (t === 'light' || t === 'dark' || t === 'auto') ? t : 'auto'; } catch (e) { return 'auto'; } }
+            function resolved(mode){ if (mode === 'dark') return 'dark'; if (mode === 'light') return 'light'; return (mq && mq.matches) ? 'dark' : 'light'; }
+            function applyTheme(mode, save){
+                d.setAttribute('data-theme', resolved(mode));
+                themeBtns.forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-theme-choice') === mode ? 'true' : 'false'); });
+                if (save) { try { localStorage.setItem(THEME_KEY, mode); } catch (e) {} }
+            }
+            applyTheme(currentTheme(), false);
+            themeBtns.forEach(function(b){ b.addEventListener('click', function(){ applyTheme(b.getAttribute('data-theme-choice'), true); }); });
+            if (mq && mq.addEventListener) mq.addEventListener('change', function(){ if (currentTheme() === 'auto') applyTheme('auto', false); });
+
+            // ---- Text size ----
+            var SIZE_KEY = 'quotle-text-size';
+            var SIZE_MAP = { normal: '100%', large: '112.5%', xl: '125%', xxl: '140%' };
+            var sizeBtns = Array.prototype.slice.call(panel.querySelectorAll('[data-size]'));
+            function currentSize(){ try { var s = localStorage.getItem(SIZE_KEY); return SIZE_MAP[s] ? s : 'normal'; } catch (e) { return 'normal'; } }
+            function applySize(size, save){
+                d.style.fontSize = SIZE_MAP[size] || '100%';
+                sizeBtns.forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-size') === size ? 'true' : 'false'); });
+                if (save) { try { localStorage.setItem(SIZE_KEY, size); } catch (e) {} }
+            }
+            applySize(currentSize(), false);
+            sizeBtns.forEach(function(b){ b.addEventListener('click', function(){ applySize(b.getAttribute('data-size'), true); }); });
+
+            // ---- Panel open/close ----
+            function setOpen(o){ panel.classList.toggle('open', o); btn.setAttribute('aria-expanded', o ? 'true' : 'false'); }
+            btn.addEventListener('click', function(e){ e.stopPropagation(); setOpen(!panel.classList.contains('open')); });
+            document.addEventListener('click', function(e){ if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) setOpen(false); });
+            document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && panel.classList.contains('open')) { setOpen(false); btn.focus(); } });
+        })();
+    </script>
+</body>
+</html>
