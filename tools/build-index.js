@@ -49,6 +49,13 @@ const BENCH_SHOWN = 48;
 const benchTotal = BENCH.length;
 const BENCH_LABEL = { misattributed: 'Likely misattributed', disputed: 'Disputed', 'genuine-famous': 'Verifying source' };
 
+// Interactive layer (Phase 2): +1 voting + nominations via the Cloudflare Worker. Feature-flagged
+// on the presence of data/harvest-config.json {votesApi, turnstileSitekey} — both PUBLIC values.
+// Absent/empty → display-only bench (the "coming soon" note). So a missing backend never breaks the site.
+let CFG = {};
+try { CFG = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'harvest-config.json'), 'utf8')); } catch (_) { /* optional */ }
+const INTERACTIVE = !!(CFG.votesApi && CFG.turnstileSitekey);
+
 const featuredCard = (f) => {
   const m = bySlug[f.slug];
   return `                <a class="feat" href="/who-said/${f.slug}/">
@@ -114,23 +121,83 @@ const SEARCH_JS = `    <script>
         })();
     </script>`;
 
+const voteBtn = (c) => `<button class="vote" type="button" data-slug="${esc(c.slug)}" title="Boost this quote up the research queue" aria-label="Boost priority for &ldquo;${esc(c.quote)}&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>`;
 const benchCard = (c) => `                <article class="bench-card ${c.category}">
                     <p class="bench-q">&ldquo;${esc(c.quote)}&rdquo;</p>
                     <div class="bench-foot">
                         <span class="bench-cred">Pinned on ${esc(c.magnetAuthor || 'unknown')}</span>
                         <span class="bench-tag ${c.category}">${BENCH_LABEL[c.category] || 'Queued'}</span>
                     </div>
-${c.documentedAt ? `                    <a class="bench-src" href="${esc(c.documentedAt)}" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>` : ''}
+                    <div class="bench-actions">
+${INTERACTIVE ? `                        ${voteBtn(c)}` : ''}
+${c.documentedAt ? `                        <a class="bench-src" href="${esc(c.documentedAt)}" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>` : ''}
+                    </div>
                 </article>`;
+const nomForm = `
+            <form class="nom" id="nomForm" aria-label="Nominate a quote or author">
+                <h3 class="nom-h">Spot a famous fake we&rsquo;re missing?</h3>
+                <p class="nom-sub">Nominate a quote or the name it&rsquo;s pinned on. We trace the source before anything goes live &mdash; nothing you submit is published unverified.</p>
+                <input class="nom-in" name="author" maxlength="120" placeholder="Who it&rsquo;s usually credited to (required)" autocomplete="off" required>
+                <input class="nom-in" name="quote" maxlength="600" placeholder="The quote, if you have it (optional)" autocomplete="off">
+                <input class="nom-in" name="note" maxlength="600" placeholder="Anything you know about the real source (optional)" autocomplete="off">
+                <button class="nom-btn" type="submit">Submit nomination</button>
+                <p class="nom-msg" id="nomMsg" role="status" hidden></p>
+            </form>`;
+const benchNote = INTERACTIVE
+  ? nomForm
+  : `            <p class="bench-note">Voting to prioritise these &mdash; and nominating new authors and quotes &mdash; is coming soon.</p>`;
 const benchBlock = benchTotal ? `
         <section class="bench" aria-label="Quotes queued for verification">
             <p class="feat-kicker">On the research bench</p>
-            <div class="sec-head-row"><h2 class="browse-h">Queued for verification</h2><p class="browse-sub">Lines we&rsquo;ve flagged as commonly misquoted or misattributed and queued for a full source trace. <strong>Not yet verified</strong> &mdash; each links to the catalog entry that put it on our list. ${benchTotal} in the queue${benchTotal > BENCH_SHOWN ? `, top ${BENCH_SHOWN} shown` : ''}.</p></div>
+            <div class="sec-head-row"><h2 class="browse-h">Queued for verification</h2><p class="browse-sub">Lines we&rsquo;ve flagged as commonly misquoted or misattributed and queued for a full source trace. <strong>Not yet verified</strong> &mdash; each links to the catalog entry that put it on our list.${INTERACTIVE ? ' <strong>Tap ▲ to bump one up the queue.</strong>' : ''} ${benchTotal} in the queue${benchTotal > BENCH_SHOWN ? `, top ${BENCH_SHOWN} shown` : ''}.</p></div>
             <div class="bench-grid">
 ${BENCH.slice(0, BENCH_SHOWN).map(benchCard).join('\n')}
             </div>
-            <p class="bench-note">Voting to prioritise these &mdash; and nominating new authors and quotes &mdash; is coming soon.</p>
+${benchNote}
         </section>` : '';
+
+const TURNSTILE_HEAD = INTERACTIVE ? `    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>` : '';
+const BENCH_JS = INTERACTIVE ? `    <script>
+        (function(){
+            var API=${JSON.stringify(CFG.votesApi)}, SITEKEY=${JSON.stringify(CFG.turnstileSitekey)};
+            var VKEY='quotle-voted', voted={};
+            try { voted=JSON.parse(localStorage.getItem(VKEY)||'{}')||{}; } catch(e){}
+            function save(){ try{ localStorage.setItem(VKEY,JSON.stringify(voted)); }catch(e){} }
+            fetch(API+'/votes').then(function(r){return r.json();}).then(function(d){
+                var v=(d&&d.votes)||{};
+                [].forEach.call(document.querySelectorAll('.vote'),function(b){
+                    var s=b.getAttribute('data-slug');
+                    b.querySelector('.vote-n').textContent=v[s]||0;
+                    if(voted[s]){ b.classList.add('voted'); b.disabled=true; }
+                });
+            }).catch(function(){ [].forEach.call(document.querySelectorAll('.vote-n'),function(n){ n.textContent='0'; }); });
+            var wid=null, pending=null;
+            function ensure(){ if(wid!==null||!window.turnstile) return; var el=document.createElement('div'); el.style.display='none'; document.body.appendChild(el);
+                wid=window.turnstile.render(el,{sitekey:SITEKEY,size:'invisible',callback:function(t){ var c=pending; pending=null; if(c)c(t); },'error-callback':function(){ var c=pending; pending=null; if(c)c(null); }}); }
+            function token(cb){ ensure(); if(wid===null){ cb(null); return; } pending=cb; try{ window.turnstile.reset(wid); window.turnstile.execute(wid); }catch(e){ pending=null; cb(null); } }
+            function vote(b){ var s=b.getAttribute('data-slug'); if(voted[s]||b.disabled) return; b.disabled=true;
+                token(function(t){ if(!t){ b.disabled=false; return; }
+                    fetch(API+'/vote',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:s,token:t})})
+                    .then(function(r){return r.json();}).then(function(d){
+                        if(d&&d.ok){ b.querySelector('.vote-n').textContent=d.count; b.classList.add('voted'); voted[s]=1; save(); }
+                        else { b.disabled=false; }
+                    }).catch(function(){ b.disabled=false; }); }); }
+            [].forEach.call(document.querySelectorAll('.vote'),function(b){ b.addEventListener('click',function(){ vote(b); }); });
+            var f=document.getElementById('nomForm');
+            function show(el,t,err){ el.textContent=t; el.hidden=false; el.className='nom-msg'+(err?' err':''); }
+            if(f){ f.addEventListener('submit',function(e){ e.preventDefault();
+                var msg=document.getElementById('nomMsg'), btn=f.querySelector('.nom-btn');
+                var author=f.author.value.trim(), quote=f.quote.value.trim(), note=f.note.value.trim();
+                if(!author&&!quote){ show(msg,'Add at least an author or a quote.',true); return; }
+                btn.disabled=true; show(msg,'Checking\\u2026',false);
+                token(function(t){ if(!t){ btn.disabled=false; show(msg,'Verification failed \\u2014 please try again.',true); return; }
+                    fetch(API+'/nominate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({author:author,quote:quote,note:note,token:t})})
+                    .then(function(r){return r.json();}).then(function(d){
+                        if(d&&d.ok){ f.reset(); btn.disabled=false; show(msg,'Thank you \\u2014 added to the review queue.',false); }
+                        else { btn.disabled=false; show(msg,(d&&d.error)||'Something went wrong.',true); }
+                    }).catch(function(){ btn.disabled=false; show(msg,'Network error \\u2014 please try again.',true); }); }); }); }
+        })();
+    </script>` : '';
 
 const featuredBlock = FEATURED.length ? `
         <section class="featured" aria-label="Notable reattributions">
@@ -183,6 +250,7 @@ ${HEAD_SCRIPT}
     }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+${TURNSTILE_HEAD}
     <style>
 ${ROOT_CSS}
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -261,9 +329,28 @@ ${ROOT_CSS}
         .bench-tag.misattributed { color:var(--caution); border-color:rgba(154,163,214,0.45); }
         .bench-tag.disputed { color:var(--amber); border-color:rgba(224,162,78,0.4); }
         .bench-tag.genuine-famous { color:var(--sage); border-color:rgba(126,179,139,0.4); }
-        .bench-src { font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:500; color:var(--burgundy); text-decoration:none; margin-top:auto; }
+        .bench-actions { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:auto; padding-top:4px; }
+        .bench-src { font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:500; color:var(--burgundy); text-decoration:none; }
         .bench-src:hover { text-decoration:underline; }
         .bench-note { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); text-align:center; margin-top:22px; }
+        /* +1 vote button (Phase 2 interactive layer) */
+        .vote { font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:700; color:var(--slate); background:transparent; border:1px solid var(--border); border-radius:999px; padding:5px 12px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:color 0.15s,border-color 0.15s,background 0.15s; }
+        .vote:hover:not(:disabled) { color:var(--gold); border-color:rgba(255,211,105,0.4); }
+        .vote .vote-caret { font-size:0.68rem; line-height:1; }
+        .vote .vote-n { min-width:0.9em; text-align:center; font-variant-numeric:tabular-nums; }
+        .vote.voted { color:var(--gold); border-color:rgba(255,211,105,0.45); background:rgba(255,211,105,0.08); }
+        .vote:disabled { cursor:default; }
+        /* nominate form */
+        .nom { margin-top:30px; background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:26px 24px; display:flex; flex-direction:column; gap:10px; max-width:560px; margin-left:auto; margin-right:auto; }
+        .nom-h { font-family:'Playfair Display',serif; font-weight:900; font-size:1.15rem; }
+        .nom-sub { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-bottom:6px; }
+        .nom-in { font-family:'DM Sans',sans-serif; font-size:0.92rem; color:var(--ink); background:var(--bg-deep); border:1px solid var(--border); border-radius:10px; padding:11px 14px; outline:none; transition:border-color 0.2s; }
+        .nom-in:focus { border-color:var(--burgundy); }
+        .nom-in::placeholder { color:var(--text-muted); }
+        .nom-btn { align-self:flex-start; margin-top:4px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.88rem; color:#fff; background:linear-gradient(135deg,var(--burgundy),var(--burgundy-deep)); border:none; border-radius:11px; padding:11px 22px; cursor:pointer; }
+        .nom-btn:disabled { opacity:0.55; cursor:default; }
+        .nom-msg { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--sage); margin-top:4px; }
+        .nom-msg.err { color:var(--caution); }
         .game-cta { margin-top:56px; text-align:center; background:linear-gradient(135deg,var(--burgundy-glow),rgba(255,211,105,0.1)); border:1px solid rgba(212,98,122,0.25); border-radius:22px; padding:38px 28px; }
         .game-cta h2 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:8px; }
         .game-cta p { color:var(--slate); font-size:0.95rem; margin-bottom:20px; }
@@ -303,6 +390,7 @@ ${benchBlock}
         <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
     </footer>
 ${SEARCH_JS}
+${BENCH_JS}
 ${SCRIPT}
 </body>
 </html>
