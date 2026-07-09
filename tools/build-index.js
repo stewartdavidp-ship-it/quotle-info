@@ -36,6 +36,19 @@ Object.values(byConf).forEach((arr) => arr.sort((a, b) => a.quote.localeCompare(
 
 const total = manifest.length;
 
+// Research bench: candidates queued for verification (data/harvest-queue.json). These are
+// NOT verified content — they are flagged, unverified targets shown for transparency. We never
+// assert the reattribution as fact here (that would break the anti-fabrication contract); we
+// only say what they're pinned on and link to the catalog entry that flagged them.
+let BENCH = [];
+try {
+  const hq = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'harvest-queue.json'), 'utf8'));
+  BENCH = (hq.candidates || []).filter((c) => c.status === 'queued');
+} catch (_) { /* backlog optional */ }
+const BENCH_SHOWN = 48;
+const benchTotal = BENCH.length;
+const BENCH_LABEL = { misattributed: 'Likely misattributed', disputed: 'Disputed', 'genuine-famous': 'Verifying source' };
+
 const featuredCard = (f) => {
   const m = bySlug[f.slug];
   return `                <a class="feat" href="/who-said/${f.slug}/">
@@ -100,6 +113,24 @@ const SEARCH_JS = `    <script>
             try { var pre=new URLSearchParams(location.search).get('q'); if(pre){ q.value=pre; apply(); } } catch(e){}
         })();
     </script>`;
+
+const benchCard = (c) => `                <article class="bench-card ${c.category}">
+                    <p class="bench-q">&ldquo;${esc(c.quote)}&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on ${esc(c.magnetAuthor || 'unknown')}</span>
+                        <span class="bench-tag ${c.category}">${BENCH_LABEL[c.category] || 'Queued'}</span>
+                    </div>
+${c.documentedAt ? `                    <a class="bench-src" href="${esc(c.documentedAt)}" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>` : ''}
+                </article>`;
+const benchBlock = benchTotal ? `
+        <section class="bench" aria-label="Quotes queued for verification">
+            <p class="feat-kicker">On the research bench</p>
+            <div class="sec-head-row"><h2 class="browse-h">Queued for verification</h2><p class="browse-sub">Lines we&rsquo;ve flagged as commonly misquoted or misattributed and queued for a full source trace. <strong>Not yet verified</strong> &mdash; each links to the catalog entry that put it on our list. ${benchTotal} in the queue${benchTotal > BENCH_SHOWN ? `, top ${BENCH_SHOWN} shown` : ''}.</p></div>
+            <div class="bench-grid">
+${BENCH.slice(0, BENCH_SHOWN).map(benchCard).join('\n')}
+            </div>
+            <p class="bench-note">Voting to prioritise these &mdash; and nominating new authors and quotes &mdash; is coming soon.</p>
+        </section>` : '';
 
 const featuredBlock = FEATURED.length ? `
         <section class="featured" aria-label="Notable reattributions">
@@ -219,6 +250,20 @@ ${ROOT_CSS}
         .chip.active span { color:var(--burgundy); }
         .no-results { font-family:'DM Sans',sans-serif; color:var(--text-muted); text-align:center; padding:34px 20px; }
         .no-results a { color:var(--sage); }
+        /* research bench: queued-for-verification candidates (dashed = not yet verified) */
+        .bench { margin-top:56px; }
+        .bench-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+        .bench-card { background:var(--bg-card); border:1px dashed var(--border-accent); border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:12px; }
+        .bench-q { font-style:italic; font-size:1rem; color:var(--ink); }
+        .bench-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+        .bench-cred { font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.8rem; color:var(--text-muted); }
+        .bench-tag { font-family:'DM Sans',sans-serif; font-size:0.68rem; font-weight:600; padding:3px 9px; border-radius:999px; border:1px solid; white-space:nowrap; }
+        .bench-tag.misattributed { color:var(--caution); border-color:rgba(154,163,214,0.45); }
+        .bench-tag.disputed { color:var(--amber); border-color:rgba(224,162,78,0.4); }
+        .bench-tag.genuine-famous { color:var(--sage); border-color:rgba(126,179,139,0.4); }
+        .bench-src { font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:500; color:var(--burgundy); text-decoration:none; margin-top:auto; }
+        .bench-src:hover { text-decoration:underline; }
+        .bench-note { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); text-align:center; margin-top:22px; }
         .game-cta { margin-top:56px; text-align:center; background:linear-gradient(135deg,var(--burgundy-glow),rgba(255,211,105,0.1)); border:1px solid rgba(212,98,122,0.25); border-radius:22px; padding:38px 28px; }
         .game-cta h2 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:8px; }
         .game-cta p { color:var(--slate); font-size:0.95rem; margin-bottom:20px; }
@@ -247,6 +292,7 @@ ${THEME_CSS}
     <main>
 ${featuredBlock}
 ${browseBlock}
+${benchBlock}
         <aside class="game-cta">
             <h2>Think you know your quotes?</h2>
             <p>Quotle is a daily puzzle: guess the author from the words alone.</p>
