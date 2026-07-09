@@ -1,0 +1,23 @@
+{
+  // quotle-info community backend (votes + nominations).
+  // Deploy to a SEPARATE Cloudflare account from Mast — see README.md.
+  "name": "quotle-community",
+  "main": "src/index.js",
+  "compatibility_date": "2026-05-05",
+  "observability": { "enabled": true },
+
+  // D1: create with `wrangler d1 create quotle-community`, then paste the printed
+  // database_id below (it is NOT a secret — it's just an identifier).
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "quotle-community",
+      "database_id": "PASTE-D1-DATABASE-ID-HERE"
+    }
+  ]
+
+  // Secrets are NOT declared here — set them once with:
+  //   wrangler secret put TURNSTILE_SECRET
+  //   wrangler secret put ADMIN_TOKEN
+  //   wrangler secret put IP_SALT
+}

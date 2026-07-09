@@ -21,6 +21,8 @@
  *                                                             [{text,author,index:null}] for the
  *                                                             selected items (feeds generate-r5)
  *   node tools/harvest.js skip   <slug> [<slug> ...]          mark candidate(s) 'skipped'
+ *   node tools/harvest.js votes  <votes.json>                 apply vote tallies (curl <worker>/votes)
+ *                                                             → boosts upvoted candidates in the queue
  *   node tools/harvest.js report                              print summary + rebuild digest
  *
  * Canonical data:   data/harvest-queue.json  ({meta, candidates})
@@ -74,6 +76,7 @@ function priority(c) { return CAT_RANK[c.category] || 9; }
 function sortCandidates(cands) {
   cands.sort((a, b) =>
     (STATUS_RANK[a.status] ?? 9) - (STATUS_RANK[b.status] ?? 9) ||
+    ((b.votes || 0) - (a.votes || 0)) ||   // community demand (+1) bubbles up within a status
     priority(a) - priority(b) ||
     (RIGHTS_RANK[a.rightsEra] ?? 9) - (RIGHTS_RANK[b.rightsEra] ?? 9) ||
     String(a.magnetAuthor).localeCompare(String(b.magnetAuthor)) ||
@@ -115,11 +118,11 @@ function writeDigest(data) {
     const rows = c.filter(pred);
     if (!rows.length) return;
     L.push(`## ${title} (${rows.length})`, '');
-    L.push(`| # | Cat | Conf | Rights | Magnet author | Quote | Real origin | Doc${showWave ? ' | Wave' : ''} |`);
-    L.push(`|--:|-----|------|--------|---------------|-------|-------------|-----${showWave ? '|------' : ''}|`);
+    L.push(`| # | ▲ | Cat | Conf | Rights | Magnet author | Quote | Real origin | Doc${showWave ? ' | Wave' : ''} |`);
+    L.push(`|--:|--:|-----|------|--------|---------------|-------|-------------|-----${showWave ? '|------' : ''}|`);
     rows.forEach((x, i) => {
       const doc = x.documentedAt ? `[src](${x.documentedAt})` : '';
-      L.push(`| ${i + 1} | ${x.category} | ${x.likelyConfidence} | ${x.rightsEra} | ${esc(x.magnetAuthor)} | ${esc(trunc(x.quote, 90))} | ${esc(trunc(x.trueOrigin, 60))} | ${doc}${showWave ? ` | ${x.wave || ''}` : ''} |`);
+      L.push(`| ${i + 1} | ${x.votes || 0} | ${x.category} | ${x.likelyConfidence} | ${x.rightsEra} | ${esc(x.magnetAuthor)} | ${esc(trunc(x.quote, 90))} | ${esc(trunc(x.trueOrigin, 60))} | ${doc}${showWave ? ` | ${x.wave || ''}` : ''} |`);
     });
     L.push('');
   };
@@ -221,6 +224,25 @@ function cmdSkip(args) {
   console.log(`skipped ${n}`);
 }
 
+function cmdVotes(args) {
+  const f = parseFlags(args);
+  const src = (f._ || [])[0];
+  if (!src) { console.error('usage: votes <votes.json>   (from: curl <worker>/votes > votes.json)'); process.exit(1); }
+  const raw = JSON.parse(fs.readFileSync(src, 'utf8'));
+  const map = raw.votes || raw;
+  const data = loadBacklog();
+  const bySlug = new Map(data.candidates.map((c) => [c.slug, c]));
+  let matched = 0, withVotes = 0;
+  for (const [slug, count] of Object.entries(map)) {
+    const c = bySlug.get(slug);
+    if (c) { c.votes = count | 0; matched++; if (c.votes > 0) withVotes++; }
+  }
+  save(data);
+  console.log(`votes: applied tallies to ${matched} candidates (${withVotes} with >0). Queue re-sorted — upvoted rise within their status.`);
+  const top = data.candidates.filter((c) => c.status === 'queued' && (c.votes || 0) > 0).slice(0, 10);
+  if (top.length) { console.log('most requested:'); top.forEach((c) => console.log(`  ▲${String(c.votes).padStart(3)}  ${c.magnetAuthor}: "${trunc(c.quote, 60)}"`)); }
+}
+
 function printSummary(data) {
   const m = data.meta;
   console.log(`backlog: ${m.total} total · ${m.queued} queued · ${m.selected} selected · ${m.ingested} ingested · ${m.skipped} skipped`);
@@ -236,6 +258,7 @@ switch (cmd) {
   case 'unselect': cmdUnselect(rest); break;
   case 'batch': cmdBatch(rest); break;
   case 'skip': cmdSkip(rest); break;
+  case 'votes': cmdVotes(rest); break;
   case 'report': case undefined: { const d = loadBacklog(); save(d); printSummary(d); break; }
   default: console.error(`unknown command: ${cmd}\nsee header of tools/harvest.js for usage`); process.exit(1);
 }
