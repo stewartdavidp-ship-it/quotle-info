@@ -141,6 +141,8 @@ const SCRIPT = `    <script>
             document.addEventListener('click', function(e){ if (panel.classList.contains('open') && !panel.contains(e.target) && !btn.contains(e.target)) setOpen(false); });
             document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && panel.classList.contains('open')) { setOpen(false); btn.focus(); } });
         })();
-    </script>`;
+    </script>
+    <!-- Privacy-friendly, cookieless analytics (GoatCounter) — injected site-wide via SCRIPT -->
+    <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>`;
 
 module.exports = { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT };
