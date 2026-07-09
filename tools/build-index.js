@@ -45,7 +45,9 @@ const FEATURED = [
   { slug: 'stay-hungry-stay-foolish', credited: 'Steve Jobs', real: 'Stewart Brand' },
   { slug: 'quality-is-not-an-act-it-is-a-habit', credited: 'Aristotle', real: 'Will Durant' },
   { slug: 'the-future-belongs-to-those-who-believe-in-the-beauty-of', credited: 'Eleanor Roosevelt', real: 'Anonymous (1978)' },
-].filter((f) => bySlug[f.slug]);
+  { slug: 'the-journey-of-a-thousand-miles-begins-with-a-single-step', credited: 'Confucius', real: 'Lao Tzu' },
+  { slug: 'whatever-you-are-be-a-good-one', credited: 'Abraham Lincoln', real: 'Thackeray' },
+].filter((f) => bySlug[f.slug]).slice(0, 6);
 const featuredCard = (f) => {
   const m = bySlug[f.slug];
   return `                <a class="feat" href="/who-said/${f.slug}/">
@@ -281,7 +283,9 @@ function _baseCss() { return `
         main { max-width:1000px; margin:0 auto; padding:8px 24px 60px; }
         .featured { margin-top:40px; }
         .feat-kicker { font-family:'DM Sans',sans-serif; text-transform:uppercase; font-size:0.7rem; font-weight:700; letter-spacing:0.2em; color:var(--burgundy); margin-bottom:16px; }
-        .feat-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; }
+        .feat-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+        @media (max-width:820px){ .feat-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+        @media (max-width:520px){ .feat-grid { grid-template-columns:1fr; } }
         .feat { display:block; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:14px; padding:20px 22px; transition:transform 0.2s; }
         .feat:hover { transform:translateY(-3px); }
         .feat-q { font-style:italic; font-size:1.02rem; color:var(--ink); }
