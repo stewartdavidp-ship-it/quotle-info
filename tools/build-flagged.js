@@ -18,6 +18,7 @@ const fs = require('fs');
 const path = require('path');
 const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
+const { NAV, CHROME_CSS, SEARCH_JS } = require('./chrome');
 const ROOT = path.resolve(__dirname, '..');
 
 // Credible-source descriptions (shown so the reader knows WHO flagged it and why they're trusted).
@@ -126,19 +127,17 @@ ${HEAD_SCRIPT}
     <meta name="description" content="A quote we&rsquo;ve flagged for verification, and the credible source that documented it.">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,700&family=Source+Serif+4:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-${STYLE}
+${STYLE}${CHROME_CSS}
     </style>
 ${THEME_CSS}
 </head>
 <body>
-    <nav class="topnav">
-        <a class="brand" href="/"><span class="brand-icon" aria-hidden="true">📖</span>quotle<span>.info</span></a>
-        ${CONTROL}
-    </nav>
+${NAV('review')}
     <main>
         <div id="card"><p class="kicker">On the research bench</p><p class="body">Loading&hellip;</p></div>
     </main>
 ${CLIENT}
+${SEARCH_JS}
 ${SCRIPT}
 </body>
 </html>

@@ -13,6 +13,7 @@ const fs = require('fs');
 const path = require('path');
 const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
+const { NAV, CHROME_CSS, SEARCH_JS } = require('./chrome');
 const ROOT = path.resolve(__dirname, '..');
 
 // confidence glyphs/labels mirror template.js CONFIDENCE (kept in sync by hand — 3 states)
@@ -90,18 +91,12 @@ ${HEAD_SCRIPT}
     <meta property="og:site_name" content="Quotle.info">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-${STYLE}
+${STYLE}${CHROME_CSS}
     </style>
 ${THEME_CSS}
 </head>
 <body>
-    <nav class="topnav" aria-label="Primary">
-        <a href="/" class="brand"><span class="brand-icon" aria-hidden="true">📖</span>quotle<span>.info</span></a>
-        <div class="nav-actions">
-            <a href="/how-we-verify" class="nav-verify" aria-current="page">✓ How we verify</a>
-            ${CONTROL}
-        </div>
-    </nav>
+${NAV('')}
     <main>
         <header class="hero">
             <p class="kicker">The standard</p>
@@ -157,6 +152,7 @@ ${STATES.map(stateRow).join('\n')}
     <footer>
         <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
     </footer>
+${SEARCH_JS}
 ${SCRIPT}
 </body>
 </html>
