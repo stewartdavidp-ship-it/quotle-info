@@ -22,6 +22,14 @@ const QUOTES_DIR = path.join(ROOT, 'data', 'quotes');
 const OUT = path.join(ROOT, 'authors');
 const ORIGIN = 'https://quotle.info';
 
+// decode HTML entities / strip tags → plain text for JSON-LD string values
+const plain = (s) => String(s || '').replace(/<[^>]+>/g, '')
+  .replace(/&mdash;/g, '—').replace(/&ndash;/g, '–').replace(/&middot;/g, '·')
+  .replace(/&ldquo;/g, '“').replace(/&rdquo;/g, '”').replace(/&lsquo;/g, '‘').replace(/&rsquo;/g, '’')
+  .replace(/&hellip;/g, '…').replace(/&([a-z]+);/g, (m, e) => ({ amp: '&', quot: '"', lt: '<', gt: '>' }[e] || m))
+  .replace(/&#(\d+);/g, (m, d) => String.fromCharCode(+d)).replace(/\s+/g, ' ').trim();
+const jsonLd = (obj) => JSON.stringify(obj, null, 2).split('\n').map((l, i) => (i === 0 ? l : '    ' + l)).join('\n');
+
 const records = fs.readdirSync(QUOTES_DIR).filter((f) => f.endsWith('.json'))
   .map((f) => JSON.parse(fs.readFileSync(path.join(QUOTES_DIR, f), 'utf8')));
 const authors = aggregateAuthors(records);
@@ -134,7 +142,21 @@ for (const a of authors) {
     <meta property="og:type" content="profile">
     <meta property="og:title" content="${esc(a.name)} — quotes traced to source">
     <meta property="og:url" content="${ORIGIN}/authors/${a.slug}">
-    <meta property="og:site_name" content="Quotle.info">`;
+    <meta property="og:site_name" content="Quotle.info">
+    <script type="application/ld+json">
+    ${jsonLd({
+      '@context': 'https://schema.org',
+      '@type': 'ProfilePage',
+      '@id': `${ORIGIN}/authors/${a.slug}`,
+      mainEntity: {
+        '@type': 'Person',
+        '@id': `${ORIGIN}/authors/${a.slug}#person`,
+        name: plain(a.name),
+        description: plain(a.metaLine),
+        subjectOf: a.quotes.map((q) => ({ '@type': 'Quotation', '@id': `${ORIGIN}/who-said/${q.slug}#quotation`, text: plain(q.quote), url: `${ORIGIN}/who-said/${q.slug}` })),
+      },
+    })}
+    </script>`;
   const inner = `    <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a><span class="sep" aria-hidden="true">›</span>
         <a href="/authors/">Authors</a><span class="sep" aria-hidden="true">›</span>

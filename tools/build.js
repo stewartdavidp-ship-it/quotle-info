@@ -99,6 +99,7 @@ function build() {
     require('./build-index'); // regenerate who-said/index.html browse directory
     require('./build-static'); // regenerate standing content pages (how-we-verify)
     require('./build-authors'); // regenerate /authors/{slug} profiles + index
+    require('./build-sitemap'); // regenerate sitemap.xml + llms.txt (machine discoverability)
   }
   console.log('Done.');
 }
