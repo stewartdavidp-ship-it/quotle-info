@@ -128,6 +128,20 @@
         .chip.active span { color:var(--burgundy); }
         .no-results { font-family:'DM Sans',sans-serif; color:var(--text-muted); text-align:center; padding:34px 20px; }
         .no-results a { color:var(--sage); }
+        /* research bench: queued-for-verification candidates (dashed = not yet verified) */
+        .bench { margin-top:56px; }
+        .bench-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+        .bench-card { background:var(--bg-card); border:1px dashed var(--border-accent); border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:12px; }
+        .bench-q { font-style:italic; font-size:1rem; color:var(--ink); }
+        .bench-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+        .bench-cred { font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.8rem; color:var(--text-muted); }
+        .bench-tag { font-family:'DM Sans',sans-serif; font-size:0.68rem; font-weight:600; padding:3px 9px; border-radius:999px; border:1px solid; white-space:nowrap; }
+        .bench-tag.misattributed { color:var(--caution); border-color:rgba(154,163,214,0.45); }
+        .bench-tag.disputed { color:var(--amber); border-color:rgba(224,162,78,0.4); }
+        .bench-tag.genuine-famous { color:var(--sage); border-color:rgba(126,179,139,0.4); }
+        .bench-src { font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:500; color:var(--burgundy); text-decoration:none; margin-top:auto; }
+        .bench-src:hover { text-decoration:underline; }
+        .bench-note { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); text-align:center; margin-top:22px; }
         .game-cta { margin-top:56px; text-align:center; background:linear-gradient(135deg,var(--burgundy-glow),rgba(255,211,105,0.1)); border:1px solid rgba(212,98,122,0.25); border-radius:22px; padding:38px 28px; }
         .game-cta h2 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:8px; }
         .game-cta p { color:var(--slate); font-size:0.95rem; margin-bottom:20px; }
@@ -1200,6 +1214,398 @@
                 </a>
             </div>
             <p class="no-results" id="noResults" hidden>No quote matches that. Try fewer words, or <a href="/authors/">browse by author</a>.</p>
+        </section>
+
+        <section class="bench" aria-label="Quotes queued for verification">
+            <p class="feat-kicker">On the research bench</p>
+            <div class="sec-head-row"><h2 class="browse-h">Queued for verification</h2><p class="browse-sub">Lines we&rsquo;ve flagged as commonly misquoted or misattributed and queued for a full source trace. <strong>Not yet verified</strong> &mdash; each links to the catalog entry that put it on our list. 184 in the queue, top 48 shown.</p></div>
+            <div class="bench-grid">
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;A man who is his own lawyer has a fool for a client.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Abraham Lincoln</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2019/07/30/lawyer/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Better to remain silent and be thought a fool than to speak and remove all doubt.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Abraham Lincoln</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2010/05/17/remain-silent/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Whatever you are, be a good one.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Abraham Lincoln</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Abraham_Lincoln#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;You cannot help the poor by destroying the rich. You cannot strengthen the weak by weakening the strong.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Abraham Lincoln</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Abraham_Lincoln#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;There is only one way to avoid criticism: do nothing, say nothing, and be nothing.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Aristotle</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2015/01/09/say-nothing/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Those who can, do; those who cannot, teach.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Aristotle</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Aristotle#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;We are what we repeatedly do. Excellence, then, is not an act, but a habit.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Aristotle</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Aristotle#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Better a diamond with a flaw than a pebble without&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Confucius</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Confucius#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;I hear and I forget. I see and I remember. I do and I understand&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Confucius</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2019/02/27/tell/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Our greatest glory is not in never falling, but in rising every time we fall&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Confucius</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2014/05/27/rising/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;The journey of a thousand miles begins with a single step&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Confucius</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Confucius#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;I do not believe in a fate that falls on men however they act; but I do believe in a fate that falls on them unless they act.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Gautama Buddha</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Gautama_Buddha#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;To understand everything is to forgive everything.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Gautama Buddha</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Gautama_Buddha#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;None are so old as those who have outlived enthusiasm.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Henry David Thoreau</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Henry_David_Thoreau#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Truths and roses have thorns about them.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Henry David Thoreau</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Henry_David_Thoreau#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;First they ignore you, then they laugh at you, then they fight you, then you win.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Mahatma Gandhi</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2017/08/13/stages/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;God has no religion.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Mahatma Gandhi</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Mahatma_Gandhi#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;If you're going to be a bear, be a grizzly.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Mahatma Gandhi</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2016/12/08/grizzly/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;I would have written a shorter letter, but I did not have the time.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Mark Twain</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Mark_Twain#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Everything that is done in the world is done by hope.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Martin Luther King Jr.</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Martin_Luther_King_Jr.#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Hate destroys the hater.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Martin Luther King Jr.</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2020/07/21/hater/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Justice runs down like water, and righteousness like a mighty stream.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Martin Luther King Jr.</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Martin_Luther_King_Jr.#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;The arc of the moral universe is long, but it bends toward justice.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Martin Luther King Jr.</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2012/11/15/arc-of-universe/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;I like work: it fascinates me. I can sit and look at it for hours.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Oscar Wilde</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Oscar_Wilde#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;I'm not young enough to know everything.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Oscar Wilde</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2020/10/30/young-know/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;The man who grasps principles can successfully select his own methods. The man who tries methods, ignoring principles, is sure to have trouble.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Ralph Waldo Emerson</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2015/07/17/methods/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;To laugh often and much; to win the respect of intelligent people and the affection of children... to know even one life has breathed easier because you have lived. This is to have succeeded.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Ralph Waldo Emerson</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Ralph_Waldo_Emerson#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Anything that is too stupid to be spoken is sung&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Voltaire</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Voltaire#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;I disapprove of what you say, but I will defend to the death your right to say it&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Voltaire</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2015/06/01/defend-say/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Judge a man by his questions rather than by his answers&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Voltaire</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Voltaire#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Nothing can be more contrary to religion and the clergy than reason and common sense&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Voltaire</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Voltaire#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;You have enemies? Good. That means you've stood up for something, sometime in your life&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Winston Churchill</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Winston_Churchill#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Folks are usually about as happy as they make up their minds to be.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Abraham Lincoln</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2012/10/20/happy-minds/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Give me six hours to chop down a tree and I will spend the first four sharpening the axe.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Abraham Lincoln</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2014/03/29/sharp-axe/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;I destroy my enemies when I make them my friends.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Abraham Lincoln</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2020/05/13/make-friends/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Compound interest is the eighth wonder of the world. He who understands it, earns it; he who doesn't, pays it&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Albert Einstein</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2019/09/09/interest/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Everybody is a genius. But if you judge a fish by its ability to climb a tree, it will live its whole life believing that it is stupid&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Albert Einstein</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2013/04/06/fish-climb/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;If the bee disappeared off the surface of the globe, man would have only four years left to live&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Albert Einstein</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://www.snopes.com/fact-check/einstein-on-bees/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;If you can't explain it simply, you don't understand it well enough&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Albert Einstein</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Albert_Einstein#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Courage is rightly esteemed the first of human qualities because it is the quality which guarantees all others.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Aristotle</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2019/07/14/courage/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Tell 'em what you're going to tell 'em; next, tell 'em; next, tell 'em what you told 'em.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Aristotle</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2017/08/15/tell-em/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;The place where your talent meets the world's needs is the job God has in mind for you.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Aristotle</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2017/12/20/talent/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;The worst form of inequality is to try to make unequal things equal.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Aristotle</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Aristotle#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Tolerance and apathy are the last virtues of a dying society.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Aristotle</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Aristotle#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Beer is proof that God loves us and wants us to be happy&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Benjamin Franklin</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2016/06/24/beer-wine/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;By failing to prepare, you are preparing to fail&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Benjamin Franklin</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Benjamin_Franklin#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Democracy is two wolves and a lamb voting on what to have for lunch&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Benjamin Franklin</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://en.wikiquote.org/wiki/Benjamin_Franklin#Misattributed" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+                <article class="bench-card misattributed">
+                    <p class="bench-q">&ldquo;Tell me and I forget. Teach me and I may remember. Involve me and I learn.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Benjamin Franklin</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <a class="bench-src" href="https://quoteinvestigator.com/2019/02/27/tell/" target="_blank" rel="noopener">Why we flagged it <span aria-hidden="true">↗</span></a>
+                </article>
+            </div>
+            <p class="bench-note">Voting to prioritise these &mdash; and nominating new authors and quotes &mdash; is coming soon.</p>
         </section>
         <aside class="game-cta">
             <h2>Think you know your quotes?</h2>
