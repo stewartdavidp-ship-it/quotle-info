@@ -1,0 +1,218 @@
+# Quotle.info
+
+> Verified quote provenance. Every quote is traced to a primary source — who really said it, the primary document, and the misattributions untangled with receipts. 127 quotes, 70 authors. Attribution is human- and web-verified (never AI-fabricated) and carries an honest confidence state (verified / attributed / disputed) and a rights status (public-domain / in-copyright / licensed).
+
+Quotle.info answers "who really said it?" for commonly quoted — and commonly misquoted — lines. Each quote has a page at `/who-said/{slug}` with the source, a verification trail of fetched-and-confirmed links, misattribution analysis, and Schema.org `Quotation` structured data (JSON-LD). Each author has a profile at `/authors/{slug}`. The canonical URL for a quote is always `https://quotle.info/who-said/{quoteSlug}`.
+
+## Methodology
+- [How we verify](https://quotle.info/how-we-verify): the standard — traced to a primary source, dated, cited, adversarially re-checked; three honest confidence states; rights stated separately from attribution.
+
+## Data
+- [Machine-readable index (JSON)](https://quotle.info/data/manifest.json): every quote as `{ dayNumber, quote, author, quoteSlug, confidence, url }`.
+- [Sitemap](https://quotle.info/sitemap.xml)
+
+## Authors
+- [All authors](https://quotle.info/authors/)
+- [Abraham Lincoln](https://quotle.info/authors/abraham-lincoln) — 1809–1865 · 16th President of the United States
+- [Aesop](https://quotle.info/authors/aesop) — c. 620–564 BCE · semi-legendary Greek fabulist
+- [Albert Einstein](https://quotle.info/authors/albert-einstein) — 1879–1955 · theoretical physicist
+- [Alfred Henry Lewis](https://quotle.info/authors/alfred-henry-lewis) — 1855–1914 · American journalist and novelist
+- [Anaïs Nin](https://quotle.info/authors/ana-s-nin) — 1903–1977 · French-American diarist & essayist
+- [Arleen Lorrance](https://quotle.info/authors/arleen-lorrance) — American educator & writer · co-founder of The Love Project
+- [Benjamin Franklin](https://quotle.info/authors/benjamin-franklin) — 1706–1790 · American printer, scientist and statesman
+- [Billie Jean King](https://quotle.info/authors/billie-jean-king) — b. 1943 · 39-time Grand Slam champion, equality advocate
+- [Confucius](https://quotle.info/authors/confucius) — 551–479 BCE · Chinese philosopher and teacher
+- [E. E. Cummings](https://quotle.info/authors/e-e-cummings) — 1894–1962 · American modernist poet
+- [Edward Everett Hale](https://quotle.info/authors/edward-everett-hale) — 1822–1909 · author, historian & Unitarian clergyman
+- [Eleanor Roosevelt](https://quotle.info/authors/eleanor-roosevelt) — 1884–1962 · First Lady, diplomat & human-rights advocate
+- [Epictetus](https://quotle.info/authors/epictetus) — c. 50 – c. 135 AD · Greek Stoic philosopher, born enslaved
+- [Epicurus](https://quotle.info/authors/epicurus) — 341–270 BC · Greek philosopher, founder of Epicureanism
+- [Franklin D. Roosevelt](https://quotle.info/authors/franklin-d-roosevelt) — 1882–1945 · 32nd President of the United States
+- [G. F. Allen](https://quotle.info/authors/g-f-allen) — fl. 1959 · British Buddhist anthologist
+- [G.K. Chesterton](https://quotle.info/authors/g-k-chesterton) — 1874–1936 · English essayist & novelist
+- [George Bernard Shaw](https://quotle.info/authors/george-bernard-shaw) — 1856–1950 · Irish playwright, critic & Nobel laureate
+- [Henry David Thoreau](https://quotle.info/authors/henry-david-thoreau) — 1817–1862 · American essayist, poet & naturalist
+- [Henry Ford](https://quotle.info/authors/henry-ford) — 1863–1947 · American industrialist
+- [Heraclitus](https://quotle.info/authors/heraclitus) — c. 540 – c. 480 BC · Pre-Socratic Greek philosopher of Ephesus
+- [Horace](https://quotle.info/authors/horace) — 65–8 BC · Roman lyric poet & satirist
+- [Indira Gandhi](https://quotle.info/authors/indira-gandhi) — 1917–1984 · Prime Minister of India
+- [Jacob M. Braude](https://quotle.info/authors/jacob-m-braude) — 1896–1970 · compiler of speakers' reference books
+- [John Archibald Wheeler](https://quotle.info/authors/john-archibald-wheeler) — 1911–2008 · American theoretical physicist
+- [John F. Kennedy](https://quotle.info/authors/john-f-kennedy) — 1917–1963 · 35th President of the United States
+- [John Heider](https://quotle.info/authors/john-heider) — 1936–2010 · American clinical psychologist & Human Potential Movement figure
+- [John Locke](https://quotle.info/authors/john-locke) — 1632–1704 · English philosopher, founder of empiricism
+- [Joseph D. Eggleston Jr.](https://quotle.info/authors/joseph-d-eggleston-jr) — 1867–1953 · educator, Virginia school superintendent, college president
+- [Lao Tzu](https://quotle.info/authors/lao-tzu) — fl. 6th century BCE (traditional) · semi-legendary Chinese sage · reputed author of the Tao Te Ching
+- [Laurel Thatcher Ulrich](https://quotle.info/authors/laurel-thatcher-ulrich) — Born July 11, 1938, Sugar City, Idaho · Historian of early America
+- [Lowell L. Bennion](https://quotle.info/authors/lowell-l-bennion) — 1908–1996 · educator & sociologist
+- [Mahatma Gandhi](https://quotle.info/authors/mahatma-gandhi) — 1869–1948 · leader of India's independence movement
+- [Marcus Aurelius](https://quotle.info/authors/marcus-aurelius) — 121–180 AD · Roman emperor & Stoic philosopher
+- [Marcus Tullius Cicero](https://quotle.info/authors/marcus-tullius-cicero) — 106–43 BCE · Roman statesman, orator & philosopher
+- [Marie Curie](https://quotle.info/authors/marie-curie) — 1867–1934 · Physicist and chemist; two-time Nobel laureate
+- [Mark Twain](https://quotle.info/authors/mark-twain) — 1835–1910 · American author, humorist and lecturer
+- [Martin Luther King Jr.](https://quotle.info/authors/martin-luther-king-jr) — 1929–1968 · Baptist minister and civil-rights leader
+- [Mary Schmich](https://quotle.info/authors/mary-schmich) — b. 1953 · Chicago Tribune columnist
+- [Maya Angelou](https://quotle.info/authors/maya-angelou) — 1928–2014 · American memoirist, poet & civil-rights activist
+- [Neil Gaiman](https://quotle.info/authors/neil-gaiman) — born 1960 · English author
+- [Nelson Mandela](https://quotle.info/authors/nelson-mandela) — 1918–2013 · statesman · first President of a democratic South Africa
+- [Niccolò Machiavelli](https://quotle.info/authors/niccolo-machiavelli) — 1469–1527 · Florentine political philosopher and statesman
+- [Oscar Wilde](https://quotle.info/authors/oscar-wilde) — 1854–1900 · Irish poet, playwright & wit
+- [Plato](https://quotle.info/authors/plato) — c. 428–348 BCE · Athenian philosopher
+- [Pliny the Elder (earliest source of the idea)](https://quotle.info/authors/pliny-the-elder-earliest-source-of-the-idea) — c. AD 23/24–79 · Roman naturalist & author
+- [Plutarch](https://quotle.info/authors/plutarch) — c. 46 – after 119 AD · Greek biographer, essayist & Delphic priest
+- [Ralph Waldo Emerson](https://quotle.info/authors/ralph-waldo-emerson) — 1803–1882 · American essayist, lecturer & poet
+- [Rita Mae Brown](https://quotle.info/authors/rita-mae-brown) — American novelist · b. 1944 · put the line in print in 1983
+- [Robert F. Kennedy](https://quotle.info/authors/robert-f-kennedy) — 1925–1968 · U.S. senator, former attorney general
+- [Robert G. Ingersoll](https://quotle.info/authors/robert-g-ingersoll) — 1833–1899 · American lawyer & orator
+- [Rosalind Franklin](https://quotle.info/authors/rosalind-franklin) — 1920–1958 · chemist & X-ray crystallographer
+- [Seneca](https://quotle.info/authors/seneca) — c. 4 BC – AD 65 · Roman Stoic philosopher, tutor to Nero
+- [Socrates](https://quotle.info/authors/socrates) — c. 470–399 BCE · Athenian philosopher
+- [Squire Bill Widener](https://quotle.info/authors/squire-bill-widener) — fl. early 1900s · farmer, Widener's Valley, Virginia
+- [Steve Jobs](https://quotle.info/authors/steve-jobs) — 1955–2011 · co-founder & CEO, Apple
+- [Stewart Brand](https://quotle.info/authors/stewart-brand) — b. 1938 · writer, editor and founder of the Whole Earth Catalog
+- [Sun Tzu](https://quotle.info/authors/sun-tzu) — trad. c. 544 – c. 496 BCE · Chinese general & military strategist
+- [The Buddha (Siddhārtha Gautama)](https://quotle.info/authors/the-buddha-siddh-rtha-gautama) — fl. c. 5th century BCE · founder of Buddhism
+- [Theodore Roosevelt](https://quotle.info/authors/theodore-roosevelt) — 1858–1919 · 26th President of the United States
+- [Thomas Aquinas](https://quotle.info/authors/thomas-aquinas) — c. 1225–1274 · Italian Dominican friar, theologian & philosopher · Doctor of the Church
+- [Virgil](https://quotle.info/authors/virgil) — 70–19 BC · Roman poet, author of the Aeneid
+- [Voltaire](https://quotle.info/authors/voltaire) — 1694–1778 · French Enlightenment philosopher
+- [Werner Jaeger](https://quotle.info/authors/werner-jaeger) — 1888–1961 · German-American classical scholar
+- [Will Durant](https://quotle.info/authors/will-durant) — 1885–1981 · American historian & philosopher
+- [William Elliot Griffis](https://quotle.info/authors/william-elliot-griffis) — 1843–1928 · American orientalist & author
+- [William H. Whyte](https://quotle.info/authors/william-h-whyte) — 1917–1999 · journalist, Fortune editor & urbanist
+- [William Shakespeare](https://quotle.info/authors/william-shakespeare) — 1564–1616 · English playwright & poet
+- [Yogi Berra](https://quotle.info/authors/yogi-berra) — 1925–2015 · Baseball Hall of Fame catcher & folk philosopher
+- [Zora Neale Hurston](https://quotle.info/authors/zora-neale-hurston) — 1891–1960 · American writer, folklorist and anthropologist
+
+## Quotes — disputed / misattributed (who really said it)
+- [An investment in knowledge pays the best interest](https://quotle.info/who-said/an-investment-in-knowledge-pays-the-best-interest) — really: Benjamin Franklin
+- [The future belongs to those who believe in the beauty of their dreams](https://quotle.info/who-said/the-future-belongs-to-those-who-believe-in-the-beauty-of) — really: Unknown (anonymous saying)
+- [Do one thing every day that scares you](https://quotle.info/who-said/do-one-thing-every-day-that-scares-you) — really: Mary Schmich
+- [We make a living by what we get, but we make a life by what we give](https://quotle.info/who-said/we-make-a-living-by-what-we-get-but-we-make-a-life-by-what) — really: Unknown (anonymous)
+- [There is no greater agony than bearing an untold story inside you](https://quotle.info/who-said/there-is-no-greater-agony-than-bearing-an-untold-story) — really: Zora Neale Hurston
+- [Fairy tales are more than true: not because they tell us that dragons exist, but because they tell us that dragons can be beaten](https://quotle.info/who-said/fairy-tales-are-more-than-true-not-because-they-tell-us) — really: Neil Gaiman
+- [There is nothing on this earth more to be prized than true friendship](https://quotle.info/who-said/there-is-nothing-on-this-earth-more-to-be-prized-than-true) — really: Thomas Aquinas
+- [Of all the means to ensure happiness, friendship is the most important](https://quotle.info/who-said/of-all-the-means-to-ensure-happiness-friendship-is-the-most) — really: Epicurus
+- [No man is free who is not master of himself](https://quotle.info/who-said/no-man-is-free-who-is-not-master-of-himself) — really: Epictetus
+- [In any moment of decision, the best thing you can do is the right thing](https://quotle.info/who-said/in-any-moment-of-decision-the-best-thing-you-can-do-is-the) — really: Alfred Henry Lewis
+- [Courage is knowing what not to fear](https://quotle.info/who-said/courage-is-knowing-what-not-to-fear) — really: Werner Jaeger
+- [Those who dare to fail miserably can achieve greatly](https://quotle.info/who-said/those-who-dare-to-fail-miserably-can-achieve-greatly) — really: Robert F. Kennedy
+- [The man who does not read has no advantage over the man who cannot read](https://quotle.info/who-said/the-man-who-does-not-read-has-no-advantage-over-the-man-who) — really: Joseph D. Eggleston Jr.
+- [Do what you can, with what you have, where you are](https://quotle.info/who-said/do-what-you-can-with-what-you-have-where-you-are) — really: Squire Bill Widener
+- [Coming together is a beginning, staying together is progress, working together is success](https://quotle.info/who-said/coming-together-is-a-beginning-staying-together-is-progress) — really: Edward Everett Hale
+- [You have power over your mind - not outside events](https://quotle.info/who-said/you-have-power-over-your-mind-not-outside-events) — really: Marcus Aurelius
+- [We must use time wisely and forever realize that the time is always ripe to do right](https://quotle.info/who-said/we-must-use-time-wisely-and-forever-realize-that-the-time) — really: Martin Luther King Jr.
+- [When you reach the end of your rope, tie a knot in it and hang on](https://quotle.info/who-said/when-you-reach-the-end-of-your-rope-tie-a-knot-in-it-and) — really: Anonymous (American folk proverb)
+- [Luck is what happens when preparation meets opportunity](https://quotle.info/who-said/luck-is-what-happens-when-preparation-meets-opportunity) — really: Anonymous
+- [The only constant in life is change](https://quotle.info/who-said/the-only-constant-in-life-is-change) — really: Heraclitus
+- [Know yourself and you will win all battles](https://quotle.info/who-said/know-yourself-and-you-will-win-all-battles) — really: Sun Tzu
+- [The mind is not a vessel to be filled, but a fire to be kindled](https://quotle.info/who-said/the-mind-is-not-a-vessel-to-be-filled-but-a-fire-to-be) — really: Plutarch
+- [What we achieve inwardly will change outer reality](https://quotle.info/who-said/what-we-achieve-inwardly-will-change-outer-reality) — really: Anaïs Nin
+- [Whether you think you can or you think you can't, you're right](https://quotle.info/who-said/whether-you-think-you-can-or-you-think-you-cant-youre-right) — really: Anonymous (traditional proverb)
+- [Nearly all men can stand adversity, but if you want to test a man's character, give him power](https://quotle.info/who-said/nearly-all-men-can-stand-adversity-but-if-you-want-to-test) — really: Robert G. Ingersoll
+- [Stay hungry, stay foolish](https://quotle.info/who-said/stay-hungry-stay-foolish) — really: Stewart Brand
+- [United we stand, divided we fall](https://quotle.info/who-said/united-we-stand-divided-we-fall) — really: Aesop
+- [The single biggest problem in communication is the illusion that it has taken place](https://quotle.info/who-said/the-single-biggest-problem-in-communication-is-the-illusion) — really: William H. Whyte
+- [Nature does not hurry, yet everything is accomplished](https://quotle.info/who-said/nature-does-not-hurry-yet-everything-is-accomplished) — really: Lao Tzu
+- [The only source of knowledge is experience](https://quotle.info/who-said/the-only-source-of-knowledge-is-experience) — really: John Locke
+- [For every minute you are angry you lose sixty seconds of happiness](https://quotle.info/who-said/for-every-minute-you-are-angry-you-lose-sixty-seconds-of) — really: Jacob M. Braude
+- [It always seems impossible until it's done](https://quotle.info/who-said/it-always-seems-impossible-until-its-done) — really: Pliny the Elder (earliest source of the idea)
+- [To one who has faith, no explanation is necessary. To one without faith, no explanation is possible](https://quotle.info/who-said/to-one-who-has-faith-no-explanation-is-necessary-to-one) — really: Anonymous
+- [No act of kindness, no matter how small, is ever wasted](https://quotle.info/who-said/no-act-of-kindness-no-matter-how-small-is-ever-wasted) — really: Aesop
+- [It is the mark of an educated mind to entertain a thought without accepting it](https://quotle.info/who-said/it-is-the-mark-of-an-educated-mind-to-entertain-a-thought) — really: Lowell L. Bennion
+- [Quality is not an act, it is a habit](https://quotle.info/who-said/quality-is-not-an-act-it-is-a-habit) — really: Will Durant
+- [Before you embark on a journey of revenge, dig two graves](https://quotle.info/who-said/before-you-embark-on-a-journey-of-revenge-dig-two-graves) — really: William Elliot Griffis
+- [Silence is a source of great strength](https://quotle.info/who-said/silence-is-a-source-of-great-strength) — really: John Heider
+- [We are twice armed if we fight with faith](https://quotle.info/who-said/we-are-twice-armed-if-we-fight-with-faith) — really: William Shakespeare
+- [The aim of art is to represent not the outward appearance of things, but their inward significance](https://quotle.info/who-said/the-aim-of-art-is-to-represent-not-the-outward-appearance) — really: Will Durant
+- [It's not what you look at that matters, it's what you see](https://quotle.info/who-said/its-not-what-you-look-at-that-matters-its-what-you-see) — really: Henry David Thoreau
+- [In the middle of difficulty lies opportunity](https://quotle.info/who-said/in-the-middle-of-difficulty-lies-opportunity) — really: John Archibald Wheeler
+- [To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment](https://quotle.info/who-said/to-be-yourself-in-a-world-that-is-constantly-trying-to-make) — really: E. E. Cummings
+- [Three things cannot be long hidden: the sun, the moon, and the truth](https://quotle.info/who-said/three-things-cannot-be-long-hidden-the-sun-the-moon-and-the) — really: The Buddha (Siddhārtha Gautama)
+- [Peace comes from within. Do not seek it without](https://quotle.info/who-said/peace-comes-from-within-do-not-seek-it-without) — really: G. F. Allen
+- [Adversity has the effect of eliciting talents which in prosperous circumstances would have lain dormant](https://quotle.info/who-said/adversity-has-the-effect-of-eliciting-talents-which-in) — really: Horace
+- [Be the change that you wish to see in the world](https://quotle.info/who-said/be-the-change-that-you-wish-to-see-in-the-world) — really: Arleen Lorrance
+- [Insanity is doing the same thing over and over again and expecting different results](https://quotle.info/who-said/insanity-is-doing-the-same-thing-over-and-over-again) — really: Rita Mae Brown
+
+## Quotes — verified
+- [Ask not what your country can do for you, ask what you can do for your country](https://quotle.info/who-said/ask-not-what-your-country-can-do-for-you-ask-what-you-can) — John F. Kennedy
+- [Speak softly and carry a big stick](https://quotle.info/who-said/speak-softly-and-carry-a-big-stick) — Theodore Roosevelt
+- [The unexamined life is not worth living](https://quotle.info/who-said/the-unexamined-life-is-not-worth-living) — Socrates
+- [The world is a stage, but the play is badly cast](https://quotle.info/who-said/the-world-is-a-stage-but-the-play-is-badly-cast) — Oscar Wilde
+- [Not until we are lost do we begin to understand ourselves](https://quotle.info/who-said/not-until-we-are-lost-do-we-begin-to-understand-ourselves) — Henry David Thoreau
+- [The true soldier fights not because he hates what is in front of him, but because he loves what is behind him](https://quotle.info/who-said/the-true-soldier-fights-not-because-he-hates-what-is-in) — G.K. Chesterton
+- [The only way to do great work is to love what you do](https://quotle.info/who-said/the-only-way-to-do-great-work-is-to-love-what-you-do) — Steve Jobs
+- [It is better to be feared than loved, if you cannot be both](https://quotle.info/who-said/it-is-better-to-be-feared-than-loved-if-you-cannot-be-both) — Niccol&ograve; Machiavelli
+- [I was taught that the way of progress was neither swift nor easy](https://quotle.info/who-said/i-was-taught-that-the-way-of-progress-was-neither-swift-nor) — Marie Curie
+- [We choose to go to the Moon in this decade and do the other things, not because they are easy, but because they are hard](https://quotle.info/who-said/we-choose-to-go-to-the-moon-in-this-decade-and-do-the-other) — John F. Kennedy
+- [Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that](https://quotle.info/who-said/darkness-cannot-drive-out-darkness-only-light-can-do-that) — Martin Luther King Jr.
+- [Education is the most powerful weapon which you can use to change the world](https://quotle.info/who-said/education-is-the-most-powerful-weapon-which-you-can-use-to) — Nelson Mandela
+- [There is only one thing in the world worse than being talked about, and that is not being talked about](https://quotle.info/who-said/there-is-only-one-thing-in-the-world-worse-than-being) — Oscar Wilde
+- [The perfect is the enemy of the good](https://quotle.info/who-said/the-perfect-is-the-enemy-of-the-good) — Voltaire
+- [The life of the dead is placed in the memory of the living](https://quotle.info/who-said/the-life-of-the-dead-is-placed-in-the-memory-of-the-living) — Marcus Tullius Cicero
+- [We are all in the gutter, but some of us are looking at the stars](https://quotle.info/who-said/we-are-all-in-the-gutter-but-some-of-us-are-looking-at-the) — Oscar Wilde
+- [We suffer more often in imagination than in reality](https://quotle.info/who-said/we-suffer-more-often-in-imagination-than-in-reality) — Seneca
+- [The soul becomes dyed with the color of its thoughts](https://quotle.info/who-said/the-soul-becomes-dyed-with-the-color-of-its-thoughts) — Marcus Aurelius
+- [Every man is guilty of all the good he did not do](https://quotle.info/who-said/every-man-is-guilty-of-all-the-good-he-did-not-do) — Voltaire
+- [The reasonable man adapts himself to the world; the unreasonable one persists in trying to adapt the world to himself](https://quotle.info/who-said/the-reasonable-man-adapts-himself-to-the-world-the) — George Bernard Shaw
+- [Injustice anywhere is a threat to justice everywhere](https://quotle.info/who-said/injustice-anywhere-is-a-threat-to-justice-everywhere) — Martin Luther King Jr.
+- [Do not spoil what you have by desiring what you have not](https://quotle.info/who-said/do-not-spoil-what-you-have-by-desiring-what-you-have-not) — Epicurus
+- [It is easy to be brave from a safe distance](https://quotle.info/who-said/it-is-easy-to-be-brave-from-a-safe-distance) — Aesop
+- [He is a wise man who does not grieve for the things which he has not, but rejoices for those which he has](https://quotle.info/who-said/he-is-a-wise-man-who-does-not-grieve-for-the-things-which) — Epictetus
+- [He who learns but does not think, is lost](https://quotle.info/who-said/he-who-learns-but-does-not-think-is-lost) — Confucius
+- [Be civil to all; sociable to many; familiar with few; friend to one; enemy to none](https://quotle.info/who-said/be-civil-to-all-sociable-to-many-familiar-with-few-friend) — Benjamin Franklin
+- [Everyone sees what you appear to be, few experience what you really are](https://quotle.info/who-said/everyone-sees-what-you-appear-to-be-few-experience-what-you) — Niccol&ograve; Machiavelli
+- [The traveler sees what he sees. The tourist sees what he has come to see](https://quotle.info/who-said/the-traveler-sees-what-he-sees-the-tourist-sees-what-he-has) — G.K. Chesterton
+- [Three things are necessary for the salvation of man: to know what he ought to believe; to know what he ought to desire; and to know what he ought to do](https://quotle.info/who-said/three-things-are-necessary-for-the-salvation-of-man-to-know) — Thomas Aquinas
+- [He who knows others is wise; he who knows himself is enlightened](https://quotle.info/who-said/he-who-knows-others-is-wise-he-who-knows-himself-is) — Lao Tzu
+- [Much learning does not teach understanding](https://quotle.info/who-said/much-learning-does-not-teach-understanding) — Heraclitus
+- [Doubt is not a pleasant condition, but certainty is absurd](https://quotle.info/who-said/doubt-is-not-a-pleasant-condition-but-certainty-is-absurd) — Voltaire
+- [If it is not right, do not do it. If it is not true, do not say it](https://quotle.info/who-said/if-it-is-not-right-do-not-do-it-if-it-is-not-true-do-not) — Marcus Aurelius
+- [The supreme art of war is to subdue the enemy without fighting](https://quotle.info/who-said/the-supreme-art-of-war-is-to-subdue-the-enemy-without) — Sun Tzu
+- [Happiness lies in the joy of achievement and the thrill of creative effort](https://quotle.info/who-said/happiness-lies-in-the-joy-of-achievement-and-the-thrill-of) — Franklin D. Roosevelt
+- [First say to yourself what you would be; and then do what you have to do](https://quotle.info/who-said/first-say-to-yourself-what-you-would-be-and-then-do-what) — Epictetus
+- [The weak can never forgive. Forgiveness is the attribute of the strong](https://quotle.info/who-said/the-weak-can-never-forgive-forgiveness-is-the-attribute-of) — Mahatma Gandhi
+- [Silence at the proper season is wisdom, and better than any speech](https://quotle.info/who-said/silence-at-the-proper-season-is-wisdom-and-better-than-any) — Plutarch
+- [I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character](https://quotle.info/who-said/i-have-a-dream-that-my-four-little-children-will-one-day) — Martin Luther King Jr.
+- [He has half the deed done who has made a beginning](https://quotle.info/who-said/he-has-half-the-deed-done-who-has-made-a-beginning) — Horace
+- [Carpe diem](https://quotle.info/who-said/carpe-diem) — Horace
+- [Life is like riding a bicycle. To keep your balance, you must keep moving](https://quotle.info/who-said/life-is-like-riding-a-bicycle-to-keep-your-balance-you-must) — Albert Einstein
+- [Never put off till tomorrow what may be done day after tomorrow just as well](https://quotle.info/who-said/never-put-off-till-tomorrow-what-may-be-done-day-after) — Mark Twain
+- [Begin at once to live, and count each separate day as a separate life](https://quotle.info/who-said/begin-at-once-to-live-and-count-each-separate-day-as-a) — Seneca
+- [A life spent making mistakes is not only more honorable, but more useful than a life spent doing nothing](https://quotle.info/who-said/a-life-spent-making-mistakes-is-not-only-more-honorable-but) — George Bernard Shaw
+- [Change is the law of life. And those who look only to the past are certain to miss the future](https://quotle.info/who-said/change-is-the-law-of-life-and-those-who-look-only-to-the) — John F. Kennedy
+- [The only way to have a friend is to be one](https://quotle.info/who-said/the-only-way-to-have-a-friend-is-to-be-one) — Ralph Waldo Emerson
+- [Imagination is more important than knowledge](https://quotle.info/who-said/imagination-is-more-important-than-knowledge) — Albert Einstein
+- [I fear the Greeks, even when they bring gifts](https://quotle.info/who-said/i-fear-the-greeks-even-when-they-bring-gifts) — Virgil
+- [The mass of men lead lives of quiet desperation](https://quotle.info/who-said/the-mass-of-men-lead-lives-of-quiet-desperation) — Henry David Thoreau
+- [I learned that courage was not the absence of fear, but the triumph over it](https://quotle.info/who-said/i-learned-that-courage-was-not-the-absence-of-fear-but-the) — Nelson Mandela
+- [They can because they think they can](https://quotle.info/who-said/they-can-because-they-think-they-can) — Virgil
+- [Science and everyday life cannot and should not be separated](https://quotle.info/who-said/science-and-everyday-life-cannot-and-should-not-be-separated) — Rosalind Franklin
+- [You cannot shake hands with a clenched fist](https://quotle.info/who-said/you-cannot-shake-hands-with-a-clenched-fist) — Indira Gandhi
+- [The only thing we have to fear is fear itself](https://quotle.info/who-said/the-only-thing-we-have-to-fear-is-fear-itself) — Franklin D. Roosevelt
+- [Well-behaved women seldom make history](https://quotle.info/who-said/well-behaved-women-seldom-make-history) — Laurel Thatcher Ulrich
+
+## Quotes — attributed (widely credited, no primary source pinned)
+- [Energy and persistence conquer all things](https://quotle.info/who-said/energy-and-persistence-conquer-all-things) — Benjamin Franklin
+- [No one can make you feel inferior without your consent](https://quotle.info/who-said/no-one-can-make-you-feel-inferior-without-your-consent) — Eleanor Roosevelt
+- [Wonder is the beginning of wisdom](https://quotle.info/who-said/wonder-is-the-beginning-of-wisdom) — Socrates
+- [We delight in the beauty of the butterfly, but rarely admit the changes it has gone through](https://quotle.info/who-said/we-delight-in-the-beauty-of-the-butterfly-but-rarely-admit) — Maya Angelou
+- [He who is not satisfied with a little is satisfied with nothing](https://quotle.info/who-said/he-who-is-not-satisfied-with-a-little-is-satisfied-with) — Epicurus
+- [If you don't like something, change it. If you can't change it, change your attitude](https://quotle.info/who-said/if-you-dont-like-something-change-it-if-you-cant-change-it) — Maya Angelou
+- [Real knowledge is to know the extent of one's ignorance](https://quotle.info/who-said/real-knowledge-is-to-know-the-extent-of-ones-ignorance) — Confucius
+- [Fortune favors the bold](https://quotle.info/who-said/fortune-favors-the-bold) — Virgil
+- [Nothing in life is to be feared, it is only to be understood](https://quotle.info/who-said/nothing-in-life-is-to-be-feared-it-is-only-to-be-understood) — Marie Curie
+- [One of the penalties for refusing to participate in politics is that you end up being governed by your inferiors](https://quotle.info/who-said/one-of-the-penalties-for-refusing-to-participate-in) — Plato
+- [The greatest victory is that which requires no battle](https://quotle.info/who-said/the-greatest-victory-is-that-which-requires-no-battle) — Sun Tzu
+- [Don't find fault, find a remedy](https://quotle.info/who-said/dont-find-fault-find-a-remedy) — Henry Ford
+- [Happiness is when what you think, what you say, and what you do are in harmony](https://quotle.info/who-said/happiness-is-when-what-you-think-what-you-say-and-what-you) — Mahatma Gandhi
+- [Be less curious about people and more curious about ideas](https://quotle.info/who-said/be-less-curious-about-people-and-more-curious-about-ideas) — Marie Curie
+- [Gratitude is not only the greatest of virtues, but the parent of all others](https://quotle.info/who-said/gratitude-is-not-only-the-greatest-of-virtues-but-the) — Marcus Tullius Cicero
+- [I am a slow walker, but I never walk back](https://quotle.info/who-said/i-am-a-slow-walker-but-i-never-walk-back) — Abraham Lincoln
+- [Never was anything great achieved without danger](https://quotle.info/who-said/never-was-anything-great-achieved-without-danger) — Niccolò Machiavelli
+- [If you have a garden and a library, you have everything you need](https://quotle.info/who-said/if-you-have-a-garden-and-a-library-you-have-everything-you) — Marcus Tullius Cicero
+- [Character is destiny](https://quotle.info/who-said/character-is-destiny) — Heraclitus
+- [Innovation distinguishes between a leader and a follower](https://quotle.info/who-said/innovation-distinguishes-between-a-leader-and-a-follower) — Steve Jobs
+- [The ballot is stronger than the bullet](https://quotle.info/who-said/the-ballot-is-stronger-than-the-bullet) — Abraham Lincoln
+- [Champions keep playing until they get it right](https://quotle.info/who-said/champions-keep-playing-until-they-get-it-right) — Billie Jean King
+- [When you come to a fork in the road, take it](https://quotle.info/who-said/when-you-come-to-a-fork-in-the-road-take-it) — Yogi Berra
