@@ -44,26 +44,60 @@ const featuredCard = (f) => {
                 </a>`;
 };
 
-const card = (m) => `                <a class="q-card ${m.confidence}" href="/who-said/${m.quoteSlug}/">
+// plain-text (entity-decoded, lowercased) for the client-side search index in data-s
+const searchText = (s) => String(s || '').replace(/&mdash;|&ndash;/g, '-').replace(/&ldquo;|&rdquo;/g, '"')
+  .replace(/&lsquo;|&rsquo;/g, "'").replace(/&amp;/g, '&').replace(/&#(\d+);/g, (m, d) => String.fromCharCode(+d))
+  .replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
+const CONF = { verified: '✓', attributed: '≈', disputed: '?' };
+
+const card = (m) => `                <a class="q-card ${m.confidence}" href="/who-said/${m.quoteSlug}/" data-c="${m.confidence}" data-s="${esc(searchText((m.quote || '') + ' ' + (m.author || '')))}">
                     <p class="q-text">&ldquo;${esc(m.quote)}&rdquo;</p>
-                    <p class="q-author">${esc(m.author || 'Unknown')}</p>
+                    <p class="q-foot"><span class="q-author">${esc(m.author || 'Unknown')}</span><span class="q-badge ${m.confidence}" title="${m.confidence}" aria-hidden="true">${CONF[m.confidence] || ''}</span></p>
                 </a>`;
 
-const section = (g) => {
-  const items = byConf[g.key] || [];
-  if (!items.length) return '';
-  return `
-        <section class="grp" aria-labelledby="h-${g.key}">
-            <div class="grp-head">
-                <span class="grp-badge ${g.key}"><span class="grp-dot">${g.glyph}</span>${g.label}</span>
-                <span class="grp-count">${items.length}</span>
+// all quotes in one grid, most-interesting first (disputed → attributed → verified), alpha within
+const CONF_RANK = { disputed: 0, attributed: 1, verified: 2 };
+const allSorted = [...manifest].sort((a, b) => (CONF_RANK[a.confidence] - CONF_RANK[b.confidence]) || String(a.quote).localeCompare(String(b.quote)));
+const chip = (key, label, n) => `<button class="chip${key === 'all' ? ' active' : ''}" data-f="${key}" role="tab" aria-selected="${key === 'all'}">${label} <span>${n}</span></button>`;
+const browseBlock = `
+        <section class="browse" aria-label="Find a quote">
+            <div class="sec-head-row"><h2 class="browse-h">Have one in mind?</h2><p class="browse-sub">Search the exact words, or the name it&rsquo;s pinned on.</p></div>
+            <input id="q" class="search" type="search" placeholder="Search a quote or an author…" aria-label="Search quotes and authors" autocomplete="off">
+            <div class="chips" role="tablist" aria-label="Filter by attribution">
+                ${chip('all', 'All', manifest.length)}
+                ${chip('disputed', 'Misattributed', (byConf.disputed || []).length)}
+                ${chip('verified', 'Verified', (byConf.verified || []).length)}
+                ${chip('attributed', 'Attributed', (byConf.attributed || []).length)}
             </div>
-            <p class="grp-blurb">${g.blurb}</p>
-            <div class="q-grid">
-${items.map(card).join('\n')}
+            <div class="q-grid" id="results">
+${allSorted.map(card).join('\n')}
             </div>
+            <p class="no-results" id="noResults" hidden>No quote matches that. Try fewer words, or <a href="/authors/">browse by author</a>.</p>
         </section>`;
-};
+
+const SEARCH_JS = `    <script>
+        (function(){
+            var q=document.getElementById('q'), none=document.getElementById('noResults');
+            var chips=[].slice.call(document.querySelectorAll('.chip'));
+            var cards=[].slice.call(document.querySelectorAll('#results .q-card'));
+            var filter='all';
+            function apply(){
+                var t=(q.value||'').trim().toLowerCase(), shown=0;
+                for(var i=0;i<cards.length;i++){ var c=cards[i];
+                    var okF = filter==='all' || c.getAttribute('data-c')===filter;
+                    var okQ = !t || c.getAttribute('data-s').indexOf(t)>-1;
+                    var vis = okF && okQ; c.hidden=!vis; if(vis) shown++;
+                }
+                none.hidden = shown>0;
+            }
+            q.addEventListener('input', apply);
+            chips.forEach(function(ch){ ch.addEventListener('click', function(){
+                chips.forEach(function(x){ x.classList.remove('active'); x.setAttribute('aria-selected','false'); });
+                ch.classList.add('active'); ch.setAttribute('aria-selected','true');
+                filter=ch.getAttribute('data-f'); apply();
+            }); });
+        })();
+    </script>`;
 
 const featuredBlock = FEATURED.length ? `
         <section class="featured" aria-label="Notable reattributions">
@@ -135,7 +169,27 @@ ${ROOT_CSS}
         .q-card:hover { transform:translateY(-3px); }
         .q-card.verified { border-left-color:var(--sage); } .q-card.attributed { border-left-color:var(--amber); } .q-card.disputed { border-left-color:var(--caution); }
         .q-text { font-style:italic; font-size:1rem; color:var(--ink); }
-        .q-author { font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.82rem; color:var(--text-muted); margin-top:10px; }
+        .q-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; }
+        .q-author { font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.82rem; color:var(--text-muted); }
+        .q-badge { flex-shrink:0; width:18px; height:18px; border-radius:50%; display:grid; place-items:center; font-size:0.62rem; font-weight:700; color:var(--bg-deep); }
+        .q-badge.verified { background:var(--sage); } .q-badge.attributed { background:var(--amber); } .q-badge.disputed { background:var(--caution); }
+        .q-card[hidden] { display:none; }
+        /* browse: search + filter chips over one grid */
+        .browse { margin-top:48px; }
+        .sec-head-row { margin-bottom:16px; }
+        .browse-h { font-family:'Playfair Display',serif; font-weight:900; font-size:1.5rem; }
+        .browse-sub { font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--text-muted); margin-top:4px; }
+        .search { width:100%; font-family:'DM Sans',sans-serif; font-size:1rem; color:var(--ink); background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:14px 18px; outline:none; transition:border-color 0.2s; }
+        .search:focus { border-color:var(--burgundy); }
+        .search::placeholder { color:var(--text-muted); }
+        .chips { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0 22px; }
+        .chip { font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:600; color:var(--slate); background:transparent; border:1px solid var(--border); border-radius:999px; padding:7px 14px; cursor:pointer; display:inline-flex; gap:7px; align-items:center; transition:color 0.2s,border-color 0.2s,background 0.2s; }
+        .chip span { color:var(--text-muted); font-weight:500; }
+        .chip:hover { color:var(--ink); border-color:var(--border-accent); }
+        .chip.active { color:var(--ink); border-color:var(--burgundy); background:var(--burgundy-glow); }
+        .chip.active span { color:var(--burgundy); }
+        .no-results { font-family:'DM Sans',sans-serif; color:var(--text-muted); text-align:center; padding:34px 20px; }
+        .no-results a { color:var(--sage); }
         .game-cta { margin-top:56px; text-align:center; background:linear-gradient(135deg,var(--burgundy-glow),rgba(255,211,105,0.1)); border:1px solid rgba(212,98,122,0.25); border-radius:22px; padding:38px 28px; }
         .game-cta h2 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:8px; }
         .game-cta p { color:var(--slate); font-size:0.95rem; margin-bottom:20px; }
@@ -163,7 +217,7 @@ ${THEME_CSS}
     </header>
     <main>
 ${featuredBlock}
-${GROUPS.map(section).join('\n')}
+${browseBlock}
         <aside class="game-cta">
             <h2>Think you know your quotes?</h2>
             <p>Quotle is a daily puzzle: guess the author from the words alone.</p>
@@ -173,6 +227,7 @@ ${GROUPS.map(section).join('\n')}
     <footer>
         <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
     </footer>
+${SEARCH_JS}
 ${SCRIPT}
 </body>
 </html>

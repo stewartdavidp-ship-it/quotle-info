@@ -80,7 +80,27 @@
         .q-card:hover { transform:translateY(-3px); }
         .q-card.verified { border-left-color:var(--sage); } .q-card.attributed { border-left-color:var(--amber); } .q-card.disputed { border-left-color:var(--caution); }
         .q-text { font-style:italic; font-size:1rem; color:var(--ink); }
-        .q-author { font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.82rem; color:var(--text-muted); margin-top:10px; }
+        .q-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; }
+        .q-author { font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.82rem; color:var(--text-muted); }
+        .q-badge { flex-shrink:0; width:18px; height:18px; border-radius:50%; display:grid; place-items:center; font-size:0.62rem; font-weight:700; color:var(--bg-deep); }
+        .q-badge.verified { background:var(--sage); } .q-badge.attributed { background:var(--amber); } .q-badge.disputed { background:var(--caution); }
+        .q-card[hidden] { display:none; }
+        /* browse: search + filter chips over one grid */
+        .browse { margin-top:48px; }
+        .sec-head-row { margin-bottom:16px; }
+        .browse-h { font-family:'Playfair Display',serif; font-weight:900; font-size:1.5rem; }
+        .browse-sub { font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--text-muted); margin-top:4px; }
+        .search { width:100%; font-family:'DM Sans',sans-serif; font-size:1rem; color:var(--ink); background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:14px 18px; outline:none; transition:border-color 0.2s; }
+        .search:focus { border-color:var(--burgundy); }
+        .search::placeholder { color:var(--text-muted); }
+        .chips { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0 22px; }
+        .chip { font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:600; color:var(--slate); background:transparent; border:1px solid var(--border); border-radius:999px; padding:7px 14px; cursor:pointer; display:inline-flex; gap:7px; align-items:center; transition:color 0.2s,border-color 0.2s,background 0.2s; }
+        .chip span { color:var(--text-muted); font-weight:500; }
+        .chip:hover { color:var(--ink); border-color:var(--border-accent); }
+        .chip.active { color:var(--ink); border-color:var(--burgundy); background:var(--burgundy-glow); }
+        .chip.active span { color:var(--burgundy); }
+        .no-results { font-family:'DM Sans',sans-serif; color:var(--text-muted); text-align:center; padding:34px 20px; }
+        .no-results a { color:var(--sage); }
         .game-cta { margin-top:56px; text-align:center; background:linear-gradient(135deg,var(--burgundy-glow),rgba(255,211,105,0.1)); border:1px solid rgba(212,98,122,0.25); border-radius:22px; padding:38px 28px; }
         .game-cta h2 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:8px; }
         .game-cta p { color:var(--slate); font-size:0.95rem; margin-bottom:20px; }
@@ -201,542 +221,526 @@
             </div>
         </section>
 
-        <section class="grp" aria-labelledby="h-verified">
-            <div class="grp-head">
-                <span class="grp-badge verified"><span class="grp-dot">✓</span>Verified</span>
-                <span class="grp-count">56</span>
+        <section class="browse" aria-label="Find a quote">
+            <div class="sec-head-row"><h2 class="browse-h">Have one in mind?</h2><p class="browse-sub">Search the exact words, or the name it&rsquo;s pinned on.</p></div>
+            <input id="q" class="search" type="search" placeholder="Search a quote or an author…" aria-label="Search quotes and authors" autocomplete="off">
+            <div class="chips" role="tablist" aria-label="Filter by attribution">
+                <button class="chip active" data-f="all" role="tab" aria-selected="true">All <span>127</span></button>
+                <button class="chip" data-f="disputed" role="tab" aria-selected="false">Misattributed <span>48</span></button>
+                <button class="chip" data-f="verified" role="tab" aria-selected="false">Verified <span>56</span></button>
+                <button class="chip" data-f="attributed" role="tab" aria-selected="false">Attributed <span>23</span></button>
             </div>
-            <p class="grp-blurb">A primary source contains the exact line from the named author.</p>
-            <div class="q-grid">
-                <a class="q-card verified" href="/who-said/a-life-spent-making-mistakes-is-not-only-more-honorable-but/">
-                    <p class="q-text">&ldquo;A life spent making mistakes is not only more honorable, but more useful than a life spent doing nothing&rdquo;</p>
-                    <p class="q-author">George Bernard Shaw</p>
-                </a>
-                <a class="q-card verified" href="/who-said/ask-not-what-your-country-can-do-for-you-ask-what-you-can/">
-                    <p class="q-text">&ldquo;Ask not what your country can do for you, ask what you can do for your country&rdquo;</p>
-                    <p class="q-author">John F. Kennedy</p>
-                </a>
-                <a class="q-card verified" href="/who-said/be-civil-to-all-sociable-to-many-familiar-with-few-friend/">
-                    <p class="q-text">&ldquo;Be civil to all; sociable to many; familiar with few; friend to one; enemy to none&rdquo;</p>
-                    <p class="q-author">Benjamin Franklin</p>
-                </a>
-                <a class="q-card verified" href="/who-said/begin-at-once-to-live-and-count-each-separate-day-as-a/">
-                    <p class="q-text">&ldquo;Begin at once to live, and count each separate day as a separate life&rdquo;</p>
-                    <p class="q-author">Seneca</p>
-                </a>
-                <a class="q-card verified" href="/who-said/carpe-diem/">
-                    <p class="q-text">&ldquo;Carpe diem&rdquo;</p>
-                    <p class="q-author">Horace</p>
-                </a>
-                <a class="q-card verified" href="/who-said/change-is-the-law-of-life-and-those-who-look-only-to-the/">
-                    <p class="q-text">&ldquo;Change is the law of life. And those who look only to the past are certain to miss the future&rdquo;</p>
-                    <p class="q-author">John F. Kennedy</p>
-                </a>
-                <a class="q-card verified" href="/who-said/darkness-cannot-drive-out-darkness-only-light-can-do-that/">
-                    <p class="q-text">&ldquo;Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that&rdquo;</p>
-                    <p class="q-author">Martin Luther King Jr.</p>
-                </a>
-                <a class="q-card verified" href="/who-said/do-not-spoil-what-you-have-by-desiring-what-you-have-not/">
-                    <p class="q-text">&ldquo;Do not spoil what you have by desiring what you have not&rdquo;</p>
-                    <p class="q-author">Epicurus</p>
-                </a>
-                <a class="q-card verified" href="/who-said/doubt-is-not-a-pleasant-condition-but-certainty-is-absurd/">
-                    <p class="q-text">&ldquo;Doubt is not a pleasant condition, but certainty is absurd&rdquo;</p>
-                    <p class="q-author">Voltaire</p>
-                </a>
-                <a class="q-card verified" href="/who-said/education-is-the-most-powerful-weapon-which-you-can-use-to/">
-                    <p class="q-text">&ldquo;Education is the most powerful weapon which you can use to change the world&rdquo;</p>
-                    <p class="q-author">Nelson Mandela</p>
-                </a>
-                <a class="q-card verified" href="/who-said/every-man-is-guilty-of-all-the-good-he-did-not-do/">
-                    <p class="q-text">&ldquo;Every man is guilty of all the good he did not do&rdquo;</p>
-                    <p class="q-author">Voltaire</p>
-                </a>
-                <a class="q-card verified" href="/who-said/everyone-sees-what-you-appear-to-be-few-experience-what-you/">
-                    <p class="q-text">&ldquo;Everyone sees what you appear to be, few experience what you really are&rdquo;</p>
-                    <p class="q-author">Niccol&ograve; Machiavelli</p>
-                </a>
-                <a class="q-card verified" href="/who-said/first-say-to-yourself-what-you-would-be-and-then-do-what/">
-                    <p class="q-text">&ldquo;First say to yourself what you would be; and then do what you have to do&rdquo;</p>
-                    <p class="q-author">Epictetus</p>
-                </a>
-                <a class="q-card verified" href="/who-said/happiness-lies-in-the-joy-of-achievement-and-the-thrill-of/">
-                    <p class="q-text">&ldquo;Happiness lies in the joy of achievement and the thrill of creative effort&rdquo;</p>
-                    <p class="q-author">Franklin D. Roosevelt</p>
-                </a>
-                <a class="q-card verified" href="/who-said/he-has-half-the-deed-done-who-has-made-a-beginning/">
-                    <p class="q-text">&ldquo;He has half the deed done who has made a beginning&rdquo;</p>
-                    <p class="q-author">Horace</p>
-                </a>
-                <a class="q-card verified" href="/who-said/he-is-a-wise-man-who-does-not-grieve-for-the-things-which/">
-                    <p class="q-text">&ldquo;He is a wise man who does not grieve for the things which he has not, but rejoices for those which he has&rdquo;</p>
-                    <p class="q-author">Epictetus</p>
-                </a>
-                <a class="q-card verified" href="/who-said/he-who-knows-others-is-wise-he-who-knows-himself-is/">
-                    <p class="q-text">&ldquo;He who knows others is wise; he who knows himself is enlightened&rdquo;</p>
-                    <p class="q-author">Lao Tzu</p>
-                </a>
-                <a class="q-card verified" href="/who-said/he-who-learns-but-does-not-think-is-lost/">
-                    <p class="q-text">&ldquo;He who learns but does not think, is lost&rdquo;</p>
-                    <p class="q-author">Confucius</p>
-                </a>
-                <a class="q-card verified" href="/who-said/i-fear-the-greeks-even-when-they-bring-gifts/">
-                    <p class="q-text">&ldquo;I fear the Greeks, even when they bring gifts&rdquo;</p>
-                    <p class="q-author">Virgil</p>
-                </a>
-                <a class="q-card verified" href="/who-said/i-have-a-dream-that-my-four-little-children-will-one-day/">
-                    <p class="q-text">&ldquo;I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character&rdquo;</p>
-                    <p class="q-author">Martin Luther King Jr.</p>
-                </a>
-                <a class="q-card verified" href="/who-said/i-learned-that-courage-was-not-the-absence-of-fear-but-the/">
-                    <p class="q-text">&ldquo;I learned that courage was not the absence of fear, but the triumph over it&rdquo;</p>
-                    <p class="q-author">Nelson Mandela</p>
-                </a>
-                <a class="q-card verified" href="/who-said/i-was-taught-that-the-way-of-progress-was-neither-swift-nor/">
-                    <p class="q-text">&ldquo;I was taught that the way of progress was neither swift nor easy&rdquo;</p>
-                    <p class="q-author">Marie Curie</p>
-                </a>
-                <a class="q-card verified" href="/who-said/if-it-is-not-right-do-not-do-it-if-it-is-not-true-do-not/">
-                    <p class="q-text">&ldquo;If it is not right, do not do it. If it is not true, do not say it&rdquo;</p>
-                    <p class="q-author">Marcus Aurelius</p>
-                </a>
-                <a class="q-card verified" href="/who-said/imagination-is-more-important-than-knowledge/">
-                    <p class="q-text">&ldquo;Imagination is more important than knowledge&rdquo;</p>
-                    <p class="q-author">Albert Einstein</p>
-                </a>
-                <a class="q-card verified" href="/who-said/injustice-anywhere-is-a-threat-to-justice-everywhere/">
-                    <p class="q-text">&ldquo;Injustice anywhere is a threat to justice everywhere&rdquo;</p>
-                    <p class="q-author">Martin Luther King Jr.</p>
-                </a>
-                <a class="q-card verified" href="/who-said/it-is-better-to-be-feared-than-loved-if-you-cannot-be-both/">
-                    <p class="q-text">&ldquo;It is better to be feared than loved, if you cannot be both&rdquo;</p>
-                    <p class="q-author">Niccol&ograve; Machiavelli</p>
-                </a>
-                <a class="q-card verified" href="/who-said/it-is-easy-to-be-brave-from-a-safe-distance/">
-                    <p class="q-text">&ldquo;It is easy to be brave from a safe distance&rdquo;</p>
-                    <p class="q-author">Aesop</p>
-                </a>
-                <a class="q-card verified" href="/who-said/life-is-like-riding-a-bicycle-to-keep-your-balance-you-must/">
-                    <p class="q-text">&ldquo;Life is like riding a bicycle. To keep your balance, you must keep moving&rdquo;</p>
-                    <p class="q-author">Albert Einstein</p>
-                </a>
-                <a class="q-card verified" href="/who-said/much-learning-does-not-teach-understanding/">
-                    <p class="q-text">&ldquo;Much learning does not teach understanding&rdquo;</p>
-                    <p class="q-author">Heraclitus</p>
-                </a>
-                <a class="q-card verified" href="/who-said/never-put-off-till-tomorrow-what-may-be-done-day-after/">
-                    <p class="q-text">&ldquo;Never put off till tomorrow what may be done day after tomorrow just as well&rdquo;</p>
-                    <p class="q-author">Mark Twain</p>
-                </a>
-                <a class="q-card verified" href="/who-said/not-until-we-are-lost-do-we-begin-to-understand-ourselves/">
-                    <p class="q-text">&ldquo;Not until we are lost do we begin to understand ourselves&rdquo;</p>
-                    <p class="q-author">Henry David Thoreau</p>
-                </a>
-                <a class="q-card verified" href="/who-said/science-and-everyday-life-cannot-and-should-not-be-separated/">
-                    <p class="q-text">&ldquo;Science and everyday life cannot and should not be separated&rdquo;</p>
-                    <p class="q-author">Rosalind Franklin</p>
-                </a>
-                <a class="q-card verified" href="/who-said/silence-at-the-proper-season-is-wisdom-and-better-than-any/">
-                    <p class="q-text">&ldquo;Silence at the proper season is wisdom, and better than any speech&rdquo;</p>
-                    <p class="q-author">Plutarch</p>
-                </a>
-                <a class="q-card verified" href="/who-said/speak-softly-and-carry-a-big-stick/">
-                    <p class="q-text">&ldquo;Speak softly and carry a big stick&rdquo;</p>
-                    <p class="q-author">Theodore Roosevelt</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-life-of-the-dead-is-placed-in-the-memory-of-the-living/">
-                    <p class="q-text">&ldquo;The life of the dead is placed in the memory of the living&rdquo;</p>
-                    <p class="q-author">Marcus Tullius Cicero</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-mass-of-men-lead-lives-of-quiet-desperation/">
-                    <p class="q-text">&ldquo;The mass of men lead lives of quiet desperation&rdquo;</p>
-                    <p class="q-author">Henry David Thoreau</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-only-thing-we-have-to-fear-is-fear-itself/">
-                    <p class="q-text">&ldquo;The only thing we have to fear is fear itself&rdquo;</p>
-                    <p class="q-author">Franklin D. Roosevelt</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-only-way-to-do-great-work-is-to-love-what-you-do/">
-                    <p class="q-text">&ldquo;The only way to do great work is to love what you do&rdquo;</p>
-                    <p class="q-author">Steve Jobs</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-only-way-to-have-a-friend-is-to-be-one/">
-                    <p class="q-text">&ldquo;The only way to have a friend is to be one&rdquo;</p>
-                    <p class="q-author">Ralph Waldo Emerson</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-perfect-is-the-enemy-of-the-good/">
-                    <p class="q-text">&ldquo;The perfect is the enemy of the good&rdquo;</p>
-                    <p class="q-author">Voltaire</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-reasonable-man-adapts-himself-to-the-world-the/">
-                    <p class="q-text">&ldquo;The reasonable man adapts himself to the world; the unreasonable one persists in trying to adapt the world to himself&rdquo;</p>
-                    <p class="q-author">George Bernard Shaw</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-soul-becomes-dyed-with-the-color-of-its-thoughts/">
-                    <p class="q-text">&ldquo;The soul becomes dyed with the color of its thoughts&rdquo;</p>
-                    <p class="q-author">Marcus Aurelius</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-supreme-art-of-war-is-to-subdue-the-enemy-without/">
-                    <p class="q-text">&ldquo;The supreme art of war is to subdue the enemy without fighting&rdquo;</p>
-                    <p class="q-author">Sun Tzu</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-traveler-sees-what-he-sees-the-tourist-sees-what-he-has/">
-                    <p class="q-text">&ldquo;The traveler sees what he sees. The tourist sees what he has come to see&rdquo;</p>
-                    <p class="q-author">G.K. Chesterton</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-true-soldier-fights-not-because-he-hates-what-is-in/">
-                    <p class="q-text">&ldquo;The true soldier fights not because he hates what is in front of him, but because he loves what is behind him&rdquo;</p>
-                    <p class="q-author">G.K. Chesterton</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-unexamined-life-is-not-worth-living/">
-                    <p class="q-text">&ldquo;The unexamined life is not worth living&rdquo;</p>
-                    <p class="q-author">Socrates</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-weak-can-never-forgive-forgiveness-is-the-attribute-of/">
-                    <p class="q-text">&ldquo;The weak can never forgive. Forgiveness is the attribute of the strong&rdquo;</p>
-                    <p class="q-author">Mahatma Gandhi</p>
-                </a>
-                <a class="q-card verified" href="/who-said/the-world-is-a-stage-but-the-play-is-badly-cast/">
-                    <p class="q-text">&ldquo;The world is a stage, but the play is badly cast&rdquo;</p>
-                    <p class="q-author">Oscar Wilde</p>
-                </a>
-                <a class="q-card verified" href="/who-said/there-is-only-one-thing-in-the-world-worse-than-being/">
-                    <p class="q-text">&ldquo;There is only one thing in the world worse than being talked about, and that is not being talked about&rdquo;</p>
-                    <p class="q-author">Oscar Wilde</p>
-                </a>
-                <a class="q-card verified" href="/who-said/they-can-because-they-think-they-can/">
-                    <p class="q-text">&ldquo;They can because they think they can&rdquo;</p>
-                    <p class="q-author">Virgil</p>
-                </a>
-                <a class="q-card verified" href="/who-said/three-things-are-necessary-for-the-salvation-of-man-to-know/">
-                    <p class="q-text">&ldquo;Three things are necessary for the salvation of man: to know what he ought to believe; to know what he ought to desire; and to know what he ought to do&rdquo;</p>
-                    <p class="q-author">Thomas Aquinas</p>
-                </a>
-                <a class="q-card verified" href="/who-said/we-are-all-in-the-gutter-but-some-of-us-are-looking-at-the/">
-                    <p class="q-text">&ldquo;We are all in the gutter, but some of us are looking at the stars&rdquo;</p>
-                    <p class="q-author">Oscar Wilde</p>
-                </a>
-                <a class="q-card verified" href="/who-said/we-choose-to-go-to-the-moon-in-this-decade-and-do-the-other/">
-                    <p class="q-text">&ldquo;We choose to go to the Moon in this decade and do the other things, not because they are easy, but because they are hard&rdquo;</p>
-                    <p class="q-author">John F. Kennedy</p>
-                </a>
-                <a class="q-card verified" href="/who-said/we-suffer-more-often-in-imagination-than-in-reality/">
-                    <p class="q-text">&ldquo;We suffer more often in imagination than in reality&rdquo;</p>
-                    <p class="q-author">Seneca</p>
-                </a>
-                <a class="q-card verified" href="/who-said/well-behaved-women-seldom-make-history/">
-                    <p class="q-text">&ldquo;Well-behaved women seldom make history&rdquo;</p>
-                    <p class="q-author">Laurel Thatcher Ulrich</p>
-                </a>
-                <a class="q-card verified" href="/who-said/you-cannot-shake-hands-with-a-clenched-fist/">
-                    <p class="q-text">&ldquo;You cannot shake hands with a clenched fist&rdquo;</p>
-                    <p class="q-author">Indira Gandhi</p>
-                </a>
-            </div>
-        </section>
-
-        <section class="grp" aria-labelledby="h-attributed">
-            <div class="grp-head">
-                <span class="grp-badge attributed"><span class="grp-dot">≈</span>Attributed</span>
-                <span class="grp-count">23</span>
-            </div>
-            <p class="grp-blurb">Widely and plausibly credited, but no primary source pins it — honest uncertainty.</p>
-            <div class="q-grid">
-                <a class="q-card attributed" href="/who-said/be-less-curious-about-people-and-more-curious-about-ideas/">
-                    <p class="q-text">&ldquo;Be less curious about people and more curious about ideas&rdquo;</p>
-                    <p class="q-author">Marie Curie</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/champions-keep-playing-until-they-get-it-right/">
-                    <p class="q-text">&ldquo;Champions keep playing until they get it right&rdquo;</p>
-                    <p class="q-author">Billie Jean King</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/character-is-destiny/">
-                    <p class="q-text">&ldquo;Character is destiny&rdquo;</p>
-                    <p class="q-author">Heraclitus</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/dont-find-fault-find-a-remedy/">
-                    <p class="q-text">&ldquo;Don't find fault, find a remedy&rdquo;</p>
-                    <p class="q-author">Henry Ford</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/energy-and-persistence-conquer-all-things/">
-                    <p class="q-text">&ldquo;Energy and persistence conquer all things&rdquo;</p>
-                    <p class="q-author">Benjamin Franklin</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/fortune-favors-the-bold/">
-                    <p class="q-text">&ldquo;Fortune favors the bold&rdquo;</p>
-                    <p class="q-author">Virgil</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/gratitude-is-not-only-the-greatest-of-virtues-but-the/">
-                    <p class="q-text">&ldquo;Gratitude is not only the greatest of virtues, but the parent of all others&rdquo;</p>
-                    <p class="q-author">Marcus Tullius Cicero</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/happiness-is-when-what-you-think-what-you-say-and-what-you/">
-                    <p class="q-text">&ldquo;Happiness is when what you think, what you say, and what you do are in harmony&rdquo;</p>
-                    <p class="q-author">Mahatma Gandhi</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/he-who-is-not-satisfied-with-a-little-is-satisfied-with/">
-                    <p class="q-text">&ldquo;He who is not satisfied with a little is satisfied with nothing&rdquo;</p>
-                    <p class="q-author">Epicurus</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/i-am-a-slow-walker-but-i-never-walk-back/">
-                    <p class="q-text">&ldquo;I am a slow walker, but I never walk back&rdquo;</p>
-                    <p class="q-author">Abraham Lincoln</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/if-you-dont-like-something-change-it-if-you-cant-change-it/">
-                    <p class="q-text">&ldquo;If you don't like something, change it. If you can't change it, change your attitude&rdquo;</p>
-                    <p class="q-author">Maya Angelou</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/if-you-have-a-garden-and-a-library-you-have-everything-you/">
-                    <p class="q-text">&ldquo;If you have a garden and a library, you have everything you need&rdquo;</p>
-                    <p class="q-author">Marcus Tullius Cicero</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/innovation-distinguishes-between-a-leader-and-a-follower/">
-                    <p class="q-text">&ldquo;Innovation distinguishes between a leader and a follower&rdquo;</p>
-                    <p class="q-author">Steve Jobs</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/never-was-anything-great-achieved-without-danger/">
-                    <p class="q-text">&ldquo;Never was anything great achieved without danger&rdquo;</p>
-                    <p class="q-author">Niccolò Machiavelli</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/no-one-can-make-you-feel-inferior-without-your-consent/">
-                    <p class="q-text">&ldquo;No one can make you feel inferior without your consent&rdquo;</p>
-                    <p class="q-author">Eleanor Roosevelt</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/nothing-in-life-is-to-be-feared-it-is-only-to-be-understood/">
-                    <p class="q-text">&ldquo;Nothing in life is to be feared, it is only to be understood&rdquo;</p>
-                    <p class="q-author">Marie Curie</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/one-of-the-penalties-for-refusing-to-participate-in/">
-                    <p class="q-text">&ldquo;One of the penalties for refusing to participate in politics is that you end up being governed by your inferiors&rdquo;</p>
-                    <p class="q-author">Plato</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/real-knowledge-is-to-know-the-extent-of-ones-ignorance/">
-                    <p class="q-text">&ldquo;Real knowledge is to know the extent of one's ignorance&rdquo;</p>
-                    <p class="q-author">Confucius</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/the-ballot-is-stronger-than-the-bullet/">
-                    <p class="q-text">&ldquo;The ballot is stronger than the bullet&rdquo;</p>
-                    <p class="q-author">Abraham Lincoln</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/the-greatest-victory-is-that-which-requires-no-battle/">
-                    <p class="q-text">&ldquo;The greatest victory is that which requires no battle&rdquo;</p>
-                    <p class="q-author">Sun Tzu</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/we-delight-in-the-beauty-of-the-butterfly-but-rarely-admit/">
-                    <p class="q-text">&ldquo;We delight in the beauty of the butterfly, but rarely admit the changes it has gone through&rdquo;</p>
-                    <p class="q-author">Maya Angelou</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/when-you-come-to-a-fork-in-the-road-take-it/">
-                    <p class="q-text">&ldquo;When you come to a fork in the road, take it&rdquo;</p>
-                    <p class="q-author">Yogi Berra</p>
-                </a>
-                <a class="q-card attributed" href="/who-said/wonder-is-the-beginning-of-wisdom/">
-                    <p class="q-text">&ldquo;Wonder is the beginning of wisdom&rdquo;</p>
-                    <p class="q-author">Socrates</p>
-                </a>
-            </div>
-        </section>
-
-        <section class="grp" aria-labelledby="h-disputed">
-            <div class="grp-head">
-                <span class="grp-badge disputed"><span class="grp-dot">?</span>Disputed</span>
-                <span class="grp-count">48</span>
-            </div>
-            <p class="grp-blurb">The famous name is wrong, or the wording is a later paraphrase — here is who really said it.</p>
-            <div class="q-grid">
-                <a class="q-card disputed" href="/who-said/adversity-has-the-effect-of-eliciting-talents-which-in/">
+            <div class="q-grid" id="results">
+                <a class="q-card disputed" href="/who-said/adversity-has-the-effect-of-eliciting-talents-which-in/" data-c="disputed" data-s="adversity has the effect of eliciting talents which in prosperous circumstances would have lain dormant horace">
                     <p class="q-text">&ldquo;Adversity has the effect of eliciting talents which in prosperous circumstances would have lain dormant&rdquo;</p>
-                    <p class="q-author">Horace</p>
+                    <p class="q-foot"><span class="q-author">Horace</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/an-investment-in-knowledge-pays-the-best-interest/">
+                <a class="q-card disputed" href="/who-said/an-investment-in-knowledge-pays-the-best-interest/" data-c="disputed" data-s="an investment in knowledge pays the best interest benjamin franklin">
                     <p class="q-text">&ldquo;An investment in knowledge pays the best interest&rdquo;</p>
-                    <p class="q-author">Benjamin Franklin</p>
+                    <p class="q-foot"><span class="q-author">Benjamin Franklin</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/be-the-change-that-you-wish-to-see-in-the-world/">
+                <a class="q-card disputed" href="/who-said/be-the-change-that-you-wish-to-see-in-the-world/" data-c="disputed" data-s="be the change that you wish to see in the world arleen lorrance">
                     <p class="q-text">&ldquo;Be the change that you wish to see in the world&rdquo;</p>
-                    <p class="q-author">Arleen Lorrance</p>
+                    <p class="q-foot"><span class="q-author">Arleen Lorrance</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/before-you-embark-on-a-journey-of-revenge-dig-two-graves/">
+                <a class="q-card disputed" href="/who-said/before-you-embark-on-a-journey-of-revenge-dig-two-graves/" data-c="disputed" data-s="before you embark on a journey of revenge, dig two graves william elliot griffis">
                     <p class="q-text">&ldquo;Before you embark on a journey of revenge, dig two graves&rdquo;</p>
-                    <p class="q-author">William Elliot Griffis</p>
+                    <p class="q-foot"><span class="q-author">William Elliot Griffis</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/coming-together-is-a-beginning-staying-together-is-progress/">
+                <a class="q-card disputed" href="/who-said/coming-together-is-a-beginning-staying-together-is-progress/" data-c="disputed" data-s="coming together is a beginning, staying together is progress, working together is success edward everett hale">
                     <p class="q-text">&ldquo;Coming together is a beginning, staying together is progress, working together is success&rdquo;</p>
-                    <p class="q-author">Edward Everett Hale</p>
+                    <p class="q-foot"><span class="q-author">Edward Everett Hale</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/courage-is-knowing-what-not-to-fear/">
+                <a class="q-card disputed" href="/who-said/courage-is-knowing-what-not-to-fear/" data-c="disputed" data-s="courage is knowing what not to fear werner jaeger">
                     <p class="q-text">&ldquo;Courage is knowing what not to fear&rdquo;</p>
-                    <p class="q-author">Werner Jaeger</p>
+                    <p class="q-foot"><span class="q-author">Werner Jaeger</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/do-one-thing-every-day-that-scares-you/">
+                <a class="q-card disputed" href="/who-said/do-one-thing-every-day-that-scares-you/" data-c="disputed" data-s="do one thing every day that scares you mary schmich">
                     <p class="q-text">&ldquo;Do one thing every day that scares you&rdquo;</p>
-                    <p class="q-author">Mary Schmich</p>
+                    <p class="q-foot"><span class="q-author">Mary Schmich</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/do-what-you-can-with-what-you-have-where-you-are/">
+                <a class="q-card disputed" href="/who-said/do-what-you-can-with-what-you-have-where-you-are/" data-c="disputed" data-s="do what you can, with what you have, where you are squire bill widener">
                     <p class="q-text">&ldquo;Do what you can, with what you have, where you are&rdquo;</p>
-                    <p class="q-author">Squire Bill Widener</p>
+                    <p class="q-foot"><span class="q-author">Squire Bill Widener</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/fairy-tales-are-more-than-true-not-because-they-tell-us/">
+                <a class="q-card disputed" href="/who-said/fairy-tales-are-more-than-true-not-because-they-tell-us/" data-c="disputed" data-s="fairy tales are more than true: not because they tell us that dragons exist, but because they tell us that dragons can be beaten neil gaiman">
                     <p class="q-text">&ldquo;Fairy tales are more than true: not because they tell us that dragons exist, but because they tell us that dragons can be beaten&rdquo;</p>
-                    <p class="q-author">Neil Gaiman</p>
+                    <p class="q-foot"><span class="q-author">Neil Gaiman</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/for-every-minute-you-are-angry-you-lose-sixty-seconds-of/">
+                <a class="q-card disputed" href="/who-said/for-every-minute-you-are-angry-you-lose-sixty-seconds-of/" data-c="disputed" data-s="for every minute you are angry you lose sixty seconds of happiness jacob m. braude">
                     <p class="q-text">&ldquo;For every minute you are angry you lose sixty seconds of happiness&rdquo;</p>
-                    <p class="q-author">Jacob M. Braude</p>
+                    <p class="q-foot"><span class="q-author">Jacob M. Braude</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/in-any-moment-of-decision-the-best-thing-you-can-do-is-the/">
+                <a class="q-card disputed" href="/who-said/in-any-moment-of-decision-the-best-thing-you-can-do-is-the/" data-c="disputed" data-s="in any moment of decision, the best thing you can do is the right thing alfred henry lewis">
                     <p class="q-text">&ldquo;In any moment of decision, the best thing you can do is the right thing&rdquo;</p>
-                    <p class="q-author">Alfred Henry Lewis</p>
+                    <p class="q-foot"><span class="q-author">Alfred Henry Lewis</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/in-the-middle-of-difficulty-lies-opportunity/">
+                <a class="q-card disputed" href="/who-said/in-the-middle-of-difficulty-lies-opportunity/" data-c="disputed" data-s="in the middle of difficulty lies opportunity john archibald wheeler">
                     <p class="q-text">&ldquo;In the middle of difficulty lies opportunity&rdquo;</p>
-                    <p class="q-author">John Archibald Wheeler</p>
+                    <p class="q-foot"><span class="q-author">John Archibald Wheeler</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/insanity-is-doing-the-same-thing-over-and-over-again/">
+                <a class="q-card disputed" href="/who-said/insanity-is-doing-the-same-thing-over-and-over-again/" data-c="disputed" data-s="insanity is doing the same thing over and over again and expecting different results rita mae brown">
                     <p class="q-text">&ldquo;Insanity is doing the same thing over and over again and expecting different results&rdquo;</p>
-                    <p class="q-author">Rita Mae Brown</p>
+                    <p class="q-foot"><span class="q-author">Rita Mae Brown</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/it-always-seems-impossible-until-its-done/">
+                <a class="q-card disputed" href="/who-said/it-always-seems-impossible-until-its-done/" data-c="disputed" data-s="it always seems impossible until it's done pliny the elder (earliest source of the idea)">
                     <p class="q-text">&ldquo;It always seems impossible until it's done&rdquo;</p>
-                    <p class="q-author">Pliny the Elder (earliest source of the idea)</p>
+                    <p class="q-foot"><span class="q-author">Pliny the Elder (earliest source of the idea)</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/it-is-the-mark-of-an-educated-mind-to-entertain-a-thought/">
+                <a class="q-card disputed" href="/who-said/it-is-the-mark-of-an-educated-mind-to-entertain-a-thought/" data-c="disputed" data-s="it is the mark of an educated mind to entertain a thought without accepting it lowell l. bennion">
                     <p class="q-text">&ldquo;It is the mark of an educated mind to entertain a thought without accepting it&rdquo;</p>
-                    <p class="q-author">Lowell L. Bennion</p>
+                    <p class="q-foot"><span class="q-author">Lowell L. Bennion</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/its-not-what-you-look-at-that-matters-its-what-you-see/">
+                <a class="q-card disputed" href="/who-said/its-not-what-you-look-at-that-matters-its-what-you-see/" data-c="disputed" data-s="it's not what you look at that matters, it's what you see henry david thoreau">
                     <p class="q-text">&ldquo;It's not what you look at that matters, it's what you see&rdquo;</p>
-                    <p class="q-author">Henry David Thoreau</p>
+                    <p class="q-foot"><span class="q-author">Henry David Thoreau</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/know-yourself-and-you-will-win-all-battles/">
+                <a class="q-card disputed" href="/who-said/know-yourself-and-you-will-win-all-battles/" data-c="disputed" data-s="know yourself and you will win all battles sun tzu">
                     <p class="q-text">&ldquo;Know yourself and you will win all battles&rdquo;</p>
-                    <p class="q-author">Sun Tzu</p>
+                    <p class="q-foot"><span class="q-author">Sun Tzu</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/luck-is-what-happens-when-preparation-meets-opportunity/">
+                <a class="q-card disputed" href="/who-said/luck-is-what-happens-when-preparation-meets-opportunity/" data-c="disputed" data-s="luck is what happens when preparation meets opportunity anonymous">
                     <p class="q-text">&ldquo;Luck is what happens when preparation meets opportunity&rdquo;</p>
-                    <p class="q-author">Anonymous</p>
+                    <p class="q-foot"><span class="q-author">Anonymous</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/nature-does-not-hurry-yet-everything-is-accomplished/">
+                <a class="q-card disputed" href="/who-said/nature-does-not-hurry-yet-everything-is-accomplished/" data-c="disputed" data-s="nature does not hurry, yet everything is accomplished lao tzu">
                     <p class="q-text">&ldquo;Nature does not hurry, yet everything is accomplished&rdquo;</p>
-                    <p class="q-author">Lao Tzu</p>
+                    <p class="q-foot"><span class="q-author">Lao Tzu</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/nearly-all-men-can-stand-adversity-but-if-you-want-to-test/">
+                <a class="q-card disputed" href="/who-said/nearly-all-men-can-stand-adversity-but-if-you-want-to-test/" data-c="disputed" data-s="nearly all men can stand adversity, but if you want to test a man's character, give him power robert g. ingersoll">
                     <p class="q-text">&ldquo;Nearly all men can stand adversity, but if you want to test a man's character, give him power&rdquo;</p>
-                    <p class="q-author">Robert G. Ingersoll</p>
+                    <p class="q-foot"><span class="q-author">Robert G. Ingersoll</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/no-act-of-kindness-no-matter-how-small-is-ever-wasted/">
+                <a class="q-card disputed" href="/who-said/no-act-of-kindness-no-matter-how-small-is-ever-wasted/" data-c="disputed" data-s="no act of kindness, no matter how small, is ever wasted aesop">
                     <p class="q-text">&ldquo;No act of kindness, no matter how small, is ever wasted&rdquo;</p>
-                    <p class="q-author">Aesop</p>
+                    <p class="q-foot"><span class="q-author">Aesop</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/no-man-is-free-who-is-not-master-of-himself/">
+                <a class="q-card disputed" href="/who-said/no-man-is-free-who-is-not-master-of-himself/" data-c="disputed" data-s="no man is free who is not master of himself epictetus">
                     <p class="q-text">&ldquo;No man is free who is not master of himself&rdquo;</p>
-                    <p class="q-author">Epictetus</p>
+                    <p class="q-foot"><span class="q-author">Epictetus</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/of-all-the-means-to-ensure-happiness-friendship-is-the-most/">
+                <a class="q-card disputed" href="/who-said/of-all-the-means-to-ensure-happiness-friendship-is-the-most/" data-c="disputed" data-s="of all the means to ensure happiness, friendship is the most important epicurus">
                     <p class="q-text">&ldquo;Of all the means to ensure happiness, friendship is the most important&rdquo;</p>
-                    <p class="q-author">Epicurus</p>
+                    <p class="q-foot"><span class="q-author">Epicurus</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/peace-comes-from-within-do-not-seek-it-without/">
+                <a class="q-card disputed" href="/who-said/peace-comes-from-within-do-not-seek-it-without/" data-c="disputed" data-s="peace comes from within. do not seek it without g. f. allen">
                     <p class="q-text">&ldquo;Peace comes from within. Do not seek it without&rdquo;</p>
-                    <p class="q-author">G. F. Allen</p>
+                    <p class="q-foot"><span class="q-author">G. F. Allen</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/quality-is-not-an-act-it-is-a-habit/">
+                <a class="q-card disputed" href="/who-said/quality-is-not-an-act-it-is-a-habit/" data-c="disputed" data-s="quality is not an act, it is a habit will durant">
                     <p class="q-text">&ldquo;Quality is not an act, it is a habit&rdquo;</p>
-                    <p class="q-author">Will Durant</p>
+                    <p class="q-foot"><span class="q-author">Will Durant</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/silence-is-a-source-of-great-strength/">
+                <a class="q-card disputed" href="/who-said/silence-is-a-source-of-great-strength/" data-c="disputed" data-s="silence is a source of great strength john heider">
                     <p class="q-text">&ldquo;Silence is a source of great strength&rdquo;</p>
-                    <p class="q-author">John Heider</p>
+                    <p class="q-foot"><span class="q-author">John Heider</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/stay-hungry-stay-foolish/">
+                <a class="q-card disputed" href="/who-said/stay-hungry-stay-foolish/" data-c="disputed" data-s="stay hungry, stay foolish stewart brand">
                     <p class="q-text">&ldquo;Stay hungry, stay foolish&rdquo;</p>
-                    <p class="q-author">Stewart Brand</p>
+                    <p class="q-foot"><span class="q-author">Stewart Brand</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/the-aim-of-art-is-to-represent-not-the-outward-appearance/">
+                <a class="q-card disputed" href="/who-said/the-aim-of-art-is-to-represent-not-the-outward-appearance/" data-c="disputed" data-s="the aim of art is to represent not the outward appearance of things, but their inward significance will durant">
                     <p class="q-text">&ldquo;The aim of art is to represent not the outward appearance of things, but their inward significance&rdquo;</p>
-                    <p class="q-author">Will Durant</p>
+                    <p class="q-foot"><span class="q-author">Will Durant</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/the-future-belongs-to-those-who-believe-in-the-beauty-of/">
+                <a class="q-card disputed" href="/who-said/the-future-belongs-to-those-who-believe-in-the-beauty-of/" data-c="disputed" data-s="the future belongs to those who believe in the beauty of their dreams unknown (anonymous saying)">
                     <p class="q-text">&ldquo;The future belongs to those who believe in the beauty of their dreams&rdquo;</p>
-                    <p class="q-author">Unknown (anonymous saying)</p>
+                    <p class="q-foot"><span class="q-author">Unknown (anonymous saying)</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/the-man-who-does-not-read-has-no-advantage-over-the-man-who/">
+                <a class="q-card disputed" href="/who-said/the-man-who-does-not-read-has-no-advantage-over-the-man-who/" data-c="disputed" data-s="the man who does not read has no advantage over the man who cannot read joseph d. eggleston jr.">
                     <p class="q-text">&ldquo;The man who does not read has no advantage over the man who cannot read&rdquo;</p>
-                    <p class="q-author">Joseph D. Eggleston Jr.</p>
+                    <p class="q-foot"><span class="q-author">Joseph D. Eggleston Jr.</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/the-mind-is-not-a-vessel-to-be-filled-but-a-fire-to-be/">
+                <a class="q-card disputed" href="/who-said/the-mind-is-not-a-vessel-to-be-filled-but-a-fire-to-be/" data-c="disputed" data-s="the mind is not a vessel to be filled, but a fire to be kindled plutarch">
                     <p class="q-text">&ldquo;The mind is not a vessel to be filled, but a fire to be kindled&rdquo;</p>
-                    <p class="q-author">Plutarch</p>
+                    <p class="q-foot"><span class="q-author">Plutarch</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/the-only-constant-in-life-is-change/">
+                <a class="q-card disputed" href="/who-said/the-only-constant-in-life-is-change/" data-c="disputed" data-s="the only constant in life is change heraclitus">
                     <p class="q-text">&ldquo;The only constant in life is change&rdquo;</p>
-                    <p class="q-author">Heraclitus</p>
+                    <p class="q-foot"><span class="q-author">Heraclitus</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/the-only-source-of-knowledge-is-experience/">
+                <a class="q-card disputed" href="/who-said/the-only-source-of-knowledge-is-experience/" data-c="disputed" data-s="the only source of knowledge is experience john locke">
                     <p class="q-text">&ldquo;The only source of knowledge is experience&rdquo;</p>
-                    <p class="q-author">John Locke</p>
+                    <p class="q-foot"><span class="q-author">John Locke</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/the-single-biggest-problem-in-communication-is-the-illusion/">
+                <a class="q-card disputed" href="/who-said/the-single-biggest-problem-in-communication-is-the-illusion/" data-c="disputed" data-s="the single biggest problem in communication is the illusion that it has taken place william h. whyte">
                     <p class="q-text">&ldquo;The single biggest problem in communication is the illusion that it has taken place&rdquo;</p>
-                    <p class="q-author">William H. Whyte</p>
+                    <p class="q-foot"><span class="q-author">William H. Whyte</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/there-is-no-greater-agony-than-bearing-an-untold-story/">
+                <a class="q-card disputed" href="/who-said/there-is-no-greater-agony-than-bearing-an-untold-story/" data-c="disputed" data-s="there is no greater agony than bearing an untold story inside you zora neale hurston">
                     <p class="q-text">&ldquo;There is no greater agony than bearing an untold story inside you&rdquo;</p>
-                    <p class="q-author">Zora Neale Hurston</p>
+                    <p class="q-foot"><span class="q-author">Zora Neale Hurston</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/there-is-nothing-on-this-earth-more-to-be-prized-than-true/">
+                <a class="q-card disputed" href="/who-said/there-is-nothing-on-this-earth-more-to-be-prized-than-true/" data-c="disputed" data-s="there is nothing on this earth more to be prized than true friendship thomas aquinas">
                     <p class="q-text">&ldquo;There is nothing on this earth more to be prized than true friendship&rdquo;</p>
-                    <p class="q-author">Thomas Aquinas</p>
+                    <p class="q-foot"><span class="q-author">Thomas Aquinas</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/those-who-dare-to-fail-miserably-can-achieve-greatly/">
+                <a class="q-card disputed" href="/who-said/those-who-dare-to-fail-miserably-can-achieve-greatly/" data-c="disputed" data-s="those who dare to fail miserably can achieve greatly robert f. kennedy">
                     <p class="q-text">&ldquo;Those who dare to fail miserably can achieve greatly&rdquo;</p>
-                    <p class="q-author">Robert F. Kennedy</p>
+                    <p class="q-foot"><span class="q-author">Robert F. Kennedy</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/three-things-cannot-be-long-hidden-the-sun-the-moon-and-the/">
+                <a class="q-card disputed" href="/who-said/three-things-cannot-be-long-hidden-the-sun-the-moon-and-the/" data-c="disputed" data-s="three things cannot be long hidden: the sun, the moon, and the truth the buddha (siddhārtha gautama)">
                     <p class="q-text">&ldquo;Three things cannot be long hidden: the sun, the moon, and the truth&rdquo;</p>
-                    <p class="q-author">The Buddha (Siddhārtha Gautama)</p>
+                    <p class="q-foot"><span class="q-author">The Buddha (Siddhārtha Gautama)</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/to-be-yourself-in-a-world-that-is-constantly-trying-to-make/">
+                <a class="q-card disputed" href="/who-said/to-be-yourself-in-a-world-that-is-constantly-trying-to-make/" data-c="disputed" data-s="to be yourself in a world that is constantly trying to make you something else is the greatest accomplishment e. e. cummings">
                     <p class="q-text">&ldquo;To be yourself in a world that is constantly trying to make you something else is the greatest accomplishment&rdquo;</p>
-                    <p class="q-author">E. E. Cummings</p>
+                    <p class="q-foot"><span class="q-author">E. E. Cummings</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/to-one-who-has-faith-no-explanation-is-necessary-to-one/">
+                <a class="q-card disputed" href="/who-said/to-one-who-has-faith-no-explanation-is-necessary-to-one/" data-c="disputed" data-s="to one who has faith, no explanation is necessary. to one without faith, no explanation is possible anonymous">
                     <p class="q-text">&ldquo;To one who has faith, no explanation is necessary. To one without faith, no explanation is possible&rdquo;</p>
-                    <p class="q-author">Anonymous</p>
+                    <p class="q-foot"><span class="q-author">Anonymous</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/united-we-stand-divided-we-fall/">
+                <a class="q-card disputed" href="/who-said/united-we-stand-divided-we-fall/" data-c="disputed" data-s="united we stand, divided we fall aesop">
                     <p class="q-text">&ldquo;United we stand, divided we fall&rdquo;</p>
-                    <p class="q-author">Aesop</p>
+                    <p class="q-foot"><span class="q-author">Aesop</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/we-are-twice-armed-if-we-fight-with-faith/">
+                <a class="q-card disputed" href="/who-said/we-are-twice-armed-if-we-fight-with-faith/" data-c="disputed" data-s="we are twice armed if we fight with faith william shakespeare">
                     <p class="q-text">&ldquo;We are twice armed if we fight with faith&rdquo;</p>
-                    <p class="q-author">William Shakespeare</p>
+                    <p class="q-foot"><span class="q-author">William Shakespeare</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/we-make-a-living-by-what-we-get-but-we-make-a-life-by-what/">
+                <a class="q-card disputed" href="/who-said/we-make-a-living-by-what-we-get-but-we-make-a-life-by-what/" data-c="disputed" data-s="we make a living by what we get, but we make a life by what we give unknown (anonymous)">
                     <p class="q-text">&ldquo;We make a living by what we get, but we make a life by what we give&rdquo;</p>
-                    <p class="q-author">Unknown (anonymous)</p>
+                    <p class="q-foot"><span class="q-author">Unknown (anonymous)</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/we-must-use-time-wisely-and-forever-realize-that-the-time/">
+                <a class="q-card disputed" href="/who-said/we-must-use-time-wisely-and-forever-realize-that-the-time/" data-c="disputed" data-s="we must use time wisely and forever realize that the time is always ripe to do right martin luther king jr.">
                     <p class="q-text">&ldquo;We must use time wisely and forever realize that the time is always ripe to do right&rdquo;</p>
-                    <p class="q-author">Martin Luther King Jr.</p>
+                    <p class="q-foot"><span class="q-author">Martin Luther King Jr.</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/what-we-achieve-inwardly-will-change-outer-reality/">
+                <a class="q-card disputed" href="/who-said/what-we-achieve-inwardly-will-change-outer-reality/" data-c="disputed" data-s="what we achieve inwardly will change outer reality anaïs nin">
                     <p class="q-text">&ldquo;What we achieve inwardly will change outer reality&rdquo;</p>
-                    <p class="q-author">Anaïs Nin</p>
+                    <p class="q-foot"><span class="q-author">Anaïs Nin</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/when-you-reach-the-end-of-your-rope-tie-a-knot-in-it-and/">
+                <a class="q-card disputed" href="/who-said/when-you-reach-the-end-of-your-rope-tie-a-knot-in-it-and/" data-c="disputed" data-s="when you reach the end of your rope, tie a knot in it and hang on anonymous (american folk proverb)">
                     <p class="q-text">&ldquo;When you reach the end of your rope, tie a knot in it and hang on&rdquo;</p>
-                    <p class="q-author">Anonymous (American folk proverb)</p>
+                    <p class="q-foot"><span class="q-author">Anonymous (American folk proverb)</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/whether-you-think-you-can-or-you-think-you-cant-youre-right/">
+                <a class="q-card disputed" href="/who-said/whether-you-think-you-can-or-you-think-you-cant-youre-right/" data-c="disputed" data-s="whether you think you can or you think you can't, you're right anonymous (traditional proverb)">
                     <p class="q-text">&ldquo;Whether you think you can or you think you can't, you're right&rdquo;</p>
-                    <p class="q-author">Anonymous (traditional proverb)</p>
+                    <p class="q-foot"><span class="q-author">Anonymous (traditional proverb)</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
                 </a>
-                <a class="q-card disputed" href="/who-said/you-have-power-over-your-mind-not-outside-events/">
+                <a class="q-card disputed" href="/who-said/you-have-power-over-your-mind-not-outside-events/" data-c="disputed" data-s="you have power over your mind - not outside events marcus aurelius">
                     <p class="q-text">&ldquo;You have power over your mind - not outside events&rdquo;</p>
-                    <p class="q-author">Marcus Aurelius</p>
+                    <p class="q-foot"><span class="q-author">Marcus Aurelius</span><span class="q-badge disputed" title="disputed" aria-hidden="true">?</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/be-less-curious-about-people-and-more-curious-about-ideas/" data-c="attributed" data-s="be less curious about people and more curious about ideas marie curie">
+                    <p class="q-text">&ldquo;Be less curious about people and more curious about ideas&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Marie Curie</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/champions-keep-playing-until-they-get-it-right/" data-c="attributed" data-s="champions keep playing until they get it right billie jean king">
+                    <p class="q-text">&ldquo;Champions keep playing until they get it right&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Billie Jean King</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/character-is-destiny/" data-c="attributed" data-s="character is destiny heraclitus">
+                    <p class="q-text">&ldquo;Character is destiny&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Heraclitus</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/dont-find-fault-find-a-remedy/" data-c="attributed" data-s="don't find fault, find a remedy henry ford">
+                    <p class="q-text">&ldquo;Don't find fault, find a remedy&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Henry Ford</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/energy-and-persistence-conquer-all-things/" data-c="attributed" data-s="energy and persistence conquer all things benjamin franklin">
+                    <p class="q-text">&ldquo;Energy and persistence conquer all things&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Benjamin Franklin</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/fortune-favors-the-bold/" data-c="attributed" data-s="fortune favors the bold virgil">
+                    <p class="q-text">&ldquo;Fortune favors the bold&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Virgil</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/gratitude-is-not-only-the-greatest-of-virtues-but-the/" data-c="attributed" data-s="gratitude is not only the greatest of virtues, but the parent of all others marcus tullius cicero">
+                    <p class="q-text">&ldquo;Gratitude is not only the greatest of virtues, but the parent of all others&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Marcus Tullius Cicero</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/happiness-is-when-what-you-think-what-you-say-and-what-you/" data-c="attributed" data-s="happiness is when what you think, what you say, and what you do are in harmony mahatma gandhi">
+                    <p class="q-text">&ldquo;Happiness is when what you think, what you say, and what you do are in harmony&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Mahatma Gandhi</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/he-who-is-not-satisfied-with-a-little-is-satisfied-with/" data-c="attributed" data-s="he who is not satisfied with a little is satisfied with nothing epicurus">
+                    <p class="q-text">&ldquo;He who is not satisfied with a little is satisfied with nothing&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Epicurus</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/i-am-a-slow-walker-but-i-never-walk-back/" data-c="attributed" data-s="i am a slow walker, but i never walk back abraham lincoln">
+                    <p class="q-text">&ldquo;I am a slow walker, but I never walk back&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Abraham Lincoln</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/if-you-dont-like-something-change-it-if-you-cant-change-it/" data-c="attributed" data-s="if you don't like something, change it. if you can't change it, change your attitude maya angelou">
+                    <p class="q-text">&ldquo;If you don't like something, change it. If you can't change it, change your attitude&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Maya Angelou</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/if-you-have-a-garden-and-a-library-you-have-everything-you/" data-c="attributed" data-s="if you have a garden and a library, you have everything you need marcus tullius cicero">
+                    <p class="q-text">&ldquo;If you have a garden and a library, you have everything you need&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Marcus Tullius Cicero</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/innovation-distinguishes-between-a-leader-and-a-follower/" data-c="attributed" data-s="innovation distinguishes between a leader and a follower steve jobs">
+                    <p class="q-text">&ldquo;Innovation distinguishes between a leader and a follower&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Steve Jobs</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/never-was-anything-great-achieved-without-danger/" data-c="attributed" data-s="never was anything great achieved without danger niccolò machiavelli">
+                    <p class="q-text">&ldquo;Never was anything great achieved without danger&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Niccolò Machiavelli</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/no-one-can-make-you-feel-inferior-without-your-consent/" data-c="attributed" data-s="no one can make you feel inferior without your consent eleanor roosevelt">
+                    <p class="q-text">&ldquo;No one can make you feel inferior without your consent&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Eleanor Roosevelt</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/nothing-in-life-is-to-be-feared-it-is-only-to-be-understood/" data-c="attributed" data-s="nothing in life is to be feared, it is only to be understood marie curie">
+                    <p class="q-text">&ldquo;Nothing in life is to be feared, it is only to be understood&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Marie Curie</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/one-of-the-penalties-for-refusing-to-participate-in/" data-c="attributed" data-s="one of the penalties for refusing to participate in politics is that you end up being governed by your inferiors plato">
+                    <p class="q-text">&ldquo;One of the penalties for refusing to participate in politics is that you end up being governed by your inferiors&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Plato</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/real-knowledge-is-to-know-the-extent-of-ones-ignorance/" data-c="attributed" data-s="real knowledge is to know the extent of one's ignorance confucius">
+                    <p class="q-text">&ldquo;Real knowledge is to know the extent of one's ignorance&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Confucius</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/the-ballot-is-stronger-than-the-bullet/" data-c="attributed" data-s="the ballot is stronger than the bullet abraham lincoln">
+                    <p class="q-text">&ldquo;The ballot is stronger than the bullet&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Abraham Lincoln</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/the-greatest-victory-is-that-which-requires-no-battle/" data-c="attributed" data-s="the greatest victory is that which requires no battle sun tzu">
+                    <p class="q-text">&ldquo;The greatest victory is that which requires no battle&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Sun Tzu</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/we-delight-in-the-beauty-of-the-butterfly-but-rarely-admit/" data-c="attributed" data-s="we delight in the beauty of the butterfly, but rarely admit the changes it has gone through maya angelou">
+                    <p class="q-text">&ldquo;We delight in the beauty of the butterfly, but rarely admit the changes it has gone through&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Maya Angelou</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/when-you-come-to-a-fork-in-the-road-take-it/" data-c="attributed" data-s="when you come to a fork in the road, take it yogi berra">
+                    <p class="q-text">&ldquo;When you come to a fork in the road, take it&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Yogi Berra</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card attributed" href="/who-said/wonder-is-the-beginning-of-wisdom/" data-c="attributed" data-s="wonder is the beginning of wisdom socrates">
+                    <p class="q-text">&ldquo;Wonder is the beginning of wisdom&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Socrates</span><span class="q-badge attributed" title="attributed" aria-hidden="true">≈</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/a-life-spent-making-mistakes-is-not-only-more-honorable-but/" data-c="verified" data-s="a life spent making mistakes is not only more honorable, but more useful than a life spent doing nothing george bernard shaw">
+                    <p class="q-text">&ldquo;A life spent making mistakes is not only more honorable, but more useful than a life spent doing nothing&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">George Bernard Shaw</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/ask-not-what-your-country-can-do-for-you-ask-what-you-can/" data-c="verified" data-s="ask not what your country can do for you, ask what you can do for your country john f. kennedy">
+                    <p class="q-text">&ldquo;Ask not what your country can do for you, ask what you can do for your country&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">John F. Kennedy</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/be-civil-to-all-sociable-to-many-familiar-with-few-friend/" data-c="verified" data-s="be civil to all; sociable to many; familiar with few; friend to one; enemy to none benjamin franklin">
+                    <p class="q-text">&ldquo;Be civil to all; sociable to many; familiar with few; friend to one; enemy to none&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Benjamin Franklin</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/begin-at-once-to-live-and-count-each-separate-day-as-a/" data-c="verified" data-s="begin at once to live, and count each separate day as a separate life seneca">
+                    <p class="q-text">&ldquo;Begin at once to live, and count each separate day as a separate life&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Seneca</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/carpe-diem/" data-c="verified" data-s="carpe diem horace">
+                    <p class="q-text">&ldquo;Carpe diem&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Horace</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/change-is-the-law-of-life-and-those-who-look-only-to-the/" data-c="verified" data-s="change is the law of life. and those who look only to the past are certain to miss the future john f. kennedy">
+                    <p class="q-text">&ldquo;Change is the law of life. And those who look only to the past are certain to miss the future&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">John F. Kennedy</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/darkness-cannot-drive-out-darkness-only-light-can-do-that/" data-c="verified" data-s="darkness cannot drive out darkness; only light can do that. hate cannot drive out hate; only love can do that martin luther king jr.">
+                    <p class="q-text">&ldquo;Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Martin Luther King Jr.</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/do-not-spoil-what-you-have-by-desiring-what-you-have-not/" data-c="verified" data-s="do not spoil what you have by desiring what you have not epicurus">
+                    <p class="q-text">&ldquo;Do not spoil what you have by desiring what you have not&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Epicurus</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/doubt-is-not-a-pleasant-condition-but-certainty-is-absurd/" data-c="verified" data-s="doubt is not a pleasant condition, but certainty is absurd voltaire">
+                    <p class="q-text">&ldquo;Doubt is not a pleasant condition, but certainty is absurd&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Voltaire</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/education-is-the-most-powerful-weapon-which-you-can-use-to/" data-c="verified" data-s="education is the most powerful weapon which you can use to change the world nelson mandela">
+                    <p class="q-text">&ldquo;Education is the most powerful weapon which you can use to change the world&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Nelson Mandela</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/every-man-is-guilty-of-all-the-good-he-did-not-do/" data-c="verified" data-s="every man is guilty of all the good he did not do voltaire">
+                    <p class="q-text">&ldquo;Every man is guilty of all the good he did not do&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Voltaire</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/everyone-sees-what-you-appear-to-be-few-experience-what-you/" data-c="verified" data-s="everyone sees what you appear to be, few experience what you really are niccol machiavelli">
+                    <p class="q-text">&ldquo;Everyone sees what you appear to be, few experience what you really are&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Niccol&ograve; Machiavelli</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/first-say-to-yourself-what-you-would-be-and-then-do-what/" data-c="verified" data-s="first say to yourself what you would be; and then do what you have to do epictetus">
+                    <p class="q-text">&ldquo;First say to yourself what you would be; and then do what you have to do&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Epictetus</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/happiness-lies-in-the-joy-of-achievement-and-the-thrill-of/" data-c="verified" data-s="happiness lies in the joy of achievement and the thrill of creative effort franklin d. roosevelt">
+                    <p class="q-text">&ldquo;Happiness lies in the joy of achievement and the thrill of creative effort&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Franklin D. Roosevelt</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/he-has-half-the-deed-done-who-has-made-a-beginning/" data-c="verified" data-s="he has half the deed done who has made a beginning horace">
+                    <p class="q-text">&ldquo;He has half the deed done who has made a beginning&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Horace</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/he-is-a-wise-man-who-does-not-grieve-for-the-things-which/" data-c="verified" data-s="he is a wise man who does not grieve for the things which he has not, but rejoices for those which he has epictetus">
+                    <p class="q-text">&ldquo;He is a wise man who does not grieve for the things which he has not, but rejoices for those which he has&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Epictetus</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/he-who-knows-others-is-wise-he-who-knows-himself-is/" data-c="verified" data-s="he who knows others is wise; he who knows himself is enlightened lao tzu">
+                    <p class="q-text">&ldquo;He who knows others is wise; he who knows himself is enlightened&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Lao Tzu</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/he-who-learns-but-does-not-think-is-lost/" data-c="verified" data-s="he who learns but does not think, is lost confucius">
+                    <p class="q-text">&ldquo;He who learns but does not think, is lost&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Confucius</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/i-fear-the-greeks-even-when-they-bring-gifts/" data-c="verified" data-s="i fear the greeks, even when they bring gifts virgil">
+                    <p class="q-text">&ldquo;I fear the Greeks, even when they bring gifts&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Virgil</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/i-have-a-dream-that-my-four-little-children-will-one-day/" data-c="verified" data-s="i have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character martin luther king jr.">
+                    <p class="q-text">&ldquo;I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Martin Luther King Jr.</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/i-learned-that-courage-was-not-the-absence-of-fear-but-the/" data-c="verified" data-s="i learned that courage was not the absence of fear, but the triumph over it nelson mandela">
+                    <p class="q-text">&ldquo;I learned that courage was not the absence of fear, but the triumph over it&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Nelson Mandela</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/i-was-taught-that-the-way-of-progress-was-neither-swift-nor/" data-c="verified" data-s="i was taught that the way of progress was neither swift nor easy marie curie">
+                    <p class="q-text">&ldquo;I was taught that the way of progress was neither swift nor easy&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Marie Curie</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/if-it-is-not-right-do-not-do-it-if-it-is-not-true-do-not/" data-c="verified" data-s="if it is not right, do not do it. if it is not true, do not say it marcus aurelius">
+                    <p class="q-text">&ldquo;If it is not right, do not do it. If it is not true, do not say it&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Marcus Aurelius</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/imagination-is-more-important-than-knowledge/" data-c="verified" data-s="imagination is more important than knowledge albert einstein">
+                    <p class="q-text">&ldquo;Imagination is more important than knowledge&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Albert Einstein</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/injustice-anywhere-is-a-threat-to-justice-everywhere/" data-c="verified" data-s="injustice anywhere is a threat to justice everywhere martin luther king jr.">
+                    <p class="q-text">&ldquo;Injustice anywhere is a threat to justice everywhere&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Martin Luther King Jr.</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/it-is-better-to-be-feared-than-loved-if-you-cannot-be-both/" data-c="verified" data-s="it is better to be feared than loved, if you cannot be both niccol machiavelli">
+                    <p class="q-text">&ldquo;It is better to be feared than loved, if you cannot be both&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Niccol&ograve; Machiavelli</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/it-is-easy-to-be-brave-from-a-safe-distance/" data-c="verified" data-s="it is easy to be brave from a safe distance aesop">
+                    <p class="q-text">&ldquo;It is easy to be brave from a safe distance&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Aesop</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/life-is-like-riding-a-bicycle-to-keep-your-balance-you-must/" data-c="verified" data-s="life is like riding a bicycle. to keep your balance, you must keep moving albert einstein">
+                    <p class="q-text">&ldquo;Life is like riding a bicycle. To keep your balance, you must keep moving&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Albert Einstein</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/much-learning-does-not-teach-understanding/" data-c="verified" data-s="much learning does not teach understanding heraclitus">
+                    <p class="q-text">&ldquo;Much learning does not teach understanding&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Heraclitus</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/never-put-off-till-tomorrow-what-may-be-done-day-after/" data-c="verified" data-s="never put off till tomorrow what may be done day after tomorrow just as well mark twain">
+                    <p class="q-text">&ldquo;Never put off till tomorrow what may be done day after tomorrow just as well&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Mark Twain</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/not-until-we-are-lost-do-we-begin-to-understand-ourselves/" data-c="verified" data-s="not until we are lost do we begin to understand ourselves henry david thoreau">
+                    <p class="q-text">&ldquo;Not until we are lost do we begin to understand ourselves&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Henry David Thoreau</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/science-and-everyday-life-cannot-and-should-not-be-separated/" data-c="verified" data-s="science and everyday life cannot and should not be separated rosalind franklin">
+                    <p class="q-text">&ldquo;Science and everyday life cannot and should not be separated&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Rosalind Franklin</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/silence-at-the-proper-season-is-wisdom-and-better-than-any/" data-c="verified" data-s="silence at the proper season is wisdom, and better than any speech plutarch">
+                    <p class="q-text">&ldquo;Silence at the proper season is wisdom, and better than any speech&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Plutarch</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/speak-softly-and-carry-a-big-stick/" data-c="verified" data-s="speak softly and carry a big stick theodore roosevelt">
+                    <p class="q-text">&ldquo;Speak softly and carry a big stick&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Theodore Roosevelt</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-life-of-the-dead-is-placed-in-the-memory-of-the-living/" data-c="verified" data-s="the life of the dead is placed in the memory of the living marcus tullius cicero">
+                    <p class="q-text">&ldquo;The life of the dead is placed in the memory of the living&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Marcus Tullius Cicero</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-mass-of-men-lead-lives-of-quiet-desperation/" data-c="verified" data-s="the mass of men lead lives of quiet desperation henry david thoreau">
+                    <p class="q-text">&ldquo;The mass of men lead lives of quiet desperation&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Henry David Thoreau</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-only-thing-we-have-to-fear-is-fear-itself/" data-c="verified" data-s="the only thing we have to fear is fear itself franklin d. roosevelt">
+                    <p class="q-text">&ldquo;The only thing we have to fear is fear itself&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Franklin D. Roosevelt</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-only-way-to-do-great-work-is-to-love-what-you-do/" data-c="verified" data-s="the only way to do great work is to love what you do steve jobs">
+                    <p class="q-text">&ldquo;The only way to do great work is to love what you do&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Steve Jobs</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-only-way-to-have-a-friend-is-to-be-one/" data-c="verified" data-s="the only way to have a friend is to be one ralph waldo emerson">
+                    <p class="q-text">&ldquo;The only way to have a friend is to be one&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Ralph Waldo Emerson</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-perfect-is-the-enemy-of-the-good/" data-c="verified" data-s="the perfect is the enemy of the good voltaire">
+                    <p class="q-text">&ldquo;The perfect is the enemy of the good&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Voltaire</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-reasonable-man-adapts-himself-to-the-world-the/" data-c="verified" data-s="the reasonable man adapts himself to the world; the unreasonable one persists in trying to adapt the world to himself george bernard shaw">
+                    <p class="q-text">&ldquo;The reasonable man adapts himself to the world; the unreasonable one persists in trying to adapt the world to himself&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">George Bernard Shaw</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-soul-becomes-dyed-with-the-color-of-its-thoughts/" data-c="verified" data-s="the soul becomes dyed with the color of its thoughts marcus aurelius">
+                    <p class="q-text">&ldquo;The soul becomes dyed with the color of its thoughts&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Marcus Aurelius</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-supreme-art-of-war-is-to-subdue-the-enemy-without/" data-c="verified" data-s="the supreme art of war is to subdue the enemy without fighting sun tzu">
+                    <p class="q-text">&ldquo;The supreme art of war is to subdue the enemy without fighting&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Sun Tzu</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-traveler-sees-what-he-sees-the-tourist-sees-what-he-has/" data-c="verified" data-s="the traveler sees what he sees. the tourist sees what he has come to see g.k. chesterton">
+                    <p class="q-text">&ldquo;The traveler sees what he sees. The tourist sees what he has come to see&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">G.K. Chesterton</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-true-soldier-fights-not-because-he-hates-what-is-in/" data-c="verified" data-s="the true soldier fights not because he hates what is in front of him, but because he loves what is behind him g.k. chesterton">
+                    <p class="q-text">&ldquo;The true soldier fights not because he hates what is in front of him, but because he loves what is behind him&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">G.K. Chesterton</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-unexamined-life-is-not-worth-living/" data-c="verified" data-s="the unexamined life is not worth living socrates">
+                    <p class="q-text">&ldquo;The unexamined life is not worth living&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Socrates</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-weak-can-never-forgive-forgiveness-is-the-attribute-of/" data-c="verified" data-s="the weak can never forgive. forgiveness is the attribute of the strong mahatma gandhi">
+                    <p class="q-text">&ldquo;The weak can never forgive. Forgiveness is the attribute of the strong&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Mahatma Gandhi</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/the-world-is-a-stage-but-the-play-is-badly-cast/" data-c="verified" data-s="the world is a stage, but the play is badly cast oscar wilde">
+                    <p class="q-text">&ldquo;The world is a stage, but the play is badly cast&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Oscar Wilde</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/there-is-only-one-thing-in-the-world-worse-than-being/" data-c="verified" data-s="there is only one thing in the world worse than being talked about, and that is not being talked about oscar wilde">
+                    <p class="q-text">&ldquo;There is only one thing in the world worse than being talked about, and that is not being talked about&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Oscar Wilde</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/they-can-because-they-think-they-can/" data-c="verified" data-s="they can because they think they can virgil">
+                    <p class="q-text">&ldquo;They can because they think they can&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Virgil</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/three-things-are-necessary-for-the-salvation-of-man-to-know/" data-c="verified" data-s="three things are necessary for the salvation of man: to know what he ought to believe; to know what he ought to desire; and to know what he ought to do thomas aquinas">
+                    <p class="q-text">&ldquo;Three things are necessary for the salvation of man: to know what he ought to believe; to know what he ought to desire; and to know what he ought to do&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Thomas Aquinas</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/we-are-all-in-the-gutter-but-some-of-us-are-looking-at-the/" data-c="verified" data-s="we are all in the gutter, but some of us are looking at the stars oscar wilde">
+                    <p class="q-text">&ldquo;We are all in the gutter, but some of us are looking at the stars&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Oscar Wilde</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/we-choose-to-go-to-the-moon-in-this-decade-and-do-the-other/" data-c="verified" data-s="we choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard john f. kennedy">
+                    <p class="q-text">&ldquo;We choose to go to the Moon in this decade and do the other things, not because they are easy, but because they are hard&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">John F. Kennedy</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/we-suffer-more-often-in-imagination-than-in-reality/" data-c="verified" data-s="we suffer more often in imagination than in reality seneca">
+                    <p class="q-text">&ldquo;We suffer more often in imagination than in reality&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Seneca</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/well-behaved-women-seldom-make-history/" data-c="verified" data-s="well-behaved women seldom make history laurel thatcher ulrich">
+                    <p class="q-text">&ldquo;Well-behaved women seldom make history&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Laurel Thatcher Ulrich</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
+                </a>
+                <a class="q-card verified" href="/who-said/you-cannot-shake-hands-with-a-clenched-fist/" data-c="verified" data-s="you cannot shake hands with a clenched fist indira gandhi">
+                    <p class="q-text">&ldquo;You cannot shake hands with a clenched fist&rdquo;</p>
+                    <p class="q-foot"><span class="q-author">Indira Gandhi</span><span class="q-badge verified" title="verified" aria-hidden="true">✓</span></p>
                 </a>
             </div>
+            <p class="no-results" id="noResults" hidden>No quote matches that. Try fewer words, or <a href="/authors/">browse by author</a>.</p>
         </section>
         <aside class="game-cta">
             <h2>Think you know your quotes?</h2>
@@ -747,6 +751,29 @@
     <footer>
         <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
     </footer>
+    <script>
+        (function(){
+            var q=document.getElementById('q'), none=document.getElementById('noResults');
+            var chips=[].slice.call(document.querySelectorAll('.chip'));
+            var cards=[].slice.call(document.querySelectorAll('#results .q-card'));
+            var filter='all';
+            function apply(){
+                var t=(q.value||'').trim().toLowerCase(), shown=0;
+                for(var i=0;i<cards.length;i++){ var c=cards[i];
+                    var okF = filter==='all' || c.getAttribute('data-c')===filter;
+                    var okQ = !t || c.getAttribute('data-s').indexOf(t)>-1;
+                    var vis = okF && okQ; c.hidden=!vis; if(vis) shown++;
+                }
+                none.hidden = shown>0;
+            }
+            q.addEventListener('input', apply);
+            chips.forEach(function(ch){ ch.addEventListener('click', function(){
+                chips.forEach(function(x){ x.classList.remove('active'); x.setAttribute('aria-selected','false'); });
+                ch.classList.add('active'); ch.setAttribute('aria-selected','true');
+                filter=ch.getAttribute('data-f'); apply();
+            }); });
+        })();
+    </script>
     <script>
         (function(){
             var d = document.documentElement;
