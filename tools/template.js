@@ -23,6 +23,7 @@ const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc'); // one shared entity-aware escape (also used by build-index.js)
 const { hasAuthorPage } = require('./authors'); // which authors have a /authors/{slug} profile
+const { NAV: siteNav, CHROME_CSS, SEARCH_JS } = require('./chrome'); // shared nav + universal search
 
 const ORIGIN = 'https://quotle.info';
 
@@ -101,7 +102,7 @@ ${HEAD_SCRIPT}
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-${STYLE}
+${STYLE}${CHROME_CSS}
     </style>
 ${THEME_CSS}
 </head>`;
@@ -192,13 +193,7 @@ function renderNav(q) {
     ? `${crumbName}<span class="sep" aria-hidden="true">›</span>\n        `
     : '';
   return `
-    <nav class="topnav" aria-label="Primary">
-        <a href="/" class="brand"><span class="brand-icon" aria-hidden="true">📖</span><span class="brand-name">quotle<span>.info</span></span></a>
-        <div class="nav-actions">
-            <a href="/how-we-verify" class="nav-verify">✓ How we verify</a>
-            ${CONTROL}
-        </div>
-    </nav>
+${siteNav('')}
     <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a><span class="sep" aria-hidden="true">›</span>
         ${crumbAuthor}<span aria-current="page">${esc(q.breadcrumbLeaf || q.displayQuote)}</span>
@@ -492,6 +487,7 @@ function renderTail(q) {
             copy(el.textContent.trim(), 'Citation copied');
         }));
     </script>
+${SEARCH_JS}
 ${SCRIPT}
 </body>
 </html>`;

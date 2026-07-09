@@ -96,7 +96,8 @@ function build() {
     fs.mkdirSync(path.dirname(MANIFEST), { recursive: true });
     fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 2) + '\n');
     console.log(`  ✓ data/manifest.json (${manifest.length} entries)`);
-    require('./build-index'); // regenerate who-said/index.html browse directory
+    require('./build-search'); // regenerate /search.json (universal search index)
+    require('./build-index'); // regenerate home + /who-said/ + /under-review/ (shared chrome)
     require('./build-static'); // regenerate standing content pages (how-we-verify)
     require('./build-flagged'); // regenerate /flagged research-bench context page
     require('./build-authors'); // regenerate /authors/{slug} profiles + index

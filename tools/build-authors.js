@@ -35,13 +35,8 @@ const records = fs.readdirSync(QUOTES_DIR).filter((f) => f.endsWith('.json'))
 const authors = aggregateAuthors(records);
 
 // ---- shared chrome ----
-const NAV = `    <nav class="topnav" aria-label="Primary">
-        <a href="/" class="brand"><span class="brand-icon" aria-hidden="true">📖</span>quotle<span>.info</span></a>
-        <div class="nav-actions">
-            <a href="/how-we-verify" class="nav-verify">✓ How we verify</a>
-            ${CONTROL}
-        </div>
-    </nav>`;
+const { NAV: siteNav, CHROME_CSS, SEARCH_JS } = require('./chrome');
+const NAV = siteNav('authors');
 const FOOTER = `    <footer>
         <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
     </footer>`;
@@ -110,7 +105,7 @@ ${headExtra}
     <meta name="gs-app-id" content="quotle-info">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-${STYLE}
+${STYLE}${CHROME_CSS}
     </style>
 ${THEME_CSS}
 </head>
@@ -118,6 +113,7 @@ ${THEME_CSS}
 ${NAV}
 ${inner}
 ${FOOTER}
+${SEARCH_JS}
 ${SCRIPT}
 </body>
 </html>
