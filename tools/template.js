@@ -39,11 +39,29 @@ const attr = (s) => esc(s);
 const canonicalUrl = (slug) => `${ORIGIN}/who-said/${slug}`;
 const ogImageUrl = (slug) => `${ORIGIN}/og/${slug}.png`;
 // decode entities + strip tags → plain text for JSON-LD string values
+// Named HTML entities that show up in our prose/author names, mapped to their literal characters.
+// Anything not here is decoded to its unicode char via the numeric fallback below when possible;
+// only a genuinely unknown named entity collapses to a space. Accented Latin-1 letters matter:
+// an author like "Barère" or "Brontë" must not render as "Bar re" in the plain-text FAQ/JSON-LD.
+const NAMED_ENTITIES = {
+  amp: '&', quot: '"', apos: "'", lt: '<', gt: '>', nbsp: ' ',
+  mdash: '—', ndash: '–', middot: '·', hellip: '…', deg: '°', times: '×',
+  ldquo: '"', rdquo: '"', lsquo: "'", rsquo: "'", laquo: '«', raquo: '»',
+  agrave: 'à', aacute: 'á', acirc: 'â', atilde: 'ã', auml: 'ä', aring: 'å', aelig: 'æ',
+  ccedil: 'ç', egrave: 'è', eacute: 'é', ecirc: 'ê', euml: 'ë',
+  igrave: 'ì', iacute: 'í', icirc: 'î', iuml: 'ï', ntilde: 'ñ',
+  ograve: 'ò', oacute: 'ó', ocirc: 'ô', otilde: 'õ', ouml: 'ö', oslash: 'ø', oelig: 'œ',
+  ugrave: 'ù', uacute: 'ú', ucirc: 'û', uuml: 'ü', yacute: 'ý', yuml: 'ÿ', szlig: 'ß',
+  Agrave: 'À', Aacute: 'Á', Acirc: 'Â', Atilde: 'Ã', Auml: 'Ä', Aring: 'Å', AElig: 'Æ',
+  Ccedil: 'Ç', Egrave: 'È', Eacute: 'É', Ecirc: 'Ê', Euml: 'Ë',
+  Igrave: 'Ì', Iacute: 'Í', Icirc: 'Î', Iuml: 'Ï', Ntilde: 'Ñ',
+  Ograve: 'Ò', Oacute: 'Ó', Ocirc: 'Ô', Otilde: 'Õ', Ouml: 'Ö', Oslash: 'Ø', OElig: 'Œ',
+  Ugrave: 'Ù', Uacute: 'Ú', Ucirc: 'Û', Uuml: 'Ü',
+};
 const plain = (x) => String(x || '').replace(/<[^>]+>/g, '')
-  .replace(/&mdash;/g, '—').replace(/&ndash;/g, '–').replace(/&middot;/g, '·')
-  .replace(/&ldquo;|&rdquo;/g, '"').replace(/&lsquo;|&rsquo;/g, "'").replace(/&hellip;/g, '…')
   .replace(/&#(\d+);/g, (m, d) => String.fromCharCode(+d))
-  .replace(/&([a-z]+);/g, (m, e) => ({ amp: '&', quot: '"', lt: '<', gt: '>' }[e] || ' '))
+  .replace(/&#x([0-9a-f]+);/gi, (m, h) => String.fromCharCode(parseInt(h, 16)))
+  .replace(/&([a-zA-Z]+);/g, (m, e) => (e in NAMED_ENTITIES ? NAMED_ENTITIES[e] : ' '))
   .replace(/\s+/g, ' ').trim();
 
 const CONFIDENCE = {
