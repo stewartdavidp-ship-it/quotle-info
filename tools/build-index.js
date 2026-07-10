@@ -138,15 +138,15 @@ const FILTER_JS = `    <script>
 // ---- HOME ----
 const homeJsonLd = `    <script type="application/ld+json">
     {"@context":"https://schema.org","@graph":[
-      {"@type":"WebSite","@id":"https://quotle.info/#website","url":"https://quotle.info/","name":"Quotle.info","description":"Verified quote provenance — who really said it, traced to a primary source, with misattributions untangled.","publisher":{"@id":"https://quotle.info/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://quotle.info/who-said/?q={search_term_string}"},"query-input":"required name=search_term_string"}},
+      {"@type":"WebSite","@id":"https://quotle.info/#website","url":"https://quotle.info/","name":"Quotle.info","description":"Verified quote provenance and reuse-rights clearance — who really said it, traced to a primary source, and whether it is public-domain or in-copyright before you publish it.","publisher":{"@id":"https://quotle.info/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://quotle.info/who-said/?q={search_term_string}"},"query-input":"required name=search_term_string"}},
       {"@type":"Organization","@id":"https://quotle.info/#org","name":"Quotle.info","url":"https://quotle.info/","description":"A verified-provenance fact-check companion to the Quotle game (Game Shelf). Every quote traced to a primary source and dated."}
     ]}
     </script>
 `;
 const homeBody = `        <header class="hero">
-            <h1>Who <em>really</em> said it?</h1>
-            <p class="lede">The internet is full of confident misattributions. Quotle.info traces each quote to its <strong>real source</strong> — who actually said it, the primary document, and the misattributions untangled with receipts.</p>
-            <p class="stat"><b>${total}</b> quotes verified · every attribution traced to a primary source and dated</p>
+            <h1>Real quote? <em>Cleared</em> to use?</h1>
+            <p class="lede">Before you put a quote on a slide or in print: Quotle.info traces it to its <strong>real source</strong> — who actually said it — and tells you whether it&rsquo;s <strong>cleared to reproduce</strong> (public domain, or still under copyright). The part an AI usually gets wrong.</p>
+            <p class="stat"><b>${total}</b> quotes verified · each traced to a primary source and marked public&#8209;domain or in&#8209;copyright</p>
         </header>
 ${FEATURED.length ? `        <section class="featured" aria-label="Notable reattributions">
             <p class="feat-kicker">Not who you think</p>
@@ -253,7 +253,7 @@ const BENCH_JS = INTERACTIVE ? `    <script>
     </script>` : '';
 
 // ---- write ----
-const homeHtml = page({ title: 'Quotle.info — Who really said it? Verified quote provenance', description: `Every quote traced to its real source: who actually said it, the primary document, and the misattributions untangled with receipts. ${total} quotes verified.`, active: 'home', canonical: 'https://quotle.info/', jsonld: homeJsonLd, body: homeBody });
+const homeHtml = page({ title: 'Quotle.info — Real quote? Cleared to use? Verified provenance + reuse rights', description: `Before you publish a quote: check it's real, who actually said it, and whether it's cleared to reproduce (public domain or in copyright) — the part AI gets wrong. ${total} quotes traced to a primary source.`, active: 'home', canonical: 'https://quotle.info/', jsonld: homeJsonLd, body: homeBody });
 const quotesHtml = page({ title: 'Quotes — who really said it | Quotle.info', description: `Search ${total} quotes traced to a primary source. Filter by verified, attributed, or misattributed.`, active: 'quotes', canonical: 'https://quotle.info/who-said/', body: quotesBody, scripts: FILTER_JS });
 const reviewHtml = page({ title: 'Under review — quotes queued for verification | Quotle.info', description: `${BENCH.length} commonly-misquoted lines we&rsquo;ve flagged and queued for a full source trace. Not yet verified.`, active: 'review', canonical: 'https://quotle.info/under-review/', headExtra: TURNSTILE_HEAD, body: reviewBody, scripts: FILTER_JS + '\n' + BENCH_JS });
 
