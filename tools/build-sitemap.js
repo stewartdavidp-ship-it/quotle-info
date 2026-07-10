@@ -11,6 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const { aggregateAuthors } = require('./authors');
+const { THEMES, isTheme } = require('./themes');
 
 const ROOT = path.resolve(__dirname, '..');
 const ORIGIN = 'https://quotle.info';
@@ -18,6 +19,11 @@ const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.js
 const records = fs.readdirSync(path.join(ROOT, 'data', 'quotes')).filter((f) => f.endsWith('.json'))
   .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'quotes', f), 'utf8')));
 const authors = aggregateAuthors(records);
+
+// themes that actually have a page (≥1 tagged record)
+const themePresent = new Set();
+for (const r of records) if (Array.isArray(r.themes)) for (const th of r.themes) if (isTheme(th)) themePresent.add(th);
+const themePages = THEMES.filter((t) => themePresent.has(t.slug));
 
 const xmlEsc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 
@@ -29,6 +35,8 @@ const urls = [
   { loc: `${ORIGIN}/`, lastmod: latest },
   { loc: `${ORIGIN}/how-we-verify`, lastmod: latest },
   { loc: `${ORIGIN}/authors/`, lastmod: latest },
+  { loc: `${ORIGIN}/themes/`, lastmod: latest },
+  ...themePages.map((t) => ({ loc: `${ORIGIN}/themes/${t.slug}`, lastmod: latest })),
   ...authors.map((a) => ({ loc: `${ORIGIN}/authors/${a.slug}`, lastmod: latest })),
   ...manifest.map((m) => ({ loc: m.url, lastmod: modOf[m.quoteSlug] || latest })),
 ];
@@ -55,7 +63,12 @@ Quotle.info answers "who really said it?" for commonly quoted — and commonly m
 
 ## Data
 - [Machine-readable index (JSON)](${ORIGIN}/data/manifest.json): every quote as \`{ dayNumber, quote, author, quoteSlug, confidence, url }\`.
+- [Themes index (JSON)](${ORIGIN}/themes.json): quotes grouped by theme as \`{ theme, label, verified:[{quote,author,url,confidence,rights}], misattributed:[...] }\` — for finding a correctly-credited, rights-cleared quote on a topic (e.g. for a talk or slide).
 - [Sitemap](${ORIGIN}/sitemap.xml)
+
+## Themes (browse verified quotes by intent)
+- [All themes](${ORIGIN}/themes/)
+${themePages.map((t) => `- [${t.label}](${ORIGIN}/themes/${t.slug}) — ${stripTags(t.blurb)}`).join('\n')}
 
 ## Authors
 - [All authors](${ORIGIN}/authors/)
@@ -72,4 +85,4 @@ ${byConf.attributed.map((m) => `- [${stripTags(m.quote)}](${m.url}) — ${stripT
 `;
 fs.writeFileSync(path.join(ROOT, 'llms.txt'), llms);
 
-console.log(`  ✓ sitemap.xml (${urls.length} URLs) + llms.txt (${authors.length} authors, ${manifest.length} quotes)`);
+console.log(`  ✓ sitemap.xml (${urls.length} URLs) + llms.txt (${authors.length} authors, ${themePages.length} themes, ${manifest.length} quotes)`);
