@@ -97,9 +97,11 @@ function build() {
     fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 2) + '\n');
     console.log(`  ✓ data/manifest.json (${manifest.length} entries)`);
     require('./build-search'); // regenerate /search.json (universal search index)
+    require('./build-verify'); // regenerate /verify-index.json (public verify API index)
     require('./build-index'); // regenerate home + /who-said/ + /under-review/ (shared chrome)
     require('./build-static'); // regenerate standing content pages (how-we-verify)
     require('./build-flagged'); // regenerate /flagged research-bench context page
+    require('./build-cite'); // regenerate /cite "how we used this source" interstitial
     require('./build-authors'); // regenerate /authors/{slug} profiles + index
     require('./build-sitemap'); // regenerate sitemap.xml + llms.txt (machine discoverability)
   }

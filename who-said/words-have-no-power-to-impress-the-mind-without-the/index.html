@@ -89,6 +89,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/words-have-no-power-to-impress-the-mind-without-the#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/words-have-no-power-to-impress-the-mind-without-the#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Edgar Allan Poe say \"Such things may be imagined, but words have no power to impress the mind with the exquisite horror of their reality.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. This line is Poe's own, from Chapter 12 of his 1838 novel The Narrative of Arthur Gordon Pym of Nantucket, spoken just after the narrator refuses to describe the cannibalism that followed a lots-drawing among the starving crew. The wording circulating online has one word swapped: Poe wrote that words have no power to impress the mind with the exquisite horror of their reality — not \"without.\"",
+                "url": "https://quotle.info/who-said/words-have-no-power-to-impress-the-mind-without-the"
+              }
+            }
+          ]
         }
       ]
     }
@@ -263,6 +278,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -532,30 +549,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://www.gutenberg.org/ebooks/2149" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=words-have-no-power-to-impress-the-mind-without-the&i=0" data-ext="https://www.gutenberg.org/ebooks/2149">
                     <div class="research-top"><span class="research-label">Full text at Project Gutenberg</span><span class="research-host">gutenberg.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Complete, free public-domain text of The Narrative of Arthur Gordon Pym of Nantucket.</p>
                 </a>
-                <a class="research-item" href="https://www.eapoe.org/works/tales/pymb12.htm" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=words-have-no-power-to-impress-the-mind-without-the&i=1" data-ext="https://www.eapoe.org/works/tales/pymb12.htm">
                     <div class="research-top"><span class="research-label">Chapter 12, scholarly edition</span><span class="research-host">eapoe.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">The Edgar Allan Poe Society of Baltimore's annotated text of the chapter containing this line.</p>
                 </a>
-                <a class="research-item" href="https://en.wikisource.org/wiki/The_Narrative_of_Arthur_Gordon_Pym/Chapter_12" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=words-have-no-power-to-impress-the-mind-without-the&i=2" data-ext="https://en.wikisource.org/wiki/The_Narrative_of_Arthur_Gordon_Pym/Chapter_12">
                     <div class="research-top"><span class="research-label">Chapter 12 transcription</span><span class="research-host">en.wikisource.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Independent Wikisource transcription confirming the exact wording.</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/The_Narrative_of_Arthur_Gordon_Pym_of_Nantucket" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=words-have-no-power-to-impress-the-mind-without-the&i=3" data-ext="https://en.wikipedia.org/wiki/The_Narrative_of_Arthur_Gordon_Pym_of_Nantucket">
                     <div class="research-top"><span class="research-label">Novel overview and publication history</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Background on the novel's serialization, 1838 book publication, and reception.</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/Edgar_Allan_Poe" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=words-have-no-power-to-impress-the-mind-without-the&i=4" data-ext="https://en.wikipedia.org/wiki/Edgar_Allan_Poe">
                     <div class="research-top"><span class="research-label">Edgar Allan Poe biography</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Life dates and career overview for the author.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The author</p><h2 id="author-h">About Edgar Allan Poe</h2></div>

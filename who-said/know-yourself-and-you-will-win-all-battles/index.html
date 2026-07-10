@@ -79,6 +79,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/know-yourself-and-you-will-win-all-battles#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/know-yourself-and-you-will-win-all-battles#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Sun Tzu (as an exact quote) say \"If you know the enemy and know yourself, you need not fear the result of a hundred battles.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. These exact words appear on quote sites but in no published translation of 'The Art of War.' They collapse — and reverse — Sun Tzu's real line (III.18), which requires knowing the enemy too and promises only that you 'need not fear' a hundred battles; knowing yourself alone, he wrote, means 'for every victory gained you will also suffer a defeat.'",
+                "url": "https://quotle.info/who-said/know-yourself-and-you-will-win-all-battles"
+              }
+            }
+          ]
         }
       ]
     }
@@ -253,6 +268,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -521,30 +538,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://suntzusaid.com/book/3/18" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=know-yourself-and-you-will-win-all-battles&i=0" data-ext="https://suntzusaid.com/book/3/18">
                     <div class="research-top"><span class="research-label">Art of War III.18 (Giles translation)</span><span class="research-host">suntzusaid.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">The genuine verse and its full three-part statement about knowing enemy and self.</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Sun_Tzu" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=know-yourself-and-you-will-win-all-battles&i=1" data-ext="https://en.wikiquote.org/wiki/Sun_Tzu">
                     <div class="research-top"><span class="research-label">Sun Tzu</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Original Chinese (知彼知己，百戰不殆) and faithful English renderings for comparison.</p>
                 </a>
-                <a class="research-item" href="https://classics.mit.edu/Tzu/artwar.html" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=know-yourself-and-you-will-win-all-battles&i=2" data-ext="https://classics.mit.edu/Tzu/artwar.html">
                     <div class="research-top"><span class="research-label">The Art of War (full Giles text)</span><span class="research-host">classics.mit.edu</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Complete public-domain translation; Chapter III confirms the wording in context.</p>
                 </a>
-                <a class="research-item" href="https://www.goodreads.com/quotes/79599-know-yourself-and-you-will-win-all-battles" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=know-yourself-and-you-will-win-all-battles&i=3" data-ext="https://www.goodreads.com/quotes/79599-know-yourself-and-you-will-win-all-battles">
                     <div class="research-top"><span class="research-label">Goodreads: the garbled version</span><span class="research-host">goodreads.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Shows the unsourced short form attributed to Sun Tzu &mdash; the version being fact-checked.</p>
                 </a>
-                <a class="research-item" href="https://fakebuddhaquotes.com/if-you-know-both-your-enemy-and-yourself/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=know-yourself-and-you-will-win-all-battles&i=4" data-ext="https://fakebuddhaquotes.com/if-you-know-both-your-enemy-and-yourself/">
                     <div class="research-top"><span class="research-label">Fact-check of the distorted variants</span><span class="research-host">fakebuddhaquotes.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Explains how popular rewrites turn Sun Tzu&rsquo;s conditional advice into a false guarantee of victory.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The real line</p><h2 id="author-h">What Sun Tzu actually wrote</h2></div>

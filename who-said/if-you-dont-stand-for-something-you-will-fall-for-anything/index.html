@@ -80,6 +80,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/if-you-dont-stand-for-something-you-will-fall-for-anything#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/if-you-dont-stand-for-something-you-will-fall-for-anything#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Malcolm X say \"If you don't stand for something you will fall for anything.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. This is an anonymous 20th-century American proverb, not a documented line from Malcolm X. Quote Investigator traces it to sayings circulating by 1945 — the earliest close match being Dr. Gordon A. Eadie's 1945 wording, \"If they don't stand for something, they will fall for anything\" — and popularized that same year by actress Irene Dunne. It appears in none of Malcolm X's known speeches or writings, and Wikiquote's Malcolm X page does not list it at all.",
+                "url": "https://quotle.info/who-said/if-you-dont-stand-for-something-you-will-fall-for-anything"
+              }
+            }
+          ]
         }
       ]
     }
@@ -254,6 +269,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -520,26 +537,36 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://quoteinvestigator.com/2014/02/18/stand-fall/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=if-you-dont-stand-for-something-you-will-fall-for-anything&i=0" data-ext="https://quoteinvestigator.com/2014/02/18/stand-fall/">
                     <div class="research-top"><span class="research-label">Quote Investigator: If You Don't Stand for Something</span><span class="research-host">quoteinvestigator.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Authoritative origin trace: anonymous proverb, 1926 precursor, Gordon A. Eadie 1945, Irene Dunne.</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Malcolm_X" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=if-you-dont-stand-for-something-you-will-fall-for-anything&i=1" data-ext="https://en.wikiquote.org/wiki/Malcolm_X">
                     <div class="research-top"><span class="research-label">Malcolm X</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Sourced Malcolm X quotations — this line is absent, confirming no primary source.</p>
                 </a>
-                <a class="research-item" href="https://quoteinvestigator.com/tag/gordon-a-eadie/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=if-you-dont-stand-for-something-you-will-fall-for-anything&i=2" data-ext="https://quoteinvestigator.com/tag/gordon-a-eadie/">
                     <div class="research-top"><span class="research-label">Gordon A. Eadie</span><span class="research-host">quoteinvestigator.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">QI tag for the physician whose 1945 wording is the earliest close match.</p>
                 </a>
-                <a class="research-item" href="https://quoteinvestigator.com/tag/alexander-hamilton/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=if-you-dont-stand-for-something-you-will-fall-for-anything&i=3" data-ext="https://quoteinvestigator.com/tag/alexander-hamilton/">
                     <div class="research-top"><span class="research-label">Alexander Hamilton (tag)</span><span class="research-host">quoteinvestigator.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Shows the saying is also spuriously credited to Hamilton — a mark of a floating proverb.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The author</p><h2 id="author-h">About Malcolm X</h2></div>

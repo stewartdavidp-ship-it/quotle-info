@@ -37,6 +37,24 @@ export default {
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
 
     try {
+      // Public quote-verification API — open CORS, callable by any agent/app. Fetches the live
+      // verdict index from quotle.info so it auto-tracks the corpus without a Worker redeploy.
+      if (url.pathname === '/verify' && req.method === 'GET') {
+        const pub = { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=300' };
+        const term = (url.searchParams.get('q') || '').trim();
+        if (!term) return new Response(JSON.stringify({ error: 'Pass ?q=<quote text> to check who really said it.' }), { status: 400, headers: pub });
+        const hit = matchQuote(term, await loadVerifyIndex());
+        if (!hit) return new Response(JSON.stringify({ found: false, query: term, note: 'No verified match in the quotle.info corpus yet.', nominate: 'https://quotle.info/under-review/' }), { headers: pub });
+        return new Response(JSON.stringify({
+          found: true, query: term, quote: hit.q,
+          verdict: hit.c,                          // verified | attributed | disputed
+          reallySaidBy: hit.real || null,
+          misattributedTo: hit.credited || null,
+          rights: hit.rights || null,
+          url: hit.u, source: 'quotle.info',
+        }), { headers: pub });
+      }
+
       if (url.pathname === '/votes' && req.method === 'GET') {
         const { results } = await env.DB.prepare('SELECT slug, count FROM votes').all();
         const votes = {};
@@ -110,6 +128,40 @@ async function verifyTurnstile(env, token, req) {
   const r = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST', body: form });
   const data = await r.json().catch(() => ({}));
   return !!data.success;
+}
+
+// ---- /verify: verdict index (fetched from the live site, cached in-isolate + at the edge) ----
+let _idxCache = null, _idxTs = 0;
+async function loadVerifyIndex() {
+  const now = Date.now();
+  if (_idxCache && (now - _idxTs) < 300000) return _idxCache;
+  const r = await fetch('https://quotle.info/verify-index.json', { cf: { cacheTtl: 300, cacheEverything: true } });
+  const data = await r.json();
+  _idxCache = data; _idxTs = now;
+  return data;
+}
+const normQ = (s) => String(s).toLowerCase().replace(/[’'‘`"“”]/g, '').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+function matchQuote(term, idx) {
+  const t = normQ(term);
+  if (!t || !Array.isArray(idx)) return null;
+  const exact = idx.find((e) => e.n === t);
+  if (exact) return exact;
+  // substring either direction (handles a partial quote or extra words)
+  const sub = idx.filter((e) => e.n && (e.n.includes(t) || t.includes(e.n)));
+  if (sub.length) { sub.sort((a, b) => Math.abs(a.n.length - t.length) - Math.abs(b.n.length - t.length)); return sub[0]; }
+  // token-overlap fallback for looser matches
+  const tw = new Set(t.split(' ').filter((w) => w.length > 3));
+  if (tw.size >= 3) {
+    let best = null, bestScore = 0;
+    for (const e of idx) {
+      const ew = (e.n || '').split(' '); let hits = 0;
+      for (const w of ew) if (tw.has(w)) hits++;
+      const score = hits / Math.max(tw.size, ew.length);
+      if (score > bestScore) { bestScore = score; best = e; }
+    }
+    if (bestScore >= 0.6) return best;
+  }
+  return null;
 }
 
 // One-way IP hash (salted, truncated) — we store a fingerprint for dedupe/limits, never the raw IP.

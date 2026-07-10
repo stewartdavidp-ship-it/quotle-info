@@ -89,6 +89,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/be-civil-to-all-sociable-to-many-familiar-with-few-friend#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/be-civil-to-all-sociable-to-many-familiar-with-few-friend#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Benjamin Franklin say \"Be civil to all; sociable to many; familiar with few; friend to one; enemy to none.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Franklin printed this himself in 'Poor Richard Improved' for 1756, on the April calendar page — one of hundreds of one-line proverbs in the almanac. The wording is confirmed verbatim in Ford's 1889 scholarly collection of the almanacs ↗ and catalogued by the Yale Papers of Benjamin Franklin ↗.",
+                "url": "https://quotle.info/who-said/be-civil-to-all-sociable-to-many-familiar-with-few-friend"
+              }
+            }
+          ]
         }
       ]
     }
@@ -263,6 +278,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -512,26 +529,36 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://founders.archives.gov/documents/Franklin/01-06-02-0136" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-civil-to-all-sociable-to-many-familiar-with-few-friend&i=0" data-ext="https://founders.archives.gov/documents/Franklin/01-06-02-0136">
                     <div class="research-top"><span class="research-label">Poor Richard Improved, 1756</span><span class="research-host">founders.archives.gov</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">The authoritative Yale Papers of Benjamin Franklin transcription of the 1756 almanac containing the maxim.</p>
                 </a>
-                <a class="research-item" href="https://archive.org/details/prefacesproverbs00franrich" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-civil-to-all-sociable-to-many-familiar-with-few-friend&i=1" data-ext="https://archive.org/details/prefacesproverbs00franrich">
                     <div class="research-top"><span class="research-label">Prefaces, Proverbs &amp; Poems of Franklin (1889)</span><span class="research-host">archive.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Paul Leicester Ford&rsquo;s public-domain collection of every Poor Richard proverb; the line appears verbatim on the &ldquo;Poor Richard for 1756&rdquo; page.</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/Poor_Richard%27s_Almanack" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-civil-to-all-sociable-to-many-familiar-with-few-friend&i=2" data-ext="https://en.wikipedia.org/wiki/Poor_Richard%27s_Almanack">
                     <div class="research-top"><span class="research-label">Poor Richard&rsquo;s Almanack</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Background on Franklin&rsquo;s almanac, its run (1733&ndash;1758), and the Richard Saunders persona.</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Benjamin_Franklin" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-civil-to-all-sociable-to-many-familiar-with-few-friend&i=3" data-ext="https://en.wikiquote.org/wiki/Benjamin_Franklin">
                     <div class="research-top"><span class="research-label">Benjamin Franklin</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Curated list separating Franklin&rsquo;s genuine, disputed, and misattributed quotations.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The true author</p><h2 id="author-h">About Benjamin Franklin</h2></div>

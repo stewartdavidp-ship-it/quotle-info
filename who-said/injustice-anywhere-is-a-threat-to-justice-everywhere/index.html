@@ -88,6 +88,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/injustice-anywhere-is-a-threat-to-justice-everywhere#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/injustice-anywhere-is-a-threat-to-justice-everywhere#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Martin Luther King Jr. say \"Injustice anywhere is a threat to justice everywhere. We are caught in an inescapable network of mutuality, tied in a single garment of destiny.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. From King's \"Letter from Birmingham Jail,\" dated April 16, 1963 — written in the margins of a newspaper while he was jailed for leading nonviolent protests. The line is confirmed in the widely published text of the letter, later collected in his 1964 book Why We Can't Wait.",
+                "url": "https://quotle.info/who-said/injustice-anywhere-is-a-threat-to-justice-everywhere"
+              }
+            }
+          ]
         }
       ]
     }
@@ -262,6 +277,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -525,30 +542,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://en.wikipedia.org/wiki/Letter_from_Birmingham_Jail" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=injustice-anywhere-is-a-threat-to-justice-everywhere&i=0" data-ext="https://en.wikipedia.org/wiki/Letter_from_Birmingham_Jail">
                     <div class="research-top"><span class="research-label">Letter from Birmingham Jail</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Overview of the letter, its April 16, 1963 date, context, and 1963–64 publication history.</p>
                 </a>
-                <a class="research-item" href="https://kinginstitute.stanford.edu/letter-birmingham-jail" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=injustice-anywhere-is-a-threat-to-justice-everywhere&i=1" data-ext="https://kinginstitute.stanford.edu/letter-birmingham-jail">
                     <div class="research-top"><span class="research-label">Annotated Letter (King Papers)</span><span class="research-host">kinginstitute.stanford.edu</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Stanford King Institute&rsquo;s annotated scholarly edition of the full letter.</p>
                 </a>
-                <a class="research-item" href="https://www.goodreads.com/quotes/631479-injustice-anywhere-is-a-threat-to-justice-everywhere-we-are" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=injustice-anywhere-is-a-threat-to-justice-everywhere&i=2" data-ext="https://www.goodreads.com/quotes/631479-injustice-anywhere-is-a-threat-to-justice-everywhere-we-are">
                     <div class="research-top"><span class="research-label">The quote in context</span><span class="research-host">goodreads.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Reproduces the fuller passage (&ldquo;network of mutuality &hellip; single garment of destiny&rdquo;).</p>
                 </a>
-                <a class="research-item" href="https://www.npr.org/2013/04/16/177468615/letter-from-birmingham-jail-50-years-later" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=injustice-anywhere-is-a-threat-to-justice-everywhere&i=3" data-ext="https://www.npr.org/2013/04/16/177468615/letter-from-birmingham-jail-50-years-later">
                     <div class="research-top"><span class="research-label">'Letter From Birmingham Jail' 50 Years Later</span><span class="research-host">npr.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">NPR retrospective on the letter&rsquo;s writing and legacy.</p>
                 </a>
-                <a class="research-item" href="https://nul.org/news/letter-birmingham-jail" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=injustice-anywhere-is-a-threat-to-justice-everywhere&i=4" data-ext="https://nul.org/news/letter-birmingham-jail">
                     <div class="research-top"><span class="research-label">Letter from a Birmingham Jail</span><span class="research-host">nul.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">National Urban League hosting of the letter&rsquo;s text.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The author</p><h2 id="author-h">About Martin Luther King Jr.</h2></div>

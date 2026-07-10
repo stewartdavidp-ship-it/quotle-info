@@ -79,6 +79,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/innovation-distinguishes-between-a-leader-and-a-follower#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/innovation-distinguishes-between-a-leader-and-a-follower#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Steve Jobs say \"Innovation distinguishes between a leader and a follower.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Not confirmed. Credited to Steve Jobs on virtually every quotation site, and it squares with his lifelong evangelism for innovation — but no primary source has ever been produced. The line is absent from the exhaustive verbatim archive of his documented statements at allaboutstevejobs.com and from Wikiquote's sourced section, so we treat it as consistent-but-unverified rather than confirmed.",
+                "url": "https://quotle.info/who-said/innovation-distinguishes-between-a-leader-and-a-follower"
+              }
+            }
+          ]
         }
       ]
     }
@@ -253,6 +268,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -519,30 +536,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://allaboutstevejobs.com/verbatim/quotes" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=innovation-distinguishes-between-a-leader-and-a-follower&i=0" data-ext="https://allaboutstevejobs.com/verbatim/quotes">
                     <div class="research-top"><span class="research-label">The verbatim Steve Jobs quote archive</span><span class="research-host">allaboutstevejobs.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Exhaustively sourced catalogue of documented Jobs quotes; the aphorism is not in it, but his real 1998 innovation remark is.</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Steve_Jobs" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=innovation-distinguishes-between-a-leader-and-a-follower&i=1" data-ext="https://en.wikiquote.org/wiki/Steve_Jobs">
                     <div class="research-top"><span class="research-label">Steve Jobs — Wikiquote</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Community reference separating sourced from attributed and misattributed Jobs quotes; the line is absent from the sourced section.</p>
                 </a>
-                <a class="research-item" href="https://money.cnn.com/magazines/fortune/fortune_archive/1998/11/09/250880/index.htm" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=innovation-distinguishes-between-a-leader-and-a-follower&i=2" data-ext="https://money.cnn.com/magazines/fortune/fortune_archive/1998/11/09/250880/index.htm">
                     <div class="research-top"><span class="research-label">The Three Faces of Steve (Fortune, 1998)</span><span class="research-host">money.cnn.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Brent Schlender&rsquo;s interview, the origin of Jobs&rsquo;s genuine documented statement on innovation and R&amp;D.</p>
                 </a>
-                <a class="research-item" href="https://www.forbes.com/sites/bwoo/2013/02/14/innovation-distinguishes-between-a-leader-and-a-follower/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=innovation-distinguishes-between-a-leader-and-a-follower&i=3" data-ext="https://www.forbes.com/sites/bwoo/2013/02/14/innovation-distinguishes-between-a-leader-and-a-follower/">
                     <div class="research-top"><span class="research-label">Innovation Distinguishes Between A Leader And A Follower</span><span class="research-host">forbes.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Representative example of the quote used as a Jobs headline with no source cited.</p>
                 </a>
-                <a class="research-item" href="https://www.inc.com/nick-hobson/steve-jobs-said-what-separates-a-leader-from-a-follower-really-comes-down-to-this-mindset.html" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=innovation-distinguishes-between-a-leader-and-a-follower&i=4" data-ext="https://www.inc.com/nick-hobson/steve-jobs-said-what-separates-a-leader-from-a-follower-really-comes-down-to-this-mindset.html">
                     <div class="research-top"><span class="research-label">What separates a leader from a follower</span><span class="research-host">inc.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Business-press piece built around the quote, illustrating its continued unsourced circulation.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The author</p><h2 id="author-h">About Steve Jobs</h2></div>

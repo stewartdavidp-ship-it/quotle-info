@@ -89,6 +89,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/the-best-way-out-is-always-through#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/the-best-way-out-is-always-through#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Robert Frost say \"The best way out is always through.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Frost wrote this exact line as dialogue in \"A Servant to Servants,\" collected in North of Boston (1914) — confirmed against three independent copies of the original text. In the poem the words are given to a character named Len, not stated as Frost's own personal motto.",
+                "url": "https://quotle.info/who-said/the-best-way-out-is-always-through"
+              }
+            }
+          ]
         }
       ]
     }
@@ -263,6 +278,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -534,30 +551,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://en.wikisource.org/wiki/North_of_Boston/A_Servant_to_Servants" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=the-best-way-out-is-always-through&i=0" data-ext="https://en.wikisource.org/wiki/North_of_Boston/A_Servant_to_Servants">
                     <div class="research-top"><span class="research-label">A Servant to Servants (full text)</span><span class="research-host">en.wikisource.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Complete text of the poem, confirming the exact wording and its context as Len's line.</p>
                 </a>
-                <a class="research-item" href="https://www.gutenberg.org/files/3026/3026-h/3026-h.htm" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=the-best-way-out-is-always-through&i=1" data-ext="https://www.gutenberg.org/files/3026/3026-h/3026-h.htm">
                     <div class="research-top"><span class="research-label">North of Boston (1914 full text)</span><span class="research-host">gutenberg.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Public-domain full text of Frost's 1914 collection, including "A Servant to Servants."</p>
                 </a>
-                <a class="research-item" href="https://www.robertfrost.org/a-servant-to-servants.jsp" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=the-best-way-out-is-always-through&i=2" data-ext="https://www.robertfrost.org/a-servant-to-servants.jsp">
                     <div class="research-top"><span class="research-label">A Servant to Servants</span><span class="research-host">robertfrost.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Poem text hosted by the Friends of Robert Frost, independently confirming the wording.</p>
                 </a>
-                <a class="research-item" href="https://quoteinvestigator.com/2025/06/30/way-out/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=the-best-way-out-is-always-through&i=3" data-ext="https://quoteinvestigator.com/2025/06/30/way-out/">
                     <div class="research-top"><span class="research-label">Adage Origin: The Only Way Out Is Through</span><span class="research-host">quoteinvestigator.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Traces the phrase's history to an 1870 Curtis essay and details Frost's role as its popularizer.</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/North_of_Boston" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=the-best-way-out-is-always-through&i=4" data-ext="https://en.wikipedia.org/wiki/North_of_Boston">
                     <div class="research-top"><span class="research-label">North of Boston</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Publication history confirming the first UK edition was published by David Nutt in London in 1914.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">American poet</p><h2 id="author-h">About Robert Frost</h2></div>

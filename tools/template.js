@@ -180,7 +180,21 @@ function buildJsonLd(q, url) {
   };
   if (!claimReview.itemReviewed.author) delete claimReview.itemReviewed.author;
 
-  return { '@context': 'https://schema.org', '@graph': [quotation, claimReview, webpage] };
+  // FAQPage — the literal "Did {who} say {quote}?" Q&A, so AI answer-engines and snippets can
+  // lift the verdict verbatim. Question uses the credited name; answer leads with the verdict.
+  const verdictLead = q.confidence === 'disputed' ? 'No. ' : q.confidence === 'attributed' ? 'Not confirmed. ' : 'Yes. ';
+  const answerText = (verdictLead + plain((q.answer && q.answer.sourceLine) || (q.answer && q.answer.label) || '')).replace(/\s+/g, ' ').trim();
+  const faq = {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: [{
+      '@type': 'Question',
+      name: claimant ? `Did ${claimant} say "${quoteText}"?` : `Who really said "${quoteText}"?`,
+      acceptedAnswer: { '@type': 'Answer', text: answerText, url },
+    }],
+  };
+
+  return { '@context': 'https://schema.org', '@graph': [quotation, claimReview, webpage, faq] };
 }
 
 // ---- top nav + breadcrumb ------------------------------------------------
@@ -375,7 +389,7 @@ ${cards}
 
 // ---- Dig deeper (always) -------------------------------------------------
 function renderResearch(q) {
-  const items = (q.externalLinks || []).map((l) => `                <a class="research-item" href="${attr(l.url)}" target="_blank" rel="noopener">
+  const items = (q.externalLinks || []).map((l, idx) => `                <a class="research-item" href="/cite/?q=${encodeURIComponent(q.quoteSlug)}&i=${idx}" data-ext="${attr(l.url)}">
                     <div class="research-top"><span class="research-label">${esc(l.label)}</span><span class="research-host">${esc(l.host)}</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">${l.what}</p>
                 </a>`).join('\n');
@@ -383,11 +397,21 @@ function renderResearch(q) {
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">${q.researchIntro || 'Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.'}</p>
+            <p class="research-intro">${q.researchIntro || 'Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.'}</p>
             <div class="research-list">
 ${items}
             </div>
-        </section>`;
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
+        </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>`;
 }
 
 // ---- About the author (always) -------------------------------------------
@@ -667,6 +691,8 @@ const STYLE = `${ROOT_CSS}
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */

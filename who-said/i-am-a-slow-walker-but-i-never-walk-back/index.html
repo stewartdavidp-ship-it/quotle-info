@@ -89,6 +89,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/i-am-a-slow-walker-but-i-never-walk-back#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/i-am-a-slow-walker-but-i-never-walk-back#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Abraham Lincoln say \"I am a slow walker, but I never walk back.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Not confirmed. Widely credited to Lincoln, and credited early: the words surface in the press in January 1864 ↗ as his reply when asked whether the Emancipation Proclamation was a finality, and they square with his incremental-but-unwavering temperament — but the line survives only as a second-hand newspaper anecdote, with no version in Lincoln's own letters or speeches to pin it.",
+                "url": "https://quotle.info/who-said/i-am-a-slow-walker-but-i-never-walk-back"
+              }
+            }
+          ]
         }
       ]
     }
@@ -263,6 +278,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -533,26 +550,36 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://barrypopik.com/blog/i_am_a_slow_walker" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=i-am-a-slow-walker-but-i-never-walk-back&i=0" data-ext="https://barrypopik.com/blog/i_am_a_slow_walker">
                     <div class="research-top"><span class="research-label">Barry Popik: tracing the phrase</span><span class="research-host">barrypopik.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Etymology sleuth&rsquo;s dossier with the earliest 1864 citations and the Earl Warren &lsquo;backwards&rsquo; variant.</p>
                 </a>
-                <a class="research-item" href="https://www.americamagazine.org/politics-society/2015/02/15/i-walk-slowly-i-never-walk-backward-humanity-abraham-lincoln/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=i-am-a-slow-walker-but-i-never-walk-back&i=1" data-ext="https://www.americamagazine.org/politics-society/2015/02/15/i-walk-slowly-i-never-walk-backward-humanity-abraham-lincoln/">
                     <div class="research-top"><span class="research-label">America: The humanity of Lincoln</span><span class="research-host">americamagazine.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Essay that quotes &lsquo;I walk slowly, but I never walk backward&rsquo; as Lincoln&rsquo;s &mdash; with no source given.</p>
                 </a>
-                <a class="research-item" href="https://www.passiton.com/inspirational-quotes/3736-i-am-a-slow-walker-but-i-never-walk-backwards" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=i-am-a-slow-walker-but-i-never-walk-back&i=2" data-ext="https://www.passiton.com/inspirational-quotes/3736-i-am-a-slow-walker-but-i-never-walk-backwards">
                     <div class="research-top"><span class="research-label">Foundation for a Better Life</span><span class="research-host">passiton.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Typical modern circulation of the &lsquo;never walk backwards&rsquo; variant, attributed to Lincoln.</p>
                 </a>
-                <a class="research-item" href="https://www.goodreads.com/quotes/6391-i-am-a-slow-walker-but-i-never-walk-back" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=i-am-a-slow-walker-but-i-never-walk-back&i=3" data-ext="https://www.goodreads.com/quotes/6391-i-am-a-slow-walker-but-i-never-walk-back">
                     <div class="research-top"><span class="research-label">Goodreads quote page</span><span class="research-host">goodreads.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Shows the &lsquo;never walk back&rsquo; form circulating as a bare Lincoln quote, no citation.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The reputed author</p><h2 id="author-h">About Abraham Lincoln</h2></div>

@@ -79,6 +79,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/we-all-have-our-own-life-to-pursue-our-own-kind-of-dream-to#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/we-all-have-our-own-life-to-pursue-our-own-kind-of-dream-to#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Quote-aggregator and inspirational-quote sites (BrainyQuote, Goodreads, AZQuotes, PassItOn, and others) say \"We all have our own life to pursue, our own kind of dream to be weaving, and we all have the power to make wishes come true, as long as we keep believing.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. This inspirational line is ubiquitous on quote-aggregator sites, always credited to Louisa May Alcott, but no full-text search of her published novels, stories, letters, or journals turns up this exact wording, and no site — including ones that specialize in tracking her misattributed quotes — cites a title, chapter, or date for it.",
+                "url": "https://quotle.info/who-said/we-all-have-our-own-life-to-pursue-our-own-kind-of-dream-to"
+              }
+            }
+          ]
         }
       ]
     }
@@ -253,6 +268,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -526,30 +543,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Louisa_May_Alcott" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=we-all-have-our-own-life-to-pursue-our-own-kind-of-dream-to&i=0" data-ext="https://en.wikiquote.org/wiki/Louisa_May_Alcott">
                     <div class="research-top"><span class="research-label">Louisa May Alcott</span><span class="research-host">Wikiquote</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Curated, sourced quotes plus a dedicated Misattributed section — this line is absent from it</p>
                 </a>
-                <a class="research-item" href="https://www.gutenberg.org/ebooks/514" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=we-all-have-our-own-life-to-pursue-our-own-kind-of-dream-to&i=1" data-ext="https://www.gutenberg.org/ebooks/514">
                     <div class="research-top"><span class="research-label">Little Women, by Louisa May Alcott</span><span class="research-host">Project Gutenberg</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Full public-domain text of Alcott's best-known novel, searchable for exact wording</p>
                 </a>
-                <a class="research-item" href="https://www.gutenberg.org/files/2804/2804-h/2804-h.htm" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=we-all-have-our-own-life-to-pursue-our-own-kind-of-dream-to&i=2" data-ext="https://www.gutenberg.org/files/2804/2804-h/2804-h.htm">
                     <div class="research-top"><span class="research-label">Rose in Bloom, by Louisa May Alcott</span><span class="research-host">Project Gutenberg</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Full text of another Alcott novel, checked and found not to contain this line</p>
                 </a>
-                <a class="research-item" href="https://www.goodreads.com/quotes/6486812-we-all-have-our-own-life-to-pursue-our-own" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=we-all-have-our-own-life-to-pursue-our-own-kind-of-dream-to&i=3" data-ext="https://www.goodreads.com/quotes/6486812-we-all-have-our-own-life-to-pursue-our-own">
                     <div class="research-top"><span class="research-label">Quote by Louisa May Alcott</span><span class="research-host">Goodreads</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Typical unsourced quote-database listing, community-submitted with no citation</p>
                 </a>
-                <a class="research-item" href="https://quoteinvestigator.com/about/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=we-all-have-our-own-life-to-pursue-our-own-kind-of-dream-to&i=4" data-ext="https://quoteinvestigator.com/about/">
                     <div class="research-top"><span class="research-label">About Quote Investigator</span><span class="research-host">quoteinvestigator.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Reference on how fabricated and misattributed quotes spread and get fact-checked</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The author</p><h2 id="author-h">About Louisa May Alcott</h2></div>

@@ -86,6 +86,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/keep-your-face-always-toward-the-sunshine-and-shadows-will#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/keep-your-face-always-toward-the-sunshine-and-shadows-will#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did M. B. Whitman say \"Keep your face always toward the sunshine—and shadows will fall behind you.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. This line does not appear anywhere in Walt Whitman’s published writing. It is a folk saying that circulated anonymously in American newspapers from at least 1862, was misattributed to an obscure “M. B. Whitman” by 1903, and was then mistakenly upgraded to the famous poet “Walt Whitman” by 1919 — almost certainly through confusion over the shared surname, according to Quote Investigator’s chronology ↗.",
+                "url": "https://quotle.info/who-said/keep-your-face-always-toward-the-sunshine-and-shadows-will"
+              }
+            }
+          ]
         }
       ]
     }
@@ -260,6 +275,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -534,26 +551,36 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://quoteinvestigator.com/2019/03/05/sunshine/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=keep-your-face-always-toward-the-sunshine-and-shadows-will&i=0" data-ext="https://quoteinvestigator.com/2019/03/05/sunshine/">
                     <div class="research-top"><span class="research-label">Quote Origin: Keep Your Face Always Towards the Sunshine</span><span class="research-host">quoteinvestigator.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Full documented chronology from the 1862 anonymous adage through the 1903 and 1919 misattributions</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Walt_Whitman" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=keep-your-face-always-toward-the-sunshine-and-shadows-will&i=1" data-ext="https://en.wikiquote.org/wiki/Walt_Whitman">
                     <div class="research-top"><span class="research-label">Walt Whitman — Misattributed section</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Wikiquote's sourced listing of this quote as misattributed to Whitman</p>
                 </a>
-                <a class="research-item" href="https://afb.org/about-afb/history/helen-keller/helen-keller-quotes/helen-keller-quotes-optimism" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=keep-your-face-always-toward-the-sunshine-and-shadows-will&i=2" data-ext="https://afb.org/about-afb/history/helen-keller/helen-keller-quotes/helen-keller-quotes-optimism">
                     <div class="research-top"><span class="research-label">Helen Keller Quotes on Optimism</span><span class="research-host">afb.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">American Foundation for the Blind's page repeating the parallel Keller variant of this saying</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/Walt_Whitman" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=keep-your-face-always-toward-the-sunshine-and-shadows-will&i=3" data-ext="https://en.wikipedia.org/wiki/Walt_Whitman">
                     <div class="research-top"><span class="research-label">Walt Whitman</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Biography and life dates for the poet this quote is popularly (and wrongly) attributed to</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">Attributed to Walt Whitman, but it isn't his line</p><h2 id="author-h">About Anonymous (American folk proverb)</h2></div>

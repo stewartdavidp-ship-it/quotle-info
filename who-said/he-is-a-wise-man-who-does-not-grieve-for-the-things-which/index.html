@@ -89,6 +89,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/he-is-a-wise-man-who-does-not-grieve-for-the-things-which#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/he-is-a-wise-man-who-does-not-grieve-for-the-things-which#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Epictetus say \"He is a wise man who does not grieve for the things which he has not, but rejoices for those which he has.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. This exact English wording is Fragment CXXIX in George Long's 1877 translation of Epictetus's Fragments (preserved in the anthology of Stobaeus), confirmed on both Wikisource and Perseus. Note that the Fragments collected by Stobaeus are of debated authenticity, and the words themselves are Long's English rendering of a Greek original.",
+                "url": "https://quotle.info/who-said/he-is-a-wise-man-who-does-not-grieve-for-the-things-which"
+              }
+            }
+          ]
         }
       ]
     }
@@ -263,6 +278,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -531,30 +548,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://en.wikisource.org/wiki/The_Discourses_of_Epictetus;_with_the_Encheiridion_and_Fragments/Fragments" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=he-is-a-wise-man-who-does-not-grieve-for-the-things-which&i=0" data-ext="https://en.wikisource.org/wiki/The_Discourses_of_Epictetus;_with_the_Encheiridion_and_Fragments/Fragments">
                     <div class="research-top"><span class="research-label">Fragments (George Long trans.)</span><span class="research-host">Wikisource</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Full public-domain text of the 1877 translation, showing Fragment CXXIX.</p>
                 </a>
-                <a class="research-item" href="https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0236:text%3Dfrag:book%3D0" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=he-is-a-wise-man-who-does-not-grieve-for-the-things-which&i=1" data-ext="https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0236:text%3Dfrag:book%3D0">
                     <div class="research-top"><span class="research-label">Epictetus, Fragments</span><span class="research-host">Perseus Digital Library</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Scholarly edition indexing the same fragment and English text.</p>
                 </a>
-                <a class="research-item" href="https://plato.stanford.edu/entries/epictetus/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=he-is-a-wise-man-who-does-not-grieve-for-the-things-which&i=2" data-ext="https://plato.stanford.edu/entries/epictetus/">
                     <div class="research-top"><span class="research-label">Epictetus</span><span class="research-host">Stanford Encyclopedia of Philosophy</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Authoritative overview of his life, works, and the transmission of the Fragments.</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/Epictetus" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=he-is-a-wise-man-who-does-not-grieve-for-the-things-which&i=3" data-ext="https://en.wikipedia.org/wiki/Epictetus">
                     <div class="research-top"><span class="research-label">Epictetus</span><span class="research-host">Wikipedia</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Biography and summary of the Discourses, Enchiridion, and Fragments.</p>
                 </a>
-                <a class="research-item" href="https://www.britannica.com/biography/Epictetus-Greek-philosopher" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=he-is-a-wise-man-who-does-not-grieve-for-the-things-which&i=4" data-ext="https://www.britannica.com/biography/Epictetus-Greek-philosopher">
                     <div class="research-top"><span class="research-label">Epictetus</span><span class="research-host">Encyclopaedia Britannica</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Reference biography of the Stoic philosopher.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The author</p><h2 id="author-h">About Epictetus</h2></div>

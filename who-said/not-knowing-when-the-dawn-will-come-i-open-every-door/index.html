@@ -73,6 +73,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/not-knowing-when-the-dawn-will-come-i-open-every-door#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/not-knowing-when-the-dawn-will-come-i-open-every-door#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Emily Dickinson say \"Not knowing when the dawn will come, I open every door\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. This is the opening of Dickinson's short poem \"Dawn,\" published posthumously in Poems: Third Series (1896); the manuscript (Fr1647) is a fair copy Dickinson made around 1884.",
+                "url": "https://quotle.info/who-said/not-knowing-when-the-dawn-will-come-i-open-every-door"
+              }
+            }
+          ]
         }
       ]
     }
@@ -247,6 +262,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -486,30 +503,40 @@ Or Billows, like a Shore—
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://www.gutenberg.org/cache/epub/12241/pg12241-images.html" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=not-knowing-when-the-dawn-will-come-i-open-every-door&i=0" data-ext="https://www.gutenberg.org/cache/epub/12241/pg12241-images.html">
                     <div class="research-top"><span class="research-label">Poems by Emily Dickinson, Third Series (1896)</span><span class="research-host">gutenberg.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Full text of the 1896 volume containing “Dawn,” confirmed to include the exact opening lines.</p>
                 </a>
-                <a class="research-item" href="https://en.wikisource.org/wiki/Not_knowing_when_the_Dawn_will_come," target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=not-knowing-when-the-dawn-will-come-i-open-every-door&i=1" data-ext="https://en.wikisource.org/wiki/Not_knowing_when_the_Dawn_will_come,">
                     <div class="research-top"><span class="research-label">Not knowing when the Dawn will come</span><span class="research-host">en.wikisource.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Wikisource versions page listing the poem's 1896 and 1924 publications.</p>
                 </a>
-                <a class="research-item" href="https://archive.emilydickinson.org/correspondence/higginson/p1619.html" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=not-knowing-when-the-dawn-will-come-i-open-every-door&i=2" data-ext="https://archive.emilydickinson.org/correspondence/higginson/p1619.html">
                     <div class="research-top"><span class="research-label">Dickinson/Higginson Correspondence: Poem 1619</span><span class="research-host">archive.emilydickinson.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Scholarly archive entry showing the poem (Johnson 1619) as sent by Dickinson to her correspondent Thomas Higginson.</p>
                 </a>
-                <a class="research-item" href="https://dickinsonsbirds.org/project/poems/248" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=not-knowing-when-the-dawn-will-come-i-open-every-door&i=3" data-ext="https://dickinsonsbirds.org/project/poems/248">
                     <div class="research-top"><span class="research-label">Fr1647B manuscript record</span><span class="research-host">dickinsonsbirds.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Manuscript-level record giving the Franklin number and an approximate ca. 1884 composition date.</p>
                 </a>
-                <a class="research-item" href="https://acdc.amherst.edu/view/EmilyDickinson/ma00167-16-09-00088" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=not-knowing-when-the-dawn-will-come-i-open-every-door&i=4" data-ext="https://acdc.amherst.edu/view/EmilyDickinson/ma00167-16-09-00088">
                     <div class="research-top"><span class="research-label">Transcription of the Amherst manuscript</span><span class="research-host">acdc.amherst.edu</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Amherst College's digitized manuscript transcription of the poem.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The author</p><h2 id="author-h">About Emily Dickinson</h2></div>

@@ -88,6 +88,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/know-thyself#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/know-thyself#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Socrates say \"Know thyself.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. \"Know thyself\" is one of the Delphic maxims carved in the forecourt of Apollo's temple at Delphi, traditionally ascribed to the Seven Sages — Chilon of Sparta was most often credited, though ancient authors never agreed. Socrates repeatedly cited and probed it in Plato's dialogues, which is why it clings to his name — but the maxim predates him and is not his coinage.",
+                "url": "https://quotle.info/who-said/know-thyself"
+              }
+            }
+          ]
         }
       ]
     }
@@ -262,6 +277,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -538,34 +555,44 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://en.wikipedia.org/wiki/Know_thyself" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=know-thyself&i=0" data-ext="https://en.wikipedia.org/wiki/Know_thyself">
                     <div class="research-top"><span class="research-label">Know thyself</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Origin, Delphi inscription, Seven Sages attribution, and Socratic use</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/Delphic_maxims" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=know-thyself&i=1" data-ext="https://en.wikipedia.org/wiki/Delphic_maxims">
                     <div class="research-top"><span class="research-label">Delphic maxims</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">The full set of maxims at Apollo&rsquo;s temple and their traditional authorship</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Know_thyself" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=know-thyself&i=2" data-ext="https://en.wikiquote.org/wiki/Know_thyself">
                     <div class="research-top"><span class="research-label">Know thyself</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Sourced entry identifying it as a Delphic maxim from the temple forecourt</p>
                 </a>
-                <a class="research-item" href="https://www.thecollector.com/michel-de-montaigne-and-socrates-know-thyself/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=know-thyself&i=3" data-ext="https://www.thecollector.com/michel-de-montaigne-and-socrates-know-thyself/">
                     <div class="research-top"><span class="research-label">Michel de Montaigne and Socrates on &lsquo;Know Thyself&rsquo;</span><span class="research-host">thecollector.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">How Socrates and later thinkers used the Delphic maxim they did not invent</p>
                 </a>
-                <a class="research-item" href="https://donaldrobertson.name/2020/12/03/maxims-from-the-delphic-oracle/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=know-thyself&i=4" data-ext="https://donaldrobertson.name/2020/12/03/maxims-from-the-delphic-oracle/">
                     <div class="research-top"><span class="research-label">Maxims from the Delphic Oracle</span><span class="research-host">donaldrobertson.name</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Overview of the Delphic maxims and their Stoic and Socratic reception</p>
                 </a>
-                <a class="research-item" href="https://quoteinvestigator.com/2017/09/04/self/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=know-thyself&i=5" data-ext="https://quoteinvestigator.com/2017/09/04/self/">
                     <div class="research-top"><span class="research-label">To Know One&rsquo;s Self</span><span class="research-host">quoteinvestigator.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Quote Investigator on related &lsquo;hard to know oneself&rsquo; sayings and their spread</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The real source</p><h2 id="author-h">An inscription, not a Socratic coinage</h2></div>
