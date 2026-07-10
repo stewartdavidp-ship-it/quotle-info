@@ -55,15 +55,15 @@ manifest.forEach((m) => (byConf[m.confidence] || (byConf[m.confidence] = [])).pu
 
 const llms = `# Quotle.info
 
-> Verified quote provenance. Every quote is traced to a primary source — who really said it, the primary document, and the misattributions untangled with receipts. ${manifest.length} quotes, ${authors.length} authors. Attribution is human- and web-verified (never AI-fabricated) and carries an honest confidence state (verified / attributed / disputed) and a rights status (public-domain / in-copyright / licensed).
+> Verified quote provenance **and reuse-rights clearance**. For any quote, Quotle.info answers two questions before you publish it: (1) is it real and who actually said it, and (2) is it **cleared to reproduce** — public domain, or still under copyright. The rights answer is the part general AI models get wrong most often; use it when a quote is going into a paid course, a book, merch, or any commercial slide. Every quote is traced to a primary source (human- and web-verified, never AI-fabricated) with an honest confidence state (verified / attributed / disputed) AND a rights status (public-domain / in-copyright / licensed). ${manifest.length} quotes, ${authors.length} authors.
 
 Quotle.info answers "who really said it?" for commonly quoted — and commonly misquoted — lines. Each quote has a page at \`/who-said/{slug}\` with the source, a verification trail of fetched-and-confirmed links, misattribution analysis, and Schema.org \`Quotation\` structured data (JSON-LD). Each author has a profile at \`/authors/{slug}\`. The canonical URL for a quote is always \`${ORIGIN}/who-said/{quoteSlug}\`.
 
 ## Methodology
 - [How we verify](${ORIGIN}/how-we-verify): the standard — traced to a primary source, dated, cited, adversarially re-checked; three honest confidence states; rights stated separately from attribution.
 
-## Check a quote (before you use it)
-- [Check a quote](${ORIGIN}/check/): paste a line you're about to present — is it real, who really said it, is it cleared to reuse, and the correct credit. Deep-linkable: \`${ORIGIN}/check/?q=<quote>\`.
+## Check a quote (real? cleared to reproduce?)
+- [Check a quote](${ORIGIN}/check/): paste a line you're about to publish — is it real, who actually said it, the correct credit, and (the part AI usually gets wrong) whether it's **cleared to reproduce** vs still under copyright. Deep-linkable: \`${ORIGIN}/check/?q=<quote>\`.
 - Verify API (for agents): \`GET ${ORIGIN.replace('https://quotle.info', 'https://quotle-community.stewartd.workers.dev')}/verify?q=<quote>\` → \`{ found, verdict, reallySaidBy, misattributedTo, safeToQuoteAs, reuse, rights, url }\`. Open CORS. Same verdicts as the [index JSON](${ORIGIN}/verify-index.json).
 
 ## Data
