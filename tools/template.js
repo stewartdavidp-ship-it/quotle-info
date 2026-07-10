@@ -142,7 +142,16 @@ function buildJsonLd(q, url) {
     text: s.quotationText || q.fullQuote || q.displayQuote,
   };
   if (s.alternateName) quotation.alternateName = s.alternateName;
-  if (s.creator) {
+  // Quotation.creator must name the TRUE author. On a DISPUTED page, generate sometimes left the
+  // magnet (the wrongly-credited name) in schema.creator — a machine-readable contradiction of the
+  // page's own verdict. So on disputed pages, only assert a creator when it genuinely matches the
+  // true author (answer.authorName) and that author is a real named person; otherwise omit it. The
+  // disputed claimant is still carried by the ClaimReview below, so nothing is lost.
+  const heroName = plain((q.answer && q.answer.authorName) || '');
+  const heroUnknown = !heroName || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroName);
+  const creatorOk = s.creator && (q.confidence !== 'disputed'
+    || (!heroUnknown && plain(s.creator.name).toLowerCase() === heroName.toLowerCase()));
+  if (creatorOk) {
     quotation.creator = { '@type': 'Person', name: s.creator.name };
     if (s.creator.birthDate) quotation.creator.birthDate = s.creator.birthDate;
     if (s.creator.jobTitle) quotation.creator.jobTitle = s.creator.jobTitle;
