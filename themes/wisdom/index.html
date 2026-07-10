@@ -403,7 +403,8 @@
         .tc:hover { transform:translateY(-3px); border-color:var(--border-accent); }
         .tc-name { font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem; color:var(--ink); }
         .tc-blurb { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); line-height:1.5; }
-        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--sage); margin-top:4px; }
+        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--slate); margin-top:4px; }
+        .tc-pd { color:var(--sage); }
         /* theme hero */
         .theme-hero { padding:34px 0 4px; }
         .theme-hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2rem,6vw,2.8rem); line-height:1.05; letter-spacing:-0.02em; }
@@ -421,6 +422,19 @@
         .q-conf .dot { width:15px; height:15px; border-radius:50%; display:grid; place-items:center; font-size:0.6rem; font-weight:700; color:var(--bg-deep); }
         .q-card.verified .q-conf { color:var(--sage); } .q-card.verified .dot { background:var(--sage); }
         .q-card.attributed .q-conf { color:var(--amber); } .q-card.attributed .dot { background:var(--amber); }
+        .q-use-row { margin-top:2px; }
+        .q-use { display:inline-flex; align-items:center; font-family:'DM Sans',sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.03em; padding:3px 9px; border-radius:999px; }
+        .q-use.pd { color:var(--sage); background:rgba(126,179,139,0.14); }
+        .q-use.ic { color:var(--amber); background:rgba(212,160,90,0.12); }
+        .q-use.unk { color:var(--text-muted); background:var(--bg-elevated); }
+        /* commercial-use toggle */
+        .theme-tools { margin:0 0 16px; }
+        .pd-toggle { display:inline-flex; align-items:center; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--slate); cursor:pointer; padding:9px 15px; background:var(--bg-card); border:1px solid var(--border); border-radius:999px; }
+        .pd-toggle:hover { border-color:var(--border-accent); }
+        .pd-toggle input { accent-color:var(--sage); width:15px; height:15px; }
+        .pd-toggle b { color:var(--sage); font-weight:700; }
+        .q-grid.pd-only .q-card[data-pd="0"] { display:none; }
+        .pd-empty { font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--text-muted); margin-top:14px; }
         /* fakes strip */
         .mis-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
         .mis-card { display:flex; flex-direction:column; gap:10px; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:12px; padding:18px 20px; transition:transform 0.2s; }
@@ -559,198 +573,248 @@
 
         <section aria-labelledby="real-h">
             <div class="sec-head"><p class="kicker">Ready for your slide</p><h2 id="real-h">Verified quotes about wisdom</h2>
-            <p class="sec-sub">Each is traced to a real source and correctly credited. Open one for a paste-ready credit line, its reuse status, and an image direction.</p></div>
-            <div class="q-grid">
-                <a class="q-card verified" href="/who-said/a-little-learning-is-a-dangerous-thing/">
+            <p class="sec-sub">Each is traced to a real source and correctly credited. <b>&check; Free to use</b> = public domain, cleared for commercial reuse. Open one for a paste-ready credit line and its reuse status.</p></div>
+            <div class="theme-tools"><label class="pd-toggle"><input type="checkbox" id="pdonly"> Only quotes <b>cleared for commercial use</b> (26 of 47)</label></div>
+            <div class="q-grid" id="real-grid">
+                <a class="q-card verified" href="/who-said/a-little-learning-is-a-dangerous-thing/" data-pd="1">
                     <p class="q-text">&ldquo;A little learning is a dangerous thing&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Alexander Pope</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/change-is-the-law-of-life-and-those-who-look-only-to-the/">
+                <a class="q-card verified" href="/who-said/change-is-the-law-of-life-and-those-who-look-only-to-the/" data-pd="1">
                     <p class="q-text">&ldquo;Change is the law of life. And those who look only to the past are certain to miss the future&rdquo;</p>
                     <div class="q-foot"><span class="q-author">John F. Kennedy</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/darkness-cannot-drive-out-darkness-only-light-can-do-that/">
+                <a class="q-card verified" href="/who-said/darkness-cannot-drive-out-darkness-only-light-can-do-that/" data-pd="0">
                     <p class="q-text">&ldquo;Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Martin Luther King Jr.</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/doubt-is-not-a-pleasant-condition-but-certainty-is-absurd/">
+                <a class="q-card verified" href="/who-said/doubt-is-not-a-pleasant-condition-but-certainty-is-absurd/" data-pd="1">
                     <p class="q-text">&ldquo;Doubt is not a pleasant condition, but certainty is absurd&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Voltaire</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/fan-chih-asked-about-benevolence-the-master-said-it-is-to/">
+                <a class="q-card verified" href="/who-said/fan-chih-asked-about-benevolence-the-master-said-it-is-to/" data-pd="1">
                     <p class="q-text">&ldquo;Fan Ch'ih asked about benevolence. The Master said, 'It is to love all men.'&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Confucius (Kong Qiu)</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/he-is-a-wise-man-who-does-not-grieve-for-the-things-which/">
+                <a class="q-card verified" href="/who-said/he-is-a-wise-man-who-does-not-grieve-for-the-things-which/" data-pd="1">
                     <p class="q-text">&ldquo;He is a wise man who does not grieve for the things which he has not, but rejoices for those which he has&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Epictetus</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/he-who-knows-others-is-wise-he-who-knows-himself-is/">
+                <a class="q-card verified" href="/who-said/he-who-knows-others-is-wise-he-who-knows-himself-is/" data-pd="0">
                     <p class="q-text">&ldquo;He who knows others is wise; he who knows himself is enlightened&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Lao Tzu</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/he-who-learns-but-does-not-think-is-lost/">
+                <a class="q-card verified" href="/who-said/he-who-learns-but-does-not-think-is-lost/" data-pd="0">
                     <p class="q-text">&ldquo;He who learns but does not think, is lost&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Confucius</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/i-can-never-decide-whether-my-dreams-are-the-result-of-my/">
+                <a class="q-card verified" href="/who-said/i-can-never-decide-whether-my-dreams-are-the-result-of-my/" data-pd="0">
                     <p class="q-text">&ldquo;I can never decide whether my dreams are the result of my thoughts, or my thoughts the result of my dreams&rdquo;</p>
                     <div class="q-foot"><span class="q-author">D.H. Lawrence</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/i-fear-the-greeks-even-when-they-bring-gifts/">
+                <a class="q-card verified" href="/who-said/i-fear-the-greeks-even-when-they-bring-gifts/" data-pd="0">
                     <p class="q-text">&ldquo;I fear the Greeks, even when they bring gifts&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Virgil</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/i-have-learned-over-the-years-that-when-ones-mind-is-made/">
+                <a class="q-card verified" href="/who-said/i-have-learned-over-the-years-that-when-ones-mind-is-made/" data-pd="0">
                     <p class="q-text">&ldquo;I have learned over the years that when one's mind is made up, this diminishes fear&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Rosa Parks</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/if-i-have-seen-further-it-is-by-standing-on-the-shoulders/">
+                <a class="q-card verified" href="/who-said/if-i-have-seen-further-it-is-by-standing-on-the-shoulders/" data-pd="1">
                     <p class="q-text">&ldquo;If I have seen further it is by standing on the shoulders of giants&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Isaac Newton</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/if-you-live-long-enough-youll-make-mistakes-but-if-you/">
+                <a class="q-card verified" href="/who-said/if-you-live-long-enough-youll-make-mistakes-but-if-you/" data-pd="0">
                     <p class="q-text">&ldquo;If you live long enough, you'll make mistakes. But if you learn from them, you'll be a better person&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Bill Clinton</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/much-learning-does-not-teach-understanding/">
+                <a class="q-card verified" href="/who-said/much-learning-does-not-teach-understanding/" data-pd="1">
                     <p class="q-text">&ldquo;Much learning does not teach understanding&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Heraclitus</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/no-longer-talk-at-all-about-the-kind-of-man-that-a-good-man/">
+                <a class="q-card verified" href="/who-said/no-longer-talk-at-all-about-the-kind-of-man-that-a-good-man/" data-pd="1">
                     <p class="q-text">&ldquo;No longer talk at all about the kind of man that a good man ought to be, but be such&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Marcus Aurelius</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/not-until-we-are-lost-do-we-begin-to-understand-ourselves/">
+                <a class="q-card verified" href="/who-said/not-until-we-are-lost-do-we-begin-to-understand-ourselves/" data-pd="1">
                     <p class="q-text">&ldquo;Not until we are lost do we begin to understand ourselves&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Henry David Thoreau</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/science-and-everyday-life-cannot-and-should-not-be-separated/">
+                <a class="q-card verified" href="/who-said/science-and-everyday-life-cannot-and-should-not-be-separated/" data-pd="0">
                     <p class="q-text">&ldquo;Science and everyday life cannot and should not be separated&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Rosalind Franklin</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/silence-at-the-proper-season-is-wisdom-and-better-than-any/">
+                <a class="q-card verified" href="/who-said/silence-at-the-proper-season-is-wisdom-and-better-than-any/" data-pd="1">
                     <p class="q-text">&ldquo;Silence at the proper season is wisdom, and better than any speech&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Plutarch</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/the-best-and-most-beautiful-things-in-the-world-cannot-be/">
+                <a class="q-card verified" href="/who-said/the-best-and-most-beautiful-things-in-the-world-cannot-be/" data-pd="1">
                     <p class="q-text">&ldquo;The best and most beautiful things in the world cannot be seen or even touched&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Helen Keller</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/the-only-way-not-to-think-about-money-is-to-have-a-great/">
+                <a class="q-card verified" href="/who-said/the-only-way-not-to-think-about-money-is-to-have-a-great/" data-pd="1">
                     <p class="q-text">&ldquo;The only way not to think about money is to have a great deal of it&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Edith Wharton</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/the-perfect-is-the-enemy-of-the-good/">
+                <a class="q-card verified" href="/who-said/the-perfect-is-the-enemy-of-the-good/" data-pd="1">
                     <p class="q-text">&ldquo;The perfect is the enemy of the good&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Voltaire</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/the-reasonable-man-adapts-himself-to-the-world-the/">
+                <a class="q-card verified" href="/who-said/the-reasonable-man-adapts-himself-to-the-world-the/" data-pd="1">
                     <p class="q-text">&ldquo;The reasonable man adapts himself to the world; the unreasonable one persists in trying to adapt the world to himself&rdquo;</p>
                     <div class="q-foot"><span class="q-author">George Bernard Shaw</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/the-soul-becomes-dyed-with-the-color-of-its-thoughts/">
+                <a class="q-card verified" href="/who-said/the-soul-becomes-dyed-with-the-color-of-its-thoughts/" data-pd="0">
                     <p class="q-text">&ldquo;The soul becomes dyed with the color of its thoughts&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Marcus Aurelius</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/the-supreme-art-of-war-is-to-subdue-the-enemy-without/">
+                <a class="q-card verified" href="/who-said/the-supreme-art-of-war-is-to-subdue-the-enemy-without/" data-pd="1">
                     <p class="q-text">&ldquo;The supreme art of war is to subdue the enemy without fighting&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Sun Tzu</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/the-test-of-a-first-rate-intelligence-is-the-ability-to/">
+                <a class="q-card verified" href="/who-said/the-test-of-a-first-rate-intelligence-is-the-ability-to/" data-pd="0">
                     <p class="q-text">&ldquo;The test of a first-rate intelligence is the ability to hold two opposed ideas in mind at the same time&rdquo;</p>
                     <div class="q-foot"><span class="q-author">F. Scott Fitzgerald</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/the-traveler-sees-what-he-sees-the-tourist-sees-what-he-has/">
+                <a class="q-card verified" href="/who-said/the-traveler-sees-what-he-sees-the-tourist-sees-what-he-has/" data-pd="0">
                     <p class="q-text">&ldquo;The traveler sees what he sees. The tourist sees what he has come to see&rdquo;</p>
                     <div class="q-foot"><span class="q-author">G.K. Chesterton</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/the-unexamined-life-is-not-worth-living/">
+                <a class="q-card verified" href="/who-said/the-unexamined-life-is-not-worth-living/" data-pd="1">
                     <p class="q-text">&ldquo;The unexamined life is not worth living&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Socrates</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/there-are-two-ways-of-spreading-light-to-be-the-candle-or/">
+                <a class="q-card verified" href="/who-said/there-are-two-ways-of-spreading-light-to-be-the-candle-or/" data-pd="1">
                     <p class="q-text">&ldquo;There are two ways of spreading light: to be the candle or the mirror that reflects it&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Edith Wharton</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/they-muddy-the-waters-to-make-them-look-deep/">
+                <a class="q-card verified" href="/who-said/they-muddy-the-waters-to-make-them-look-deep/" data-pd="1">
                     <p class="q-text">&ldquo;They muddy the waters to make them look deep&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Friedrich Nietzsche</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/think-not-so-much-of-what-thou-hast-not-as-of-what-thou/">
+                <a class="q-card verified" href="/who-said/think-not-so-much-of-what-thou-hast-not-as-of-what-thou/" data-pd="1">
                     <p class="q-text">&ldquo;Think not so much of what thou hast not as of what thou hast: but of the things which thou hast select the best, and then reflect how eagerly they would have been sought, if thou hadst them not&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Marcus Aurelius</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/think-youre-escaping-and-run-into-yourself-longest-way/">
+                <a class="q-card verified" href="/who-said/think-youre-escaping-and-run-into-yourself-longest-way/" data-pd="1">
                     <p class="q-text">&ldquo;Think you're escaping and run into yourself. Longest way round is the shortest way home&rdquo;</p>
                     <div class="q-foot"><span class="q-author">James Joyce</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/three-things-are-necessary-for-the-salvation-of-man-to-know/">
+                <a class="q-card verified" href="/who-said/three-things-are-necessary-for-the-salvation-of-man-to-know/" data-pd="0">
                     <p class="q-text">&ldquo;Three things are necessary for the salvation of man: to know what he ought to believe; to know what he ought to desire; and to know what he ought to do&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Thomas Aquinas</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/we-learn-wisdom-from-failure-much-more-than-from-success-we/">
+                <a class="q-card verified" href="/who-said/we-learn-wisdom-from-failure-much-more-than-from-success-we/" data-pd="1">
                     <p class="q-text">&ldquo;We learn wisdom from failure much more than from success. We often discover what will do, by finding out what will not do; and probably he who never made a mistake never made a discovery&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Samuel Smiles</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/we-suffer-more-often-in-imagination-than-in-reality/">
+                <a class="q-card verified" href="/who-said/we-suffer-more-often-in-imagination-than-in-reality/" data-pd="1">
                     <p class="q-text">&ldquo;We suffer more often in imagination than in reality&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Seneca</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/when-you-know-a-thing-to-hold-that-you-know-it-and-when-you/">
+                <a class="q-card verified" href="/who-said/when-you-know-a-thing-to-hold-that-you-know-it-and-when-you/" data-pd="1">
                     <p class="q-text">&ldquo;When you know a thing, to hold that you know it; and when you do not know a thing, to allow that you do not know it — this is knowledge&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Confucius</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/you-cannot-shake-hands-with-a-clenched-fist/">
+                <a class="q-card verified" href="/who-said/you-cannot-shake-hands-with-a-clenched-fist/" data-pd="0">
                     <p class="q-text">&ldquo;You cannot shake hands with a clenched fist&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Indira Gandhi</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/be-less-curious-about-people-and-more-curious-about-ideas/">
+                <a class="q-card attributed" href="/who-said/be-less-curious-about-people-and-more-curious-about-ideas/" data-pd="0">
                     <p class="q-text">&ldquo;Be less curious about people and more curious about ideas&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Marie Curie</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/character-is-destiny/">
+                <a class="q-card attributed" href="/who-said/character-is-destiny/" data-pd="1">
                     <p class="q-text">&ldquo;Character is destiny&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Heraclitus</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/dont-find-fault-find-a-remedy/">
+                <a class="q-card attributed" href="/who-said/dont-find-fault-find-a-remedy/" data-pd="0">
                     <p class="q-text">&ldquo;Don't find fault, find a remedy&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Henry Ford</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/if-you-dont-like-something-change-it-if-you-cant-change-it/">
+                <a class="q-card attributed" href="/who-said/if-you-dont-like-something-change-it-if-you-cant-change-it/" data-pd="0">
                     <p class="q-text">&ldquo;If you don't like something, change it. If you can't change it, change your attitude&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Maya Angelou</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/in-three-words-i-can-sum-up-everything-i-have-learned-about/">
+                <a class="q-card attributed" href="/who-said/in-three-words-i-can-sum-up-everything-i-have-learned-about/" data-pd="0">
                     <p class="q-text">&ldquo;In three words I can sum up everything I have learned about life: it goes on&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Robert Frost</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/nothing-in-life-is-to-be-feared-it-is-only-to-be-understood/">
+                <a class="q-card attributed" href="/who-said/nothing-in-life-is-to-be-feared-it-is-only-to-be-understood/" data-pd="0">
                     <p class="q-text">&ldquo;Nothing in life is to be feared, it is only to be understood&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Marie Curie</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/real-knowledge-is-to-know-the-extent-of-ones-ignorance/">
+                <a class="q-card attributed" href="/who-said/real-knowledge-is-to-know-the-extent-of-ones-ignorance/" data-pd="0">
                     <p class="q-text">&ldquo;Real knowledge is to know the extent of one's ignorance&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Confucius</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/the-greatest-victory-is-that-which-requires-no-battle/">
+                <a class="q-card attributed" href="/who-said/the-greatest-victory-is-that-which-requires-no-battle/" data-pd="1">
                     <p class="q-text">&ldquo;The greatest victory is that which requires no battle&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Sun Tzu</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/the-way-to-do-is-to-be/">
+                <a class="q-card attributed" href="/who-said/the-way-to-do-is-to-be/" data-pd="0">
                     <p class="q-text">&ldquo;The way to do is to be&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Lao Tzu</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/wonder-is-the-beginning-of-wisdom/">
+                <a class="q-card attributed" href="/who-said/wonder-is-the-beginning-of-wisdom/" data-pd="1">
                     <p class="q-text">&ldquo;Wonder is the beginning of wisdom&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Socrates</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/you-are-the-average-of-the-five-people-you-spend-the-most/">
+                <a class="q-card attributed" href="/who-said/you-are-the-average-of-the-five-people-you-spend-the-most/" data-pd="0">
                     <p class="q-text">&ldquo;You are the average of the five people you spend the most time with&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Jim Rohn</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span></div>
                 </a>
             </div>
+            <p class="pd-empty" id="pd-empty" hidden>No public-domain quotes on this theme yet &mdash; try another, or use an in-copyright one with attribution.</p>
         </section>
+        <script>(function(){var cb=document.getElementById('pdonly'),g=document.getElementById('real-grid'),e=document.getElementById('pd-empty');if(!cb||!g)return;cb.addEventListener('change',function(){g.classList.toggle('pd-only',cb.checked);if(e){var any=g.querySelector('.q-card[data-pd="1"]');e.hidden=!(cb.checked&&!any);}});})();</script>
         <section aria-labelledby="fake-h">
             <div class="sec-head"><p class="kicker">Don&rsquo;t get caught out</p><h2 id="fake-h">Commonly shared about wisdom &mdash; but misattributed</h2>
             <p class="sec-sub">Popular wisdom lines that get pinned on the wrong name. If you use one, credit it correctly.</p></div>

@@ -57,7 +57,8 @@
         .tc:hover { transform:translateY(-3px); border-color:var(--border-accent); }
         .tc-name { font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem; color:var(--ink); }
         .tc-blurb { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); line-height:1.5; }
-        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--sage); margin-top:4px; }
+        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--slate); margin-top:4px; }
+        .tc-pd { color:var(--sage); }
         /* theme hero */
         .theme-hero { padding:34px 0 4px; }
         .theme-hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2rem,6vw,2.8rem); line-height:1.05; letter-spacing:-0.02em; }
@@ -75,6 +76,19 @@
         .q-conf .dot { width:15px; height:15px; border-radius:50%; display:grid; place-items:center; font-size:0.6rem; font-weight:700; color:var(--bg-deep); }
         .q-card.verified .q-conf { color:var(--sage); } .q-card.verified .dot { background:var(--sage); }
         .q-card.attributed .q-conf { color:var(--amber); } .q-card.attributed .dot { background:var(--amber); }
+        .q-use-row { margin-top:2px; }
+        .q-use { display:inline-flex; align-items:center; font-family:'DM Sans',sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.03em; padding:3px 9px; border-radius:999px; }
+        .q-use.pd { color:var(--sage); background:rgba(126,179,139,0.14); }
+        .q-use.ic { color:var(--amber); background:rgba(212,160,90,0.12); }
+        .q-use.unk { color:var(--text-muted); background:var(--bg-elevated); }
+        /* commercial-use toggle */
+        .theme-tools { margin:0 0 16px; }
+        .pd-toggle { display:inline-flex; align-items:center; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--slate); cursor:pointer; padding:9px 15px; background:var(--bg-card); border:1px solid var(--border); border-radius:999px; }
+        .pd-toggle:hover { border-color:var(--border-accent); }
+        .pd-toggle input { accent-color:var(--sage); width:15px; height:15px; }
+        .pd-toggle b { color:var(--sage); font-weight:700; }
+        .q-grid.pd-only .q-card[data-pd="0"] { display:none; }
+        .pd-empty { font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--text-muted); margin-top:14px; }
         /* fakes strip */
         .mis-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
         .mis-card { display:flex; flex-direction:column; gap:10px; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:12px; padding:18px 20px; transition:transform 0.2s; }
@@ -213,142 +227,142 @@
             <a class="tc" href="/themes/resilience/">
                 <span class="tc-name">Resilience</span>
                 <span class="tc-blurb">Enduring hardship, bouncing back, and refusing to stay down.</span>
-                <span class="tc-count">17 verified quotes</span>
+                <span class="tc-count">17 verified quotes &middot; <span class="tc-pd">11 free to use</span></span>
             </a>
             <a class="tc" href="/themes/courage/">
                 <span class="tc-name">Courage</span>
                 <span class="tc-blurb">Facing fear, taking the risk, acting in spite of the odds.</span>
-                <span class="tc-count">31 verified quotes</span>
+                <span class="tc-count">31 verified quotes &middot; <span class="tc-pd">19 free to use</span></span>
             </a>
             <a class="tc" href="/themes/leadership/">
                 <span class="tc-name">Leadership</span>
                 <span class="tc-blurb">Leading people, carrying responsibility, setting direction.</span>
-                <span class="tc-count">12 verified quotes</span>
+                <span class="tc-count">12 verified quotes &middot; <span class="tc-pd">8 free to use</span></span>
             </a>
             <a class="tc" href="/themes/change/">
                 <span class="tc-name">Change</span>
                 <span class="tc-blurb">Transformation, adapting, and letting the old give way.</span>
-                <span class="tc-count">13 verified quotes</span>
+                <span class="tc-count">13 verified quotes &middot; <span class="tc-pd">8 free to use</span></span>
             </a>
             <a class="tc" href="/themes/growth/">
                 <span class="tc-name">Growth</span>
                 <span class="tc-blurb">Getting better, learning by doing, becoming who you could be.</span>
-                <span class="tc-count">23 verified quotes</span>
+                <span class="tc-count">23 verified quotes &middot; <span class="tc-pd">15 free to use</span></span>
             </a>
             <a class="tc" href="/themes/failure/">
                 <span class="tc-name">Failure</span>
                 <span class="tc-blurb">Mistakes, setbacks, and what they teach.</span>
-                <span class="tc-count">6 verified quotes</span>
+                <span class="tc-count">6 verified quotes &middot; <span class="tc-pd">3 free to use</span></span>
             </a>
             <a class="tc" href="/themes/success/">
                 <span class="tc-name">Success</span>
                 <span class="tc-blurb">Achievement, winning, and what it really costs.</span>
-                <span class="tc-count">13 verified quotes</span>
+                <span class="tc-count">13 verified quotes &middot; <span class="tc-pd">9 free to use</span></span>
             </a>
             <a class="tc" href="/themes/creativity/">
                 <span class="tc-name">Creativity</span>
                 <span class="tc-blurb">Imagination, making art, and where ideas come from.</span>
-                <span class="tc-count">11 verified quotes</span>
+                <span class="tc-count">11 verified quotes &middot; <span class="tc-pd">7 free to use</span></span>
             </a>
             <a class="tc" href="/themes/wisdom/">
                 <span class="tc-name">Wisdom</span>
                 <span class="tc-blurb">Insight, judgment, and knowing what matters.</span>
-                <span class="tc-count">47 verified quotes</span>
+                <span class="tc-count">47 verified quotes &middot; <span class="tc-pd">26 free to use</span></span>
             </a>
             <a class="tc" href="/themes/knowledge/">
                 <span class="tc-name">Knowledge</span>
                 <span class="tc-blurb">Learning, education, and the pursuit of understanding.</span>
-                <span class="tc-count">17 verified quotes</span>
+                <span class="tc-count">17 verified quotes &middot; <span class="tc-pd">9 free to use</span></span>
             </a>
             <a class="tc" href="/themes/truth/">
                 <span class="tc-name">Truth</span>
                 <span class="tc-blurb">Honesty, facts, and the courage to face them.</span>
-                <span class="tc-count">13 verified quotes</span>
+                <span class="tc-count">13 verified quotes &middot; <span class="tc-pd">11 free to use</span></span>
             </a>
             <a class="tc" href="/themes/justice/">
                 <span class="tc-name">Justice</span>
                 <span class="tc-blurb">Fairness, rights, and standing against wrong.</span>
-                <span class="tc-count">12 verified quotes</span>
+                <span class="tc-count">12 verified quotes &middot; <span class="tc-pd">7 free to use</span></span>
             </a>
             <a class="tc" href="/themes/freedom/">
                 <span class="tc-name">Freedom</span>
                 <span class="tc-blurb">Liberty, independence, and the right to choose.</span>
-                <span class="tc-count">15 verified quotes</span>
+                <span class="tc-count">15 verified quotes &middot; <span class="tc-pd">7 free to use</span></span>
             </a>
             <a class="tc" href="/themes/love/">
                 <span class="tc-name">Love</span>
                 <span class="tc-blurb">Affection, devotion, and the bonds between people.</span>
-                <span class="tc-count">15 verified quotes</span>
+                <span class="tc-count">15 verified quotes &middot; <span class="tc-pd">12 free to use</span></span>
             </a>
             <a class="tc" href="/themes/friendship/">
                 <span class="tc-name">Friendship</span>
                 <span class="tc-blurb">Connection, loyalty, and the company we keep.</span>
-                <span class="tc-count">9 verified quotes</span>
+                <span class="tc-count">9 verified quotes &middot; <span class="tc-pd">7 free to use</span></span>
             </a>
             <a class="tc" href="/themes/kindness/">
                 <span class="tc-name">Kindness</span>
                 <span class="tc-blurb">Compassion, generosity, and treating others well.</span>
-                <span class="tc-count">8 verified quotes</span>
+                <span class="tc-count">8 verified quotes &middot; <span class="tc-pd">6 free to use</span></span>
             </a>
             <a class="tc" href="/themes/gratitude/">
                 <span class="tc-name">Gratitude</span>
                 <span class="tc-blurb">Thankfulness and appreciating what you have.</span>
-                <span class="tc-count">9 verified quotes</span>
+                <span class="tc-count">9 verified quotes &middot; <span class="tc-pd">6 free to use</span></span>
             </a>
             <a class="tc" href="/themes/happiness/">
                 <span class="tc-name">Happiness</span>
                 <span class="tc-blurb">Joy, contentment, and the good life.</span>
-                <span class="tc-count">14 verified quotes</span>
+                <span class="tc-count">14 verified quotes &middot; <span class="tc-pd">7 free to use</span></span>
             </a>
             <a class="tc" href="/themes/purpose/">
                 <span class="tc-name">Purpose</span>
                 <span class="tc-blurb">Meaning, calling, and why we do what we do.</span>
-                <span class="tc-count">18 verified quotes</span>
+                <span class="tc-count">18 verified quotes &middot; <span class="tc-pd">10 free to use</span></span>
             </a>
             <a class="tc" href="/themes/time/">
                 <span class="tc-name">Time</span>
                 <span class="tc-blurb">Impermanence, the present moment, and how we spend our days.</span>
-                <span class="tc-count">13 verified quotes</span>
+                <span class="tc-count">13 verified quotes &middot; <span class="tc-pd">9 free to use</span></span>
             </a>
             <a class="tc" href="/themes/mortality/">
                 <span class="tc-name">Mortality</span>
                 <span class="tc-blurb">Death, legacy, and living in its light.</span>
-                <span class="tc-count">8 verified quotes</span>
+                <span class="tc-count">8 verified quotes &middot; <span class="tc-pd">4 free to use</span></span>
             </a>
             <a class="tc" href="/themes/hope/">
                 <span class="tc-name">Hope</span>
                 <span class="tc-blurb">Optimism and faith that things can be better.</span>
-                <span class="tc-count">16 verified quotes</span>
+                <span class="tc-count">16 verified quotes &middot; <span class="tc-pd">7 free to use</span></span>
             </a>
             <a class="tc" href="/themes/work/">
                 <span class="tc-name">Work</span>
                 <span class="tc-blurb">Effort, discipline, craft, and the dignity of labor.</span>
-                <span class="tc-count">11 verified quotes</span>
+                <span class="tc-count">11 verified quotes &middot; <span class="tc-pd">8 free to use</span></span>
             </a>
             <a class="tc" href="/themes/simplicity/">
                 <span class="tc-name">Simplicity</span>
                 <span class="tc-blurb">Less is more, focus, and cutting to what counts.</span>
-                <span class="tc-count">15 verified quotes</span>
+                <span class="tc-count">15 verified quotes &middot; <span class="tc-pd">9 free to use</span></span>
             </a>
             <a class="tc" href="/themes/doubt/">
                 <span class="tc-name">Doubt</span>
                 <span class="tc-blurb">Skepticism, questioning, and thinking for yourself.</span>
-                <span class="tc-count">11 verified quotes</span>
+                <span class="tc-count">11 verified quotes &middot; <span class="tc-pd">8 free to use</span></span>
             </a>
             <a class="tc" href="/themes/power/">
                 <span class="tc-name">Power</span>
                 <span class="tc-blurb">Influence, authority, and how it is used.</span>
-                <span class="tc-count">13 verified quotes</span>
+                <span class="tc-count">13 verified quotes &middot; <span class="tc-pd">10 free to use</span></span>
             </a>
             <a class="tc" href="/themes/character/">
                 <span class="tc-name">Character</span>
                 <span class="tc-blurb">Integrity, virtue, and who you are when no one is watching.</span>
-                <span class="tc-count">35 verified quotes</span>
+                <span class="tc-count">35 verified quotes &middot; <span class="tc-pd">23 free to use</span></span>
             </a>
             <a class="tc" href="/themes/humility/">
                 <span class="tc-name">Humility</span>
                 <span class="tc-blurb">Modesty, perspective, and knowing your limits.</span>
-                <span class="tc-count">7 verified quotes</span>
+                <span class="tc-count">7 verified quotes &middot; <span class="tc-pd">5 free to use</span></span>
             </a>
         </div>
     </main>

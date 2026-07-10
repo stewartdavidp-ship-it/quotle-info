@@ -81,7 +81,8 @@ const STYLE = `${ROOT_CSS}
         .tc:hover { transform:translateY(-3px); border-color:var(--border-accent); }
         .tc-name { font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem; color:var(--ink); }
         .tc-blurb { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); line-height:1.5; }
-        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--sage); margin-top:4px; }
+        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--slate); margin-top:4px; }
+        .tc-pd { color:var(--sage); }
         /* theme hero */
         .theme-hero { padding:34px 0 4px; }
         .theme-hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2rem,6vw,2.8rem); line-height:1.05; letter-spacing:-0.02em; }
@@ -99,6 +100,19 @@ const STYLE = `${ROOT_CSS}
         .q-conf .dot { width:15px; height:15px; border-radius:50%; display:grid; place-items:center; font-size:0.6rem; font-weight:700; color:var(--bg-deep); }
         .q-card.verified .q-conf { color:var(--sage); } .q-card.verified .dot { background:var(--sage); }
         .q-card.attributed .q-conf { color:var(--amber); } .q-card.attributed .dot { background:var(--amber); }
+        .q-use-row { margin-top:2px; }
+        .q-use { display:inline-flex; align-items:center; font-family:'DM Sans',sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.03em; padding:3px 9px; border-radius:999px; }
+        .q-use.pd { color:var(--sage); background:rgba(126,179,139,0.14); }
+        .q-use.ic { color:var(--amber); background:rgba(212,160,90,0.12); }
+        .q-use.unk { color:var(--text-muted); background:var(--bg-elevated); }
+        /* commercial-use toggle */
+        .theme-tools { margin:0 0 16px; }
+        .pd-toggle { display:inline-flex; align-items:center; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--slate); cursor:pointer; padding:9px 15px; background:var(--bg-card); border:1px solid var(--border); border-radius:999px; }
+        .pd-toggle:hover { border-color:var(--border-accent); }
+        .pd-toggle input { accent-color:var(--sage); width:15px; height:15px; }
+        .pd-toggle b { color:var(--sage); font-weight:700; }
+        .q-grid.pd-only .q-card[data-pd="0"] { display:none; }
+        .pd-empty { font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--text-muted); margin-top:14px; }
         /* fakes strip */
         .mis-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
         .mis-card { display:flex; flex-direction:column; gap:10px; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:12px; padding:18px 20px; transition:transform 0.2s; }
@@ -142,9 +156,16 @@ ${SCRIPT}
 
 const realCard = (q) => {
   const c = CONFIDENCE[q.confidence] || CONFIDENCE.verified;
-  return `                <a class="q-card ${c.cls}" href="/who-said/${q.slug}/">
+  const pd = q.rights === 'public-domain';
+  const use = pd
+    ? '<span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span>'
+    : (q.rights === 'in-copyright'
+      ? '<span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span>'
+      : '<span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span>');
+  return `                <a class="q-card ${c.cls}" href="/who-said/${q.slug}/" data-pd="${pd ? 1 : 0}">
                     <p class="q-text">&ldquo;${esc(q.quote)}&rdquo;</p>
                     <div class="q-foot"><span class="q-author">${esc(q.author)}</span><span class="q-conf"><span class="dot" aria-hidden="true">${c.glyph}</span>${esc(c.text)}</span></div>
+                    <div class="q-use-row">${use}</div>
                 </a>`;
 };
 const fakeCard = (q) => `                <a class="mis-card" href="/who-said/${q.slug}/">
@@ -186,14 +207,19 @@ for (const t of THEMES) {
     })}
     </script>`;
 
+  const pdReal = real.filter((q) => q.rights === 'public-domain').length;
+  const pdToggle = pdReal ? `
+            <div class="theme-tools"><label class="pd-toggle"><input type="checkbox" id="pdonly"> Only quotes <b>cleared for commercial use</b> (${pdReal} of ${real.length})</label></div>` : '';
   const realSection = real.length ? `
         <section aria-labelledby="real-h">
             <div class="sec-head"><p class="kicker">Ready for your slide</p><h2 id="real-h">Verified quotes about ${esc(t.label.toLowerCase())}</h2>
-            <p class="sec-sub">Each is traced to a real source and correctly credited. Open one for a paste-ready credit line, its reuse status, and an image direction.</p></div>
-            <div class="q-grid">
+            <p class="sec-sub">Each is traced to a real source and correctly credited. <b>&check; Free to use</b> = public domain, cleared for commercial reuse. Open one for a paste-ready credit line and its reuse status.</p></div>${pdToggle}
+            <div class="q-grid" id="real-grid">
 ${real.map(realCard).join('\n')}
             </div>
-        </section>` : '';
+            <p class="pd-empty" id="pd-empty" hidden>No public-domain quotes on this theme yet &mdash; try another, or use an in-copyright one with attribution.</p>
+        </section>
+        <script>(function(){var cb=document.getElementById('pdonly'),g=document.getElementById('real-grid'),e=document.getElementById('pd-empty');if(!cb||!g)return;cb.addEventListener('change',function(){g.classList.toggle('pd-only',cb.checked);if(e){var any=g.querySelector('.q-card[data-pd="1"]');e.hidden=!(cb.checked&&!any);}});})();</script>` : '';
 
   const fakeSection = fake.length ? `
         <section aria-labelledby="fake-h">
@@ -218,10 +244,14 @@ ${realSection}${fakeSection}
   fs.mkdirSync(path.join(OUT, t.slug), { recursive: true });
   fs.writeFileSync(path.join(OUT, t.slug, 'index.html'), page(inner, headExtra, 'themes'));
 
-  indexCards.push({ slug: t.slug, label: t.label, blurb: t.blurb, count: real.length });
+  indexCards.push({ slug: t.slug, label: t.label, blurb: t.blurb, count: real.length, pd: real.filter((q) => q.rights === 'public-domain').length });
+  // Agent channel: order the verified list PUBLIC-DOMAIN first, so a deck-building agent grabs a
+  // commercially-safe quote by default (the usefulness test's #10 tail risk was steering toward a
+  // worse-to-reuse pick). `rights` is carried per quote so an agent can still filter precisely.
+  const jsonReal = [...real].sort((a, b) => (a.rights === 'public-domain' ? 0 : 1) - (b.rights === 'public-domain' ? 0 : 1));
   jsonIndex.push({
     theme: t.slug, label: t.label, url: `${ORIGIN}/themes/${t.slug}`,
-    verified: real.map((q) => ({ quote: q.quote, author: q.author, url: `${ORIGIN}/who-said/${q.slug}`, confidence: q.confidence, rights: q.rights })),
+    verified: jsonReal.map((q) => ({ quote: q.quote, author: q.author, url: `${ORIGIN}/who-said/${q.slug}`, confidence: q.confidence, rights: q.rights, clearedForCommercialUse: q.rights === 'public-domain' })),
     misattributed: fake.map((q) => ({ quote: q.quote, reallyBy: q.author, oftenCreditedTo: q.credited, url: `${ORIGIN}/who-said/${q.slug}` })),
   });
 }
@@ -244,7 +274,7 @@ const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/
 ${indexCards.map((c) => `            <a class="tc" href="/themes/${c.slug}/">
                 <span class="tc-name">${esc(c.label)}</span>
                 <span class="tc-blurb">${esc(c.blurb)}</span>
-                <span class="tc-count">${c.count} verified ${c.count === 1 ? 'quote' : 'quotes'}</span>
+                <span class="tc-count">${c.count} verified ${c.count === 1 ? 'quote' : 'quotes'}${c.pd ? ` &middot; <span class="tc-pd">${c.pd} free to use</span>` : ''}</span>
             </a>`).join('\n')}
         </div>
     </main>`;
