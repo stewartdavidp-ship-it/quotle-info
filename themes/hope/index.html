@@ -286,7 +286,8 @@
         .tc:hover { transform:translateY(-3px); border-color:var(--border-accent); }
         .tc-name { font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem; color:var(--ink); }
         .tc-blurb { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); line-height:1.5; }
-        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--sage); margin-top:4px; }
+        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--slate); margin-top:4px; }
+        .tc-pd { color:var(--sage); }
         /* theme hero */
         .theme-hero { padding:34px 0 4px; }
         .theme-hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2rem,6vw,2.8rem); line-height:1.05; letter-spacing:-0.02em; }
@@ -304,6 +305,19 @@
         .q-conf .dot { width:15px; height:15px; border-radius:50%; display:grid; place-items:center; font-size:0.6rem; font-weight:700; color:var(--bg-deep); }
         .q-card.verified .q-conf { color:var(--sage); } .q-card.verified .dot { background:var(--sage); }
         .q-card.attributed .q-conf { color:var(--amber); } .q-card.attributed .dot { background:var(--amber); }
+        .q-use-row { margin-top:2px; }
+        .q-use { display:inline-flex; align-items:center; font-family:'DM Sans',sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.03em; padding:3px 9px; border-radius:999px; }
+        .q-use.pd { color:var(--sage); background:rgba(126,179,139,0.14); }
+        .q-use.ic { color:var(--amber); background:rgba(212,160,90,0.12); }
+        .q-use.unk { color:var(--text-muted); background:var(--bg-elevated); }
+        /* commercial-use toggle */
+        .theme-tools { margin:0 0 16px; }
+        .pd-toggle { display:inline-flex; align-items:center; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--slate); cursor:pointer; padding:9px 15px; background:var(--bg-card); border:1px solid var(--border); border-radius:999px; }
+        .pd-toggle:hover { border-color:var(--border-accent); }
+        .pd-toggle input { accent-color:var(--sage); width:15px; height:15px; }
+        .pd-toggle b { color:var(--sage); font-weight:700; }
+        .q-grid.pd-only .q-card[data-pd="0"] { display:none; }
+        .pd-empty { font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--text-muted); margin-top:14px; }
         /* fakes strip */
         .mis-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
         .mis-card { display:flex; flex-direction:column; gap:10px; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:12px; padding:18px 20px; transition:transform 0.2s; }
@@ -442,74 +456,93 @@
 
         <section aria-labelledby="real-h">
             <div class="sec-head"><p class="kicker">Ready for your slide</p><h2 id="real-h">Verified quotes about hope</h2>
-            <p class="sec-sub">Each is traced to a real source and correctly credited. Open one for a paste-ready credit line, its reuse status, and an image direction.</p></div>
-            <div class="q-grid">
-                <a class="q-card verified" href="/who-said/and-now-abideth-faith-hope-charity-these-three-but-the/">
+            <p class="sec-sub">Each is traced to a real source and correctly credited. <b>&check; Free to use</b> = public domain, cleared for commercial reuse. Open one for a paste-ready credit line and its reuse status.</p></div>
+            <div class="theme-tools"><label class="pd-toggle"><input type="checkbox" id="pdonly"> Only quotes <b>cleared for commercial use</b> (7 of 16)</label></div>
+            <div class="q-grid" id="real-grid">
+                <a class="q-card verified" href="/who-said/and-now-abideth-faith-hope-charity-these-three-but-the/" data-pd="1">
                     <p class="q-text">&ldquo;And now abideth faith, hope, charity, these three; but the greatest of these is charity&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Paul the Apostle</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/darkness-cannot-drive-out-darkness-only-light-can-do-that/">
+                <a class="q-card verified" href="/who-said/darkness-cannot-drive-out-darkness-only-light-can-do-that/" data-pd="0">
                     <p class="q-text">&ldquo;Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Martin Luther King Jr.</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/education-is-the-passport-to-the-future/">
+                <a class="q-card verified" href="/who-said/education-is-the-passport-to-the-future/" data-pd="0">
                     <p class="q-text">&ldquo;Education is the passport to the future&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Malcolm X</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/every-moment-is-a-fresh-beginning/">
+                <a class="q-card verified" href="/who-said/every-moment-is-a-fresh-beginning/" data-pd="0">
                     <p class="q-text">&ldquo;Every moment is a fresh beginning&rdquo;</p>
                     <div class="q-foot"><span class="q-author">T. S. Eliot</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/how-wonderful-it-is-that-nobody-need-wait-a-single-moment/">
+                <a class="q-card verified" href="/who-said/how-wonderful-it-is-that-nobody-need-wait-a-single-moment/" data-pd="0">
                     <p class="q-text">&ldquo;How wonderful it is that nobody need wait a single moment before starting to improve the world&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Anne Frank</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/i-have-a-dream-that-my-four-little-children-will-one-day/">
+                <a class="q-card verified" href="/who-said/i-have-a-dream-that-my-four-little-children-will-one-day/" data-pd="0">
                     <p class="q-text">&ldquo;I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Martin Luther King Jr.</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/im-for-whatever-gets-you-through-the-night/">
+                <a class="q-card verified" href="/who-said/im-for-whatever-gets-you-through-the-night/" data-pd="0">
                     <p class="q-text">&ldquo;I'm for whatever gets you through the night&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Frank Sinatra</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/imagine-all-the-people-living-life-in-peace/">
+                <a class="q-card verified" href="/who-said/imagine-all-the-people-living-life-in-peace/" data-pd="0">
                     <p class="q-text">&ldquo;Imagine all the people living life in peace&rdquo;</p>
                     <div class="q-foot"><span class="q-author">John Lennon</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/in-spite-of-everything-i-still-believe-that-people-are/">
+                <a class="q-card verified" href="/who-said/in-spite-of-everything-i-still-believe-that-people-are/" data-pd="0">
                     <p class="q-text">&ldquo;In spite of everything, I still believe that people are really good at heart&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Anne Frank</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/not-knowing-when-the-dawn-will-come-i-open-every-door/">
+                <a class="q-card verified" href="/who-said/not-knowing-when-the-dawn-will-come-i-open-every-door/" data-pd="1">
                     <p class="q-text">&ldquo;Not knowing when the dawn will come, I open every door&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Emily Dickinson</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/the-only-thing-we-have-to-fear-is-fear-itself/">
+                <a class="q-card verified" href="/who-said/the-only-thing-we-have-to-fear-is-fear-itself/" data-pd="1">
                     <p class="q-text">&ldquo;The only thing we have to fear is fear itself&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Franklin D. Roosevelt</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/there-is-nothing-wrong-with-america-that-cannot-be-cured-by/">
+                <a class="q-card verified" href="/who-said/there-is-nothing-wrong-with-america-that-cannot-be-cured-by/" data-pd="1">
                     <p class="q-text">&ldquo;There is nothing wrong with America that cannot be cured by what is right with America&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Bill Clinton</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/they-can-because-they-think-they-can/">
+                <a class="q-card verified" href="/who-said/they-can-because-they-think-they-can/" data-pd="1">
                     <p class="q-text">&ldquo;They can because they think they can&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Virgil</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/we-are-all-in-the-gutter-but-some-of-us-are-looking-at-the/">
+                <a class="q-card verified" href="/who-said/we-are-all-in-the-gutter-but-some-of-us-are-looking-at-the/" data-pd="1">
                     <p class="q-text">&ldquo;We are all in the gutter, but some of us are looking at the stars&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Oscar Wilde</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/you-may-say-im-a-dreamer-but-im-not-the-only-one/">
+                <a class="q-card verified" href="/who-said/you-may-say-im-a-dreamer-but-im-not-the-only-one/" data-pd="0">
                     <p class="q-text">&ldquo;You may say I'm a dreamer, but I'm not the only one&rdquo;</p>
                     <div class="q-foot"><span class="q-author">John Lennon</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/none-are-so-old-as-those-who-have-outlived-enthusiasm/">
+                <a class="q-card attributed" href="/who-said/none-are-so-old-as-those-who-have-outlived-enthusiasm/" data-pd="1">
                     <p class="q-text">&ldquo;None are so old as those who have outlived enthusiasm&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Henry David Thoreau</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
             </div>
+            <p class="pd-empty" id="pd-empty" hidden>No public-domain quotes on this theme yet &mdash; try another, or use an in-copyright one with attribution.</p>
         </section>
+        <script>(function(){var cb=document.getElementById('pdonly'),g=document.getElementById('real-grid'),e=document.getElementById('pd-empty');if(!cb||!g)return;cb.addEventListener('change',function(){g.classList.toggle('pd-only',cb.checked);if(e){var any=g.querySelector('.q-card[data-pd="1"]');e.hidden=!(cb.checked&&!any);}});})();</script>
         <section aria-labelledby="fake-h">
             <div class="sec-head"><p class="kicker">Don&rsquo;t get caught out</p><h2 id="fake-h">Commonly shared about hope &mdash; but misattributed</h2>
             <p class="sec-sub">Popular hope lines that get pinned on the wrong name. If you use one, credit it correctly.</p></div>

@@ -195,7 +195,8 @@
         .tc:hover { transform:translateY(-3px); border-color:var(--border-accent); }
         .tc-name { font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem; color:var(--ink); }
         .tc-blurb { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); line-height:1.5; }
-        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--sage); margin-top:4px; }
+        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--slate); margin-top:4px; }
+        .tc-pd { color:var(--sage); }
         /* theme hero */
         .theme-hero { padding:34px 0 4px; }
         .theme-hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2rem,6vw,2.8rem); line-height:1.05; letter-spacing:-0.02em; }
@@ -213,6 +214,19 @@
         .q-conf .dot { width:15px; height:15px; border-radius:50%; display:grid; place-items:center; font-size:0.6rem; font-weight:700; color:var(--bg-deep); }
         .q-card.verified .q-conf { color:var(--sage); } .q-card.verified .dot { background:var(--sage); }
         .q-card.attributed .q-conf { color:var(--amber); } .q-card.attributed .dot { background:var(--amber); }
+        .q-use-row { margin-top:2px; }
+        .q-use { display:inline-flex; align-items:center; font-family:'DM Sans',sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.03em; padding:3px 9px; border-radius:999px; }
+        .q-use.pd { color:var(--sage); background:rgba(126,179,139,0.14); }
+        .q-use.ic { color:var(--amber); background:rgba(212,160,90,0.12); }
+        .q-use.unk { color:var(--text-muted); background:var(--bg-elevated); }
+        /* commercial-use toggle */
+        .theme-tools { margin:0 0 16px; }
+        .pd-toggle { display:inline-flex; align-items:center; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--slate); cursor:pointer; padding:9px 15px; background:var(--bg-card); border:1px solid var(--border); border-radius:999px; }
+        .pd-toggle:hover { border-color:var(--border-accent); }
+        .pd-toggle input { accent-color:var(--sage); width:15px; height:15px; }
+        .pd-toggle b { color:var(--sage); font-weight:700; }
+        .q-grid.pd-only .q-card[data-pd="0"] { display:none; }
+        .pd-empty { font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--text-muted); margin-top:14px; }
         /* fakes strip */
         .mis-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
         .mis-card { display:flex; flex-direction:column; gap:10px; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:12px; padding:18px 20px; transition:transform 0.2s; }
@@ -351,46 +365,58 @@
 
         <section aria-labelledby="real-h">
             <div class="sec-head"><p class="kicker">Ready for your slide</p><h2 id="real-h">Verified quotes about friendship</h2>
-            <p class="sec-sub">Each is traced to a real source and correctly credited. Open one for a paste-ready credit line, its reuse status, and an image direction.</p></div>
-            <div class="q-grid">
-                <a class="q-card verified" href="/who-said/a-friend-loveth-at-all-times-and-a-brother-is-born-for/">
+            <p class="sec-sub">Each is traced to a real source and correctly credited. <b>&check; Free to use</b> = public domain, cleared for commercial reuse. Open one for a paste-ready credit line and its reuse status.</p></div>
+            <div class="theme-tools"><label class="pd-toggle"><input type="checkbox" id="pdonly"> Only quotes <b>cleared for commercial use</b> (7 of 9)</label></div>
+            <div class="q-grid" id="real-grid">
+                <a class="q-card verified" href="/who-said/a-friend-loveth-at-all-times-and-a-brother-is-born-for/" data-pd="1">
                     <p class="q-text">&ldquo;A friend loveth at all times, and a brother is born for adversity&rdquo;</p>
                     <div class="q-foot"><span class="q-author">King James Bible (Book of Proverbs)</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/a-man-sir-should-keep-his-friendship-in-constant-repair/">
+                <a class="q-card verified" href="/who-said/a-man-sir-should-keep-his-friendship-in-constant-repair/" data-pd="1">
                     <p class="q-text">&ldquo;A man, Sir, should keep his friendship in constant repair&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Samuel Johnson</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/a-true-friend-is-as-it-were-a-second-self/">
+                <a class="q-card verified" href="/who-said/a-true-friend-is-as-it-were-a-second-self/" data-pd="1">
                     <p class="q-text">&ldquo;A true friend is, as it were, a second self&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Marcus Tullius Cicero</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/any-mans-death-diminishes-me-because-i-am-involved-in/">
+                <a class="q-card verified" href="/who-said/any-mans-death-diminishes-me-because-i-am-involved-in/" data-pd="1">
                     <p class="q-text">&ldquo;any man's death diminishes me, because I am involved in mankind; and therefore never send to know for whom the bell tolls; it tolls for thee&rdquo;</p>
                     <div class="q-foot"><span class="q-author">John Donne</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/be-civil-to-all-sociable-to-many-familiar-with-few-friend/">
+                <a class="q-card verified" href="/who-said/be-civil-to-all-sociable-to-many-familiar-with-few-friend/" data-pd="1">
                     <p class="q-text">&ldquo;Be civil to all; sociable to many; familiar with few; friend to one; enemy to none&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Benjamin Franklin</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/the-only-way-to-have-a-friend-is-to-be-one/">
+                <a class="q-card verified" href="/who-said/the-only-way-to-have-a-friend-is-to-be-one/" data-pd="1">
                     <p class="q-text">&ldquo;The only way to have a friend is to be one&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Ralph Waldo Emerson</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/there-is-nothing-i-would-not-do-for-those-who-are-really-my/">
+                <a class="q-card verified" href="/who-said/there-is-nothing-i-would-not-do-for-those-who-are-really-my/" data-pd="1">
                     <p class="q-text">&ldquo;There is nothing I would not do for those who are really my friends&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Jane Austen</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/alone-we-can-do-so-little-together-we-can-do-so-much/">
+                <a class="q-card attributed" href="/who-said/alone-we-can-do-so-little-together-we-can-do-so-much/" data-pd="0">
                     <p class="q-text">&ldquo;Alone we can do so little; together we can do so much&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Helen Keller</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/you-are-the-average-of-the-five-people-you-spend-the-most/">
+                <a class="q-card attributed" href="/who-said/you-are-the-average-of-the-five-people-you-spend-the-most/" data-pd="0">
                     <p class="q-text">&ldquo;You are the average of the five people you spend the most time with&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Jim Rohn</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span></div>
                 </a>
             </div>
+            <p class="pd-empty" id="pd-empty" hidden>No public-domain quotes on this theme yet &mdash; try another, or use an in-copyright one with attribution.</p>
         </section>
+        <script>(function(){var cb=document.getElementById('pdonly'),g=document.getElementById('real-grid'),e=document.getElementById('pd-empty');if(!cb||!g)return;cb.addEventListener('change',function(){g.classList.toggle('pd-only',cb.checked);if(e){var any=g.querySelector('.q-card[data-pd="1"]');e.hidden=!(cb.checked&&!any);}});})();</script>
         <section aria-labelledby="fake-h">
             <div class="sec-head"><p class="kicker">Don&rsquo;t get caught out</p><h2 id="fake-h">Commonly shared about friendship &mdash; but misattributed</h2>
             <p class="sec-sub">Popular friendship lines that get pinned on the wrong name. If you use one, credit it correctly.</p></div>

@@ -221,7 +221,8 @@
         .tc:hover { transform:translateY(-3px); border-color:var(--border-accent); }
         .tc-name { font-family:'Playfair Display',serif; font-weight:700; font-size:1.15rem; color:var(--ink); }
         .tc-blurb { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); line-height:1.5; }
-        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--sage); margin-top:4px; }
+        .tc-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--slate); margin-top:4px; }
+        .tc-pd { color:var(--sage); }
         /* theme hero */
         .theme-hero { padding:34px 0 4px; }
         .theme-hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2rem,6vw,2.8rem); line-height:1.05; letter-spacing:-0.02em; }
@@ -239,6 +240,19 @@
         .q-conf .dot { width:15px; height:15px; border-radius:50%; display:grid; place-items:center; font-size:0.6rem; font-weight:700; color:var(--bg-deep); }
         .q-card.verified .q-conf { color:var(--sage); } .q-card.verified .dot { background:var(--sage); }
         .q-card.attributed .q-conf { color:var(--amber); } .q-card.attributed .dot { background:var(--amber); }
+        .q-use-row { margin-top:2px; }
+        .q-use { display:inline-flex; align-items:center; font-family:'DM Sans',sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.03em; padding:3px 9px; border-radius:999px; }
+        .q-use.pd { color:var(--sage); background:rgba(126,179,139,0.14); }
+        .q-use.ic { color:var(--amber); background:rgba(212,160,90,0.12); }
+        .q-use.unk { color:var(--text-muted); background:var(--bg-elevated); }
+        /* commercial-use toggle */
+        .theme-tools { margin:0 0 16px; }
+        .pd-toggle { display:inline-flex; align-items:center; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--slate); cursor:pointer; padding:9px 15px; background:var(--bg-card); border:1px solid var(--border); border-radius:999px; }
+        .pd-toggle:hover { border-color:var(--border-accent); }
+        .pd-toggle input { accent-color:var(--sage); width:15px; height:15px; }
+        .pd-toggle b { color:var(--sage); font-weight:700; }
+        .q-grid.pd-only .q-card[data-pd="0"] { display:none; }
+        .pd-empty { font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--text-muted); margin-top:14px; }
         /* fakes strip */
         .mis-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
         .mis-card { display:flex; flex-direction:column; gap:10px; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:12px; padding:18px 20px; transition:transform 0.2s; }
@@ -377,54 +391,68 @@
 
         <section aria-labelledby="real-h">
             <div class="sec-head"><p class="kicker">Ready for your slide</p><h2 id="real-h">Verified quotes about creativity</h2>
-            <p class="sec-sub">Each is traced to a real source and correctly credited. Open one for a paste-ready credit line, its reuse status, and an image direction.</p></div>
-            <div class="q-grid">
-                <a class="q-card verified" href="/who-said/a-man-of-genius-makes-no-mistakes-his-errors-are-volitional/">
+            <p class="sec-sub">Each is traced to a real source and correctly credited. <b>&check; Free to use</b> = public domain, cleared for commercial reuse. Open one for a paste-ready credit line and its reuse status.</p></div>
+            <div class="theme-tools"><label class="pd-toggle"><input type="checkbox" id="pdonly"> Only quotes <b>cleared for commercial use</b> (7 of 11)</label></div>
+            <div class="q-grid" id="real-grid">
+                <a class="q-card verified" href="/who-said/a-man-of-genius-makes-no-mistakes-his-errors-are-volitional/" data-pd="1">
                     <p class="q-text">&ldquo;A man of genius makes no mistakes. His errors are volitional and are the portals of discovery&rdquo;</p>
                     <div class="q-foot"><span class="q-author">James Joyce</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/every-artist-was-first-an-amateur/">
+                <a class="q-card verified" href="/who-said/every-artist-was-first-an-amateur/" data-pd="1">
                     <p class="q-text">&ldquo;Every artist was first an amateur&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Ralph Waldo Emerson</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/happiness-lies-in-the-joy-of-achievement-and-the-thrill-of/">
+                <a class="q-card verified" href="/who-said/happiness-lies-in-the-joy-of-achievement-and-the-thrill-of/" data-pd="1">
                     <p class="q-text">&ldquo;Happiness lies in the joy of achievement and the thrill of creative effort&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Franklin D. Roosevelt</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/imagination-is-more-important-than-knowledge/">
+                <a class="q-card verified" href="/who-said/imagination-is-more-important-than-knowledge/" data-pd="1">
                     <p class="q-text">&ldquo;Imagination is more important than knowledge&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Albert Einstein</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/in-order-to-be-irreplaceable-one-must-always-be-different/">
+                <a class="q-card verified" href="/who-said/in-order-to-be-irreplaceable-one-must-always-be-different/" data-pd="0">
                     <p class="q-text">&ldquo;In order to be irreplaceable, one must always be different&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Coco Chanel</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/invention-does-not-consist-in-creating-out-of-void-but-out/">
+                <a class="q-card verified" href="/who-said/invention-does-not-consist-in-creating-out-of-void-but-out/" data-pd="1">
                     <p class="q-text">&ldquo;Invention does not consist in creating out of void, but out of chaos&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Mary Shelley</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/this-world-is-but-canvas-to-our-imaginations/">
+                <a class="q-card verified" href="/who-said/this-world-is-but-canvas-to-our-imaginations/" data-pd="1">
                     <p class="q-text">&ldquo;This world is but canvas to our imaginations&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Henry David Thoreau</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/words-have-no-power-to-impress-the-mind-without-the/">
+                <a class="q-card verified" href="/who-said/words-have-no-power-to-impress-the-mind-without-the/" data-pd="1">
                     <p class="q-text">&ldquo;Words have no power to impress the mind without the exquisite horror of their reality&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Edgar Allan Poe</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use pd" title="Public domain — free to reuse, including commercially">&check; Free to use</span></div>
                 </a>
-                <a class="q-card verified" href="/who-said/you-dont-write-because-you-want-to-say-something-you-write/">
+                <a class="q-card verified" href="/who-said/you-dont-write-because-you-want-to-say-something-you-write/" data-pd="0">
                     <p class="q-text">&ldquo;You don't write because you want to say something, you write because you have something to say&rdquo;</p>
                     <div class="q-foot"><span class="q-author">F. Scott Fitzgerald</span><span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span></div>
+                    <div class="q-use-row"><span class="q-use ic" title="In copyright — a short credited quote is usually fine for talks; get permission for commercial reuse">&copy; In copyright</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/england-and-america-are-two-countries-separated-by-a-common/">
+                <a class="q-card attributed" href="/who-said/england-and-america-are-two-countries-separated-by-a-common/" data-pd="0">
                     <p class="q-text">&ldquo;England and America are two countries separated by a common language&rdquo;</p>
                     <div class="q-foot"><span class="q-author">George Bernard Shaw</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span></div>
                 </a>
-                <a class="q-card attributed" href="/who-said/innovation-distinguishes-between-a-leader-and-a-follower/">
+                <a class="q-card attributed" href="/who-said/innovation-distinguishes-between-a-leader-and-a-follower/" data-pd="0">
                     <p class="q-text">&ldquo;Innovation distinguishes between a leader and a follower&rdquo;</p>
                     <div class="q-foot"><span class="q-author">Steve Jobs</span><span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span></div>
+                    <div class="q-use-row"><span class="q-use unk" title="Rights not established — present as an unverified line">Rights unverified</span></div>
                 </a>
             </div>
+            <p class="pd-empty" id="pd-empty" hidden>No public-domain quotes on this theme yet &mdash; try another, or use an in-copyright one with attribution.</p>
         </section>
+        <script>(function(){var cb=document.getElementById('pdonly'),g=document.getElementById('real-grid'),e=document.getElementById('pd-empty');if(!cb||!g)return;cb.addEventListener('change',function(){g.classList.toggle('pd-only',cb.checked);if(e){var any=g.querySelector('.q-card[data-pd="1"]');e.hidden=!(cb.checked&&!any);}});})();</script>
         <section aria-labelledby="fake-h">
             <div class="sec-head"><p class="kicker">Don&rsquo;t get caught out</p><h2 id="fake-h">Commonly shared about creativity &mdash; but misattributed</h2>
             <p class="sec-sub">Popular creativity lines that get pinned on the wrong name. If you use one, credit it correctly.</p></div>
