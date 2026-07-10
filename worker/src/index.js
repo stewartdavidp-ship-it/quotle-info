@@ -135,10 +135,15 @@ let _idxCache = null, _idxTs = 0;
 async function loadVerifyIndex() {
   const now = Date.now();
   if (_idxCache && (now - _idxTs) < 300000) return _idxCache;
-  const r = await fetch('https://quotle.info/verify-index.json', { cf: { cacheTtl: 300, cacheEverything: true } });
-  const data = await r.json();
-  _idxCache = data; _idxTs = now;
-  return data;
+  try {
+    // per-minute cache-bust so a transient 404 can't stick in the edge cache; only 200s cache.
+    const bust = Math.floor(now / 60000);
+    const r = await fetch('https://quotle.info/verify-index.json?_=' + bust, { cf: { cacheTtl: 60 } });
+    if (!r.ok) throw new Error('index ' + r.status);
+    const data = await r.json();
+    if (Array.isArray(data)) { _idxCache = data; _idxTs = now; }
+  } catch (_) { /* index not reachable yet — degrade to found:false */ }
+  return _idxCache || [];
 }
 const normQ = (s) => String(s).toLowerCase().replace(/[’'‘`"“”]/g, '').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
 function matchQuote(term, idx) {
@@ -149,17 +154,20 @@ function matchQuote(term, idx) {
   // substring either direction (handles a partial quote or extra words)
   const sub = idx.filter((e) => e.n && (e.n.includes(t) || t.includes(e.n)));
   if (sub.length) { sub.sort((a, b) => Math.abs(a.n.length - t.length) - Math.abs(b.n.length - t.length)); return sub[0]; }
-  // token-overlap fallback for looser matches
-  const tw = new Set(t.split(' ').filter((w) => w.length > 3));
-  if (tw.size >= 3) {
-    let best = null, bestScore = 0;
+  // query-coverage fallback: how many of the QUERY's significant words appear in the entry
+  // (handles partial quotes / paraphrases of long lines). Tie-break toward the closest length.
+  const tw = t.split(' ').filter((w) => w.length > 3);
+  if (tw.length >= 3) {
+    const twset = new Set(tw);
+    let best = null, bestCov = 0, bestGap = Infinity;
     for (const e of idx) {
-      const ew = (e.n || '').split(' '); let hits = 0;
-      for (const w of ew) if (tw.has(w)) hits++;
-      const score = hits / Math.max(tw.size, ew.length);
-      if (score > bestScore) { bestScore = score; best = e; }
+      const ewset = new Set((e.n || '').split(' '));
+      let hits = 0; twset.forEach((w) => { if (ewset.has(w)) hits++; });
+      const cov = hits / twset.size;
+      const gap = Math.abs((e.n || '').length - t.length);
+      if (cov > bestCov || (cov === bestCov && gap < bestGap)) { bestCov = cov; bestGap = gap; best = e; }
     }
-    if (bestScore >= 0.6) return best;
+    if (bestCov >= 0.8) return best;
   }
   return null;
 }
