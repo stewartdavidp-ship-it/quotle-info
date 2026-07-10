@@ -89,6 +89,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/everything-that-is-done-in-the-world-is-done-by-hope#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/everything-that-is-done-in-the-world-is-done-by-hope#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Martin Luther King Jr. say \"Everything that is done in the world is done by hope.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The line is genuine, but it is not Dr. King's — it belongs to Martin Luther, the 16th-century reformer, and comes from his Table Talk (Tischreden), section CCXCVIII. It continues: \"No husbandman would sow one grain of corn, if he hoped not it would grow up and become seed… no merchant or tradesman would set himself to work, if he did not hope to reap benefit thereby.\" The credit to Martin Luther King Jr. is a name-confusion mix-up.",
+                "url": "https://quotle.info/who-said/everything-that-is-done-in-the-world-is-done-by-hope"
+              }
+            }
+          ]
         }
       ]
     }
@@ -263,6 +278,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -524,30 +541,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://www.ccel.org/ccel/luther/tabletalk.v.xi.html" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=everything-that-is-done-in-the-world-is-done-by-hope&i=0" data-ext="https://www.ccel.org/ccel/luther/tabletalk.v.xi.html">
                     <div class="research-top"><span class="research-label">Luther&rsquo;s Table Talk, no. CCXCVIII</span><span class="research-host">ccel.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Full text of the passage in the standard Hazlitt translation.</p>
                 </a>
-                <a class="research-item" href="https://archive.org/details/tabletalkofmarti00luth" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=everything-that-is-done-in-the-world-is-done-by-hope&i=1" data-ext="https://archive.org/details/tabletalkofmarti00luth">
                     <div class="research-top"><span class="research-label">The Table Talk of Martin Luther (Hazlitt)</span><span class="research-host">archive.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Scanned Hazlitt translation of the Table Talk.</p>
                 </a>
-                <a class="research-item" href="https://libquotes.com/martin-luther/quote/lbw3k1o" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=everything-that-is-done-in-the-world-is-done-by-hope&i=2" data-ext="https://libquotes.com/martin-luther/quote/lbw3k1o">
                     <div class="research-top"><span class="research-label">Martin Luther &mdash; Table Talk quote</span><span class="research-host">libquotes.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Files the full quote under Martin Luther, citing the 1857 edition.</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Martin_Luther" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=everything-that-is-done-in-the-world-is-done-by-hope&i=3" data-ext="https://en.wikiquote.org/wiki/Martin_Luther">
                     <div class="research-top"><span class="research-label">Martin Luther (Wikiquote)</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Sourced quotations of the reformer, including Table Talk.</p>
                 </a>
-                <a class="research-item" href="https://institutesuccess.com/library/everything-that-is-done-in-this-world-is-done-by-hope-martin-luther-king/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=everything-that-is-done-in-the-world-is-done-by-hope&i=4" data-ext="https://institutesuccess.com/library/everything-that-is-done-in-this-world-is-done-by-hope-martin-luther-king/">
                     <div class="research-top"><span class="research-label">Misattributed to &lsquo;Martin Luther King&rsquo;</span><span class="research-host">institutesuccess.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Example of the line pinned on Martin Luther King.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The real author</p><h2 id="author-h">About Martin Luther</h2></div>

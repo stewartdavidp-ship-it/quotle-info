@@ -84,6 +84,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/when-governments-fear-the-people-there-is-liberty-when-the#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/when-governments-fear-the-people-there-is-liberty-when-the#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Thomas Jefferson say \"When governments fear the people, there is liberty. When the people fear the government, there is tyranny.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Thomas Jefferson's estate at Monticello lists this as a spurious quotation ↗ — no version of it appears in his papers. The closest documented origin is John Basil Barnhill, who wrote \"Where the people fear the government you have tyranny. Where the government fears the people you have liberty\" in a 1914 debate on socialism. The familiar Jefferson-attributed wording is a later paraphrase of that line, not Barnhill's exact words either.",
+                "url": "https://quotle.info/who-said/when-governments-fear-the-people-there-is-liberty-when-the"
+              }
+            }
+          ]
         }
       ]
     }
@@ -258,6 +273,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -524,30 +541,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://www.monticello.org/encyclopedia/when-government-fears-people-there-liberty-spurious-quotation" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=when-governments-fear-the-people-there-is-liberty-when-the&i=0" data-ext="https://www.monticello.org/encyclopedia/when-government-fears-people-there-liberty-spurious-quotation">
                     <div class="research-top"><span class="research-label">Monticello: Spurious Quotation entry</span><span class="research-host">monticello.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Jefferson Foundation&rsquo;s ruling that the line is spurious and untraceable in his papers.</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/John_Basil_Barnhill" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=when-governments-fear-the-people-there-is-liberty-when-the&i=1" data-ext="https://en.wikiquote.org/wiki/John_Basil_Barnhill">
                     <div class="research-top"><span class="research-label">John Basil Barnhill</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Sourced original wording and citation to the 1914 Barnhill&ndash;Tichenor Debate.</p>
                 </a>
-                <a class="research-item" href="https://www.snopes.com/fact-check/jefferson-government-tyranny/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=when-governments-fear-the-people-there-is-liberty-when-the&i=2" data-ext="https://www.snopes.com/fact-check/jefferson-government-tyranny/">
                     <div class="research-top"><span class="research-label">Snopes fact-check</span><span class="research-host">snopes.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Rates the Jefferson attribution false and traces the line to the 1914 debate.</p>
                 </a>
-                <a class="research-item" href="https://checkyourfact.com/2019/10/25/fact-check-thomas-jefferson-people-fear-government-tyranny-liberty/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=when-governments-fear-the-people-there-is-liberty-when-the&i=3" data-ext="https://checkyourfact.com/2019/10/25/fact-check-thomas-jefferson-people-fear-government-tyranny-liberty/">
                     <div class="research-top"><span class="research-label">Check Your Fact</span><span class="research-host">checkyourfact.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Independent fact-check reaching the same conclusion via Monticello.</p>
                 </a>
-                <a class="research-item" href="https://tjrs.monticello.org/letter/2294" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=when-governments-fear-the-people-there-is-liberty-when-the&i=4" data-ext="https://tjrs.monticello.org/letter/2294">
                     <div class="research-top"><span class="research-label">Jefferson Quotes &amp; Family Letters</span><span class="research-host">tjrs.monticello.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Monticello&rsquo;s primary-source catalog entry flagging the quote as spurious.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The documented source</p><h2 id="author-h">John Basil Barnhill</h2></div>

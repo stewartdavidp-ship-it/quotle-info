@@ -89,6 +89,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/a-life-spent-making-mistakes-is-not-only-more-honorable-but#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/a-life-spent-making-mistakes-is-not-only-more-honorable-but#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did George Bernard Shaw say \"A life spent in making mistakes is not only more honorable but more useful than a life spent doing nothing.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Shaw wrote this in the \"Preface on Doctors\" to his play The Doctor's Dilemma, published by Brentano's in 1911. It is confirmed verbatim in the full text of the preface ↗ — though Shaw's original reads \"a life spent in making mistakes.\"",
+                "url": "https://quotle.info/who-said/a-life-spent-making-mistakes-is-not-only-more-honorable-but"
+              }
+            }
+          ]
         }
       ]
     }
@@ -263,6 +278,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -533,30 +550,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://quoteinvestigator.com/2018/05/14/mistakes/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=a-life-spent-making-mistakes-is-not-only-more-honorable-but&i=0" data-ext="https://quoteinvestigator.com/2018/05/14/mistakes/">
                     <div class="research-top"><span class="research-label">Quote Investigator: origin &amp; 1911 citation</span><span class="research-host">quoteinvestigator.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Traces the line to Shaw's Preface on Doctors, citing Brentano's 1911 edition, pp. lxxxv–lxxxvi.</p>
                 </a>
-                <a class="research-item" href="https://www.gutenberg.org/files/5069/5069-h/5069-h.htm" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=a-life-spent-making-mistakes-is-not-only-more-honorable-but&i=1" data-ext="https://www.gutenberg.org/files/5069/5069-h/5069-h.htm">
                     <div class="research-top"><span class="research-label">The Doctor's Dilemma: Preface on Doctors (full text)</span><span class="research-host">gutenberg.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Project Gutenberg's complete preface — contains the sentence verbatim.</p>
                 </a>
-                <a class="research-item" href="https://archive.org/details/BernardShawsDoctorsDilemmaTheCompletePreface" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=a-life-spent-making-mistakes-is-not-only-more-honorable-but&i=2" data-ext="https://archive.org/details/BernardShawsDoctorsDilemmaTheCompletePreface">
                     <div class="research-top"><span class="research-label">Bernard Shaw's Doctor's Dilemma — complete preface (scan)</span><span class="research-host">archive.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Internet Archive copy of the preface as prepared for publication.</p>
                 </a>
-                <a class="research-item" href="https://en.wikisource.org/wiki/The_Doctor%E2%80%99s_Dilemma" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=a-life-spent-making-mistakes-is-not-only-more-honorable-but&i=3" data-ext="https://en.wikisource.org/wiki/The_Doctor%E2%80%99s_Dilemma">
                     <div class="research-top"><span class="research-label">The Doctor's Dilemma</span><span class="research-host">en.wikisource.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Wikisource edition of the play and preface, with publication history.</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/George_Bernard_Shaw" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=a-life-spent-making-mistakes-is-not-only-more-honorable-but&i=4" data-ext="https://en.wikipedia.org/wiki/George_Bernard_Shaw">
                     <div class="research-top"><span class="research-label">George Bernard Shaw</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Biography of the author, including the 1925 Nobel Prize in Literature.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The author</p><h2 id="author-h">About George Bernard Shaw</h2></div>

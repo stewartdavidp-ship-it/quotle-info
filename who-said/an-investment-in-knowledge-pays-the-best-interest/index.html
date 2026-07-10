@@ -80,6 +80,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/an-investment-in-knowledge-pays-the-best-interest#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/an-investment-in-knowledge-pays-the-best-interest#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Benjamin Franklin say \"If a man empties his purse into his head, no man can take it away from him. An investment in knowledge always pays the best interest.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. There is no documentary evidence Franklin ever wrote or said this. The line surfaces only in Boston newspapers of 1848–49 — nearly 60 years after his death — already credited to \"Dr. Franklin,\" and it appears nowhere in Yale's Papers of Benjamin Franklin.",
+                "url": "https://quotle.info/who-said/an-investment-in-knowledge-pays-the-best-interest"
+              }
+            }
+          ]
         }
       ]
     }
@@ -254,6 +269,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -525,30 +542,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://www.barrypopik.com/index.php/new_york_city/entry/an_investment_in_knowledge/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=an-investment-in-knowledge-pays-the-best-interest&i=0" data-ext="https://www.barrypopik.com/index.php/new_york_city/entry/an_investment_in_knowledge/">
                     <div class="research-top"><span class="research-label">&ldquo;An investment in knowledge&rdquo; &mdash; the tracing</span><span class="research-host">barrypopik.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Etymologist Barry Popik&rsquo;s citation-by-citation record: earliest 1848&ndash;49 newspapers, the &ldquo;Unverified&rdquo; Library of Congress note, and the absence from Yale&rsquo;s Franklin Papers.</p>
                 </a>
-                <a class="research-item" href="https://franklinpapers.org/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=an-investment-in-knowledge-pays-the-best-interest&i=1" data-ext="https://franklinpapers.org/">
                     <div class="research-top"><span class="research-label">Papers of Benjamin Franklin (Yale)</span><span class="research-host">franklinpapers.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">The definitive searchable edition of everything Franklin is known to have written &mdash; where this phrase does not appear.</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/Benjamin_Franklin" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=an-investment-in-knowledge-pays-the-best-interest&i=2" data-ext="https://en.wikipedia.org/wiki/Benjamin_Franklin">
                     <div class="research-top"><span class="research-label">Benjamin Franklin</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Background on Franklin&rsquo;s life, dates and his role as author of Poor Richard&rsquo;s Almanack.</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Benjamin_Franklin" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=an-investment-in-knowledge-pays-the-best-interest&i=3" data-ext="https://en.wikiquote.org/wiki/Benjamin_Franklin">
                     <div class="research-top"><span class="research-label">Benjamin Franklin (quotations)</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Community-curated split of Franklin&rsquo;s sourced versus misattributed quotes; this line is not among the sourced entries.</p>
                 </a>
-                <a class="research-item" href="https://www.19fortyfive.com/2025/12/history-quote-of-the-day-from-benjamin-franklin-an-investment-in-knowledge-pays-the-best-interest/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=an-investment-in-knowledge-pays-the-best-interest&i=4" data-ext="https://www.19fortyfive.com/2025/12/history-quote-of-the-day-from-benjamin-franklin-an-investment-in-knowledge-pays-the-best-interest/">
                     <div class="research-top"><span class="research-label">Quote of the Day: &lsquo;An Investment in Knowledge&hellip;&rsquo;</span><span class="research-host">19fortyfive.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">A recent mainstream example of the line still being published under Franklin&rsquo;s name, showing how entrenched the misattribution is.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">Popularly credited author</p><h2 id="author-h">The man it gets pinned on</h2></div>

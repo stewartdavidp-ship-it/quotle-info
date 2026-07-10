@@ -89,6 +89,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/be-still-when-you-have-nothing-to-say-when-genuine-passion#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/be-still-when-you-have-nothing-to-say-when-genuine-passion#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did D.H. Lawrence say \"Be still when you have nothing to say; when genuine passion moves you, say what you've got to say, and say it hot.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. This line is confirmed: it is item 2, \"Silence,\" in the mock virtue-list Lawrence sets against Benjamin Franklin's thirteen virtues in his essay collection Studies in Classic American Literature ↗ (1923).",
+                "url": "https://quotle.info/who-said/be-still-when-you-have-nothing-to-say-when-genuine-passion"
+              }
+            }
+          ]
         }
       ]
     }
@@ -263,6 +278,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -506,30 +523,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://www.gutenberg.org/files/60547/60547-h/60547-h.htm" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-still-when-you-have-nothing-to-say-when-genuine-passion&i=0" data-ext="https://www.gutenberg.org/files/60547/60547-h/60547-h.htm">
                     <div class="research-top"><span class="research-label">Studies in Classic American Literature — full text</span><span class="research-host">gutenberg.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Project Gutenberg's complete public-domain text of the 1923 essay collection, including the Benjamin Franklin chapter.</p>
                 </a>
-                <a class="research-item" href="https://www.gutenberg.org/ebooks/60547" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-still-when-you-have-nothing-to-say-when-genuine-passion&i=1" data-ext="https://www.gutenberg.org/ebooks/60547">
                     <div class="research-top"><span class="research-label">Studies in Classic American Literature — ebook record</span><span class="research-host">gutenberg.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Gutenberg's catalog page with bibliographic metadata for the ebook.</p>
                 </a>
-                <a class="research-item" href="https://americanliterature.com/author/d-h-lawrence/book/studies-in-classic-american-literature/chapter-2-benjamin-franklin" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-still-when-you-have-nothing-to-say-when-genuine-passion&i=2" data-ext="https://americanliterature.com/author/d-h-lawrence/book/studies-in-classic-american-literature/chapter-2-benjamin-franklin">
                     <div class="research-top"><span class="research-label">Chapter II: Benjamin Franklin</span><span class="research-host">americanliterature.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">A second full-text transcription of the same chapter, confirming the wording.</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/Studies_in_Classic_American_Literature" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-still-when-you-have-nothing-to-say-when-genuine-passion&i=3" data-ext="https://en.wikipedia.org/wiki/Studies_in_Classic_American_Literature">
                     <div class="research-top"><span class="research-label">Studies in Classic American Literature</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Background on the book: 1923 U.S. publication by Thomas Seltzer, 1924 U.K. edition, and its contents.</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/D._H._Lawrence" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-still-when-you-have-nothing-to-say-when-genuine-passion&i=4" data-ext="https://en.wikipedia.org/wiki/D._H._Lawrence">
                     <div class="research-top"><span class="research-label">D. H. Lawrence</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Biographical overview of the author.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The author</p><h2 id="author-h">About D.H. Lawrence</h2></div>

@@ -89,6 +89,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/the-person-be-it-gentleman-or-lady-who-has-not-pleasure-in#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/the-person-be-it-gentleman-or-lady-who-has-not-pleasure-in#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Jane Austen say \"The person, be it gentleman or lady, who has not pleasure in a good novel, must be intolerably stupid.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Spoken by Henry Tilney in Chapter 14 of Jane Austen's Northanger Abbey, written by 1799 and published posthumously in December 1817 (title page dated 1818). The exact wording is confirmed in the original text.",
+                "url": "https://quotle.info/who-said/the-person-be-it-gentleman-or-lady-who-has-not-pleasure-in"
+              }
+            }
+          ]
         }
       ]
     }
@@ -263,6 +278,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -533,34 +550,44 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://en.wikisource.org/wiki/Northanger_Abbey/Chapter_14" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=the-person-be-it-gentleman-or-lady-who-has-not-pleasure-in&i=0" data-ext="https://en.wikisource.org/wiki/Northanger_Abbey/Chapter_14">
                     <div class="research-top"><span class="research-label">Northanger Abbey, Chapter 14 (full text)</span><span class="research-host">en.wikisource.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Primary source containing the exact quoted line, spoken by Henry Tilney</p>
                 </a>
-                <a class="research-item" href="https://www.gutenberg.org/ebooks/121" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=the-person-be-it-gentleman-or-lady-who-has-not-pleasure-in&i=1" data-ext="https://www.gutenberg.org/ebooks/121">
                     <div class="research-top"><span class="research-label">Northanger Abbey (Project Gutenberg edition)</span><span class="research-host">gutenberg.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Free public-domain edition of the full novel</p>
                 </a>
-                <a class="research-item" href="https://archive.org/details/northangerabbeyp03aust" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=the-person-be-it-gentleman-or-lady-who-has-not-pleasure-in&i=2" data-ext="https://archive.org/details/northangerabbeyp03aust">
                     <div class="research-top"><span class="research-label">Northanger Abbey and Persuasion</span><span class="research-host">archive.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Scanned edition of the original 1817/1818 four-volume publication</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/Northanger_Abbey" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=the-person-be-it-gentleman-or-lady-who-has-not-pleasure-in&i=3" data-ext="https://en.wikipedia.org/wiki/Northanger_Abbey">
                     <div class="research-top"><span class="research-label">Northanger Abbey</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Background on composition date, posthumous publication, and plot</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Northanger_Abbey" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=the-person-be-it-gentleman-or-lady-who-has-not-pleasure-in&i=4" data-ext="https://en.wikiquote.org/wiki/Northanger_Abbey">
                     <div class="research-top"><span class="research-label">Northanger Abbey</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Collected quotations from the novel, including this line</p>
                 </a>
-                <a class="research-item" href="https://jasna.org/austen/works/northanger-abbey/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=the-person-be-it-gentleman-or-lady-who-has-not-pleasure-in&i=5" data-ext="https://jasna.org/austen/works/northanger-abbey/">
                     <div class="research-top"><span class="research-label">Northanger Abbey</span><span class="research-host">jasna.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Jane Austen Society of North America overview of the novel's history</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The author</p><h2 id="author-h">About Jane Austen</h2></div>

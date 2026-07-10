@@ -86,6 +86,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/no-act-of-kindness-no-matter-how-small-is-ever-wasted#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/no-act-of-kindness-no-matter-how-small-is-ever-wasted#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Aesop say \"No act of kindness, no matter how small, is ever wasted.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The thought is genuinely Aesop's: it is the moral of The Lion and the Mouse (Perry Index 150). But this exact sentence appears in no standard translation. The closest documented wording is \"A kindness is never wasted,\" printed as the moral in the 1919 Aesop for Children; the longer \"no matter how small\" version is an undated modern paraphrase.",
+                "url": "https://quotle.info/who-said/no-act-of-kindness-no-matter-how-small-is-ever-wasted"
+              }
+            }
+          ]
         }
       ]
     }
@@ -260,6 +275,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -528,30 +545,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Aesop" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=no-act-of-kindness-no-matter-how-small-is-ever-wasted&i=0" data-ext="https://en.wikiquote.org/wiki/Aesop">
                     <div class="research-top"><span class="research-label">Aesop</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Lists the quote under &ldquo;Quotes,&rdquo; sourced only to &ldquo;The Lion and the Mouse&rdquo; with no translator.</p>
                 </a>
-                <a class="research-item" href="https://read.gov/aesop/007.html" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=no-act-of-kindness-no-matter-how-small-is-ever-wasted&i=1" data-ext="https://read.gov/aesop/007.html">
                     <div class="research-top"><span class="research-label">The Lion and the Mouse (Aesop for Children, 1919)</span><span class="research-host">read.gov</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Library of Congress edition whose moral reads &ldquo;A kindness is never wasted&rdquo; &mdash; the closest documented antecedent.</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/The_Lion_and_the_Mouse" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=no-act-of-kindness-no-matter-how-small-is-ever-wasted&i=2" data-ext="https://en.wikipedia.org/wiki/The_Lion_and_the_Mouse">
                     <div class="research-top"><span class="research-label">The Lion and the Mouse</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Overview of the fable (Perry 150), its classical sources (Phaedrus, Babrius) and moral variants.</p>
                 </a>
-                <a class="research-item" href="https://fablesofaesop.com/the-lion-and-the-mouse.html" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=no-act-of-kindness-no-matter-how-small-is-ever-wasted&i=3" data-ext="https://fablesofaesop.com/the-lion-and-the-mouse.html">
                     <div class="research-top"><span class="research-label">The Lion and the Mouse (translations)</span><span class="research-host">fablesofaesop.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Collates many English versions; none use the popular one-liner.</p>
                 </a>
-                <a class="research-item" href="https://www.gutenberg.org/files/49010/49010-h/49010-h.htm" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=no-act-of-kindness-no-matter-how-small-is-ever-wasted&i=4" data-ext="https://www.gutenberg.org/files/49010/49010-h/49010-h.htm">
                     <div class="research-top"><span class="research-label">Aesop&rsquo;s Fables (J. H. Stickney)</span><span class="research-host">gutenberg.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Public-domain edition giving a different moral, illustrating how translators vary the ending.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The true source of the idea</p><h2 id="author-h">About Aesop</h2></div>

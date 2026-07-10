@@ -79,6 +79,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/if-you-judge-people-you-have-no-time-to-love-them#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/if-you-judge-people-you-have-no-time-to-love-them#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Anonymous / unknown say \"If you judge people, you have no time to love them.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The Mother Teresa Center ↗ — the official custodian of her words, run by her own order — lists this exact sentence among quotations that are \"significantly paraphrased versions or personal interpretations\" and expressly \"not her authentic words.\" The sentiment is broadly consistent with her teaching on not judging, but no book, speech, letter, or interview has ever been shown to contain this wording; it was removed from Wikiquote in 2009 ↗ as unsourced and remains undocumented.",
+                "url": "https://quotle.info/who-said/if-you-judge-people-you-have-no-time-to-love-them"
+              }
+            }
+          ]
         }
       ]
     }
@@ -253,6 +268,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -526,26 +543,36 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://www.motherteresa.org/mtc/false-quotes" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=if-you-judge-people-you-have-no-time-to-love-them&i=0" data-ext="https://www.motherteresa.org/mtc/false-quotes">
                     <div class="research-top"><span class="research-label">Quotes falsely attributed to Mother Teresa</span><span class="research-host">motherteresa.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">The official Mother Teresa Center&rsquo;s list of non-authentic quotes — includes this exact line as a paraphrase, not her words.</p>
                 </a>
-                <a class="research-item" href="https://fauxtations.wordpress.com/tag/mother-teresa/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=if-you-judge-people-you-have-no-time-to-love-them&i=1" data-ext="https://fauxtations.wordpress.com/tag/mother-teresa/">
                     <div class="research-top"><span class="research-label">Fauxtations: Mother Teresa</span><span class="research-host">fauxtations.wordpress.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Fact-check blog that traces the line, notes its 2009 removal from Wikiquote, and labels it a &ldquo;fauxtation.&rdquo;</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Mother_Teresa" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=if-you-judge-people-you-have-no-time-to-love-them&i=2" data-ext="https://en.wikiquote.org/wiki/Mother_Teresa">
                     <div class="research-top"><span class="research-label">Mother Teresa — Wikiquote</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Community quote archive; this line appears with only a school-blog link and no primary citation.</p>
                 </a>
-                <a class="research-item" href="https://www.goodreads.com/quotes/2887-if-you-judge-people-you-have-no-time-to-love" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=if-you-judge-people-you-have-no-time-to-love-them&i=3" data-ext="https://www.goodreads.com/quotes/2887-if-you-judge-people-you-have-no-time-to-love">
                     <div class="research-top"><span class="research-label">Goodreads quote page</span><span class="research-host">goodreads.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Shows how the uncited attribution spreads across quote-aggregator sites.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">About the person it&rsquo;s pinned on</p><h2 id="author-h">About Mother Teresa</h2></div>

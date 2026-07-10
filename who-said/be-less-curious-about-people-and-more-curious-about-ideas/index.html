@@ -86,6 +86,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/be-less-curious-about-people-and-more-curious-about-ideas#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/be-less-curious-about-people-and-more-curious-about-ideas#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Marie Curie say \"Be less curious about people and more curious about ideas.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Not confirmed. Widely credited to Marie Curie and consistent with a view she is documented to have expressed — \"In science, we should be interested in things, not persons\" (1923) — but no primary source pins this exact wording, which reads as a modern paraphrase. Wikiquote lists it with no citation ↗.",
+                "url": "https://quotle.info/who-said/be-less-curious-about-people-and-more-curious-about-ideas"
+              }
+            }
+          ]
         }
       ]
     }
@@ -260,6 +275,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -527,30 +544,40 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://quoteinvestigator.com/2021/03/26/science-things/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-less-curious-about-people-and-more-curious-about-ideas&i=0" data-ext="https://quoteinvestigator.com/2021/03/26/science-things/">
                     <div class="research-top"><span class="research-label">Quote Investigator: &lsquo;things, not persons&rsquo;</span><span class="research-host">quoteinvestigator.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Traces the documented 1923 Curie remark and its variants; concludes the saying belongs to both Marie and Pierre Curie.</p>
                 </a>
-                <a class="research-item" href="https://en.wikiquote.org/wiki/Marie_Curie" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-less-curious-about-people-and-more-curious-about-ideas&i=1" data-ext="https://en.wikiquote.org/wiki/Marie_Curie">
                     <div class="research-top"><span class="research-label">Marie Curie</span><span class="research-host">en.wikiquote.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Lists the popular wording attributed to Curie with no source, book, or date.</p>
                 </a>
-                <a class="research-item" href="https://www.goodreads.com/quotes/45949-be-less-curious-about-people-and-more-curious-about-ideas" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-less-curious-about-people-and-more-curious-about-ideas&i=2" data-ext="https://www.goodreads.com/quotes/45949-be-less-curious-about-people-and-more-curious-about-ideas">
                     <div class="research-top"><span class="research-label">Curie quote page</span><span class="research-host">goodreads.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">The heavily-liked aggregator page spreading the quote; flagged as community-added and unverified.</p>
                 </a>
-                <a class="research-item" href="https://en.wikipedia.org/wiki/Marie_Curie" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-less-curious-about-people-and-more-curious-about-ideas&i=3" data-ext="https://en.wikipedia.org/wiki/Marie_Curie">
                     <div class="research-top"><span class="research-label">Marie Curie</span><span class="research-host">en.wikipedia.org</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Biography of the physicist and chemist, for life dates and career context.</p>
                 </a>
-                <a class="research-item" href="https://huxley.media/en/be-less-curious-about-people-but-more-curious-about-ideas-rules-of-life-of-the-experimental-scientist-maria-sklodowska-curie/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=be-less-curious-about-people-and-more-curious-about-ideas&i=4" data-ext="https://huxley.media/en/be-less-curious-about-people-but-more-curious-about-ideas-rules-of-life-of-the-experimental-scientist-maria-sklodowska-curie/">
                     <div class="research-top"><span class="research-label">&lsquo;Rules of life&rsquo; feature</span><span class="research-host">huxley.media</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">A profile that headlines the quote as one of Curie&rsquo;s &lsquo;rules of life&rsquo; but supplies no source &mdash; typical of how it circulates.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">About the author</p><h2 id="author-h">Who was Marie Curie?</h2></div>

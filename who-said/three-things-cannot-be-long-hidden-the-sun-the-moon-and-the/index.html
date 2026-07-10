@@ -81,6 +81,21 @@
           "mainEntity": {
             "@id": "https://quotle.info/who-said/three-things-cannot-be-long-hidden-the-sun-the-moon-and-the#quotation"
           }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://quotle.info/who-said/three-things-cannot-be-long-hidden-the-sun-the-moon-and-the#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Did Confucius say \"Three things cannot be long hidden: the sun, the moon, and the truth.\"?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The Buddha did teach a version of this — that three things shine openly, the moon, the sun, and the Dhamma of a Realized One (Aṅguttara Nikāya 3.131 ↗) — but the familiar \"cannot be long hidden … the truth\" phrasing is a 20th-century paraphrase that quietly changes the meaning, first crystallising in P. Lakshmi Narasu's The Essence of Buddhism (1907).",
+                "url": "https://quotle.info/who-said/three-things-cannot-be-long-hidden-the-sun-the-moon-and-the"
+              }
+            }
+          ]
         }
       ]
     }
@@ -255,6 +270,8 @@
         .research-arrow { color: var(--burgundy); margin-left: auto; transition: transform 0.2s; }
         .research-item:hover .research-arrow { transform: translateX(3px); }
         .research-what { font-size: 0.88rem; color: var(--slate); margin-top: 4px; }
+        .cite-skip-note { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+        .cite-skip-note a { color: var(--burgundy); text-decoration: none; } .cite-skip-note a:hover { text-decoration: underline; }
         .research-host { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; }
 
         /* ===== AUTHOR ===== */
@@ -532,26 +549,36 @@
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
             <div class="sec-head"><p class="kicker">Go further</p><h2 id="research-h">Dig deeper</h2></div>
-            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship.</p>
+            <p class="research-intro">Trusted places to keep pulling the thread — primary archives, fact-checks, and scholarship. We show how we used each one before you leave.</p>
             <div class="research-list">
-                <a class="research-item" href="https://fakebuddhaquotes.com/three-things-cannot-be-long-hidden-the-sun-the-moon-and-the-truth/" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=three-things-cannot-be-long-hidden-the-sun-the-moon-and-the&i=0" data-ext="https://fakebuddhaquotes.com/three-things-cannot-be-long-hidden-the-sun-the-moon-and-the-truth/">
                     <div class="research-top"><span class="research-label">Fake Buddha Quotes — the investigation</span><span class="research-host">fakebuddhaquotes.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Traces the quote to Narasu&rsquo;s 1907 paraphrase and its ~2003 exact form; notes Confucius and Colin Powell misattributions.</p>
                 </a>
-                <a class="research-item" href="https://discourse.suttacentral.net/t/verification-of-a-popular-quote/17419" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=three-things-cannot-be-long-hidden-the-sun-the-moon-and-the&i=1" data-ext="https://discourse.suttacentral.net/t/verification-of-a-popular-quote/17419">
                     <div class="research-top"><span class="research-label">SuttaCentral forum — verification thread</span><span class="research-host">discourse.suttacentral.net</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Quotes the canonical Aṅguttara Nikāya 3.131 text and explains how the popular version departs from it.</p>
                 </a>
-                <a class="research-item" href="https://www.goodreads.com/work/quotes/16511110-the-essence-of-buddhism" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=three-things-cannot-be-long-hidden-the-sun-the-moon-and-the&i=2" data-ext="https://www.goodreads.com/work/quotes/16511110-the-essence-of-buddhism">
                     <div class="research-top"><span class="research-label">Narasu, The Essence of Buddhism (quotes)</span><span class="research-host">goodreads.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">Shows the 1907 paraphrase: &ldquo;Three things shine before the world and cannot be hidden. They are the moon, the sun, and the truth proclaimed by the Tathagata.&rdquo;</p>
                 </a>
-                <a class="research-item" href="https://www.azquotes.com/quote/531030" target="_blank" rel="noopener">
+                <a class="research-item" href="/cite/?q=three-things-cannot-be-long-hidden-the-sun-the-moon-and-the&i=3" data-ext="https://www.azquotes.com/quote/531030">
                     <div class="research-top"><span class="research-label">AZ Quotes — the Confucius misattribution</span><span class="research-host">azquotes.com</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">A typical quote-site page crediting the line to Confucius, illustrating the competing (and unsupported) attribution.</p>
                 </a>
             </div>
+            <p class="cite-skip-note" id="citeSkipNote" hidden>You&rsquo;re skipping our source pages &mdash; these links now open the source directly. <a href="#" id="citeSkipReset">Show them again</a></p>
         </section>
+        <script>
+        (function(){
+            var skip=false; try{ skip=localStorage.getItem('quotle-skip-cite')==='1'; }catch(e){}
+            var note=document.getElementById('citeSkipNote');
+            if(skip){ [].forEach.call(document.querySelectorAll('.research-item'),function(a){ var ext=a.getAttribute('data-ext'); if(ext){ a.setAttribute('href',ext); a.setAttribute('target','_blank'); a.setAttribute('rel','noopener nofollow'); } }); if(note) note.hidden=false; }
+            var r=document.getElementById('citeSkipReset');
+            if(r) r.addEventListener('click',function(e){ e.preventDefault(); try{ localStorage.removeItem('quotle-skip-cite'); }catch(e){} location.reload(); });
+        })();
+        </script>
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
             <div class="sec-head"><p class="kicker">The true source of the teaching</p><h2 id="author-h">About the Buddha</h2></div>
