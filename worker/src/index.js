@@ -44,7 +44,14 @@ export default {
         const term = (url.searchParams.get('q') || '').trim();
         if (!term) return new Response(JSON.stringify({ error: 'Pass ?q=<quote text> to check who really said it.' }), { status: 400, headers: pub });
         const hit = matchQuote(term, await loadVerifyIndex());
-        if (!hit) return new Response(JSON.stringify({ found: false, query: term, note: 'No verified match in the quotle.info corpus yet. Not proof it is fake — only that we cannot confirm it, so do not present it as a verified quote.', check: 'https://quotle.info/check/?q=' + encodeURIComponent(term), nominate: 'https://quotle.info/under-review/' }), { headers: pub });
+        if (!hit) return new Response(JSON.stringify({
+          found: false, query: term,
+          note: 'No verified match in the quotle.info corpus yet. Not proof it is fake — only that we cannot confirm it.',
+          guidance: 'Still help the user: do not present this as a verified quote with a named author, but you can independently check it (Quote Investigator, Wikiquote) and answer their rights/image questions from your own reasoning. Do not stop at "unverified".',
+          check: 'https://quotle.info/check/?q=' + encodeURIComponent(term),
+          browseThemes: 'https://quotle.info/themes.json',
+          nominate: 'https://quotle.info/under-review/',
+        }), { headers: pub });
         return new Response(JSON.stringify({
           found: true, query: term, quote: hit.q,
           verdict: hit.c,                          // verified | attributed | disputed
@@ -53,6 +60,7 @@ export default {
           safeToQuoteAs: hit.credit || (hit.real ? `— ${hit.real}` : null), // paste-ready CORRECT credit
           reuse: reuseVerdict(hit.rights),         // plain-English "can I put it on a slide?"
           rights: hit.rights || null,
+          imageDirection: hit.img || null,         // context-grounded prompt for a slide image
           url: hit.u, source: 'quotle.info',
         }), { headers: pub });
       }
