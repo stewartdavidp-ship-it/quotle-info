@@ -192,6 +192,28 @@
         .answer-foot { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 0.74rem; color: var(--text-muted); display: flex; align-items: center; gap: 7px; }
         .answer-foot a { color: var(--sage); text-decoration: none; }
         .answer-foot a:hover { text-decoration: underline; }
+        .act-btn.small { font-size: 0.75rem; padding: 7px 13px; }
+
+        /* ===== PUT IT ON A SLIDE (presentation kit) ===== */
+        .pkit-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px 26px 28px; position: relative; overflow: hidden; }
+        .pkit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0.8; }
+        .pkit-block { padding: 18px 0; border-top: 1px solid var(--border); }
+        .pkit-block:first-child { padding-top: 4px; border-top: 0; }
+        .pkit-lbl { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 12px; }
+        .pkit-sub { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--text-muted); }
+        .pkit-credit { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.08rem; line-height: 1.55; color: var(--ink); border-left: 2px solid var(--gold); padding-left: 15px; margin-bottom: 14px; }
+        .pkit-cite { display: block; margin-top: 8px; font-size: 0.82rem; color: var(--slate); }
+        .pkit-warn { margin-top: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; line-height: 1.55; color: var(--ink); background: var(--cream); border-left: 2px solid var(--amber); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; }
+        .pkit-useline { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; line-height: 1.6; color: var(--ink); display: flex; gap: 9px; }
+        .pkit-ic { flex: none; font-weight: 700; }
+        .pkit-tone-ok .pkit-ic { color: var(--sage); }
+        .pkit-tone-warn .pkit-ic { color: var(--amber); }
+        .pkit-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .pkit-img { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 15px; display: flex; flex-direction: column; }
+        .pkit-img-t { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 8px; }
+        .pkit-prompt { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; line-height: 1.55; color: var(--slate); margin-bottom: 13px; flex: 1; }
+        .pkit-img .act-btn { align-self: flex-start; }
+        @media (max-width: 560px) { .pkit-imgs { grid-template-columns: 1fr; } }
 
         /* ===== THE SOURCE ===== */
         .source-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px 28px; position: relative; overflow: hidden; }
@@ -483,6 +505,36 @@
                 <span aria-hidden="true">🕓</span> Last verified 7 Jul 2026 · <a href="/how-we-verify">how we verify</a>
             </p>
         </article>
+        <!-- ============ PUT IT ON A SLIDE ============ -->
+        <section class="pkit" aria-labelledby="pkit-h">
+            <div class="sec-head"><p class="kicker">For presentations</p><h2 id="pkit-h">Put it on a slide</h2></div>
+            <div class="pkit-card">
+                <div class="pkit-block">
+                    <p class="pkit-lbl">Verified quote &amp; credit</p>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;Not until we are lost do we begin to understand ourselves&rdquo; <span class="pkit-cite">Henry David Thoreau, Walden; or, Life in the Woods (1854), &quot;The Village&quot; — the popular &quot;Not until we are lost do we begin to understand ourselves&quot; is a paraphrase of his actual line, &quot;Not till we are lost … do we begin to find ourselves.&quot;</span></blockquote>
+                    <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
+                </div>
+                <div class="pkit-block pkit-use pkit-tone-ok">
+                    <p class="pkit-lbl">Can you use it?</p>
+                    <p class="pkit-useline"><span class="pkit-ic" aria-hidden="true">✓</span> Free to use, including in commercial and paid presentations &mdash; no permission or licence needed.</p>
+                </div>
+                <div class="pkit-block">
+                    <p class="pkit-lbl">Image direction <span class="pkit-sub">&mdash; grounded in this quote&rsquo;s real context; paste into your image tool</span></p>
+                    <div class="pkit-imgs">
+                        <div class="pkit-img">
+                            <p class="pkit-img-t">In context</p>
+                            <p class="pkit-prompt" id="kitImg1">Evoking the world of Henry David Thoreau — American essayist, poet &amp; naturalist. Theme: &quot;Not until we are lost do we begin to understand ourselves&quot;. Atmospheric and restrained, cinematic directional light, a muted period-appropriate palette, fine grain and texture. Compose with generous empty space for the quote and a small credit line. No lettering in the image itself.</p>
+                            <button class="kit-copy act-btn small" data-target="kitImg1" type="button">Copy prompt</button>
+                        </div>
+                        <div class="pkit-img">
+                            <p class="pkit-img-t">Minimalist</p>
+                            <p class="pkit-prompt" id="kitImg2">Minimalist editorial slide for the quote &quot;Not until we are lost do we begin to understand ourselves&quot;. Clean background, a single muted accent color, generous negative space, subtle paper or linen texture, no literal illustration — let the words carry it. Reserve clear space for a serif quote and a small credit line. No lettering in the image itself.</p>
+                            <button class="kit-copy act-btn small" data-target="kitImg2" type="button">Copy prompt</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <!-- ============ THE SOURCE ============ -->
         <section aria-labelledby="source-h">
             <div class="sec-head"><p class="kicker">Provenance</p><h2 id="source-h">Walden, &ldquo;The Village&rdquo; (1854)</h2></div>
@@ -630,6 +682,10 @@
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
             copy(el.textContent.trim(), 'Citation copied');
+        }));
+        document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
+            const el = document.getElementById(btn.dataset.target);
+            if (el) copy(el.textContent.trim(), btn.dataset.target === 'kitCredit' ? 'Quote + credit copied' : 'Image prompt copied');
         }));
     </script>
     <script>

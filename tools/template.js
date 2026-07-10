@@ -84,6 +84,14 @@ const RIGHTS = {
     note: 'Quoted <strong>with permission</strong>{holder}. Reuse rights belong to the rightsholder, not to Quotle.info.' },
 };
 
+// Presentation-kit reuse guidance, keyed off the same rights state. This is the practical
+// "can I put this on a slide I'm selling?" translation of the rights badge, not legal advice.
+const USE = {
+  'public-domain': { tone: 'ok',   icon: '✓', line: 'Free to use, including in commercial and paid presentations &mdash; no permission or licence needed.' },
+  'in-copyright':  { tone: 'warn', icon: '©', line: 'Still under copyright{holder}. A short, credited quote is generally fine for talks, teaching, and internal decks; for commercial, published, or large-scale reuse, get permission.' },
+  'licensed':      { tone: 'ok',   icon: '✓', line: 'Cleared for reuse{holder}, but the terms belong to the rightsholder &mdash; keep the credit and check the licence before commercial reuse.' },
+};
+
 // ---- <head> --------------------------------------------------------------
 function renderHead(q) {
   const url = canonicalUrl(q.quoteSlug);
@@ -334,6 +342,89 @@ function renderRights(src) {
                 </div>`;
 }
 
+// ---- Put it on a slide (always) ------------------------------------------
+// The presentation kit: the one thing an AI deck-builder gets wrong — a paste-ready
+// CORRECT credit, an honest "can I reuse this?" line from the rights state, and image
+// directions grounded in the quote's real context (not a generic stock vibe).
+const cap = (s) => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+
+// The attribution tail, safe to prepend a single quoted line to. Some records store
+// copyAttribution as a standalone share string that ALREADY leads with the quoted line
+// (`"…quote…" — Author, source`); strip that leading quoted segment so callers can render
+// `"quote" + creditLine` without duplicating the quote. Records that store just the tail
+// (`Author (attributed) — …`) pass through unchanged.
+function creditLine(q) {
+  const raw = (q.copyAttribution != null) ? q.copyAttribution : `— ${plain((q.answer || {}).authorName || '')}`;
+  return raw.replace(/^\s*["“][^"”]*["”][.,]?\s*[—–-]?\s*/, '').trim() || raw;
+}
+
+function buildImagePrompts(q) {
+  // Records may carry authored prompts (presentation.imagePrompts[]); use them if present.
+  if (q.presentation && Array.isArray(q.presentation.imagePrompts) && q.presentation.imagePrompts.length) {
+    return q.presentation.imagePrompts.slice(0, 2);
+  }
+  const quote = plain(q.displayQuote);
+  const who = plain((q.author && q.author.name) || (q.answer && q.answer.authorName) || '').trim();
+  // metaLine is "dates · role · role" — drop the leading date clause, keep the role/era cues.
+  const meta = plain((q.author && q.author.metaLine) || '');
+  const era = meta.includes('·') ? meta.slice(meta.indexOf('·') + 1).trim() : meta.trim();
+  const ground = era ? `evoking the world of ${who} — ${era}` : (who ? `evoking the world of ${who}` : 'evoking the theme of the line');
+  const inContext = `${cap(ground)}. Theme: "${quote}". Atmospheric and restrained, cinematic directional light, a muted period-appropriate palette, fine grain and texture. Compose with generous empty space for the quote and a small credit line. No lettering in the image itself.`;
+  const minimalist = `Minimalist editorial slide for the quote "${quote}". Clean background, a single muted accent color, generous negative space, subtle paper or linen texture, no literal illustration — let the words carry it. Reserve clear space for a serif quote and a small credit line. No lettering in the image itself.`;
+  return [inContext, minimalist];
+}
+
+function renderPresentationKit(q) {
+  const credit = creditLine(q);
+  const quote = plain(q.displayQuote);
+
+  const state = q.source && (q.source.rights || (q.source.publicDomain === true ? 'public-domain' : null));
+  const u = state && USE[state];
+  const holder = (q.source && q.source.rightsHolder) ? ` (rights held by ${esc(q.source.rightsHolder)})` : '';
+  const useLine = u ? u.line.replace('{holder}', holder)
+    : 'We couldn&rsquo;t verify where this wording comes from, so there&rsquo;s no rights status to give. Safe to present as an unverified or anonymous line &mdash; just don&rsquo;t assert a specific author or source.';
+  const useTone = u ? u.tone : 'warn';
+  const useIcon = u ? u.icon : '?';
+
+  const trueName = plain((q.answer || {}).authorName || 'unknown');
+  const warn = (q.confidence === 'disputed' && q.creditedTo) ? `
+                    <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>${esc(q.creditedTo)}</strong>. Use the credit above (${esc(trueName)}) instead.</p>` : '';
+
+  const [imgA, imgB] = buildImagePrompts(q);
+
+  return `
+        <!-- ============ PUT IT ON A SLIDE ============ -->
+        <section class="pkit" aria-labelledby="pkit-h">
+            <div class="sec-head"><p class="kicker">For presentations</p><h2 id="pkit-h">Put it on a slide</h2></div>
+            <div class="pkit-card">
+                <div class="pkit-block">
+                    <p class="pkit-lbl">Verified quote &amp; credit</p>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;${esc(quote)}&rdquo; <span class="pkit-cite">${esc(credit)}</span></blockquote>
+                    <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>${warn}
+                </div>
+                <div class="pkit-block pkit-use pkit-tone-${useTone}">
+                    <p class="pkit-lbl">Can you use it?</p>
+                    <p class="pkit-useline"><span class="pkit-ic" aria-hidden="true">${useIcon}</span> ${useLine}</p>
+                </div>
+                <div class="pkit-block">
+                    <p class="pkit-lbl">Image direction <span class="pkit-sub">&mdash; grounded in this quote&rsquo;s real context; paste into your image tool</span></p>
+                    <div class="pkit-imgs">
+                        <div class="pkit-img">
+                            <p class="pkit-img-t">In context</p>
+                            <p class="pkit-prompt" id="kitImg1">${esc(imgA)}</p>
+                            <button class="kit-copy act-btn small" data-target="kitImg1" type="button">Copy prompt</button>
+                        </div>
+                        <div class="pkit-img">
+                            <p class="pkit-img-t">Minimalist</p>
+                            <p class="pkit-prompt" id="kitImg2">${esc(imgB)}</p>
+                            <button class="kit-copy act-btn small" data-target="kitImg2" type="button">Copy prompt</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>`;
+}
+
 // ---- Often misattributed (optional) --------------------------------------
 function renderMisattribution(q) {
   const m = q.misattribution;
@@ -496,9 +587,7 @@ function renderPager(q) {
 
 // ---- Game CTA + footer + script (constant except copy attribution) -------
 function renderTail(q) {
-  const copyAttr = (q.copyAttribution != null)
-    ? q.copyAttribution
-    : `— ${(q.answer || {}).authorName || ''}`;
+  const copyAttr = creditLine(q);
   return `
         <!-- ============ GAME CTA ============ -->
         <aside class="game-cta" aria-label="Related game">
@@ -528,6 +617,10 @@ function renderTail(q) {
             const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
             copy(el.textContent.trim(), 'Citation copied');
         }));
+        document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
+            const el = document.getElementById(btn.dataset.target);
+            if (el) copy(el.textContent.trim(), btn.dataset.target === 'kitCredit' ? 'Quote + credit copied' : 'Image prompt copied');
+        }));
     </script>
 ${SEARCH_JS}
 ${SCRIPT}
@@ -543,6 +636,7 @@ function renderPage(q) {
     + renderNav(q)
     + '\n\n    <main>'
     + renderAnswer(q)
+    + renderPresentationKit(q)
     + renderSource(q)
     + renderMisattribution(q)
     + renderContext(q)
@@ -623,6 +717,28 @@ const STYLE = `${ROOT_CSS}
         .answer-foot { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border); font-family: 'DM Sans', sans-serif; font-size: 0.74rem; color: var(--text-muted); display: flex; align-items: center; gap: 7px; }
         .answer-foot a { color: var(--sage); text-decoration: none; }
         .answer-foot a:hover { text-decoration: underline; }
+        .act-btn.small { font-size: 0.75rem; padding: 7px 13px; }
+
+        /* ===== PUT IT ON A SLIDE (presentation kit) ===== */
+        .pkit-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px 26px 28px; position: relative; overflow: hidden; }
+        .pkit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0.8; }
+        .pkit-block { padding: 18px 0; border-top: 1px solid var(--border); }
+        .pkit-block:first-child { padding-top: 4px; border-top: 0; }
+        .pkit-lbl { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 12px; }
+        .pkit-sub { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--text-muted); }
+        .pkit-credit { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.08rem; line-height: 1.55; color: var(--ink); border-left: 2px solid var(--gold); padding-left: 15px; margin-bottom: 14px; }
+        .pkit-cite { display: block; margin-top: 8px; font-size: 0.82rem; color: var(--slate); }
+        .pkit-warn { margin-top: 12px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; line-height: 1.55; color: var(--ink); background: var(--cream); border-left: 2px solid var(--amber); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 10px 14px; }
+        .pkit-useline { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; line-height: 1.6; color: var(--ink); display: flex; gap: 9px; }
+        .pkit-ic { flex: none; font-weight: 700; }
+        .pkit-tone-ok .pkit-ic { color: var(--sage); }
+        .pkit-tone-warn .pkit-ic { color: var(--amber); }
+        .pkit-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .pkit-img { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 15px; display: flex; flex-direction: column; }
+        .pkit-img-t { font-family: 'DM Sans', sans-serif; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 8px; }
+        .pkit-prompt { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; line-height: 1.55; color: var(--slate); margin-bottom: 13px; flex: 1; }
+        .pkit-img .act-btn { align-self: flex-start; }
+        @media (max-width: 560px) { .pkit-imgs { grid-template-columns: 1fr; } }
 
         /* ===== THE SOURCE ===== */
         .source-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px 28px; position: relative; overflow: hidden; }
