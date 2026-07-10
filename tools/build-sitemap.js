@@ -35,6 +35,7 @@ const urls = [
   { loc: `${ORIGIN}/`, lastmod: latest },
   { loc: `${ORIGIN}/how-we-verify`, lastmod: latest },
   { loc: `${ORIGIN}/authors/`, lastmod: latest },
+  { loc: `${ORIGIN}/check/`, lastmod: latest },
   { loc: `${ORIGIN}/themes/`, lastmod: latest },
   ...themePages.map((t) => ({ loc: `${ORIGIN}/themes/${t.slug}`, lastmod: latest })),
   ...authors.map((a) => ({ loc: `${ORIGIN}/authors/${a.slug}`, lastmod: latest })),
@@ -60,6 +61,10 @@ Quotle.info answers "who really said it?" for commonly quoted — and commonly m
 
 ## Methodology
 - [How we verify](${ORIGIN}/how-we-verify): the standard — traced to a primary source, dated, cited, adversarially re-checked; three honest confidence states; rights stated separately from attribution.
+
+## Check a quote (before you use it)
+- [Check a quote](${ORIGIN}/check/): paste a line you're about to present — is it real, who really said it, is it cleared to reuse, and the correct credit. Deep-linkable: \`${ORIGIN}/check/?q=<quote>\`.
+- Verify API (for agents): \`GET ${ORIGIN.replace('https://quotle.info', 'https://quotle-community.stewartd.workers.dev')}/verify?q=<quote>\` → \`{ found, verdict, reallySaidBy, misattributedTo, safeToQuoteAs, reuse, rights, url }\`. Open CORS. Same verdicts as the [index JSON](${ORIGIN}/verify-index.json).
 
 ## Data
 - [Machine-readable index (JSON)](${ORIGIN}/data/manifest.json): every quote as \`{ dayNumber, quote, author, quoteSlug, confidence, url }\`.

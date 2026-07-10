@@ -19,7 +19,7 @@ const NAV_LINKS = [
   { key: 'quotes', label: 'Quotes', href: '/who-said/' },
   { key: 'themes', label: 'Themes', href: '/themes/' },
   { key: 'authors', label: 'Authors', href: '/authors/' },
-  { key: 'review', label: 'Under review', href: '/under-review/' },
+  { key: 'check', label: 'Check a quote', href: '/check/' },
 ];
 
 const NAV = (active) => `    <nav class="topnav">
