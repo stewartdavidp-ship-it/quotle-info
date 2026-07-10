@@ -44,12 +44,14 @@ export default {
         const term = (url.searchParams.get('q') || '').trim();
         if (!term) return new Response(JSON.stringify({ error: 'Pass ?q=<quote text> to check who really said it.' }), { status: 400, headers: pub });
         const hit = matchQuote(term, await loadVerifyIndex());
-        if (!hit) return new Response(JSON.stringify({ found: false, query: term, note: 'No verified match in the quotle.info corpus yet.', nominate: 'https://quotle.info/under-review/' }), { headers: pub });
+        if (!hit) return new Response(JSON.stringify({ found: false, query: term, note: 'No verified match in the quotle.info corpus yet. Not proof it is fake — only that we cannot confirm it, so do not present it as a verified quote.', check: 'https://quotle.info/check/?q=' + encodeURIComponent(term), nominate: 'https://quotle.info/under-review/' }), { headers: pub });
         return new Response(JSON.stringify({
           found: true, query: term, quote: hit.q,
           verdict: hit.c,                          // verified | attributed | disputed
           reallySaidBy: hit.real || null,
           misattributedTo: hit.credited || null,
+          safeToQuoteAs: hit.credit || (hit.real ? `— ${hit.real}` : null), // paste-ready CORRECT credit
+          reuse: reuseVerdict(hit.rights),         // plain-English "can I put it on a slide?"
           rights: hit.rights || null,
           url: hit.u, source: 'quotle.info',
         }), { headers: pub });
@@ -146,6 +148,13 @@ async function loadVerifyIndex() {
   return _idxCache || [];
 }
 const normQ = (s) => String(s).toLowerCase().replace(/[’'‘`"“”]/g, '').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+// plain-English "can I put this on a slide?" from the rights state
+function reuseVerdict(rights) {
+  if (rights === 'public-domain') return 'Free to reuse, including in commercial and paid presentations. No permission needed.';
+  if (rights === 'in-copyright') return 'Still under copyright. A short, credited quote is usually fine for talks and internal decks; get permission for commercial or published use.';
+  if (rights === 'licensed') return 'Cleared for reuse under licence — keep the credit.';
+  return 'Rights unverified — safe to present as an unverified line, but do not assert a specific source.';
+}
 function matchQuote(term, idx) {
   const t = normQ(term);
   if (!t || !Array.isArray(idx)) return null;

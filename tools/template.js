@@ -883,4 +883,4 @@ const STYLE = `${ROOT_CSS}
             .pager .next { text-align: left; }
         }`;
 
-module.exports = { renderPage, canonicalUrl, ogImageUrl, CONFIDENCE };
+module.exports = { renderPage, canonicalUrl, ogImageUrl, CONFIDENCE, creditLine, plain };

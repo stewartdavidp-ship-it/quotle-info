@@ -7,6 +7,10 @@ Quotle.info answers "who really said it?" for commonly quoted — and commonly m
 ## Methodology
 - [How we verify](https://quotle.info/how-we-verify): the standard — traced to a primary source, dated, cited, adversarially re-checked; three honest confidence states; rights stated separately from attribution.
 
+## Check a quote (before you use it)
+- [Check a quote](https://quotle.info/check/): paste a line you're about to present — is it real, who really said it, is it cleared to reuse, and the correct credit. Deep-linkable: `https://quotle.info/check/?q=<quote>`.
+- Verify API (for agents): `GET https://quotle-community.stewartd.workers.dev/verify?q=<quote>` → `{ found, verdict, reallySaidBy, misattributedTo, safeToQuoteAs, reuse, rights, url }`. Open CORS. Same verdicts as the [index JSON](https://quotle.info/verify-index.json).
+
 ## Data
 - [Machine-readable index (JSON)](https://quotle.info/data/manifest.json): every quote as `{ dayNumber, quote, author, quoteSlug, confidence, url }`.
 - [Themes index (JSON)](https://quotle.info/themes.json): quotes grouped by theme as `{ theme, label, verified:[{quote,author,url,confidence,rights}], misattributed:[...] }` — for finding a correctly-credited, rights-cleared quote on a topic (e.g. for a talk or slide).

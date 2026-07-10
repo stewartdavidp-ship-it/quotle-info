@@ -10,6 +10,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { creditLine } = require('./template');
 const ROOT = path.resolve(__dirname, '..');
 const QUOTES_DIR = path.join(ROOT, 'data', 'quotes');
 const ORIGIN = 'https://quotle.info';
@@ -34,7 +35,7 @@ for (const f of fs.readdirSync(QUOTES_DIR)) {
     c: r.confidence,                                   // verified | attributed | disputed
     real: plain((r.answer && r.answer.authorName) || ''), // who really said it
     credited: plain(r.creditedTo || (r.confidence === 'disputed' && r.misattribution && r.misattribution.items && r.misattribution.items[0] && r.misattribution.items[0].who) || ''), // who it's falsely credited to
-
+    credit: plain(creditLine(r)),                       // paste-ready CORRECT credit line (quote already implied)
     rights: (r.source && r.source.rights) || '',        // public-domain | in-copyright | ''
     u: `${ORIGIN}/who-said/${r.quoteSlug}/`,
   });

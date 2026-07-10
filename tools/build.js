@@ -104,6 +104,7 @@ function build() {
     require('./build-cite'); // regenerate /cite "how we used this source" interstitial
     require('./build-authors'); // regenerate /authors/{slug} profiles + index
     require('./build-themes'); // regenerate /themes/{slug} intent pages + index + themes.json
+    require('./build-check'); // regenerate /check paste-a-quote verifier
     require('./build-sitemap'); // regenerate sitemap.xml + llms.txt (machine discoverability)
   }
   console.log('Done.');
