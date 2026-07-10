@@ -60,7 +60,11 @@ export default {
           safeToQuoteAs: hit.credit || (hit.real ? `— ${hit.real}` : null), // paste-ready CORRECT credit
           reuse: reuseVerdict(hit.rights),         // plain-English "can I put it on a slide?"
           rights: hit.rights || null,
-          imageDirection: hit.img || null,         // context-grounded prompt for a slide image
+          // NOTE: image direction is intentionally NOT returned to agents. The usefulness test
+          // showed handing a model our terse templated prompt made its image ideas WORSE than the
+          // one it writes free-form. The grounded prompt still serves HUMANS on /check (which reads
+          // verify-index.json.img directly). Agents should invent their own image; we add rights,
+          // not image direction.
           url: hit.u, source: 'quotle.info',
         }), { headers: pub });
       }
