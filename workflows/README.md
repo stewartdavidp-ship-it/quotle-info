@@ -5,9 +5,9 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 558** quotes (241 genuine [verified+attributed] + 317 disputed). **Target: 2000.**
-- **Next wave number: r17.** (Waves r6–r16 shipped. Numbering is just a label for batch/scratch files.)
-- Harvest backlog: `data/harvest-queue.json` (committed) — ~404 queued. `node tools/harvest.js report`.
+- **Corpus: 638** quotes. **Target: 2000.**
+- **Next wave number: r19.** (Waves r6–r18 shipped. Numbering is just a label for batch/scratch files.)
+- Harvest backlog: `data/harvest-queue.json` (committed) — ~324 queued. `node tools/harvest.js report`.
 - Two harvest tracks (see below). Track A ≈ 70 magnet authors harvested; Track B covered 24 themes.
 
 ## The two tracks
