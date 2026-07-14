@@ -105,6 +105,7 @@ function build() {
     require('./build-authors'); // regenerate /authors/{slug} profiles + index
     require('./build-themes'); // regenerate /themes/{slug} intent pages + index + themes.json
     require('./build-check'); // regenerate /check paste-a-quote verifier
+    require('./build-discovery'); // regenerate openapi.json + .well-known/ai-plugin.json (agent API discovery)
     require('./build-sitemap'); // regenerate sitemap.xml + llms.txt (machine discoverability)
   }
   console.log('Done.');

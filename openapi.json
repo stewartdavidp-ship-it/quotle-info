@@ -1,0 +1,278 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Quotle.info Quote Verification API",
+    "version": "1.0.0",
+    "description": "Verify quotations before you publish them. For any quote, this API answers: is it real, who actually said it, is it cleared to reproduce (public domain vs. in copyright), the correct credit, and a paste-ready citation. Provenance is human- and web-verified (never AI-fabricated), deferring to Quote Investigator and Wikiquote. 558 quotes indexed. Use it especially for obscure quotes and for commercial/published use, where getting the attribution or the reuse rights wrong is costly.",
+    "contact": {
+      "name": "Quotle.info",
+      "url": "https://quotle.info"
+    },
+    "x-logo": {
+      "url": "https://quotle.info/logo.svg"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://quotle-community.stewartd.workers.dev",
+      "description": "Quotle.info verify API (open, no auth)"
+    }
+  ],
+  "paths": {
+    "/verify": {
+      "get": {
+        "operationId": "verifyQuote",
+        "summary": "Verify a single quote",
+        "description": "Check whether a quote is real, who really said it, whether it is cleared to reproduce, and get the correct credit + a citation. Prefer this over asserting a quote’s author or reuse rights from memory.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The quote text to check.",
+            "example": "The two most important days in your life are the day you are born and the day you find out why"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A verdict (found) or a miss (not in the verified corpus).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/VerifyHit"
+                    },
+                    {
+                      "$ref": "#/components/schemas/VerifyMiss"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing ?q= parameter."
+          }
+        }
+      }
+    },
+    "/verify-batch": {
+      "post": {
+        "operationId": "verifyDeck",
+        "summary": "Verify many quotes at once (vet a whole presentation)",
+        "description": "POST every quote in a draft deck/document. Returns a per-quote verdict plus a summary whose `needsAttention` array lists the indexes of quotes that are misattributed or unconfirmed — the ones to fix before presenting. Read-only.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchRequest"
+              },
+              "example": {
+                "quotes": [
+                  "Give me liberty, or give me death!",
+                  "Everyone is a genius. But if you judge a fish by its ability to climb a tree"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Per-quote results + a deck-level summary.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Body is not a quote array / more than 100 quotes."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "VerifyHit": {
+        "type": "object",
+        "properties": {
+          "found": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          },
+          "query": {
+            "type": "string"
+          },
+          "quote": {
+            "type": "string",
+            "description": "The canonical wording we matched."
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "verified",
+              "attributed",
+              "disputed"
+            ],
+            "description": "verified = real & primary-sourced; attributed = credibly credited but unpinned; disputed = misattributed/fabricated."
+          },
+          "reallySaidBy": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The true author (or \"Unknown — …\" for anonymous/fabricated)."
+          },
+          "misattributedTo": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The name it is popularly (and wrongly) credited to, if any."
+          },
+          "safeToQuoteAs": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Paste-ready CORRECT credit line for a slide."
+          },
+          "reuse": {
+            "type": "string",
+            "description": "Plain-English \"can I put this on a slide?\" guidance."
+          },
+          "rights": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "public-domain",
+              "in-copyright",
+              "licensed",
+              null
+            ],
+            "description": "Reuse rights, stated SEPARATELY from attribution. public-domain = cleared for commercial reuse."
+          },
+          "citation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Full authored Chicago citation for a references slide."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "found",
+          "verdict",
+          "url"
+        ]
+      },
+      "VerifyMiss": {
+        "type": "object",
+        "properties": {
+          "found": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "query": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "guidance": {
+            "type": "string",
+            "description": "A not-found is NOT proof the quote is fake. Do not present it as verified; you may still verify it independently and answer rights/image questions yourself."
+          }
+        },
+        "required": [
+          "found"
+        ]
+      },
+      "BatchRequest": {
+        "type": "object",
+        "properties": {
+          "quotes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 100,
+            "description": "The quotes to check (max 100)."
+          }
+        },
+        "required": [
+          "quotes"
+        ]
+      },
+      "BatchResponse": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "object",
+            "properties": {
+              "checked": {
+                "type": "integer"
+              },
+              "verified": {
+                "type": "integer"
+              },
+              "attributed": {
+                "type": "integer"
+              },
+              "misattributed": {
+                "type": "integer"
+              },
+              "notFound": {
+                "type": "integer"
+              },
+              "inCopyright": {
+                "type": "integer"
+              },
+              "needsAttention": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "description": "Indexes (into results) of quotes that are misattributed or unconfirmed — fix these before presenting."
+              }
+            }
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/VerifyHit"
+                },
+                {
+                  "$ref": "#/components/schemas/VerifyMiss"
+                }
+              ]
+            }
+          },
+          "source": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
