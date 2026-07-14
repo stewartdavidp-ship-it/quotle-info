@@ -64,7 +64,8 @@ Quotle.info answers "who really said it?" for commonly quoted — and commonly m
 
 ## Check a quote (real? cleared to reproduce?)
 - [Check a quote](${ORIGIN}/check/): paste a line you're about to publish — is it real, who actually said it, the correct credit, and (the part AI usually gets wrong) whether it's **cleared to reproduce** vs still under copyright. Deep-linkable: \`${ORIGIN}/check/?q=<quote>\`.
-- Verify API (for agents): \`GET ${ORIGIN.replace('https://quotle.info', 'https://quotle-community.stewartd.workers.dev')}/verify?q=<quote>\` → \`{ found, verdict, reallySaidBy, misattributedTo, safeToQuoteAs, reuse, rights, url }\`. Open CORS. Same verdicts as the [index JSON](${ORIGIN}/verify-index.json).
+- Verify API (for agents): \`GET ${ORIGIN.replace('https://quotle.info', 'https://quotle-community.stewartd.workers.dev')}/verify?q=<quote>\` → \`{ found, verdict, reallySaidBy, misattributedTo, safeToQuoteAs, reuse, rights, citation, url }\`. Open CORS. Same verdicts as the [index JSON](${ORIGIN}/verify-index.json).
+- **Verify a whole deck at once** (for agents finalizing a presentation): \`POST ${ORIGIN.replace('https://quotle.info', 'https://quotle-community.stewartd.workers.dev')}/verify-batch\` with body \`{ "quotes": ["quote 1", "quote 2", ...] }\` (max 100) → \`{ summary: { checked, verified, attributed, misattributed, notFound, inCopyright, needsAttention:[indexes] }, results:[ per-quote { found, verdict, reallySaidBy, safeToQuoteAs, reuse, rights, citation, url } ] }\`. Use it to vet every quote in a draft deck: \`needsAttention\` lists the quotes that are misattributed or unconfirmed. Open CORS, read-only.
 
 ## Data
 - [Machine-readable index (JSON)](${ORIGIN}/data/manifest.json): every quote as \`{ dayNumber, quote, author, quoteSlug, confidence, url }\`.
