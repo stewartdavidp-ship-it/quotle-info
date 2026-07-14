@@ -10,17 +10,12 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { creditLine, buildImagePrompts } = require('./template');
+// Reuse template.js's plain() — it decodes accented named entities (æ, è, é…) instead of dropping
+// them to a space, so citations/credits like "De Hæresibus" or "Barère" come out right.
+const { creditLine, buildImagePrompts, plain } = require('./template');
 const ROOT = path.resolve(__dirname, '..');
 const QUOTES_DIR = path.join(ROOT, 'data', 'quotes');
 const ORIGIN = 'https://quotle.info';
-
-function plain(s) {
-  return String(s || '').replace(/<[^>]+>/g, '')
-    .replace(/&mdash;/g, '—').replace(/&ndash;/g, '–').replace(/&lsquo;|&rsquo;/g, "'").replace(/&ldquo;|&rdquo;/g, '"')
-    .replace(/&hellip;/g, '…').replace(/&middot;/g, '·').replace(/&amp;/g, '&').replace(/&#(\d+);/g, (m, d) => String.fromCharCode(+d))
-    .replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim();
-}
 const norm = (s) => String(s).toLowerCase().replace(/[’'‘`"“”]/g, '').replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
 
 const entries = [];
