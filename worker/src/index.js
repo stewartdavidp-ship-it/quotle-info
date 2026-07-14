@@ -34,7 +34,13 @@ export default {
     const send = (obj, status = 200) =>
       new Response(JSON.stringify(obj), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
 
-    if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
+    // Public verify endpoints allow ANY origin (agents/apps); the community endpoints stay scoped.
+    if (req.method === 'OPTIONS') {
+      const oc = url.pathname.startsWith('/verify')
+        ? { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type' }
+        : cors;
+      return new Response(null, { status: 204, headers: oc });
+    }
 
     try {
       // Public quote-verification API — open CORS, callable by any agent/app. Fetches the live
@@ -60,6 +66,7 @@ export default {
           safeToQuoteAs: hit.credit || (hit.real ? `— ${hit.real}` : null), // paste-ready CORRECT credit
           reuse: reuseVerdict(hit.rights),         // plain-English "can I put it on a slide?"
           rights: hit.rights || null,
+          citation: hit.cite || null,              // full authored Chicago citation for a references slide
           // NOTE: image direction is intentionally NOT returned to agents. The usefulness test
           // showed handing a model our terse templated prompt made its image ideas WORSE than the
           // one it writes free-form. The grounded prompt still serves HUMANS on /check (which reads
@@ -67,6 +74,40 @@ export default {
           // not image direction.
           url: hit.u, source: 'quotle.info',
         }), { headers: pub });
+      }
+
+      // Batch "verify my deck" — an agent POSTs every quote in a draft presentation and gets back a
+      // per-quote verdict + correct credit + reuse status + paste-ready citation, plus a summary that
+      // flags which quotes would embarrass (misattributed) or can't be confirmed. Read-only, open CORS.
+      if (url.pathname === '/verify-batch' && req.method === 'POST') {
+        const pub = { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', 'Cache-Control': 'no-store' };
+        const body = await req.json().catch(() => null);
+        const list = Array.isArray(body) ? body : (body && Array.isArray(body.quotes) ? body.quotes : null);
+        if (!list) return new Response(JSON.stringify({ error: 'POST a JSON array of quotes, or { "quotes": [ ... ] }.' }), { status: 400, headers: pub });
+        if (list.length > 100) return new Response(JSON.stringify({ error: 'Max 100 quotes per batch.' }), { status: 400, headers: pub });
+        const idx = await loadVerifyIndex();
+        const results = list.map((raw) => {
+          const query = String(raw == null ? '' : (typeof raw === 'object' ? (raw.quote || raw.text || '') : raw)).trim();
+          const hit = query ? matchQuote(query, idx) : null;
+          if (!hit) return { query, found: false, note: 'Not in the verified corpus — cannot confirm. Do not present as a verified quote with a named author.' };
+          return {
+            query, found: true, verdict: hit.c, reallySaidBy: hit.real || null, misattributedTo: hit.credited || null,
+            safeToQuoteAs: hit.credit || (hit.real ? `— ${hit.real}` : null), reuse: reuseVerdict(hit.rights),
+            rights: hit.rights || null, citation: hit.cite || null, url: hit.u,
+          };
+        });
+        const summary = {
+          checked: results.length,
+          verified: results.filter((r) => r.found && r.verdict === 'verified').length,
+          attributed: results.filter((r) => r.found && r.verdict === 'attributed').length,
+          misattributed: results.filter((r) => r.found && r.verdict === 'disputed').length,
+          notFound: results.filter((r) => !r.found).length,
+          inCopyright: results.filter((r) => r.rights === 'in-copyright').length,
+        };
+        summary.needsAttention = results
+          .map((r, i) => ((r.found && r.verdict === 'disputed') || !r.found ? i : -1))
+          .filter((i) => i >= 0);
+        return new Response(JSON.stringify({ summary, results, source: 'quotle.info' }), { headers: pub });
       }
 
       if (url.pathname === '/votes' && req.method === 'GET') {

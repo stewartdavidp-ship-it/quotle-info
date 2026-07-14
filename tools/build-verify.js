@@ -36,6 +36,7 @@ for (const f of fs.readdirSync(QUOTES_DIR)) {
     real: plain((r.answer && r.answer.authorName) || ''), // who really said it
     credited: plain(r.creditedTo || (r.confidence === 'disputed' && r.misattribution && r.misattribution.items && r.misattribution.items[0] && r.misattribution.items[0].who) || ''), // who it's falsely credited to
     credit: plain(creditLine(r)),                       // paste-ready CORRECT credit line (quote already implied)
+    cite: plain((r.cite && r.cite.sourceCitation) || ''), // full authored Chicago citation (for a references slide)
     rights: (r.source && r.source.rights) || '',        // public-domain | in-copyright | ''
     img: (buildImagePrompts(r)[0] || ''),               // context-grounded image direction (the "in context" one)
     u: `${ORIGIN}/who-said/${r.quoteSlug}/`,
