@@ -20,14 +20,14 @@ if (!JOURNAL) { console.error('usage: apply-tags.js --journal <tag journal.jsonl
 const DIR = path.join(REPO, 'data/quotes');
 
 const tags = {};
+const take = (r) => { if (!r || !r.slug) return; const t = [...new Set((r.themes || []).filter(isTheme))]; if (t.length) tags[r.slug] = t; };
 for (const l of fs.readFileSync(JOURNAL, 'utf8').trim().split('\n')) {
   let j; try { j = JSON.parse(l); } catch (e) { continue; }
-  if (j.type !== 'result' || !j.result || !Array.isArray(j.result.results)) continue;
-  for (const r of j.result.results) {
-    if (!r || !r.slug) continue;
-    const t = [...new Set((r.themes || []).filter(isTheme))];
-    if (t.length) tags[r.slug] = t;
-  }
+  if (j.type !== 'result' || !j.result) continue;
+  // Two shapes: the workflow's final return {result:{results:[...]}}, OR a per-agent
+  // journal line whose result IS a single {slug,themes} (what wf journal.jsonl actually holds).
+  if (Array.isArray(j.result.results)) j.result.results.forEach(take);
+  else take(j.result);
 }
 let n = 0;
 for (const [slug, themes] of Object.entries(tags)) {

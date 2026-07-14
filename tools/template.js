@@ -149,8 +149,13 @@ function buildJsonLd(q, url) {
   // disputed claimant is still carried by the ClaimReview below, so nothing is lost.
   const heroName = plain((q.answer && q.answer.authorName) || '');
   const heroUnknown = !heroName || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroName);
+  const magnetName = plain(q.creditedTo || '').toLowerCase();
+  // On a disputed page, emit Quotation.creator ONLY when it names the TRUE author: it must match the
+  // hero, the hero must be a real named person, AND the hero must NOT be the magnet. This catches
+  // records where generate left answer.authorName as the wrongly-credited name (else the machine-
+  // readable creator would assert the very misattribution the page debunks).
   const creatorOk = s.creator && (q.confidence !== 'disputed'
-    || (!heroUnknown && plain(s.creator.name).toLowerCase() === heroName.toLowerCase()));
+    || (!heroUnknown && plain(s.creator.name).toLowerCase() === heroName.toLowerCase() && heroName.toLowerCase() !== magnetName));
   if (creatorOk) {
     quotation.creator = { '@type': 'Person', name: s.creator.name };
     if (s.creator.birthDate) quotation.creator.birthDate = s.creator.birthDate;
@@ -395,9 +400,10 @@ function renderPresentationKit(q) {
   const useTone = u ? u.tone : 'warn';
   const useIcon = u ? u.icon : '?';
 
-  const trueName = plain((q.answer || {}).authorName || 'unknown');
+  // Don't name a "correct credit" here — the pkit-credit blockquote directly above already shows it.
+  // (Naming answer.authorName could self-contradict when a record left it as the magnet.)
   const warn = (q.confidence === 'disputed' && q.creditedTo) ? `
-                    <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>${esc(q.creditedTo)}</strong>. Use the credit above (${esc(trueName)}) instead.</p>` : '';
+                    <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>${esc(q.creditedTo)}</strong>. Use the credit shown above instead.</p>` : '';
 
   const [imgA, imgB] = buildImagePrompts(q);
 
