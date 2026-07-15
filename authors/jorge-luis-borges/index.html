@@ -150,7 +150,10 @@
         .chip[aria-pressed="true"] .n { color:var(--slate); }
         .f-count { font-family:'DM Sans',sans-serif; font-size:0.8rem; color:var(--text-muted); margin-top:4px; }
         .ac[hidden] { display:none; }
+        /* the display:block below beats the UA's [hidden]{display:none}, so restate it explicitly —
+           otherwise el.hidden=true leaves a dead "Show all" button sitting there (same trap as .ac). */
         .f-more { display:block; margin:26px auto 0; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; color:var(--ink); background:var(--bg-card); border:1px solid var(--border-accent); border-radius:999px; padding:11px 24px; cursor:pointer; transition:transform 0.2s; }
+        .f-more[hidden] { display:none; }
         .f-more:hover { transform:translateY(-2px); }
         .f-none { display:none; background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:18px 20px; margin-top:20px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--slate); }
         footer { text-align:center; padding:40px 24px; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-size:0.8rem; border-top:1px solid var(--border); margin-top:48px; }
