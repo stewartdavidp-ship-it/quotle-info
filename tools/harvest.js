@@ -15,7 +15,11 @@
  *                                                             corpus + backlog), sweep published
  *                                                             ones to 'ingested', rebuild digest
  *   node tools/harvest.js select <N> [--wave rN] [--author "Name"] [--category misattributed]
+ *                                   [--source harvest-file.json]
  *                                                             mark the top-N queued as 'selected'
+ *                                                             (--source draws from ONE harvest input;
+ *                                                             use it when a pool must jump the
+ *                                                             genuine-famous-ranks-last default)
  *   node tools/harvest.js unselect [--wave rN]                revert selected → queued
  *   node tools/harvest.js batch  [--wave rN] [--out path]     emit ingestion args
  *                                                             [{text,author,index:null}] for the
@@ -151,6 +155,10 @@ function cmdSync(inputs) {
         magnetAuthor: c.magnetAuthor || c.creditedTo || '', creditedTo: c.creditedTo || '',
         trueOrigin: c.trueOrigin || '', category: c.category || '', whyNotable: c.whyNotable || '',
         likelyConfidence: c.likelyConfidence || '', rightsEra: c.rightsEra || '', documentedAt: c.documentedAt || '',
+        // The Quotle game's slot number, when the candidate came from the game. Carried into the
+        // batch as `index` → becomes the record's dayNumber (prep-wave.js), which is what the game
+        // resolves its "Who really said it?" link through. null for candidates with no game slot.
+        gameIndex: (typeof c.gameIndex === 'number') ? c.gameIndex : null,
         status: 'queued', wave: null, resultSlug: null, harvestedFrom: path.basename(src), harvestedOn: today(), notes: '',
       };
       data.candidates.push(rec); byNorm.set(n, rec); added++;
@@ -167,6 +175,7 @@ function parseFlags(args) {
     if (args[i] === '--wave') f.wave = args[++i];
     else if (args[i] === '--author') f.author = args[++i];
     else if (args[i] === '--category') f.category = args[++i];
+    else if (args[i] === '--source') f.source = args[++i];
     else if (args[i] === '--out') f.out = args[++i];
     else f._ = (f._ || []).concat(args[i]);
   }
@@ -181,6 +190,11 @@ function cmdSelect(args) {
   let pool = data.candidates.filter((c) => c.status === 'queued');
   if (f.author) pool = pool.filter((c) => c.magnetAuthor.toLowerCase().includes(f.author.toLowerCase()));
   if (f.category) pool = pool.filter((c) => c.category === f.category);
+  // --source draws a wave from one harvest input. Needed because the default sort ranks
+  // genuine-famous LAST (CAT_RANK) — correct when the site's thesis is misattribution, but it
+  // buries pools we sometimes need FIRST. The Quotle game's hidden quotes are the live example:
+  // they're all genuine-famous, and each stays unplayable until it has a verified page.
+  if (f.source) pool = pool.filter((c) => String(c.harvestedFrom || '').includes(f.source));
   sortCandidates(pool);
   const pick = pool.slice(0, n);
   pick.forEach((c) => { c.status = 'selected'; c.wave = f.wave || c.wave || 'next'; });
@@ -203,7 +217,9 @@ function cmdBatch(args) {
   const data = loadBacklog();
   const sel = data.candidates.filter((c) => c.status === 'selected' && (!f.wave || c.wave === f.wave));
   if (!sel.length) { console.error(`no selected candidates${f.wave ? ` for wave ${f.wave}` : ''}. Run: harvest.js select <N> --wave rN`); process.exit(1); }
-  const items = sel.map((c) => ({ text: c.quote, author: c.magnetAuthor, index: null }));
+  // index → the record's dayNumber. Candidates harvested from the Quotle game already own a slot
+  // there, so pass it through: the page then maps straight back to the puzzle it unblocks.
+  const items = sel.map((c) => ({ text: c.quote, author: c.magnetAuthor, index: c.gameIndex ?? null }));
   const out = f.out || path.join(ROOT, 'data', `.harvest-batch${f.wave ? '-' + f.wave : ''}.json`);
   fs.writeFileSync(out, JSON.stringify(items, null, 2) + '\n');
   console.log(`wrote ${items.length} ingestion items → ${out}`);

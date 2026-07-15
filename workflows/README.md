@@ -57,10 +57,18 @@ Workflow harvest-candidates.js  args={authors:[<magnet authors NOT yet harvested
 #    write to /tmp/harvest-rN.json, then:
 node tools/harvest.js sync /tmp/harvest-rN.json     # append + dedup vs corpus+backlog
 #    (TRACK B instead: Workflow harvest-verified-by-theme.js; candidates are {theme,quotes} per agent.)
+#    (TRACK C — the Quotle game's hidden quotes: already synced from the game, no harvest needed.
+#     The game plays ONLY quotes verified here, so each of these is a puzzle that stays dark until
+#     it has a page. They're genuine-famous, which CAT_RANK sorts LAST, so they never surface in a
+#     default `select` — draw them explicitly with --source. They carry gameIndex → batch `index`
+#     → the record's dayNumber, so the page maps straight back to the puzzle it unblocks:
+#         node tools/harvest.js select 40 --wave rN --source quotle-game-unverified.json
+#     After the wave ships, flip those quotes to verified:true in gameshelf/quotle/index.html.)
 
 # 1. SELECT + BATCH the next ~40
 node tools/harvest.js select 40 --wave rN           # review the list; `harvest.js skip <slug>` (see the skip bar below)
-node tools/harvest.js batch  --wave rN              # writes data/.harvest-batch-rN.json = [{text,author,index:null}]
+node tools/harvest.js batch  --wave rN              # writes data/.harvest-batch-rN.json = [{text,author,index}]
+                                                    # index = gameIndex (track C) or null (tracks A/B)
 
 # 2. GENERATE (Opus, QI-deference). Pass TODAY'S date.
 Workflow generate.js  args={items:<contents of data/.harvest-batch-rN.json>, verifiedDate:"D Mon YYYY", dateModified:"YYYY-MM-DD"}
