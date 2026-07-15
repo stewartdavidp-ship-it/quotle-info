@@ -391,6 +391,7 @@ const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb">
             </div>
             <div class="fbar-row">
                 <span class="fbar-lbl">Era</span>
+                <button class="chip" data-era="" aria-pressed="true">All <span class="n">${authors.length}</span></button>
 ${ERAS.map((e) => `                <button class="chip" data-era="${e.id}" aria-pressed="false">${e.label} <span class="n">${eraCounts[e.id] || 0}</span></button>`).join('\n')}
             </div>
             <p id="f-count" class="f-count" role="status" aria-live="polite"></p>
