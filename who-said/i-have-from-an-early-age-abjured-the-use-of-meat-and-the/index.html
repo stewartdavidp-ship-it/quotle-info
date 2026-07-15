@@ -734,6 +734,35 @@
             const el = document.getElementById(btn.dataset.target);
             if (el) copy(el.textContent.trim(), btn.dataset.target === 'kitCredit' ? 'Quote + credit copied' : 'Image prompt copied');
         }));
+
+        // Breadcrumb: when you ARRIVED from a theme, show that route back —
+        // Home > Themes > Friendship > quote — instead of the static attribution trail.
+        // Uses document.referrer, not a ?from= param: same-origin navigations send the full path,
+        // so this needs no query string. A param would mint a second crawlable URL per quote per
+        // theme and fight the canonical, to buy nothing a crawler can use anyway.
+        // Progressive enhancement only. Arrive direct, from search, or as a crawler and the static
+        // attribution crumb (and the BreadcrumbList JSON-LD, which stays the canonical hierarchy)
+        // is what you get. The theme is only shown if this quote genuinely carries it — the chip
+        // must exist — so a stale or hand-typed referrer can't invent a filing.
+        (function () {
+            if (!document.referrer) return;
+            var u; try { u = new URL(document.referrer, location.origin); } catch (e) { return; }
+            if (u.origin !== location.origin) return;
+            var m = u.pathname.match(/^\/themes\/([a-z][a-z0-9-]*)\/?$/);
+            if (!m) return;
+            var chip = document.querySelector('.theme-chip[href="/themes/' + m[1] + '/"]');
+            if (!chip) return;
+            var nav = document.querySelector('nav.breadcrumb');
+            var leaf = nav && nav.querySelector('[aria-current="page"]');
+            if (!leaf) return;
+            var sep = function () { var s = document.createElement('span'); s.className = 'sep'; s.setAttribute('aria-hidden', 'true'); s.textContent = '\u203A'; return s; };
+            var link = function (href, text) { var a = document.createElement('a'); a.setAttribute('href', href); a.textContent = text; return a; };
+            nav.textContent = '';
+            nav.appendChild(link('/', 'Home')); nav.appendChild(sep());
+            nav.appendChild(link('/themes/', 'Themes')); nav.appendChild(sep());
+            nav.appendChild(link(chip.getAttribute('href'), chip.textContent.trim())); nav.appendChild(sep());
+            nav.appendChild(leaf);
+        })();
     </script>
     <script>
         (function(){
