@@ -95,6 +95,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/kindness-in-words-creates-confidence-kindness-in-thinking#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Lao Tzu (Laozi)",
+              "item": "https://quotle.info/authors/lao-tzu-laozi"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Kindness in words creates confidence. Kindness in thinking creates profoundness. Kindness in giving creates love"
+            }
+          ]
         }
       ]
     }
@@ -273,6 +296,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -595,6 +621,15 @@
             <p>The saying&rsquo;s tidy three-part structure &mdash; words, thinking, giving &mdash; reads like ancient wisdom, and Lao Tzu&rsquo;s name lends instant gravity. That combination is exactly what makes a modern aphorism go viral under a philosopher&rsquo;s byline while the real trail runs cold in a 20th-century quotation anthology.</p>
             <p>The lesson isn&rsquo;t that the sentiment is bad &mdash; it&rsquo;s that &ldquo;Lao Tzu said&rdquo; is doing unearned work. When a line praises &ldquo;love&rdquo; and appears in no chapter of the text it&rsquo;s ascribed to, the honest label is &ldquo;author unknown.&rdquo;</p>
             <p class="pull">It appears in no chapter of the Tao Te Ching — and no earlier than 1977.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/kindness/">Kindness</a>
+                <a class="theme-chip" href="/themes/love/">Love</a>
+                <a class="theme-chip" href="/themes/character/">Character</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

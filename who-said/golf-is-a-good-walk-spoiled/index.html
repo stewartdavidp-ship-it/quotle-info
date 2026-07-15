@@ -91,6 +91,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/golf-is-a-good-walk-spoiled#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Mark Twain",
+              "item": "https://quotle.info/authors/mark-twain"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Golf is a good walk spoiled"
+            }
+          ]
         }
       ]
     }
@@ -269,6 +292,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -591,6 +617,13 @@
             <p>Mark Twain is the internet&rsquo;s favorite gravitational well for homeless one-liners: if a quip is dry, folksy, and vaguely 19th-century, it drifts to him. &ldquo;Golf is a good walk spoiled&rdquo; fits the mold perfectly, which is precisely why the 1948 attribution took hold and never let go.</p>
             <p>In reality the line predates its famous claimants and belonged to no one in particular &mdash; a working piece of sporting-page wit that changed owners every few years until it found the most bankable name available.</p>
             <p class="pull">An orphan quip that only borrowed Twain&rsquo;s name 38 years after he died.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/happiness/">Happiness</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -96,6 +96,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/sometimes-a-cigar-is-just-a-cigar#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Sigmund Freud",
+              "item": "https://quotle.info/authors/sigmund-freud"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Sometimes a cigar is just a cigar"
+            }
+          ]
         }
       ]
     }
@@ -274,6 +297,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -588,6 +614,14 @@
             <p>Freud built a system in which nothing is ever &lsquo;just&rsquo; anything &mdash; a cigar, a train, an umbrella could all stand in for something unconscious. So a line in which Freud himself waves that off is irresistibly funny, and irresistibly quotable. That is precisely the pattern of a good apocryphal quote: too perfect, and unattached to any real source.</p>
             <p>When scholars went looking, the trail ran cold well short of Freud. The earliest version anyone has found appears in 1950 &mdash; eleven years after his death &mdash; and even it only gestures at a &ldquo;famous remark&rdquo; no one can locate. The honest verdict is that this is a saying <em>about</em> Freud that the culture handed back to him.</p>
             <p class="pull">A line too perfectly Freudian to be Freud&rsquo;s.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/simplicity/">Simplicity</a>
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

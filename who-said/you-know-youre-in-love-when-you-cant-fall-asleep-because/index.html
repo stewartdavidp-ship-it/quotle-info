@@ -91,6 +91,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/you-know-youre-in-love-when-you-cant-fall-asleep-because#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Dr. Seuss (Theodor Seuss Geisel)",
+              "item": "https://quotle.info/authors/dr-seuss-theodor-seuss-geisel"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "You know you're in love when you can't fall asleep because reality is finally better than your dreams"
+            }
+          ]
         }
       ]
     }
@@ -269,6 +292,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -577,6 +603,14 @@
             <p>The sentence is compact, romantic, and endlessly shareable &mdash; ideal for image macros, wedding readings, and greeting cards. Dr. Seuss&rsquo;s name gives an anonymous line instant credibility, which is exactly why unsourced sayings gravitate to famous authors.</p>
             <p>Notably, the wording carries none of Seuss&rsquo;s signature rhyme or playful meter. That stylistic mismatch, plus the total absence of a book or date, is the tell that this is a modern saying wearing a borrowed name.</p>
             <p class="pull">127,000+ likes, and not one citation.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/love/">Love</a>
+                <a class="theme-chip" href="/themes/happiness/">Happiness</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

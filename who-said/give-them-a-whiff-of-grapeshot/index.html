@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/give-them-a-whiff-of-grapeshot#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Thomas Carlyle",
+              "item": "https://quotle.info/authors/thomas-carlyle"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Give them a whiff of grapeshot"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -595,6 +621,14 @@
             <p>On 13 Vend&eacute;miaire (5 October 1795) a young Napoleon Bonaparte helped the Republic scatter a royalist rising in Paris with point-blank artillery fire &mdash; the episode that first made his name. Four decades later, Thomas Carlyle compressed the whole convulsion into a memorable image: the Revolution, he wrote, was ended by &ldquo;a whiff of grapeshot.&rdquo;</p>
             <p>Carlyle&rsquo;s phrase was so vivid that it detached from his book and reattached to Napoleon himself, mutating into a supposed order &mdash; &ldquo;give them a whiff of grapeshot&rdquo; &mdash; that no primary source records him giving.</p>
             <p class="pull">The Revolution was &ldquo;blown into space&rdquo; by a whiff of grapeshot &mdash; Carlyle&rsquo;s image, not Napoleon&rsquo;s order.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/power/">Power</a>
+                <a class="theme-chip" href="/themes/leadership/">Leadership</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

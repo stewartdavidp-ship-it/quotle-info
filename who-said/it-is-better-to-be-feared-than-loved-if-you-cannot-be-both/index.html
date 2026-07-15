@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/it-is-better-to-be-feared-than-loved-if-you-cannot-be-both#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Niccolò Machiavelli",
+              "item": "https://quotle.info/authors/niccolo-machiavelli"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "It is better to be feared than loved, if you cannot be both"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -602,6 +628,14 @@
             <p>Chapter 17 is the emotional core of <em>The Prince</em>: Machiavelli coolly weighs love against fear as instruments of rule and decides fear is the safer bet, because love &ldquo;is preserved by the link of obligation which&hellip; is broken at every opportunity,&rdquo; while fear is held by &ldquo;a dread of punishment which never fails.&rdquo;</p>
             <p>But he immediately hedges: the wise prince makes himself feared <em>without</em> becoming hated. The famous soundbite keeps the cold calculation and loses the caution.</p>
             <p class="pull">One should wish to be both &mdash; but if forced to choose, it is safer to be feared.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/power/">Power</a>
+                <a class="theme-chip" href="/themes/leadership/">Leadership</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

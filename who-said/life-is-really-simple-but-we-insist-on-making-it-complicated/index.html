@@ -95,6 +95,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/life-is-really-simple-but-we-insist-on-making-it-complicated#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Confucius",
+              "item": "https://quotle.info/authors/confucius"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Life is really simple, but we insist on making it complicated"
+            }
+          ]
         }
       ]
     }
@@ -273,6 +296,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -587,6 +613,14 @@
             <p>Confucius is a magnet for modern aphorisms for the same reason as Einstein, Twain, and Gandhi: attaching a name that means &ldquo;timeless wisdom&rdquo; makes a tidy line feel weightier and stops readers asking where it came from. A crisp paradox about simplicity fits the popular image of a sage, so few pause to check whether it is actually in the <em>Analects</em>.</p>
             <p>The honest answer is that no one knows who first wrote it. The trail goes cold at a 1949 trade magazine, and even there it is a floating aphorism rather than a sourced Confucian saying. That absence &mdash; not a rival author &mdash; is the whole story.</p>
             <p class="pull">A name that means &ldquo;ancient wisdom&rdquo; is exactly what a rootless quote needs to survive.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/simplicity/">Simplicity</a>
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

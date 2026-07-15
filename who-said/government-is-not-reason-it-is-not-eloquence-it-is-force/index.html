@@ -97,6 +97,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/government-is-not-reason-it-is-not-eloquence-it-is-force#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "George Washington",
+              "item": "https://quotle.info/authors/george-washington"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Government is not reason, it is not eloquence, it is force; like fire, a troublesome servant and a fearful master"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +298,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -597,6 +623,14 @@
             <p>The quote is potent political rhetoric &mdash; a stark, quotable warning about state power &mdash; and Washington&rsquo;s name lends it unimpeachable authority. That combination is exactly what makes fabricated founder quotes travel so far.</p>
             <p>Its real lineage runs through an old &ldquo;good servant, bad master&rdquo; proverb, reworked into an anti-government epigram that first appears, unsigned, in 1902 and was popularized by Upton Sinclair in 1915.</p>
             <p class="pull">&ldquo;No one has ever found any evidence that Washington said it.&rdquo;</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/power/">Power</a>
+                <a class="theme-chip" href="/themes/justice/">Justice</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

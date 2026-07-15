@@ -97,6 +97,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/adventure-is-worthwhile-in-itself#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Amelia Earhart",
+              "item": "https://quotle.info/authors/amelia-earhart"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Adventure is worthwhile in itself"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +298,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -589,6 +615,15 @@
             <p>Earhart is a magnet for uplifting quotes because she left real, quotable writing &mdash; two books in her lifetime and a posthumous third &mdash; and because her life embodies daring. That combination makes a short, punchy line like &ldquo;Adventure is worthwhile in itself&rdquo; feel unimpeachably hers, even when no one can name the page it came from.</p>
             <p>The tell here is the company it keeps: online it is usually fused to the &ldquo;decision to act &hellip; paper tigers&rdquo; passage, a piece of polished motivational prose that is itself undocumented. When an unsourced line is used to authenticate another unsourced line, the citation chain is circular &mdash; which is why we mark this <em>attributed</em> rather than <em>verified</em>.</p>
             <p class="pull">Credited everywhere, sourced nowhere &mdash; a beloved line still waiting for its page number.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/courage/">Courage</a>
+                <a class="theme-chip" href="/themes/purpose/">Purpose</a>
+                <a class="theme-chip" href="/themes/happiness/">Happiness</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

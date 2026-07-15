@@ -108,6 +108,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-perfect-is-the-enemy-of-the-good#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Voltaire",
+              "item": "https://quotle.info/authors/voltaire"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The perfect is the enemy of the good"
+            }
+          ]
         }
       ]
     }
@@ -286,6 +309,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -603,6 +629,14 @@
             <p>The maxim endures because it names a real trap: the pursuit of an ideal outcome can prevent a perfectly workable one. Voltaire deployed it as a moral about restlessness &mdash; his heroine cannot leave a good life alone &mdash; and the line has since become a staple of engineering, medicine, economics, and management, usually as a caution against over-optimizing.</p>
             <p>Its journey is itself an example of the idea: a compact old proverb, &lsquo;good enough&rsquo; as it was, outlived every attempt to improve on it &mdash; and it reached the English-speaking world through a slightly imperfect translation that stuck.</p>
             <p class="pull">Le mieux est l&rsquo;ennemi du bien.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+                <a class="theme-chip" href="/themes/simplicity/">Simplicity</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

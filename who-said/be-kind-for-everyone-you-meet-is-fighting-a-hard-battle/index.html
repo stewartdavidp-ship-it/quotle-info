@@ -101,6 +101,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/be-kind-for-everyone-you-meet-is-fighting-a-hard-battle#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "John Watson (\"Ian Maclaren\")",
+              "item": "https://quotle.info/authors/john-watson-ian-maclaren"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Be kind, for everyone you meet is fighting a hard battle"
+            }
+          ]
         }
       ]
     }
@@ -279,6 +302,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -603,6 +629,14 @@
             <p>Watson delivered the thought as pastoral counsel, and its power lay in the old sense of <em>pitiful</em> &mdash; not &lsquo;pathetic,&rsquo; but &lsquo;full of pity.&rsquo; As that sense faded, editors and reciters swapped in &ldquo;kind,&rdquo; and &ldquo;every man&rdquo; broadened to &ldquo;everyone you meet.&rdquo;</p>
             <p>The migration onto Plato is a textbook case of authority-borrowing: a modern maxim gains gravitas when draped over an ancient name, and repetition on quote sites hardens the mistake.</p>
             <p class="pull">&ldquo;Be pitiful&rdquo; became &ldquo;Be kind&rdquo; &mdash; and a Scottish minister became Plato.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/kindness/">Kindness</a>
+                <a class="theme-chip" href="/themes/resilience/">Resilience</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

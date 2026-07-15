@@ -95,6 +95,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/live-a-good-life-if-there-are-gods-and-they-are-just-then#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Marcus Aurelius",
+              "item": "https://quotle.info/authors/marcus-aurelius"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Live a good life. If there are gods and they are just, then they will not care how devout you have been, but will welcome you based on the virtues you have lived by. If there are gods, but unjust, then you should not want to worship them. If there are no gods, then you will be gone, but will have lived a noble life that will live on in the memories of your loved ones"
+            }
+          ]
         }
       ]
     }
@@ -273,6 +296,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -588,6 +614,15 @@
             <p>The sentiment &mdash; live well and you lose nothing whether or not the gods are watching &mdash; is really a compact, secular restatement of Pascal&rsquo;s Wager, dressed in Stoic robes. Its appeal is exactly why it spread: it flatters both the devout and the doubtful, and Marcus Aurelius&rsquo;s reputation as the philosopher-king lends it instant gravitas.</p>
             <p>But Marcus was an earnest polytheist for whom providence was a settled fact, not a hypothesis. The genuine passage it borrows from reaches the opposite conclusion: he would not even want to live &lsquo;in a universe devoid of gods and devoid of Providence.&rsquo;</p>
             <p class="pull">Marcus argues the gods do exist and care for us. The viral quote hedges that they might not exist at all.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/character/">Character</a>
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+                <a class="theme-chip" href="/themes/mortality/">Mortality</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

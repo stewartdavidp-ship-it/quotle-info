@@ -99,6 +99,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/three-things-cannot-be-long-hidden-the-sun-the-moon-and-the#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "The Buddha (Siddhārtha Gautama)",
+              "item": "https://quotle.info/authors/the-buddha-siddhartha-gautama"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Three things cannot be long hidden: the sun, the moon, and the truth"
+            }
+          ]
         }
       ]
     }
@@ -277,6 +300,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -601,6 +627,13 @@
             <p>The gap between the canonical text and the popular quote is not just wording &mdash; it is meaning. The Buddha&rsquo;s original point was institutional: unlike the secret, initiate-only doctrines of some rival schools, his teaching was proclaimed openly, &ldquo;in the open, not under cover.&rdquo; The modern version repurposes that image into a moral promise that truth will always come to light, which is a different (and more marketable) claim.</p>
             <p>That drift is exactly what makes the line so quotable today &mdash; and so easy to hang on whichever sage a reader finds most authoritative, whether the Buddha, Confucius, or a modern statesman.</p>
             <p class="pull">A claim about open teaching became a promise that truth always surfaces.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

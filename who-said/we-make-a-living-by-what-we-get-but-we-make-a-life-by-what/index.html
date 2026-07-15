@@ -97,6 +97,28 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/we-make-a-living-by-what-we-get-but-we-make-a-life-by-what#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Unknown (anonymous)"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "We make a living by what we get, but we make a life by what we give"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +297,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -589,6 +614,14 @@
             <p>The saying works as a tidy chiasmus &mdash; &lsquo;get&rsquo; against &lsquo;give,&rsquo; &lsquo;living&rsquo; against &lsquo;life&rsquo; &mdash; the kind of balanced epigram people instinctively file under a great orator. Churchill is the default magnet for any unowned line that sounds wise and vaguely British, so an anonymous 1944 newspaper filler drifted, over decades, into his mouth.</p>
             <p>The competing MacEwen credit is instructive: when a saying is genuinely orphaned, multiple plausible-sounding attributions bloom at once, none with a page or a date behind it. That disagreement is itself the fingerprint of a misattribution.</p>
             <p class="pull">An orphan aphorism with a famous face bolted on &mdash; the name is decoration, not authorship.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/kindness/">Kindness</a>
+                <a class="theme-chip" href="/themes/purpose/">Purpose</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

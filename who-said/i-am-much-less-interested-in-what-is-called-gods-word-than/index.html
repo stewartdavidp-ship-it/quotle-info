@@ -108,6 +108,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/i-am-much-less-interested-in-what-is-called-gods-word-than#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "John Burroughs",
+              "item": "https://quotle.info/authors/john-burroughs"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "I am much less interested in what is called God's word than in God's deeds"
+            }
+          ]
         }
       ]
     }
@@ -286,6 +309,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -604,6 +630,14 @@
             <p>Edison did hold irreverent views about scripture &mdash; he gave interviews doubting a personal God and a literal soul &mdash; so a line like this <em>sounds</em> like him, which is exactly why it sticks. But sounding like someone is not the same as being said by them.</p>
             <p>The actual author, John Burroughs, wrote from a self-described <em>pantheist</em> standpoint: reverence directed at nature and &ldquo;God&rsquo;s deeds&rdquo; rather than at any book. Published months after his death in 1921, the passage is a tidy statement of that creed &mdash; and a reminder of how easily a famous friend&rsquo;s name can swallow a quieter writer&rsquo;s words.</p>
             <p class="pull">The pantheist voice is Burroughs&rsquo;s; the byline the internet gave it is Edison&rsquo;s.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/character/">Character</a>
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

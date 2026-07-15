@@ -101,6 +101,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/do-what-you-can-with-what-youve-got-where-you-are#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Squire Bill Widener",
+              "item": "https://quotle.info/authors/squire-bill-widener"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Do what you can, with what you've got, where you are"
+            }
+          ]
         }
       ]
     }
@@ -279,6 +302,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -603,6 +629,15 @@
             <p>The line lands like a Roosevelt maxim &mdash; terse, bracing, self-reliant &mdash; which is exactly why his name stuck to it. But in the <em>Autobiography</em> he is doing something more modest: crediting a plain-spoken Virginia farmer whose wisdom he wanted to preserve.</p>
             <p>That small act of attribution is what the internet erased. Strip the &ldquo;quoted by Squire Bill Widener&rdquo; clause and you get a clean presidential quotation &mdash; tidy, shareable, and slightly false.</p>
             <p class="pull">Roosevelt wrote it down. He also told you it wasn&rsquo;t his.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/resilience/">Resilience</a>
+                <a class="theme-chip" href="/themes/simplicity/">Simplicity</a>
+                <a class="theme-chip" href="/themes/work/">Work</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

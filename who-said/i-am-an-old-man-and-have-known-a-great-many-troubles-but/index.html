@@ -96,6 +96,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/i-am-an-old-man-and-have-known-a-great-many-troubles-but#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Seneca the Younger",
+              "item": "https://quotle.info/authors/seneca-the-younger"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "I am an old man and have known a great many troubles, but most of them never happened"
+            }
+          ]
         }
       ]
     }
@@ -274,6 +297,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -596,6 +622,15 @@
             <p>The <em>thought</em> behind the line is genuinely ancient and genuinely Stoic. In his letters to Lucilius, Seneca argues that most of what we dread never arrives: &ldquo;There are more things &hellip; likely to frighten us than there are to crush us; we suffer more often in imagination than in reality&rdquo; (Letter 13), and elsewhere, &ldquo;there is nothing so wretched or foolish as to anticipate misfortunes&rdquo; (Letter 98).</p>
             <p>But the folksy, self-deprecating punchline &mdash; an <em>old man</em> looking back and admitting most of his troubles &ldquo;never happened&rdquo; &mdash; is a 19th-century English proverb, not a translation of Seneca. Quote Investigator traces humorous versions circulating by the 1880s, with the fraction of troubles that never happened drifting between &ldquo;the worst,&rdquo; &ldquo;nine-tenths,&rdquo; and &ldquo;most.&rdquo;</p>
             <p class="pull">The idea is Seneca&rsquo;s. The joke is anonymous.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+                <a class="theme-chip" href="/themes/doubt/">Doubt</a>
+                <a class="theme-chip" href="/themes/hope/">Hope</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

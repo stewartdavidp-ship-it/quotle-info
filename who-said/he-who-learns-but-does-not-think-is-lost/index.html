@@ -106,6 +106,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/he-who-learns-but-does-not-think-is-lost#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Confucius",
+              "item": "https://quotle.info/authors/confucius"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "He who learns but does not think, is lost"
+            }
+          ]
         }
       ]
     }
@@ -284,6 +307,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -595,6 +621,14 @@
             <p>Verse 2.15 is one of the Analects&rsquo; tightest formulations of Confucius&rsquo; theory of education: study and reflection are useless apart and powerful together. It reads as a balanced couplet &mdash; learning without thought leaves you &lsquo;lost&rsquo; or bewildered; thought without learning leaves you in &lsquo;danger.&rsquo;</p>
             <p>Because the line survives only in Classical Chinese, every English version is an act of interpretation. That is why the same nine characters have entered English as &ldquo;labour lost,&rdquo; &ldquo;a blur,&rdquo; &ldquo;a waste,&rdquo; and Waley&rsquo;s memorable &ldquo;is lost&rdquo; &mdash; all faithful to the original, none definitive.</p>
             <p class="pull">Learning without thought leaves you lost; thought without learning leaves you in danger.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/knowledge/">Knowledge</a>
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

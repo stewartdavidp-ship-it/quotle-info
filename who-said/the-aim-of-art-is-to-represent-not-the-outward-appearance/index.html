@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-aim-of-art-is-to-represent-not-the-outward-appearance#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Will Durant",
+              "item": "https://quotle.info/authors/will-durant"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The aim of art is to represent not the outward appearance of things, but their inward significance"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -603,6 +629,14 @@
             <p>Durant&rsquo;s <em>The Story of Philosophy</em> works by paraphrase: he condenses each thinker into brisk, quotable prose, often folding his own summarizing sentences right after phrases like &ldquo;says Aristotle.&rdquo; Read at speed &mdash; or clipped for a quote card &mdash; those summaries look exactly like direct quotations.</p>
             <p>That is how this line, and several other &lsquo;Aristotle&rsquo; favorites from the same book, escaped into the world under Aristotle&rsquo;s name. The underlying thought is faithful to Aristotle&rsquo;s account of <em>mimesis</em> in the <em>Poetics</em>; the polished wording is Durant&rsquo;s twentieth-century voice.</p>
             <p class="pull">Faithful to Aristotle&rsquo;s idea — but written by his 1926 popularizer, Will Durant.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/creativity/">Creativity</a>
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -90,6 +90,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/we-can-easily-forgive-a-child-who-is-afraid-of-the-dark-the#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Plato",
+              "item": "https://quotle.info/authors/plato"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "We can easily forgive a child who is afraid of the dark; the real tragedy of life is when men are afraid of the light"
+            }
+          ]
         }
       ]
     }
@@ -268,6 +291,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -591,6 +617,15 @@
             <p>Plato&rsquo;s <em>Republic</em> gave the world its most famous parable of illumination: prisoners chained in a cave who take flickering shadows for reality, and who are blinded &mdash; even hostile &mdash; when dragged up into the sunlight. A pithy line about grown men being &ldquo;afraid of the light&rdquo; slots so neatly into that imagery that few readers pause to ask whether Plato actually wrote it.</p>
             <p>He didn&rsquo;t. The value of tracing these lines is not to deny the thought its charm but to separate a genuine 2,400-year-old text from a modern sentence wearing an ancient mask.</p>
             <p class="pull">It fits the Allegory of the Cave so well that no one checks &mdash; which is exactly how misquotes survive.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/courage/">Courage</a>
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

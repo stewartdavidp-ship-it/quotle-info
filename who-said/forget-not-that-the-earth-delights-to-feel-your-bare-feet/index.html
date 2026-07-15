@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/forget-not-that-the-earth-delights-to-feel-your-bare-feet#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Kahlil Gibran",
+              "item": "https://quotle.info/authors/kahlil-gibran"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Forget not that the earth delights to feel your bare feet and the winds long to play with your hair"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -596,6 +622,15 @@
             <p>&ldquo;On Clothes&rdquo; is one of the twenty-six short discourses that make up <em>The Prophet</em>, Kahlil Gibran&rsquo;s 1923 book in which the fictional prophet Almustafa answers the people of Orphalese on subjects from love to death before departing by ship. Asked to &ldquo;speak to us of Clothes,&rdquo; Almustafa argues that garments are as much a shield of shame and habit as they are protection, and closes the passage by urging his listeners not to let clothing sever them from direct, physical contact with the natural world.</p>
             <p>This exact sentence closes that discourse, immediately following Gibran&rsquo;s lines on modesty as &ldquo;a shield against the eye of the unclean.&rdquo; It is one of the most widely circulated single lines from <em>The Prophet</em> on social media and inspirational-quote sites, almost always presented on its own and stripped of the leading &ldquo;And&rdquo; that opens it in the original text.</p>
             <p class="pull">And forget not that the earth delights to feel your bare feet and the winds long to play with your hair.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/freedom/">Freedom</a>
+                <a class="theme-chip" href="/themes/happiness/">Happiness</a>
+                <a class="theme-chip" href="/themes/simplicity/">Simplicity</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

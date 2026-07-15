@@ -95,6 +95,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/success-usually-comes-to-those-who-are-too-busy-to-be#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Henry David Thoreau",
+              "item": "https://quotle.info/authors/henry-david-thoreau"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Success usually comes to those who are too busy to be looking for it"
+            }
+          ]
         }
       ]
     }
@@ -273,6 +296,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -587,6 +613,14 @@
             <p>Thoreau is a natural lightning rod for aphorisms about work and purpose. His real writing &mdash; &ldquo;the mass of men lead lives of quiet desperation,&rdquo; &ldquo;simplify, simplify&rdquo; &mdash; is crisp, moral, and quotable, so a tidy modern maxim about success finding the busy slides comfortably under his name and rarely gets questioned.</p>
             <p>But this particular line matches nothing in his corpus. It carries a mid-20th-century, self-improvement cadence rather than Thoreau&rsquo;s 1840s&ndash;50s prose, and the earliest appearances his own scholarly library can find are minor publications well after his death.</p>
             <p class="pull">A modern success maxim in Thoreau&rsquo;s clothing &mdash; his own library says it isn&rsquo;t his.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/success/">Success</a>
+                <a class="theme-chip" href="/themes/work/">Work</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

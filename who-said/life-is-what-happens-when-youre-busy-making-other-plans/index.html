@@ -104,6 +104,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/life-is-what-happens-when-youre-busy-making-other-plans#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Allen Saunders",
+              "item": "https://quotle.info/authors/allen-saunders"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Life is what happens when you're busy making other plans"
+            }
+          ]
         }
       ]
     }
@@ -282,6 +305,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -595,6 +621,14 @@
             <p>The saying travels well because it lands emotionally, and Lennon&rsquo;s version came wrapped in tragedy: &ldquo;Beautiful Boy&rdquo; was a father&rsquo;s tender song to his young son Sean, released weeks before Lennon was murdered in December 1980. A line about life slipping past while you plan for later reads very differently once you know the singer had almost no &ldquo;later&rdquo; left.</p>
             <p>That poignancy is exactly why the misattribution is so durable. Crediting a folksy aphorism to a comic-strip writer named Allen Saunders is forgettable; crediting it to John Lennon gives it a face, a voice, and a story.</p>
             <p class="pull">The line was in print, credited to Saunders, when Lennon was still a teenager in Liverpool.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/time/">Time</a>
+                <a class="theme-chip" href="/themes/simplicity/">Simplicity</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

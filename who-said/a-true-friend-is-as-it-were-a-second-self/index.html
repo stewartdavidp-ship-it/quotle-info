@@ -106,6 +106,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/a-true-friend-is-as-it-were-a-second-self#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Marcus Tullius Cicero",
+              "item": "https://quotle.info/authors/marcus-tullius-cicero"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "A true friend is, as it were, a second self"
+            }
+          ]
         }
       ]
     }
@@ -284,6 +307,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -601,6 +627,14 @@
             <p>Cicero&rsquo;s <em>De Amicitia</em> was one of the most widely read texts of the Middle Ages and Renaissance, which is how &ldquo;a second self&rdquo; became the standard way to describe a true friend in European languages. The Latin <em>alter idem</em> and its cousin <em>alter ego</em> both flow from this tradition.</p>
             <p>The paradox Cicero packs into two words &mdash; a friend who is at once <em>other</em> (alter) and <em>identical</em> (idem) &mdash; is exactly what has kept the line quotable for two millennia.</p>
             <p class="pull">A friend is &ldquo;other&rdquo; and &ldquo;the same&rdquo; at once &mdash; <em>alter idem</em>.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/friendship/">Friendship</a>
+                <a class="theme-chip" href="/themes/love/">Love</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/a-man-of-genius-makes-no-mistakes-his-errors-are-volitional#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "James Joyce",
+              "item": "https://quotle.info/authors/james-joyce"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "A man of genius makes no mistakes. His errors are volitional and are the portals of discovery"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -601,6 +627,15 @@
             <p>The line comes from the &ldquo;Scylla and Charybdis&rdquo; episode of <em>Ulysses</em>, set in the National Library of Ireland, where Stephen Dedalus holds forth on a theory of Shakespeare's life and marriage. When John Eglinton suggests that Shakespeare's marriage to Anne Hathaway was simply a mistake, Stephen dismisses the idea &mdash; genius, he argues, does not make mistakes in the ordinary sense; its apparent errors are chosen, and become the means by which new understanding is reached.</p>
             <p>The aphorism has taken on a life well beyond its original context, frequently cited (and just as frequently truncated) as general wisdom about creativity and failure, stripped of the specific claim about genius that gives it its edge in the novel.</p>
             <p class="pull">His errors are volitional and are the portals of discovery.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/failure/">Failure</a>
+                <a class="theme-chip" href="/themes/growth/">Growth</a>
+                <a class="theme-chip" href="/themes/creativity/">Creativity</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -104,6 +104,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/education-is-the-kindling-of-a-flame-not-the-filling-of-a#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Plutarch",
+              "item": "https://quotle.info/authors/plutarch"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Education is the kindling of a flame, not the filling of a vessel"
+            }
+          ]
         }
       ]
     }
@@ -282,6 +305,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -597,6 +623,14 @@
             <p>The line endures because it captures a genuine educational ideal in one clean antithesis &mdash; learning as ignition, not storage. That elegance is exactly why it drifts onto Socrates: a maxim about the love of inquiry feels like it <em>should</em> belong to the philosopher who claimed to know only that he knew nothing.</p>
             <p>But the polish is the tell. Plutarch&rsquo;s actual sentence is longer and hedged with qualification; the slogan is a 20th-century compression that no ancient author wrote. Crediting it to Socrates gives a modern paraphrase a 2,400-year pedigree it never earned.</p>
             <p class="pull">Learning as ignition, not storage &mdash; a real idea, wrongly signed.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/knowledge/">Knowledge</a>
+                <a class="theme-chip" href="/themes/growth/">Growth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

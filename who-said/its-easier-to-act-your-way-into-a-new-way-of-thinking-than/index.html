@@ -97,6 +97,28 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/its-easier-to-act-your-way-into-a-new-way-of-thinking-than#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Anonymous"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "It's easier to act your way into a new way of thinking than to think your way into a new way of acting"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +297,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -597,6 +622,14 @@
             <p>The saying is built on <em>chiasmus</em> &mdash; the mirrored &ldquo;act your way into thinking / think your way into acting&rdquo; structure &mdash; which makes it endlessly remixable. Over ninety years the verbs have swapped between <em>act</em>, <em>live</em>, and <em>behave</em>, and the nouns between <em>right thinking</em>, <em>new way of thinking</em>, and <em>new way of feeling</em>.</p>
             <p>That plasticity is exactly why no single author can claim it: each speaker reshaped an already-circulating proverb. It survives in psychotherapy, recovery, and management literature precisely because it compresses a real idea &mdash; behavior can lead belief &mdash; into a memorable mirror.</p>
             <p class="pull">An idea old enough, and useful enough, to belong to everyone and no one.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/change/">Change</a>
+                <a class="theme-chip" href="/themes/growth/">Growth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

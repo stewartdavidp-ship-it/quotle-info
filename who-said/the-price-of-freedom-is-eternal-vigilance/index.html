@@ -97,6 +97,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-price-of-freedom-is-eternal-vigilance#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "John Philpot Curran",
+              "item": "https://quotle.info/authors/john-philpot-curran"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The price of freedom is eternal vigilance"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +298,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -597,6 +623,14 @@
             <p>Jefferson is a magnet for stirring civic one-liners, and the phrase&rsquo;s themes &mdash; liberty, watchfulness, the danger of concentrated power &mdash; sound Jeffersonian. But the paper trail runs elsewhere. American newspapers first printed Curran&rsquo;s 1790 words with his name, then began dropping the attribution and compressing the sentence, so that by the mid-19th century it circulated as a free-floating maxim ripe for reassignment to a Founding Father.</p>
             <p>The wording submitted here, &ldquo;the price of freedom is eternal vigilance,&rdquo; is a second-order paraphrase: it reverses the clauses of the standard saying and swaps &ldquo;freedom&rdquo; for &ldquo;liberty.&rdquo; No primary source ties that exact phrasing to Jefferson &mdash; or to any single author.</p>
             <p class="pull">The idea is Curran&rsquo;s, the famous wording is Phillips&rsquo;, and neither man was Jefferson.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/freedom/">Freedom</a>
+                <a class="theme-chip" href="/themes/justice/">Justice</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

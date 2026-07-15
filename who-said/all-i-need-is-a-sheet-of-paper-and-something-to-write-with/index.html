@@ -106,6 +106,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/all-i-need-is-a-sheet-of-paper-and-something-to-write-with#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Cornelia Funke",
+              "item": "https://quotle.info/authors/cornelia-funke"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "All I need is a sheet of paper and something to write with, and then I can turn the world upside down"
+            }
+          ]
         }
       ]
     }
@@ -284,6 +307,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -602,6 +628,14 @@
             <p>The idea &mdash; that a writer armed with only paper and pen can overturn the world &mdash; sits perfectly inside Funke&rsquo;s Inkworld, where words read aloud literally remake reality. So a boastful line about the power of writing felt at home as an epigraph, and Nietzsche&rsquo;s reputation for punchy aphorisms made the fictional credit read as plausible.</p>
             <p>Once the line was lifted out of the novel and onto quote sites, the fabricated citation fell away and only the famous name remained &mdash; a self-reinforcing loop, since no aggregator ever names the Nietzsche work it supposedly comes from (because none exists).</p>
             <p class="pull">A line invented for a novel about the magic of writing became &mdash; through writing &mdash; a fake Nietzsche quote.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/power/">Power</a>
+                <a class="theme-chip" href="/themes/creativity/">Creativity</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

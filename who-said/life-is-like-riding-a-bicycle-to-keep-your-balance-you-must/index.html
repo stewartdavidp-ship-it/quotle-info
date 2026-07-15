@@ -106,6 +106,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/life-is-like-riding-a-bicycle-to-keep-your-balance-you-must#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Albert Einstein",
+              "item": "https://quotle.info/authors/albert-einstein"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Life is like riding a bicycle. To keep your balance, you must keep moving"
+            }
+          ]
         }
       ]
     }
@@ -284,6 +307,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -608,6 +634,15 @@
             <p>Einstein wrote the line not as public wisdom but as a father&rsquo;s encouragement. In early 1930 his younger son <em>Eduard</em> &mdash; not yet twenty, gifted, and beginning the psychiatric decline that would define his life &mdash; was on Einstein&rsquo;s mind, and the bicycle image folded a physicist&rsquo;s instinct for balance and momentum into a piece of paternal advice.</p>
             <p>Walter Isaacson lifted the sentence into the epigraph of his 2007 biography, and from there the tidied English version spread across motivational posters, business talks, and social media &mdash; usually stripped of the letter, the son, and the literal &lsquo;people&rsquo; wording behind it.</p>
             <p class="pull">He was writing to a struggling son, not to posterity.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/change/">Change</a>
+                <a class="theme-chip" href="/themes/growth/">Growth</a>
+                <a class="theme-chip" href="/themes/resilience/">Resilience</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

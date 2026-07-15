@@ -91,6 +91,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/success-consists-of-going-from-failure-to-failure-without#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Winston Churchill",
+              "item": "https://quotle.info/authors/winston-churchill"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Success consists of going from failure to failure without loss of enthusiasm"
+            }
+          ]
         }
       ]
     }
@@ -269,6 +292,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -583,6 +609,14 @@
             <p>The sentiment &mdash; that resilience matters more than an unbroken record of wins &mdash; is exactly the kind of pithy, forceful line that <em>sounds</em> Churchillian, which is precisely why it drifted to him. Sayings feel more authoritative when attached to a famous orator, so an anonymous 1950s maxim about public speaking gradually acquired a marquee name.</p>
             <p>By the 1980s the once-anonymous line was being confidently credited to Churchill (and, almost as often, to Abraham Lincoln), even though it survives in neither man&rsquo;s documented words.</p>
             <p class="pull">An anonymous maxim in search of a famous mouth &mdash; and Churchill&rsquo;s was the one it found.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/resilience/">Resilience</a>
+                <a class="theme-chip" href="/themes/success/">Success</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

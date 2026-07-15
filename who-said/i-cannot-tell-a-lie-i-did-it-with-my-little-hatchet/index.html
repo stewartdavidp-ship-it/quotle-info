@@ -108,6 +108,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/i-cannot-tell-a-lie-i-did-it-with-my-little-hatchet#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Mason Locke Weems",
+              "item": "https://quotle.info/authors/mason-locke-weems"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "I cannot tell a lie, I did it with my little hatchet"
+            }
+          ]
         }
       ]
     }
@@ -286,6 +309,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -603,6 +629,14 @@
             <p>After Washington&rsquo;s death in 1799, an eager public wanted intimate stories about the first president. Weems, a Federalist admirer of order and self-discipline, supplied them &mdash; casting Washington&rsquo;s public greatness as the fruit of private virtue. The cherry tree, added in 1806, was the perfect parable of honesty.</p>
             <p>Nineteenth-century schoolbooks, above all McGuffey&rsquo;s Readers (from 1836), drilled the story into millions of American children and standardized its wording, which is how a bookseller&rsquo;s moral fiction hardened into &ldquo;something Washington said.&rdquo;</p>
             <p class="pull">A bookseller&rsquo;s parable, repeated until it passed for history.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+                <a class="theme-chip" href="/themes/character/">Character</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

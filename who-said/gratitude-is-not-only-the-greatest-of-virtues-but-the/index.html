@@ -108,6 +108,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/gratitude-is-not-only-the-greatest-of-virtues-but-the#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Marcus Tullius Cicero",
+              "item": "https://quotle.info/authors/marcus-tullius-cicero"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Gratitude is not only the greatest of virtues, but the parent of all others"
+            }
+          ]
         }
       ]
     }
@@ -286,6 +309,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -602,6 +628,14 @@
             <p>The line is genuinely rooted in a Roman courtroom, not a book of maxims. Defending Cn. Plancius &mdash; who had sheltered Cicero during his exile &mdash; Cicero made his own <em>gratitude</em> the emotional core of the defence, arguing that to repay a benefactor is not merely decent but the root from which every other virtue grows.</p>
             <p>That is why the thought has traveled so far: it elevates gratitude from a courtesy to a foundation. The catch for quoters is that the crisp modern sentence is a paraphrase &mdash; Cicero never wrote the word &ldquo;gratitude&rdquo; as the grammatical subject; translators and later editors supplied it.</p>
             <p class="pull">For this one virtue is not only the greatest, but is also the parent of all the other virtues.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/gratitude/">Gratitude</a>
+                <a class="theme-chip" href="/themes/character/">Character</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

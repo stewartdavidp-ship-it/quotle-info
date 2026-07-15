@@ -99,6 +99,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-journey-of-a-thousand-miles-begins-with-a-single-step#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Laozi (Lao Tzu)",
+              "item": "https://quotle.info/authors/laozi-lao-tzu"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The journey of a thousand miles begins with a single step"
+            }
+          ]
         }
       ]
     }
@@ -277,6 +300,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -595,6 +621,15 @@
             <p>In chapter 64 of the <em>Tao Te Ching</em>, the line sits in a series of images about how large things grow from tiny ones: a tree that fills the arms grew from a sprout, a nine-storey tower rose from a heap of earth, and a thousand-<em>li</em> journey begins under one&rsquo;s feet. The point is Laozi&rsquo;s philosophy of acting on things while they are still small and manageable.</p>
             <p>Because Laozi and Confucius are the two most famous names of early Chinese thought and lived around the same era, feel-good aphorisms from either are routinely swapped &mdash; and this one is very often pinned on Confucius in English-language quote collections.</p>
             <p class="pull">A journey of a thousand li starts beneath one&rsquo;s feet.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/courage/">Courage</a>
+                <a class="theme-chip" href="/themes/growth/">Growth</a>
+                <a class="theme-chip" href="/themes/purpose/">Purpose</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

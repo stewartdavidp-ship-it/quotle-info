@@ -97,6 +97,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/if-you-dont-read-the-newspaper-you-are-uninformed-if-you-do#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Mark Twain",
+              "item": "https://quotle.info/authors/mark-twain"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "If you don't read the newspaper, you are uninformed. If you do read the newspaper, you are misinformed"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +298,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -596,6 +622,15 @@
             <p>There is a fitting joke buried in this quote&rsquo;s history: newspaper columnists spent years citing a fabricated Twain line&mdash;in newspapers&mdash;to warn readers that newspapers can&rsquo;t be trusted. An unreliable citation testifying to unreliability is exactly the kind of self-swallowing paradox Twain built careers of humor on.</p>
             <p>The sentiment itself is genuinely old. Complaints that reading the press leaves you worse-informed than reading nothing stretch back through Ezra Taft Benson, Orville Hubbard and all the way to Thomas Jefferson in 1807. The <em>phrasing</em> we share today, though, is a late-20th-century coinage&mdash;polished, symmetrical, and authorless&mdash;that found a famous home it never earned.</p>
             <p class="pull">A fake quote about misinformation, spread by the very medium it mocks.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+                <a class="theme-chip" href="/themes/doubt/">Doubt</a>
+                <a class="theme-chip" href="/themes/knowledge/">Knowledge</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

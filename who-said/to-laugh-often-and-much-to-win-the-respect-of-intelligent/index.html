@@ -104,6 +104,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/to-laugh-often-and-much-to-win-the-respect-of-intelligent#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Bessie Anderson Stanley",
+              "item": "https://quotle.info/authors/bessie-anderson-stanley"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "To laugh often and much; to win the respect of intelligent people and the affection of children... to know even one life has breathed easier because you have lived. This is to have succeeded"
+            }
+          ]
         }
       ]
     }
@@ -282,6 +305,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -604,6 +630,15 @@
             <p>Emerson is a magnet for uplifting, unsourced aphorisms: a high-minded 19th-century American sage is a plausible-sounding home for almost any noble sentiment about self-reliance, nature, or success. That plausibility is exactly what lets a fabricated attribution spread unchecked.</p>
             <p>In reality the passage began as an ordinary reader&rsquo;s contest entry. Stanley answered &ldquo;What constitutes success?&rdquo; in about a hundred words, won a cash prize, and saw her paragraph reprinted, reworded, and eventually handed to Emerson &mdash; a reminder that a beloved quote&rsquo;s true author is often far more modest than its famous byline.</p>
             <p class="pull">The thought is Bessie Anderson Stanley&rsquo;s. Only the byline is Emerson&rsquo;s.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/success/">Success</a>
+                <a class="theme-chip" href="/themes/happiness/">Happiness</a>
+                <a class="theme-chip" href="/themes/character/">Character</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -98,6 +98,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-greatest-way-to-live-with-honor-in-this-world-is-to-be#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Socrates",
+              "item": "https://quotle.info/authors/socrates"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The greatest way to live with honor in this world is to be what we pretend to be"
+            }
+          ]
         }
       ]
     }
@@ -276,6 +299,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -591,6 +617,14 @@
             <p>Xenophon&rsquo;s Socrates is coaching young Critobulus on how to win real friends and a real reputation. His point is blunt: don&rsquo;t chase the <em>appearance</em> of virtue, because a false reputation collapses the instant you&rsquo;re asked to deliver on it. The safest road to honour is simply to <em>become</em> good at the thing you want to be admired for.</p>
             <p>The modern &lsquo;pretend to be&rsquo; rewrite keeps the shape of that idea but nudges its spirit &mdash; from &lsquo;be genuinely what you appear&rsquo; toward &lsquo;live up to your pretense.&rsquo; It&rsquo;s a memorable line, but it is Xenophon&rsquo;s Socrates filtered through an 18th-century translator and then smoothed by the internet, not anything Socrates is recorded as saying word-for-word.</p>
             <p class="pull">&ldquo;Be in reality what we would appear to be&rdquo; &mdash; not &ldquo;pretend to be.&rdquo;</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/character/">Character</a>
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

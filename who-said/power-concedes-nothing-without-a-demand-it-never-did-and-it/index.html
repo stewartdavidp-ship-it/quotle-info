@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/power-concedes-nothing-without-a-demand-it-never-did-and-it#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Frederick Douglass",
+              "item": "https://quotle.info/authors/frederick-douglass"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Power concedes nothing without a demand. It never did and it never will"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -615,6 +641,15 @@
             <p>Douglass delivered the address on the twenty-third anniversary of British emancipation in the West Indies, using the occasion to argue that freedom is won by pressure, not granted by the powerful. The surrounding lines &mdash; &ldquo;If there is no struggle, there is no progress&rdquo; and &ldquo;The limits of tyrants are prescribed by the endurance of those whom they oppress&rdquo; &mdash; frame the sentence as a theory of how change actually happens.</p>
             <p>Spoken four years before the Civil War, the passage reads as both a diagnosis of slavery&rsquo;s stubbornness and a call to organized demand. It has since become a staple of civil-rights, labor, and protest rhetoric.</p>
             <p class="pull">Power concedes nothing without a demand.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/justice/">Justice</a>
+                <a class="theme-chip" href="/themes/power/">Power</a>
+                <a class="theme-chip" href="/themes/courage/">Courage</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

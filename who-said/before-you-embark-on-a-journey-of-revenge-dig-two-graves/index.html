@@ -101,6 +101,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/before-you-embark-on-a-journey-of-revenge-dig-two-graves#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "William Elliot Griffis",
+              "item": "https://quotle.info/authors/william-elliot-griffis"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Before you embark on a journey of revenge, dig two graves"
+            }
+          ]
         }
       ]
     }
@@ -279,6 +302,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -604,6 +630,14 @@
             <p>The saying most people know &mdash; grave, symmetrical, faintly Eastern &mdash; is a textbook example of a proverb drifting across cultures and picking up a prestigious name along the way. Its earliest recorded ancestor isn&rsquo;t about revenge at all: it warns that cursing someone may doom you too, &ldquo;curses, like young chickens,&rdquo; coming home to roost.</p>
             <p>Only over the twentieth century did &ldquo;curse&rdquo; harden into &ldquo;revenge,&rdquo; the origin migrate from Japan to China, and the author blank get filled in with the most famous Chinese name available. The polish is real; the attribution is not.</p>
             <p class="pull">It started as a warning about curses &mdash; not revenge &mdash; and it was Japanese, not Confucian.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+                <a class="theme-chip" href="/themes/justice/">Justice</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

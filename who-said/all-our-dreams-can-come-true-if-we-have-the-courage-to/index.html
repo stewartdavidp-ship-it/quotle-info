@@ -97,6 +97,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/all-our-dreams-can-come-true-if-we-have-the-courage-to#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Walt Disney",
+              "item": "https://quotle.info/authors/walt-disney"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "All our dreams can come true, if we have the courage to pursue them"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +298,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -588,6 +614,14 @@
             <p>Walt Disney&rsquo;s entire brand is dreams-made-real, so a tidy sentence about dreams and courage feels unmistakably &lsquo;his&rsquo; &mdash; which is exactly why it attaches to him so easily and resists correction. The line reads like distilled Disney marketing, and LibQuotes suggests it may in fact be a paraphrase of the Disneyland tagline &ldquo;Where Dreams Come True&rdquo; rather than a personal remark.</p>
             <p>The same dynamic produced &ldquo;If you can dream it, you can do it,&rdquo; another perennial &lsquo;Disney&rsquo; quote actually written by Imagineer Tom Fitzgerald years after Walt&rsquo;s death. In both cases the sentiment is on-brand; the sourcing is not.</p>
             <p class="pull">It&rsquo;s very &lsquo;Wisdom-ish&rsquo; &mdash; but it doesn&rsquo;t appear in publication.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/courage/">Courage</a>
+                <a class="theme-chip" href="/themes/hope/">Hope</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -98,6 +98,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/if-you-dont-stand-for-something-you-will-fall-for-anything#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Malcolm X",
+              "item": "https://quotle.info/authors/malcolm-x"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "If you don't stand for something you will fall for anything"
+            }
+          ]
         }
       ]
     }
@@ -276,6 +299,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -589,6 +615,14 @@
             <p>The sentiment &mdash; that conviction is a defense against manipulation &mdash; fits Malcolm X&rsquo;s public image so well that the misattribution feels self-evidently right to readers. That plausibility is exactly what lets a genuinely author-less proverb travel under a famous name.</p>
             <p>In reality the phrase was a mid-century American commonplace, surfacing in a 1926 church bulletin as &ldquo;It is easier to fall for anything than to stand for something&rdquo; and reaching its familiar shape in 1945 through a physician&rsquo;s essay and a movie star&rsquo;s radio appearance.</p>
             <p class="pull">A proverb in print by 1945 &mdash; when Malcolm X was still years from public life.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/character/">Character</a>
+                <a class="theme-chip" href="/themes/courage/">Courage</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

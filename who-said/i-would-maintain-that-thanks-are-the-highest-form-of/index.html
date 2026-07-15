@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/i-would-maintain-that-thanks-are-the-highest-form-of#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "G. K. Chesterton",
+              "item": "https://quotle.info/authors/g-k-chesterton"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "I would maintain that thanks are the highest form of thought; and that gratitude is happiness doubled by wonder"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -601,6 +627,14 @@
             <p>The sentence is a small aside inside a 1917 popular history: mid-narrative, Chesterton stops to argue that thanks is not sentimentality but a form of clear thinking. Set against his image of a man &ldquo;sucking his soul&rdquo; in self-sufficiency, gratitude becomes the intelligent response to a world one did not make.</p>
             <p>&ldquo;Happiness doubled by wonder&rdquo; compresses that into an equation: to be glad <em>and</em> astonished at the same thing is to be twice as glad. It is quintessential Chesterton &mdash; a paradox that turns a moral into a mathematical-sounding claim.</p>
             <p class="pull">Thanks are the highest form of thought &mdash; gratitude, happiness doubled by wonder.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/gratitude/">Gratitude</a>
+                <a class="theme-chip" href="/themes/happiness/">Happiness</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -97,6 +97,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/a-free-people-ought-not-only-to-be-armed-and-disciplined#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "George Washington",
+              "item": "https://quotle.info/authors/george-washington"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "A free people ought not only to be armed and disciplined, but they should have sufficient arms and ammunition to maintain a status of independence from any who might attempt to abuse them"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +298,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -591,6 +617,14 @@
             <p>The quote is routinely deployed in Second Amendment debates as if Washington endorsed an armed citizenry as a check on government. The authentic 1790 passage does the opposite kind of work: it is a plea for the fledgling United States to build its own arsenals and powder mills so it would not have to buy &ldquo;military supplies&rdquo; from foreign powers &mdash; a supply-chain argument born of the Continental Army&rsquo;s wartime shortages.</p>
             <p>The fabricated tail, traced to 1975, grafts a distinctly modern anti-tyranny reading onto a founder who, as president, actually led troops to put down the Whiskey Rebellion. That gap between the real sentence and the meme is exactly why it keeps getting fact-checked.</p>
             <p class="pull">Authentic in its first ten words; fabricated in everything that makes it quotable.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/freedom/">Freedom</a>
+                <a class="theme-chip" href="/themes/justice/">Justice</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

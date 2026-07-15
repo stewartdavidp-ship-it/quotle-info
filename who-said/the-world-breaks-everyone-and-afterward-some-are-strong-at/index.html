@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-world-breaks-everyone-and-afterward-some-are-strong-at#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Ernest Hemingway",
+              "item": "https://quotle.info/authors/ernest-hemingway"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The world breaks everyone, and afterward, some are strong at the broken places"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -617,6 +643,14 @@
             <p>Frederic Henry, Hemingway's wounded American narrator, thinks this to himself late in the novel while recovering with Catherine Barkley in Stresa, Italy &mdash; not long before their circumstances turn tragic. In its original form the line is less a triumphant motivational slogan than a piece of grim wartime philosophy: <em>most</em> people are broken by the world, some grow stronger at the break, and the ones who refuse to break at all get killed outright.</p>
             <p>The single-sentence, inspirational-poster version &mdash; &ldquo;some are strong at the broken places&rdquo; &mdash; has outpaced the real text online, stripped of its bleaker second half and quietly swapped from &ldquo;many&rdquo; to &ldquo;some.&rdquo;</p>
             <p class="pull">&ldquo;But those that will not break it kills.&rdquo;</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/resilience/">Resilience</a>
+                <a class="theme-chip" href="/themes/failure/">Failure</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

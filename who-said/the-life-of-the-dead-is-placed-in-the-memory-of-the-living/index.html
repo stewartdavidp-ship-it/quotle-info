@@ -105,6 +105,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-life-of-the-dead-is-placed-in-the-memory-of-the-living#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Marcus Tullius Cicero",
+              "item": "https://quotle.info/authors/marcus-tullius-cicero"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The life of the dead is placed in the memory of the living"
+            }
+          ]
         }
       ]
     }
@@ -283,6 +306,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -596,6 +622,13 @@
             <p>Cicero delivered the Ninth Philippic in the Roman Senate in early 43 BC. The Senate had sent three envoys to negotiate with Mark Antony; one of them, the distinguished jurist <strong>Servius Sulpicius Rufus</strong>, was already ill and died on the journey. Cicero rose to propose that the state honour him with a bronze statue and a public tomb.</p>
             <p>It is in that argument &mdash; that a man who gives his life in service should be repaid with lasting remembrance &mdash; that Cicero frames memory as a form of immortality: the dead go on living in the minds of those who remember them. The line has since drifted far from its senatorial setting to become a consolation read at funerals and engraved on memorials.</p>
             <p class="pull">Restore life to him from whom you have taken it &mdash; for the life of the dead is placed in the memory of the living.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/mortality/">Mortality</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

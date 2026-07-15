@@ -102,6 +102,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/its-kind-of-fun-to-do-the-impossible#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Walt Disney",
+              "item": "https://quotle.info/authors/walt-disney"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "It's kind of fun to do the impossible"
+            }
+          ]
         }
       ]
     }
@@ -280,6 +303,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -594,6 +620,14 @@
             <p>Whatever its exact origin, the sentiment fits Disney better than almost anyone: a career built on being told animation, sync sound, feature-length cartoons and a walk-through theme park couldn&rsquo;t be done &mdash; and doing them anyway. That resonance is precisely why the line adheres to his name so effortlessly, and why it needs no source to feel true.</p>
             <p>The same resonance is what makes it a textbook &lsquo;magnet&rsquo; quote: an upbeat, frictionless aphorism that gets pinned to a famous optimist and then propagated by quote databases faster than anyone stops to ask for a citation.</p>
             <p class="pull">Everywhere in his name, true to his spirit &mdash; and sourced to no documented thing he said.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/courage/">Courage</a>
+                <a class="theme-chip" href="/themes/success/">Success</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

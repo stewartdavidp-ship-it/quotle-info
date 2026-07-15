@@ -97,6 +97,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-best-time-to-plant-a-tree-was-20-years-ago-the-second#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Confucius",
+              "item": "https://quotle.info/authors/confucius"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The best time to plant a tree was 20 years ago. The second best time is now"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +298,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -589,6 +615,15 @@
             <p>The line pairs an appealing structure &mdash; regret about the past, followed by a call to act now &mdash; with the aura of timeless wisdom. Attaching it to Confucius or an &ldquo;ancient Chinese proverb&rdquo; lends borrowed authority that a plainly anonymous saying lacks, which is exactly why such lines migrate onto famous names.</p>
             <p>Quote Investigator shows the migration in the record itself: American newspapers carry it from 1967, the &ldquo;Chinese&rdquo; gloss arrives around 1985, and the Confucius credit only around 2002 &mdash; the attribution growing more specific and more ancient the further it travels from its actual, humble source.</p>
             <p class="pull">The older the wording is claimed to be, the more recent its paper trail turns out to be.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/time/">Time</a>
+                <a class="theme-chip" href="/themes/growth/">Growth</a>
+                <a class="theme-chip" href="/themes/purpose/">Purpose</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

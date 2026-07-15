@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/if-my-mind-can-conceive-it-and-my-heart-can-believe-it-then#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Jesse Jackson",
+              "item": "https://quotle.info/authors/jesse-jackson"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "If my mind can conceive it and my heart can believe it, then I can achieve it"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -610,6 +636,14 @@
             <p>The saying belongs to a family of American self-help mantras built on three verbs &mdash; <em>conceive, believe, achieve</em>. Napoleon Hill packaged the idea for a mass audience in the 1930s, and preachers and motivational speakers reshaped it for decades after. Jesse Jackson&rsquo;s cadenced 1978 version added the &ldquo;heart&rdquo; and the &ldquo;I am somebody&rdquo; refrain that make this phrasing memorable.</p>
             <p>Muhammad Ali was a magnet for exactly this kind of aspirational one-liner, so a maxim already floating through motivational culture was easy to re-tag with his name once a columnist did so in 2001. The polish of the line, not any documented Ali source, is what keeps it attached to him.</p>
             <p class="pull">Conceive, believe, achieve &mdash; a self-help mantra, re-tagged with a champion&rsquo;s name.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/success/">Success</a>
+                <a class="theme-chip" href="/themes/hope/">Hope</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -96,6 +96,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/not-all-of-us-can-do-great-things-but-we-can-do-small#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Mother Teresa",
+              "item": "https://quotle.info/authors/mother-teresa"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Not all of us can do great things. But we can do small things with great love"
+            }
+          ]
         }
       ]
     }
@@ -274,6 +297,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -587,6 +613,15 @@
             <p>Mother Teresa&rsquo;s whole spirituality was built on the &lsquo;Little Way&rsquo; of St. Th&eacute;r&egrave;se of Lisieux &mdash; the conviction that ordinary, hidden acts, done with love, matter more than grand achievements. She said versions of this idea often, which is exactly why a clean, quotable paraphrase spread so easily and now appears on posters, mugs, and graduation cards worldwide.</p>
             <p>The trouble is that the neat symmetrical wording people share is a later smoothing of what she actually said. Recognizing that doesn&rsquo;t diminish the sentiment &mdash; it simply keeps the attribution honest, which her own religious order takes care to do.</p>
             <p class="pull">The idea is hers. The polished sentence is the internet&rsquo;s.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/kindness/">Kindness</a>
+                <a class="theme-chip" href="/themes/humility/">Humility</a>
+                <a class="theme-chip" href="/themes/love/">Love</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
