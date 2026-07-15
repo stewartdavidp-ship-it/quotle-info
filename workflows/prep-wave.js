@@ -41,12 +41,8 @@ if (!JOURNAL || !BATCH || !OUT) { console.error('usage: prep-wave.js --journal <
 if (!VERIFIED_DATE || !DATE_MODIFIED) { console.error('ERROR: pass --verified-date and --date-modified (must match what generate.js was launched with).'); process.exit(1); }
 
 const norm = (s) => String(s).toLowerCase().replace(/[’‘`"“”']/g, '').replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
-function slugify(text) {
-  let s = String(text).toLowerCase().replace(/[’'‘`]/g, '').replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  if (s.length > 60) s = s.slice(0, 60).replace(/-[^-]*$/, '');
-  return s;
-}
-const authorSlugOf = (name) => slugify(name);
+// slugify lives in tools/slugify.js — generate.js inlines a verbatim copy (sandbox, no require).
+const { slugify, authorSlugOf } = require(path.join(__dirname, '..', 'tools', 'slugify.js'));
 
 // --- toRecord: VERBATIM from workflows/generate.js (keep in sync) ---
 function toRecord(d, item) {

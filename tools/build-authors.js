@@ -35,7 +35,8 @@ const records = fs.readdirSync(QUOTES_DIR).filter((f) => f.endsWith('.json'))
 const authors = aggregateAuthors(records);
 
 // ---- misattribution intelligence for author pages ----
-const kebab = (s) => String(s).toLowerCase().replace(/[’'‘`]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+// Same slug function the records were built with — these keys are matched against author.slug.
+const { slugify: kebab } = require('./slugify');
 // "Often misattributed to X": disputed records whose creditedTo (the magnet name) is X, real author ≠ X.
 const misattrBy = {};
 for (const r of records) {

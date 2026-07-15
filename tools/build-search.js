@@ -14,7 +14,9 @@ const { hasAuthorPage } = require('./authors');
 const { THEMES, isTheme } = require('./themes');
 const ROOT = path.resolve(__dirname, '..');
 
-const kebab = (s) => String(s).toLowerCase().replace(/[’'‘`]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+// Must be the SAME slug the records were built with, or search links 404: the manifest carries the
+// author's display name (entities and all), not their slug, so we re-derive it here.
+const { slugify: kebab } = require('./slugify');
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.json'), 'utf8'));
 
 const entries = [];

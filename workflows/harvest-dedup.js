@@ -22,16 +22,10 @@ if (!src) { console.error('usage: node harvest-dedup.js <harvest-output.json> [-
 const outIdx = process.argv.indexOf('--out');
 const outPath = outIdx > -1 ? process.argv[outIdx + 1] : path.join(path.dirname(src), 'harvest-queue.json');
 
-// --- same slugify as generate-r5 toRecord (so a match means an existing page) ---
-function slugify(text) {
-  let s = String(text).toLowerCase()
-    .replace(/[’'‘`]/g, '')
-    .replace(/&[a-z]+;/g, ' ')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-  if (s.length > 60) { s = s.slice(0, 60).replace(/-[^-]*$/, ''); }
-  return s;
-}
+// --- same slugify the records were built with (so a match means an existing page) ---
+// Resolved from __dirname, not REPO: REPO is a hardcoded absolute path, so a checkout elsewhere
+// (e.g. a git worktree) would load the wrong copy of this file — or fail to find it at all.
+const { slugify } = require(path.join(__dirname, '..', 'tools', 'slugify.js'));
 // looser normalization for fuzzy text-equality dedup (ignores length cap + all punctuation)
 function norm(text) {
   return String(text).toLowerCase()
