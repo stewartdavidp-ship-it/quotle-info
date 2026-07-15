@@ -14,6 +14,7 @@ const { HEAD_SCRIPT, THEME_CSS, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc');
 const { NAV, CHROME_CSS, SEARCH_JS } = require('./chrome');
+const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
 const ROOT = path.resolve(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.json'), 'utf8'));
 const bySlug = Object.fromEntries(manifest.map((m) => [m.quoteSlug, m]));
@@ -92,7 +93,7 @@ ${HEAD_SCRIPT}
     <meta property="og:description" content="${esc(description)}">
     <meta property="og:url" content="${canonical}">
     <meta property="og:site_name" content="Quotle.info">
-    <meta name="twitter:card" content="summary_large_image">
+${OG_IMAGE_TAGS}
 ${jsonld}    ${FONTS}
 ${headExtra}    <style>
 ${ROOT_CSS}${_baseCss()}${CHROME_CSS}

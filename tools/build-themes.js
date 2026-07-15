@@ -19,6 +19,7 @@ const { esc } = require('./esc');
 const { CONFIDENCE } = require('./template');
 const { NAV: siteNav, CHROME_CSS, SEARCH_JS } = require('./chrome');
 const { THEMES, THEME_BY_SLUG, isTheme } = require('./themes');
+const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
 
 const ROOT = path.resolve(__dirname, '..');
 const QUOTES_DIR = path.join(ROOT, 'data', 'quotes');
@@ -192,6 +193,7 @@ for (const t of THEMES) {
     <meta property="og:title" content="Verified quotes about ${esc(t.label)}">
     <meta property="og:description" content="${esc(t.blurb)} Correctly credited, rights-cleared, presentation-ready.">
     <meta property="og:url" content="${url}">
+${OG_IMAGE_TAGS}
     <script type="application/ld+json">
     ${jsonLd({
       '@context': 'https://schema.org', '@type': 'CollectionPage',
@@ -262,7 +264,8 @@ const idxHead = `    <title>Browse quotes by theme | Quotle.info</title>
     <link rel="canonical" href="${ORIGIN}/themes/">
     <meta property="og:title" content="Browse quotes by theme">
     <meta property="og:description" content="Find a verified, correctly-credited quote for your talk or slide by theme.">
-    <meta property="og:url" content="${ORIGIN}/themes/">`;
+    <meta property="og:url" content="${ORIGIN}/themes/">
+${OG_IMAGE_TAGS}`;
 const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">›</span>Themes</nav>
     <main>
         <div class="idx-hero">

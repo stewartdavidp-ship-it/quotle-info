@@ -24,6 +24,7 @@ const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc'); // one shared entity-aware escape (also used by build-index.js)
 const { hasAuthorPage } = require('./authors'); // which authors have a /authors/{slug} profile
 const { NAV: siteNav, CHROME_CSS, SEARCH_JS } = require('./chrome'); // shared nav + universal search
+const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
 
 const ORIGIN = 'https://quotle.info';
 
@@ -37,7 +38,6 @@ const authorLinked = (slug) => AUTHORS_ENABLED && hasAuthorPage(slug);
 // escape only for a double-quoted HTML attribute (keeps &lt; etc. out of the way)
 const attr = (s) => esc(s);
 const canonicalUrl = (slug) => `${ORIGIN}/who-said/${slug}`;
-const ogImageUrl = (slug) => `${ORIGIN}/og/${slug}.png`;
 // decode entities + strip tags → plain text for JSON-LD string values
 // Named HTML entities that show up in our prose/author names, mapped to their literal characters.
 // Anything not here is decoded to its unicode char via the numeric fallback below when possible;
@@ -117,8 +117,7 @@ ${HEAD_SCRIPT}
     <meta property="og:title" content="${attr(q.meta.ogTitle)}">
     <meta property="og:description" content="${attr(q.meta.ogDescription)}">
     <meta property="og:site_name" content="Quotle.info">
-    <meta property="og:image" content="${ogImageUrl(q.quoteSlug)}">
-    <meta name="twitter:card" content="summary_large_image">
+${OG_IMAGE_TAGS}
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -898,4 +897,4 @@ const STYLE = `${ROOT_CSS}
             .pager .next { text-align: left; }
         }`;
 
-module.exports = { renderPage, canonicalUrl, ogImageUrl, CONFIDENCE, creditLine, plain, buildImagePrompts };
+module.exports = { renderPage, canonicalUrl, CONFIDENCE, creditLine, plain, buildImagePrompts };

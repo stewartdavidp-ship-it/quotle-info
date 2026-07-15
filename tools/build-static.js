@@ -14,6 +14,7 @@ const path = require('path');
 const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { NAV, CHROME_CSS, SEARCH_JS } = require('./chrome');
+const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
 const ROOT = path.resolve(__dirname, '..');
 
 // confidence glyphs/labels mirror template.js CONFIDENCE (kept in sync by hand — 3 states)
@@ -89,6 +90,7 @@ ${HEAD_SCRIPT}
     <meta property="og:description" content="Traced to a primary source, dated, cited, and marked with honest confidence. Nothing invented.">
     <meta property="og:url" content="https://quotle.info/how-we-verify">
     <meta property="og:site_name" content="Quotle.info">
+${OG_IMAGE_TAGS}
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
 ${STYLE}${CHROME_CSS}

@@ -16,6 +16,7 @@ const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc');
 const { CONFIDENCE } = require('./template');
 const { aggregateAuthors } = require('./authors');
+const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
 
 const ROOT = path.resolve(__dirname, '..');
 const QUOTES_DIR = path.join(ROOT, 'data', 'quotes');
@@ -259,6 +260,7 @@ for (const a of authors) {
     <meta property="og:title" content="${esc(a.name)} — quotes traced to source">
     <meta property="og:url" content="${ORIGIN}/authors/${a.slug}">
     <meta property="og:site_name" content="Quotle.info">
+${OG_IMAGE_TAGS}
     <script type="application/ld+json">
     ${jsonLd({
       '@context': 'https://schema.org',
@@ -372,7 +374,8 @@ const idxHead = `    <title>The authors — every voice traced to source · Quot
     <meta property="og:type" content="website">
     <meta property="og:title" content="The authors — Quotle.info">
     <meta property="og:url" content="${ORIGIN}/authors/">
-    <meta property="og:site_name" content="Quotle.info">`;
+    <meta property="og:site_name" content="Quotle.info">
+${OG_IMAGE_TAGS}`;
 const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a><span class="sep" aria-hidden="true">›</span>
         <span aria-current="page">Authors</span>

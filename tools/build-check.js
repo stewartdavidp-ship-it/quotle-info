@@ -12,6 +12,7 @@ const path = require('path');
 const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { NAV: siteNav, CHROME_CSS, SEARCH_JS } = require('./chrome');
+const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
 
 const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'check');
@@ -83,7 +84,8 @@ const headExtra = `    <title>Check a quote before you use it | Quotle.info</tit
     <link rel="canonical" href="${ORIGIN}/check/">
     <meta property="og:title" content="Check a quote before you use it">
     <meta property="og:description" content="Paste a line you're about to present — real? correctly credited? safe to reuse? Verified against the quotle.info corpus.">
-    <meta property="og:url" content="${ORIGIN}/check/">`;
+    <meta property="og:url" content="${ORIGIN}/check/">
+${OG_IMAGE_TAGS}`;
 
 const inner = `    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">›</span>Check a quote</nav>
     <main>
