@@ -259,6 +259,19 @@ ${realSection}${fakeSection}
 }
 
 // ---- /themes/ index ----
+// Order the browse by DEPTH, not by the vocabulary's declaration order. That order is just the
+// sequence someone typed the themes in (themes.js even says "to add a theme: append here", so it
+// decays into authoring chronology), and it actively misled: wisdom — the deepest shelf at 56
+// verified / 35 free — sat at position 9 and character (38) at position 27 of 28, while failure,
+// the THINNEST at 7, held a first-row slot. Depth is derived from the corpus, so it needs no
+// curation and can't drift out of true as waves land. Same reasoning as the PD-first ordering
+// above, one level up: lead with the shelves we can actually serve from. /themes/{slug} URLs are
+// unaffected — only the browse order moves.
+// Tie-break on slug: the built HTML is COMMITTED, so an unstable sort would churn the diff (and
+// the wave/generator merge order) on every rebuild.
+indexCards.sort((a, b) => (b.count - a.count) || a.slug.localeCompare(b.slug));
+jsonIndex.sort((a, b) => (b.verified.length - a.verified.length) || a.theme.localeCompare(b.theme));
+
 const idxHead = `    <title>Browse quotes by theme | Quotle.info</title>
     <meta name="description" content="Find a verified, correctly-credited quote for your talk or slide by theme — resilience, leadership, courage, and more. Provenance-checked and rights-cleared.">
     <link rel="canonical" href="${ORIGIN}/themes/">
