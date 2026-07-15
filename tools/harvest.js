@@ -21,6 +21,7 @@
  *                                                             [{text,author,index:null}] for the
  *                                                             selected items (feeds generate-r5)
  *   node tools/harvest.js skip   <slug> [<slug> ...]          mark candidate(s) 'skipped'
+ *   node tools/harvest.js unskip <slug> [<slug> ...]          put skipped candidate(s) back in the queue
  *   node tools/harvest.js votes  <votes.json>                 apply vote tallies (curl <worker>/votes)
  *                                                             → boosts upvoted candidates in the queue
  *   node tools/harvest.js report                              print summary + rebuild digest
@@ -218,6 +219,17 @@ function cmdSkip(args) {
   console.log(`skipped ${n}`);
 }
 
+// The skip bar is hate/harm ONLY (see README) — a crude-but-real misattribution still gets a page.
+// That bar is narrow enough that a wrong skip is a live possibility, so it has to be reversible.
+function cmdUnskip(args) {
+  const data = loadBacklog();
+  const set = new Set(args);
+  let n = 0;
+  for (const c of data.candidates) if (set.has(c.slug) && c.status === 'skipped') { c.status = 'queued'; n++; }
+  save(data);
+  console.log(`unskipped ${n} → back in the queue`);
+}
+
 function cmdVotes(args) {
   const f = parseFlags(args);
   const src = (f._ || [])[0];
@@ -252,6 +264,7 @@ switch (cmd) {
   case 'unselect': cmdUnselect(rest); break;
   case 'batch': cmdBatch(rest); break;
   case 'skip': cmdSkip(rest); break;
+  case 'unskip': cmdUnskip(rest); break;
   case 'votes': cmdVotes(rest); break;
   case 'report': case undefined: { const d = loadBacklog(); save(d); printSummary(d); break; }
   default: console.error(`unknown command: ${cmd}\nsee header of tools/harvest.js for usage`); process.exit(1);

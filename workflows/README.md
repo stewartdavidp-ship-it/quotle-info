@@ -10,6 +10,17 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
 - Harvest backlog: `data/harvest-queue.json` (committed) — ~324 queued. `node tools/harvest.js report`.
 - Two harvest tracks (see below). Track A ≈ 70 magnet authors harvested; Track B covered 24 themes.
 
+## The skip bar — hate/harm ONLY (operator policy, 2026-07-14)
+`harvest.js skip` is for **hate or harm**, nothing else. The two standing skips are the racist
+Darwin fabrication and an Ali/Hitler line — that is the bar. A quote being crude, tasteless, or
+useless-in-a-slide-deck is **not** grounds to skip it: if it is a real, documented misattribution
+it gets a page. The corpus targets QI parity, QI documents these, and the Quote Googler ("did X
+really say this?") is exactly who that page serves.
+
+This exists because an agent skipped the Steve-Jobs-attributed Emo Philips joke on taste grounds;
+the operator reversed it and set the bar here. **Do not make taste calls on the operator's behalf** —
+the bar is bright-line so it needs no judgement. `harvest.js unskip <slug>` reverses a bad skip.
+
 ## The two tracks
 - **Track A — misattributions** (the bulk toward 2000; the differentiator + long-tail fakes agents don't know).
   Author-driven: `workflows/harvest-candidates.js` (one agent per magnet author → Wikiquote Misattributed/
@@ -48,7 +59,7 @@ node tools/harvest.js sync /tmp/harvest-rN.json     # append + dedup vs corpus+b
 #    (TRACK B instead: Workflow harvest-verified-by-theme.js; candidates are {theme,quotes} per agent.)
 
 # 1. SELECT + BATCH the next ~40
-node tools/harvest.js select 40 --wave rN           # (review the list; `harvest.js skip <slug>` any junk/hate)
+node tools/harvest.js select 40 --wave rN           # review the list; `harvest.js skip <slug>` (see the skip bar below)
 node tools/harvest.js batch  --wave rN              # writes data/.harvest-batch-rN.json = [{text,author,index:null}]
 
 # 2. GENERATE (Opus, QI-deference). Pass TODAY'S date.
