@@ -91,6 +91,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/you-will-never-find-justice-in-a-world-where-criminals-make#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Bob Marley",
+              "item": "https://quotle.info/authors/bob-marley"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "You will never find justice in a world where criminals make the rules"
+            }
+          ]
         }
       ]
     }
@@ -269,6 +292,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -583,6 +609,14 @@
             <p>Marley&rsquo;s catalogue &mdash; <em>Get Up, Stand Up</em>, <em>Redemption Song</em>, <em>Rebel Music</em> &mdash; made him shorthand for standing against a corrupt establishment. A sharp epigram about criminals making the rules slots neatly into that image, which is exactly why it attaches to him so easily and travels so far.</p>
             <p>The quote gained fresh traction during 2010s&ndash;2020s political protests, appearing on placards and in reshares aimed at governments and figures the poster opposed. Its resonance is genuine; its provenance is not.</p>
             <p class="pull">It sounds like something Marley would say &mdash; which is precisely why it isn&rsquo;t safe to assume he did.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/justice/">Justice</a>
+                <a class="theme-chip" href="/themes/power/">Power</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

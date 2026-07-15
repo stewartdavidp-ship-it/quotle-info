@@ -101,6 +101,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/you-can-discover-more-about-a-person-in-an-hour-of-play#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Richard Lingard",
+              "item": "https://quotle.info/authors/richard-lingard"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "You can discover more about a person in an hour of play than in a year of conversation"
+            }
+          ]
         }
       ]
     }
@@ -279,6 +302,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -597,6 +623,14 @@
             <p>The thought has genuine pedigree: European advice literature long held that games &mdash; especially gambling, where money and temper are on the line &mdash; expose a person&rsquo;s true disposition faster than polite talk. Lingard&rsquo;s 1670 formulation is the sharpest early version, and by the mid-19th century it had smoothed into a proverb detached from any author.</p>
             <p>What makes the &ldquo;Plato&rdquo; version so sticky is the swap from &ldquo;game&rdquo; (gambling) to &ldquo;play&rdquo; and from &ldquo;seven years&rdquo; to &ldquo;a year,&rdquo; producing a warm, quotable line that fits modern ideas about children, sport, and personality &mdash; and then borrowing an ancient philosopher&rsquo;s authority it never had.</p>
             <p class="pull">An hour of play discovers more than a year of conversation &mdash; a proverb, printed anonymously in 1857.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+                <a class="theme-chip" href="/themes/friendship/">Friendship</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

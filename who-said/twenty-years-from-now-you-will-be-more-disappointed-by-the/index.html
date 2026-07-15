@@ -106,6 +106,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/twenty-years-from-now-you-will-be-more-disappointed-by-the#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "H. Jackson Brown Jr.",
+              "item": "https://quotle.info/authors/h-jackson-brown-jr"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover"
+            }
+          ]
         }
       ]
     }
@@ -284,6 +307,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -601,6 +627,15 @@
             <p>Mark Twain is one of a handful of names &mdash; alongside Einstein, Gandhi, and Lincoln &mdash; that act as gravity wells for orphan quotations. A punchy, optimistic line with no obvious author drifts toward the most quotable famous person who plausibly could have said it, and Twain, the wry American adventurer, fits a sailing-and-exploration metaphor almost too well.</p>
             <p>The irony is that Twain <em>did</em> write memorably about travel and risk &mdash; his 1869 <em>The Innocents Abroad</em> is a whole book about leaving the safe harbor. That thematic overlap makes the false attribution feel right, which is exactly why it spread so fast once it started.</p>
             <p class="pull">A famous name is easier to remember than a real one.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/courage/">Courage</a>
+                <a class="theme-chip" href="/themes/hope/">Hope</a>
+                <a class="theme-chip" href="/themes/purpose/">Purpose</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -97,6 +97,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/culture-eats-strategy-for-breakfast#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Peter Drucker",
+              "item": "https://quotle.info/authors/peter-drucker"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Culture eats strategy for breakfast"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +298,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -597,6 +623,14 @@
             <p>Drucker did write seriously about organizational culture &mdash; famously calling it &ldquo;singularly persistent&rdquo; in a 1991 Wall Street Journal essay &mdash; so a crisp maxim about culture beating strategy <em>sounds</em> like something he would say. That plausibility, combined with his authority as the father of modern management, is exactly what makes him such a reliable magnet for unsourced quotes.</p>
             <p>The irony is that the real thought is more nuanced than the slogan. Culture and strategy are not adversaries eating each other; the aphorism&rsquo;s punch comes from a false binary that Drucker himself never endorsed in these words.</p>
             <p class="pull">Culture, no matter how defined, is singularly persistent. &mdash; what Drucker actually wrote (1991)</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/leadership/">Leadership</a>
+                <a class="theme-chip" href="/themes/work/">Work</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

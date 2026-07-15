@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/everyone-sees-what-you-appear-to-be-few-experience-what-you#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Niccolò Machiavelli",
+              "item": "https://quotle.info/authors/niccolo-machiavelli"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Everyone sees what you appear to be, few experience what you really are"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -580,6 +606,14 @@
                     <p>The line is often quoted as timeless wisdom about authenticity, but in its original setting it is coldly instrumental: it explains why cultivating a false but pleasing image is a workable strategy for holding power. That gap &mdash; between the self-help reading and Machiavelli&rsquo;s realpolitik &mdash; is part of why the sentence travels so well.</p>
                 </div>
             </details>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/character/">Character</a>
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

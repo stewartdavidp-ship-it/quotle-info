@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/we-loved-with-a-love-that-was-more-than-love#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Edgar Allan Poe",
+              "item": "https://quotle.info/authors/edgar-allan-poe"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "We loved with a love that was more than love"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -574,6 +600,13 @@
             <p>&ldquo;Annabel Lee&rdquo; was among the very last things Edgar Allan Poe wrote, completed only months before he died in October 1849 under still-disputed circumstances. It tells of a childhood love so pure that envious angels &ldquo;in Heaven&rdquo; conspire to take the beloved away, leaving the narrator to keep loving her beyond death.</p>
             <p>The poem is often read as an elegy connected to the women in Poe's life — most commonly his young wife Virginia Clemm Poe, who had died two years earlier — though Poe left no direct statement confirming a single inspiration.</p>
             <p class="pull">But we loved with a love that was more than love—</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/love/">Love</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

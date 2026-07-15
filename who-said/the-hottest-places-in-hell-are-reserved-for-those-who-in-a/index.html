@@ -95,6 +95,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-hottest-places-in-hell-are-reserved-for-those-who-in-a#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "John F. Kennedy",
+              "item": "https://quotle.info/authors/john-f-kennedy"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The hottest places in Hell are reserved for those who in a period of moral crisis maintain their neutrality"
+            }
+          ]
         }
       ]
     }
@@ -273,6 +296,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -595,6 +621,14 @@
             <p>The sentence works because it feels like Dante: it borrows his moral architecture&mdash;a Hell that sorts sinners by gravity&mdash;and weaponizes it against political indifference. Kennedy grasped its rhetorical force and used it to indict neutrality on civil rights and the Cold War, which is why it now reads as his.</p>
             <p>But the real Inferno makes the opposite point: Dante despised the neutrals so thoroughly that he refused them even the dignity of damnation, leaving them to churn in the antechamber outside Hell&rsquo;s gate. The popular quote &ldquo;promotes&rdquo; them to Hell&rsquo;s hottest core&mdash;a punchier idea Dante never wrote.</p>
             <p class="pull">Dante&rsquo;s neutrals aren&rsquo;t in the hottest place in Hell. They&rsquo;re not in Hell at all.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/justice/">Justice</a>
+                <a class="theme-chip" href="/themes/courage/">Courage</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -96,6 +96,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/youth-is-wasted-on-the-young#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "George Bernard Shaw",
+              "item": "https://quotle.info/authors/george-bernard-shaw"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Youth is wasted on the young"
+            }
+          ]
         }
       ]
     }
@@ -274,6 +297,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -597,6 +623,13 @@
             <p>Quote Investigator&rsquo;s chronology shows the idea mutating almost month to month across 1931 &mdash; &ldquo;wasted on children,&rdquo; &ldquo;a shame to waste it on children,&rdquo; &ldquo;too bad it is wasted on children&rdquo; &mdash; before settling into the tight, proverb-like &ldquo;youth is wasted on the young.&rdquo; That drift is itself the tell: a genuine authored quotation tends to have one stable sentence, while a folk saying gets polished by every hand it passes through.</p>
             <p>The sentiment does echo something Shaw actually wrote in <em>Maxims for Revolutionists</em> &mdash; &ldquo;Youth, which is forgiven everything, forgives itself nothing; age, which forgives itself everything, is forgiven nothing&rdquo; &mdash; which may be part of why his name stuck. But that is a resemblance, not the source.</p>
             <p class="pull">A stable sentence usually has an author; a saying that reshapes itself every few months usually has a newspaper.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/time/">Time</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

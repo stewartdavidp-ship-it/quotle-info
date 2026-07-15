@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/dost-thou-love-life-then-do-not-squander-time-for-thats-the#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Benjamin Franklin",
+              "item": "https://quotle.info/authors/benjamin-franklin"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Dost thou love life? Then do not squander time, for that's the stuff life is made of"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -602,6 +628,13 @@
             <p>Franklin ran <em>Poor Richard&rsquo;s Almanack</em> for a quarter-century, seeding each edition with proverbs on thrift, diligence and the value of time. This line distils his signature theme: that time is not merely money but the very substance of a life.</p>
             <p>In 1758 he harvested his favourite maxims into &ldquo;The Way to Wealth,&rdquo; a preface in which the fictional Father Abraham lectures a crowd entirely in Poor Richard&rsquo;s sayings. Reprinted and translated for two centuries, it carried this line to a global audience and cemented Franklin&rsquo;s reputation as America&rsquo;s foremost aphorist.</p>
             <p class="pull">Time is not merely money — it is the stuff life is made of.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/time/">Time</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

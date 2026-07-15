@@ -90,6 +90,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-greatness-of-a-man-is-not-in-how-much-wealth-he#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Bob Marley",
+              "item": "https://quotle.info/authors/bob-marley"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The greatness of a man is not in how much wealth he acquires, but in his integrity and his ability to affect those around him positively"
+            }
+          ]
         }
       ]
     }
@@ -268,6 +291,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -582,6 +608,14 @@
             <p>The sentiment is appealing and on-brand for an idealist icon &mdash; greatness measured by integrity and positive influence rather than money &mdash; which is exactly why it travels well as a caption. But appeal is not attribution. The test for a Marley quote is a documented source: a lyric, an interview, a filmed or printed statement. This line has none.</p>
             <p>Until someone produces a primary Marley source, the honest label is &ldquo;unsourced.&rdquo; It functions as anonymous motivational text that borrowed Marley&rsquo;s name for reach.</p>
             <p class="pull">A warm sentiment, a famous face, and no source in between.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/character/">Character</a>
+                <a class="theme-chip" href="/themes/success/">Success</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

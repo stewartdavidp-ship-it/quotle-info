@@ -108,6 +108,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-urge-to-destroy-is-also-a-creative-urge#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Mikhail Bakunin",
+              "item": "https://quotle.info/authors/mikhail-bakunin"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The urge to destroy is also a creative urge"
+            }
+          ]
         }
       ]
     }
@@ -286,6 +309,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -610,6 +636,14 @@
             <p>Bakunin wrote the essay in 1842 as a young Hegelian, and the closing line distills his lifelong conviction that tearing down old orders is itself an act of creation &mdash; the germ of the anarchism he would spend his life building.</p>
             <p>The sentence outlived its author as a slogan: it reappeared as wall graffiti during the May 1968 revolt in Paris and, decades later, as Banksy&rsquo;s caption for a self-destroying artwork &mdash; the moment that most firmly (and wrongly) welded it to Picasso&rsquo;s name.</p>
             <p class="pull">The passion for destruction is a creative passion, too!</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/creativity/">Creativity</a>
+                <a class="theme-chip" href="/themes/change/">Change</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

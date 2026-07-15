@@ -100,6 +100,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/tell-em-what-youre-going-to-tell-em-next-tell-em-next-tell#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Aristotle",
+              "item": "https://quotle.info/authors/aristotle"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Tell 'em what you're going to tell 'em; next, tell 'em; next, tell 'em what you told 'em"
+            }
+          ]
         }
       ]
     }
@@ -278,6 +301,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -602,6 +628,14 @@
             <p>The line survives because it is a genuinely useful teaching device &mdash; a memorable rule of thumb for structuring any talk, sermon, or presentation. Attaching it to Aristotle, the father of rhetoric, gives a modern classroom mnemonic the authority of antiquity.</p>
             <p>That is exactly the pattern behind most fake Aristotle quotes: a real association (he did write the foundational work on speech structure) makes him a plausible-sounding home for lines he never actually wrote.</p>
             <p class="pull">A modern speaking maxim in ancient dress &mdash; first seen in a 1908 newspaper, not in Aristotle.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+                <a class="theme-chip" href="/themes/work/">Work</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

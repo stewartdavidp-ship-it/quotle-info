@@ -106,6 +106,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-traveler-sees-what-he-sees-the-tourist-sees-what-he-has#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "G.K. Chesterton",
+              "item": "https://quotle.info/authors/g-k-chesterton"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The traveler sees what he sees. The tourist sees what he has come to see"
+            }
+          ]
         }
       ]
     }
@@ -284,6 +307,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -601,6 +627,14 @@
             <p>Chesterton drops the line in a chapter about his lecture tours and his lifelong habit of &ldquo;pottering about&rdquo; France since boyhood. His point is not snobbery about who can afford to travel &mdash; he calls the distinction &ldquo;one rather of epoch than education&rdquo; &mdash; but about attention. The traveller lets a place surprise him; the tripper arrives with a checklist and notices only what confirms it.</p>
             <p>The aphorism has outlived its own vocabulary. &ldquo;Tripper&rdquo; &mdash; the day-excursionist of Edwardian England &mdash; faded from speech, and quoters reached for &ldquo;tourist,&rdquo; which sharpens the modern travel-versus-tourism cliché the line is now used to endorse.</p>
             <p class="pull">The traveller sees what he sees; the tripper sees what he has come to see.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+                <a class="theme-chip" href="/themes/simplicity/">Simplicity</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

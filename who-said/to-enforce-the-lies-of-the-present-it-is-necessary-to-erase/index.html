@@ -98,6 +98,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/to-enforce-the-lies-of-the-present-it-is-necessary-to-erase#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "George Orwell",
+              "item": "https://quotle.info/authors/george-orwell"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "To enforce the lies of the present, it is necessary to erase the truths of the past"
+            }
+          ]
         }
       ]
     }
@@ -276,6 +299,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -594,6 +620,14 @@
             <p>Orwell&rsquo;s <em>Nineteen Eighty-Four</em> made the deliberate rewriting of history a central image of totalitarian rule: Winston Smith&rsquo;s job in the Ministry of Truth is to revise old newspapers so the Party is never wrong. That is the engine behind this quotation&rsquo;s ring of authenticity.</p>
             <p>But a genuine theme is not a genuine quotation. The compact, quotable sentence people share began life as a broadcaster&rsquo;s paraphrase in 2006, then lost its attribution and was upgraded into &ldquo;Orwell&rsquo;s own words.&rdquo; It is a textbook case of a paraphrase hardening into a fake quote.</p>
             <p class="pull">The idea is Orwell&rsquo;s. The sentence is not.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+                <a class="theme-chip" href="/themes/power/">Power</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

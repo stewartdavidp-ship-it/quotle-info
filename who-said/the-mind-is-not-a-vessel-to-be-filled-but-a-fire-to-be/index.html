@@ -104,6 +104,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/the-mind-is-not-a-vessel-to-be-filled-but-a-fire-to-be#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Plutarch",
+              "item": "https://quotle.info/authors/plutarch"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "The mind is not a vessel to be filled, but a fire to be kindled"
+            }
+          ]
         }
       ]
     }
@@ -282,6 +305,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -602,6 +628,14 @@
             <p>Plutarch&rsquo;s essay is a letter of advice to a young man on how to <em>listen</em> &mdash; how to be an active learner rather than a passive receptacle. The kindling image is his argument that a good teacher supplies a spark, not a finished stock of facts; the student&rsquo;s own reason must catch and burn.</p>
             <p>That is why the modern paraphrase, though catchy, subtly shifts his meaning: Plutarch never opposes a &lsquo;vessel&rsquo; to a &lsquo;fire.&rsquo; His contrast is a vessel/bottle (passive filling) against <em>wood</em> (raw material that must be set alight from within) &mdash; a point about self-driven inquiry, not a slogan about inspiration.</p>
             <p class="pull">The mind is wood to be kindled, not a fire ready-made &mdash; the spark is the teacher&rsquo;s, the flame the learner&rsquo;s own.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/knowledge/">Knowledge</a>
+                <a class="theme-chip" href="/themes/growth/">Growth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

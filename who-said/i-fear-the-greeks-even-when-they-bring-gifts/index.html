@@ -105,6 +105,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/i-fear-the-greeks-even-when-they-bring-gifts#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Virgil",
+              "item": "https://quotle.info/authors/virgil"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "I fear the Greeks, even when they bring gifts"
+            }
+          ]
         }
       ]
     }
@@ -283,6 +306,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -597,6 +623,14 @@
             <p>In Book 2 of the <em>Aeneid</em>, Aeneas tells Queen Dido how Troy fell. When the Greeks leave a giant wooden horse outside the walls and sail off, the priest Laoco&ouml;n rushes down and hurls a spear into its flank, crying that whatever it is, he fears the Greeks even bearing gifts. The Trojans ignore him; sea-serpents soon drag Laoco&ouml;n and his sons to their deaths, the horse is wheeled inside, and Troy is destroyed.</p>
             <p>Virgil&rsquo;s half-line became one of the most durable tags in the Western canon &mdash; a shorthand for suspicion of an enemy&rsquo;s generosity that survives today as &lsquo;beware of Greeks bearing gifts.&rsquo;</p>
             <p class="pull">Whatever it is, I fear the Greeks.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/doubt/">Doubt</a>
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

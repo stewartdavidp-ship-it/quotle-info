@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/words-have-no-power-to-impress-the-mind-without-the#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Edgar Allan Poe",
+              "item": "https://quotle.info/authors/edgar-allan-poe"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Words have no power to impress the mind without the exquisite horror of their reality"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -601,6 +627,14 @@
             <p>The line appears at the climax of the novel&rsquo;s most notorious episode: after their ship is wrecked, four starving survivors &mdash; Pym, Peters, Augustus, and a sailor named Richard Parker &mdash; draw lots to decide who will be killed and eaten so the others can live. Parker draws the fatal splinter and is killed by Peters. Poe&rsquo;s narrator then declines to describe the meal itself, using this sentence to explain why: language, he says, cannot convey the &ldquo;exquisite horror&rdquo; of what actually happened.</p>
             <p>The passage became macabrely famous decades later when, in 1884, an English yacht called the <em>Mignonette</em> sank and its starving crew drew lots and killed a cabin boy to survive &mdash; a boy who, by coincidence, was also named Richard Parker. The case (<em>R v Dudley and Stephens</em>) became a landmark in English criminal law, and the eerie parallel to Poe&rsquo;s fiction has been noted by legal historians and Poe scholars ever since.</p>
             <p class="pull">words have no power to impress the mind with the exquisite horror of their reality</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+                <a class="theme-chip" href="/themes/creativity/">Creativity</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

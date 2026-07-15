@@ -106,6 +106,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/it-is-good-to-have-an-end-to-journey-towards-but-it-is-the#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Ursula K. Le Guin",
+              "item": "https://quotle.info/authors/ursula-k-le-guin"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "It is good to have an end to journey towards; but it is the journey that matters, in the end"
+            }
+          ]
         }
       ]
     }
@@ -284,6 +307,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -602,6 +628,14 @@
             <p>Within the novel the line lands at the end of a brutal months-long trek across a glacier &mdash; a physical journey that has become the emotional heart of the story. Pulled out of the book and pinned on Hemingway, it reads like generic inspirational wisdom; in context it is the hard-won reflection of a character who has nearly died getting somewhere.</p>
             <p>Its journey-over-destination theme is ancient, and Quote Investigator notes an echo in a 1920 line by theologian Lynn H. Hough &mdash; but the specific, memorable wording is Le Guin&rsquo;s own.</p>
             <p class="pull">It is the journey that matters, in the end.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/purpose/">Purpose</a>
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

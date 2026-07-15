@@ -97,6 +97,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/it-is-never-too-late-to-be-what-you-might-have-been#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "George Eliot (Mary Ann Evans)",
+              "item": "https://quotle.info/authors/george-eliot-mary-ann-evans"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "It is never too late to be what you might have been"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +298,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -588,6 +614,15 @@
             <p>In June 1881, less than a year after George Eliot&rsquo;s death, the magazine <em>Literary News</em> ran a reader contest to collect the &ldquo;best&rdquo; quotations from her work. One submission &mdash; entry 23, printed without any source citation &mdash; read &ldquo;It is never too late to be what you might have been.&rdquo; The editors did not verify it against Eliot&rsquo;s actual books, and it has never been located in any of them since.</p>
             <p>Quote Investigator, which traced the line&rsquo;s history, suggests it may be a compressed rewording of a couplet by the poet Adelaide Anne Procter, published two decades earlier: <em>&ldquo;No star is ever lost we once have seen, / We always may be what we might have been.&rdquo;</em> Once printed under Eliot&rsquo;s name in 1881, the line was copied forward by anthologies and, eventually, motivational posters and social media, with the wording gradually smoothing into today&rsquo;s familiar form.</p>
             <p class="pull">Entry 23 in an 1881 fan contest, printed with no source &mdash; and it stuck for well over a century.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/hope/">Hope</a>
+                <a class="theme-chip" href="/themes/growth/">Growth</a>
+                <a class="theme-chip" href="/themes/change/">Change</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

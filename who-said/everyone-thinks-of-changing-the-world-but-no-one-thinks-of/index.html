@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/everyone-thinks-of-changing-the-world-but-no-one-thinks-of#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Leo Tolstoy",
+              "item": "https://quotle.info/authors/leo-tolstoy"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Everyone thinks of changing the world, but no one thinks of changing himself"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -610,6 +636,15 @@
             <p>&ldquo;Three Methods of Reform&rdquo; is a short essay from <em>Some Social Remedies</em>, part of the pamphlet collection Tolstoy&rsquo;s follower Vladimir Chertkov distributed through the Free Age Press in 1900. In it, Tolstoy weighs three ways reformers had proposed to relieve the condition of laborers, and argues that only a moral change beginning within each person can produce what he calls a &ldquo;permanent revolution.&rdquo;</p>
             <p>That argument was one of the seeds of the Christian pacifism Tolstoy preached in his later decades, which went on to shape Gandhi&rsquo;s thinking on nonviolent resistance. The line about everyone wanting to change humanity while no one changes himself was his summary of why, in his view, reform movements aimed outward kept failing.</p>
             <p class="pull">Everybody thinks of changing humanity, and nobody thinks of changing himself.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/change/">Change</a>
+                <a class="theme-chip" href="/themes/growth/">Growth</a>
+                <a class="theme-chip" href="/themes/humility/">Humility</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

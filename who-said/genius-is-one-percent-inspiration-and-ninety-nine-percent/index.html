@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/genius-is-one-percent-inspiration-and-ninety-nine-percent#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Thomas Edison",
+              "item": "https://quotle.info/authors/thomas-edison"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Genius is one percent inspiration and ninety-nine percent perspiration"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -601,6 +627,15 @@
             <p>The maxim endures because it captures Edison&rsquo;s entire working method in a single line. He built the first industrial research laboratory on the premise that invention was systematic grind, not lightning-strike genius &mdash; and he returned to the &ldquo;inspiration and perspiration&rdquo; formula repeatedly across a public career spanning the phonograph, the light bulb, and hundreds of other patents.</p>
             <p>That it comes from Edison&rsquo;s own mouth, in his own letters and interviews, is what sets it apart from the thousands of feel-good lines falsely pinned to famous names. The only honest caveat is the arithmetic: the ratio drifted from 2&thinsp;%/98&thinsp;% to the crisper 1&thinsp;%/99&thinsp;% that everyone now quotes.</p>
             <p class="pull">What it boils down to is one per cent inspiration and ninety-nine per cent perspiration.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/work/">Work</a>
+                <a class="theme-chip" href="/themes/success/">Success</a>
+                <a class="theme-chip" href="/themes/creativity/">Creativity</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

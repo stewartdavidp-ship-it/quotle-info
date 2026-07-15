@@ -23,6 +23,7 @@ const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc'); // one shared entity-aware escape (also used by build-index.js)
 const { hasAuthorPage } = require('./authors'); // which authors have a /authors/{slug} profile
+const { THEME_BY_SLUG } = require('./themes'); // controlled vocab → labels for the theme links
 const { NAV: siteNav, CHROME_CSS, SEARCH_JS } = require('./chrome'); // shared nav + universal search
 const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
 
@@ -288,31 +289,74 @@ function buildJsonLd(q, url) {
     }],
   };
 
-  return { '@context': 'https://schema.org', '@graph': [quotation, claimReview, webpage, faq] };
+  // BreadcrumbList — the same trail the visible nav renders (crumbTrail is the single source), so
+  // search results can show the path instead of a bare URL. The current page carries no `item`,
+  // per Google's spec for the final crumb.
+  const breadcrumb = {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: crumbTrail(q).map((c, i) => {
+      const item = { '@type': 'ListItem', position: i + 1, name: plain(c.name) };
+      if (c.href) item.item = c.href === '/' ? `${ORIGIN}/` : `${ORIGIN}${c.href}`;
+      return item;
+    }),
+  };
+
+  return { '@context': 'https://schema.org', '@graph': [quotation, claimReview, webpage, faq, breadcrumb] };
 }
 
 // ---- top nav + breadcrumb ------------------------------------------------
-function renderNav(q) {
+// The ONE breadcrumb trail, rendered twice: as the visible nav and as BreadcrumbList JSON-LD.
+// Deriving them separately is how the ClaimReview claimant bug happened — two call sites computing
+// the same fact independently, one of them wrong for months. Change the trail here or nowhere.
+//
+// The trail is an ATTRIBUTION path (Home › who it's filed under › the quote), not a history of how
+// you arrived. A prerendered page has exactly one trail, and a quote belongs to several themes at
+// once (this one is both Friendship and Resilience), so there is no single true theme trail to show.
+// The route back to a theme is the theme link row in the body — see renderThemes.
+function crumbTrail(q) {
   const a = q.author || {};
-  // The breadcrumb is an attribution claim to users and crawlers. On a page whose verdict is that
-  // the line has no known author, filing it under the author-card person re-attributes it — the
-  // same error class the page exists to correct. `breadcrumbSection` lets such a record route the
-  // crumb through the quote taxonomy instead, keeping the author card as an in-body reference.
+  // On a page whose verdict is that the line has no known author, filing it under the author-card
+  // person re-attributes it — the same error class the page exists to correct. `breadcrumbSection`
+  // lets such a record route the crumb through the quote taxonomy instead, keeping the author card
+  // as an in-body reference.
   const sec = q.breadcrumbSection;
-  const crumbName = sec
-    ? (sec.href ? `<a href="${attr(sec.href)}">${esc(sec.name)}</a>` : `<span>${esc(sec.name)}</span>`)
-    : (authorLinked(a.slug)
-      ? `<a href="/authors/${a.slug}">${esc(a.name)}</a>`
-      : `<span>${esc(a.name)}</span>`);
-  const crumbAuthor = (sec || a.name)
-    ? `${crumbName}<span class="sep" aria-hidden="true">›</span>\n        `
-    : '';
+  const trail = [{ name: 'Home', href: '/' }];
+  if (sec) trail.push({ name: sec.name, href: sec.href || null });
+  else if (a.name) trail.push({ name: a.name, href: authorLinked(a.slug) ? `/authors/${a.slug}` : null });
+  trail.push({ name: q.breadcrumbLeaf || q.displayQuote, href: null, current: true });
+  return trail;
+}
+
+function renderNav(q) {
+  const crumbs = crumbTrail(q).map((c) => (c.current
+    ? `<span aria-current="page">${esc(c.name)}</span>`
+    : (c.href ? `<a href="${attr(c.href)}">${esc(c.name)}</a>` : `<span>${esc(c.name)}</span>`)))
+    .join('<span class="sep" aria-hidden="true">›</span>\n        ');
   return `
 ${siteNav('')}
     <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a><span class="sep" aria-hidden="true">›</span>
-        ${crumbAuthor}<span aria-current="page">${esc(q.breadcrumbLeaf || q.displayQuote)}</span>
+        ${crumbs}
     </nav>`;
+}
+
+// ---- themes the quote is filed under -------------------------------------
+// Without this every tagged quote page was a dead end: /themes/{slug} linked OUT to 678 quotes and
+// nothing linked back, so the taxonomy ran one way. That cost a reader the route back to the theme
+// they were browsing, and cost the theme pages their internal link graph — they were reachable only
+// from /themes/, on a site whose whole bottleneck is getting crawled and indexed.
+function renderThemes(q) {
+  const themes = (q.themes || []).map((slug) => THEME_BY_SLUG[slug]).filter(Boolean);
+  if (!themes.length) return '';
+  const chips = themes.map((t) => `                <a class="theme-chip" href="/themes/${t.slug}/">${esc(t.label)}</a>`).join('\n');
+  return `
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+${chips}
+            </div>
+        </section>`;
 }
 
 // ---- Layer 1: the answer -------------------------------------------------
@@ -716,6 +760,7 @@ function renderPage(q) {
     + renderSource(q)
     + renderMisattribution(q)
     + renderContext(q)
+    + renderThemes(q)
     + renderRelated(q)
     + renderResearch(q)
     + renderAuthor(q)
@@ -883,6 +928,9 @@ const STYLE = `${ROOT_CSS}
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }

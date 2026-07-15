@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/to-live-is-to-change-and-to-be-perfect-is-to-have-changed#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "John Henry Newman",
+              "item": "https://quotle.info/authors/john-henry-newman"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "To live is to change, and to be perfect is to have changed often"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -594,6 +620,14 @@
             <p>Newman wrote the sentence at a hinge moment in his life. As he completed the <em>Essay on the Development of Christian Doctrine</em> in 1845, he was reasoning his way out of the Church of England and into Roman Catholicism &mdash; and the book&rsquo;s central claim is that a true doctrine, like a living thing, unfolds and grows over centuries rather than staying frozen.</p>
             <p>In that setting the line is not a motivational slogan about self-improvement but a theological argument: to be a living idea in this world <em>is</em> to change, and the deepest fidelity shows itself through repeated, faithful development.</p>
             <p class="pull">Here below to live is to change, and to be perfect is to have changed often.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/change/">Change</a>
+                <a class="theme-chip" href="/themes/growth/">Growth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

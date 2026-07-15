@@ -96,6 +96,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/believe-nothing-no-matter-where-you-read-it-or-who-has-said#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Gautama Buddha",
+              "item": "https://quotle.info/authors/gautama-buddha"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Believe nothing, no matter where you read it or who has said it, not even if I have said it, unless it agrees with your own reason and your own common sense"
+            }
+          ]
         }
       ]
     }
@@ -274,6 +297,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -596,6 +622,15 @@
             <p>The <em>Kalama Sutta</em> is often called the Buddhist &lsquo;charter of free inquiry,&rsquo; and that reputation is what makes this fake so plausible. But the real discourse is more subtle than &lsquo;trust your own reason.&rsquo; The Buddha lists ten grounds &mdash; report, legend, tradition, scripture, logical conjecture, inference, analogy, agreement through pondering, probability, and deference to a teacher &mdash; and says none of them, on its own, settles what is true.</p>
             <p>The genuine test the sutta offers is experiential and social: see for yourself whether a course of action, when undertaken, leads to harm or to welfare, and weigh it against the judgment of the wise. The popular quote quietly swaps that for a tidy appeal to &lsquo;common sense&rsquo; &mdash; which the sutta never endorses.</p>
             <p class="pull">The sutta warns against trusting logic alone; the fake quote makes logic the whole point.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/doubt/">Doubt</a>
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+                <a class="theme-chip" href="/themes/truth/">Truth</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

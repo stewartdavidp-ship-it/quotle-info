@@ -97,6 +97,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/if-you-live-to-be-a-hundred-i-want-to-live-to-be-a-hundred#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "A. A. Milne",
+              "item": "https://quotle.info/authors/a-a-milne"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "If you live to be a hundred, I want to live to be a hundred minus one day, so I never have to live without you"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +298,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -596,6 +622,15 @@
             <p>The line thrives because it feels exactly like something Pooh <em>would</em> say, and because Milne really did write a wistful farewell scene about a boy and a bear growing old. That genuine kernel &mdash; &ldquo;a hundred&rdquo; and &ldquo;ninety-nine&rdquo; at the close of <em>The House at Pooh Corner</em> &mdash; gives the fabrication just enough truth to feel remembered rather than invented.</p>
             <p>The 1997 direct-to-video film <em>Pooh&rsquo;s Grand Adventure</em> echoes that same &lsquo;hundred / ninety-nine&rsquo; exchange, which is often mistaken online for the source of the &lsquo;minus one day&rsquo; wording. But the precise quotation everyone shares is not spoken there either; the earliest documented instance of it remains the 1999 newspaper caption.</p>
             <p class="pull">It feels like Pooh &mdash; which is exactly why nobody checks the book.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/love/">Love</a>
+                <a class="theme-chip" href="/themes/friendship/">Friendship</a>
+                <a class="theme-chip" href="/themes/mortality/">Mortality</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -98,6 +98,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/it-isnt-the-mountains-ahead-to-climb-that-wear-you-out-its#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Muhammad Ali",
+              "item": "https://quotle.info/authors/muhammad-ali"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "It isn't the mountains ahead to climb that wear you out; it's the pebble in your shoe"
+            }
+          ]
         }
       ]
     }
@@ -276,6 +299,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -598,6 +624,14 @@
             <p>The thought is a small, portable piece of motivational wisdom: it is not the grand obstacle but the tiny nagging irritant that defeats you. Lines like that travel well and attach easily to admired names.</p>
             <p>Muhammad Ali &mdash; endlessly quotable and endlessly quoted &mdash; is a natural landing spot. But the documented trail runs from an anonymous 1916 filler item through a misread &ldquo;Service&rdquo; credit, long before anyone thought of Ali.</p>
             <p class="pull">It isn&rsquo;t the mountain &mdash; it&rsquo;s the grain of sand. And nobody signed it.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/resilience/">Resilience</a>
+                <a class="theme-chip" href="/themes/simplicity/">Simplicity</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

@@ -107,6 +107,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/no-longer-talk-at-all-about-the-kind-of-man-that-a-good-man#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Marcus Aurelius",
+              "item": "https://quotle.info/authors/marcus-aurelius"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "No longer talk at all about the kind of man that a good man ought to be, but be such"
+            }
+          ]
         }
       ]
     }
@@ -285,6 +308,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -594,6 +620,14 @@
             <p>Book X of the <em>Meditations</em> is Marcus at his most self-admonishing, and section 16 is one of its shortest entries &mdash; a single imperative to stop theorizing about goodness and simply embody it. It reads as a note to himself, which is exactly what it was.</p>
             <p>That directness is why the line travels so well, and why it gets smoothed into ever-punchier forms. The genuine George Long wording is elegant; the modern &ldquo;Be one&rdquo; version is a slogan. Both point at the same Stoic conviction that character is demonstrated, not discussed.</p>
             <p class="pull">Stop describing the good man. Be him.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/character/">Character</a>
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

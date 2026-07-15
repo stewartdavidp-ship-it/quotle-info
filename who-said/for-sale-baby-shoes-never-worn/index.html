@@ -97,6 +97,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/for-sale-baby-shoes-never-worn#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Ernest Hemingway",
+              "item": "https://quotle.info/authors/ernest-hemingway"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "For sale: baby shoes, never worn"
+            }
+          ]
         }
       ]
     }
@@ -275,6 +298,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -588,6 +614,14 @@
             <div class="sec-head"><p class="kicker">Context</p><h2 id="story-h">Why it stuck</h2></div>
             <p>The line endures because it works: six words that imply an entire tragedy, attached to a famous name known for saying much with little. That fit is precisely why the misattribution spread so far &mdash; it <em>feels</em> like Hemingway, even though the story elements were circulating in classified ads and writing manuals before he published a word.</p>
             <p class="pull">Six words that imply a whole tragedy &mdash; but not, on any evidence, Hemingway&rsquo;s six words.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/mortality/">Mortality</a>
+                <a class="theme-chip" href="/themes/love/">Love</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">

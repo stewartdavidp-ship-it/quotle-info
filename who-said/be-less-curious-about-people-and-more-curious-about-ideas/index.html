@@ -104,6 +104,29 @@
               }
             }
           ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://quotle.info/who-said/be-less-curious-about-people-and-more-curious-about-ideas#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://quotle.info/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Marie Curie",
+              "item": "https://quotle.info/authors/marie-curie"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Be less curious about people and more curious about ideas"
+            }
+          ]
         }
       ]
     }
@@ -282,6 +305,9 @@
         .pull { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; line-height: 1.4; color: var(--gold); margin: 24px 0; padding-left: 20px; border-left: 3px solid var(--gold); }
 
         /* ===== RELATED ===== */
+        .theme-chips { display: flex; flex-wrap: wrap; gap: 9px; }
+        .theme-chip { display: inline-flex; align-items: center; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--slate); text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; padding: 8px 16px; transition: transform 0.2s, border-color 0.2s, color 0.2s; }
+        .theme-chip:hover { transform: translateY(-2px); border-color: var(--border-accent); color: var(--ink); }
         .connect-grid { display: flex; flex-direction: column; gap: 12px; }
         .connect-card { display: block; text-decoration: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 22px 24px; transition: transform 0.25s, border-color 0.25s; }
         .connect-card:hover { transform: translateY(-3px); border-color: var(--border-accent); }
@@ -596,6 +622,14 @@
             <p>The line endures because it distils a real trait of Curie&rsquo;s: an almost total impatience with celebrity and gossip, and a conviction that science should be about phenomena rather than personalities. She lived it &mdash; declining to patent radium, shrinking from the press, and, when a reporter pressed her about herself, redirecting the conversation to the work.</p>
             <p>That the exact aphorism is a later paraphrase rather than her documented words doesn&rsquo;t make it dishonest &mdash; but on a provenance site it earns amber, not green.</p>
             <p class="pull">A genuine Curie idea, polished into words she is not on record as saying.</p>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/knowledge/">Knowledge</a>
+                <a class="theme-chip" href="/themes/wisdom/">Wisdom</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
