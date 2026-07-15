@@ -47,7 +47,9 @@ function plainText(s) {
     .replace(/&nbsp;/g, ' ').replace(/&#8599;/g, '↗').replace(/&quot;/g, '"')
     .replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
 }
-const kebab = (s) => String(s).toLowerCase().replace(/[’'‘`]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+// Same slug function author.slug is built with — an entity-blind variant here silently dropped
+// authorHref for every accented author ("Niccol&ograve; Machiavelli" never matched its own slug).
+const { slugify: kebab } = require('./slugify');
 function normalize(rec) {
   if (typeof rec.copyAttribution === 'string') rec.copyAttribution = plainText(rec.copyAttribution);
   // The Layer-1 name links to /authors/{slug} ONLY when the hero IS that author. On disputed/anonymous

@@ -16,9 +16,26 @@ const VERIFIED_DATE = (!Array.isArray(_cfg) && _cfg.verifiedDate) || '8 Jul 2026
 const DATE_MODIFIED = (!Array.isArray(_cfg) && _cfg.dateModified) || '2026-07-08'
 
 // ---------- deterministic helpers (plain JS, no fs) ----------
+// slugify + its tables are DUPLICATED VERBATIM from tools/slugify.js — workflow scripts run in a
+// sandbox with no require(). Change one, change the other; see that file for why accented letters
+// are transliterated (ò→o) instead of dropped, and why only ACCENT entities are decoded here.
+const ACCENT_ENTITIES = Object.assign(Object.create(null), {
+  agrave: 'a', aacute: 'a', acirc: 'a', atilde: 'a', auml: 'a', aring: 'a', aelig: 'ae',
+  ccedil: 'c', egrave: 'e', eacute: 'e', ecirc: 'e', euml: 'e',
+  igrave: 'i', iacute: 'i', icirc: 'i', iuml: 'i', ntilde: 'n',
+  ograve: 'o', oacute: 'o', ocirc: 'o', otilde: 'o', ouml: 'o', oslash: 'o', oelig: 'oe',
+  ugrave: 'u', uacute: 'u', ucirc: 'u', uuml: 'u', yacute: 'y', yuml: 'y',
+  szlig: 'ss', eth: 'd', thorn: 'th',
+})
+const RAW_LETTERS = Object.assign(Object.create(null), {
+  ß: 'ss', æ: 'ae', œ: 'oe', ø: 'o', đ: 'd', ð: 'd', þ: 'th', ł: 'l', ħ: 'h', ı: 'i',
+})
 function slugify(text) {
   let s = String(text).toLowerCase()
     .replace(/[’'‘`]/g, '')
+    .replace(/&([a-z]+);/g, (m, name) => ACCENT_ENTITIES[name] || m)
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[ßæœøđðþłħı]/g, (ch) => RAW_LETTERS[ch] || ch)
     .replace(/&[a-z]+;/g, ' ')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');

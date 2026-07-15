@@ -41,13 +41,7 @@ const RIGHTS_RANK = { 'public-domain': 0, uncertain: 1, 'in-copyright': 2 };
 const STATUS_RANK = { selected: 0, queued: 1, ingested: 2, skipped: 3 };
 
 // ---- helpers ----
-function slugify(text) {
-  let s = String(text).toLowerCase()
-    .replace(/[’'‘`]/g, '').replace(/&[a-z]+;/g, ' ')
-    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-  if (s.length > 60) s = s.slice(0, 60).replace(/-[^-]*$/, '');
-  return s;
-}
+const { slugify } = require('./slugify');
 function norm(text) {
   return String(text).toLowerCase().replace(/[’'‘`"“”]/g, '')
     .replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
