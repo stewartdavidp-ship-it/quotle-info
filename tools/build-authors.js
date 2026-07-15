@@ -432,7 +432,10 @@ ${authors.map(authorCard).join('\n')}
                 var capped = limit < hits;
                 moreEl.hidden = !capped;
                 if (capped) moreEl.textContent = 'Show all ' + hits;
-                countEl.textContent = hits ? (capped ? 'Showing ' + limit + ' of ' + hits + ' authors' : hits + ' author' + (hits === 1 ? '' : 's')) : '';
+                // Always the same sentence: how many the filter MATCHED. Whether the list is capped
+                // is the Show-all button's job to say — a count that changes shape between pills
+                // ("48 authors" vs "Showing 60 of 130 authors") reads as a different metric each time.
+                countEl.textContent = hits ? hits + ' author' + (hits === 1 ? '' : 's') : '';
             }
             // Scope to .chip — the author cards carry data-era/data-mag/data-n too, so a bare
             // [data-era] selector would wire every card as a filter button.
