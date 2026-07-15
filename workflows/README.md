@@ -5,9 +5,9 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 638** quotes. **Target: 2000.**
-- **Next wave number: r19.** (Waves r6–r18 shipped. Numbering is just a label for batch/scratch files.)
-- Harvest backlog: `data/harvest-queue.json` (committed) — ~324 queued. `node tools/harvest.js report`.
+- **Corpus: 678** quotes. **Target: 2000.**
+- **Next wave number: r20.** (Waves r6–r19 shipped. Numbering is just a label for batch/scratch files.)
+- Harvest backlog: `data/harvest-queue.json` (committed) — ~284 queued. `node tools/harvest.js report`.
 - Two harvest tracks (see below). Track A ≈ 70 magnet authors harvested; Track B covered 24 themes.
 
 ## The skip bar — hate/harm ONLY (operator policy, 2026-07-14)
@@ -91,8 +91,17 @@ node tools/build.js
 # 7. SHIP
 echo '[]' > /tmp/empty.json && node tools/harvest.js sync /tmp/empty.json   # sweep this wave's selected → ingested
 git checkout -b wave-rN && git add -A && git commit && git push
-gh pr create ... && gh pr merge <#> --squash
+gh pr create ...
+#    !! REBASE-REBUILD BEFORE MERGING — built HTML is COMMITTED, so a wave branched before a
+#    generator fix but merged after it SILENTLY REVERTS that fix on every page the wave rebuilt.
+#    (git is right to keep the wave's side: the wave did change those files.) r19 reverted #59's
+#    og:image fix on its 40 pages this way. The build is idempotent, so this is cheap and a no-op
+#    when nothing moved:
+git pull origin main && node tools/build.js && git add -A && git commit --amend --no-edit && git push -f
+gh pr merge <#> --squash
 #    after Pages deploys: node tools/indexnow.js   (feeds Bing/Yandex — the fastest agent-discovery path)
+#    THEN VERIFY THE LIVE PAGE, not the merge — curl a page and check the thing you changed is
+#    actually there. The og revert was invisible in a green merge + green deploy.
 ```
 
 ## Gotchas (all learned the hard way — do not skip)
