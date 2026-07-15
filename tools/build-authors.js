@@ -186,6 +186,23 @@ const STYLE = `${ROOT_CSS}
         .ac-name { font-family:'Playfair Display',serif; font-weight:700; font-size:1.05rem; color:var(--ink); }
         .ac-meta { font-family:'DM Sans',sans-serif; font-size:0.72rem; color:var(--text-muted); margin-top:2px; }
         .ac-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--sage); margin-top:5px; }
+        .ac-mag { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--caution); margin-top:3px; }
+        /* authors filter bar */
+        .fbar { margin-top:28px; display:flex; flex-direction:column; gap:14px; }
+        .fbar-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+        .fbar-lbl { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-right:2px; }
+        .f-in { flex:1; min-width:220px; font-family:'DM Sans',sans-serif; font-size:0.95rem; color:var(--ink); background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; outline:none; transition:border-color 0.2s; }
+        .f-in:focus { border-color:var(--border-accent); }
+        .chip { font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:600; color:var(--slate); background:var(--bg-card); border:1px solid var(--border); border-radius:999px; padding:7px 14px; cursor:pointer; transition:border-color 0.2s,color 0.2s,background 0.2s; }
+        .chip:hover { border-color:var(--border-accent); color:var(--ink); }
+        .chip[aria-pressed="true"] { background:var(--burgundy-glow); border-color:var(--burgundy); color:var(--ink); }
+        .chip .n { color:var(--text-muted); font-weight:500; }
+        .chip[aria-pressed="true"] .n { color:var(--slate); }
+        .f-count { font-family:'DM Sans',sans-serif; font-size:0.8rem; color:var(--text-muted); margin-top:4px; }
+        .ac[hidden] { display:none; }
+        .f-more { display:block; margin:26px auto 0; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; color:var(--ink); background:var(--bg-card); border:1px solid var(--border-accent); border-radius:999px; padding:11px 24px; cursor:pointer; transition:transform 0.2s; }
+        .f-more:hover { transform:translateY(-2px); }
+        .f-none { display:none; background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:18px 20px; margin-top:20px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--slate); }
         footer { text-align:center; padding:40px 24px; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-size:0.8rem; border-top:1px solid var(--border); margin-top:48px; }
         footer a { color:var(--burgundy-link); text-decoration:none; }
         @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } * { transition:none !important; } }
@@ -299,12 +316,50 @@ ${ASK_JS}`;
 
 // ---- authors index ----
 const totalQuotes = authors.reduce((s, a) => s + a.quotes.length, 0);
-const authorCard = (a) => `                <a class="ac" href="/authors/${a.slug}/">
+
+// Browse facets. A flat A–Z list of every author is useless past a few hundred (66% of authors
+// carry a single quote), so the index ships three lenses instead of an alphabet:
+//   mag  — how many quotes are WRONGLY credited to this person (records[].creditedTo). This is the
+//          site's own thesis rendered as a browse, and the default sort.
+//   n    — quote count; separates the substantial profiles from the single-quote long tail.
+//   era  — parsed from the author's metaLine dates ("1809–1865", "b. 1961", "c. 620–564 BCE").
+// Every author still ships in the static HTML (crawlable); the filters only hide client-side.
+const magnetCount = {};
+for (const r of records) if (r.creditedTo) magnetCount[plain(r.creditedTo)] = (magnetCount[plain(r.creditedTo)] || 0) + 1;
+
+// Buckets are keyed on BIRTH year and must be labelled for what they actually catch: the second
+// bucket takes everyone from the fall of Rome to 1800 (Aquinas and Machiavelli live there too), so
+// it says "Pre-1800" rather than naming a narrower window it would misdescribe.
+const ERAS = [
+  { id: 'ancient', label: 'Ancient', max: 500 },
+  { id: 'pre1800', label: 'Pre-1800', max: 1800 },
+  { id: 'nineteenth', label: '1800s', max: 1900 },
+  { id: 'modern', label: 'Modern', max: 9999 },
+];
+function eraOf(metaLine) {
+  const head = plain(metaLine).split('·')[0];
+  if (/\bBCE?\b/i.test(head)) return 'ancient';
+  const yrs = head.match(/\d{3,4}/g);
+  if (!yrs) return '';
+  const birth = parseInt(yrs[0], 10);
+  return (ERAS.find((e) => birth < e.max) || {}).id || '';
+}
+
+authors.forEach((a) => { a.mag = magnetCount[plain(a.name)] || 0; a.era = eraOf(a.metaLine); });
+const magnets = authors.filter((a) => a.mag > 0).length;
+const deep = authors.filter((a) => a.quotes.length >= 3).length;
+const eraCounts = {};
+authors.forEach((a) => { if (a.era) eraCounts[a.era] = (eraCounts[a.era] || 0) + 1; });
+// default order = the ranked head: biggest misattribution magnets, then depth, then name
+authors.sort((a, b) => (b.mag - a.mag) || (b.quotes.length - a.quotes.length) || a.name.localeCompare(b.name));
+
+const authorCard = (a) => `                <a class="ac" href="/authors/${a.slug}/" data-name="${esc(plain(a.name).toLowerCase())}" data-n="${a.quotes.length}" data-mag="${a.mag}" data-era="${a.era}">
                     <div class="author-avatar" aria-hidden="true">${esc(a.initials || '')}</div>
                     <div>
                         <p class="ac-name">${esc(a.name)}</p>
                         <p class="ac-meta">${esc(a.metaLine || '')}</p>
                         <p class="ac-count">${a.quotes.length} quote${a.quotes.length === 1 ? '' : 's'}</p>
+                        ${a.mag ? `<p class="ac-mag">${a.mag} quote${a.mag === 1 ? '' : 's'} wrongly credited to them</p>` : ''}
                     </div>
                 </a>`;
 const idxHead = `    <title>The authors — every voice traced to source · Quotle.info</title>
@@ -324,10 +379,90 @@ const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb">
             <h1>The authors</h1>
             <p class="lede"><b>${authors.length}</b> authors · <b>${totalQuotes}</b> quotes traced to a primary source, with the misattributions untangled.</p>
         </header>
-        <div class="author-grid">
+        <div class="fbar">
+            <div class="fbar-row">
+                <input id="f-q" class="f-in" type="search" placeholder="Find an author by name&hellip;" autocomplete="off" aria-label="Filter authors by name">
+            </div>
+            <div class="fbar-row">
+                <span class="fbar-lbl">Show</span>
+                <button class="chip" data-lens="mag" aria-pressed="true">Most misattributed <span class="n">${magnets}</span></button>
+                <button class="chip" data-lens="deep" aria-pressed="false">3+ quotes <span class="n">${deep}</span></button>
+                <button class="chip" data-lens="all" aria-pressed="false">Everyone <span class="n">${authors.length}</span></button>
+            </div>
+            <div class="fbar-row">
+                <span class="fbar-lbl">Era</span>
+${ERAS.map((e) => `                <button class="chip" data-era="${e.id}" aria-pressed="false">${e.label} <span class="n">${eraCounts[e.id] || 0}</span></button>`).join('\n')}
+            </div>
+            <p id="f-count" class="f-count" role="status" aria-live="polite"></p>
+        </div>
+        <div id="a-grid" class="author-grid">
 ${authors.map(authorCard).join('\n')}
         </div>
-    </main>`;
+        <p id="f-none" class="f-none">No author matches that. Try <b>Everyone</b>, or clear the era filter.</p>
+        <button id="f-more" class="f-more" hidden>Show all</button>
+    </main>
+    <script>
+        (function(){
+            var PAGE = 60, lens = 'mag', era = '', term = '', shown = PAGE;
+            var grid = document.getElementById('a-grid');
+            var cards = [].slice.call(grid.querySelectorAll('.ac'));
+            var qEl = document.getElementById('f-q'), countEl = document.getElementById('f-count');
+            var moreEl = document.getElementById('f-more'), noneEl = document.getElementById('f-none');
+            function matches(c){
+                if (term && c.getAttribute('data-name').indexOf(term) === -1) return false;
+                if (era && c.getAttribute('data-era') !== era) return false;
+                if (lens === 'mag' && +c.getAttribute('data-mag') === 0) return false;
+                if (lens === 'deep' && +c.getAttribute('data-n') < 3) return false;
+                return true;
+            }
+            function render(){
+                var hits = 0, i;
+                for (i = 0; i < cards.length; i++) if (matches(cards[i])) hits++;
+                // Only cap a genuinely long list. Hiding a handful behind a button ("showing 60 of 61")
+                // is pure friction, so absorb any small overflow instead.
+                var limit = hits <= shown + 24 ? hits : shown;
+                var seen = 0;
+                for (i = 0; i < cards.length; i++) {
+                    var ok = matches(cards[i]);
+                    if (ok) seen++;
+                    cards[i].hidden = !ok || seen > limit;
+                }
+                noneEl.style.display = hits ? 'none' : 'block';
+                var capped = limit < hits;
+                moreEl.hidden = !capped;
+                if (capped) moreEl.textContent = 'Show all ' + hits;
+                countEl.textContent = hits ? (capped ? 'Showing ' + limit + ' of ' + hits + ' authors' : hits + ' author' + (hits === 1 ? '' : 's')) : '';
+            }
+            // Scope to .chip — the author cards carry data-era/data-mag/data-n too, so a bare
+            // [data-era] selector would wire every card as a filter button.
+            function press(sel, attr, val){
+                [].forEach.call(document.querySelectorAll(sel), function(b){
+                    b.setAttribute('aria-pressed', b.getAttribute(attr) === val ? 'true' : 'false');
+                });
+            }
+            [].forEach.call(document.querySelectorAll('.chip[data-lens]'), function(b){
+                b.addEventListener('click', function(){
+                    lens = b.getAttribute('data-lens'); shown = PAGE;
+                    press('.chip[data-lens]', 'data-lens', lens); render();
+                });
+            });
+            [].forEach.call(document.querySelectorAll('.chip[data-era]'), function(b){
+                b.addEventListener('click', function(){
+                    var v = b.getAttribute('data-era');
+                    era = (era === v) ? '' : v; shown = PAGE;
+                    press('.chip[data-era]', 'data-era', era); render();
+                });
+            });
+            qEl.addEventListener('input', function(){
+                term = qEl.value.trim().toLowerCase();
+                // typing a name is a known-item lookup — search the whole corpus, not the active lens
+                if (term) { lens = 'all'; press('.chip[data-lens]', 'data-lens', 'all'); }
+                shown = PAGE; render();
+            });
+            moreEl.addEventListener('click', function(){ shown = 1e9; render(); moreEl.hidden = true; });
+            render();
+        })();
+    </script>`;
 fs.writeFileSync(path.join(OUT, 'index.html'), page(idxInner, idxHead));
 
 console.log(`  ✓ authors/ (${authors.length} author pages + index, ${totalQuotes} quotes linked)`);
