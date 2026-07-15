@@ -407,7 +407,7 @@ ${authors.map(authorCard).join('\n')}
     </main>
     <script>
         (function(){
-            var PAGE = 60, lens = 'mag', era = '', term = '', shown = PAGE;
+            var PAGE = 60, lens = 'mag', era = '', term = '', shown = PAGE, mode = 'reset';
             var grid = document.getElementById('a-grid');
             var cards = [].slice.call(grid.querySelectorAll('.ac'));
             var qEl = document.getElementById('f-q'), countEl = document.getElementById('f-count');
@@ -432,9 +432,13 @@ ${authors.map(authorCard).join('\n')}
                     cards[i].hidden = !ok || seen > limit;
                 }
                 noneEl.style.display = hits ? 'none' : 'block';
-                var capped = limit < hits;
-                moreEl.hidden = !capped;
-                if (capped) moreEl.textContent = 'Show all ' + hits;
+                // The button is the way FORWARD from the end of the list, so it stays useful whenever
+                // anyone is being withheld — whether by the cap or by the active lens/era/search. It
+                // only disappears once all 332 are actually on screen, so it is never a dead control.
+                var reveal = limit < hits ? hits : cards.length; // uncap within the filter, else drop it
+                mode = limit < hits ? 'uncap' : 'reset';
+                moreEl.hidden = limit >= cards.length;
+                moreEl.textContent = 'Show all ' + reveal + ' authors';
                 // Always the same sentence: how many the filter MATCHED. Whether the list is capped
                 // is the Show-all button's job to say — a count that changes shape between pills
                 // ("48 authors" vs "Showing 60 of 130 authors") reads as a different metric each time.
@@ -466,7 +470,15 @@ ${authors.map(authorCard).join('\n')}
                 if (term) { lens = 'all'; press('.chip[data-lens]', 'data-lens', 'all'); }
                 shown = PAGE; render();
             });
-            moreEl.addEventListener('click', function(){ shown = 1e9; render(); moreEl.hidden = true; });
+            moreEl.addEventListener('click', function(){
+                shown = 1e9;
+                if (mode === 'reset') { // drop the lens/era/search that were withholding people
+                    lens = 'all'; era = ''; term = ''; qEl.value = '';
+                    press('.chip[data-lens]', 'data-lens', 'all');
+                    press('.chip[data-era]', 'data-era', '');
+                }
+                render();
+            });
             render();
         })();
     </script>`;
