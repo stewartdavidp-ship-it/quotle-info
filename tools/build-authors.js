@@ -328,8 +328,15 @@ const totalQuotes = authors.reduce((s, a) => s + a.quotes.length, 0);
 //   n    — quote count; separates the substantial profiles from the single-quote long tail.
 //   era  — parsed from the author's metaLine dates ("1809–1865", "b. 1961", "c. 620–564 BCE").
 // Every author still ships in the static HTML (crawlable); the filters only hide client-side.
+// Only DISPUTED records count as "wrongly credited" — same gate misattrBy uses below. A Track A
+// wave stamps creditedTo on every record it harvested, including the ones that turn out GENUINE
+// (Reagan really did say "trust, but verify"), so counting bare creditedTo would tell a person
+// their own quotes were misattributed to them. Do NOT try to infer this by comparing creditedTo to
+// answer.authorName: that field holds the magnet's name on plenty of disputed pages ("Not Thomas
+// Jefferson" carries authorName "Thomas Jefferson"), and reads "Unknown — falsely credited to
+// Marilyn Monroe" on others, so name-matching both misses and false-positives.
 const magnetCount = {};
-for (const r of records) if (r.creditedTo) magnetCount[plain(r.creditedTo)] = (magnetCount[plain(r.creditedTo)] || 0) + 1;
+for (const r of records) if (r.creditedTo && r.confidence === 'disputed') magnetCount[plain(r.creditedTo)] = (magnetCount[plain(r.creditedTo)] || 0) + 1;
 
 // Buckets are keyed on BIRTH year and must be labelled for what they actually catch: the second
 // bucket takes everyone from the fall of Rome to 1800 (Aquinas and Machiavelli live there too), so

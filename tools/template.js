@@ -142,6 +142,12 @@ function buildJsonLd(q, url) {
     text: s.quotationText || q.fullQuote || q.displayQuote,
   };
   if (s.alternateName) quotation.alternateName = s.alternateName;
+  // NOTE: schema.inLanguage is NOT emitted yet, though the CLAUDE.md RULE requires it and records
+  // already carry it. Wiring it up naively mis-tags translated quotations: records whose `text` is a
+  // published English translation (e.g. Meditations via Staniforth) set inLanguage to the ORIGINAL
+  // composition language ("grc"), so emitting it as-is would assert an English sentence is Ancient
+  // Greek. Needs a site-wide pass that settles the semantics (language of `text`, not of the source)
+  // and audits existing values before it can be turned on.
   // Quotation.creator must name the TRUE author. On a DISPUTED page, generate sometimes left the
   // magnet (the wrongly-credited name) in schema.creator — a machine-readable contradiction of the
   // page's own verdict. So on disputed pages, only assert a creator when it genuinely matches the
@@ -160,9 +166,20 @@ function buildJsonLd(q, url) {
     quotation.creator = { '@type': 'Person', name: s.creator.name };
     if (s.creator.birthDate) quotation.creator.birthDate = s.creator.birthDate;
     if (s.creator.jobTitle) quotation.creator.jobTitle = s.creator.jobTitle;
+    // The RULE in CLAUDE.md asks for creator.description; jobTitle stays for records that only carry it.
+    if (s.creator.description) quotation.creator.description = s.creator.description;
     if (s.creator.sameAs) quotation.creator.sameAs = s.creator.sameAs;
   }
   if (s.dateCreated) quotation.dateCreated = s.dateCreated;
+  // isPartOf = the work this sentence is CONTAINED IN (e.g. the Meditations itself). Distinct from
+  // isBasedOn below, which points at the specific translation the English wording comes from. A
+  // translated quote legitimately needs both: the ancient work it belongs to, and the edition quoted.
+  if (s.isPartOf) {
+    const p = s.isPartOf;
+    quotation.isPartOf = { '@type': p.type || 'CreativeWork', name: p.name };
+    if (p.datePublished) quotation.isPartOf.datePublished = p.datePublished;
+    if (p.sameAs) quotation.isPartOf.sameAs = p.sameAs;
+  }
   if (s.isBasedOn) {
     const b = s.isBasedOn;
     quotation.isBasedOn = { '@type': b.type || 'CreativeWork', name: b.name };
@@ -170,6 +187,12 @@ function buildJsonLd(q, url) {
     if (b.datePublished) quotation.isBasedOn.datePublished = b.datePublished;
     if (b.pagination) quotation.isBasedOn.pagination = b.pagination;
     if (b.sameAs) quotation.isBasedOn.sameAs = b.sameAs;
+    // sameAs asserts the linked URL IS this work. For a source we only know via a third-party
+    // reference (a Wikiquote entry that merely CITES a pamphlet), that's a false identity claim —
+    // use `citation` instead. `description` lets a record say what the relationship actually is,
+    // e.g. "earliest documented antecedent", so isBasedOn isn't read as "the text came from here".
+    if (b.citation) quotation.isBasedOn.citation = b.citation;
+    if (b.description) quotation.isBasedOn.disambiguatingDescription = b.description;
   }
   // Rights → structured, so agents get reuse status without scraping prose.
   const rights = q.source && q.source.rights;
@@ -177,7 +200,12 @@ function buildJsonLd(q, url) {
     quotation.license = 'https://creativecommons.org/publicdomain/mark/1.0/';
     quotation.isAccessibleForFree = true;
   } else if (rights === 'in-copyright') {
-    quotation.copyrightNotice = 'In copyright' + (q.source.rightsHolder ? ' — ' + plain(q.source.rightsHolder) : '');
+    // A record whose `text` and `alternateName` have DIFFERENT rights status (an in-copyright
+    // original plus a later anonymous rewrite the page says is unowned) can't be described by the
+    // blanket notice — it would assert ownership over the paraphrase. schema.copyrightNotice lets
+    // such a record scope the claim to the string that actually carries the right.
+    quotation.copyrightNotice = s.copyrightNotice
+      || 'In copyright' + (q.source.rightsHolder ? ' — ' + plain(q.source.rightsHolder) : '');
   }
   if (rights) quotation.usageInfo = `${ORIGIN}/how-we-verify`;
 
@@ -195,18 +223,45 @@ function buildJsonLd(q, url) {
   // the popularly-credited (wrong) name, false (1). The Quotation.creator still names the REAL
   // author, so a machine reads both "the claim about {who} is {rating}" and "actually by {creator}".
   const RATING = { verified: [5, 'Verified'], attributed: [3, 'Attributed'], disputed: [1, 'Disputed'] };
-  const [ratingValue, ratingName] = RATING[q.confidence] || RATING.verified;
+  const [ratingValue, defaultRatingName] = RATING[q.confidence] || RATING.verified;
+  // `confidence` describes the quote's ORIGIN; this ClaimReview rates the narrower "{who} said it"
+  // claim, which can be flatly false even while the origin stays disputed. Records where the cited
+  // fact-checks are decisive (e.g. Monticello "Spurious" + CheckYourFact "False") can override the
+  // label via schema.claimRatingName so it matches ratingValue 1 rather than implying a live dispute.
+  const ratingName = (q.schema && q.schema.claimRatingName) || defaultRatingName;
   const trueAuthor = plain((q.answer && q.answer.authorName) || (s.creator && s.creator.name) || '');
   const firstMisWho = q.misattribution && q.misattribution.items && q.misattribution.items[0] && plain(q.misattribution.items[0].who);
-  const claimant = (q.confidence === 'disputed' && firstMisWho) ? firstMisWho : trueAuthor;
+  // The claimant is the MAGNET — the name the false claim is actually made under — which the record
+  // carries as `creditedTo`. It is NOT misattribution.items[0].who: that field holds whatever the
+  // first fact-check row happens to be about, which is routinely the propagation VECTOR rather than
+  // the magnet ("Reader's Digest, June 1954", "ESPN", "Anonymous (internet)"), a work ("Not in the
+  // Tao Te Ching"), or plain prose ("Not Mahatma Gandhi"). Using it emitted claimReviewed strings
+  // like `Reader's Digest, June 1954 said: "..."` rated Disputed 1/5 — rating a TRUE statement false,
+  // typing a magazine as a Person, and asking voice assistants "Did ESPN say ...?". 59 of 431
+  // disputed pages were affected. creditedTo first, with the old chain as fallback for records
+  // that predate it.
+  const magnet = plain(q.creditedTo);
+  const claimant = (q.confidence === 'disputed') ? (magnet || firstMisWho || trueAuthor) : trueAuthor;
   const quoteText = plain(quotation.text);
+  // The claim under review is "{who} said {X}". On a paraphrase page, X is the polished wording that
+  // actually circulates over the magnet's name — NOT Quotation.text, which carries the documented
+  // origin nobody ever credited to the magnet. Records where the two differ set schema.claimQuoteText
+  // so ClaimReview/FAQ rate the claim that was really made rather than a strawman.
+  const claimQuoteText = plain(s.claimQuoteText) || quoteText;
+  // Some claims cannot be stated honestly in the "{who} said {X}" template. A genuine quote whose
+  // FAMOUS ENGLISH is a translator's needs the caveat inside claimReviewed itself, or a consumer
+  // that lifts only the ClaimReview emits "{ancient author} said {modern translator's words} —
+  // Verified", reproducing the exact error the page exists to correct. schema.claimReviewed lets
+  // such a record state the reviewed claim in full.
+  const claimReviewedText = plain(s.claimReviewed)
+    || (claimant ? `${claimant} said: "${claimQuoteText}"` : `"${claimQuoteText}"`);
   const claimReview = {
     '@type': 'ClaimReview',
     '@id': `${url}#claimreview`,
     url,
     author: { '@type': 'Organization', name: 'Quotle.info', url: ORIGIN },
     datePublished: s.dateModified,
-    claimReviewed: claimant ? `${claimant} said: "${quoteText}"` : `"${quoteText}"`,
+    claimReviewed: claimReviewedText,
     itemReviewed: {
       '@type': 'Claim',
       author: claimant ? { '@type': 'Person', name: claimant } : undefined,
@@ -229,7 +284,7 @@ function buildJsonLd(q, url) {
     '@id': `${url}#faq`,
     mainEntity: [{
       '@type': 'Question',
-      name: claimant ? `Did ${claimant} say "${quoteText}"?` : `Who really said "${quoteText}"?`,
+      name: claimant ? `Did ${claimant} say "${claimQuoteText}"?` : `Who really said "${claimQuoteText}"?`,
       acceptedAnswer: { '@type': 'Answer', text: answerText, url },
     }],
   };
@@ -240,10 +295,17 @@ function buildJsonLd(q, url) {
 // ---- top nav + breadcrumb ------------------------------------------------
 function renderNav(q) {
   const a = q.author || {};
-  const crumbName = authorLinked(a.slug)
-    ? `<a href="/authors/${a.slug}">${esc(a.name)}</a>`
-    : `<span>${esc(a.name)}</span>`;
-  const crumbAuthor = a.name
+  // The breadcrumb is an attribution claim to users and crawlers. On a page whose verdict is that
+  // the line has no known author, filing it under the author-card person re-attributes it — the
+  // same error class the page exists to correct. `breadcrumbSection` lets such a record route the
+  // crumb through the quote taxonomy instead, keeping the author card as an in-body reference.
+  const sec = q.breadcrumbSection;
+  const crumbName = sec
+    ? (sec.href ? `<a href="${attr(sec.href)}">${esc(sec.name)}</a>` : `<span>${esc(sec.name)}</span>`)
+    : (authorLinked(a.slug)
+      ? `<a href="/authors/${a.slug}">${esc(a.name)}</a>`
+      : `<span>${esc(a.name)}</span>`);
+  const crumbAuthor = (sec || a.name)
     ? `${crumbName}<span class="sep" aria-hidden="true">›</span>\n        `
     : '';
   return `
