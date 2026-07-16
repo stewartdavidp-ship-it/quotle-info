@@ -101,10 +101,10 @@ for (const d of dossiers) {
     if (nd.length >= 12) b = batch.find((x) => { const nx = norm(x.text); return nx.startsWith(nd.slice(0, 30)) || nd.startsWith(nx.slice(0, 30)); });
   }
   if (!b) { unmatched.push(d.meta.ogTitle); continue; }
-  // index → dayNumber. Carry the batch's index instead of dropping it: track-C candidates come
+  // index → dayNumber. Carry the batch's index instead of dropping it: track-D candidates come
   // from the Quotle game and own a slot there, and dayNumber is what the game resolves its
   // provenance link through. Null for tracks A/B, where the batch has no index — which is why
-  // this was hardcoded null and got away with it until the first track-C wave.
+  // this was hardcoded null and got away with it until the first track-D wave.
   const rec = toRecord(d, { text: b.text, author: b.author, index: b.index ?? null });
   if (STAMP_CREDITED) rec.creditedTo = b.author;
   records.push(rec);

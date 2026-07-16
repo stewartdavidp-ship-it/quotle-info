@@ -5,10 +5,12 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 678** quotes. **Target: 2000.**
-- **Next wave number: r20.** (Waves r6–r19 shipped. Numbering is just a label for batch/scratch files.)
-- Harvest backlog: `data/harvest-queue.json` (committed) — ~284 queued. `node tools/harvest.js report`.
-- Two harvest tracks (see below). Track A ≈ 70 magnet authors harvested; Track B covered 24 themes.
+- **Corpus: 718** quotes. **Target: 2000.**
+- **Next wave number: r21.** (Waves r6–r20 shipped. Numbering is just a label for batch/scratch files.)
+- Harvest backlog: `data/harvest-queue.json` (committed) — ~500 queued. `node tools/harvest.js report`.
+- Four tracks (see below). Track A ≈ 70 magnet authors harvested; Track B covered 24 themes;
+  Track C (film) seeded; Track D (Quotle game) has **161 queued — ~4 waves**, and every one of them
+  is a puzzle the game currently refuses to show.
 
 ## The skip bar — hate/harm ONLY (operator policy, 2026-07-14)
 `harvest.js skip` is for **hate or harm**, nothing else. The two standing skips are the racist
@@ -57,18 +59,20 @@ Workflow harvest-candidates.js  args={authors:[<magnet authors NOT yet harvested
 #    write to /tmp/harvest-rN.json, then:
 node tools/harvest.js sync /tmp/harvest-rN.json     # append + dedup vs corpus+backlog
 #    (TRACK B instead: Workflow harvest-verified-by-theme.js; candidates are {theme,quotes} per agent.)
-#    (TRACK C — the Quotle game's hidden quotes: already synced from the game, no harvest needed.
+#    (TRACK C instead: Workflow harvest-film-misquotes.js; screen lines the public gets wrong.)
+#    (TRACK D — the Quotle game's hidden quotes: already synced from the game, no harvest needed.
 #     The game plays ONLY quotes verified here, so each of these is a puzzle that stays dark until
 #     it has a page. They're genuine-famous, which CAT_RANK sorts LAST, so they never surface in a
 #     default `select` — draw them explicitly with --source. They carry gameIndex → batch `index`
 #     → the record's dayNumber, so the page maps straight back to the puzzle it unblocks:
 #         node tools/harvest.js select 40 --wave rN --source quotle-game-unverified.json
-#     After the wave ships, flip those quotes to verified:true in gameshelf/quotle/index.html.)
+#     After the wave ships, flip those quotes to verified:true in gameshelf/quotle/index.html.
+#     r20 was the first: 40 in → 18 verified, 9 attributed, 13 disputed. Expect ~45% to survive.)
 
 # 1. SELECT + BATCH the next ~40
 node tools/harvest.js select 40 --wave rN           # review the list; `harvest.js skip <slug>` (see the skip bar below)
 node tools/harvest.js batch  --wave rN              # writes data/.harvest-batch-rN.json = [{text,author,index}]
-                                                    # index = gameIndex (track C) or null (tracks A/B)
+                                                    # index = gameIndex (track D) or null (tracks A/B/C)
 
 # 2. GENERATE (Opus, QI-deference). Pass TODAY'S date.
 Workflow generate.js  args={items:<contents of data/.harvest-batch-rN.json>, verifiedDate:"D Mon YYYY", dateModified:"YYYY-MM-DD"}
