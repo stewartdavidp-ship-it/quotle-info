@@ -91,6 +91,17 @@ node tools/build.js
 Workflow audit.js  args=<contents of workflows/.scratch/audit-args-rN.json>
 node workflows/parse-audit.js --journal <auditTranscriptDir>/journal.jsonl   # writes .scratch/current-fixes.json + prints FAIL slugs
 Workflow fix.js  args=<the FAIL slug list printed above>
+#    !! SCOPE GATE — fix.js agents may edit ONLY their own data/quotes/{slug}.json. Before you build,
+#    check that they did. They run in PARALLEL on a generator that renders every page, so an edit
+#    there is both a race and a blast radius nobody chose. r19's agents correctly refused and
+#    escalated; r20's agents edited tools/template.js instead, and +94/-14 of generator change
+#    shipped inside a CONTENT wave, unplanned. Same prompt, opposite behaviour — so verify, don't
+#    trust. This must print nothing:
+git status --porcelain -- tools workflows | grep . && echo "^^ fix agents escaped their lane — review before building"
+#    Their generator findings arrive in the fix report's `remaining` (they're told to report, not
+#    edit). Read those: apply each ONCE, centrally, as its OWN commit — not smuggled into a wave.
+#    They are often right and often important (the ClaimReview claimant bug, 59 pages emitting a
+#    false machine-readable claim, was found exactly this way).
 node tools/build.js
 #    Spot-check any reassigned heroes (disputed pages must show the TRUE author, not the magnet).
 
