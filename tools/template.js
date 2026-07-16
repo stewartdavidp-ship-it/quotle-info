@@ -345,8 +345,12 @@ function buildJsonLd(q, url) {
   if (!claimReview.itemReviewed.author) delete claimReview.itemReviewed.author;
 
   // FAQPage — the literal "Did {who} say {quote}?" Q&A, so AI answer-engines and snippets can
-  // lift the verdict verbatim. Question uses the credited name; answer leads with the verdict.
-  const verdictLead = q.confidence === 'disputed' ? 'No. ' : q.confidence === 'attributed' ? 'Not confirmed. ' : 'Yes. ';
+  // lift the verdict verbatim. The yes/no lead ("No." / "Not confirmed." / "Yes.") only answers the
+  // yes/no QUESTION form. When there is no claimant the question is "Who really said X?", which a
+  // "No." does not answer — and pairing them was actively self-contradictory ("Who really said X?"
+  // → "No. Wiesel really did say this"). So only prepend the lead on the "Did {claimant} say" form;
+  // the who-form answer opens with the verdict sentence itself. (42 pages carried the mismatch.)
+  const verdictLead = !claimant ? '' : q.confidence === 'disputed' ? 'No. ' : q.confidence === 'attributed' ? 'Not confirmed. ' : 'Yes. ';
   const answerText = (verdictLead + plain((q.answer && q.answer.sourceLine) || (q.answer && q.answer.label) || '')).replace(/\s+/g, ' ').trim();
   const faq = {
     '@type': 'FAQPage',
