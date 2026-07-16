@@ -63,6 +63,11 @@ const plain = (x) => String(x || '').replace(/<[^>]+>/g, '')
   .replace(/&#(\d+);/g, (m, d) => String.fromCharCode(+d))
   .replace(/&#x([0-9a-f]+);/gi, (m, h) => String.fromCharCode(parseInt(h, 16)))
   .replace(/&([a-zA-Z]+);/g, (m, e) => (e in NAMED_ENTITIES ? NAMED_ENTITIES[e] : ' '))
+  // "↗" is link-affordance chrome: it lives inside an anchor in our prose and means "opens in a new
+  // tab". Stripping tags leaves it stranded mid-sentence in plain-text sinks (JSON-LD FAQ answers,
+  // meta text), where there is no link for it to mark — a voice assistant reads a stray glyph aloud.
+  // Drop it with any space that preceded it, so "…a breath earlier ↗, which…" closes up cleanly.
+  .replace(/\s*↗/g, '')
   .replace(/\s+/g, ' ').trim();
 
 const CONFIDENCE = {
@@ -156,15 +161,25 @@ function buildJsonLd(q, url) {
   const heroName = plain((q.answer && q.answer.authorName) || '');
   const heroUnknown = !heroName || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroName);
   const magnetName = plain(q.creditedTo || '').toLowerCase();
+  // A WORDING-DRIFT page: the credited name IS the true author and the dispute is the WORDING, not
+  // the attribution — the paraphrase in circulation (schema.claimQuoteText) differs from the
+  // documented sentence carried by Quotation.text. There the "hero must not be the magnet" test
+  // below is a false positive: creator names whoever wrote `text`, which is exactly right, and the
+  // ClaimReview separately rates the paraphrase claim. Keyed on claimQuoteText, so records that
+  // don't distinguish the two strings are unaffected.
+  const wordingDrift = !!(s.claimQuoteText && plain(s.claimQuoteText) !== plain(quotation.text));
   // On a disputed page, emit Quotation.creator ONLY when it names the TRUE author: it must match the
-  // hero, the hero must be a real named person, AND the hero must NOT be the magnet. This catches
-  // records where generate left answer.authorName as the wrongly-credited name (else the machine-
-  // readable creator would assert the very misattribution the page debunks).
+  // hero, the hero must be a real named person, AND the hero must NOT be the magnet (unless this is
+  // a wording-drift page, where magnet == true author by definition). This catches records where
+  // generate left answer.authorName as the wrongly-credited name (else the machine-readable creator
+  // would assert the very misattribution the page debunks).
   const creatorOk = s.creator && (q.confidence !== 'disputed'
-    || (!heroUnknown && plain(s.creator.name).toLowerCase() === heroName.toLowerCase() && heroName.toLowerCase() !== magnetName));
+    || (!heroUnknown && plain(s.creator.name).toLowerCase() === heroName.toLowerCase()
+      && (wordingDrift || heroName.toLowerCase() !== magnetName)));
   if (creatorOk) {
     quotation.creator = { '@type': 'Person', name: s.creator.name };
     if (s.creator.birthDate) quotation.creator.birthDate = s.creator.birthDate;
+    if (s.creator.deathDate) quotation.creator.deathDate = s.creator.deathDate;
     if (s.creator.jobTitle) quotation.creator.jobTitle = s.creator.jobTitle;
     // The RULE in CLAUDE.md asks for creator.description; jobTitle stays for records that only carry it.
     if (s.creator.description) quotation.creator.description = s.creator.description;
@@ -454,9 +469,14 @@ function renderRights(src) {
   if (!r) return src.rightsNote ? `\n                <p class="rights-note">${src.rightsNote}</p>` : '';
   const holder = src.rightsHolder ? ` of ${esc(src.rightsHolder)}` : '';
   const body = src.rightsNote || r.note.replace('{holder}', holder);
+  // "Public domain" is a worldwide claim, but our evidence is routinely US-only (Gutenberg's own
+  // status line says "Public domain in the USA"). Where a work is PD in the US yet still protected
+  // elsewhere — e.g. a pre-1931 English translation whose translator died within the last 70 years —
+  // `source.rightsLabel` lets the record scope the badge to the jurisdiction it can actually support.
+  const label = src.rightsLabel || r.label;
   return `
                 <div class="rights rights-${state}">
-                    <span class="rights-badge"><span class="rights-mark" aria-hidden="true">${r.mark}</span>${esc(r.label)}</span>
+                    <span class="rights-badge"><span class="rights-mark" aria-hidden="true">${r.mark}</span>${esc(label)}</span>
                     <p class="rights-body">${body}</p>
                 </div>`;
 }
@@ -477,6 +497,17 @@ function creditLine(q) {
   return raw.replace(/^\s*["“][^"”]*["”][.,]?\s*[—–-]?\s*/, '').trim() || raw;
 }
 
+// The quote string the presentation kit and the copy/share buttons emit. Defaults to displayQuote
+// (the H1/slug form), which is what every record wants. But a record whose displayQuote is the
+// POPULAR CLIPPING of a longer verified sentence must not have the site's own paste-ready
+// deliverable ship the very truncation the page exists to correct — pinning a clipped fragment to
+// a page number asserts that page contains that string, which it doesn't. Such a record sets
+// presentation.verifiedQuote to the full sourced text; the H1/slug stay clipped (that's the form
+// people search for, and JSON-LD already carries it as alternateName).
+function kitQuote(q) {
+  return plain((q.presentation && q.presentation.verifiedQuote) || q.displayQuote);
+}
+
 function buildImagePrompts(q) {
   // Records may carry authored prompts (presentation.imagePrompts[]); use them if present.
   if (q.presentation && Array.isArray(q.presentation.imagePrompts) && q.presentation.imagePrompts.length) {
@@ -495,30 +526,71 @@ function buildImagePrompts(q) {
 
 function renderPresentationKit(q) {
   const credit = creditLine(q);
-  const quote = plain(q.displayQuote);
+  const quote = kitQuote(q);
 
   const state = q.source && (q.source.rights || (q.source.publicDomain === true ? 'public-domain' : null));
   const u = state && USE[state];
   const holder = (q.source && q.source.rightsHolder) ? ` (rights held by ${esc(q.source.rightsHolder)})` : '';
-  const useLine = u ? u.line.replace('{holder}', holder)
-    : 'We couldn&rsquo;t verify where this wording comes from, so there&rsquo;s no rights status to give. Safe to present as an unverified or anonymous line &mdash; just don&rsquo;t assert a specific author or source.';
-  const useTone = u ? u.tone : 'warn';
-  const useIcon = u ? u.icon : '?';
+  // A record may author its own reuse line (`source.useLine`, plus optional `useTone`/`useIcon`).
+  // Needed where neither a rights state nor the no-provenance fallback tells the truth — e.g. a page
+  // whose ATTRIBUTION is settled but whose REUSE status is not (first publication date unestablished).
+  // Without this, the fallback below tells readers not to assert an author the page has just proven.
+  const own = q.source && q.source.useLine;
+  const useLine = own || (u ? u.line.replace('{holder}', holder)
+    : 'We couldn&rsquo;t verify where this wording comes from, so there&rsquo;s no rights status to give. Safe to present as an unverified or anonymous line &mdash; just don&rsquo;t assert a specific author or source.');
+  const useTone = (q.source && q.source.useTone) || (u ? u.tone : 'warn');
+  const useIcon = (q.source && q.source.useIcon) || (u ? u.icon : '?');
 
   // Don't name a "correct credit" here — the pkit-credit blockquote directly above already shows it.
   // (Naming answer.authorName could self-contradict when a record left it as the magnet.)
-  const warn = (q.confidence === 'disputed' && q.creditedTo) ? `
+  // On a WORDING-DRIFT page (schema.claimQuoteText differs from the documented schema.quotationText)
+  // the magnet IS the true author and only the wording drifted, so "crediting this to X is the
+  // mistake" contradicts the page's own verdict — and the credit shown above names that very person.
+  // The block label and the reuse line already carry the real caution, so say nothing here instead of
+  // something false. Keyed on claimQuoteText, so ordinary wrong-name records are unaffected.
+  const sch = q.schema || {};
+  // Is the DISPUTE about the wording, or about the credit? A record that carries a distinct
+  // claimQuoteText is saying "the line in circulation differs from the documented sentence" —
+  // that's a wording dispute. Everything else disputed is a wrong-name dispute, where the wording
+  // is usually verbatim correct and only the attribution is false.
+  const wordingDrift = !!(sch.claimQuoteText && plain(sch.claimQuoteText) !== plain(sch.quotationText || q.displayQuote));
+  const drift = wordingDrift
+    && plain(q.creditedTo).toLowerCase() === plain((q.answer || {}).authorName || '').toLowerCase();
+  const warn = (q.confidence === 'disputed' && q.creditedTo && !drift) ? `
                     <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>${esc(q.creditedTo)}</strong>. Use the credit shown above instead.</p>` : '';
 
   const [imgA, imgB] = buildImagePrompts(q);
+
+  // The block label is an attribution claim of its own. "Verified quote & credit" is only true on a
+  // verified page: stamped on a disputed or unproven record it contradicts the confidence badge a
+  // few hundred pixels above, and a skimmer who copies the block is told the opposite of the page's
+  // finding. Track the verdict instead — and on a non-verified page drop the gold accent bar, whose
+  // whole job is to signal an authentic voice.
+  // Name the dispute the page actually found — the label is a claim of its own, so it has to be true
+  // for THIS record, not for the common case. Three distinct kinds hide under `disputed`:
+  //   credit  — the wording is verbatim right, the name is wrong. Mary Schmich really did write
+  //             "Do one thing every day that scares you"; Eleanor Roosevelt just didn't.
+  //   wording — the name is right, the line in circulation isn't what they wrote (Camus).
+  //   neither — nothing is securely documented at all.
+  // Only ~9 records carry claimQuoteText, so wordingDrift alone can't classify the rest; fall back
+  // to the unqualified "Disputed", which is true of every disputed page, rather than guessing.
+  const creditDisputed = !!q.creditedTo
+    && plain(q.creditedTo).toLowerCase() !== plain((q.answer || {}).authorName || '').toLowerCase();
+  const kitLbl = q.confidence === 'disputed'
+    ? (creditDisputed ? 'Disputed credit &mdash; copy with the correction'
+      : wordingDrift ? 'Disputed wording &mdash; copy with the correction'
+        : 'Disputed &mdash; copy with the correction')
+    : q.confidence === 'attributed' ? 'Unconfirmed quote &amp; credit'
+      : 'Verified quote &amp; credit';
+  const cardCls = q.confidence === 'verified' || !q.confidence ? 'pkit-card' : `pkit-card pkit-card-${q.confidence}`;
 
   return `
         <!-- ============ PUT IT ON A SLIDE ============ -->
         <section class="pkit" aria-labelledby="pkit-h">
             <div class="sec-head"><p class="kicker">For presentations</p><h2 id="pkit-h">Put it on a slide</h2></div>
-            <div class="pkit-card">
+            <div class="${cardCls}">
                 <div class="pkit-block">
-                    <p class="pkit-lbl">Verified quote &amp; credit</p>
+                    <p class="pkit-lbl">${kitLbl}</p>
                     <blockquote class="pkit-credit" id="kitCredit">&ldquo;${esc(quote)}&rdquo; <span class="pkit-cite">${esc(credit)}</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>${warn}
                 </div>
@@ -724,7 +796,10 @@ function renderTail(q) {
     <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
 
     <script>
-        const quoteText = document.getElementById('quote-heading').textContent.trim();
+        // The verified sentence, not the H1: on records where the H1 is the popular clipping, the
+        // copy/share text must carry the full quote the credit's page number actually supports.
+        // (Identical to the H1 for every record without presentation.verifiedQuote.)
+        const quoteText = ${JSON.stringify(kitQuote(q))};
         const copyAttribution = ${JSON.stringify(copyAttr)};
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
@@ -872,6 +947,11 @@ const STYLE = `${ROOT_CSS}
         /* ===== PUT IT ON A SLIDE (presentation kit) ===== */
         .pkit-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px 26px 28px; position: relative; overflow: hidden; }
         .pkit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0.8; }
+        /* Gold reads as "authentic voice". Match the confidence badge instead when the page's verdict isn't "verified". */
+        .pkit-card-disputed::before { background: var(--caution); }
+        .pkit-card-attributed::before { background: var(--amber); }
+        .pkit-card-disputed .pkit-credit { border-left-color: var(--caution); }
+        .pkit-card-attributed .pkit-credit { border-left-color: var(--amber); }
         .pkit-block { padding: 18px 0; border-top: 1px solid var(--border); }
         .pkit-block:first-child { padding-top: 4px; border-top: 0; }
         .pkit-lbl { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 12px; }

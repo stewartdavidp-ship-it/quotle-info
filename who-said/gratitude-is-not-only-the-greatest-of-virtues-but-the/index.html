@@ -103,7 +103,7 @@
               "name": "Did Marcus Tullius Cicero say \"Gratitude is not only the greatest of virtues, but the parent of all others.\"?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Not confirmed. The thought is genuinely Cicero's: in Pro Plancio (54 BCE) he tells the jurors that of all virtues he most wishes to be grateful, \"for this one virtue is not only the greatest but also the mater virtutum omnium reliquarum\" — the mother of all the other virtues (Pro Plancio 33.80 ↗). But this exact English one-liner is a modern paraphrase: standard translations render the subject as \"this one virtue\" (Yonge) or \"a grateful mind\" (Ramage, 1884), not \"Gratitude,\" and the popular wording is first documented only in the 20th century.",
+                "text": "Not confirmed. The thought is genuinely Cicero's: in Pro Plancio (54 BCE) he tells the jurors that of all virtues he most wishes to be grateful, \"for this one virtue is not only the greatest but also the mater virtutum omnium reliquarum\" — the mother of all the other virtues (Pro Plancio 33.80). But this exact English one-liner is a modern paraphrase: standard translations render the subject as \"this one virtue\" (Yonge) or \"a grateful mind\" (Ramage, 1884), not \"Gratitude,\" and the popular wording is first documented only in the 20th century.",
                 "url": "https://quotle.info/who-said/gratitude-is-not-only-the-greatest-of-virtues-but-the"
               }
             }
@@ -224,6 +224,11 @@
         /* ===== PUT IT ON A SLIDE (presentation kit) ===== */
         .pkit-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px 26px 28px; position: relative; overflow: hidden; }
         .pkit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0.8; }
+        /* Gold reads as "authentic voice". Match the confidence badge instead when the page's verdict isn't "verified". */
+        .pkit-card-disputed::before { background: var(--caution); }
+        .pkit-card-attributed::before { background: var(--amber); }
+        .pkit-card-disputed .pkit-credit { border-left-color: var(--caution); }
+        .pkit-card-attributed .pkit-credit { border-left-color: var(--amber); }
         .pkit-block { padding: 18px 0; border-top: 1px solid var(--border); }
         .pkit-block:first-child { padding-top: 4px; border-top: 0; }
         .pkit-lbl { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 12px; }
@@ -539,9 +544,9 @@
         <!-- ============ PUT IT ON A SLIDE ============ -->
         <section class="pkit" aria-labelledby="pkit-h">
             <div class="sec-head"><p class="kicker">For presentations</p><h2 id="pkit-h">Put it on a slide</h2></div>
-            <div class="pkit-card">
+            <div class="pkit-card pkit-card-attributed">
                 <div class="pkit-block">
-                    <p class="pkit-lbl">Verified quote &amp; credit</p>
+                    <p class="pkit-lbl">Unconfirmed quote &amp; credit</p>
                     <blockquote class="pkit-credit" id="kitCredit">&ldquo;Gratitude is not only the greatest of virtues, but the parent of all others&rdquo; <span class="pkit-cite">Gratitude is not only the greatest of virtues, but the parent of all others. —Marcus Tullius Cicero (paraphrased from Pro Plancio, 54 BCE)</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                 </div>
@@ -715,7 +720,10 @@
     <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
 
     <script>
-        const quoteText = document.getElementById('quote-heading').textContent.trim();
+        // The verified sentence, not the H1: on records where the H1 is the popular clipping, the
+        // copy/share text must carry the full quote the credit's page number actually supports.
+        // (Identical to the H1 for every record without presentation.verifiedQuote.)
+        const quoteText = "Gratitude is not only the greatest of virtues, but the parent of all others";
         const copyAttribution = "Gratitude is not only the greatest of virtues, but the parent of all others. —Marcus Tullius Cicero (paraphrased from Pro Plancio, 54 BCE)";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }

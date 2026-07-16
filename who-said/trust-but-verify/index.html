@@ -103,7 +103,7 @@
               "name": "Did Ronald Reagan say \"We have listened to the wisdom in an old Russian maxim. And I'm sure you're familiar with it, Mr. General Secretary, though my pronunciation may give you difficulty. The maxim is: Dovorey no provorey—trust, but verify.\"?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. Reagan really did say it — repeatedly, and on the record. The signature moment is his Remarks on Signing the Intermediate-Range Nuclear Forces Treaty ↗, East Room of the White House, 8 December 1987: \"The maxim is: Dovorey no provorey—trust, but verify.\" But note what he actually said in the same breath: he introduced it as \"an old Russian maxim,\" not as his own line. Reagan popularised the phrase in English; he never claimed to have coined it.",
+                "text": "Yes. Reagan really did say it — repeatedly, and on the record. The signature moment is his Remarks on Signing the Intermediate-Range Nuclear Forces Treaty, East Room of the White House, 8 December 1987: \"The maxim is: Dovorey no provorey—trust, but verify.\" But note what he actually said in the same breath: he introduced it as \"an old Russian maxim,\" not as his own line. Reagan popularised the phrase in English; he never claimed to have coined it.",
                 "url": "https://quotle.info/who-said/trust-but-verify"
               }
             }
@@ -224,6 +224,11 @@
         /* ===== PUT IT ON A SLIDE (presentation kit) ===== */
         .pkit-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px 26px 28px; position: relative; overflow: hidden; }
         .pkit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0.8; }
+        /* Gold reads as "authentic voice". Match the confidence badge instead when the page's verdict isn't "verified". */
+        .pkit-card-disputed::before { background: var(--caution); }
+        .pkit-card-attributed::before { background: var(--amber); }
+        .pkit-card-disputed .pkit-credit { border-left-color: var(--caution); }
+        .pkit-card-attributed .pkit-credit { border-left-color: var(--amber); }
         .pkit-block { padding: 18px 0; border-top: 1px solid var(--border); }
         .pkit-block:first-child { padding-top: 4px; border-top: 0; }
         .pkit-lbl { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 12px; }
@@ -749,7 +754,10 @@
     <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
 
     <script>
-        const quoteText = document.getElementById('quote-heading').textContent.trim();
+        // The verified sentence, not the H1: on records where the H1 is the popular clipping, the
+        // copy/share text must carry the full quote the credit's page number actually supports.
+        // (Identical to the H1 for every record without presentation.verifiedQuote.)
+        const quoteText = "Trust, but verify";
         const copyAttribution = "Ronald Reagan, quoting what he called an old Russian maxim, Remarks on Signing the Intermediate-Range Nuclear Forces Treaty, the White House, 8 December 1987";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }

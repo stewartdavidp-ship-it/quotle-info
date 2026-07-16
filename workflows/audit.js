@@ -4,7 +4,14 @@ export const meta = {
   phases: [{ title: 'Audit', detail: 'one adversarial agent per page' }, { title: 'Verify', detail: 'skeptic re-checks each high/blocker' }],
 }
 
-const REPO = '/Users/davidstewart/Developer/quotle-info'
+// args is EITHER the legacy array of pages [{slug, confidence, rights}], OR an object
+// { pages:[...], repo:"/abs/path/to/checkout" }.
+// repo MUST be passed when the wave was built in a git worktree: the agents Read the freshly
+// BUILT html off disk, and a worktree's who-said/ is the only place this wave's pages exist —
+// pointed at the main checkout every agent silently fails to find its page.
+const _a = typeof args === 'string' ? JSON.parse(args) : (args || [])
+const pages = Array.isArray(_a) ? _a : (_a.pages || [])
+const REPO = (!Array.isArray(_a) && _a.repo) || '/Users/davidstewart/Developer/quotle-info'
 const BASE = `${REPO}/who-said`
 const ORIGIN = 'https://quotle.info'
 
@@ -64,7 +71,7 @@ The source link: ${issue.sourceLink}
 Independently verify: WebFetch the source link and read the page's own wording (Read the file). Does the linked source REALLY fail to support the claim as stated (or is the confidence/rights/contract problem real)? Return finding (what you found), standsUp (true only if the problem is genuinely real and worth fixing), reasoning.`
 
 phase('Audit')
-const pages = typeof args === 'string' ? JSON.parse(args) : args
+// (pages + REPO are parsed at the top of this file, where BASE needs them.)
 
 const pageAudits = await parallel(pages.map((p) => () =>
   agent(auditPrompt(p), { label: `audit:${p.slug.slice(0, 22)}`, phase: 'Audit', schema: AUDIT_SCHEMA, effort: 'high' })

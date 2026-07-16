@@ -53,7 +53,12 @@ const TAG_SCHEMA = {
   },
 }
 
-const MANIFEST = '/Users/davidstewart/Developer/quotle-info/data/manifest.json'
+// args: { chunks, total, manifest }. `manifest` points at ANY manifest-shaped array of
+// {quote, author, quoteSlug, confidence} — pass it to tag a subset (just a wave's new records)
+// instead of re-tagging the whole corpus, and to work from a git worktree rather than the
+// main checkout this used to hardcode.
+const cfg = typeof args === 'string' ? JSON.parse(args) : (args || {})
+const MANIFEST = cfg.manifest || '/Users/davidstewart/Developer/quotle-info/data/manifest.json'
 
 const tagPrompt = (k, n) => `You are a librarian tagging quotations by THEME so people can find the right one for a talk or slide.
 
@@ -68,7 +73,6 @@ Judge by meaning: e.g. "Fall seven times, stand up eight" → resilience, hope (
 Return {results:[{slug, themes:[...]}]} with one entry per quote in YOUR slice, echoing each quoteSlug exactly. Do not include items outside your slice.`
 
 phase('Tag')
-const cfg = typeof args === 'string' ? JSON.parse(args) : (args || {})
 const N = cfg.chunks || 15
 const total = cfg.total || 434
 
