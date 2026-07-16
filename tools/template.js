@@ -262,11 +262,13 @@ function buildJsonLd(q, url) {
   // Falling back to it emitted `"Luke, I am your father" said: "No. I am your father."`, typed a
   // quote string as a Person, and asked assistants `Did "Luke, I am your father" say ...?`.
   const quoteText = plain(quotation.text);
-  // The claim under review is "{who} said {X}". On a paraphrase page, X is the polished wording that
-  // actually circulates over the magnet's name — NOT Quotation.text, which carries the documented
-  // origin nobody ever credited to the magnet. Records where the two differ set schema.claimQuoteText
-  // so ClaimReview/FAQ rate the claim that was really made rather than a strawman.
-  const claimQuoteText = plain(s.claimQuoteText) || quoteText;
+  // The claim under review is "{who} said {X}". X is the wording that actually CIRCULATES — the H1 /
+  // slug / displayQuote, which is definitionally what people claim was said. It is NOT quotation.text
+  // (schema.quotationText), which carries the DOCUMENTED origin nobody ever credited to the magnet:
+  // on 218 pages the two differ, and defaulting to quotation.text rated a strawman — the Churchill
+  // page reviewed "Churchill said 'Men and nations do behave wisely…'", the Eban original, a claim
+  // nobody ever made. displayQuote is the claim; quoteText is the last-ditch fallback if it's empty.
+  const claimQuoteText = plain(s.claimQuoteText) || plain(q.displayQuote) || quoteText;
   // Both quote strings are compared against, since a drift page's `who` may echo either the popular
   // wording or the documented one.
   const isQuoteNotPerson = (w) => {
@@ -277,7 +279,28 @@ function buildJsonLd(q, url) {
       return !!y && (x.includes(y.slice(0, 24)) || y.includes(x.slice(0, 24)));
     });
   };
-  const misWho = (firstMisWho && !isQuoteNotPerson(firstMisWho)) ? firstMisWho : '';
+  // A fallback claimant (no creditedTo) must be the MAGNET — a person. misattribution.items[0].who
+  // is not reliably that: it is also populated with propagation VECTORS ("Internet quote-aggregator
+  // sites"), anonymity notes ("Anonymous / unknown"), paraphrase tags ("A modern paraphrase"), and
+  // sentences. Each was being typed as a schema.org Person and rated "X said {quote}" 1/5 — the r19
+  // vector bug surviving on ~16 records that carry no creditedTo. A trailing parenthetical is a
+  // scope qualifier, not part of the name ("Malcolm X (as popularly quoted)" → "Malcolm X"): strip
+  // it. When what remains still doesn't read as a person, degrade to the bare-quote form, which is
+  // always honest ("Who really said X?"). Conservative: over-rejecting only loses the "Did X say it"
+  // framing on a page or two; naming the wrong entity ships a falsehood.
+  const stripQual = (w) => String(w || '').replace(/\s*\([^)]*\)\s*$/, '').trim();
+  const looksLikePerson = (w) => {
+    const x = stripQual(w);
+    if (!x || x.length > 60) return false;
+    // Article words match on a following SPACE, not \b: \b after "the " fails on punctuation (so
+    // "The ‘some’ variant" slipped through), while \b after "a" wrongly fires on the initial in
+    // "A. A. Milne" (a real person). The longer vector words keep \b since they can't be initials.
+    if (/^(a|an|the|no|not)\s/i.test(x)) return false;
+    if (/^(modern|popular|internet|anonymous|unknown|various|multiple)\b/i.test(x)) return false;
+    if (/\b(quote ?sites?|aggregator|inspirational|paraphrase[rd]?|quote culture|web-era|quote-book|goodreads|brainyquote|azquotes|passiton|no documented|no identifiable|the discourses|the handbook)\b/i.test(x)) return false;
+    return /[A-ZÀ-Þ]/.test(x); // a real name carries a capital
+  };
+  const misWho = (firstMisWho && !isQuoteNotPerson(firstMisWho) && looksLikePerson(firstMisWho)) ? stripQual(firstMisWho) : '';
   // And do NOT end the disputed chain at trueAuthor. On a wording drift the true author is the
   // person who really DID write the real line — claiming "{writer} said {quote}" and rating it
   // Disputed 1/5 rates a TRUE statement false. That is the Reader's-Digest-as-claimant bug wearing
