@@ -106,8 +106,25 @@ for (const d of dossiers) {
   // provenance link through. Null for tracks A/B, where the batch has no index — which is why
   // this was hardcoded null and got away with it until the first track-D wave.
   const rec = toRecord(d, { text: b.text, author: b.author, index: b.index ?? null });
-  if (STAMP_CREDITED) rec.creditedTo = b.author;
+  // Only stamp a magnet that EXISTS. Track C (film) batches carry author '' for wording-drift lines,
+  // where nobody is falsely credited; stamping creditedTo:'' there would write a junk field claiming
+  // a magnet, and one mixed wave can legitimately hold both shapes (a misquote next to a screen line
+  // genuinely pinned on Conan Doyle), so this is per-record, not a per-wave flag.
+  if (STAMP_CREDITED && b.author) rec.creditedTo = b.author;
   records.push(rec);
+}
+// DEDUPE by slug. A RESUMED generate (Workflow resumeFromRunId — the sanctioned recovery for a
+// usage-limit or transient API failure) appends to the SAME journal, so every agent that replayed
+// from cache now has TWO identical {type:result} lines. Left alone that doubles the record count,
+// and audit-args bills to adversarially audit each duplicated page twice. Last wins: for the agents
+// that actually re-ran, the resume's result is the real one (the original attempt died before
+// emitting a line, so it appears once anyway); for cached replays the two lines are identical.
+const bySlug = new Map();
+for (const r of records) bySlug.set(r.quoteSlug, r);
+const deduped = [...bySlug.values()];
+if (deduped.length !== records.length) {
+  console.log('deduped:', records.length, '→', deduped.length, 'records (journal holds a resumed run — expected, not an error)');
+  records.length = 0; records.push(...deduped);
 }
 console.log('records built:', records.length, '| unmatched (likely stubs):', unmatched.length, unmatched.slice(0, 6));
 

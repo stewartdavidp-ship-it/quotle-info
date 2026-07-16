@@ -256,13 +256,34 @@ function buildJsonLd(q, url) {
   // disputed pages were affected. creditedTo first, with the old chain as fallback for records
   // that predate it.
   const magnet = plain(q.creditedTo);
-  const claimant = (q.confidence === 'disputed') ? (magnet || firstMisWho || trueAuthor) : trueAuthor;
+  // A WORDING-DRIFT page (track C film) has NO claimant by design: nobody is falsely credited, the
+  // source is right and only the words drifted. Its fact-check row is about the wording, so the
+  // record carries {who: "Luke, I am your father", scope: "The wording"} — `who` holds the QUOTE.
+  // Falling back to it emitted `"Luke, I am your father" said: "No. I am your father."`, typed a
+  // quote string as a Person, and asked assistants `Did "Luke, I am your father" say ...?`.
   const quoteText = plain(quotation.text);
   // The claim under review is "{who} said {X}". On a paraphrase page, X is the polished wording that
   // actually circulates over the magnet's name — NOT Quotation.text, which carries the documented
   // origin nobody ever credited to the magnet. Records where the two differ set schema.claimQuoteText
   // so ClaimReview/FAQ rate the claim that was really made rather than a strawman.
   const claimQuoteText = plain(s.claimQuoteText) || quoteText;
+  // Both quote strings are compared against, since a drift page's `who` may echo either the popular
+  // wording or the documented one.
+  const isQuoteNotPerson = (w) => {
+    const x = String(w || '').toLowerCase().trim();
+    if (!x) return false;
+    return [claimQuoteText, quoteText, plain(q.displayQuote)].some((s2) => {
+      const y = String(s2 || '').toLowerCase().trim();
+      return !!y && (x.includes(y.slice(0, 24)) || y.includes(x.slice(0, 24)));
+    });
+  };
+  const misWho = (firstMisWho && !isQuoteNotPerson(firstMisWho)) ? firstMisWho : '';
+  // And do NOT end the disputed chain at trueAuthor. On a wording drift the true author is the
+  // person who really DID write the real line — claiming "{writer} said {quote}" and rating it
+  // Disputed 1/5 rates a TRUE statement false. That is the Reader's-Digest-as-claimant bug wearing
+  // a different hat. With no claimant the template already degrades honestly: claimReviewed becomes
+  // the bare quote and the FAQ asks "Who really said X?" — which is the actual question.
+  const claimant = (q.confidence === 'disputed') ? (magnet || misWho || '') : trueAuthor;
   // Some claims cannot be stated honestly in the "{who} said {X}" template. A genuine quote whose
   // FAMOUS ENGLISH is a translator's needs the caveat inside claimReviewed itself, or a consumer
   // that lifts only the ClaimReview emits "{ancient author} said {modern translator's words} —
