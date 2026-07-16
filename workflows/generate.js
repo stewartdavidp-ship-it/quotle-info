@@ -143,6 +143,11 @@ function toRecord(d, item) {
     }
     out.webPageName = d.meta.ogTitle;
     out.dateModified = DATE_MODIFIED;
+    // Film misquote (item.author === '', so no magnet): the CLAIMED wording is displayQuote and the
+    // DOCUMENTED line is out.quotationText. Setting claimQuoteText = displayQuote signals wordingDrift,
+    // which template.js uses to (a) rate the claimed wording not the documented one and (b) suppress
+    // the bogus claimant (film/character/fragment) an author-less record's misattribution row carries.
+    if (!item.author && out.quotationText && displayQuote !== out.quotationText) out.claimQuoteText = displayQuote;
     rec.schema = out;
   }
   return rec;
