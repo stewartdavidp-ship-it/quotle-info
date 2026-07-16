@@ -224,6 +224,11 @@
         /* ===== PUT IT ON A SLIDE (presentation kit) ===== */
         .pkit-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px 26px 28px; position: relative; overflow: hidden; }
         .pkit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0.8; }
+        /* Gold reads as "authentic voice". Match the confidence badge instead when the page's verdict isn't "verified". */
+        .pkit-card-disputed::before { background: var(--caution); }
+        .pkit-card-attributed::before { background: var(--amber); }
+        .pkit-card-disputed .pkit-credit { border-left-color: var(--caution); }
+        .pkit-card-attributed .pkit-credit { border-left-color: var(--amber); }
         .pkit-block { padding: 18px 0; border-top: 1px solid var(--border); }
         .pkit-block:first-child { padding-top: 4px; border-top: 0; }
         .pkit-lbl { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 12px; }
@@ -721,7 +726,10 @@
     <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
 
     <script>
-        const quoteText = document.getElementById('quote-heading').textContent.trim();
+        // The verified sentence, not the H1: on records where the H1 is the popular clipping, the
+        // copy/share text must carry the full quote the credit's page number actually supports.
+        // (Identical to the H1 for every record without presentation.verifiedQuote.)
+        const quoteText = "The credit belongs to the man who is actually in the arena, whose face is marred by dust and sweat and blood; who strives valiantly; who errs, who comes short again and again, because there is no effort without error and shortcoming; but who does actually strive to do the deeds; who knows great enthusiasms, the great devotions; who spends himself in a worthy cause; who at the best knows in the end the triumph of high achievement, and who at the worst, if he fails, at least fails while daring greatly, so that his place shall never be with those cold and timid souls who neither know victory nor defeat";
         const copyAttribution = "Theodore Roosevelt, \"Citizenship in a Republic,\" address at the Sorbonne, Paris, 23 April 1910.";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }

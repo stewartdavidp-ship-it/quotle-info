@@ -207,6 +207,11 @@
         /* ===== PUT IT ON A SLIDE (presentation kit) ===== */
         .pkit-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px 26px 28px; position: relative; overflow: hidden; }
         .pkit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0.8; }
+        /* Gold reads as "authentic voice". Match the confidence badge instead when the page's verdict isn't "verified". */
+        .pkit-card-disputed::before { background: var(--caution); }
+        .pkit-card-attributed::before { background: var(--amber); }
+        .pkit-card-disputed .pkit-credit { border-left-color: var(--caution); }
+        .pkit-card-attributed .pkit-credit { border-left-color: var(--amber); }
         .pkit-block { padding: 18px 0; border-top: 1px solid var(--border); }
         .pkit-block:first-child { padding-top: 4px; border-top: 0; }
         .pkit-lbl { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 12px; }
@@ -522,9 +527,9 @@
         <!-- ============ PUT IT ON A SLIDE ============ -->
         <section class="pkit" aria-labelledby="pkit-h">
             <div class="sec-head"><p class="kicker">For presentations</p><h2 id="pkit-h">Put it on a slide</h2></div>
-            <div class="pkit-card">
+            <div class="pkit-card pkit-card-disputed">
                 <div class="pkit-block">
-                    <p class="pkit-lbl">Verified quote &amp; credit</p>
+                    <p class="pkit-lbl">Disputed credit &mdash; copy with the correction</p>
                     <blockquote class="pkit-credit" id="kitCredit">&ldquo;Beware the leader who bangs the drums of war in order to whip the citizenry into a patriotic fervor&rdquo; <span class="pkit-cite">Not Shakespeare and not Julius Caesar. &quot;Beware the leader who bangs the drums of war…&quot; is an anonymous internet composition first recorded in late 2001; its author is unknown. Barbra Streisand recited it as Shakespeare in 2002 and later conceded the misattribution. — Quotle.info</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                     <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>William Shakespeare</strong>. Use the credit shown above instead.</p>
@@ -716,7 +721,10 @@
     <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
 
     <script>
-        const quoteText = document.getElementById('quote-heading').textContent.trim();
+        // The verified sentence, not the H1: on records where the H1 is the popular clipping, the
+        // copy/share text must carry the full quote the credit's page number actually supports.
+        // (Identical to the H1 for every record without presentation.verifiedQuote.)
+        const quoteText = "Beware the leader who bangs the drums of war in order to whip the citizenry into a patriotic fervor";
         const copyAttribution = "Not Shakespeare and not Julius Caesar. \"Beware the leader who bangs the drums of war…\" is an anonymous internet composition first recorded in late 2001; its author is unknown. Barbra Streisand recited it as Shakespeare in 2002 and later conceded the misattribution. — Quotle.info";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }

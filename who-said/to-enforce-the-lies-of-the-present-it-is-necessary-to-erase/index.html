@@ -93,7 +93,7 @@
               "name": "Did George Orwell say \"To enforce the lies of the present, it is necessary to erase the truths of the past\"?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. The idea—that rewriting the past is a tool of present-day control—is a genuine, central theme of Orwell's Nineteen Eighty-Four (1949). But this exact wording is not his. The earliest known appearance is on Keith Olbermann's MSNBC show \"Countdown\" in September 2006, where he framed it (without quotation marks) as his own paraphrase of \"one of the great mechanical realities Eric Blair, writing as George Orwell, gave us in the book '1984.'\" A full-text search of the novel confirms the sentence never occurs in it, per The Fallacy Files ↗.",
+                "text": "No. The idea—that rewriting the past is a tool of present-day control—is a genuine, central theme of Orwell's Nineteen Eighty-Four (1949). But this exact wording is not his. The earliest known appearance is on Keith Olbermann's MSNBC show \"Countdown\" in September 2006, where he framed it (without quotation marks) as his own paraphrase of \"one of the great mechanical realities Eric Blair, writing as George Orwell, gave us in the book '1984.'\" A full-text search of the novel confirms the sentence never occurs in it, per The Fallacy Files.",
                 "url": "https://quotle.info/who-said/to-enforce-the-lies-of-the-present-it-is-necessary-to-erase"
               }
             }
@@ -214,6 +214,11 @@
         /* ===== PUT IT ON A SLIDE (presentation kit) ===== */
         .pkit-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px 26px 28px; position: relative; overflow: hidden; }
         .pkit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0.8; }
+        /* Gold reads as "authentic voice". Match the confidence badge instead when the page's verdict isn't "verified". */
+        .pkit-card-disputed::before { background: var(--caution); }
+        .pkit-card-attributed::before { background: var(--amber); }
+        .pkit-card-disputed .pkit-credit { border-left-color: var(--caution); }
+        .pkit-card-attributed .pkit-credit { border-left-color: var(--amber); }
         .pkit-block { padding: 18px 0; border-top: 1px solid var(--border); }
         .pkit-block:first-child { padding-top: 4px; border-top: 0; }
         .pkit-lbl { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 12px; }
@@ -529,9 +534,9 @@
         <!-- ============ PUT IT ON A SLIDE ============ -->
         <section class="pkit" aria-labelledby="pkit-h">
             <div class="sec-head"><p class="kicker">For presentations</p><h2 id="pkit-h">Put it on a slide</h2></div>
-            <div class="pkit-card">
+            <div class="pkit-card pkit-card-disputed">
                 <div class="pkit-block">
-                    <p class="pkit-lbl">Verified quote &amp; credit</p>
+                    <p class="pkit-lbl">Disputed &mdash; copy with the correction</p>
                     <blockquote class="pkit-credit" id="kitCredit">&ldquo;To enforce the lies of the present, it is necessary to erase the truths of the past&rdquo; <span class="pkit-cite">Not a genuine George Orwell quotation. The exact wording does not appear in Nineteen Eighty-Four or any other Orwell work; its earliest documented use is a 2006 paraphrase by Keith Olbermann on MSNBC's &quot;Countdown.&quot; Orwell's real, related line is &quot;Day by day and almost minute by minute the past was brought up to date&quot; (Nineteen Eighty-Four, Part 1, Ch. 4). Source: quotle.info</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                     <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>George Orwell</strong>. Use the credit shown above instead.</p>
@@ -703,7 +708,10 @@
     <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
 
     <script>
-        const quoteText = document.getElementById('quote-heading').textContent.trim();
+        // The verified sentence, not the H1: on records where the H1 is the popular clipping, the
+        // copy/share text must carry the full quote the credit's page number actually supports.
+        // (Identical to the H1 for every record without presentation.verifiedQuote.)
+        const quoteText = "To enforce the lies of the present, it is necessary to erase the truths of the past";
         const copyAttribution = "Not a genuine George Orwell quotation. The exact wording does not appear in Nineteen Eighty-Four or any other Orwell work; its earliest documented use is a 2006 paraphrase by Keith Olbermann on MSNBC's \"Countdown.\" Orwell's real, related line is \"Day by day and almost minute by minute the past was brought up to date\" (Nineteen Eighty-Four, Part 1, Ch. 4). Source: quotle.info";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }

@@ -4,7 +4,14 @@ export const meta = {
   phases: [{ title: 'Fix', detail: 'one agent per flagged record' }],
 }
 
-const REPO = '/Users/davidstewart/Developer/quotle-info'
+// args is EITHER the legacy array of FAIL slugs, OR an object { slugs:[...], repo:"/abs/path" }.
+// repo MUST be passed when the wave was built in a git worktree — the records this edits, and the
+// fixes map it reads, only exist in that checkout. Pointed at the main one, every agent fails to
+// find its file. (parse-audit.js defaults its --out to the main checkout too: point it at the
+// same repo when you generate current-fixes.json.)
+const _a = typeof args === 'string' ? JSON.parse(args) : (args || [])
+const _slugs = Array.isArray(_a) ? _a : (_a.slugs || [])
+const REPO = (!Array.isArray(_a) && _a.repo) || '/Users/davidstewart/Developer/quotle-info'
 const DIR = `${REPO}/data/quotes`
 // Per-wave fixes map: { "<slug>": [ {severity, location, problem, fix}, ... ] }.
 // Write this file (from the audit FAIL issues) BEFORE invoking this workflow.
@@ -38,7 +45,7 @@ STEPS:
 Report fixedCount (how many issues for your slug you resolved), a one-paragraph summary of the edits, sourceVerified (did you fetch-confirm the factual replacements — false is fine for pure structured-data/formatting fixes with no new fact), and remaining (anything you could NOT fix and why).`
 
 phase('Fix')
-const pages = (typeof args === 'string' ? JSON.parse(args) : args).map((slug) => ({ slug }))
+const pages = _slugs.map((slug) => ({ slug }))
 
 const done = await parallel(pages.map((p) => () =>
   agent(fixPrompt(p), { label: `fix:${p.slug.slice(0, 22)}`, phase: 'Fix', schema: FIX_SCHEMA, effort: 'high' })

@@ -103,7 +103,7 @@
               "name": "Did William Shakespeare say \"Time is very slow for those who wait, very fast for those who are scared, very long for those who lament, very short for those who celebrate, but for those who love, time is eternal\"?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. Shakespeare never wrote this. The lines are a reworded version of Henry van Dyke's short poem \"Time Is,\" composed as a sundial inscription and first printed in 1901. Van Dyke's original reads \"too slow … too swift … too long … too short … but for those who love, Time is Eternity\"; the Shakespeare-credited version swaps in \"scared,\" \"lament\" and \"celebrate\" and appeared online by 2013. According to Quote Investigator ↗, there is no support for the Shakespeare attribution.",
+                "text": "No. Shakespeare never wrote this. The lines are a reworded version of Henry van Dyke's short poem \"Time Is,\" composed as a sundial inscription and first printed in 1901. Van Dyke's original reads \"too slow … too swift … too long … too short … but for those who love, Time is Eternity\"; the Shakespeare-credited version swaps in \"scared,\" \"lament\" and \"celebrate\" and appeared online by 2013. According to Quote Investigator, there is no support for the Shakespeare attribution.",
                 "url": "https://quotle.info/who-said/time-is-very-slow-for-those-who-wait-very-fast-for-those"
               }
             }
@@ -224,6 +224,11 @@
         /* ===== PUT IT ON A SLIDE (presentation kit) ===== */
         .pkit-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 26px 26px 28px; position: relative; overflow: hidden; }
         .pkit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); opacity: 0.8; }
+        /* Gold reads as "authentic voice". Match the confidence badge instead when the page's verdict isn't "verified". */
+        .pkit-card-disputed::before { background: var(--caution); }
+        .pkit-card-attributed::before { background: var(--amber); }
+        .pkit-card-disputed .pkit-credit { border-left-color: var(--caution); }
+        .pkit-card-attributed .pkit-credit { border-left-color: var(--amber); }
         .pkit-block { padding: 18px 0; border-top: 1px solid var(--border); }
         .pkit-block:first-child { padding-top: 4px; border-top: 0; }
         .pkit-lbl { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.13em; color: var(--slate); margin-bottom: 12px; }
@@ -539,9 +544,9 @@
         <!-- ============ PUT IT ON A SLIDE ============ -->
         <section class="pkit" aria-labelledby="pkit-h">
             <div class="sec-head"><p class="kicker">For presentations</p><h2 id="pkit-h">Put it on a slide</h2></div>
-            <div class="pkit-card">
+            <div class="pkit-card pkit-card-disputed">
                 <div class="pkit-block">
-                    <p class="pkit-lbl">Verified quote &amp; credit</p>
+                    <p class="pkit-lbl">Disputed credit &mdash; copy with the correction</p>
                     <blockquote class="pkit-credit" id="kitCredit">&ldquo;Time is very slow for those who wait, very fast for those who are scared, very long for those who lament, very short for those who celebrate, but for those who love, time is eternal&rdquo; <span class="pkit-cite">Time is / Too Slow for those who Wait, / Too Swift for those who Fear, / Too Long for those who Grieve, / Too Short for those who Rejoice; / But for those who Love, / Time is Eternity. —Henry van Dyke, &quot;Time Is&quot; (first printed 1901). NOT Shakespeare — the &quot;very slow… very fast… scared… lament… celebrate… eternal&quot; version is a later corruption misattributed to Shakespeare.</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                     <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>William Shakespeare</strong>. Use the credit shown above instead.</p>
@@ -716,7 +721,10 @@
     <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
 
     <script>
-        const quoteText = document.getElementById('quote-heading').textContent.trim();
+        // The verified sentence, not the H1: on records where the H1 is the popular clipping, the
+        // copy/share text must carry the full quote the credit's page number actually supports.
+        // (Identical to the H1 for every record without presentation.verifiedQuote.)
+        const quoteText = "Time is very slow for those who wait, very fast for those who are scared, very long for those who lament, very short for those who celebrate, but for those who love, time is eternal";
         const copyAttribution = "Time is / Too Slow for those who Wait, / Too Swift for those who Fear, / Too Long for those who Grieve, / Too Short for those who Rejoice; / But for those who Love, / Time is Eternity. —Henry van Dyke, \"Time Is\" (first printed 1901). NOT Shakespeare — the \"very slow… very fast… scared… lament… celebrate… eternal\" version is a later corruption misattributed to Shakespeare.";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
