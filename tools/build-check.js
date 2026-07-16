@@ -110,7 +110,8 @@ const inner = `    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">H
 const PAGE_SCRIPT = `    <script>
     (function(){
         var box=document.getElementById('cq'), btn=document.getElementById('cbtn'), out=document.getElementById('result');
-        var idx=null, loading=false;
+        var idx=null, loading=false, escalating=false;
+        var API='https://quotle-community.stewartd.workers.dev';
         function esc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':String(s)); return d.innerHTML; }
         function toast(m){ var t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},1700); }
         function norm(s){ return String(s).toLowerCase().replace(/[\\u2019'\\u2018\\u0060"\\u201c\\u201d]/g,'').replace(/[^a-z0-9]+/g,' ').trim().replace(/\\s+/g,' '); }
@@ -142,18 +143,53 @@ const PAGE_SCRIPT = `    <script>
                 '<div class="r-actions"><button class="r-btn primary" id="copycredit" type="button">Copy quote + credit</button>'+
                 '<a class="r-btn" href="'+esc(hit.u)+'">See the full proof \\u2192</a></div></div>'+img;
         }
+        // --- no-corpus-match escalation: backlog \\u2192 review queue \\u2192 Wikiquote (server-checked) ---
+        function wqSearch(q){ return 'https://en.wikiquote.org/w/index.php?search='+encodeURIComponent(q); }
+        function qiSearch(q){ return 'https://quoteinvestigator.com/?s='+encodeURIComponent(q); }
+        function noneCard(q){
+            return '<div class="rcard none"><div class="r-verdict"><span class="r-ic">?</span>Not in our verified corpus</div>'+
+                '<p class="r-quote">\\u201c'+esc(q)+'\\u201d</p>'+
+                '<p class="r-line">We haven\\u2019t traced this exact line to a source yet, and we couldn\\u2019t find it on Wikiquote either. <strong>That isn\\u2019t proof it\\u2019s fake</strong> &mdash; only that we can\\u2019t confirm it, so don\\u2019t present it as a verified quote with a named author.</p>'+
+                '<div class="r-actions"><a class="r-btn primary" href="/under-review/">Nominate it for review</a>'+
+                '<a class="r-btn" target="_blank" rel="noopener" href="'+wqSearch(q)+'">Search Wikiquote \\u2197</a>'+
+                '<a class="r-btn" target="_blank" rel="noopener" href="'+qiSearch(q)+'">Search Quote Investigator \\u2197</a></div>'+
+                '<p class="r-note">Tip: try a shorter, distinctive phrase from the line.</p></div>';
+        }
+        function queuedCard(q, lead){
+            // already on our list (backlog or pending nomination) \\u2014 not yet verified
+            return '<div class="rcard attr"><div class="r-verdict"><span class="r-ic">\\u23f3</span>Already on our list to verify</div>'+
+                '<p class="r-quote">\\u201c'+esc(q)+'\\u201d</p>'+
+                '<p class="r-line">'+lead+' We haven\\u2019t confirmed the attribution yet, so hold off on presenting it as a verified quote with a named author &mdash; but Wikiquote may have sourcing details you can use now.</p>'+
+                '<div class="r-actions"><a class="r-btn primary" target="_blank" rel="noopener" href="'+wqSearch(q)+'">Check Wikiquote for details \\u2197</a>'+
+                '<a class="r-btn" target="_blank" rel="noopener" href="'+qiSearch(q)+'">Search Quote Investigator \\u2197</a></div></div>';
+        }
+        function wikiquoteCard(q, d){
+            var added = d.added
+                ? 'We haven\\u2019t confirmed this line ourselves yet, but we found it on Wikiquote and <strong>added it to our list to validate</strong>.'
+                : 'We haven\\u2019t confirmed this line ourselves yet, but we found it on Wikiquote.';
+            return '<div class="rcard attr"><div class="r-verdict"><span class="r-ic">\\u2248</span>Found on Wikiquote &mdash; we\\u2019ll verify it</div>'+
+                '<p class="r-quote">\\u201c'+esc(q)+'\\u201d</p>'+
+                '<p class="r-line">'+added+' Wikiquote can give you sourcing details right now &mdash; want us to send you over?'+(d.title?(' It appears on their <strong>'+esc(d.title)+'</strong> page.'):'')+'</p>'+
+                '<div class="r-actions"><a class="r-btn primary" target="_blank" rel="noopener" href="'+esc(d.wikiquoteUrl||wqSearch(q))+'">Take me to Wikiquote \\u2192</a>'+
+                '<a class="r-btn" target="_blank" rel="noopener" href="'+qiSearch(q)+'">Search Quote Investigator \\u2197</a></div>'+
+                '<p class="r-note">We\\u2019ll trace it to a primary source and, once confirmed, it\\u2019ll show a full verdict here.</p></div>';
+        }
+        function escalate(q){
+            out.innerHTML='<div class="rcard none"><div class="r-verdict"><span class="r-ic">\\u2026</span>Checking our backlog and Wikiquote\\u2026</div>'+
+                '<p class="r-quote">\\u201c'+esc(q)+'\\u201d</p></div>';
+            if(escalating) return; escalating=true;
+            fetch(API+'/lookup?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){
+                escalating=false; d=d||{};
+                if(d.stage==='backlog') out.innerHTML=queuedCard(q,'You\\u2019re ahead of us &mdash; this line is already queued for verification.');
+                else if(d.stage==='nominated') out.innerHTML=queuedCard(q,'Someone\\u2019s already flagged this one for us to verify.');
+                else if(d.stage==='wikiquote') out.innerHTML=wikiquoteCard(q,d);
+                else if(d.stage==='corpus'&&d.url) out.innerHTML='<div class="rcard ok"><div class="r-verdict"><span class="r-ic">\\u2713</span>We do have this one</div><p class="r-quote">\\u201c'+esc(q)+'\\u201d</p><div class="r-actions"><a class="r-btn primary" href="'+esc(d.url)+'">See the full verdict \\u2192</a></div></div>';
+                else out.innerHTML=noneCard(q); // 'none' or 'short' or unknown
+            }).catch(function(){ escalating=false; out.innerHTML=noneCard(q); });
+        }
         function render(term){
             var hit=match(term);
-            if(!hit){
-                out.innerHTML='<div class="rcard none"><div class="r-verdict"><span class="r-ic">?</span>Not in our verified corpus</div>'+
-                    '<p class="r-quote">\\u201c'+esc(term.trim())+'\\u201d</p>'+
-                    '<p class="r-line">We haven\\u2019t traced this exact line to a source yet. <strong>That isn\\u2019t proof it\\u2019s fake</strong> &mdash; only that we can\\u2019t confirm it, so don\\u2019t present it as a verified quote with a named author.</p>'+
-                    '<div class="r-actions"><a class="r-btn primary" href="/under-review/">Nominate it for review</a>'+
-                    '<a class="r-btn" target="_blank" rel="noopener" href="https://en.wikiquote.org/w/index.php?search='+encodeURIComponent(term.trim())+'">Search Wikiquote \\u2197</a>'+
-                    '<a class="r-btn" target="_blank" rel="noopener" href="https://quoteinvestigator.com/?s='+encodeURIComponent(term.trim())+'">Search Quote Investigator \\u2197</a></div>'+
-                    '<p class="r-note">Tip: try a shorter, distinctive phrase from the line.</p></div>';
-                return;
-            }
+            if(!hit){ escalate(term.trim()); return; }
             var ru=reuse(hit.rights);
             var reuseHtml='<div class="r-reuse '+ru.t+'"><span class="ric">'+ru.ic+'</span><span>'+ru.x+'</span></div>';
             if(hit.c==='disputed'){
