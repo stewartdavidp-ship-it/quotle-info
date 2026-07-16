@@ -101,6 +101,23 @@ function save(data) {
   };
   fs.writeFileSync(BACKLOG, JSON.stringify(data, null, 2) + '\n');
   writeDigest(data);
+  writeBacklogIndex(data);
+}
+
+// A COMPACT, web-servable index of what's already ON OUR LIST (queued/selected candidates awaiting a
+// wave). The full backlog is ~1MB — too big for the browser or the Worker to fetch per lookup — so we
+// publish just the normalized quote strings. The Worker /lookup endpoint fetches this from the live
+// site (like verify-index.json) to answer "is this already queued to validate?" before it decides
+// whether to nominate a fresh Wikiquote find. Ingested candidates are omitted — they're in the corpus
+// (verify-index.json) already, which /lookup checks first.
+function writeBacklogIndex(data) {
+  const norms = [...new Set(
+    data.candidates
+      .filter((x) => x.status === 'queued' || x.status === 'selected')
+      .map((x) => norm(x.quote))
+      .filter(Boolean)
+  )];
+  fs.writeFileSync(path.join(ROOT, 'backlog-index.json'), JSON.stringify(norms) + '\n');
 }
 
 function esc(s) { return String(s || '').replace(/\|/g, '\\|').replace(/\n/g, ' '); }

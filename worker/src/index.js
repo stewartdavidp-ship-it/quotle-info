@@ -36,7 +36,7 @@ export default {
 
     // Public verify endpoints allow ANY origin (agents/apps); the community endpoints stay scoped.
     if (req.method === 'OPTIONS') {
-      const oc = url.pathname.startsWith('/verify')
+      const oc = (url.pathname.startsWith('/verify') || url.pathname === '/lookup')
         ? { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,POST,OPTIONS', 'Access-Control-Allow-Headers': 'Content-Type' }
         : cors;
       return new Response(null, { status: 204, headers: oc });
@@ -166,6 +166,60 @@ export default {
         return send({ nominations: results });
       }
 
+      // /check "is this real?" escalation. The /check page matches the corpus in the browser; on a
+      // MISS it calls this to walk the rest of the ladder the user can't reach client-side:
+      //   corpus (safety net) → our harvest backlog → an existing pending nomination → Wikiquote.
+      // If Wikiquote genuinely carries the line (STRICT, server-verified — the anti-abuse gate), we
+      // add it as a PENDING nomination (never straight into the backlog — the moderation guardrail
+      // above still holds; a human promotes it) and tell the client so it can offer the Wikiquote
+      // page. Read-mostly; open CORS. The one write is a heavily-gated nomination.
+      if (url.pathname === '/lookup' && req.method === 'GET') {
+        const pub = { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', 'Cache-Control': 'no-store' };
+        const term = (url.searchParams.get('q') || '').trim().slice(0, 600);
+        if (term.length < 12) return new Response(JSON.stringify({ stage: 'short' }), { headers: pub });
+        const nq = normQ(term);
+
+        // 1. Corpus — safety net; the page already checked client-side, but re-check in case its
+        //    index was stale. A hit means "go read the page we already have."
+        const hit = matchQuote(term, await loadVerifyIndex());
+        if (hit) return new Response(JSON.stringify({ stage: 'corpus', verdict: hit.c, url: hit.u }), { headers: pub });
+
+        // 2. Already on our harvest list (queued/selected, awaiting a wave).
+        const backlog = await loadBacklogIndex();
+        const nqKey = nq.length > 28 ? nq.slice(0, 28) : nq;
+        if (backlog.some((b) => b === nq || (nqKey.length > 20 && (b.includes(nqKey) || nq.includes(b.slice(0, 28)))))) {
+          return new Response(JSON.stringify({ stage: 'backlog' }), { headers: pub });
+        }
+
+        // 3. Already nominated by someone (pending moderation) — don't double-add.
+        try {
+          const { results } = await env.DB.prepare("SELECT quote FROM nominations WHERE status='pending' ORDER BY created DESC LIMIT 500").all();
+          if ((results || []).some((r) => normQ(r.quote || '') === nq)) {
+            return new Response(JSON.stringify({ stage: 'nominated' }), { headers: pub });
+          }
+        } catch (_) { /* DB hiccup → fall through, worst case a dup nomination the moderator drops */ }
+
+        // 4. Wikiquote — server-side STRICT check (the pasted wording must literally appear).
+        const wq = await wikiquoteLookup(term);
+        if (wq.found) {
+          let added = false;
+          try {
+            const iphash = await ipHash(req, env);
+            const since = new Date(Date.now() - 86400000).toISOString();
+            const cnt = await env.DB.prepare('SELECT COUNT(*) AS n FROM nominations WHERE iphash=? AND created>?').bind(iphash, since).first();
+            if (!cnt || cnt.n < MAX_NOMS_PER_DAY) {
+              await env.DB.prepare('INSERT INTO nominations (quote,author,note,status,created,iphash) VALUES (?,?,?,?,?,?)')
+                .bind(term.slice(0, 600), '', 'wikiquote-auto · found on ' + String(wq.title).slice(0, 200), 'pending', new Date().toISOString(), iphash).run();
+              added = true;
+            }
+          } catch (_) { /* rate/DB error → still show the Wikiquote result, just not "added" */ }
+          return new Response(JSON.stringify({ stage: 'wikiquote', added, wikiquoteUrl: wq.url, title: wq.title }), { headers: pub });
+        }
+
+        // 5. Nowhere we can confirm.
+        return new Response(JSON.stringify({ stage: 'none', wikiquoteSearch: 'https://en.wikiquote.org/w/index.php?search=' + encodeURIComponent(term) }), { headers: pub });
+      }
+
       return send({ error: 'not found' }, 404);
     } catch (e) {
       return send({ error: String((e && e.message) || e) }, 500);
@@ -201,6 +255,67 @@ async function loadVerifyIndex() {
   return _idxCache || [];
 }
 const normQ = (s) => String(s).toLowerCase().replace(/[’'‘`"“”]/g, '').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+
+// ---- /lookup: compact "already on our list" index (queued/selected harvest candidates) ----
+let _blCache = null, _blTs = 0;
+async function loadBacklogIndex() {
+  const now = Date.now();
+  if (_blCache && (now - _blTs) < 300000) return _blCache;
+  try {
+    const r = await fetch('https://quotle.info/backlog-index.json?_=' + Math.floor(now / 60000), { cf: { cacheTtl: 60 } });
+    if (r.ok) { const d = await r.json(); if (Array.isArray(d)) { _blCache = d; _blTs = now; } }
+  } catch (_) { /* not reachable → degrade to empty */ }
+  return _blCache || [];
+}
+
+// ---- /lookup: STRICT server-side Wikiquote check ----
+// The anti-abuse gate for auto-nomination. Search Wikiquote for the phrase, then RE-FETCH each top
+// page as raw wikitext (?action=raw — MediaWiki's own API summarizes/omits the quote list, so raw is
+// the only faithful source, exactly the trap the film-harvest hit) and require a substantial
+// contiguous chunk of the pasted wording to LITERALLY appear. Fuzzy search hits alone don't count —
+// that would let paraphrases and near-misses flood the moderation queue.
+const WQ_UA = { 'User-Agent': 'quotle.info-lookup/1.0 (+https://quotle.info; stewartd@runmast.com)' };
+// Skip pages that carry quotes but aren't the SOURCE: date/QOTD calendar pages ("May 21"), namespaces
+// ("Wikiquote:", "Talk:"), and list pages. Without this, "May the Force be with you" matched a
+// "May 21" quote-of-the-day page and we'd have sent the user there. Tested against live Wikiquote.
+const WQ_CAL = /^(January|February|March|April|May|June|July|August|September|October|November|December|Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)\b/;
+const wqSkip = (t) => t.includes(':') || /^List of/i.test(t) || WQ_CAL.test(t) || /^\d/.test(t);
+async function wqTitles(srsearch) {
+  const url = 'https://en.wikiquote.org/w/api.php?action=query&list=search&format=json&srlimit=8&srprop=&srsearch='
+    + encodeURIComponent(srsearch);
+  const r = await fetch(url, { headers: WQ_UA, cf: { cacheTtl: 300 } });
+  const d = await r.json().catch(() => ({}));
+  return ((d.query && d.query.search) || []).map((p) => p.title);
+}
+async function wikiquoteLookup(term) {
+  const nq = normQ(term);
+  if (nq.length < 12) return { found: false };
+  const chunk = nq.length > 40 ? nq.slice(0, 40) : nq;           // distinctive opening run
+  const chunk2 = nq.length > 70 ? nq.slice(25, 65) : '';         // a second run for longer lines
+  const clean = term.replace(/["“”]/g, '').slice(0, 200);
+  try {
+    // A QUOTED-phrase search surfaces the SOURCE page (Hamlet, Walden, Star Wars) that an unquoted search
+    // buries under topic pages ("Good and evil", "Optimism"); the unquoted pass is the recall fallback for
+    // slight wording/punctuation drift. Merge, quoted first. The STRICT gate is the raw-wikitext substring
+    // check below (not the search), so extra candidate titles only add recall — junk still fails the gate.
+    let titles = [];
+    try { titles = titles.concat(await wqTitles('"' + clean + '"')); } catch (_) { /* one search failing is fine */ }
+    try { titles = titles.concat(await wqTitles(clean)); } catch (_) { /* ditto */ }
+    const seen = new Set();
+    titles = titles.filter((t) => !wqSkip(t) && !seen.has(t) && seen.add(t)).slice(0, 6);
+    for (const title of titles) {
+      const page = encodeURIComponent(String(title).replace(/ /g, '_'));
+      // ?action=raw = the faithful wikitext (the API extract summarizes and drops the quote list).
+      const raw = await fetch('https://en.wikiquote.org/wiki/' + page + '?action=raw', { headers: WQ_UA, cf: { cacheTtl: 300 } });
+      if (!raw.ok) continue;
+      const text = normQ(await raw.text());
+      if (text.includes(chunk) || (chunk2 && text.includes(chunk2))) {
+        return { found: true, title, url: 'https://en.wikiquote.org/wiki/' + page };
+      }
+    }
+  } catch (_) { /* Wikiquote unreachable → treat as not found (never a false "added") */ }
+  return { found: false };
+}
 // plain-English "can I put this on a slide?" from the rights state
 function reuseVerdict(rights) {
   if (rights === 'public-domain') return 'Free to reuse, including in commercial and paid presentations. No permission needed.';
