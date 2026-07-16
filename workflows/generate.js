@@ -208,20 +208,68 @@ const DOSSIER_SCHEMA = {
   },
 }
 
+// TRACK C (film misquotes) arrives with author '' BY DESIGN: on a wording-drift line nobody is
+// falsely credited — the source is right and only the words drifted — so the harvest deliberately
+// leaves creditedTo/magnetAuthor empty (see harvest-film-misquotes.js). The track-A framing below is
+// actively WRONG for those: there is no magnet, "assume fabrication" is false (the line is real but
+// misworded), and the verdict label would render as "Not  — a modern paraphrase". So branch the
+// framing. Everything after this block — the dossier contract, rights rules, toRecord — is shared,
+// which is why this is a branch here rather than a second generate script: generate.js already
+// carries duplicated copies of slugify and toRecord, and a third copy is how they drift.
+const filmFraming = (dq) => `THE POPULAR WORDING: "${dq}"
+THIS IS A SCREEN LINE THE PUBLIC MISQUOTES. There is NO magnet author and nothing here is fabricated
+— the film is real and the line is nearly real. The error is the WORDING. Your job is to establish
+what was ACTUALLY said, who wrote it, and whether that film originated the line at all.
+
+RESEARCH (use WebSearch + WebFetch widely):
+1. IDENTIFY the work, then get the ACTUAL line from a TRANSCRIPTION — Wikiquote's page for the film.
+   The entire claim of this page is the wording, so it may not rest on memory or a listicle. NOTE:
+   WebFetch tends to SUMMARISE a Wikiquote page rather than reproduce dialogue, which is useless
+   here — fetch the raw wikitext instead (append ?action=raw to the Wikiquote URL). A summariser
+   paraphrasing a transcript is precisely the error this site exists to correct.
+2. ORIGINATION — the expensive question, do not skip it. Did the line originate in this film, or was
+   it only USED there? Many famous "movie quotes" come from the source novel or play and the film
+   merely sharpened them: "Frankly, my dear, I don't give a damn" is in Mitchell's 1936 novel, which
+   reads "My dear, I don't give a damn" — the film's contribution is one word. If the line came from
+   a novel/play/earlier work, SAY SO and name that work and date. Crediting a film with a line it
+   borrowed is the same error class as crediting Einstein with a line he never said.
+3. AUTHORSHIP — the author of a screen line is the WRITER (screenplay/teleplay), NEVER the character
+   and NEVER the actor. author.* = the writer. Record the character + actor as the SPEAKER in
+   source.docMeta ("Spoken by: Cmdr. William Riker (Jonathan Frakes) — a fictional character"). If
+   the writing credit is shared or contested (Brackett & Kasdan on Empire), say so rather than
+   picking one name. If a real person is credited in the misattribution section, they go there — not
+   in author.*.
+4. RIGHTS — screen writing is WORK-FOR-HIRE: source.rightsHolder is the STUDIO, not the screenwriter.
+   US public domain reaches works published through 1930 only, so a film is essentially always
+   in-copyright; use public-domain ONLY for a pre-1931 release and justify it.
+
+VERDICT for a wording drift: confidence 'disputed' — the line AS QUOTED was not said. answer.label
+reads like "Not quite — the actual line is ..." or "Misquoted — {Writer} wrote ...", NOT "Not X —".
+answer.authorName = the WRITER (the real author of the real line). The popular wording stays as the
+page's displayQuote because that is what people search for; put the ACTUAL sentence in
+source.excerpt and set schema.claimQuoteText to the popular wording so the ClaimReview rates the
+claim that was really made rather than a strawman.
+
+FETCH each source you cite and confirm it literally contains the claim you attach to it. Populate
+sourcesVerified with {claim, url, containsClaim} for every source link — do NOT use a link unless a
+fetch confirmed it supports that claim (this is the site's #1 discipline).`;
+
+const magnetFraming = (dq, author) => `THE QUOTE: "${dq}"
+POPULARLY CREDITED TO: ${author}  (a famous name — one of the INTERNET'S #1 MAGNETS FOR FAKE QUOTES: feel-good and clever lines get pinned on them with no source. Assume fabrication until proven otherwise. Rights turn on when the specific SPEECH/BOOK/LETTER/artwork was first published — a modern line is usually IN-COPYRIGHT; an old translation may itself be in-copyright. Your job is the truth: did they really say/write this exact line, in what documented source, and is the popular wording genuine or a later paraphrase/fabrication?)
+
+RESEARCH (use WebSearch + WebFetch widely): find the documented SOURCE (speech + date, book + page, interview, letter, diary) and whether ${author} actually said/wrote this exact wording; and the misattribution history. FETCH each source you cite and confirm it literally contains the specific claim you attach to it. Populate sourcesVerified with {claim, url, containsClaim} for every source link — do NOT use a link unless a fetch confirmed it supports that claim (this is the site's #1 discipline).`;
+
 const researchPrompt = (item) => {
   const dq = String(item.text).replace(/\s*\.\s*$/, '');
   return `You are a rigorous quote-provenance researcher for quotle.info, a verified-provenance / fact-check site. Your output IS the data for a published page, so every claim must be checkable. Be skeptical; default to honest uncertainty over false precision.
 
-THE QUOTE: "${dq}"
-POPULARLY CREDITED TO: ${item.author}  (a famous name — one of the INTERNET'S #1 MAGNETS FOR FAKE QUOTES: feel-good and clever lines get pinned on them with no source. Assume fabrication until proven otherwise. Rights turn on when the specific SPEECH/BOOK/LETTER/artwork was first published — a modern line is usually IN-COPYRIGHT; an old translation may itself be in-copyright. Your job is the truth: did they really say/write this exact line, in what documented source, and is the popular wording genuine or a later paraphrase/fabrication?)
-
-RESEARCH (use WebSearch + WebFetch widely): find the documented SOURCE (speech + date, book + page, interview, letter, diary) and whether ${item.author} actually said/wrote this exact wording; and the misattribution history. FETCH each source you cite and confirm it literally contains the specific claim you attach to it. Populate sourcesVerified with {claim, url, containsClaim} for every source link — do NOT use a link unless a fetch confirmed it supports that claim (this is the site's #1 discipline).
+${item.author ? magnetFraming(dq, item.author) : filmFraming(dq)}
 
 ANCHOR SOURCES — DEFER TO THE SPECIALISTS: If Quote Investigator (quoteinvestigator.com) OR Wikiquote's *sourced* section has already investigated this quote, treat their finding as the AUTHORITATIVE ANCHOR. Search QI first (site:quoteinvestigator.com "<key phrase>"). Cite QI/Wikiquote prominently (a trail item AND a Dig-deeper link), adopt their earliest-attestation and origin conclusion, and do NOT assert a different or earlier origin, a more confident attribution, or extra specificity (dates, editions, who-really-said-it) beyond what they document — unless you independently confirm it against a primary source you fetched. Where QI is uncertain or calls it apocryphal, MIRROR that: use "attributed" or "disputed" honestly rather than manufacturing a confident answer. quotle.info's value is a clean, structured, honestly-hedged answer built on the best existing research — never an overclaim past it.
 
 ASSIGN confidence (drives the page):
  • "verified"  — you located the specific work (+ translation, if translated) that demonstrably contains this exact wording from this author.
- • "attributed" — credibly and widely credited to ${item.author}, consistent with their work, but you could NOT pin the exact wording to a specific primary source, and it is not known to be wrong.
+ • "attributed" — credibly and widely credited to ${item.author || 'the source above'}, consistent with their work, but you could NOT pin the exact wording to a specific primary source, and it is not known to be wrong.
  • "disputed"   — the attribution is wrong/unsupported: a different writer originated it, OR it is a fabrication/paraphrase found in none of the author's actual works, OR no evidence they wrote it.
 
 RIGHTS — classify source.rights (a claim SEPARATE from attribution; a quote can be firmly attributed and still under copyright). Rules for the UNITED STATES, current year 2026:
@@ -238,11 +286,13 @@ FILL THE DOSSIER (all prose fields use HTML entities — &ldquo; &rdquo; &lsquo;
 
 answer.label / authorName / authorDates / sourceLine, following the confidence pattern:
  • verified  → label "Written by" (or "Spoken by"). authorName = the author. authorDates = life dates / role. sourceLine = 1-2 sentences: which work + translation + that it's confirmed.
- • attributed → label "Attributed to". authorName = ${item.author}. sourceLine = honest: widely credited; consistent with their work; but no primary source/translation pins this exact wording.
- • disputed  → label like "Not ${item.author} — a modern paraphrase" or "Not ${item.author} — actually {TrueName}". authorName = the TRUE originator (or ${item.author} if the THOUGHT is theirs but the WORDING is a paraphrase — then explain in sourceLine). sourceLine = the real story.
+${item.author ? ` • attributed → label "Attributed to". authorName = ${item.author}. sourceLine = honest: widely credited; consistent with their work; but no primary source/translation pins this exact wording.
+ • disputed  → label like "Not ${item.author} — a modern paraphrase" or "Not ${item.author} — actually {TrueName}". authorName = the TRUE originator (or ${item.author} if the THOUGHT is theirs but the WORDING is a paraphrase — then explain in sourceLine). sourceLine = the real story.`
+  : ` • attributed → label "Attributed to". authorName = the writer it is credibly credited to. sourceLine = honest: widely credited but no transcript pins this exact wording.
+ • disputed  → this is the WORDING-DRIFT case. Label "Not quite &mdash; the actual line is &hellip;" or "Misquoted &mdash; {Writer} wrote &hellip;". Do NOT write "Not {name} &mdash;": nobody is falsely credited here, the source is right and only the words drifted, and that label would accuse the wrong party. authorName = the WRITER of the real line. sourceLine = what was actually said, in which work, and how the popular version drifted.`}
 answer.confidenceText: OMIT unless overriding the default.
 
-author.*  = ABOUT THE TRUE AUTHOR (for verified/attributed that is ${item.author}; for disputed the hero/author is the TRUE originator when known, else ${item.author} if the idea is theirs). name, initials (e.g. "MA"), metaLine (PLAIN TEXT, e.g. "121–180 AD · Roman emperor & Stoic philosopher"), bio (2-3 sentences, may use <strong>/<em>).
+author.*  = ABOUT THE TRUE AUTHOR${item.author ? ` (for verified/attributed that is ${item.author}; for disputed the hero/author is the TRUE originator when known, else ${item.author} if the idea is theirs)` : ' (here: the WRITER of the line — never the character, never the actor)'}. name, initials (e.g. "MA"), metaLine (PLAIN TEXT, e.g. "121–180 AD · Roman emperor & Stoic philosopher"), bio (2-3 sentences, may use <strong>/<em>).
 
 source: docMeta (2-4 {dt,dd}; ddClass:"title" for a work title; include a "Translation" row when relevant), excerpt (the quote in fuller original context when one exists, else the quote), cutTag (optional), excerptNote (optional), artifact (ONLY if a real primary artifact exists; OMIT otherwise), sourceLink ({text,url} to the best primary/translation/chronology page), trail (2-4 HTML strings, INNER content only, each with an inline confirmed <a>), rights (see RIGHTS above), rightsHolder (when in-copyright/licensed), rightsNote (honest HTML note).
 
@@ -271,7 +321,7 @@ Return the dossier via the structured schema. Do not invent sources or translati
 phase('Research')
 
 const records = (await parallel(items.map((it) => () =>
-  agent(researchPrompt(it), { label: `research:${it.author.split(' ').pop()}#${it.index}`, phase: 'Research', schema: DOSSIER_SCHEMA, effort: 'high' })
+  agent(researchPrompt(it), { label: `research:${it.author ? it.author.split(' ').pop() : String(it.text).slice(0, 18)}#${it.index}`, phase: 'Research', schema: DOSSIER_SCHEMA, effort: 'high' })
     .then((d) => (d ? { record: toRecord(d, it), confidence: d.confidence, reason: d.confidenceReason, rights: (d.source && d.source.rights) || '?', verifiedCount: (d.sourcesVerified || []).length, author: d.author.name, index: it.index } : null))
 ))).filter(Boolean)
 
