@@ -271,11 +271,15 @@ function buildJsonLd(q, url) {
   const claimQuoteText = plain(s.claimQuoteText) || plain(q.displayQuote) || quoteText;
   // Both quote strings are compared against, since a drift page's `who` may echo either the popular
   // wording or the documented one.
+  // Strip surrounding quote marks (straight + curly) before comparing: a fact-check row often quotes
+  // the wording — items[0].who = ‘"I'll never go hungry again"’ — and the leading quote char made the
+  // 24-char prefix never match displayQuote, leaking the fragment in as a Person claimant.
+  const dequote = (s) => String(s || '').replace(/^[\s"'‘’“”]+|[\s"'‘’“”]+$/g, '').toLowerCase().trim();
   const isQuoteNotPerson = (w) => {
-    const x = String(w || '').toLowerCase().trim();
+    const x = dequote(w);
     if (!x) return false;
     return [claimQuoteText, quoteText, plain(q.displayQuote)].some((s2) => {
-      const y = String(s2 || '').toLowerCase().trim();
+      const y = dequote(s2);
       return !!y && (x.includes(y.slice(0, 24)) || y.includes(x.slice(0, 24)));
     });
   };
@@ -306,7 +310,13 @@ function buildJsonLd(q, url) {
   // Disputed 1/5 rates a TRUE statement false. That is the Reader's-Digest-as-claimant bug wearing
   // a different hat. With no claimant the template already degrades honestly: claimReviewed becomes
   // the bare quote and the FAQ asks "Who really said X?" — which is the actual question.
-  const claimant = (q.confidence === 'disputed') ? (magnet || misWho || '') : trueAuthor;
+  // A WORDING-DRIFT page (a film misquote: claimQuoteText differs from the documented quotation.text)
+  // has NO magnet — nobody is falsely credited, the source is right and only the words drifted. So on
+  // a drift page with no explicit creditedTo, do NOT fall back to misWho: items[0].who there is the
+  // film ("Casablanca"), a character/actor ("Clint Eastwood"), or a fragment — none a magnet, all
+  // typed as a schema.org Person and rated "X said {quote}" 1/5. Degrade to the bare quote instead.
+  // Ordinary wrong-name records (no claimQuoteText) are unaffected and keep the misWho fallback.
+  const claimant = (q.confidence === 'disputed') ? (magnet || (wordingDrift ? '' : misWho) || '') : trueAuthor;
   // Some claims cannot be stated honestly in the "{who} said {X}" template. A genuine quote whose
   // FAMOUS ENGLISH is a translator's needs the caveat inside claimReviewed itself, or a consumer
   // that lifts only the ClaimReview emits "{ancient author} said {modern translator's words} —

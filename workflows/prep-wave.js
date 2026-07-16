@@ -75,7 +75,11 @@ function toRecord(d, item) {
     if (sc.creatorName) { out.creator = { name: sc.creatorName }; if (sc.creatorBirthDate) out.creator.birthDate = sc.creatorBirthDate; if (sc.creatorJobTitle) out.creator.jobTitle = sc.creatorJobTitle; if (sc.creatorSameAs) out.creator.sameAs = sc.creatorSameAs; }
     if (sc.dateCreated) out.dateCreated = sc.dateCreated;
     if (sc.isBasedOnName) { out.isBasedOn = { type: 'CreativeWork', name: sc.isBasedOnName }; if (sc.isBasedOnDatePublished) out.isBasedOn.datePublished = sc.isBasedOnDatePublished; if (sc.isBasedOnSameAs) out.isBasedOn.sameAs = sc.isBasedOnSameAs; }
-    out.webPageName = d.meta.ogTitle; out.dateModified = DATE_MODIFIED; rec.schema = out;
+    out.webPageName = d.meta.ogTitle; out.dateModified = DATE_MODIFIED;
+    // Film misquote (item.author === ''): signal wordingDrift so template.js rates the CLAIMED wording
+    // and suppresses the bogus film/character/fragment claimant. Keep in sync with generate.js toRecord.
+    if (!item.author && out.quotationText && displayQuote !== out.quotationText) out.claimQuoteText = displayQuote;
+    rec.schema = out;
   }
   return rec;
 }
