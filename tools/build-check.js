@@ -76,6 +76,29 @@ const STYLE = `${ROOT_CSS}
         .narrow-in::placeholder { color:var(--text-muted); }
         .narrow-btn { flex:0 0 auto; }
         .r-note { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-top:14px; line-height:1.6; }
+        /* whole-deck batch checker */
+        .deck { margin-top:52px; padding-top:30px; border-top:1px solid var(--border); }
+        .deck .sec-head { margin-bottom:12px; }
+        .deck .kicker { color:var(--sage); }
+        .deck h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:1.5rem; letter-spacing:-0.01em; }
+        .deck-lede { font-family:'DM Sans',sans-serif; font-size:0.95rem; color:var(--slate); line-height:1.6; margin:8px 0 16px; max-width:620px; }
+        #bq { width:100%; min-height:120px; resize:vertical; font-family:'Source Serif 4',Georgia,serif; font-size:1rem; color:var(--ink); background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:16px 18px; outline:none; transition:border-color 0.2s; }
+        #bq:focus { border-color:var(--burgundy); }
+        #bq::placeholder { color:var(--text-muted); }
+        .deck-result { margin-top:22px; }
+        .deck-sum { display:flex; flex-wrap:wrap; gap:9px; margin-bottom:16px; }
+        .ds { font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:600; padding:6px 13px; border-radius:999px; border:1px solid; }
+        .ds.ok { color:var(--sage); background:var(--sage-dim); border-color:rgba(126,179,139,0.35); }
+        .ds.bad { color:var(--caution); background:rgba(138,147,201,0.14); border-color:rgba(138,147,201,0.4); }
+        .ds.warn { color:var(--amber); background:rgba(224,162,78,0.12); border-color:rgba(224,162,78,0.35); }
+        .ds.none { color:var(--text-muted); background:rgba(154,162,178,0.12); border-color:rgba(154,162,178,0.3); }
+        .deck-list { list-style:none; display:flex; flex-direction:column; gap:8px; }
+        .dr { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; padding:12px 15px; background:var(--bg-card); border:1px solid var(--border); border-left:4px solid var(--border); border-radius:10px; }
+        .dr-ok { border-left-color:var(--sage); } .dr-bad { border-left-color:var(--caution); } .dr-warn { border-left-color:var(--amber); } .dr-none { border-left-color:var(--slate); }
+        .dr-q { font-family:'Source Serif 4',Georgia,serif; font-style:italic; font-size:0.95rem; color:var(--ink); flex:1 1 55%; min-width:0; }
+        .dr-v { font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:600; color:var(--slate); margin-left:auto; }
+        .dr-bad .dr-v { color:var(--caution); } .dr-none .dr-v { color:var(--text-muted); }
+        .dr-v a { color:var(--sage); text-decoration:none; font-weight:500; margin-left:8px; }
         .how { margin-top:44px; padding-top:22px; border-top:1px solid var(--border); font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); line-height:1.65; }
         .how a { color:var(--sage); text-decoration:none; }
         footer { text-align:center; padding:40px 24px; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-size:0.8rem; border-top:1px solid var(--border); margin-top:48px; }
@@ -109,7 +132,20 @@ const inner = `    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">H
             </div>
         </div>
         <div class="result" id="result" aria-live="polite"></div>
-        <p class="how">How this works: your text is matched (in your browser) against the ${'${COUNT}'} quotes we&rsquo;ve traced to a primary source. A match returns our verdict, the correct credit, and reuse status; no match means we haven&rsquo;t verified that exact line &mdash; which isn&rsquo;t proof it&rsquo;s fake, only that you shouldn&rsquo;t present it as confirmed. Agents can call the same data at <a href="/verify-index.json">/verify-index.json</a> or the <a href="/verify?q=your+quote">/verify API</a>.</p>
+
+        <section class="deck" aria-labelledby="deck-h">
+            <div class="sec-head"><p class="kicker">Whole deck at once</p><h2 id="deck-h">Vet every quote in your presentation</h2></div>
+            <p class="deck-lede">Paste every quote from your slides, paper, or bibliography &mdash; one per line &mdash; and check them all in one pass. We&rsquo;ll flag the misattributed and unconfirmed ones so nothing embarrassing makes it in front of an audience. Nothing about your deck is stored.</p>
+            <label for="bq" class="visually-hidden">Paste quotes to check, one per line</label>
+            <textarea id="bq" placeholder="One quote per line&hellip;&#10;The only thing we have to fear is fear itself&#10;Let them eat cake&#10;Insanity is doing the same thing over and over"></textarea>
+            <div class="check-row">
+                <button class="check-btn" id="bbtn" type="button">Check all</button>
+                <span class="check-hint">up to 100 at once &mdash; nothing is stored</span>
+            </div>
+            <div class="deck-result" id="bresult" aria-live="polite"></div>
+        </section>
+
+        <p class="how">How this works: your text is matched (in your browser) against the ${'${COUNT}'} quotes we&rsquo;ve traced to a primary source. A match returns our verdict, the correct credit, and reuse status; no match means we haven&rsquo;t verified that exact line &mdash; which isn&rsquo;t proof it&rsquo;s fake, only that you shouldn&rsquo;t present it as confirmed. Agents can call the same data at <a href="/verify-index.json">/verify-index.json</a>, the <a href="/verify?q=your+quote">/verify API</a>, or POST a whole deck to <code>/verify-batch</code>.</p>
     </main>
     <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>`;
 
@@ -306,6 +342,40 @@ const PAGE_SCRIPT = `    <script>
             if(t.closest('.dym-none')){ escalate(box.value.trim()); return; }
         });
         out.addEventListener('keydown',function(e){ if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('narrow-in')){ e.preventDefault(); applyNarrow(); } });
+        // --- whole-deck batch check: POST every line to /verify-batch, flag what needs fixing ---
+        var bq=document.getElementById('bq'), bbtn=document.getElementById('bbtn'), bout=document.getElementById('bresult');
+        function renderBatch(lines, d){
+            var s=(d&&d.summary)||{}, res=(d&&d.results)||[];
+            var sum='<div class="deck-sum">'+
+                '<span class="ds ok">'+(s.verified||0)+' verified</span>'+
+                '<span class="ds bad">'+(s.misattributed||0)+' misattributed</span>'+
+                (s.attributed?'<span class="ds warn">'+s.attributed+' attributed</span>':'')+
+                '<span class="ds none">'+(s.notFound||0)+' unconfirmed</span></div>';
+            var rows=res.map(function(r,i){
+                var cls=!r.found?'none':r.verdict==='disputed'?'bad':r.verdict==='attributed'?'warn':'ok';
+                var v=!r.found?'Unconfirmed'
+                    :r.verdict==='disputed'?('Not '+esc(r.misattributedTo||'as credited')+' \\u2192 '+esc(r.reallySaidBy||'unverified'))
+                    :r.verdict==='attributed'?('Attributed to '+esc(r.reallySaidBy||'\\u2014'))
+                    :('Verified \\u2014 '+esc(r.reallySaidBy||'\\u2014'));
+                var link=(r.found&&r.url)?' <a href="'+esc(r.url)+'">details</a>':'';
+                return '<li class="dr dr-'+cls+'"><span class="dr-q">\\u201c'+esc((r.query||lines[i]||'').trim())+'\\u201d</span><span class="dr-v">'+v+link+'</span></li>';
+            }).join('');
+            var foot=(s.misattributed||s.notFound)
+                ? '<p class="r-note">The flagged lines are the ones to fix before you present.</p>'
+                : '<p class="r-note">All clear \\u2014 every line checked out.</p>';
+            bout.innerHTML=sum+'<ul class="deck-list">'+rows+'</ul>'+foot;
+        }
+        function batchRun(){
+            var lines=(bq.value||'').split('\\n').map(function(s){return s.trim();}).filter(Boolean);
+            if(!lines.length){ bout.innerHTML=''; return; }
+            var note='';
+            if(lines.length>100){ note='<p class="r-note">That\\u2019s more than 100 \\u2014 checking the first 100.</p>'; lines=lines.slice(0,100); }
+            bout.innerHTML=note+'<p class="r-note">Checking '+lines.length+' quote'+(lines.length>1?'s':'')+'\\u2026</p>';
+            fetch(API+'/verify-batch',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({quotes:lines})})
+                .then(function(r){return r.json();}).then(function(d){ renderBatch(lines,d); })
+                .catch(function(){ bout.innerHTML='<p class="r-note">Couldn\\u2019t reach the checker \\u2014 please retry.</p>'; });
+        }
+        if(bbtn) bbtn.addEventListener('click',batchRun);
         // deep link: /check/?q=...&author=...&source=...
         try{ var sp=new URLSearchParams(location.search); var qp=sp.get('q'); if(qp){ box.value=qp; hintAuthor=(sp.get('author')||'').trim(); hintSource=(sp.get('source')||'').trim(); run(); } }catch(e){}
     })();
