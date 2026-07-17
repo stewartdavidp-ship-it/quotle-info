@@ -22,7 +22,8 @@ const NAV_LINKS = [
   { key: 'check', label: 'Check a quote', href: '/check/' },
 ];
 
-const NAV = (active) => `    <nav class="topnav">
+const NAV = (active) => `    <a class="skip-link" href="#main">Skip to content</a>
+    <nav class="topnav">
         <a class="brand" href="/"><span class="brand-icon" aria-hidden="true">📖</span>quotle<span>.info</span></a>
         <div class="nav-search">
             <input id="gsearch" class="gsearch" type="search" placeholder="Search quotes, authors&hellip;" aria-label="Search quotes, authors, and quotes under review" autocomplete="off">
@@ -36,6 +37,9 @@ ${NAV_LINKS.map((l) => `            <a class="nav-link${active === l.key ? ' act
     </nav>`;
 
 const CHROME_CSS = `
+        /* skip link — first focusable element; visible only on keyboard focus */
+        .skip-link { position:absolute; left:12px; top:-48px; z-index:200; background:var(--burgundy); color:#fff; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:600; padding:10px 16px; border-radius:0 0 10px 10px; text-decoration:none; transition:top 0.15s; }
+        .skip-link:focus { top:0; outline:2px solid var(--sage); outline-offset:2px; }
         /* shared nav + universal search */
         .topnav { display:flex; align-items:center; gap:14px 16px; flex-wrap:wrap; max-width:1000px; margin:0 auto; padding:16px 24px 0; }
         .brand { display:inline-flex; align-items:center; gap:9px; text-decoration:none; font-family:'Playfair Display',serif; font-weight:900; font-size:1.05rem; flex-shrink:0; }

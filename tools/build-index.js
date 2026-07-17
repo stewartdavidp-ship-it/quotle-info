@@ -105,7 +105,7 @@ ${THEME_CSS}
 </head>
 <body>
 ${NAV(active)}
-    <main>
+    <main id="main">
 ${body}
     </main>
     <footer>

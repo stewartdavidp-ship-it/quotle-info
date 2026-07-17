@@ -99,7 +99,7 @@ ${THEME_CSS}
 </head>
 <body>
 ${NAV('')}
-    <main>
+    <main id="main">
         <header class="hero">
             <p class="kicker">The standard</p>
             <h1>How we verify</h1>
@@ -112,7 +112,7 @@ ${NAV('')}
                 <div class="principle"><span class="num">1</span><div><h3>Traced to a primary source</h3><p>We work back to the earliest document that actually carries the words — a first edition, a letter, a transcript, a recording — not a later anthology quoting an anthology.</p></div></div>
                 <div class="principle"><span class="num">2</span><div><h3>Cited and dated, with links</h3><p>Each page names the source, the edition or issue, and the date, and links out to the archive or record so you can check it yourself. &ldquo;Trust us&rdquo; is not verification.</p></div></div>
                 <div class="principle"><span class="num">3</span><div><h3>Re-checked adversarially</h3><p>Before a page ships, every source link is opened and the claim is tested against it — the goal is to <em>break</em> the attribution, not to confirm what we hoped. Only what survives is published.</p></div></div>
-                <div class="principle"><span class="num">4</span><div><h3>Never invented</h3><p>Nothing here is a machine-generated guess dressed up as fact. If a quote can&rsquo;t be grounded in a real source, it does not get a confident attribution — full stop.</p></div></div>
+                <div class="principle"><span class="num">4</span><div><h3>Sourced, or honestly marked</h3><p>We don&rsquo;t repeat what other quote sites claim just because they claim it. Every attribution is grounded in a primary source &mdash; or in the documented research that traces to one. When the trail can&rsquo;t be closed, the quote is marked <em>Attributed</em> or <em>Disputed</em>, never asserted as fact. What matters is the source behind a claim, not whether a person or a model did the tracing.</p></div></div>
             </div>
         </section>
 

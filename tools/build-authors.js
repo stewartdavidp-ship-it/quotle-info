@@ -280,7 +280,7 @@ ${OG_IMAGE_TAGS}
         <a href="/authors/">Authors</a><span class="sep" aria-hidden="true">›</span>
         <span aria-current="page">${esc(a.name)}</span>
     </nav>
-    <main>
+    <main id="main">
         <header class="author-hero">
             <div class="author-avatar" aria-hidden="true">${esc(a.initials || '')}</div>
             <div>
@@ -387,7 +387,7 @@ const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb">
         <a href="/">Home</a><span class="sep" aria-hidden="true">›</span>
         <span aria-current="page">Authors</span>
     </nav>
-    <main>
+    <main id="main">
         <header class="idx-hero">
             <p class="kicker">Every voice, traced</p>
             <h1>The authors</h1>

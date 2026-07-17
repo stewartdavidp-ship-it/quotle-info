@@ -926,7 +926,7 @@ function renderPage(q) {
   return renderHead(q)
     + '\n<body>\n'
     + renderNav(q)
-    + '\n\n    <main>'
+    + '\n\n    <main id="main">'
     + renderAnswer(q)
     + renderPresentationKit(q)
     + renderSource(q)
