@@ -717,11 +717,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Aesop. &ldquo;The Lion and the Mouse.&rdquo; In <em>The Aesop for Children</em>, illustrated by Milo Winter, moral &ldquo;A kindness is never wasted.&rdquo; Chicago: Rand McNally, 1919. The exact popular wording &ldquo;No act of kindness, no matter how small, is ever wasted&rdquo; is a modern paraphrase not found in standard translations.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;No act of kindness, no matter how small, is ever wasted&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/no-act-of-kindness-no-matter-how-small-is-ever-wasted</code></p>
                 </div>
             </div>
@@ -762,8 +762,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

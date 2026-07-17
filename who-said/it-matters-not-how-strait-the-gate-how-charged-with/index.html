@@ -723,11 +723,19 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>The primary source (Chicago)</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source — Chicago</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">William Ernest Henley, &ldquo;Invictus&rdquo; [untitled], in <em>A Book of Verses</em> (London: David Nutt, 1888), &ldquo;Life and Death (Echoes)&rdquo; sequence.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>MLA (9th ed.)</span><button class="cite-copy" data-copy="citeMla" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeMla">Henley, William Ernest. &ldquo;Invictus.&rdquo; <em>A Book of Verses</em>, David Nutt, 1888.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>APA (7th ed.)</span><button class="cite-copy" data-copy="citeApa" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeApa">Henley, W. E. (1888). Invictus. In <em>A book of verses</em>. David Nutt.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;It matters not how strait the gate, how charged with punishments the scroll&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/it-matters-not-how-strait-the-gate-how-charged-with</code></p>
                 </div>
             </div>
@@ -768,8 +776,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

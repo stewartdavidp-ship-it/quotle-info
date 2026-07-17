@@ -723,11 +723,19 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>All's Well That Ends Well, Act 1, Scene 1</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source — Chicago</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">William Shakespeare, All&rsquo;s Well That Ends Well, Act 1, Scene 1, in Mr. William Shakespeares Comedies, Histories, &amp; Tragedies (London: 1623), the First Folio.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>MLA (9th ed.)</span><button class="cite-copy" data-copy="citeMla" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeMla">Shakespeare, William. <em>All&rsquo;s Well That Ends Well</em>. <em>Mr. William Shakespeares Comedies, Histories, &amp; Tragedies</em>, 1623, act 1, sc. 1.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>APA (7th ed.)</span><button class="cite-copy" data-copy="citeApa" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeApa">Shakespeare, W. (1623). <em>All&rsquo;s well that ends well</em>. In <em>Mr. William Shakespeares comedies, histories, &amp; tragedies</em>.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Love all, trust a few, do wrong to none&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/love-all-trust-a-few-do-wrong-to-none</code></p>
                 </div>
             </div>
@@ -768,8 +776,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

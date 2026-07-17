@@ -750,11 +750,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Vincent van Gogh to Anthon van Rappard, Nuenen, on or about Tuesday, 18 August 1885, letter 528 (529, R57), in <cite>Vincent van Gogh: The Letters</cite> (Amsterdam: Van Gogh Museum; The Hague: Huygens ING, 2009), vangoghletters.org. The familiar English wording (&ldquo;I am always doing what I can&rsquo;t do yet in order to learn how to do it&rdquo;) appears in the R57 text published by The Vincent van Gogh Gallery, and is documented in print by 1979.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;I am always doing what I can't do yet in order to learn how to do it&rsquo;?&rdquo; Last verified 14 Jul 2026. <code>https://quotle.info/who-said/i-am-always-doing-what-i-cant-do-yet-in-order-to-learn-how</code></p>
                 </div>
             </div>
@@ -795,8 +795,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

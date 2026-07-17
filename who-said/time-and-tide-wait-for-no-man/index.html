@@ -715,11 +715,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary &amp; chronology</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary &amp; chronology</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Geoffrey Chaucer, &ldquo;The Clerk&rsquo;s Prologue,&rdquo; in <em>The Canterbury Tales</em> (c. 1395), for the line &ldquo;Ay fleeth the tyme; it nyl no man abyde.&rdquo; The proverb &ldquo;time and tide wait for no man&rdquo; is anonymous: the &ldquo;time and tide&rdquo; pairing is recorded from Robert Greene, <em>A Disputation</em> (1592), with the near-modern &ldquo;waits for no man&rdquo; wording by Arthur Murphy, <em>The Apprentice</em> (1764).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Time and tide wait for no man&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/time-and-tide-wait-for-no-man</code></p>
                 </div>
             </div>
@@ -760,8 +760,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

@@ -756,11 +756,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Marcus Aurelius, Meditations, trans. Maxwell Staniforth, Penguin Classics (London: Penguin Books, 1964), bk. 4, sec. 35, p. 72. Cf. Marcus Aurelius, The Thoughts of the Emperor M. Aurelius Antoninus, trans. George Long (London: Bell and Daldy, 1862), bk. 4, sec. 35, p. 53. Translation history documented in "Quote Origin: All of Us Are Creatures of a Day; the Rememberer and the Remembered Alike," Quote Investigator, November 12, 2022.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;All of us are creatures of a day; the rememberer and the remembered alike&rsquo;?&rdquo; Last verified 14 Jul 2026. <code>https://quotle.info/who-said/all-of-us-are-creatures-of-a-day-the-rememberer-and-the</code></p>
                 </div>
             </div>
@@ -801,8 +801,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

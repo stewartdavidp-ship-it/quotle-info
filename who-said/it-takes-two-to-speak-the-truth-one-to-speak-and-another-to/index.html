@@ -714,11 +714,19 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>The primary source (Chicago)</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source — Chicago</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Henry David Thoreau, <em>A Week on the Concord and Merrimack Rivers</em> (Boston: James Munroe and Company, 1849), &ldquo;Wednesday.&rdquo;</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>MLA (9th ed.)</span><button class="cite-copy" data-copy="citeMla" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeMla">Thoreau, Henry David. &ldquo;Wednesday.&rdquo; <em>A Week on the Concord and Merrimack Rivers</em>, James Munroe and Company, 1849.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>APA (7th ed.)</span><button class="cite-copy" data-copy="citeApa" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeApa">Thoreau, H. D. (1849). <em>A week on the Concord and Merrimack Rivers</em>. James Munroe and Company.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;It takes two to speak the truth, — one to speak, and another to hear&rsquo;?&rdquo; Last verified 10 Jul 2026. <code>https://quotle.info/who-said/it-takes-two-to-speak-the-truth-one-to-speak-and-another-to</code></p>
                 </div>
             </div>
@@ -759,8 +767,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

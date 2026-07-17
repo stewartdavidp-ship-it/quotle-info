@@ -718,11 +718,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Earliest documented source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Earliest documented source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">&ldquo;Sometimes I sit and think, and then again I just sit.&rdquo; Anonymous, quoted from the Boston Record, reprinted in U.S. newspapers, February 1905; popularized by William Gunning King&rsquo;s cartoon in Punch, 24 October 1906. Earliest documented in Garson O&rsquo;Toole, &ldquo;Sometimes I Sits and Thinks, and Sometimes I Just Sits,&rdquo; Quote Investigator, 29 August 2018.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Sometimes I sit and think, and sometimes I just sit&rsquo;?&rdquo; Last verified 10 Jul 2026. <code>https://quotle.info/who-said/sometimes-i-sit-and-think-and-sometimes-i-just-sit</code></p>
                 </div>
             </div>
@@ -763,8 +763,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

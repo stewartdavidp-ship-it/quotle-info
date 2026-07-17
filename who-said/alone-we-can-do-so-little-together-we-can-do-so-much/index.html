@@ -728,11 +728,19 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Documented source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source — Chicago</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Joseph P. Lash, Helen and Teacher: The Story of Helen Keller and Anne Sullivan Macy (New York: Delacorte Press/Seymour Lawrence, 1980), quoting Helen Keller&rsquo;s vaudeville stage address, early 1920s. Earliest documented printing of the line; exact page not independently confirmed.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>MLA (9th ed.)</span><button class="cite-copy" data-copy="citeMla" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeMla">Lash, Joseph P. <em>Helen and Teacher: The Story of Helen Keller and Anne Sullivan Macy</em>. Delacorte Press/Seymour Lawrence, 1980.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>APA (7th ed.)</span><button class="cite-copy" data-copy="citeApa" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeApa">Lash, J. P. (1980). <em>Helen and teacher: The story of Helen Keller and Anne Sullivan Macy</em>. Delacorte Press/Seymour Lawrence.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Alone we can do so little; together we can do so much&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/alone-we-can-do-so-little-together-we-can-do-so-much</code></p>
                 </div>
             </div>
@@ -773,8 +781,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

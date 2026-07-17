@@ -725,11 +725,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source &amp; origin trail</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source &amp; origin trail</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Sydney Smith, Elementary Sketches of Moral Philosophy: Delivered at the Royal Institution, in the Years 1804, 1805, and 1806 (London: Longman, Brown, Green, and Longmans, 1850). Origin analysis: &ldquo;It Is the Greatest of All Mistakes, To Do Nothing Because You Can Only Do Little,&rdquo; Quote Investigator, 31 January 2020.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Nobody made a greater mistake than he who did nothing because he could do only a little&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/nobody-made-a-greater-mistake-than-he-who-did-nothing</code></p>
                 </div>
             </div>
@@ -770,8 +770,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

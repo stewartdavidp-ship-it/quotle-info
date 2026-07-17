@@ -740,11 +740,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>No primary source located</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>No primary source located</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">No primary source located for this wording. Nearest documented articulation: Billie Holiday with William Dufty, <em>Lady Sings the Blues</em> (New York: Doubleday, 1956), ch. 4. Compare Billie Holiday, interview by Willis Conover, <em>Music USA</em> program #447-B, recorded 15 February 1956, broadcast 20 March 1956, Music Library Conover Collection, University of North Texas Libraries.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;If I'm going to sing like someone else, then I don't need to sing at all&rsquo;?&rdquo; Last verified 15 Jul 2026. <code>https://quotle.info/who-said/if-im-going-to-sing-like-someone-else-then-i-dont-need-to</code></p>
                 </div>
             </div>
@@ -785,8 +785,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

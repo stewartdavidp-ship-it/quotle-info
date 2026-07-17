@@ -739,11 +739,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Julius J. Epstein, Philip G. Epstein, and Howard Koch, <em>Casablanca</em>, directed by Michael Curtiz (Burbank, CA: Warner Bros., 1942); based on the unproduced play <em>Everybody Comes to Rick&rsquo;s</em> by Murray Burnett and Joan Alison (1940). Dialogue as transcribed in &ldquo;Casablanca (film),&rdquo; Wikiquote.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;If that plane leaves the ground and you're not on it, you'll regret it. Maybe not today, maybe not tomorrow, but soon and for the rest of your life&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/if-that-plane-leaves-the-ground-and-youre-not-on-it-youll</code></p>
                 </div>
             </div>
@@ -784,8 +784,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

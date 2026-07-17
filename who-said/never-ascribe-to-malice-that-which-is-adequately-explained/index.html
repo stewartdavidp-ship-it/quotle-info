@@ -724,11 +724,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary chronology</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary chronology</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Garson O&rsquo;Toole (Quote Investigator), &ldquo;Never Attribute to Malice That Which Is Adequately Explained by Stupidity,&rdquo; Quote Investigator, Dec. 30, 2016 &mdash; earliest documented in Arthur Bloch, ed., <em>Murphy&rsquo;s Law Book Two: More Reasons Why Things Go Wrong</em> (Los Angeles: Price/Stern/Sloan, 1980).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Never ascribe to malice that which is adequately explained by stupidity&rsquo;?&rdquo; Last verified 10 Jul 2026. <code>https://quotle.info/who-said/never-ascribe-to-malice-that-which-is-adequately-explained</code></p>
                 </div>
             </div>
@@ -769,8 +769,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

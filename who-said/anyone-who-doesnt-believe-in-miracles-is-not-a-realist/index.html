@@ -706,11 +706,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Documented source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Documented source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">David Ben-Gurion, attributed in Roman Frister, Israel: Years of Crisis, Years of Hope (1973), p. 45 (&ldquo;With us, anyone who doesn&rsquo;t believe in miracles isn&rsquo;t a realist&rdquo;); a variant reputedly from a CBS interview of 5 October 1956 is unverified. Exact wording &ldquo;Anyone who doesn&rsquo;t believe in miracles is not a realist&rdquo; attributed to Ben-Gurion in Charles A. Garfield, Psychosocial Care of the Dying Patient (New York: McGraw-Hill, 1978).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Anyone who doesn't believe in miracles is not a realist&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/anyone-who-doesnt-believe-in-miracles-is-not-a-realist</code></p>
                 </div>
             </div>
@@ -751,8 +751,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

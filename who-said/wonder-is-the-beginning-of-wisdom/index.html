@@ -622,6 +622,7 @@
                 <div class="rights rights-public-domain">
                     <span class="rights-badge"><span class="rights-mark" aria-hidden="true">✓</span>Public domain</span>
                     <p class="rights-body">The underlying text is ancient and long in the public domain; Fowler&rsquo;s 1921 translation is also public domain in the U.S. The tidy modern wording &ldquo;Wonder is the beginning of wisdom&rdquo; is an anonymous paraphrase with no identifiable author.</p>
+                    <p class="rights-body rights-caveat"><span aria-hidden="true">⚠</span> This reflects the <strong>original</strong> work, which is public domain. If your exact English wording comes from a specific <strong>modern translation</strong>, that translation may itself still be under copyright &mdash; check the edition you quote.</p>
                 </div>
             </div>
         </section>
@@ -727,11 +728,19 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source — Chicago</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Plato, Theaetetus 155d, in Plato in Twelve Volumes, Vol. 12, trans. Harold N. Fowler (Cambridge, MA: Harvard University Press, 1921).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>MLA (9th ed.)</span><button class="cite-copy" data-copy="citeMla" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeMla">Plato. <em>Theaetetus</em>. Translated by Harold N. Fowler, <em>Plato in Twelve Volumes</em>, vol. 12, Harvard University Press, 1921, 155d.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>APA (7th ed.)</span><button class="cite-copy" data-copy="citeApa" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeApa">Plato. (1921). <em>Theaetetus</em> (H. N. Fowler, Trans.). In <em>Plato in twelve volumes</em> (Vol. 12). Harvard University Press. (Original work composed c. 369 BCE)</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Wonder is the beginning of wisdom&rsquo;?&rdquo; Last verified 7 Jul 2026. <code>https://quotle.info/who-said/wonder-is-the-beginning-of-wisdom</code></p>
                 </div>
             </div>
@@ -772,8 +781,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

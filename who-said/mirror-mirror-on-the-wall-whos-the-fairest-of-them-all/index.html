@@ -739,11 +739,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Jacob and Wilhelm Grimm. &ldquo;Sneewittchen (Schneewei&szlig;chen).&rdquo; In <em>Kinder- und Haus-M&auml;rchen</em>, vol. 1, no. 53. Berlin: Realschulbuchhandlung, 1812; final (7th) edition, Berlin, 1857. English renderings quoted: Margaret Hunt, trans., <em>Grimm&rsquo;s Household Tales</em> (London: George Bell and Sons, 1884), and D. L. Ashliman, trans., &ldquo;Little Snow-White,&rdquo; <em>Folktexts</em> (&copy; 2002&ndash;2005). Film adaptation: <em>Snow White and the Seven Dwarfs</em>, supervising dir. David Hand, story adaptation by Ted Sears, Richard Creedon, Otto Englander, Dick Rickard, Earl Hurd, Merrill De Maris, Dorothy Ann Blank and Webb Smith (Walt Disney Productions; dist. RKO Radio Pictures), premiered 21 December 1937.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Mirror, mirror on the wall, who's the fairest of them all?&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/mirror-mirror-on-the-wall-whos-the-fairest-of-them-all</code></p>
                 </div>
             </div>
@@ -784,8 +784,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

@@ -724,11 +724,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>History of Woman Suffrage (1881), reprinting Gage's 1863 account</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>History of Woman Suffrage (1881), reprinting Gage's 1863 account</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Frances Dana Gage, &ldquo;Sojourner Truth,&rdquo; recollection of the 1851 Akron Women&rsquo;s Rights Convention, first published 1863; reprinted in Elizabeth Cady Stanton, Susan B. Anthony &amp; Matilda Joslyn Gage, eds., <em>History of Woman Suffrage</em>, vol. 1 (1881). Earliest record: Marius Robinson, <em>Anti-Slavery Bugle</em>, 21 June 1851 (differing wording).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;If the first woman God ever made was strong enough to turn the world upside down all alone, these women together ought to be able to turn it back&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/if-the-first-woman-god-ever-made-was-strong-enough-to-turn</code></p>
                 </div>
             </div>
@@ -769,8 +769,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

@@ -737,11 +737,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Earliest documented appearance</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Earliest documented appearance</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">John Galt [pseud.], <em>Dreams Come Due: Government and Economics as if Freedom Mattered</em> (New York: Simon &amp; Schuster, 1986), 312 &mdash; where the line is credited to Jefferson without a source. The genuine parallel text: Thomas Jefferson, &ldquo;Addition to Note for Destutt de Tracy&rsquo;s <em>Treatise on Political Economy</em>,&rdquo; [ca. 18 May 1816], in <em>The Papers of Thomas Jefferson: Retirement Series</em>, 10:65&ndash;66.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;The democracy will cease to exist when you take away from those who are willing to work and give to those who would not&rsquo;?&rdquo; Last verified 14 Jul 2026. <code>https://quotle.info/who-said/the-democracy-will-cease-to-exist-when-you-take-away-from</code></p>
                 </div>
             </div>
@@ -782,8 +782,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

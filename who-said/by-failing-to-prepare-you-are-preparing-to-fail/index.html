@@ -711,11 +711,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Quote Investigator</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Quote Investigator</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Garson O&rsquo;Toole (Quote Investigator), &ldquo;If You Fail To Prepare You Are Preparing To Fail,&rdquo; July 8, 2018. Earliest documented in Rev. H. K. Williams, <em>The Biblical World</em>, vol. 53 (1919); catalogued in Charles Clay Doyle et al., <em>The Dictionary of Modern Proverbs</em> (New Haven: Yale University Press, 2012).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;By failing to prepare, you are preparing to fail&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/by-failing-to-prepare-you-are-preparing-to-fail</code></p>
                 </div>
             </div>
@@ -756,8 +756,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

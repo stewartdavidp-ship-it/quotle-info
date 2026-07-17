@@ -743,11 +743,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">David Gelman with Sharon Begley, Dewey Gram, and Evert Clark, &ldquo;Seeking Other Worlds,&rdquo; <em>Newsweek</em> 90 (15 August 1977): 53. Earliest documented appearance; the closing sentence is the reporters&rsquo; kicker, printed without quotation marks, and is not a quotation of Carl Sagan. Origin established by Garson O&rsquo;Toole, &ldquo;Quote Origin: Somewhere, Something Incredible Is Waiting To Be Known,&rdquo; <em>Quote Investigator</em>, 18 March 2013.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Somewhere, something incredible is waiting to be known&rsquo;?&rdquo; Last verified 15 Jul 2026. <code>https://quotle.info/who-said/somewhere-something-incredible-is-waiting-to-be-known</code></p>
                 </div>
             </div>
@@ -788,8 +788,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

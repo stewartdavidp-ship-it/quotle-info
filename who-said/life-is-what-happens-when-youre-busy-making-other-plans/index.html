@@ -716,11 +716,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Reader's Digest, January 1957</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Reader's Digest, January 1957</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">&ldquo;Quotable Quotes,&rdquo; <em>Reader&rsquo;s Digest</em>, January 1957, crediting Allen Saunders (&ldquo;Life is what happens to us while we are making other plans&rdquo;); earliest partial in Allen Saunders, &ldquo;Mary Worth&rdquo; comic strip, 2 September 1956; popularized by John Lennon, &ldquo;Beautiful Boy (Darling Boy),&rdquo; <em>Double Fantasy</em> (Geffen, 1980). Origin traced by Quote Investigator, 6 May 2012.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Life is what happens when you're busy making other plans&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/life-is-what-happens-when-youre-busy-making-other-plans</code></p>
                 </div>
             </div>
@@ -761,8 +761,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);
