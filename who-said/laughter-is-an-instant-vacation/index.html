@@ -422,6 +422,13 @@
         .nav-link:hover { color:var(--ink); border-color:var(--border-accent); }
         .nav-link.active { color:var(--ink); border-color:var(--burgundy); background:var(--burgundy-glow); }
         .nav-play { font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:600; color:var(--gold); text-decoration:none; padding:7px 14px; border:1px solid rgba(255,211,105,0.3); border-radius:999px; white-space:nowrap; }
+        .site-footer { border-top:1px solid var(--border); margin-top:56px; padding:34px 24px 44px; text-align:center; }
+        .foot-links { display:flex; flex-wrap:wrap; justify-content:center; gap:10px 20px; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; margin-bottom:16px; }
+        .foot-links a { color:var(--slate); text-decoration:none; }
+        .foot-links a:hover { color:var(--sage); text-decoration:underline; }
+        .foot-tag { font-family:'DM Sans',sans-serif; font-size:0.8rem; color:var(--text-muted); max-width:560px; margin:0 auto; line-height:1.6; }
+        .foot-tag span { color:var(--burgundy); }
+        .foot-tag a { color:var(--burgundy-link); text-decoration:none; }
     </style>
     <style>
         :root[data-theme="light"] {
@@ -718,8 +725,16 @@
         </aside>
     </main>
 
-    <footer>
-        <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
+    <footer class="site-footer">
+        <nav class="foot-links" aria-label="Site">
+            <a href="/about">About</a>
+            <a href="/how-we-verify">How we verify</a>
+            <a href="/check/">Check a quote</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+        </nav>
+        <p class="foot-tag">quotle<span>.info</span> &mdash; every attribution traced to a primary source and dated. An independent <a href="https://gameshelf.co">Game Shelf</a> project by runMast&nbsp;LLC.</p>
     </footer>
 
     <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>

@@ -18,7 +18,7 @@ const fs = require('fs');
 const path = require('path');
 const { HEAD_SCRIPT, THEME_CSS, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
-const { NAV, CHROME_CSS, SEARCH_JS } = require('./chrome');
+const { NAV, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const ROOT = path.resolve(__dirname, '..');
 
 const STYLE = `${ROOT_CSS}
@@ -124,6 +124,7 @@ ${NAV('')}
     <main id="main">
         <div id="card"><p class="kicker">How we used this source</p><p class="src-blurb">Loading&hellip;</p></div>
     </main>
+${FOOTER}
 ${CLIENT}
 ${SEARCH_JS}
 ${SCRIPT}

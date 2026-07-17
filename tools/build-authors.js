@@ -101,11 +101,8 @@ const ASK_JS = `    <script>
     </script>`;
 
 // ---- shared chrome ----
-const { NAV: siteNav, CHROME_CSS, SEARCH_JS } = require('./chrome');
+const { NAV: siteNav, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const NAV = siteNav('authors');
-const FOOTER = `    <footer>
-        <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
-    </footer>`;
 
 const STYLE = `${ROOT_CSS}
         * { margin:0; padding:0; box-sizing:border-box; }

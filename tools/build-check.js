@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
-const { NAV: siteNav, CHROME_CSS, SEARCH_JS } = require('./chrome');
+const { NAV: siteNav, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
 
 const ROOT = path.resolve(__dirname, '..');
@@ -84,9 +84,6 @@ const STYLE = `${ROOT_CSS}
         .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
         @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } * { transition:none !important; } }`;
 
-const FOOTER = `    <footer>
-        <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
-    </footer>`;
 
 const headExtra = `    <title>Check a quote before you use it | Quotle.info</title>
     <meta name="description" content="About to put a quote on a slide? Paste it here — we'll tell you if it's real, who really said it, and whether it's cleared to reuse. Every attribution traced to a primary source, or honestly marked when it can't be.">

@@ -34,6 +34,10 @@ const latest = records.map((r) => r.schema && r.schema.dateModified).filter(Bool
 const urls = [
   { loc: `${ORIGIN}/`, lastmod: latest },
   { loc: `${ORIGIN}/how-we-verify`, lastmod: latest },
+  { loc: `${ORIGIN}/about`, lastmod: latest },
+  { loc: `${ORIGIN}/contact`, lastmod: latest },
+  { loc: `${ORIGIN}/privacy`, lastmod: latest },
+  { loc: `${ORIGIN}/terms`, lastmod: latest },
   { loc: `${ORIGIN}/authors/`, lastmod: latest },
   { loc: `${ORIGIN}/check/`, lastmod: latest },
   { loc: `${ORIGIN}/themes/`, lastmod: latest },

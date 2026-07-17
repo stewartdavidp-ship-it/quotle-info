@@ -18,7 +18,7 @@ const fs = require('fs');
 const path = require('path');
 const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
-const { NAV, CHROME_CSS, SEARCH_JS } = require('./chrome');
+const { NAV, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const ROOT = path.resolve(__dirname, '..');
 
 // Credible-source descriptions (shown so the reader knows WHO flagged it and why they're trusted).
@@ -136,6 +136,7 @@ ${NAV('review')}
     <main id="main">
         <div id="card"><p class="kicker">On the research bench</p><p class="body">Loading&hellip;</p></div>
     </main>
+${FOOTER}
 ${CLIENT}
 ${SEARCH_JS}
 ${SCRIPT}
