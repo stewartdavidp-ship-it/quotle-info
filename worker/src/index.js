@@ -199,8 +199,12 @@ export default {
           }
         } catch (_) { /* DB hiccup → fall through, worst case a dup nomination the moderator drops */ }
 
-        // 4. Wikiquote — server-side STRICT check (the pasted wording must literally appear).
-        const wq = await wikiquoteLookup(term);
+        // 4. Wikiquote — server-side STRICT check (the pasted wording must literally appear). Optional
+        //    author/source hints turn the flaky full-text search into a TARGETED page scan (fetch the
+        //    named author/work page directly) — the fix for misremembered lines search can't find.
+        const author = (url.searchParams.get('author') || '').trim().slice(0, 120);
+        const source = (url.searchParams.get('source') || '').trim().slice(0, 120);
+        const wq = await wikiquoteLookup(term, { author, source });
         if (wq.found) {
           let added = false;
           try {
@@ -209,11 +213,16 @@ export default {
             const cnt = await env.DB.prepare('SELECT COUNT(*) AS n FROM nominations WHERE iphash=? AND created>?').bind(iphash, since).first();
             if (!cnt || cnt.n < MAX_NOMS_PER_DAY) {
               await env.DB.prepare('INSERT INTO nominations (quote,author,note,status,created,iphash) VALUES (?,?,?,?,?,?)')
-                .bind(term.slice(0, 600), '', 'wikiquote-auto · found on ' + String(wq.title).slice(0, 200), 'pending', new Date().toISOString(), iphash).run();
+                .bind(term.slice(0, 600), author, 'wikiquote-auto · found on ' + String(wq.title).slice(0, 200), 'pending', new Date().toISOString(), iphash).run();
               added = true;
             }
           } catch (_) { /* rate/DB error → still show the Wikiquote result, just not "added" */ }
           return new Response(JSON.stringify({ stage: 'wikiquote', added, wikiquoteUrl: wq.url, title: wq.title }), { headers: pub });
+        }
+        // 4b. Hinted page had no literal match but a CLOSE line — offer it for the user to confirm
+        //     (the pasted wording is likely misremembered). We don't auto-add a mangled line.
+        if (wq.fuzzy) {
+          return new Response(JSON.stringify({ stage: 'wikiquote-fuzzy', wikiquoteUrl: wq.fuzzy.url, title: wq.fuzzy.title, suggestion: wq.fuzzy.suggestion }), { headers: pub });
         }
 
         // 5. Nowhere we can confirm.
@@ -287,33 +296,84 @@ async function wqTitles(srsearch) {
   const d = await r.json().catch(() => ({}));
   return ((d.query && d.query.search) || []).map((p) => p.title);
 }
-async function wikiquoteLookup(term) {
+// Character-bigram Dice similarity — used to find the closest real line on a hinted page when the
+// pasted wording is misremembered (so search + literal-substring both miss).
+function wqBigrams(s) { const a = []; for (let i = 0; i < s.length - 1; i++) a.push(s.slice(i, i + 2)); return a; }
+function wqDice(qg, s) {
+  const bg = wqBigrams(s); if (!qg.length || !bg.length) return 0;
+  const m = new Map(); for (const g of qg) m.set(g, (m.get(g) || 0) + 1);
+  let inter = 0; for (const g of bg) { const c = m.get(g) || 0; if (c > 0) { inter++; m.set(g, c - 1); } }
+  return 2 * inter / (qg.length + bg.length);
+}
+// Pull quote-shaped lines (top-level bullets) out of raw wikitext, stripped of markup.
+function wqCleanLine(line) {
+  return line
+    .replace(/<ref[^>]*>[\s\S]*?<\/ref>/gi, '').replace(/<ref[^>]*\/>/gi, '').replace(/<[^>]+>/g, '')
+    .replace(/\[\[[^\]|]*\|([^\]]*)\]\]/g, '$1').replace(/\[\[([^\]]*)\]\]/g, '$1')
+    .replace(/\{\{[^{}]*\}\}/g, '').replace(/'''?/g, '').replace(/^\**\s*/, '')
+    .replace(/\s+/g, ' ').trim();
+}
+// A bullet plus its individual sentences — so a short canonical line ("I love the smell of napalm in the
+// morning.") embedded in a long monologue bullet can still be suggested on its own.
+function wqSentences(line) {
+  const out = [line];
+  const parts = line.split(/(?<=[.!?])\s+/);
+  if (parts.length > 1) for (const p of parts) { const s = p.trim(); if (s.length >= 15 && s.length <= 240) out.push(s); }
+  return out;
+}
+function wqExtractLines(raw) {
+  const out = [];
+  for (const ln of raw.split('\n')) {
+    if (!/^\*+\s*[^*]/.test(ln)) continue;             // top-level bullet = a quote line
+    const c = wqCleanLine(ln);
+    if (c.length >= 15 && c.length <= 600) for (const s of wqSentences(c)) out.push(s);
+    if (out.length >= 800) break;
+  }
+  return out;
+}
+async function wikiquoteLookup(term, hints) {
+  hints = hints || {};
   const nq = normQ(term);
   if (nq.length < 12) return { found: false };
   const chunk = nq.length > 40 ? nq.slice(0, 40) : nq;           // distinctive opening run
   const chunk2 = nq.length > 70 ? nq.slice(25, 65) : '';         // a second run for longer lines
   const clean = term.replace(/["“”]/g, '').slice(0, 200);
+  const qg = wqBigrams(nq);
+  let best = null;                                                // {title, url, suggestion, score}
   try {
-    // A QUOTED-phrase search surfaces the SOURCE page (Hamlet, Walden, Star Wars) that an unquoted search
-    // buries under topic pages ("Good and evil", "Optimism"); the unquoted pass is the recall fallback for
-    // slight wording/punctuation drift. Merge, quoted first. The STRICT gate is the raw-wikitext substring
-    // check below (not the search), so extra candidate titles only add recall — junk still fails the gate.
-    let titles = [];
-    try { titles = titles.concat(await wqTitles('"' + clean + '"')); } catch (_) { /* one search failing is fine */ }
-    try { titles = titles.concat(await wqTitles(clean)); } catch (_) { /* ditto */ }
+    // Author/source hints → fetch the NAMED page directly (targeted lookup beats a full-text search that
+    // misremembered lines defeat). Then the QUOTED-phrase search surfaces the source page, and the unquoted
+    // pass is the recall fallback. The STRICT gate stays the raw-wikitext substring check, so extra titles
+    // only add recall — junk still fails the gate and is never auto-added.
+    const hintTitles = [];
+    if (hints.source) { const s = hints.source; hintTitles.push(s, s + ' (film)', s + ' (novel)', s + ' (play)'); }
+    if (hints.author) hintTitles.push(hints.author);
+    let searchTitles = [];
+    try { searchTitles = searchTitles.concat(await wqTitles('"' + clean + '"')); } catch (_) { /* one search failing is fine */ }
+    try { searchTitles = searchTitles.concat(await wqTitles(clean)); } catch (_) { /* ditto */ }
     const seen = new Set();
-    titles = titles.filter((t) => !wqSkip(t) && !seen.has(t) && seen.add(t)).slice(0, 6);
+    const hinted = new Set(hintTitles);
+    const titles = [...hintTitles, ...searchTitles].filter((t) => t && !wqSkip(t) && !seen.has(t) && seen.add(t)).slice(0, 8);
     for (const title of titles) {
       const page = encodeURIComponent(String(title).replace(/ /g, '_'));
       // ?action=raw = the faithful wikitext (the API extract summarizes and drops the quote list).
       const raw = await fetch('https://en.wikiquote.org/wiki/' + page + '?action=raw', { headers: WQ_UA, cf: { cacheTtl: 300 } });
       if (!raw.ok) continue;
-      const text = normQ(await raw.text());
-      if (text.includes(chunk) || (chunk2 && text.includes(chunk2))) {
+      const body = await raw.text();
+      if (normQ(body).includes(chunk) || (chunk2 && normQ(body).includes(chunk2))) {
         return { found: true, title, url: 'https://en.wikiquote.org/wiki/' + page };
+      }
+      // No literal hit: if the user NAMED this page, find its closest line to suggest (misremembered wording).
+      if (hinted.has(title)) {
+        for (const line of wqExtractLines(body)) {
+          const ns = normQ(line); if (ns.length < 12) continue;
+          const sc = wqDice(qg, ns);   // symmetric: rewards a close-LENGTH line, so junk + a long bullet won't match
+          if (sc >= 0.5 && (!best || sc > best.score)) best = { title, url: 'https://en.wikiquote.org/wiki/' + page, suggestion: line.slice(0, 240), score: sc };
+        }
       }
     }
   } catch (_) { /* Wikiquote unreachable → treat as not found (never a false "added") */ }
+  if (best) return { found: false, fuzzy: best };
   return { found: false };
 }
 // plain-English "can I put this on a slide?" from the rights state
