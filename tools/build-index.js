@@ -150,7 +150,7 @@ const homeJsonLd = `    <script type="application/ld+json">
 const homeBody = `        <header class="hero">
             <h1>Real quote? <em>Cleared</em> to use?</h1>
             <p class="lede">Before you put a quote on a slide or in print: Quotle.info traces it to its <strong>real source</strong> — who actually said it — and tells you whether it&rsquo;s <strong>cleared to reproduce</strong> (public domain, or still under copyright). The part an AI usually gets wrong.</p>
-            <p class="stat"><b>${total}</b> quotes verified · each traced to a primary source and marked public&#8209;domain or in&#8209;copyright</p>
+            <p class="stat"><b>${total}</b> quotes fact&#8209;checked &mdash; ${(byConf.verified || []).length} verified, ${(byConf.disputed || []).length} flagged as misquoted &mdash; each traced to a primary source with its reuse rights marked</p>
         </header>
 ${FEATURED.length ? `        <section class="featured" aria-label="Notable reattributions">
             <p class="feat-kicker">Not who you think</p>
