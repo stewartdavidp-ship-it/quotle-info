@@ -346,8 +346,8 @@
         function narrowForm(prompt){
             return '<div class="narrow"><p class="r-lbl">'+(prompt||'Know who said it, or where it\u2019s from? Narrow it down')+'</p>'+
                 '<div class="narrow-row">'+
-                '<input class="narrow-in" id="n-author" type="text" placeholder="Author (e.g. Oscar Wilde)" value="'+esc(hintAuthor)+'">'+
-                '<input class="narrow-in" id="n-source" type="text" placeholder="Film, book, or speech" value="'+esc(hintSource)+'">'+
+                '<input class="narrow-in" id="n-author" type="text" placeholder="Author (e.g. Oscar Wilde)" aria-label="Narrow by author" value="'+esc(hintAuthor)+'">'+
+                '<input class="narrow-in" id="n-source" type="text" placeholder="Film, book, or speech" aria-label="Narrow by film, book, or speech" value="'+esc(hintSource)+'">'+
                 '<button class="r-btn primary narrow-btn" type="button">Narrow it down</button></div></div>';
         }
         function noneCard(q){

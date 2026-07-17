@@ -431,6 +431,19 @@ ${siteNav('')}
 // nothing linked back, so the taxonomy ran one way. That cost a reader the route back to the theme
 // they were browsing, and cost the theme pages their internal link graph — they were reachable only
 // from /themes/, on a site whose whole bottleneck is getting crawled and indexed.
+// The GAME door: visitors arriving from Quotle (?from=game, or a gameshelf referrer) are known players
+// here for the STORY, not for slide rights. A friendly loop-back banner is revealed and the
+// presentation-kit block is hidden for them (see .from-game CSS + the detection script). Hidden by
+// default, so search/direct visitors — the professional default — are unaffected.
+function renderGameBanner() {
+  return `
+        <a class="game-banner" href="https://gameshelf.co/quotle/">
+            <span class="gb-emoji" aria-hidden="true">🎮</span>
+            <span class="gb-txt">Straight from today&rsquo;s <strong>Quotle</strong> &mdash; here&rsquo;s who really said it, and the story behind it.</span>
+            <span class="gb-cta">Play again <span aria-hidden="true">&rarr;</span></span>
+        </a>
+        <script>try{var _sp=new URLSearchParams(location.search);if(_sp.get('from')==='game'||/gameshelf\\.co/.test(document.referrer))document.body.classList.add('from-game');}catch(e){}</script>`;
+}
 function renderThemes(q) {
   const themes = (q.themes || []).map((slug) => THEME_BY_SLUG[slug]).filter(Boolean);
   if (!themes.length) return '';
@@ -951,6 +964,7 @@ function renderPage(q) {
     + '\n<body>\n'
     + renderNav(q)
     + '\n\n    <main id="main">'
+    + renderGameBanner(q)
     + renderAnswer(q)
     + renderPresentationKit(q)
     + renderSource(q)
@@ -1003,6 +1017,16 @@ const STYLE = `${ROOT_CSS}
         .sec-head h2 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.7rem; letter-spacing: -0.015em; }
 
         /* ===== LAYER 1 — THE ANSWER (sealed container) ===== */
+        /* GAME door — revealed only for visitors arriving from Quotle (body.from-game) */
+        .game-banner { display: none; align-items: center; gap: 13px; margin: 4px 0 -6px; padding: 12px 18px; background: var(--sage-dim); border: 1px solid rgba(126,179,139,0.3); border-radius: var(--radius-md); text-decoration: none; font-family: 'DM Sans', sans-serif; }
+        .game-banner .gb-emoji { font-size: 1.35rem; flex: none; }
+        .game-banner .gb-txt { font-size: 0.9rem; color: var(--slate); line-height: 1.4; }
+        .game-banner .gb-txt strong { color: var(--sage); }
+        .game-banner .gb-cta { margin-left: auto; flex: none; font-size: 0.85rem; font-weight: 700; color: var(--sage); white-space: nowrap; }
+        .game-banner:hover .gb-cta { text-decoration: underline; }
+        body.from-game .game-banner { display: flex; }
+        body.from-game .pkit { display: none; }
+        @media (max-width: 560px) { .game-banner { flex-wrap: wrap; } .game-banner .gb-cta { margin-left: 0; } }
         .answer { margin-top: 18px; padding: 34px 32px 26px; background: linear-gradient(180deg, rgba(26,26,46,0.9), rgba(26,26,46,0.35)); border: 1px solid rgba(255,255,255,0.09); border-radius: var(--radius-lg); box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
         .the-quote { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(1.9rem, 6vw, 2.8rem); line-height: 1.22; letter-spacing: -0.015em; margin: 4px 0 24px; text-wrap: balance; }
         .the-quote::before { content: '\\201C'; color: var(--burgundy); opacity: 0.4; margin-right: 2px; }

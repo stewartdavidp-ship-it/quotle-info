@@ -47,7 +47,7 @@ export default {
       // verdict index from quotle.info so it auto-tracks the corpus without a Worker redeploy.
       if (url.pathname === '/verify' && req.method === 'GET') {
         const pub = { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=300' };
-        const term = (url.searchParams.get('q') || '').trim();
+        const term = (url.searchParams.get('q') || '').trim().slice(0, 600);   // cap so oversized input can't be reflected/cached
         if (!term) return new Response(JSON.stringify({ error: 'Pass ?q=<quote text> to check who really said it.' }), { status: 400, headers: pub });
         const vIdx = await loadVerifyIndex();
         const hit = matchQuote(term, vIdx);
@@ -94,7 +94,7 @@ export default {
         if (list.length > 100) return new Response(JSON.stringify({ error: 'Max 100 quotes per batch.' }), { status: 400, headers: pub });
         const idx = await loadVerifyIndex();
         const results = list.map((raw) => {
-          const query = String(raw == null ? '' : (typeof raw === 'object' ? (raw.quote || raw.text || '') : raw)).trim();
+          const query = String(raw == null ? '' : (typeof raw === 'object' ? (raw.quote || raw.text || '') : raw)).trim().slice(0, 600);
           const hit = query ? matchQuote(query, idx) : null;
           if (!hit) return { query, found: false, note: 'Not in the verified corpus — cannot confirm. Do not present as a verified quote with a named author.' };
           return {
