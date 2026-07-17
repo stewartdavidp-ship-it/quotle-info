@@ -147,6 +147,7 @@ ${STATES.map(stateRow).join('\n')}
         <section aria-labelledby="wrong-h">
             <h2 id="wrong-h">When we get it wrong</h2>
             <p class="big">Provenance research is never finished — new archives surface and old ones get corrected. If you can point to a primary source that changes an attribution, that is exactly the evidence we want. Every page is dated so you can see how current it is.</p>
+            <p class="big"><a class="nav-verify" href="/under-review/">Flag a correction or a missing quote &rarr;</a></p>
         </section>
 
         <a class="back" href="/"><span aria-hidden="true">←</span> Browse the verified quotes</a>
