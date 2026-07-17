@@ -156,12 +156,11 @@ function buildJsonLd(q, url) {
     text: s.quotationText || q.fullQuote || q.displayQuote,
   };
   if (s.alternateName) quotation.alternateName = s.alternateName;
-  // NOTE: schema.inLanguage is NOT emitted yet, though the CLAUDE.md RULE requires it and records
-  // already carry it. Wiring it up naively mis-tags translated quotations: records whose `text` is a
-  // published English translation (e.g. Meditations via Staniforth) set inLanguage to the ORIGINAL
-  // composition language ("grc"), so emitting it as-is would assert an English sentence is Ancient
-  // Greek. Needs a site-wide pass that settles the semantics (language of `text`, not of the source)
-  // and audits existing values before it can be turned on.
+  // The DISPLAYED quote text is always English on Quotle.info, so the Quotation's own language is 'en'.
+  // (The old deferral worried about records that set s.inLanguage to the ORIGINAL composition language
+  // of a translated source, e.g. "grc" — but that belongs on the SOURCE work via isPartOf.inLanguage
+  // below, NOT on the English sentence in `text`. Language-of-`text` is unambiguously 'en'.)
+  quotation.inLanguage = 'en';
   // Quotation.creator must name the TRUE author. On a DISPUTED page, generate sometimes left the
   // magnet (the wrongly-credited name) in schema.creator — a machine-readable contradiction of the
   // page's own verdict. So on disputed pages, only assert a creator when it genuinely matches the
@@ -203,6 +202,10 @@ function buildJsonLd(q, url) {
     quotation.isPartOf = { '@type': p.type || 'CreativeWork', name: p.name };
     if (p.datePublished) quotation.isPartOf.datePublished = p.datePublished;
     if (p.sameAs) quotation.isPartOf.sameAs = p.sameAs;
+    // Original composition language of the source work (e.g. "grc", "fr") when the English quote is a
+    // translation — lives on the WORK, not on the English `text`. Prefer isPartOf's own, else the record's.
+    const orig = p.inLanguage || s.inLanguage;
+    if (orig && orig !== 'en') quotation.isPartOf.inLanguage = orig;
   }
   if (s.isBasedOn) {
     const b = s.isBasedOn;
@@ -481,10 +484,24 @@ function renderAnswer(q) {
 }
 
 // ---- The source ----------------------------------------------------------
+// Infer a BCP-47 lang code from a docMeta label that names a language (e.g. "French original" → fr),
+// so original-language snippets carry lang= for screen readers and search engines instead of being
+// tagged as English. A row can also set r.lang explicitly to override.
+const DOC_LANGS = [['french', 'fr'], ['greek', 'grc'], ['latin', 'la'], ['german', 'de'], ['italian', 'it'], ['spanish', 'es'], ['hebrew', 'he'], ['russian', 'ru'], ['chinese', 'zh'], ['sanskrit', 'sa'], ['arabic', 'ar'], ['japanese', 'ja'], ['portuguese', 'pt']];
+const docLang = (dt) => { const t = String(dt || '').toLowerCase(); for (const [name, code] of DOC_LANGS) if (t.includes(name)) return code; return ''; };
+// True when the quote's English wording is a translation of a non-English source — used to caveat a
+// "public domain" rights badge (the ORIGINAL may be PD while a specific modern translation is not).
+function isTranslatedSource(src) {
+  // Require a NAMED source language ("French original", "Greek", "Latin"…) — NOT the bare word
+  // "original", which English-source records use for "original wording/spelling/date" and would
+  // false-trigger the caveat. Records can also set source.inLanguage or source.translated explicitly.
+  return src.translated === true || (!!src.inLanguage && src.inLanguage !== 'en')
+    || (src.docMeta || []).some((r) => docLang(r.dt));
+}
 function renderSource(q) {
   const src = q.source || {};
   const rows = (src.docMeta || [])
-    .map((r) => `                    <dt>${esc(r.dt)}</dt><dd${r.ddClass ? ` class="${r.ddClass}"` : ''}>${r.dd}</dd>`)
+    .map((r) => { const lg = r.lang || docLang(r.dt); return `                    <dt>${esc(r.dt)}</dt><dd${r.ddClass ? ` class="${r.ddClass}"` : ''}${lg ? ` lang="${lg}"` : ''}>${r.dd}</dd>`; })
     .join('\n');
   const cutTag = src.cutTag ? `\n                    <span class="cut-tag">${esc(src.cutTag)}</span>` : '';
   const excerptNote = src.excerptNote
@@ -542,10 +559,17 @@ function renderRights(src) {
   // elsewhere — e.g. a pre-1931 English translation whose translator died within the last 70 years —
   // `source.rightsLabel` lets the record scope the badge to the jurisdiction it can actually support.
   const label = src.rightsLabel || r.label;
+  // Translation caveat: a "public domain" badge reflects the ORIGINAL work, but if the English wording
+  // is a modern translation, that translation can itself be in copyright. Flag it so the badge isn't
+  // read as "this exact English is free." (Suppress with source.noTranslationCaveat for records whose
+  // English translation is itself confirmed PD.)
+  const xlation = (state === 'public-domain' && !src.noTranslationCaveat && isTranslatedSource(src))
+    ? `\n                    <p class="rights-body rights-caveat"><span aria-hidden="true">⚠</span> This reflects the <strong>original</strong> work, which is public domain. If your exact English wording comes from a specific <strong>modern translation</strong>, that translation may itself still be under copyright &mdash; check the edition you quote.</p>`
+    : '';
   return `
                 <div class="rights rights-${state}">
                     <span class="rights-badge"><span class="rights-mark" aria-hidden="true">${r.mark}</span>${esc(label)}</span>
-                    <p class="rights-body">${body}</p>
+                    <p class="rights-body">${body}</p>${xlation}
                 </div>`;
 }
 
@@ -1087,6 +1111,8 @@ const STYLE = `${ROOT_CSS}
         .rights-mark { font-size: 0.9rem; line-height: 1; }
         .rights-body { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); line-height: 1.6; margin: 0; }
         .rights-body strong { color: var(--ink); }
+        .rights-caveat { margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--border); color: var(--amber); }
+        .rights-caveat strong { color: var(--amber); }
 
         /* ===== MISATTRIBUTION ===== */
         .misattr { background: linear-gradient(135deg, var(--burgundy-glow), transparent); border: 1px solid var(--border-accent); border-radius: var(--radius-lg); padding: 30px 28px; }
