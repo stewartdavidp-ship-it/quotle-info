@@ -33,7 +33,10 @@ const BENCH_LABEL = { misattributed: 'Likely misattributed', disputed: 'Disputed
 const total = manifest.length;
 const byConf = { verified: [], attributed: [], disputed: [] };
 manifest.forEach((m) => { (byConf[m.confidence] || (byConf[m.confidence] = [])).push(m); });
-const authorCount = new Set(manifest.map((m) => m.author)).size;
+// Count PROFILE-ABLE authors (those with an /authors/{slug} page), so the homepage tile matches the
+// /authors/ index it links to — not distinct name strings, which double-count anon/unknown + variants.
+const { hasAuthorPage } = require('./authors');
+const authorCount = new Set(manifest.map((m) => m.authorSlug).filter(hasAuthorPage)).size;
 
 // ---- shared renderers ----
 const searchText = (s) => String(s || '').replace(/&mdash;|&ndash;/g, '-').replace(/&ldquo;|&rdquo;/g, '"')

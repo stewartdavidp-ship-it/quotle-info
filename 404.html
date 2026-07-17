@@ -27,13 +27,30 @@
 <body>
     <div class="wrap">
         <div class="code">404</div>
-        <h1>This quote isn&rsquo;t in our collection</h1>
-        <p>The page you&rsquo;re looking for doesn&rsquo;t exist here. Every quote we&rsquo;ve traced lives under a <code>/who-said/</code> address.</p>
-        <div class="btns">
+        <h1 id="h">This quote isn&rsquo;t in our collection</h1>
+        <p id="p">The page you&rsquo;re looking for doesn&rsquo;t exist here. Every quote we&rsquo;ve traced lives under a <code>/who-said/</code> address.</p>
+        <div class="btns" id="btns">
             <a class="home" href="/">Browse verified quotes</a>
-            <a class="verify" href="/how-we-verify">How we verify</a>
+            <a class="verify" href="/check/">Check a quote</a>
         </div>
     </div>
+    <script>
+    // If someone landed on a /who-said/<slug> we don't have (a search hit or guessed URL), don't dead-end:
+    // reconstruct the quote from the slug and route them into the checker (verified corpus + Wikiquote).
+    (function(){
+        try{
+            var m = location.pathname.match(/\/who-said\/([^\/?#]+)/);
+            if(!m) return;
+            var q = decodeURIComponent(m[1]).replace(/-+/g,' ').replace(/[^a-z0-9 ]/gi,'').trim().slice(0,90);
+            if(!q) return;
+            document.getElementById('h').textContent = 'We haven’t verified this one yet';
+            document.getElementById('p').innerHTML = 'We don’t have a page for this exact quote &mdash; but you can run it through our checker, which searches our verified corpus and Wikiquote. <strong>Not finding it isn’t proof it’s fake.</strong>';
+            var a = document.createElement('a'); a.className='home'; a.href='/check/?q='+encodeURIComponent(q); a.textContent='Check “'+q+'” →';
+            var b = document.createElement('a'); b.className='verify'; b.href='/'; b.textContent='Browse verified quotes';
+            var btns = document.getElementById('btns'); btns.innerHTML=''; btns.appendChild(a); btns.appendChild(b);
+        }catch(e){}
+    })();
+    </script>
     <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
