@@ -178,6 +178,16 @@
         .sec-head h2 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.7rem; letter-spacing: -0.015em; }
 
         /* ===== LAYER 1 — THE ANSWER (sealed container) ===== */
+        /* GAME door — revealed only for visitors arriving from Quotle (body.from-game) */
+        .game-banner { display: none; align-items: center; gap: 13px; margin: 4px 0 -6px; padding: 12px 18px; background: var(--sage-dim); border: 1px solid rgba(126,179,139,0.3); border-radius: var(--radius-md); text-decoration: none; font-family: 'DM Sans', sans-serif; }
+        .game-banner .gb-emoji { font-size: 1.35rem; flex: none; }
+        .game-banner .gb-txt { font-size: 0.9rem; color: var(--slate); line-height: 1.4; }
+        .game-banner .gb-txt strong { color: var(--sage); }
+        .game-banner .gb-cta { margin-left: auto; flex: none; font-size: 0.85rem; font-weight: 700; color: var(--sage); white-space: nowrap; }
+        .game-banner:hover .gb-cta { text-decoration: underline; }
+        body.from-game .game-banner { display: flex; }
+        body.from-game .pkit { display: none; }
+        @media (max-width: 560px) { .game-banner { flex-wrap: wrap; } .game-banner .gb-cta { margin-left: 0; } }
         .answer { margin-top: 18px; padding: 34px 32px 26px; background: linear-gradient(180deg, rgba(26,26,46,0.9), rgba(26,26,46,0.35)); border: 1px solid rgba(255,255,255,0.09); border-radius: var(--radius-lg); box-shadow: 0 20px 60px rgba(0,0,0,0.25); }
         .the-quote { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(1.9rem, 6vw, 2.8rem); line-height: 1.22; letter-spacing: -0.015em; margin: 4px 0 24px; text-wrap: balance; }
         .the-quote::before { content: '\201C'; color: var(--burgundy); opacity: 0.4; margin-right: 2px; }
@@ -532,14 +542,20 @@
     </nav>
 
     <main id="main">
+        <a class="game-banner" href="https://gameshelf.co/quotle/">
+            <span class="gb-emoji" aria-hidden="true">🎮</span>
+            <span class="gb-txt">Straight from today&rsquo;s <strong>Quotle</strong> &mdash; here&rsquo;s who really said it, and the story behind it.</span>
+            <span class="gb-cta">Play again <span aria-hidden="true">&rarr;</span></span>
+        </a>
+        <script>try{var _sp=new URLSearchParams(location.search);if(_sp.get('from')==='game'||/gameshelf\.co/.test(document.referrer))document.body.classList.add('from-game');}catch(e){}</script>
         <!-- ============ LAYER 1: THE ANSWER ============ -->
         <article class="answer" aria-labelledby="quote-heading">
             <p class="kicker">Who really said it</p>
             <h1 class="the-quote" id="quote-heading">Be the change you wish to see in the world</h1>
             <div class="attribution-row">
                 <div class="author-block">
-                    <span class="lbl">Not Mahatma Gandhi — a modern paraphrase</span>
-                    <span class="author-name"><a href="/authors/mahatma-gandhi">Mahatma Gandhi</a></span>
+                    <span class="lbl">Not Gandhi — first written by Arleen Lorrance</span>
+                    <span class="author-name"><a href="/authors/mahatma-gandhi">Arleen Lorrance</a></span>
                     <span class="author-dates">1869&ndash;1948 &middot; leader of the Indian independence movement</span>
                 </div>
                 <span class="confidence disputed">
@@ -562,7 +578,7 @@
             <div class="sec-head"><p class="kicker">For presentations</p><h2 id="pkit-h">Put it on a slide</h2></div>
             <div class="pkit-card pkit-card-disputed">
                 <div class="pkit-block">
-                    <p class="pkit-lbl">Disputed &mdash; copy with the correction</p>
+                    <p class="pkit-lbl">Disputed credit &mdash; copy with the correction</p>
                     <blockquote class="pkit-credit" id="kitCredit">&ldquo;Be the change you wish to see in the world&rdquo; <span class="pkit-cite">Often credited to Mahatma Gandhi, but he never said it. The exact phrase traces to educator Arleen Lorrance (1974); Gandhi's genuine 1913 line was &quot;If we could change ourselves, the tendencies in the world would also change.&quot; — via Quote Investigator</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                     <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>Mahatma Gandhi</strong>. Use the credit shown above instead.</p>

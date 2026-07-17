@@ -307,7 +307,7 @@ ${rev.length > 12 ? `            <p class="rev-more"><a href="/under-review/?q=$
         </section>` : ''}
         <section class="ask" data-author="${esc(a.name)}" aria-labelledby="ask-h">
             <div class="sec-head"><p class="kicker">Did they really say it?</p><h2 id="ask-h">Thought ${esc(a.name)} said something else?</h2><p class="sec-sub">Type a quote you think ${esc(a.name)} said &mdash; we&rsquo;ll tell you what we know, or point you to the best sources.</p></div>
-            <input id="ask-q" class="ask-in" type="search" placeholder="Type or paste the quote&hellip;" autocomplete="off">
+            <input id="ask-q" class="ask-in" type="search" placeholder="Type or paste the quote&hellip;" aria-label="Type or paste a quote you think ${esc(a.name)} said" autocomplete="off">
             <div id="ask-out" class="ask-out"></div>
         </section>
     </main>
