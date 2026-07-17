@@ -401,8 +401,14 @@ function matchQuote(term, idx) {
   if (!t || !Array.isArray(idx)) return null;
   const exact = idx.find((e) => e.n === t);
   if (exact) return exact;
-  // substring either direction (handles a partial quote or extra words)
-  const sub = idx.filter((e) => e.n && (e.n.includes(t) || t.includes(e.n)));
+  // substring either direction (handles a partial quote or extra words). GUARDED by length so a trivial
+  // query ("a", "1", "hi") can't substring-hit a long entry and get returned as a confident "verified"
+  // quote: the entry-contains-query direction needs a distinctive query (>=12 chars), and the
+  // query-contains-entry direction needs the matched entry to be a real, non-trivial quote (>=12 chars).
+  const sub = idx.filter((e) => e.n && (
+    (t.length >= 12 && e.n.includes(t)) ||
+    (e.n.length >= 12 && t.includes(e.n))
+  ));
   if (sub.length) { sub.sort((a, b) => Math.abs(a.n.length - t.length) - Math.abs(b.n.length - t.length)); return sub[0]; }
   // query-coverage fallback: how many of the QUERY's significant words appear in the entry
   // (handles partial quotes / paraphrases of long lines). Tie-break toward the closest length.
