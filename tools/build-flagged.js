@@ -133,7 +133,7 @@ ${THEME_CSS}
 </head>
 <body>
 ${NAV('review')}
-    <main>
+    <main id="main">
         <div id="card"><p class="kicker">On the research bench</p><p class="body">Loading&hellip;</p></div>
     </main>
 ${CLIENT}

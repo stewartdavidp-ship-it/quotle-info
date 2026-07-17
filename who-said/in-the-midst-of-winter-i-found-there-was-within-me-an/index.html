@@ -399,6 +399,9 @@
             .pager { flex-direction: column; }
             .pager .next { text-align: left; }
         }
+        /* skip link — first focusable element; visible only on keyboard focus */
+        .skip-link { position:absolute; left:12px; top:-48px; z-index:200; background:var(--burgundy); color:#fff; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:600; padding:10px 16px; border-radius:0 0 10px 10px; text-decoration:none; transition:top 0.15s; }
+        .skip-link:focus { top:0; outline:2px solid var(--sage); outline-offset:2px; }
         /* shared nav + universal search */
         .topnav { display:flex; align-items:center; gap:14px 16px; flex-wrap:wrap; max-width:1000px; margin:0 auto; padding:16px 24px 0; }
         .brand { display:inline-flex; align-items:center; gap:9px; text-decoration:none; font-family:'Playfair Display',serif; font-weight:900; font-size:1.05rem; flex-shrink:0; }
@@ -452,8 +455,8 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
-        .disp-panel h3 { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
-        .disp-panel h3.mt { margin-top: 15px; }
+        .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
+        .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
         .disp-row button { flex: 1; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--slate); font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; cursor: pointer; padding: 8px 0; transition: border-color 0.15s, color 0.15s, background 0.15s; }
         .disp-row button:hover { color: var(--ink); border-color: var(--border-accent); }
@@ -484,6 +487,7 @@
 </head>
 <body>
 
+    <a class="skip-link" href="#main">Skip to content</a>
     <nav class="topnav">
         <a class="brand" href="/"><span class="brand-icon" aria-hidden="true">📖</span>quotle<span>.info</span></a>
         <div class="nav-search">
@@ -499,14 +503,14 @@
             <div class="disp">
                 <button class="disp-btn" id="dispBtn" type="button" aria-label="Display settings: theme and text size" aria-haspopup="dialog" aria-expanded="false" aria-controls="dispPanel"><span class="a1">A</span><span class="a2">a</span></button>
                 <div class="disp-panel" id="dispPanel" role="dialog" aria-label="Display settings">
-                    <h3>Theme</h3>
-                    <div class="disp-row" id="dispTheme">
+                    <p class="dph" id="dispThemeLbl">Theme</p>
+                    <div class="disp-row" id="dispTheme" role="group" aria-labelledby="dispThemeLbl">
                         <button type="button" data-theme-choice="auto" aria-pressed="true" title="Match your device">Auto</button>
                         <button type="button" data-theme-choice="light" aria-pressed="false" title="Light theme">Light</button>
                         <button type="button" data-theme-choice="dark" aria-pressed="false" title="Dark theme">Dark</button>
                     </div>
-                    <h3 class="mt">Text size</h3>
-                    <div class="disp-sizes">
+                    <p class="dph mt" id="dispSizeLbl">Text size</p>
+                    <div class="disp-sizes" role="group" aria-labelledby="dispSizeLbl">
                         <button type="button" data-size="normal" aria-pressed="true" aria-label="Normal text size" title="Normal">A</button>
                         <button type="button" data-size="large" aria-pressed="false" aria-label="Large text size" title="Large">A</button>
                         <button type="button" data-size="xl" aria-pressed="false" aria-label="Extra-large text size" title="Extra large">A</button>
@@ -523,7 +527,7 @@
         <span aria-current="page">In the midst of winter, I found there was, within me, an invincible summer</span>
     </nav>
 
-    <main>
+    <main id="main">
         <!-- ============ LAYER 1: THE ANSWER ============ -->
         <article class="answer" aria-labelledby="quote-heading">
             <p class="kicker">Who really said it</p>

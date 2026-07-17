@@ -121,7 +121,7 @@ ${THEME_CSS}
 </head>
 <body>
 ${NAV('')}
-    <main>
+    <main id="main">
         <div id="card"><p class="kicker">How we used this source</p><p class="src-blurb">Loading&hellip;</p></div>
     </main>
 ${CLIENT}

@@ -233,7 +233,7 @@ ${fake.slice(0, 18).map(fakeCard).join('\n')}
         </section>` : '';
 
   const inner = `    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">›</span><a href="/themes/">Themes</a><span class="sep">›</span>${esc(t.label)}</nav>
-    <main>
+    <main id="main">
         <div class="theme-hero">
             <p class="kicker">Theme</p>
             <h1>${esc(t.label)}</h1>
@@ -280,7 +280,7 @@ const idxHead = `    <title>Browse quotes by theme | Quotle.info</title>
     <meta property="og:url" content="${ORIGIN}/themes/">
 ${OG_IMAGE_TAGS}`;
 const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">›</span>Themes</nav>
-    <main>
+    <main id="main">
         <div class="idx-hero">
             <p class="kicker">Find the right one</p>
             <h1>Quotes by theme</h1>

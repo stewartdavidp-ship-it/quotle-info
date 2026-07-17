@@ -49,8 +49,8 @@ const THEME_CSS = `    <style>
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
-        .disp-panel h3 { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
-        .disp-panel h3.mt { margin-top: 15px; }
+        .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
+        .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
         .disp-row button { flex: 1; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--slate); font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; cursor: pointer; padding: 8px 0; transition: border-color 0.15s, color 0.15s, background 0.15s; }
         .disp-row button:hover { color: var(--ink); border-color: var(--border-accent); }
@@ -84,14 +84,14 @@ const THEME_CSS = `    <style>
 const CONTROL = `<div class="disp">
                 <button class="disp-btn" id="dispBtn" type="button" aria-label="Display settings: theme and text size" aria-haspopup="dialog" aria-expanded="false" aria-controls="dispPanel"><span class="a1">A</span><span class="a2">a</span></button>
                 <div class="disp-panel" id="dispPanel" role="dialog" aria-label="Display settings">
-                    <h3>Theme</h3>
-                    <div class="disp-row" id="dispTheme">
+                    <p class="dph" id="dispThemeLbl">Theme</p>
+                    <div class="disp-row" id="dispTheme" role="group" aria-labelledby="dispThemeLbl">
                         <button type="button" data-theme-choice="auto" aria-pressed="true" title="Match your device">Auto</button>
                         <button type="button" data-theme-choice="light" aria-pressed="false" title="Light theme">Light</button>
                         <button type="button" data-theme-choice="dark" aria-pressed="false" title="Dark theme">Dark</button>
                     </div>
-                    <h3 class="mt">Text size</h3>
-                    <div class="disp-sizes">
+                    <p class="dph mt" id="dispSizeLbl">Text size</p>
+                    <div class="disp-sizes" role="group" aria-labelledby="dispSizeLbl">
                         <button type="button" data-size="normal" aria-pressed="true" aria-label="Normal text size" title="Normal">A</button>
                         <button type="button" data-size="large" aria-pressed="false" aria-label="Large text size" title="Large">A</button>
                         <button type="button" data-size="xl" aria-pressed="false" aria-label="Extra-large text size" title="Extra large">A</button>

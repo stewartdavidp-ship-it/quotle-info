@@ -89,7 +89,7 @@ const FOOTER = `    <footer>
     </footer>`;
 
 const headExtra = `    <title>Check a quote before you use it | Quotle.info</title>
-    <meta name="description" content="About to put a quote on a slide? Paste it here — we'll tell you if it's real, who really said it, and whether it's cleared to reuse. Provenance-checked, not AI-guessed.">
+    <meta name="description" content="About to put a quote on a slide? Paste it here — we'll tell you if it's real, who really said it, and whether it's cleared to reuse. Every attribution traced to a primary source, or honestly marked when it can't be.">
     <link rel="canonical" href="${ORIGIN}/check/">
     <meta property="og:title" content="Check a quote before you use it">
     <meta property="og:description" content="Paste a line you're about to present — real? correctly credited? safe to reuse? Verified against the quotle.info corpus.">
@@ -97,7 +97,7 @@ const headExtra = `    <title>Check a quote before you use it | Quotle.info</tit
 ${OG_IMAGE_TAGS}`;
 
 const inner = `    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">›</span>Check a quote</nav>
-    <main>
+    <main id="main">
         <div class="hero">
             <p class="kicker">Before you present</p>
             <h1>Check a quote before you use it</h1>
