@@ -16,11 +16,13 @@ const JOURNAL = arg('journal');
 if (!JOURNAL) { console.error('usage: _ingest-cites.js --journal <journal.jsonl>'); process.exit(1); }
 const DIR = path.join(__dirname, '..', 'data', 'quotes');
 
-// Undo one level of over-escaping: &lt;em&gt; → <em>, and &amp;X; → &X; for the entities we emit.
+// Undo one level of over-escaping the agents sometimes apply: &lt;em&gt; → <em>, and ANY double-escaped
+// entity &amp;NAME; / &amp;#NNN; → &NAME; / &#NNN; (catches &amp;euml;, &amp;eacute;, &amp;amp;, etc.).
+// Safe because a literal ampersand ("Ticknor &amp; Fields") has no trailing ";" and won't match.
 function normEsc(s) {
   return String(s || '')
     .replace(/&lt;(\/?)em&gt;/g, '<$1em>')
-    .replace(/&amp;(amp|ldquo|rdquo|lsquo|rsquo|mdash|ndash|hellip|nbsp|copy|deg);/g, '&$1;');
+    .replace(/&amp;(#?[a-zA-Z0-9]+);/g, '&$1;');
 }
 
 const rows = [];
