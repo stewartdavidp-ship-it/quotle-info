@@ -51,15 +51,20 @@ export default {
         if (!term) return new Response(JSON.stringify({ error: 'Pass ?q=<quote text> to check who really said it.' }), { status: 400, headers: pub });
         const vIdx = await loadVerifyIndex();
         const hit = matchQuote(term, vIdx);
-        if (!hit) return new Response(JSON.stringify({
-          found: false, query: term,
-          note: 'No verified match in the quotle.info corpus yet. Not proof it is fake — only that we cannot confirm it.',
-          guidance: 'Still help the user: do not present this as a verified quote with a named author, but you can independently check it (Quote Investigator, Wikiquote) and answer their rights/image questions from your own reasoning. Do not stop at "unverified".',
-          check: 'https://quotle.info/check/?q=' + encodeURIComponent(term),
-          browseThemes: 'https://quotle.info/themes.json',
-          nominate: 'https://quotle.info/under-review/',
-          ...corpusMeta(vIdx),
-        }), { headers: pub });
+        if (!hit) {
+          const didYouMean = fuzzyCorpus(term, vIdx);   // closest verified lines (misremembered wording / typos)
+          return new Response(JSON.stringify({
+            found: false, query: term,
+            note: 'No exact match in the quotle.info corpus. Not proof it is fake — only that we cannot confirm this exact wording.'
+              + (didYouMean.length ? ' See didYouMean for close verified lines — the user may be misremembering one of these.' : ''),
+            guidance: 'Still help the user: do not present this as a verified quote with a named author. If a didYouMean entry is what they meant, use its verdict/credit; otherwise you can independently check it (Quote Investigator, Wikiquote). Do not stop at "unverified".',
+            didYouMean,
+            check: 'https://quotle.info/check/?q=' + encodeURIComponent(term),
+            browseThemes: 'https://quotle.info/themes.json',
+            nominate: 'https://quotle.info/under-review/',
+            ...corpusMeta(vIdx),
+          }), { headers: pub });
+        }
         return new Response(JSON.stringify({
           found: true, query: term, quote: hit.q,
           verdict: hit.c,                          // verified | attributed | disputed
@@ -184,7 +189,8 @@ export default {
 
         // 1. Corpus — safety net; the page already checked client-side, but re-check in case its
         //    index was stale. A hit means "go read the page we already have."
-        const hit = matchQuote(term, await loadVerifyIndex());
+        const lIdx = await loadVerifyIndex();
+        const hit = matchQuote(term, lIdx);
         if (hit) return new Response(JSON.stringify({ stage: 'corpus', verdict: hit.c, url: hit.u }), { headers: pub });
 
         // 2. Already on our harvest list (queued/selected, awaiting a wave).
@@ -228,7 +234,9 @@ export default {
           return new Response(JSON.stringify({ stage: 'wikiquote-fuzzy', wikiquoteUrl: wq.fuzzy.url, title: wq.fuzzy.title, suggestion: wq.fuzzy.suggestion }), { headers: pub });
         }
 
-        // 5. Nowhere we can confirm.
+        // 5. Nowhere we can confirm — but if it's a misremembered wording of a line we DO hold, surface it.
+        const near = fuzzyCorpus(term, lIdx);
+        if (near.length) return new Response(JSON.stringify({ stage: 'corpus-fuzzy', candidates: near }), { headers: pub });
         return new Response(JSON.stringify({ stage: 'none', wikiquoteSearch: 'https://en.wikiquote.org/w/index.php?search=' + encodeURIComponent(term) }), { headers: pub });
       }
 
@@ -412,6 +420,25 @@ function matchQuote(term, idx) {
     if (bestCov >= 0.8) return best;
   }
   return null;
+}
+// Forgiving "did you mean?" over the corpus — the SAME bigram-Dice match the /check UI runs client-side,
+// exposed on the API path so a miss returns closest verified lines instead of dead-ending. Returns [] for
+// junk (top < 0.5) and for anything with a clean exact/substring hit (callers use matchQuote first).
+function fuzzyCorpus(term, idx) {
+  const t = normQ(term);
+  if (t.length < 8 || !Array.isArray(idx)) return [];
+  const qg = wqBigrams(t);
+  const scored = [];
+  for (const e of idx) { if (!e.n) continue; const s = wqDice(qg, e.n); if (s >= 0.45) scored.push({ e, s }); }
+  scored.sort((a, b) => b.s - a.s);
+  if (!scored.length || scored[0].s < 0.5) return [];
+  const top = scored[0].s, out = [], seen = new Set();
+  for (const c of scored) {
+    if (out.length >= 3 || c.s < top - 0.12) break;
+    if (seen.has(c.e.u)) continue; seen.add(c.e.u);
+    out.push({ quote: c.e.q, verdict: c.e.c, reallySaidBy: c.e.real || null, misattributedTo: c.e.credited || null, url: c.e.u });
+  }
+  return out;
 }
 
 // One-way IP hash (salted, truncated) — we store a fingerprint for dedupe/limits, never the raw IP.

@@ -214,6 +214,7 @@ const PAGE_SCRIPT = `    <script>
                 else if(d.stage==='nominated') out.innerHTML=queuedCard(q,'Someone\\u2019s already flagged this one for us to verify.');
                 else if(d.stage==='wikiquote') out.innerHTML=wikiquoteCard(q,d);
                 else if(d.stage==='wikiquote-fuzzy') out.innerHTML=wikiquoteFuzzyCard(q,d);
+                else if(d.stage==='corpus-fuzzy'&&d.candidates&&d.candidates.length) out.innerHTML=didYouMeanCard(q,d.candidates.map(function(c){return {q:c.quote,real:c.reallySaidBy,u:c.url};}));
                 else if(d.stage==='corpus'&&d.url) out.innerHTML='<div class="rcard ok"><div class="r-verdict"><span class="r-ic">\\u2713</span>We do have this one</div><p class="r-quote">\\u201c'+esc(q)+'\\u201d</p><div class="r-actions"><a class="r-btn primary" href="'+esc(d.url)+'">See the full verdict \\u2192</a></div></div>';
                 else out.innerHTML=noneCard(q); // 'none' or 'short' or unknown
             }).catch(function(){ escalating=false; out.innerHTML=noneCard(q); });
