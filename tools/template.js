@@ -21,7 +21,8 @@
 
 const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
-const { esc } = require('./esc'); // one shared entity-aware escape (also used by build-index.js)
+const { esc, escEm } = require('./esc'); // one shared entity-aware escape (also used by build-index.js); escEm preserves inline <em>
+
 const { hasAuthorPage } = require('./authors'); // which authors have a /authors/{slug} profile
 const { THEME_BY_SLUG } = require('./themes'); // controlled vocab → labels for the theme links
 const { NAV: siteNav, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome'); // shared nav + universal search
@@ -454,7 +455,7 @@ function renderAnswer(q) {
     ? `<a href="${attr(ans.authorHref)}">${esc(ans.authorName)}</a>`
     : esc(ans.authorName);
   const dates = ans.authorDates
-    ? `\n                    <span class="author-dates">${esc(ans.authorDates)}</span>`
+    ? `\n                    <span class="author-dates">${escEm(ans.authorDates)}</span>`
     : '';
   return `
         <!-- ============ LAYER 1: THE ANSWER ============ -->
@@ -463,12 +464,12 @@ function renderAnswer(q) {
             <h1 class="the-quote" id="quote-heading">${esc(q.displayQuote)}</h1>
             <div class="attribution-row">
                 <div class="author-block">
-                    <span class="lbl">${esc(label)}</span>
+                    <span class="lbl">${escEm(label)}</span>
                     <span class="author-name">${nameInner}</span>${dates}
                 </div>
                 <span class="confidence ${conf.cls}">
                     <span class="dot" aria-hidden="true">${conf.glyph}</span>
-                    <span><span class="visually-hidden">Attribution status: </span>${esc(confText)}</span>
+                    <span><span class="visually-hidden">Attribution status: </span>${escEm(confText)}</span>
                 </span>
                 ${(() => { const rc = REUSE_CHIP[(q.source && q.source.rights) || 'uncertain'] || REUSE_CHIP.uncertain; return `<a class="reuse-chip ${rc.cls}" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">${rc.glyph}</span><span><span class="visually-hidden">Reuse status: </span>${rc.label}</span></a>`; })()}
             </div>
@@ -552,7 +553,7 @@ function renderRights(src) {
   const r = state && RIGHTS[state];
   // No (recognized) state: fall back to legacy prose-only note for un-migrated records.
   if (!r) return src.rightsNote ? `\n                <p class="rights-note">${src.rightsNote}</p>` : '';
-  const holder = src.rightsHolder ? ` of ${esc(src.rightsHolder)}` : '';
+  const holder = src.rightsHolder ? ` of ${escEm(src.rightsHolder)}` : '';
   const body = src.rightsNote || r.note.replace('{holder}', holder);
   // "Public domain" is a worldwide claim, but our evidence is routinely US-only (Gutenberg's own
   // status line says "Public domain in the USA"). Where a work is PD in the US yet still protected
@@ -622,7 +623,7 @@ function renderPresentationKit(q) {
 
   const state = q.source && (q.source.rights || (q.source.publicDomain === true ? 'public-domain' : null));
   const u = state && USE[state];
-  const holder = (q.source && q.source.rightsHolder) ? ` (rights held by ${esc(q.source.rightsHolder)})` : '';
+  const holder = (q.source && q.source.rightsHolder) ? ` (rights held by ${escEm(q.source.rightsHolder)})` : '';
   // A record may author its own reuse line (`source.useLine`, plus optional `useTone`/`useIcon`).
   // Needed where neither a rights state nor the no-provenance fallback tells the truth — e.g. a page
   // whose ATTRIBUTION is settled but whose REUSE status is not (first publication date unestablished).
@@ -718,7 +719,7 @@ function renderMisattribution(q) {
     return `                    <div class="false-item">
                         <span class="false-x" aria-hidden="true">✕</span>
                         <div>
-                            <div class="false-who"><span class="visually-hidden">${esc(it.scope || 'Incorrectly attributed to ')}</span>${it.who}${tag}</div>
+                            <div class="false-who"><span class="visually-hidden">${escEm(it.scope || 'Incorrectly attributed to ')}</span>${it.who}${tag}</div>
                             <p class="false-why">${it.why}</p>
                         </div>
                     </div>`;
@@ -783,7 +784,7 @@ ${cards}
 // ---- Dig deeper (always) -------------------------------------------------
 function renderResearch(q) {
   const items = (q.externalLinks || []).map((l, idx) => `                <a class="research-item" href="/cite/?q=${encodeURIComponent(q.quoteSlug)}&i=${idx}" data-ext="${attr(l.url)}">
-                    <div class="research-top"><span class="research-label">${esc(l.label)}</span><span class="research-host">${esc(l.host)}</span><span class="research-arrow" aria-hidden="true">→</span></div>
+                    <div class="research-top"><span class="research-label">${escEm(l.label)}</span><span class="research-host">${esc(l.host)}</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">${l.what}</p>
                 </a>`).join('\n');
   return `

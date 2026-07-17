@@ -14,4 +14,11 @@ const esc = (s) => String(s)
   .replace(/</g, '&lt;').replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
 
-module.exports = { esc };
+// escEm — for trusted PROSE fields that carry inline <em> emphasis (book/film titles, a stressed
+// word, a non-English phrase). Escapes everything via esc() — so any other tag stays inert — then
+// restores ONLY the bare <em>/</em> pair, so the emphasis renders italic instead of leaking a
+// literal "&lt;em&gt;". This is the same treatment the sibling raw-rendered fields (sourceLine,
+// author.bio, misattribution.why …) already get; escEm brings the few esc()'d prose fields in line.
+const escEm = (s) => esc(s).replace(/&lt;(\/?)em&gt;/g, '<$1em>');
+
+module.exports = { esc, escEm };
