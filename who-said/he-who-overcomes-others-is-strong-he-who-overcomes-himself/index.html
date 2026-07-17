@@ -622,6 +622,7 @@
                 <div class="rights rights-public-domain">
                     <span class="rights-badge"><span class="rights-mark" aria-hidden="true">✓</span>Public domain</span>
                     <p class="rights-body">The Chinese original has been in the public domain for over two millennia, and this specific English wording comes from <strong>James Legge&rsquo;s 1891 translation</strong> (Sacred Books of the East, Vol. 39), first published well before 1931 &mdash; so it too is public domain in the United States. Modern translations of Chapter 33 (e.g. Stephen Mitchell&rsquo;s 1988 &ldquo;Mastering others is strength; mastering yourself is true power&rdquo;) remain under copyright, but that is not the wording quoted here.</p>
+                    <p class="rights-body rights-caveat"><span aria-hidden="true">⚠</span> This reflects the <strong>original</strong> work, which is public domain. If your exact English wording comes from a specific <strong>modern translation</strong>, that translation may itself still be under copyright &mdash; check the edition you quote.</p>
                 </div>
             </div>
         </section>
@@ -721,11 +722,19 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Tao Te Ching, Ch. 33 (Legge, 1891)</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source — Chicago</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Lao Tzu. <em>The Tâo Teh King</em>, Chapter 33. Translated by James Legge. In <em>The Sacred Books of the East</em>, Vol. 39: <em>The Texts of Tâoism</em>, Part I. Oxford: Clarendon Press, 1891.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>MLA (9th ed.)</span><button class="cite-copy" data-copy="citeMla" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeMla">Lao Tzu. <em>The T&acirc;o Teh King</em>. Translated by James Legge, <em>The Sacred Books of the East</em>, vol. 39, Clarendon Press, 1891, ch. 33.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>APA (7th ed.)</span><button class="cite-copy" data-copy="citeApa" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeApa">Laozi. (1891). <em>The T&acirc;o Teh King</em> (J. Legge, Trans.). In <em>The sacred books of the East</em> (Vol. 39). Clarendon Press.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;He who overcomes others is strong; he who overcomes himself is mighty&rsquo;?&rdquo; Last verified 10 Jul 2026. <code>https://quotle.info/who-said/he-who-overcomes-others-is-strong-he-who-overcomes-himself</code></p>
                 </div>
             </div>
@@ -766,8 +775,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

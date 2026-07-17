@@ -742,11 +742,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>How to cite this</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>How to cite this</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Walter J. Hickel, quoted in "Former Alaska Gov. Hickel dead at 90," Anchorage Daily News, May 8, 2010 — remark made in a 1992 NBC interview on Alaska's aerial predator-control program. Collected in Malcolm B. Roberts, comp. and ed., The Wit and Wisdom of Wally Hickel (Anchorage: Searchers Press, 1994). Listed as misattributed to Walt Disney in Wikiquote, "Walt Disney," Misattributed section, citing Living With Wolves (2005) by James Dutcher, p. 8.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;You can't just let nature run wild&rsquo;?&rdquo; Last verified 14 Jul 2026. <code>https://quotle.info/who-said/you-cant-just-let-nature-run-wild</code></p>
                 </div>
             </div>
@@ -787,8 +787,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

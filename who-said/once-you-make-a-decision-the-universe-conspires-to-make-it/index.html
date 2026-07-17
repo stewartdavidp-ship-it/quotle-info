@@ -735,11 +735,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Nearest documented source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Nearest documented source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Coelho, Paulo. <em>The Alchemist</em>. Translated by Alan R. Clarke. Originally published as <em>O Alquimista</em> (Rio de Janeiro: Editora Rocco, 1988); first English publication HarperSanFrancisco, 1993. Page&nbsp;22 per Wikiquote&rsquo;s citation, which names no edition &mdash; Wikiquote notes that page numbers vary among editions. Earliest located attribution of the reworded line to Emerson: John F. Brown, <em>The Gift of Depression: Twenty-one Inspirational Stories Sharing Experience, Strength, and Hope</em> (2001), p.&nbsp;56.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Once you make a decision, the universe conspires to make it happen&rsquo;?&rdquo; Last verified 14 Jul 2026. <code>https://quotle.info/who-said/once-you-make-a-decision-the-universe-conspires-to-make-it</code></p>
                 </div>
             </div>
@@ -780,8 +780,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

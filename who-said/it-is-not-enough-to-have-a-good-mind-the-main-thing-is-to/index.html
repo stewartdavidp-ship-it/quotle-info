@@ -701,11 +701,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Ren&eacute; Descartes, <em>Discourse on the Method</em>, Part One (originally <em>Discours de la m&eacute;thode</em>, Leiden, 1637); popular English wording after John Cottingham and Robert Stoothoff, trans., <em>The Philosophical Writings of Descartes</em>, vol. 1 (Cambridge: Cambridge University Press, 1985). Original French: &ldquo;Car ce n&rsquo;est pas assez d&rsquo;avoir l&rsquo;esprit bon, mais le principal est de l&rsquo;appliquer bien.&rdquo;</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;It is not enough to have a good mind; the main thing is to use it well&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/it-is-not-enough-to-have-a-good-mind-the-main-thing-is-to</code></p>
                 </div>
             </div>
@@ -746,8 +746,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

@@ -731,11 +731,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Jaws, directed by Steven Spielberg, screenplay by Peter Benchley and Carl Gottlieb, based on the novel by Peter Benchley (Universal City, CA: Universal Pictures, 1975). Line spoken by Roy Scheider as Chief Martin Brody; transcribed at Wikiquote and listed as #35 in AFI's 100 Years…100 Movie Quotes (2005). Not in the shooting script — ad-libbed on set, per co-screenwriter Carl Gottlieb, interviewed in The Hollywood Reporter.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;We're gonna need a bigger boat&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/were-gonna-need-a-bigger-boat</code></p>
                 </div>
             </div>
@@ -776,8 +776,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

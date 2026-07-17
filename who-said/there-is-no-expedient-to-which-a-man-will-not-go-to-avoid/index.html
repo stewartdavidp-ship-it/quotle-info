@@ -727,11 +727,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary &amp; chronology</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary &amp; chronology</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Joshua Reynolds, <em>Discourse XII</em> (delivered 1784; published in <em>The Works of Sir Joshua Reynolds</em>, 1797); condensed form traced in Irving Babbitt, <em>The New Laokoon</em> (Boston: Houghton Mifflin, 1910). Chronology per Quote Investigator, &ldquo;There Is No Expedient to which a Man Will Not Resort to Avoid the Real Labor of Thinking,&rdquo; 15 May 2014.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;There is no expedient to which a man will not go to avoid the labor of thinking&rsquo;?&rdquo; Last verified 10 Jul 2026. <code>https://quotle.info/who-said/there-is-no-expedient-to-which-a-man-will-not-go-to-avoid</code></p>
                 </div>
             </div>
@@ -772,8 +772,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

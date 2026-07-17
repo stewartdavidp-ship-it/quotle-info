@@ -743,11 +743,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>How to cite this</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>How to cite this</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Russell, Bertrand. &ldquo;Stupidity Rules.&rdquo; <em>San Francisco Examiner</em>, 10 May 1933, p. 10, col. 7. Reprinted as &ldquo;The Triumph of Stupidity&rdquo; in <em>Mortals and Others: Bertrand Russell&rsquo;s American Essays, 1931&ndash;1935</em>, vol. 2 (London: Routledge). The popular &ldquo;fools and fanatics&rdquo; wording is not Russell&rsquo;s; earliest documented instance, 2001.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;The whole problem with the world is that fools are so certain, and wiser people so full of doubts&rsquo;?&rdquo; Last verified 15 Jul 2026. <code>https://quotle.info/who-said/the-whole-problem-with-the-world-is-that-fools-are-so</code></p>
                 </div>
             </div>
@@ -788,8 +788,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

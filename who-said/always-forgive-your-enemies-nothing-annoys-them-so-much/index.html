@@ -736,11 +736,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Earliest documented source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Earliest documented source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Earliest documented in Percy Colson, precepts printed in &ldquo;The Sketch&rdquo; (London), 13 April 1949, p. 239, col. 2: &ldquo;Always forgive your enemies. Nothing annoys them so intensely.&rdquo; Cited in Quote Investigator, &ldquo;Quote Origin: Always Forgive Your Enemies; Nothing Annoys Them So Much,&rdquo; 11 June 2021. The familiar wording is first documented in 1954: Walter Winchell&rsquo;s column of 27 May 1954 (Courier-Post) carries it while crediting it to &ldquo;Reader&rsquo;s Digest&rdquo; 64, no. 386 (June 1954): 134, whose filler item credits Oscar Wilde without citation.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Always forgive your enemies; nothing annoys them so much&rsquo;?&rdquo; Last verified 14 Jul 2026. <code>https://quotle.info/who-said/always-forgive-your-enemies-nothing-annoys-them-so-much</code></p>
                 </div>
             </div>
@@ -781,8 +781,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

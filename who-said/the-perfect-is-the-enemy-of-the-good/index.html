@@ -625,6 +625,7 @@
                 <div class="rights rights-public-domain">
                     <span class="rights-badge"><span class="rights-mark" aria-hidden="true">✓</span>Public domain</span>
                     <p class="rights-body">The quote is public domain: Voltaire&rsquo;s text was published in 1772 and he died in 1778. Modern English translations of the line carry no separate claim on the maxim itself.</p>
+                    <p class="rights-body rights-caveat"><span aria-hidden="true">⚠</span> This reflects the <strong>original</strong> work, which is public domain. If your exact English wording comes from a specific <strong>modern translation</strong>, that translation may itself still be under copyright &mdash; check the edition you quote.</p>
                 </div>
             </div>
         </section>
@@ -724,11 +725,19 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source — Chicago</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Voltaire. &ldquo;La Bégueule, conte moral.&rdquo; In Contes en vers. Paris, 1772. Opening lines: &ldquo;Dans ses écrits un sage Italien / Dit que le mieux est l&rsquo;ennemi du bien.&rdquo;</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>MLA (9th ed.)</span><button class="cite-copy" data-copy="citeMla" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeMla">Voltaire. &ldquo;La B&eacute;gueule, conte moral.&rdquo; <em>Contes en vers</em>, 1772.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>APA (7th ed.)</span><button class="cite-copy" data-copy="citeApa" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeApa">Voltaire. (1772). La B&eacute;gueule, conte moral. In <em>Contes en vers</em>.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;The perfect is the enemy of the good&rsquo;?&rdquo; Last verified 7 Jul 2026. <code>https://quotle.info/who-said/the-perfect-is-the-enemy-of-the-good</code></p>
                 </div>
             </div>
@@ -769,8 +778,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

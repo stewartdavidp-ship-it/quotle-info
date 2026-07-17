@@ -634,6 +634,7 @@
                 <div class="rights rights-public-domain">
                     <span class="rights-badge"><span class="rights-mark" aria-hidden="true">✓</span>Public domain</span>
                     <p class="rights-body">Both layers are clear. Pascal&rsquo;s French was first published in 1670 and has been in the public domain for centuries. The English shown here is W. F. Trotter&rsquo;s translation, published in <a href="https://en.wikisource.org/wiki/Index:Blaise_Pascal_works.djvu" target="_blank" rel="noopener">The Harvard Classics in 1910 ↗</a> &mdash; comfortably before the 1931 US copyright threshold &mdash; which is why it is freely hosted on Wikisource. Note that modern renderings such as A. J. Krailsheimer&rsquo;s Penguin translation are separately in copyright.</p>
+                    <p class="rights-body rights-caveat"><span aria-hidden="true">⚠</span> This reflects the <strong>original</strong> work, which is public domain. If your exact English wording comes from a specific <strong>modern translation</strong>, that translation may itself still be under copyright &mdash; check the edition you quote.</p>
                 </div>
             </div>
         </section>
@@ -755,11 +756,19 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>How to cite</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source — Chicago</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Pascal, Blaise. &ldquo;Section IV: Of the Means of Belief,&rdquo; fr. 277. In <em>Pens&eacute;es</em>, translated by W. F. Trotter (translation first published 1904). <em>Blaise Pascal</em>, The Harvard Classics, vol. 48. New York: P. F. Collier &amp; Son, 1910. Originally published in French, Paris, 1670.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>MLA (9th ed.)</span><button class="cite-copy" data-copy="citeMla" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeMla">Pascal, Blaise. &ldquo;Section IV: Of the Means of Belief.&rdquo; <em>Pens&eacute;es</em>, translated by W. F. Trotter, <em>Blaise Pascal</em>, The Harvard Classics, vol. 48, P. F. Collier &amp; Son, 1910, fr. 277.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>APA (7th ed.)</span><button class="cite-copy" data-copy="citeApa" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeApa">Pascal, B. (1910). <em>Pens&eacute;es</em> (W. F. Trotter, Trans.). In <em>Blaise Pascal</em> (The Harvard Classics, Vol. 48). P. F. Collier &amp; Son. (Original work published 1670)</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;The heart has its reasons which reason knows not&rsquo;?&rdquo; Last verified 15 Jul 2026. <code>https://quotle.info/who-said/the-heart-has-its-reasons-which-reason-knows-not</code></p>
                 </div>
             </div>
@@ -800,8 +809,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

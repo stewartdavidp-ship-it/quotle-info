@@ -623,6 +623,7 @@
                 <div class="rights rights-public-domain">
                     <span class="rights-badge"><span class="rights-mark" aria-hidden="true">✓</span>Public domain</span>
                     <p class="rights-body">Aristotle&rsquo;s Greek has been public domain for over two millennia. The exact English wording here tracks W.&thinsp;D. Ross&rsquo;s translation, first published in 1925 (The Works of Aristotle Translated into English, Vol. IX, Oxford: Clarendon Press) &mdash; also public domain in the United States as a work published before 1931. Modern in-copyright translations (e.g. Irwin, Crisp, Bartlett &amp; Collins) phrase the line differently.</p>
+                    <p class="rights-body rights-caveat"><span aria-hidden="true">⚠</span> This reflects the <strong>original</strong> work, which is public domain. If your exact English wording comes from a specific <strong>modern translation</strong>, that translation may itself still be under copyright &mdash; check the edition you quote.</p>
                 </div>
             </div>
         </section>
@@ -722,11 +723,19 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>The primary source (Chicago)</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source — Chicago</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Aristotle. Nicomachean Ethics, Book I, 1098a16 and 1102a5. Translated by W. D. Ross. In The Works of Aristotle Translated into English, Vol. IX. Oxford: Clarendon Press, 1925.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>MLA (9th ed.)</span><button class="cite-copy" data-copy="citeMla" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeMla">Aristotle. <em>Nicomachean Ethics</em>, translated by W. D. Ross, vol. 9, Clarendon Press, 1925.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>APA (7th ed.)</span><button class="cite-copy" data-copy="citeApa" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeApa">Aristotle. (1925). <em>The works of Aristotle translated into English</em> (Vol. 9) (W. D. Ross, Trans.). Clarendon Press. (Original work published c. 340&ndash;322 BCE)</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Happiness is an activity of the soul in accordance with virtue&rsquo;?&rdquo; Last verified 10 Jul 2026. <code>https://quotle.info/who-said/happiness-is-an-activity-of-the-soul-in-accordance-with</code></p>
                 </div>
             </div>
@@ -767,8 +776,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

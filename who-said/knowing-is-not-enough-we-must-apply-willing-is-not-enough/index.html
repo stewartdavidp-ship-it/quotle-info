@@ -713,11 +713,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Goethe, Wilhelm Meisters Wanderjahre (1829)</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Goethe, Wilhelm Meisters Wanderjahre (1829)</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Johann Wolfgang von Goethe, &ldquo;Aus Makariens Archiv,&rdquo; in <em>Wilhelm Meisters Wanderjahre</em> (1829); also collected in <em>Maximen und Reflexionen</em>. German: &ldquo;Es ist nicht genug, zu wissen, man mu&szlig; auch anwenden; es ist nicht genug, zu wollen, man mu&szlig; auch tun.&rdquo;</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Knowing is not enough; we must apply. Willing is not enough; we must do&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/knowing-is-not-enough-we-must-apply-willing-is-not-enough</code></p>
                 </div>
             </div>
@@ -758,8 +758,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

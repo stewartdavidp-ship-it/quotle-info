@@ -726,11 +726,19 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Vatican Saying 68</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source — Chicago</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Epicurus. Vatican Saying 68, in <em>The Vatican Sayings</em>. Greek: <em>Ou&delta;&#941;&nu; &#7985;&kappa;&alpha;&nu;&#8056;&nu; &#8083; &#8000;&lambda;&#943;&gamma;&omicron;&nu; &tau;&#8056; &#7985;&kappa;&alpha;&nu;&#972;&nu;</em>; standard translation &ldquo;Nothing is enough to one for whom enough is little.&rdquo; The popular English wording is an unattributed modern paraphrase.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>MLA (9th ed.)</span><button class="cite-copy" data-copy="citeMla" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeMla">Epicurus. &ldquo;Vatican Saying 68.&rdquo; <em>The Vatican Sayings</em>.</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>APA (7th ed.)</span><button class="cite-copy" data-copy="citeApa" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeApa">Epicurus. (n.d.). <em>The Vatican Sayings</em> (Saying 68).</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;He who is not satisfied with a little is satisfied with nothing&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/he-who-is-not-satisfied-with-a-little-is-satisfied-with</code></p>
                 </div>
             </div>
@@ -771,8 +779,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

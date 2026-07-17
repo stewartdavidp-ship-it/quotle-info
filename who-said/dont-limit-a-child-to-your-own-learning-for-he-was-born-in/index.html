@@ -716,11 +716,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Earliest documented source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Earliest documented source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Anonymous. &ldquo;Do not confine your children to your own learning, for they were born in another time.&rdquo; Earliest documented in <em>Gems of the Orient</em>, comp. Rev. A. Huebsch (1877), &ldquo;Arabic Proverbs and Sentences&rdquo;; modern wording in <em>Leo Rosten&rsquo;s Treasury of Jewish Quotations</em> (New York: McGraw-Hill, 1972). Chronology per Quote Investigator.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Don't limit a child to your own learning, for he was born in another time&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/dont-limit-a-child-to-your-own-learning-for-he-was-born-in</code></p>
                 </div>
             </div>
@@ -761,8 +761,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

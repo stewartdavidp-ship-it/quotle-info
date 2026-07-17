@@ -717,11 +717,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Tao Te Ching, ch. 64 (Legge, 1891)</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Tao Te Ching, ch. 64 (Legge, 1891)</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Laozi, <em>Tao Te Ching</em>, ch. 64, trans. James Legge, in <em>The Sacred Books of the East</em>, vol. 39: <em>The Texts of T&acirc;oism</em> (Oxford: Clarendon Press, 1891): &ldquo;the journey of a thousand <em>li</em> commenced with a single step.&rdquo;</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;The journey of a thousand miles begins with a single step&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/the-journey-of-a-thousand-miles-begins-with-a-single-step</code></p>
                 </div>
             </div>
@@ -762,8 +762,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

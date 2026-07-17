@@ -751,11 +751,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Mitchell, Margaret. <em>Gone with the Wind</em>. New York: Macmillan, 1936, pt. 5, ch. 63 (closing line). Line carried into <em>Gone with the Wind</em>, dir. Victor Fleming, screenplay credited to Sidney Howard (Selznick International Pictures / MGM, 1939). Proverb attested earlier in <em>England&rsquo;s Helicon</em> (London, 1600), &ldquo;Phyllida&rsquo;s Love-call to her Corydon, and his Replying,&rdquo; signed &ldquo;Ignoto.&rdquo;</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Tomorrow is another day&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/tomorrow-is-another-day</code></p>
                 </div>
             </div>
@@ -796,8 +796,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

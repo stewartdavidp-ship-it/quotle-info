@@ -739,11 +739,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Fragments, no. 35 (Oldfather, Loeb 1928)</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Fragments, no. 35 (Oldfather, Loeb 1928)</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Epictetus. &ldquo;Fragments,&rdquo; no. 35, in <em>The Discourses as Reported by Arrian, the Manual, and Fragments</em>. Translated by W. A. Oldfather. Loeb Classical Library 218. Cambridge, MA: Harvard University Press, 1928. Classed among the &lsquo;Doubtful and Spurious Fragments.&rsquo;</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;No man is free who is not master of himself&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/no-man-is-free-who-is-not-master-of-himself</code></p>
                 </div>
             </div>
@@ -784,8 +784,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

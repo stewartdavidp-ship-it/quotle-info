@@ -709,11 +709,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Alan C. Elms, &ldquo;Apocryphal Freud: Sigmund Freud&rsquo;s Most Famous &lsquo;Quotations&rsquo; and Their Actual Sources,&rdquo; <em>Annual of Psychoanalysis</em> 29 (2001): 83&ndash;104; earliest attestation in Allen Wheelis, &ldquo;The Place of Action in Personality Change,&rdquo; <em>Psychiatry</em> 13, no. 2 (1950): 139 n.9.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Sometimes a cigar is just a cigar&rsquo;?&rdquo; Last verified 10 Jul 2026. <code>https://quotle.info/who-said/sometimes-a-cigar-is-just-a-cigar</code></p>
                 </div>
             </div>
@@ -754,8 +754,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

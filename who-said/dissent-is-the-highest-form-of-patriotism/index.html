@@ -725,11 +725,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Earliest documented source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Earliest documented source</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Earliest documented in Friends Peace Committee, <em>The Use of Force in International Affairs</em> (Philadelphia: Friends Peace Committee, 1961), cited in &ldquo;Dissent,&rdquo; Wikiquote, and in Barry Popik, &ldquo;Dissent is the highest form of patriotism,&rdquo; The Big Apple. Later documented use: Howard Zinn, interview by Sharon Basco, TomPaine.com, 3 July 2002. Not found in Jefferson&rsquo;s writings; see &ldquo;Dissent is the highest form of patriotism &hellip; [Spurious Quote],&rdquo; <em>Jefferson Quotes &amp; Family Letters</em>, Thomas Jefferson Foundation.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Dissent is the highest form of patriotism&rsquo;?&rdquo; Last verified 14 Jul 2026. <code>https://quotle.info/who-said/dissent-is-the-highest-form-of-patriotism</code></p>
                 </div>
             </div>
@@ -770,8 +770,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

@@ -721,11 +721,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Documented in Anthony&rsquo;s authorized biography</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Documented in Anthony&rsquo;s authorized biography</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Susan B. Anthony, quoted in Ida Husted Harper, <em>The Life and Work of Susan B. Anthony</em>, Vol. I (Indianapolis: Bowen-Merrill, 1899), ch. XII, p. 197, from the 1860 divorce-law-reform campaign (&ldquo;Miss Anthony wrote at this time&hellip;&rdquo;). The one-line version commonly quoted (&ldquo;&hellip;can never effect a reform&rdquo;) is a compressed paraphrase of Harper&rsquo;s text (&ldquo;&hellip;never can bring about a reform&rdquo;).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Cautious, careful people always casting about to preserve their reputation can never effect a reform&rsquo;?&rdquo; Last verified 9 Jul 2026. <code>https://quotle.info/who-said/cautious-careful-people-always-casting-about-to-preserve</code></p>
                 </div>
             </div>
@@ -766,8 +766,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

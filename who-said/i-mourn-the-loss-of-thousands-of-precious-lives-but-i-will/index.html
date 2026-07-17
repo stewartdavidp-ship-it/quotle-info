@@ -735,11 +735,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Strength to Love (1963) + Jessica Dovey (2011)</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Strength to Love (1963) + Jessica Dovey (2011)</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Martin Luther King Jr., &ldquo;Loving Your Enemies,&rdquo; in <em>Strength to Love</em> (New York: Harper &amp; Row, 1963), ch. 5 (the genuine passage); opening sentence written by Jessica Dovey, Facebook status, May 2011.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;I mourn the loss of thousands of precious lives, but I will not rejoice in the death of one, not even an enemy. Returning hate for hate multiplies hate, adding deeper darkness to a night already devoid of stars. Darkness cannot drive out darkness: only light can do that. Hate cannot drive out hate: only love can do that&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/i-mourn-the-loss-of-thousands-of-precious-lives-but-i-will</code></p>
                 </div>
             </div>
@@ -780,8 +780,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

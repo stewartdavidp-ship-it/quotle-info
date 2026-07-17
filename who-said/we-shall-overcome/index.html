@@ -717,11 +717,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary sources</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary sources</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Lyndon B. Johnson, &ldquo;Special Message to the Congress: The American Promise,&rdquo; March 15, 1965 (spoken as &ldquo;And we shall overcome&rdquo;). Phrase originates in the anthem &ldquo;We Shall Overcome,&rdquo; rooted in Charles A. Tindley, &ldquo;I&rsquo;ll Overcome Some Day&rdquo; (1901) and published as &ldquo;We Will Overcome,&rdquo; People&rsquo;s Songs Bulletin (1948).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;We shall overcome&rsquo;?&rdquo; Last verified 16 Jul 2026. <code>https://quotle.info/who-said/we-shall-overcome</code></p>
                 </div>
             </div>
@@ -762,8 +762,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

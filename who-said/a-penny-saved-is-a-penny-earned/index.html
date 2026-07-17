@@ -735,11 +735,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Earliest documented wording</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Earliest documented wording</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Joseph Huddart (the Elder), <em>Swansea Harbour. Extracts from the [First] Report of J. H. &hellip; Shewing His Plan for the Improvement Thereof, Dated 1794</em> (1804), 13 &mdash; earliest documented appearance of the &ldquo;earned&rdquo; wording. Compare Benjamin Franklin, &ldquo;Hints for those that would be Rich,&rdquo; <em>Poor Richard&rsquo;s Almanack</em> (1737): &ldquo;A penny saved is twopence clear.&rdquo;</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;A penny saved is a penny earned&rsquo;?&rdquo; Last verified 14 Jul 2026. <code>https://quotle.info/who-said/a-penny-saved-is-a-penny-earned</code></p>
                 </div>
             </div>
@@ -780,8 +780,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

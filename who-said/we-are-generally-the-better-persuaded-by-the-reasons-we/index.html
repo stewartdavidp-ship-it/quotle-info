@@ -739,11 +739,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>How to cite this</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>How to cite this</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Blaise Pascal, <em>Pens&eacute;es</em>, ed. L&eacute;on Brunschvicg, Section I, fragment 10 (Paris: Hachette). English: Blaise Pascal, <em>Thoughts</em>, trans. W. F. Trotter (New York: P. F. Collier &amp; Son, 1910), fragment 10. The wording &ldquo;We are generally the better persuaded&hellip;&rdquo; corresponds to no translation we could identify.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;We are generally the better persuaded by the reasons we discover ourselves than by those given to us by others&rsquo;?&rdquo; Last verified 15 Jul 2026. <code>https://quotle.info/who-said/we-are-generally-the-better-persuaded-by-the-reasons-we</code></p>
                 </div>
             </div>
@@ -784,8 +784,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

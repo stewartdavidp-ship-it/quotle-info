@@ -754,11 +754,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Earliest documented wording</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Earliest documented wording</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Pappus of Alexandria. <em>Synagoge</em> (Collection), Book VIII, c. AD 340. Greek text in Friedrich Otto Hultsch, ed., <em>Pappi Alexandrini Collectionis quae supersunt</em> (Berlin, 1876&ndash;78), vol. 3, p. 1060. English rendering as in Sir Thomas Heath, <em>Archimedes</em> (1920): &ldquo;Give me a place to stand on, and I can move the earth.&rdquo; Earlier witness to the boast in different words: Plutarch, <em>Life of Marcellus</em> 14.7, trans. Bernadotte Perrin, Loeb Classical Library (1917).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Give me a place to stand, and I shall move the earth&rsquo;?&rdquo; Last verified 15 Jul 2026. <code>https://quotle.info/who-said/give-me-a-place-to-stand-and-i-shall-move-the-earth</code></p>
                 </div>
             </div>
@@ -799,8 +799,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

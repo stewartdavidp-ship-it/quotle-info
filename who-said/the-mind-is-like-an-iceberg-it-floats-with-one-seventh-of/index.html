@@ -739,11 +739,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary tracing</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary tracing</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Iceberg-mind simile earliest documented in G. Stanley Hall, &ldquo;Some Aspects of the Early Sense of Self,&rdquo; <em>American Journal of Psychology</em>, Vol. 9 (1898), p. 393; exact &ldquo;one-seventh&rdquo; wording in Woods Hutchinson, <em>The Saturday Evening Post</em> (March 17, 1923); first attributed to Freud in William Leon Smyser, &ldquo;The Czar of Psychoanalysis,&rdquo; <em>New York Herald Tribune</em> (1929), as traced by Quote Investigator (Aug 7, 2024).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;The mind is like an iceberg, it floats with one-seventh of its bulk above water&rsquo;?&rdquo; Last verified 10 Jul 2026. <code>https://quotle.info/who-said/the-mind-is-like-an-iceberg-it-floats-with-one-seventh-of</code></p>
                 </div>
             </div>
@@ -784,8 +784,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

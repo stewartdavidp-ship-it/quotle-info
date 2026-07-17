@@ -755,11 +755,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Cite this page</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Cite this page</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Kevin Alfred Strom, &ldquo;All America Must Know the Terror That Is Upon Us,&rdquo; <em>American Dissident Voices</em> (radio broadcast), 14 August 1993. The familiar wording is a later anonymous paraphrase; earliest documented attribution to Voltaire, 2007 (Barry Popik). Cf. Nicholas Cronk, <em>Voltaire: A Very Short Introduction</em> (Oxford: Oxford University Press, 2017), 122.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;To learn who rules over you, simply find out who you are not allowed to criticize&rsquo;?&rdquo; Last verified 14 Jul 2026. <code>https://quotle.info/who-said/to-learn-who-rules-over-you-simply-find-out-who-you-are-not</code></p>
                 </div>
             </div>
@@ -800,8 +800,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

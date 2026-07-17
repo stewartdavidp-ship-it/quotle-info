@@ -709,11 +709,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Coined by Drew &ldquo;Bundini&rdquo; Brown</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Coined by Drew &ldquo;Bundini&rdquo; Brown</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Attributed to Drew &ldquo;Bundini&rdquo; Brown, coined c. 1963&ndash;64 and popularised by Muhammad Ali (then Cassius Clay) during the build-up to the first Sonny Liston title fight, Miami Beach, 25 February 1964. Earliest widely documented in period press coverage; authorship recorded in Brown&rsquo;s biographical record.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Float like a butterfly, sting like a bee&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/float-like-a-butterfly-sting-like-a-bee</code></p>
                 </div>
             </div>
@@ -754,8 +754,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

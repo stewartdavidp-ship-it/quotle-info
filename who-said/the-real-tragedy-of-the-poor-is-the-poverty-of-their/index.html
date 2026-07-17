@@ -731,11 +731,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Source (best available)</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Source (best available)</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">No primary source located in the works of Adam Smith or Ernest Bevin. Clearest rebuttal consulted: Sam Bowman, &ldquo;Ideas can mean the difference between wealth and poverty,&rdquo; Adam Smith Institute blog, adamsmith.org (accessed 15 July 2026), which states that Smith never said it. On the Bevin credit, see Konstanze Spohrer, &ldquo;The problem with &lsquo;raising aspiration&rsquo; strategies,&rdquo; LSE British Politics and Policy, 9 May 2018.</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;The real tragedy of the poor is the poverty of their aspirations&rsquo;?&rdquo; Last verified 15 Jul 2026. <code>https://quotle.info/who-said/the-real-tragedy-of-the-poor-is-the-poverty-of-their</code></p>
                 </div>
             </div>
@@ -776,8 +776,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

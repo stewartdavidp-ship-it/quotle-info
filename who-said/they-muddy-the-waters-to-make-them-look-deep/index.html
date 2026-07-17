@@ -624,6 +624,7 @@
                 <div class="rights rights-public-domain">
                     <span class="rights-badge"><span class="rights-mark" aria-hidden="true">✓</span>Public domain</span>
                     <p class="rights-body">The German text was first published in 1883 and Thomas Common&rsquo;s English translation in 1909 &mdash; both well before 1931, so both are in the public domain in the United States. (Later translations such as Kaufmann&rsquo;s 1954 version remain in copyright, but the underlying line and the pre-1931 renderings are free to use.)</p>
+                    <p class="rights-body rights-caveat"><span aria-hidden="true">⚠</span> This reflects the <strong>original</strong> work, which is public domain. If your exact English wording comes from a specific <strong>modern translation</strong>, that translation may itself still be under copyright &mdash; check the edition you quote.</p>
                 </div>
             </div>
         </section>
@@ -729,11 +730,19 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Primary source</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>Primary source — Chicago</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Friedrich Nietzsche, <em>Thus Spake Zarathustra</em>, Part II, &ldquo;The Poets,&rdquo; trans. Thomas Common (London: T. N. Foulis, 1909); orig. <em>Also sprach Zarathustra</em>, &ldquo;Von den Dichtern&rdquo; (Chemnitz: Schmeitzner, 1883).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>MLA (9th ed.)</span><button class="cite-copy" data-copy="citeMla" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeMla">Nietzsche, Friedrich. <em>Thus Spake Zarathustra</em>. Translated by Thomas Common, T. N. Foulis, 1909, pt. 2, &ldquo;The Poets.&rdquo;</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>APA (7th ed.)</span><button class="cite-copy" data-copy="citeApa" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeApa">Nietzsche, F. (1909). <em>Thus spake Zarathustra</em> (T. Common, Trans.). T. N. Foulis. (Original work published 1883)</p>
+                </div>
+                <div class="cite-block">
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;They muddy the waters to make them look deep&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/they-muddy-the-waters-to-make-them-look-deep</code></p>
                 </div>
             </div>
@@ -774,8 +783,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

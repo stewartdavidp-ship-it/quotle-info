@@ -706,11 +706,11 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>The primary source (Chicago)</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>The primary source (Chicago)</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
                     <p class="cite-text" id="citeSrc">Garson O&rsquo;Toole (Quote Investigator), &ldquo;Everybody Is a Genius. But If You Judge a Fish by Its Ability To Climb a Tree, It Will Live Its Whole Life Believing that It Is Stupid,&rdquo; quoteinvestigator.com, 6 April 2013. Earliest documented instance: Matthew Kelly, <em>The Rhythm of Life</em> (New York: Fireside, 2004).</p>
                 </div>
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
+                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Everybody is a genius. But if you judge a fish by its ability to climb a tree, it will live its whole life believing that it is stupid&rsquo;?&rdquo; Last verified 8 Jul 2026. <code>https://quotle.info/who-said/everybody-is-a-genius-but-if-you-judge-a-fish-by-its</code></p>
                 </div>
             </div>
@@ -751,8 +751,8 @@
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);

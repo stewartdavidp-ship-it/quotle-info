@@ -832,19 +832,20 @@ function renderCite(q) {
   const cite = q.cite || {};
   const pageCite = cite.pageCitation
     || `Quotle.info. &ldquo;${esc(q.meta.ogTitle)}&rdquo; Last verified ${esc((q.answer || {}).lastVerified || '')}.`;
+  const block = (id, label, html) => `                <div class="cite-block">
+                    <div class="cite-lbl"><span>${esc(label)}</span><button class="cite-copy" data-copy="${id}" type="button">Copy</button></div>
+                    <p class="cite-text" id="${id}">${html}</p>
+                </div>`;
+  const blocks = [block('citeSrc', cite.sourceLabel && !cite.mla ? cite.sourceLabel : 'Primary source — Chicago', cite.sourceCitation)];
+  if (cite.mla) blocks.push(block('citeMla', 'MLA (9th ed.)', cite.mla));
+  if (cite.apa) blocks.push(block('citeApa', 'APA (7th ed.)', cite.apa));
+  blocks.push(block('citePage', 'This verification page', `${pageCite} <code>${url}</code>`));
   return `
         <!-- ============ CITE THIS PAGE ============ -->
         <section aria-labelledby="cite-h">
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
-                <div class="cite-block">
-                    <div class="cite-lbl"><span>${esc(cite.sourceLabel || 'The primary source (Chicago)')}</span><button class="cite-copy" data-copy="src" type="button">Copy</button></div>
-                    <p class="cite-text" id="citeSrc">${cite.sourceCitation}</p>
-                </div>
-                <div class="cite-block">
-                    <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="page" type="button">Copy</button></div>
-                    <p class="cite-text" id="citePage">${pageCite} <code>${url}</code></p>
-                </div>
+${blocks.join('\n')}
             </div>
         </section>`;
 }
@@ -899,8 +900,8 @@ ${FOOTER}
             if (navigator.share) { try { await navigator.share(data); } catch(e){} } else { copy(data.text+' '+data.url, 'Link copied'); }
         });
         document.querySelectorAll('.cite-copy').forEach(btn => btn.addEventListener('click', () => {
-            const el = document.getElementById(btn.dataset.copy === 'src' ? 'citeSrc' : 'citePage');
-            copy(el.textContent.trim(), 'Citation copied');
+            const el = document.getElementById(btn.dataset.copy);
+            if (el) copy(el.textContent.trim(), 'Citation copied');
         }));
         document.querySelectorAll('.kit-copy').forEach(btn => btn.addEventListener('click', () => {
             const el = document.getElementById(btn.dataset.target);
