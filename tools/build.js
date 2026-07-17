@@ -77,6 +77,7 @@ function build() {
       dayNumber: r.dayNumber ?? null,
       quote: r.displayQuote,
       author: (r.author && r.author.name) || null,
+      authorSlug: (r.author && r.author.slug) || null,
       quoteSlug: r.quoteSlug,
       confidence: r.confidence,
       url: canonicalUrl(r.quoteSlug),
