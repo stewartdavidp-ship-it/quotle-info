@@ -475,7 +475,7 @@ function renderAnswer(q) {
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
             </div>
             <p class="answer-foot">
-                <span aria-hidden="true">🕓</span> Last verified ${esc(ans.lastVerified)} · <a href="/how-we-verify">how we verify</a>
+                <span aria-hidden="true">🕓</span> Last verified ${esc(ans.lastVerified)} · <a href="/how-we-verify">how we verify</a> · <a href="/under-review/">spot an error?</a>
             </p>
         </article>`;
 }
