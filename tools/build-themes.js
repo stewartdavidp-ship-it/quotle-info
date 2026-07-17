@@ -17,7 +17,7 @@ const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc');
 const { CONFIDENCE } = require('./template');
-const { NAV: siteNav, CHROME_CSS, SEARCH_JS } = require('./chrome');
+const { NAV: siteNav, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const { THEMES, THEME_BY_SLUG, isTheme } = require('./themes');
 const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
 
@@ -125,9 +125,6 @@ const STYLE = `${ROOT_CSS}
         footer a { color:var(--burgundy-link); text-decoration:none; }
         @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } * { transition:none !important; } }`;
 
-const FOOTER = `    <footer>
-        <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
-    </footer>`;
 
 function page(inner, headExtra, active) {
   return `<!DOCTYPE html>

@@ -109,4 +109,27 @@ const SEARCH_JS = `    <script>
         })();
     </script>`;
 
-module.exports = { NAV, CHROME_CSS, SEARCH_JS };
+// Shared site footer with the standard trust/utility links. Used across every generator so About /
+// Privacy / Terms / Contact / How-we-verify are reachable from any page.
+const FOOTER = `    <footer class="site-footer">
+        <nav class="foot-links" aria-label="Site">
+            <a href="/about">About</a>
+            <a href="/how-we-verify">How we verify</a>
+            <a href="/check/">Check a quote</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+        </nav>
+        <p class="foot-tag">quotle<span>.info</span> &mdash; every attribution traced to a primary source and dated. An independent <a href="https://gameshelf.co">Game Shelf</a> project by runMast&nbsp;LLC.</p>
+    </footer>`;
+
+const FOOTER_CSS = `
+        .site-footer { border-top:1px solid var(--border); margin-top:56px; padding:34px 24px 44px; text-align:center; }
+        .foot-links { display:flex; flex-wrap:wrap; justify-content:center; gap:10px 20px; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; margin-bottom:16px; }
+        .foot-links a { color:var(--slate); text-decoration:none; }
+        .foot-links a:hover { color:var(--sage); text-decoration:underline; }
+        .foot-tag { font-family:'DM Sans',sans-serif; font-size:0.8rem; color:var(--text-muted); max-width:560px; margin:0 auto; line-height:1.6; }
+        .foot-tag span { color:var(--burgundy); }
+        .foot-tag a { color:var(--burgundy-link); text-decoration:none; }`;
+
+module.exports = { NAV, CHROME_CSS: CHROME_CSS + FOOTER_CSS, SEARCH_JS, FOOTER };

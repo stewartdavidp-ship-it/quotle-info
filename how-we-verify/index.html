@@ -6,11 +6,11 @@
     <script>(function(){try{var d=document.documentElement,ls=localStorage;var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
     <title>How we verify · Quotle.info</title>
     <meta name="gs-app-id" content="quotle-info">
-    <meta name="description" content="How Quotle.info verifies every quote: traced to a primary source, dated, cited, and marked with honest confidence — verified, attributed, or disputed. Nothing invented.">
+    <meta name="description" content="How Quotle.info verifies every quote: traced to a primary source, dated, cited, and marked with honest confidence — verified, attributed, or disputed.">
     <link rel="canonical" href="https://quotle.info/how-we-verify">
     <meta property="og:type" content="article">
     <meta property="og:title" content="How Quotle.info verifies every quote">
-    <meta property="og:description" content="Traced to a primary source, dated, cited, and marked with honest confidence. Nothing invented.">
+    <meta property="og:description" content="Traced to a primary source, dated, cited, and marked with honest confidence.">
     <meta property="og:url" content="https://quotle.info/how-we-verify">
     <meta property="og:site_name" content="Quotle.info">
     <meta property="og:image" content="https://quotle.info/og/default.png">
@@ -46,11 +46,6 @@
         body { font-family:'Source Serif 4',Georgia,serif; background:var(--bg-deep); color:var(--ink); line-height:1.7; overflow-x:hidden; }
         a { color:inherit; }
         a:focus-visible, button:focus-visible { outline:2px solid var(--sage); outline-offset:3px; border-radius:4px; }
-        .topnav { display:flex; align-items:center; justify-content:space-between; max-width:760px; margin:0 auto; padding:20px 24px 0; }
-        .brand { display:inline-flex; align-items:center; gap:9px; text-decoration:none; font-family:'Playfair Display',serif; font-weight:900; font-size:1.05rem; }
-        .brand-icon { width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,var(--burgundy),var(--burgundy-deep)); display:grid; place-items:center; font-size:0.95rem; }
-        .brand span { color:var(--burgundy); }
-        .nav-verify { font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:600; color:var(--sage); text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:7px 13px; border:1px solid rgba(126,179,139,0.3); border-radius:999px; background:var(--sage-dim); }
         main { max-width:680px; margin:0 auto; padding:8px 24px 64px; }
         .hero { padding:46px 0 8px; }
         .hero .kicker { font-family:'DM Sans',sans-serif; text-transform:uppercase; font-size:0.7rem; font-weight:700; letter-spacing:0.2em; color:var(--burgundy); margin-bottom:14px; }
@@ -59,8 +54,12 @@
         .hero .lede strong { color:var(--ink); }
         section { margin-top:44px; }
         h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:1.5rem; letter-spacing:-0.015em; margin-bottom:16px; }
+        h3.sub { font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:700; color:var(--ink); margin:22px 0 6px; }
         p { margin-bottom:16px; }
         p.big { color:var(--slate); }
+        ul, ol { color:var(--slate); margin:0 0 16px 1.1em; }
+        li { margin-bottom:9px; }
+        li strong { color:var(--ink); }
         .principle { display:flex; gap:14px; align-items:flex-start; padding:16px 0; border-bottom:1px solid var(--border); }
         .principle:last-child { border-bottom:none; }
         .principle .num { font-family:'Playfair Display',serif; font-weight:900; font-size:1.1rem; color:var(--gold); flex-shrink:0; width:26px; }
@@ -76,12 +75,11 @@
         .state-def { font-size:0.95rem; color:var(--slate); margin-bottom:0; }
         .note { background:var(--cream); border-left:2px solid var(--sage); border-radius:0 var(--radius-sm) var(--radius-sm) 0; padding:16px 18px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--slate); }
         .note strong { color:var(--ink); }
+        .cta { font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; color:var(--sage); text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:8px 15px; border:1px solid rgba(126,179,139,0.3); border-radius:999px; background:var(--sage-dim); }
+        .updated { font-family:'DM Sans',sans-serif; font-size:0.8rem; color:var(--text-muted); margin-top:6px; }
         .back { display:inline-flex; align-items:center; gap:8px; margin-top:40px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.9rem; color:var(--sage); text-decoration:none; }
         .back:hover { text-decoration:underline; }
-        footer { text-align:center; padding:40px 24px; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-size:0.8rem; border-top:1px solid var(--border); margin-top:48px; }
-        footer a { color:var(--burgundy-link); text-decoration:none; }
         @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } * { transition:none !important; } }
-        @media (max-width:560px) { .topnav { flex-wrap:wrap; gap:10px; } }
         /* skip link — first focusable element; visible only on keyboard focus */
         .skip-link { position:absolute; left:12px; top:-48px; z-index:200; background:var(--burgundy); color:#fff; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:600; padding:10px 16px; border-radius:0 0 10px 10px; text-decoration:none; transition:top 0.15s; }
         .skip-link:focus { top:0; outline:2px solid var(--sage); outline-offset:2px; }
@@ -112,6 +110,13 @@
         .nav-link:hover { color:var(--ink); border-color:var(--border-accent); }
         .nav-link.active { color:var(--ink); border-color:var(--burgundy); background:var(--burgundy-glow); }
         .nav-play { font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:600; color:var(--gold); text-decoration:none; padding:7px 14px; border:1px solid rgba(255,211,105,0.3); border-radius:999px; white-space:nowrap; }
+        .site-footer { border-top:1px solid var(--border); margin-top:56px; padding:34px 24px 44px; text-align:center; }
+        .foot-links { display:flex; flex-wrap:wrap; justify-content:center; gap:10px 20px; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; margin-bottom:16px; }
+        .foot-links a { color:var(--slate); text-decoration:none; }
+        .foot-links a:hover { color:var(--sage); text-decoration:underline; }
+        .foot-tag { font-family:'DM Sans',sans-serif; font-size:0.8rem; color:var(--text-muted); max-width:560px; margin:0 auto; line-height:1.6; }
+        .foot-tag span { color:var(--burgundy); }
+        .foot-tag a { color:var(--burgundy-link); text-decoration:none; }
     </style>
     <style>
         :root[data-theme="light"] {
@@ -207,9 +212,8 @@
         <header class="hero">
             <p class="kicker">The standard</p>
             <h1>How we verify</h1>
-            <p class="lede">Most quote sites repeat whatever is already circulating. Quotle.info does the opposite: every attribution here is traced back to a <strong>primary source</strong>, dated, and cited — and when the trail runs cold, we say so instead of guessing.</p>
+            <p class="lede">Every attribution here is traced back to a primary source, dated, and cited — and when the trail runs cold, we say so instead of guessing.</p>
         </header>
-
         <section aria-labelledby="how-h">
             <h2 id="how-h">What &ldquo;verified&rdquo; means here</h2>
             <div>
@@ -222,7 +226,7 @@
 
         <section aria-labelledby="states-h">
             <h2 id="states-h">Three honest states</h2>
-            <p class="big">Certainty is a spectrum, so every quote wears one of three badges. The badge is the whole point — it tells you exactly how far the evidence goes.</p>
+            <p class="big">Certainty is a spectrum, so we don&rsquo;t pretend everything is settled. Every quote wears one of three badges:</p>
             <div class="states">
                 <div class="state">
                     <span class="state-badge verified"><span class="state-dot">✓</span>Verified</span>
@@ -250,7 +254,7 @@
                 </div>
                 <div class="state">
                     <span class="state-badge attributed"><span class="state-dot">&copy;</span>In copyright</span>
-                    <p class="state-def">Still protected. We quote the single line for identification and commentary; the full work belongs to its author or estate, and verifying who said it is not a grant of reuse rights.</p>
+                    <p class="state-def">Still protected. We quote the single line for identification and commentary; the full work belongs to its author or estate, and verifying who said it is not a grant of reuse rights. Note that a modern <em>translation</em> of an old work can itself still be in copyright.</p>
                 </div>
                 <div class="state">
                     <span class="state-badge verified"><span class="state-dot">✓</span>Used with permission</span>
@@ -262,13 +266,20 @@
         <section aria-labelledby="wrong-h">
             <h2 id="wrong-h">When we get it wrong</h2>
             <p class="big">Provenance research is never finished — new archives surface and old ones get corrected. If you can point to a primary source that changes an attribution, that is exactly the evidence we want. Every page is dated so you can see how current it is.</p>
-            <p class="big"><a class="nav-verify" href="/under-review/">Flag a correction or a missing quote &rarr;</a></p>
+            <p class="big"><a class="cta" href="/under-review/">Flag a correction or a missing quote &rarr;</a></p>
         </section>
-
         <a class="back" href="/"><span aria-hidden="true">←</span> Browse the verified quotes</a>
     </main>
-    <footer>
-        <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
+    <footer class="site-footer">
+        <nav class="foot-links" aria-label="Site">
+            <a href="/about">About</a>
+            <a href="/how-we-verify">How we verify</a>
+            <a href="/check/">Check a quote</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/terms">Terms</a>
+        </nav>
+        <p class="foot-tag">quotle<span>.info</span> &mdash; every attribution traced to a primary source and dated. An independent <a href="https://gameshelf.co">Game Shelf</a> project by runMast&nbsp;LLC.</p>
     </footer>
     <script>
         (function(){

@@ -13,7 +13,7 @@ const path = require('path');
 const { HEAD_SCRIPT, THEME_CSS, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc');
-const { NAV, CHROME_CSS, SEARCH_JS } = require('./chrome');
+const { NAV, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
 const ROOT = path.resolve(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.json'), 'utf8'));
@@ -108,9 +108,7 @@ ${NAV(active)}
     <main id="main">
 ${body}
     </main>
-    <footer>
-        <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. <a href="/how-we-verify">How we verify</a> · A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
-    </footer>
+${FOOTER}
 ${SEARCH_JS}
 ${scripts}${SCRIPT}
 </body>

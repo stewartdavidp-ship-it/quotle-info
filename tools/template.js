@@ -24,7 +24,7 @@ const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc'); // one shared entity-aware escape (also used by build-index.js)
 const { hasAuthorPage } = require('./authors'); // which authors have a /authors/{slug} profile
 const { THEME_BY_SLUG } = require('./themes'); // controlled vocab → labels for the theme links
-const { NAV: siteNav, CHROME_CSS, SEARCH_JS } = require('./chrome'); // shared nav + universal search
+const { NAV: siteNav, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome'); // shared nav + universal search
 const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
 
 const ORIGIN = 'https://quotle.info';
@@ -857,9 +857,7 @@ function renderTail(q) {
         </aside>
     </main>
 
-    <footer>
-        <p>quotle<span style="color:var(--burgundy)">.info</span> — every attribution traced to a primary source and dated. A <a href="https://gameshelf.co">Game Shelf</a> project.</p>
-    </footer>
+${FOOTER}
 
     <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
 
