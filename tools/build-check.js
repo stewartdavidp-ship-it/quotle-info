@@ -144,7 +144,7 @@ const PAGE_SCRIPT = `    <script>
             if(r==='public-domain') return {t:'ok',ic:'\\u2713',x:'Free to reuse &mdash; including in commercial and paid decks. No permission needed.'};
             if(r==='in-copyright') return {t:'warn',ic:'\\u00a9',x:'Still under copyright. A short, credited quote is usually fine for talks and internal decks; get permission for commercial or published use.'};
             if(r==='licensed') return {t:'ok',ic:'\\u2713',x:'Cleared for reuse under licence &mdash; keep the credit.'};
-            return {t:'warn',ic:'?',x:'Rights unverified &mdash; fine to present as an unverified line, but don\\u2019t assert a specific source.'};
+            return {t:'warn',ic:'?',x:'Copyright status unconfirmed &mdash; we couldn\\u2019t establish whether it&rsquo;s public domain or still under copyright. A short, credited quote is usually fine for talks; clear the rights before commercial or published use.'};
         }
         function creditBlock(hit){
             if(!hit.credit) return '';

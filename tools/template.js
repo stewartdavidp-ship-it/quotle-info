@@ -76,6 +76,15 @@ const CONFIDENCE = {
   disputed:   { cls: 'disputed',   glyph: '?', text: 'Disputed',   label: 'Disputed attribution' },
 };
 
+// Compact reuse chip for Layer 1 — puts the "can I reuse it?" answer up top beside the attribution
+// status, instead of only in the "Put it on a slide" block below the fold. Links down to the full ruling.
+const REUSE_CHIP = {
+  'public-domain': { cls: 'pd',  glyph: '✓', label: 'Free to reuse' },
+  'in-copyright':  { cls: 'ic',  glyph: '©', label: 'In copyright' },
+  'licensed':      { cls: 'lic', glyph: '✓', label: 'Licensed reuse' },
+  'uncertain':     { cls: 'unc', glyph: '?', label: 'Rights unconfirmed' },
+};
+
 // Rights status is a SEPARATE claim from attribution (who said it) — a quote can be firmly
 // attributed and still under copyright. Three states, each with an honest default note; a record's
 // own `source.rightsNote` prose, if present, replaces the default body but keeps the badge.
@@ -458,6 +467,7 @@ function renderAnswer(q) {
                     <span class="dot" aria-hidden="true">${conf.glyph}</span>
                     <span><span class="visually-hidden">Attribution status: </span>${esc(confText)}</span>
                 </span>
+                ${(() => { const rc = REUSE_CHIP[(q.source && q.source.rights) || 'uncertain'] || REUSE_CHIP.uncertain; return `<a class="reuse-chip ${rc.cls}" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">${rc.glyph}</span><span><span class="visually-hidden">Reuse status: </span>${rc.label}</span></a>`; })()}
             </div>
             <p class="source-line">${ans.sourceLine}</p>
             <div class="actions">
@@ -991,6 +1001,18 @@ const STYLE = `${ROOT_CSS}
         .confidence.attributed .dot { background: var(--amber); }
         .confidence.disputed   { color: var(--caution); background: rgba(138,147,201,0.14);    border-color: rgba(138,147,201,0.4); }
         .confidence.disputed .dot   { background: var(--caution); }
+
+        /* Compact reuse chip beside the confidence chip — the "can I reuse it?" answer, up top */
+        .reuse-chip { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; padding: 7px 13px; border-radius: 999px; border: 1px solid; text-decoration: none; }
+        .reuse-chip .dot { width: 16px; height: 16px; border-radius: 50%; display: grid; place-items: center; font-size: 0.68rem; font-weight: 700; color: var(--bg-deep); }
+        .reuse-chip.pd  { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.pd .dot,  .reuse-chip.lic .dot { background: var(--sage); }
+        .reuse-chip.lic { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.ic  { color: var(--amber);   background: rgba(224,162,78,0.12);    border-color: rgba(224,162,78,0.35); }
+        .reuse-chip.ic .dot  { background: var(--amber); }
+        .reuse-chip.unc { color: var(--text-muted); background: rgba(154,162,178,0.12); border-color: rgba(154,162,178,0.3); }
+        .reuse-chip.unc .dot { background: var(--text-muted); }
+        .reuse-chip:hover { filter: brightness(1.08); }
 
         .source-line { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--slate); padding-top: 16px; border-top: 1px solid var(--border); }
         .source-line strong { color: var(--ink); font-weight: 600; }

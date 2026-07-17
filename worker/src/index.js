@@ -49,7 +49,8 @@ export default {
         const pub = { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=300' };
         const term = (url.searchParams.get('q') || '').trim();
         if (!term) return new Response(JSON.stringify({ error: 'Pass ?q=<quote text> to check who really said it.' }), { status: 400, headers: pub });
-        const hit = matchQuote(term, await loadVerifyIndex());
+        const vIdx = await loadVerifyIndex();
+        const hit = matchQuote(term, vIdx);
         if (!hit) return new Response(JSON.stringify({
           found: false, query: term,
           note: 'No verified match in the quotle.info corpus yet. Not proof it is fake — only that we cannot confirm it.',
@@ -57,6 +58,7 @@ export default {
           check: 'https://quotle.info/check/?q=' + encodeURIComponent(term),
           browseThemes: 'https://quotle.info/themes.json',
           nominate: 'https://quotle.info/under-review/',
+          ...corpusMeta(vIdx),
         }), { headers: pub });
         return new Response(JSON.stringify({
           found: true, query: term, quote: hit.q,
@@ -72,7 +74,7 @@ export default {
           // one it writes free-form. The grounded prompt still serves HUMANS on /check (which reads
           // verify-index.json.img directly). Agents should invent their own image; we add rights,
           // not image direction.
-          url: hit.u, source: 'quotle.info',
+          url: hit.u, source: 'quotle.info', ...corpusMeta(vIdx),
         }), { headers: pub });
       }
 
@@ -103,6 +105,7 @@ export default {
           misattributed: results.filter((r) => r.found && r.verdict === 'disputed').length,
           notFound: results.filter((r) => !r.found).length,
           inCopyright: results.filter((r) => r.rights === 'in-copyright').length,
+          ...corpusMeta(idx),
         };
         summary.needsAttention = results
           .map((r, i) => ((r.found && r.verdict === 'disputed') || !r.found ? i : -1))
@@ -249,7 +252,7 @@ async function verifyTurnstile(env, token, req) {
 }
 
 // ---- /verify: verdict index (fetched from the live site, cached in-isolate + at the edge) ----
-let _idxCache = null, _idxTs = 0;
+let _idxCache = null, _idxTs = 0, _idxLastMod = null;
 async function loadVerifyIndex() {
   const now = Date.now();
   if (_idxCache && (now - _idxTs) < 300000) return _idxCache;
@@ -259,10 +262,12 @@ async function loadVerifyIndex() {
     const r = await fetch('https://quotle.info/verify-index.json?_=' + bust, { cf: { cacheTtl: 60 } });
     if (!r.ok) throw new Error('index ' + r.status);
     const data = await r.json();
-    if (Array.isArray(data)) { _idxCache = data; _idxTs = now; }
+    if (Array.isArray(data)) { _idxCache = data; _idxTs = now; _idxLastMod = r.headers.get('last-modified') || _idxLastMod; }
   } catch (_) { /* index not reachable yet — degrade to found:false */ }
   return _idxCache || [];
 }
+// Freshness/size metadata for machine consumers to gate/cache on — derived free from the index fetch.
+function corpusMeta(idx) { return { corpusSize: (idx && idx.length) || 0, dataUpdated: _idxLastMod || null }; }
 const normQ = (s) => String(s).toLowerCase().replace(/[’'‘`"“”]/g, '').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
 
 // ---- /lookup: compact "already on our list" index (queued/selected harvest candidates) ----
@@ -381,7 +386,7 @@ function reuseVerdict(rights) {
   if (rights === 'public-domain') return 'Free to reuse, including in commercial and paid presentations. No permission needed.';
   if (rights === 'in-copyright') return 'Still under copyright. A short, credited quote is usually fine for talks and internal decks; get permission for commercial or published use.';
   if (rights === 'licensed') return 'Cleared for reuse under licence — keep the credit.';
-  return 'Rights unverified — safe to present as an unverified line, but do not assert a specific source.';
+  return 'Copyright status unconfirmed — we could not establish whether this is public domain or still under copyright. A short, credited quote is usually fine for talks; clear the rights before commercial or published use.';
 }
 function matchQuote(term, idx) {
   const t = normQ(term);

@@ -187,6 +187,18 @@
         .confidence.disputed   { color: var(--caution); background: rgba(138,147,201,0.14);    border-color: rgba(138,147,201,0.4); }
         .confidence.disputed .dot   { background: var(--caution); }
 
+        /* Compact reuse chip beside the confidence chip — the "can I reuse it?" answer, up top */
+        .reuse-chip { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; padding: 7px 13px; border-radius: 999px; border: 1px solid; text-decoration: none; }
+        .reuse-chip .dot { width: 16px; height: 16px; border-radius: 50%; display: grid; place-items: center; font-size: 0.68rem; font-weight: 700; color: var(--bg-deep); }
+        .reuse-chip.pd  { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.pd .dot,  .reuse-chip.lic .dot { background: var(--sage); }
+        .reuse-chip.lic { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.ic  { color: var(--amber);   background: rgba(224,162,78,0.12);    border-color: rgba(224,162,78,0.35); }
+        .reuse-chip.ic .dot  { background: var(--amber); }
+        .reuse-chip.unc { color: var(--text-muted); background: rgba(154,162,178,0.12); border-color: rgba(154,162,178,0.3); }
+        .reuse-chip.unc .dot { background: var(--text-muted); }
+        .reuse-chip:hover { filter: brightness(1.08); }
+
         .source-line { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--slate); padding-top: 16px; border-top: 1px solid var(--border); }
         .source-line strong { color: var(--ink); font-weight: 600; }
         .actions { display: flex; gap: 10px; margin-top: 20px; }
@@ -507,6 +519,7 @@
                     <span class="dot" aria-hidden="true">?</span>
                     <span><span class="visually-hidden">Attribution status: </span>Disputed</span>
                 </span>
+                <a class="reuse-chip unc" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">?</span><span><span class="visually-hidden">Reuse status: </span>Rights unconfirmed</span></a>
             </div>
             <p class="source-line">There is <strong>no evidence Salvador Dalí ever said or wrote this</strong>. A near-variant <em>simile</em> &mdash; &ldquo;intelligence without ambition is <strong>like a</strong> bird without wings&rdquo; &mdash; appeared anonymously in 1996; the <strong>exact modern wording</strong> (&ldquo;is a bird without wings&rdquo;) is first seen in 1997, credited to <strong>C. Archie Danielson</strong> in <em>Reader&rsquo;s Digest Quotable Quotes</em>. The Dalí label only shows up around 2004, most likely from an alphabetical mix-up between &ldquo;Danielson&rdquo; and &ldquo;Dalí,&rdquo; per <a href="https://quoteinvestigator.com/2015/10/14/wings/" target="_blank" rel="noopener">Quote Investigator ↗</a>.</p>
             <div class="actions">
