@@ -89,6 +89,12 @@
         .dym-list { flex-direction:column; align-items:stretch; }
         .dym-item { justify-content:flex-start; text-align:left; white-space:normal; max-width:100%; font-style:italic; line-height:1.5; padding:11px 15px; }
         .dym-item b { font-style:normal; font-family:'DM Sans',sans-serif; font-size:0.8rem; color:var(--slate); }
+        .narrow { margin-top:18px; padding-top:16px; border-top:1px solid var(--border); }
+        .narrow-row { display:flex; flex-wrap:wrap; gap:9px; margin-top:8px; }
+        .narrow-in { flex:1 1 160px; min-width:0; font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--ink); background:var(--bg-elevated); border:1px solid var(--border); border-radius:999px; padding:10px 15px; outline:none; }
+        .narrow-in:focus { border-color:var(--burgundy); }
+        .narrow-in::placeholder { color:var(--text-muted); }
+        .narrow-btn { flex:0 0 auto; }
         .r-note { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-top:14px; line-height:1.6; }
         .how { margin-top:44px; padding-top:22px; border-top:1px solid var(--border); font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); line-height:1.65; }
         .how a { color:var(--sage); text-decoration:none; }
@@ -281,6 +287,7 @@
     (function(){
         var box=document.getElementById('cq'), btn=document.getElementById('cbtn'), out=document.getElementById('result');
         var idx=null, loading=false, escalating=false;
+        var hintAuthor='', hintSource='';
         var API='https://quotle-community.stewartd.workers.dev';
         function esc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':String(s)); return d.innerHTML; }
         function toast(m){ var t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout(function(){t.classList.remove('show');},1700); }
@@ -316,14 +323,31 @@
         // --- no-corpus-match escalation: backlog \u2192 review queue \u2192 Wikiquote (server-checked) ---
         function wqSearch(q){ return 'https://en.wikiquote.org/w/index.php?search='+encodeURIComponent(q); }
         function qiSearch(q){ return 'https://quoteinvestigator.com/?s='+encodeURIComponent(q); }
+        // Optional author/source hints — narrow our corpus AND turn the Wikiquote search into a targeted page scan.
+        function narrowForm(prompt){
+            return '<div class="narrow"><p class="r-lbl">'+(prompt||'Know who said it, or where it\u2019s from? Narrow it down')+'</p>'+
+                '<div class="narrow-row">'+
+                '<input class="narrow-in" id="n-author" type="text" placeholder="Author (e.g. Oscar Wilde)" value="'+esc(hintAuthor)+'">'+
+                '<input class="narrow-in" id="n-source" type="text" placeholder="Film, book, or speech" value="'+esc(hintSource)+'">'+
+                '<button class="r-btn primary narrow-btn" type="button">Narrow it down</button></div></div>';
+        }
         function noneCard(q){
             return '<div class="rcard none"><div class="r-verdict"><span class="r-ic">?</span>Not in our verified corpus</div>'+
                 '<p class="r-quote">\u201c'+esc(q)+'\u201d</p>'+
                 '<p class="r-line">We haven\u2019t traced this exact line to a source yet, and we couldn\u2019t find it on Wikiquote either. <strong>That isn\u2019t proof it\u2019s fake</strong> &mdash; only that we can\u2019t confirm it, so don\u2019t present it as a verified quote with a named author.</p>'+
+                narrowForm()+
                 '<div class="r-actions"><a class="r-btn primary" href="/under-review/">Nominate it for review</a>'+
                 '<a class="r-btn" target="_blank" rel="noopener" href="'+wqSearch(q)+'">Search Wikiquote \u2197</a>'+
-                '<a class="r-btn" target="_blank" rel="noopener" href="'+qiSearch(q)+'">Search Quote Investigator \u2197</a></div>'+
-                '<p class="r-note">Tip: try a shorter, distinctive phrase from the line.</p></div>';
+                '<a class="r-btn" target="_blank" rel="noopener" href="'+qiSearch(q)+'">Search Quote Investigator \u2197</a></div></div>';
+        }
+        function wikiquoteFuzzyCard(q, d){
+            return '<div class="rcard attr"><div class="r-verdict"><span class="r-ic">\u2248</span>Closest match on Wikiquote</div>'+
+                '<p class="r-line">You typed \u201c'+esc(q)+'\u201d. On Wikiquote\u2019s <strong>'+esc(d.title)+'</strong> page, the closest line is:</p>'+
+                '<p class="r-quote">\u201c'+esc(d.suggestion)+'\u201d</p>'+
+                '<p class="r-line">Is that the one? We haven\u2019t verified it ourselves yet, but Wikiquote has the sourcing.</p>'+
+                '<div class="r-actions"><a class="r-btn primary" target="_blank" rel="noopener" href="'+esc(d.wikiquoteUrl)+'">Take me to Wikiquote \u2192</a>'+
+                '<a class="r-btn" target="_blank" rel="noopener" href="'+qiSearch(d.suggestion||q)+'">Search Quote Investigator \u2197</a></div>'+
+                narrowForm('Not it? Try a different author or source')+'</div>';
         }
         function queuedCard(q, lead){
             // already on our list (backlog or pending nomination) \u2014 not yet verified
@@ -348,11 +372,15 @@
             out.innerHTML='<div class="rcard none"><div class="r-verdict"><span class="r-ic">\u2026</span>Checking our backlog and Wikiquote\u2026</div>'+
                 '<p class="r-quote">\u201c'+esc(q)+'\u201d</p></div>';
             if(escalating) return; escalating=true;
-            fetch(API+'/lookup?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){
+            var qs='/lookup?q='+encodeURIComponent(q);
+            if(hintAuthor) qs+='&author='+encodeURIComponent(hintAuthor);
+            if(hintSource) qs+='&source='+encodeURIComponent(hintSource);
+            fetch(API+qs).then(function(r){return r.json();}).then(function(d){
                 escalating=false; d=d||{};
                 if(d.stage==='backlog') out.innerHTML=queuedCard(q,'You\u2019re ahead of us &mdash; this line is already queued for verification.');
                 else if(d.stage==='nominated') out.innerHTML=queuedCard(q,'Someone\u2019s already flagged this one for us to verify.');
                 else if(d.stage==='wikiquote') out.innerHTML=wikiquoteCard(q,d);
+                else if(d.stage==='wikiquote-fuzzy') out.innerHTML=wikiquoteFuzzyCard(q,d);
                 else if(d.stage==='corpus'&&d.url) out.innerHTML='<div class="rcard ok"><div class="r-verdict"><span class="r-ic">\u2713</span>We do have this one</div><p class="r-quote">\u201c'+esc(q)+'\u201d</p><div class="r-actions"><a class="r-btn primary" href="'+esc(d.url)+'">See the full verdict \u2192</a></div></div>';
                 else out.innerHTML=noneCard(q); // 'none' or 'short' or unknown
             }).catch(function(){ escalating=false; out.innerHTML=noneCard(q); });
@@ -367,9 +395,23 @@
             var inter=0; for(var j=0;j<bg.length;j++){ if(m[bg[j]]>0){ inter++; m[bg[j]]--; } }
             return 2*inter/(qg.length+bg.length);
         }
+        function authorMatch(real){ if(!hintAuthor) return true; var a=norm(hintAuthor), r=norm(real||''); return !!r && (r.indexOf(a)>-1 || a.indexOf(r)>-1); }
         function fuzzyCandidates(term){
-            var t=norm(term); if(t.length<8||!idx) return [];
-            var qg=bigrams(t), scored=[];
+            var t=norm(term); if(!idx) return [];
+            var hasA=!!hintAuthor;
+            if(t.length<8 && !hasA) return [];
+            var qg=bigrams(t);
+            // Author hint (Tier 1): narrow to that author's quotes, then rank by word-similarity so even a
+            // vague, gist-only memory surfaces their closest line. No hint: pure fuzzy over the whole corpus.
+            if(hasA){
+                var pool=[];
+                for(var p=0;p<idx.length;p++){ var pe=idx[p]; if(pe.n&&authorMatch(pe.real)) pool.push({e:pe,s:diceScore(qg,pe.n)}); }
+                if(!pool.length) return [];            // nothing by this author in corpus \u2192 let Wikiquote (Tier 2) handle
+                pool.sort(function(a,b){ return b.s-a.s; });
+                if(pool[0].s<0.25) return [];          // author matched but no line resembles the words \u2192 escalate
+                return pool.slice(0,3).map(function(x){ return x.e; });
+            }
+            var scored=[];
             for(var i=0;i<idx.length;i++){ var e=idx[i]; if(!e.n) continue; var s=diceScore(qg,e.n); if(s>=0.45) scored.push({e:e,s:s}); }
             scored.sort(function(a,b){ return b.s-a.s; });
             if(!scored.length||scored[0].s<0.5) return [];
@@ -382,19 +424,18 @@
                 var who=e.real?(' <b>&mdash; '+esc(e.real)+'</b>'):'';
                 return '<button class="dym-item r-btn" type="button" data-q="'+esc(e.q)+'">\u201c'+esc(e.q)+'\u201d'+who+'</button>';
             }).join('');
+            var lead=hintAuthor
+                ? 'Closest lines we hold from <strong>'+esc(hintAuthor)+'</strong> &mdash; pick the one you meant:'
+                : 'We couldn\u2019t match \u201c'+esc(term.trim())+'\u201d word-for-word, but these verified lines are close. Pick the one you meant to see its verdict and credit:';
             return '<div class="rcard none"><div class="r-verdict"><span class="r-ic">\u2248</span>Did you mean one of these?</div>'+
-                '<p class="r-line">We couldn\u2019t match \u201c'+esc(term.trim())+'\u201d word-for-word, but these verified lines are close. Pick the one you meant to see its verdict and credit:</p>'+
+                '<p class="r-line">'+lead+'</p>'+
                 '<div class="r-actions dym-list">'+items+'</div>'+
+                narrowForm('Not these? Add an author or source to widen the search')+
                 '<p class="r-note"><button class="dym-none" type="button" style="background:none;border:none;color:var(--sage);cursor:pointer;font:inherit;padding:0;text-decoration:underline">None of these &mdash; check the exact line anyway \u2192</button></p></div>';
-        }
-        function wireDidYouMean(term){
-            var items=out.querySelectorAll('.dym-item');
-            for(var i=0;i<items.length;i++){ items[i].addEventListener('click',function(){ box.value=this.getAttribute('data-q'); run(); box.scrollIntoView({block:'nearest'}); }); }
-            var none=out.querySelector('.dym-none'); if(none) none.addEventListener('click',function(){ escalate(term.trim()); });
         }
         function render(term){
             var hit=match(term);
-            if(!hit){ var cands=fuzzyCandidates(term); if(cands.length){ out.innerHTML=didYouMeanCard(term,cands); wireDidYouMean(term); } else { escalate(term.trim()); } return; }
+            if(!hit){ var cands=fuzzyCandidates(term); if(cands.length){ out.innerHTML=didYouMeanCard(term,cands); } else { escalate(term.trim()); } return; }
             var ru=reuse(hit.rights);
             var reuseHtml='<div class="r-reuse '+ru.t+'"><span class="ric">'+ru.ic+'</span><span>'+ru.x+'</span></div>';
             if(hit.c==='disputed'){
@@ -422,10 +463,20 @@
             if(loading) return; loading=true;
             fetch('/verify-index.json').then(function(r){return r.json();}).then(function(d){ idx=d||[]; loading=false; render(v); }).catch(function(){ loading=false; out.innerHTML='<p class="r-note">Couldn\u2019t load the verification index &mdash; please retry.</p>'; });
         }
-        btn.addEventListener('click',run);
-        box.addEventListener('keydown',function(e){ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); run(); } });
-        // deep link: /check/?q=...
-        try{ var qp=new URLSearchParams(location.search).get('q'); if(qp){ box.value=qp; run(); } }catch(e){}
+        function freshRun(){ hintAuthor=''; hintSource=''; run(); }        // a new paste clears stale hints
+        function applyNarrow(){ var a=document.getElementById('n-author'), s=document.getElementById('n-source'); hintAuthor=(a&&a.value||'').trim(); hintSource=(s&&s.value||'').trim(); run(); }
+        btn.addEventListener('click',freshRun);
+        box.addEventListener('keydown',function(e){ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); freshRun(); } });
+        // Delegated result-card actions (cards are re-rendered, this container is not).
+        out.addEventListener('click',function(e){
+            var t=e.target;
+            if(t.closest('.narrow-btn')){ applyNarrow(); return; }
+            var di=t.closest('.dym-item'); if(di){ box.value=di.getAttribute('data-q'); freshRun(); box.scrollIntoView({block:'nearest'}); return; }
+            if(t.closest('.dym-none')){ escalate(box.value.trim()); return; }
+        });
+        out.addEventListener('keydown',function(e){ if(e.key==='Enter'&&e.target.classList&&e.target.classList.contains('narrow-in')){ e.preventDefault(); applyNarrow(); } });
+        // deep link: /check/?q=...&author=...&source=...
+        try{ var sp=new URLSearchParams(location.search); var qp=sp.get('q'); if(qp){ box.value=qp; hintAuthor=(sp.get('author')||'').trim(); hintSource=(sp.get('source')||'').trim(); run(); } }catch(e){}
     })();
     </script>
     <script>
