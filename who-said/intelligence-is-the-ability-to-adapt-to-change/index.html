@@ -200,6 +200,18 @@
         .confidence.disputed   { color: var(--caution); background: rgba(138,147,201,0.14);    border-color: rgba(138,147,201,0.4); }
         .confidence.disputed .dot   { background: var(--caution); }
 
+        /* Compact reuse chip beside the confidence chip — the "can I reuse it?" answer, up top */
+        .reuse-chip { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; padding: 7px 13px; border-radius: 999px; border: 1px solid; text-decoration: none; }
+        .reuse-chip .dot { width: 16px; height: 16px; border-radius: 50%; display: grid; place-items: center; font-size: 0.68rem; font-weight: 700; color: var(--bg-deep); }
+        .reuse-chip.pd  { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.pd .dot,  .reuse-chip.lic .dot { background: var(--sage); }
+        .reuse-chip.lic { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.ic  { color: var(--amber);   background: rgba(224,162,78,0.12);    border-color: rgba(224,162,78,0.35); }
+        .reuse-chip.ic .dot  { background: var(--amber); }
+        .reuse-chip.unc { color: var(--text-muted); background: rgba(154,162,178,0.12); border-color: rgba(154,162,178,0.3); }
+        .reuse-chip.unc .dot { background: var(--text-muted); }
+        .reuse-chip:hover { filter: brightness(1.08); }
+
         .source-line { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--slate); padding-top: 16px; border-top: 1px solid var(--border); }
         .source-line strong { color: var(--ink); font-weight: 600; }
         .actions { display: flex; gap: 10px; margin-top: 20px; }
@@ -520,6 +532,7 @@
                     <span class="dot" aria-hidden="true">?</span>
                     <span><span class="visually-hidden">Attribution status: </span>Disputed</span>
                 </span>
+                <a class="reuse-chip unc" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">?</span><span><span class="visually-hidden">Reuse status: </span>Rights unconfirmed</span></a>
             </div>
             <p class="source-line">There is no record of Stephen Hawking writing or saying this line &mdash; it appears in none of his books, papers, or documented interviews, and <a href="https://en.wikiquote.org/wiki/Stephen_Hawking" target="_blank" rel="noopener">Wikiquote</a> lists no sourced instance of it. The sentence is a compressed, anonymised echo of a much older meme: <a href="https://quoteinvestigator.com/2014/05/04/adapt/" target="_blank" rel="noopener">Quote Investigator</a> traces the &ldquo;survives by adapting to change&rdquo; idea to management professor Leon C. Megginson, who in 1963 paraphrased Darwin. Tellingly, Megginson set intelligence <em>against</em> adaptability rather than equating them &mdash; so the tidy &ldquo;intelligence <em>is</em> the ability to adapt&rdquo; wording matches neither Hawking nor Megginson. It was simply pinned on Hawking&rsquo;s famous name.</p>
             <div class="actions">

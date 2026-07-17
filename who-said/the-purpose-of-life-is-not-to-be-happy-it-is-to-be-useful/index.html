@@ -202,6 +202,18 @@
         .confidence.disputed   { color: var(--caution); background: rgba(138,147,201,0.14);    border-color: rgba(138,147,201,0.4); }
         .confidence.disputed .dot   { background: var(--caution); }
 
+        /* Compact reuse chip beside the confidence chip — the "can I reuse it?" answer, up top */
+        .reuse-chip { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; padding: 7px 13px; border-radius: 999px; border: 1px solid; text-decoration: none; }
+        .reuse-chip .dot { width: 16px; height: 16px; border-radius: 50%; display: grid; place-items: center; font-size: 0.68rem; font-weight: 700; color: var(--bg-deep); }
+        .reuse-chip.pd  { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.pd .dot,  .reuse-chip.lic .dot { background: var(--sage); }
+        .reuse-chip.lic { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.ic  { color: var(--amber);   background: rgba(224,162,78,0.12);    border-color: rgba(224,162,78,0.35); }
+        .reuse-chip.ic .dot  { background: var(--amber); }
+        .reuse-chip.unc { color: var(--text-muted); background: rgba(154,162,178,0.12); border-color: rgba(154,162,178,0.3); }
+        .reuse-chip.unc .dot { background: var(--text-muted); }
+        .reuse-chip:hover { filter: brightness(1.08); }
+
         .source-line { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--slate); padding-top: 16px; border-top: 1px solid var(--border); }
         .source-line strong { color: var(--ink); font-weight: 600; }
         .actions { display: flex; gap: 10px; margin-top: 20px; }
@@ -522,6 +534,7 @@
                     <span class="dot" aria-hidden="true">?</span>
                     <span><span class="visually-hidden">Attribution status: </span>No evidence Emerson wrote it; the idea is Leo Rosten&rsquo;s, but this precise wording matches no text by either man.</span>
                 </span>
+                <a class="reuse-chip ic" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">©</span><span><span class="visually-hidden">Reuse status: </span>In copyright</span></a>
             </div>
             <p class="source-line">Emerson died in 1882 and <a href="https://quoteinvestigator.com/2014/11/29/purpose/" target="_blank" rel="noopener">Quote Investigator found no substantive evidence he crafted these words ↗</a>; the thought belongs to humorist Leo Rosten, who argued it repeatedly from 1962 onward &mdash; most memorably in his 1965 essay &ldquo;The Myths by Which We Live.&rdquo; Even so, this exact wording is not Rosten&rsquo;s either: the trailing phrase &ldquo;that you have lived and lived well&rdquo; appears in none of his texts, and surfaces only once the line had already been pinned on Emerson.</p>
             <div class="actions">

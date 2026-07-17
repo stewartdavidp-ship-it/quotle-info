@@ -205,6 +205,18 @@
         .confidence.disputed   { color: var(--caution); background: rgba(138,147,201,0.14);    border-color: rgba(138,147,201,0.4); }
         .confidence.disputed .dot   { background: var(--caution); }
 
+        /* Compact reuse chip beside the confidence chip — the "can I reuse it?" answer, up top */
+        .reuse-chip { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; padding: 7px 13px; border-radius: 999px; border: 1px solid; text-decoration: none; }
+        .reuse-chip .dot { width: 16px; height: 16px; border-radius: 50%; display: grid; place-items: center; font-size: 0.68rem; font-weight: 700; color: var(--bg-deep); }
+        .reuse-chip.pd  { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.pd .dot,  .reuse-chip.lic .dot { background: var(--sage); }
+        .reuse-chip.lic { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.ic  { color: var(--amber);   background: rgba(224,162,78,0.12);    border-color: rgba(224,162,78,0.35); }
+        .reuse-chip.ic .dot  { background: var(--amber); }
+        .reuse-chip.unc { color: var(--text-muted); background: rgba(154,162,178,0.12); border-color: rgba(154,162,178,0.3); }
+        .reuse-chip.unc .dot { background: var(--text-muted); }
+        .reuse-chip:hover { filter: brightness(1.08); }
+
         .source-line { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--slate); padding-top: 16px; border-top: 1px solid var(--border); }
         .source-line strong { color: var(--ink); font-weight: 600; }
         .actions { display: flex; gap: 10px; margin-top: 20px; }
@@ -525,6 +537,7 @@
                     <span class="dot" aria-hidden="true">?</span>
                     <span><span class="visually-hidden">Attribution status: </span>The joke is real and Hemingway wrote it down &mdash; but not in these words, and by his own account not first.</span>
                 </span>
+                <a class="reuse-chip ic" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">©</span><span><span class="visually-hidden">Reuse status: </span>In copyright</span></a>
             </div>
             <p class="source-line">The documented line is from a 1930 letter Hemingway wrote to his friend Henry Strater: &ldquo;He advised us all to be careful as men are dying this year who have never died before&rdquo; &mdash; and the &ldquo;he&rdquo; is not Hemingway but his Key West fishing companion Edward &lsquo;Bra&rsquo; Saunders, whom Hemingway credited every time he used it. The popular wording drifted twice over: first into the widely shared &ldquo;People are dying who have never died before,&rdquo; then into the apocalyptic &ldquo;Millions of people who have never died before will be killed,&rdquo; which no documented source contains.</p>
             <div class="actions">

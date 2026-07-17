@@ -208,6 +208,18 @@
         .confidence.disputed   { color: var(--caution); background: rgba(138,147,201,0.14);    border-color: rgba(138,147,201,0.4); }
         .confidence.disputed .dot   { background: var(--caution); }
 
+        /* Compact reuse chip beside the confidence chip — the "can I reuse it?" answer, up top */
+        .reuse-chip { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.78rem; padding: 7px 13px; border-radius: 999px; border: 1px solid; text-decoration: none; }
+        .reuse-chip .dot { width: 16px; height: 16px; border-radius: 50%; display: grid; place-items: center; font-size: 0.68rem; font-weight: 700; color: var(--bg-deep); }
+        .reuse-chip.pd  { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.pd .dot,  .reuse-chip.lic .dot { background: var(--sage); }
+        .reuse-chip.lic { color: var(--sage);    background: var(--sage-dim);          border-color: rgba(126,179,139,0.35); }
+        .reuse-chip.ic  { color: var(--amber);   background: rgba(224,162,78,0.12);    border-color: rgba(224,162,78,0.35); }
+        .reuse-chip.ic .dot  { background: var(--amber); }
+        .reuse-chip.unc { color: var(--text-muted); background: rgba(154,162,178,0.12); border-color: rgba(154,162,178,0.3); }
+        .reuse-chip.unc .dot { background: var(--text-muted); }
+        .reuse-chip:hover { filter: brightness(1.08); }
+
         .source-line { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--slate); padding-top: 16px; border-top: 1px solid var(--border); }
         .source-line strong { color: var(--ink); font-weight: 600; }
         .actions { display: flex; gap: 10px; margin-top: 20px; }
@@ -528,6 +540,7 @@
                     <span class="dot" aria-hidden="true">✓</span>
                     <span><span class="visually-hidden">Attribution status: </span>Verified</span>
                 </span>
+                <a class="reuse-chip pd" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">✓</span><span><span class="visually-hidden">Reuse status: </span>Free to reuse</span></a>
             </div>
             <p class="source-line">This is a genuine line from the <em>Tao Te Ching</em>, Chapter 33. The exact English wording &mdash; &ldquo;overcomes&hellip;is strong&hellip;overcomes himself is mighty&rdquo; &mdash; is <a href="https://terebess.hu/english/tao/legge.html" target="_blank" rel="noopener">James Legge&rsquo;s 1891 translation</a>. Note that the widely-shared &ldquo;<a href="https://www.goodreads.com/quotes/206693" target="_blank" rel="noopener">He who conquers others&hellip;</a>&rdquo; form swaps in &ldquo;conquers&rdquo; and is a later variant of Legge&rsquo;s &ldquo;overcomes.&rdquo;</p>
             <div class="actions">
