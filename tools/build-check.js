@@ -66,6 +66,9 @@ const STYLE = `${ROOT_CSS}
         .r-btn { font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500; color:var(--slate); background:var(--bg-elevated); border:1px solid var(--border); border-radius:999px; padding:9px 16px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:6px; }
         .r-btn:hover { background:var(--bg-card-hover); color:var(--ink); }
         .r-btn.primary { color:#fff; background:linear-gradient(135deg,var(--burgundy),var(--burgundy-deep)); border:none; }
+        .dym-list { flex-direction:column; align-items:stretch; }
+        .dym-item { justify-content:flex-start; text-align:left; white-space:normal; max-width:100%; font-style:italic; line-height:1.5; padding:11px 15px; }
+        .dym-item b { font-style:normal; font-family:'DM Sans',sans-serif; font-size:0.8rem; color:var(--slate); }
         .r-note { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-top:14px; line-height:1.6; }
         .how { margin-top:44px; padding-top:22px; border-top:1px solid var(--border); font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); line-height:1.65; }
         .how a { color:var(--sage); text-decoration:none; }
@@ -187,9 +190,44 @@ const PAGE_SCRIPT = `    <script>
                 else out.innerHTML=noneCard(q); // 'none' or 'short' or unknown
             }).catch(function(){ escalating=false; out.innerHTML=noneCard(q); });
         }
+        // --- fuzzy "Did you mean?" over our own corpus (discovery is forgiving; the auto-add gate stays strict) ---
+        // Character-bigram Dice similarity: tolerates typos (dam/damn), dropped words (my/Scarlett), and reorderings,
+        // so a half-remembered line still surfaces the verified quote we already hold instead of falling to "not found".
+        function bigrams(s){ var a=[]; for(var i=0;i<s.length-1;i++) a.push(s.slice(i,i+2)); return a; }
+        function diceScore(qg, s){
+            var bg=bigrams(s||''); if(!qg.length||!bg.length) return 0;
+            var m={}; for(var i=0;i<qg.length;i++) m[qg[i]]=(m[qg[i]]||0)+1;
+            var inter=0; for(var j=0;j<bg.length;j++){ if(m[bg[j]]>0){ inter++; m[bg[j]]--; } }
+            return 2*inter/(qg.length+bg.length);
+        }
+        function fuzzyCandidates(term){
+            var t=norm(term); if(t.length<8||!idx) return [];
+            var qg=bigrams(t), scored=[];
+            for(var i=0;i<idx.length;i++){ var e=idx[i]; if(!e.n) continue; var s=diceScore(qg,e.n); if(s>=0.45) scored.push({e:e,s:s}); }
+            scored.sort(function(a,b){ return b.s-a.s; });
+            if(!scored.length||scored[0].s<0.5) return [];
+            var top=scored[0].s, outc=[], seen={};
+            for(var k=0;k<scored.length&&outc.length<3;k++){ var c=scored[k]; if(c.s<top-0.12) break; if(seen[c.e.u]) continue; seen[c.e.u]=1; outc.push(c.e); }
+            return outc;
+        }
+        function didYouMeanCard(term, cands){
+            var items=cands.map(function(e){
+                var who=e.real?(' <b>&mdash; '+esc(e.real)+'</b>'):'';
+                return '<button class="dym-item r-btn" type="button" data-q="'+esc(e.q)+'">\\u201c'+esc(e.q)+'\\u201d'+who+'</button>';
+            }).join('');
+            return '<div class="rcard none"><div class="r-verdict"><span class="r-ic">\\u2248</span>Did you mean one of these?</div>'+
+                '<p class="r-line">We couldn\\u2019t match \\u201c'+esc(term.trim())+'\\u201d word-for-word, but these verified lines are close. Pick the one you meant to see its verdict and credit:</p>'+
+                '<div class="r-actions dym-list">'+items+'</div>'+
+                '<p class="r-note"><button class="dym-none" type="button" style="background:none;border:none;color:var(--sage);cursor:pointer;font:inherit;padding:0;text-decoration:underline">None of these &mdash; check the exact line anyway \\u2192</button></p></div>';
+        }
+        function wireDidYouMean(term){
+            var items=out.querySelectorAll('.dym-item');
+            for(var i=0;i<items.length;i++){ items[i].addEventListener('click',function(){ box.value=this.getAttribute('data-q'); run(); box.scrollIntoView({block:'nearest'}); }); }
+            var none=out.querySelector('.dym-none'); if(none) none.addEventListener('click',function(){ escalate(term.trim()); });
+        }
         function render(term){
             var hit=match(term);
-            if(!hit){ escalate(term.trim()); return; }
+            if(!hit){ var cands=fuzzyCandidates(term); if(cands.length){ out.innerHTML=didYouMeanCard(term,cands); wireDidYouMean(term); } else { escalate(term.trim()); } return; }
             var ru=reuse(hit.rights);
             var reuseHtml='<div class="r-reuse '+ru.t+'"><span class="ric">'+ru.ic+'</span><span>'+ru.x+'</span></div>';
             if(hit.c==='disputed'){
