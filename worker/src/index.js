@@ -434,10 +434,24 @@ function fuzzyCorpus(term, idx) {
   const t = normQ(term);
   if (t.length < 8 || !Array.isArray(idx)) return [];
   const qg = wqBigrams(t);
+  // Two-part gate. Char-bigram Dice alone is too permissive: any two same-length English sentences
+  // share ~0.5 of their bigrams (common letters/word-endings), so unrelated lines slip through and we
+  // surface junk "did you mean?" instead of routing the miss to Wikiquote. Require BOTH a high Dice
+  // (real typo/misremember ≈ 0.9+) AND real shared content-words (>3 chars) — junk scores ~0.5 Dice but
+  // only ~0.2 word-overlap, a genuine misremember ~0.8. Empty result → caller falls through to Wikiquote.
+  const qw = new Set(t.split(' ').filter((w) => w.length > 3));
   const scored = [];
-  for (const e of idx) { if (!e.n) continue; const s = wqDice(qg, e.n); if (s >= 0.45) scored.push({ e, s }); }
+  for (const e of idx) {
+    if (!e.n) continue;
+    const s = wqDice(qg, e.n);
+    if (s < 0.6) continue;
+    const ew = new Set(e.n.split(' '));
+    let hits = 0; qw.forEach((w) => { if (ew.has(w)) hits++; });
+    if (!qw.size || hits / qw.size < 0.4) continue;
+    scored.push({ e, s });
+  }
   scored.sort((a, b) => b.s - a.s);
-  if (!scored.length || scored[0].s < 0.5) return [];
+  if (!scored.length) return [];
   const top = scored[0].s, out = [], seen = new Set();
   for (const c of scored) {
     if (out.length >= 3 || c.s < top - 0.12) break;

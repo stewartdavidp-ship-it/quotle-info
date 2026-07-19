@@ -278,10 +278,21 @@ const PAGE_SCRIPT = `    <script>
                 if(pool[0].s<0.25) return [];          // author matched but no line resembles the words \\u2192 escalate
                 return pool.slice(0,3).map(function(x){ return x.e; });
             }
+            // Two-part gate. Char-bigram Dice alone is too permissive: any two same-length English
+            // sentences share ~0.5 of their bigrams, so unrelated lines slip through as junk "did you
+            // mean?" instead of escalating to Wikiquote. Require BOTH high Dice (real misremember \\u2248 0.9+)
+            // AND shared content-words (>3 chars) \\u2014 junk scores ~0.5 Dice but only ~0.2 word-overlap.
+            var qw=t.split(' ').filter(function(w){return w.length>3;}), qwn=qw.length, qwset={};
+            for(var a=0;a<qwn;a++) qwset[qw[a]]=1;
             var scored=[];
-            for(var i=0;i<idx.length;i++){ var e=idx[i]; if(!e.n) continue; var s=diceScore(qg,e.n); if(s>=0.45) scored.push({e:e,s:s}); }
+            for(var i=0;i<idx.length;i++){ var e=idx[i]; if(!e.n) continue;
+                var s=diceScore(qg,e.n); if(s<0.6) continue;
+                var ew=e.n.split(' '), ewset={}; for(var b=0;b<ew.length;b++) ewset[ew[b]]=1;
+                var hits=0; for(var c=0;c<qwn;c++){ if(ewset[qw[c]]) hits++; }
+                if(!qwn||hits/qwn<0.4) continue;
+                scored.push({e:e,s:s}); }
             scored.sort(function(a,b){ return b.s-a.s; });
-            if(!scored.length||scored[0].s<0.5) return [];
+            if(!scored.length) return [];
             var top=scored[0].s, outc=[], seen={};
             for(var k=0;k<scored.length&&outc.length<3;k++){ var c=scored[k]; if(c.s<top-0.12) break; if(seen[c.e.u]) continue; seen[c.e.u]=1; outc.push(c.e); }
             return outc;
