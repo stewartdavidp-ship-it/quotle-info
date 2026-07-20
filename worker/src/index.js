@@ -415,17 +415,42 @@ function matchQuote(term, idx) {
   const tw = t.split(' ').filter((w) => w.length > 3);
   if (tw.length >= 3) {
     const twset = new Set(tw);
+    const tWords = t.split(' ');
     let best = null, bestCov = 0, bestGap = Infinity;
     for (const e of idx) {
-      const ewset = new Set((e.n || '').split(' '));
+      const eWords = (e.n || '').split(' ');
+      const ewset = new Set(eWords);
       let hits = 0; twset.forEach((w) => { if (ewset.has(w)) hits++; });
       const cov = hits / twset.size;
+      if (cov < 0.8) continue;
+      // ADJACENCY GUARD. Long entries act as "word sponges": a short query whose ordinary words happen
+      // to appear SCATTERED through a 100-word passage hits 0.8 coverage and used to return a confident,
+      // wrong verdict — "There is no great achievement without suffering" resolved to Roosevelt's
+      // Man-in-the-Arena because there/great/achievement/without each appear somewhere in it. A genuine
+      // partial quote shares a CONTIGUOUS run of words; a coincidence only shares scattered singletons.
+      if (longestWordRun(tWords, eWords) < 4) continue;
       const gap = Math.abs((e.n || '').length - t.length);
       if (cov > bestCov || (cov === bestCov && gap < bestGap)) { bestCov = cov; bestGap = gap; best = e; }
     }
-    if (bestCov >= 0.8) return best;
+    if (best) return best;
   }
   return null;
+}
+// Longest run of CONSECUTIVE shared words between two word arrays (LCSubstring over words).
+function longestWordRun(a, b) {
+  if (!a.length || !b.length) return 0;
+  let best = 0;
+  const row = new Array(b.length + 1).fill(0);
+  for (let i = 0; i < a.length; i++) {
+    let diag = 0;
+    for (let j = 0; j < b.length; j++) {
+      const tmp = row[j + 1];
+      row[j + 1] = a[i] === b[j] ? diag + 1 : 0;
+      if (row[j + 1] > best) best = row[j + 1];
+      diag = tmp;
+    }
+  }
+  return best;
 }
 // Forgiving "did you mean?" over the corpus — the SAME bigram-Dice match the /check UI runs client-side,
 // exposed on the API path so a miss returns closest verified lines instead of dead-ending. Returns [] for
