@@ -350,13 +350,16 @@ const PAGE_SCRIPT = `    <script>
             var reuseHtml='<div class="r-reuse '+ru.t+'"><span class="ric">'+ru.ic+'</span><span>'+ru.x+'</span></div>';
             if(hit.c==='disputed'){
                 var really = hit.real ? ('<strong>'+esc(hit.real)+'</strong>') : 'no verified author (anonymous / unsourced)';
-                // Right-person-wrong-words: the credited author IS the real one, but the wording is a
-                // later paraphrase. Without this branch the card reads "put on slides as X - that's the
-                // mistake. Really: X." Same-name disputes are a real page class, not a data error.
+                // real == credited covers TWO different cases and we cannot tell them apart from the
+                // index alone: (a) genuine right-person-wrong-words (Lincoln's Lyceum paraphrase), and
+                // (b) records where answer.authorName holds the FALSELY credited author, so the index
+                // reports the fake author as real (73 such records - a known data defect). Asserting
+                // either reading would be confidently wrong half the time, so say only what is true of
+                // both: the credit is commonly made, and something about it is disputed.
                 var sameName = hit.credited && hit.real && hit.credited.trim().toLowerCase()===hit.real.trim().toLowerCase();
-                var vhead = sameName ? 'Right person &mdash; wrong words' : 'Careful &mdash; commonly misattributed';
+                var vhead = sameName ? 'Careful &mdash; disputed as quoted' : 'Careful &mdash; commonly misattributed';
                 var vline = sameName
-                    ? ('The attribution to '+really+' is right, but these are not their words &mdash; the wording is a later paraphrase. See the page for what they actually wrote.')
+                    ? ('Commonly credited to '+really+', but disputed as quoted &mdash; the wording, the source, or the attribution itself. See the full proof for what is actually established.')
                     : ((hit.credited?('Often put on slides as <strong>'+esc(hit.credited)+'</strong> &mdash; that\\u2019s the mistake. '):'')+'Really: '+really+'.');
                 out.innerHTML='<div class="rcard bad"><div class="r-verdict"><span class="r-ic">!</span>'+vhead+'</div>'+
                     '<p class="r-quote">\\u201c'+esc(hit.q)+'\\u201d</p>'+
@@ -407,7 +410,7 @@ const PAGE_SCRIPT = `    <script>
                 var v=!r.found?'Unconfirmed'
                     :r.verdict==='disputed'?(
                         (r.misattributedTo&&r.reallySaidBy&&r.misattributedTo.trim().toLowerCase()===r.reallySaidBy.trim().toLowerCase())
-                          ? (esc(r.reallySaidBy)+' \\u2014 but not these words')
+                          ? (esc(r.reallySaidBy)+' \\u2014 disputed as quoted')
                           : ('Not '+esc(r.misattributedTo||'as credited')+' \\u2192 '+esc(r.reallySaidBy||'unverified')))
                     :r.verdict==='attributed'?('Attributed to '+esc(r.reallySaidBy||'\\u2014'))
                     :('Verified \\u2014 '+esc(r.reallySaidBy||'\\u2014'));
