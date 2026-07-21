@@ -207,13 +207,14 @@ const PAGE_SCRIPT = `    <script>
         function creditBlock(hit){
             if(!hit.credit) return '';
             var img = hit.img ? ('<div class="r-credit-wrap"><p class="r-lbl">Image direction <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text-muted)">&mdash; grounded in this quote\\u2019s real context</span></p><div class="r-credit" id="rimg">'+esc(hit.img)+'</div><div class="r-actions"><button class="r-btn" id="copyimg" type="button">Copy image prompt</button></div></div>') : '';
-            // For a disputed entry, hit.q IS the misattributed wording. Prepending it here produced a
-            // "paste-ready credit" whose first line was the very text we just warned the user off -
-            // the opposite of the site's job. Disputed credit strings are self-contained corrections.
+            // creditLine() in template.js strips any leading quoted segment precisely so callers can
+            // prepend the quote themselves - so the quote must lead here. For a disputed entry that
+            // means the block reads "<misattributed wording> - <the correction>", which is what you
+            // want to paste when correcting someone. Records must therefore write copyAttribution
+            // leading with THEIR OWN displayQuote, never with a different (e.g. the real) passage.
             var bad = hit.c==='disputed';
             var lbl = bad ? 'Paste-ready correction' : 'Paste-ready credit';
-            var body = bad ? esc(hit.credit) : ('\\u201c'+esc(hit.q)+'\\u201d '+esc(hit.credit));
-            return '<div class="r-credit-wrap"><p class="r-lbl">'+lbl+'</p><div class="r-credit" id="rcredit">'+body+'</div>'+
+            return '<div class="r-credit-wrap"><p class="r-lbl">'+lbl+'</p><div class="r-credit" id="rcredit">\\u201c'+esc(hit.q)+'\\u201d '+esc(hit.credit)+'</div>'+
                 '<div class="r-actions"><button class="r-btn primary" id="copycredit" type="button">'+(bad?'Copy the correction':'Copy quote + credit')+'</button>'+
                 '<a class="r-btn" href="'+esc(hit.u)+'">See the full proof \\u2192</a></div></div>'+img;
         }

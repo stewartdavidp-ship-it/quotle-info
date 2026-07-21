@@ -588,7 +588,7 @@
             <div class="pkit-card">
                 <div class="pkit-block">
                     <p class="pkit-lbl">Verified quote &amp; credit</p>
-                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;Hard times create strong men, strong men create good times, good times create weak men, and weak men create hard times&rdquo; <span class="pkit-cite">Hard times create strong men. Strong men create good times. Good times create weak men. And, weak men create hard times. —G. Michael Hopf, Those Who Remain (2016). In copyright.</span></blockquote>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;Hard times create strong men, strong men create good times, good times create weak men, and weak men create hard times&rdquo; <span class="pkit-cite">—G. Michael Hopf, Those Who Remain (2016). In copyright: quote briefly with attribution, not as free stock content.</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                 </div>
                 <div class="pkit-block pkit-use pkit-tone-warn">
@@ -797,7 +797,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Hard times create strong men, strong men create good times, good times create weak men, and weak men create hard times";
-        const copyAttribution = "Hard times create strong men. Strong men create good times. Good times create weak men. And, weak men create hard times. —G. Michael Hopf, Those Who Remain (2016). In copyright.";
+        const copyAttribution = "—G. Michael Hopf, Those Who Remain (2016). In copyright: quote briefly with attribution, not as free stock content.";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

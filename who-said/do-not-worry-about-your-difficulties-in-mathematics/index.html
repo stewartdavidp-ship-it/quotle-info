@@ -586,7 +586,7 @@
             <div class="pkit-card">
                 <div class="pkit-block">
                     <p class="pkit-lbl">Verified quote &amp; credit</p>
-                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;Do not worry about your difficulties in Mathematics. I can assure you mine are still greater&rdquo; <span class="pkit-cite">Do not worry about your difficulties in Mathematics. I can assure you mine are still greater. —Albert Einstein, letter to Barbara Lee Wilson, 7 January 1943. Einstein Archives 42-606.</span></blockquote>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;Do not worry about your difficulties in Mathematics. I can assure you mine are still greater&rdquo; <span class="pkit-cite">—Albert Einstein, letter to Barbara Lee Wilson, 7 January 1943. Einstein Archives 42-606.</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                 </div>
                 <div class="pkit-block pkit-use pkit-tone-warn">
@@ -786,7 +786,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Do not worry about your difficulties in Mathematics. I can assure you mine are still greater";
-        const copyAttribution = "Do not worry about your difficulties in Mathematics. I can assure you mine are still greater. —Albert Einstein, letter to Barbara Lee Wilson, 7 January 1943. Einstein Archives 42-606.";
+        const copyAttribution = "—Albert Einstein, letter to Barbara Lee Wilson, 7 January 1943. Einstein Archives 42-606.";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

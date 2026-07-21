@@ -586,7 +586,7 @@
             <div class="pkit-card">
                 <div class="pkit-block">
                     <p class="pkit-lbl">Verified quote &amp; credit</p>
-                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;Blind belief in authority is the greatest enemy of truth&rdquo; <span class="pkit-cite">Autoritätsdusel ist der grösste Feind der Wahrheit. —Albert Einstein, letter to Jost Winteler, 8 July 1901 (CPAE 1:378).</span></blockquote>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;Blind belief in authority is the greatest enemy of truth&rdquo; <span class="pkit-cite">German original: &quot;Autoritätsdusel ist der grösste Feind der Wahrheit.&quot; —Albert Einstein, letter to Jost Winteler, 8 July 1901 (CPAE 1:378). English wording varies by translator.</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                 </div>
                 <div class="pkit-block pkit-use pkit-tone-warn">
@@ -785,7 +785,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Blind belief in authority is the greatest enemy of truth";
-        const copyAttribution = "Autoritätsdusel ist der grösste Feind der Wahrheit. —Albert Einstein, letter to Jost Winteler, 8 July 1901 (CPAE 1:378).";
+        const copyAttribution = "German original: \"Autoritätsdusel ist der grösste Feind der Wahrheit.\" —Albert Einstein, letter to Jost Winteler, 8 July 1901 (CPAE 1:378). English wording varies by translator.";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

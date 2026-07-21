@@ -582,7 +582,7 @@
             <div class="pkit-card pkit-card-disputed">
                 <div class="pkit-block">
                     <p class="pkit-lbl">Disputed &mdash; copy with the correction</p>
-                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;America will never be destroyed from the outside. If we falter and lose our freedoms, it will be because we destroyed ourselves&rdquo; <span class="pkit-cite">If destruction be our lot, we must ourselves be its author and finisher. As a nation of freemen, we must live through all time, or die by suicide. —Abraham Lincoln, Lyceum Address, 27 January 1838. Public domain.</span></blockquote>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;America will never be destroyed from the outside. If we falter and lose our freedoms, it will be because we destroyed ourselves&rdquo; <span class="pkit-cite">Not Lincoln's words — a modern paraphrase of his Lyceum Address, 27 January 1838, which reads: &quot;If destruction be our lot, we must ourselves be its author and finisher. As a nation of freemen, we must live through all time, or die by suicide.&quot; Public domain.</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                     <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>Abraham Lincoln</strong>. Use the credit shown above instead.</p>
                 </div>
@@ -786,7 +786,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "America will never be destroyed from the outside. If we falter and lose our freedoms, it will be because we destroyed ourselves";
-        const copyAttribution = "If destruction be our lot, we must ourselves be its author and finisher. As a nation of freemen, we must live through all time, or die by suicide. —Abraham Lincoln, Lyceum Address, 27 January 1838. Public domain.";
+        const copyAttribution = "Not Lincoln's words — a modern paraphrase of his Lyceum Address, 27 January 1838, which reads: \"If destruction be our lot, we must ourselves be its author and finisher. As a nation of freemen, we must live through all time, or die by suicide.\" Public domain.";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -586,7 +586,7 @@
             <div class="pkit-card pkit-card-disputed">
                 <div class="pkit-block">
                     <p class="pkit-lbl">Disputed credit &mdash; copy with the correction</p>
-                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;Never argue with stupid people, they will drag you down to their level and beat you with experience&rdquo; <span class="pkit-cite">Never associate with idiots on their own level… on their level they'll beat you every time. —Jean Cocteau, as recalled by Yul Brynner, 1956. Not Mark Twain.</span></blockquote>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;Never argue with stupid people, they will drag you down to their level and beat you with experience&rdquo; <span class="pkit-cite">Not Mark Twain. The 1956 original: &quot;Never associate with idiots on their own level… on their level they'll beat you every time.&quot; —Jean Cocteau, as recalled by Yul Brynner.</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                     <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>Mark Twain</strong>. Use the credit shown above instead.</p>
                 </div>
@@ -783,7 +783,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Never argue with stupid people, they will drag you down to their level and beat you with experience";
-        const copyAttribution = "Never associate with idiots on their own level… on their level they'll beat you every time. —Jean Cocteau, as recalled by Yul Brynner, 1956. Not Mark Twain.";
+        const copyAttribution = "Not Mark Twain. The 1956 original: \"Never associate with idiots on their own level… on their level they'll beat you every time.\" —Jean Cocteau, as recalled by Yul Brynner.";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));
