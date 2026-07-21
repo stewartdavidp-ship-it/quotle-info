@@ -343,9 +343,17 @@ const PAGE_SCRIPT = `    <script>
             var reuseHtml='<div class="r-reuse '+ru.t+'"><span class="ric">'+ru.ic+'</span><span>'+ru.x+'</span></div>';
             if(hit.c==='disputed'){
                 var really = hit.real ? ('<strong>'+esc(hit.real)+'</strong>') : 'no verified author (anonymous / unsourced)';
-                out.innerHTML='<div class="rcard bad"><div class="r-verdict"><span class="r-ic">!</span>Careful &mdash; commonly misattributed</div>'+
+                // Right-person-wrong-words: the credited author IS the real one, but the wording is a
+                // later paraphrase. Without this branch the card reads "put on slides as X - that's the
+                // mistake. Really: X." Same-name disputes are a real page class, not a data error.
+                var sameName = hit.credited && hit.real && hit.credited.trim().toLowerCase()===hit.real.trim().toLowerCase();
+                var vhead = sameName ? 'Right person &mdash; wrong words' : 'Careful &mdash; commonly misattributed';
+                var vline = sameName
+                    ? ('The attribution to '+really+' is right, but these are not their words &mdash; the wording is a later paraphrase. See the page for what they actually wrote.')
+                    : ((hit.credited?('Often put on slides as <strong>'+esc(hit.credited)+'</strong> &mdash; that\\u2019s the mistake. '):'')+'Really: '+really+'.');
+                out.innerHTML='<div class="rcard bad"><div class="r-verdict"><span class="r-ic">!</span>'+vhead+'</div>'+
                     '<p class="r-quote">\\u201c'+esc(hit.q)+'\\u201d</p>'+
-                    '<p class="r-line">'+(hit.credited?('Often put on slides as <strong>'+esc(hit.credited)+'</strong> &mdash; that\\u2019s the mistake. '):'')+'Really: '+really+'.</p>'+
+                    '<p class="r-line">'+vline+'</p>'+
                     reuseHtml+creditBlock(hit)+'</div>';
             } else {
                 var cls = hit.c==='attributed' ? 'attr' : 'ok';
@@ -390,7 +398,10 @@ const PAGE_SCRIPT = `    <script>
             var rows=res.map(function(r,i){
                 var cls=!r.found?'none':r.verdict==='disputed'?'bad':r.verdict==='attributed'?'warn':'ok';
                 var v=!r.found?'Unconfirmed'
-                    :r.verdict==='disputed'?('Not '+esc(r.misattributedTo||'as credited')+' \\u2192 '+esc(r.reallySaidBy||'unverified'))
+                    :r.verdict==='disputed'?(
+                        (r.misattributedTo&&r.reallySaidBy&&r.misattributedTo.trim().toLowerCase()===r.reallySaidBy.trim().toLowerCase())
+                          ? (esc(r.reallySaidBy)+' \\u2014 but not these words')
+                          : ('Not '+esc(r.misattributedTo||'as credited')+' \\u2192 '+esc(r.reallySaidBy||'unverified')))
                     :r.verdict==='attributed'?('Attributed to '+esc(r.reallySaidBy||'\\u2014'))
                     :('Verified \\u2014 '+esc(r.reallySaidBy||'\\u2014'));
                 var link=(r.found&&r.url)?' <a href="'+esc(r.url)+'">details</a>':'';
