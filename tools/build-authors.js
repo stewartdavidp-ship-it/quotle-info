@@ -43,9 +43,17 @@ const misattrBy = {};
 for (const r of records) {
   if (r.confidence !== 'disputed' || !r.creditedTo) continue;
   const credSlug = kebab(r.creditedTo);
-  const trueSlug = (r.author && r.author.slug) || kebab((r.answer && r.answer.authorName) || '');
+  // The real author is answer.realAuthorName when present (see the note on it in template.js), NOT
+  // answer.authorName — that field holds the magnet's own name on a disputed page, which both
+  // suppressed the entry here (credSlug === trueSlug) and, when it did render, printed the magnet
+  // as the "actually" line: "Often misattributed to Jefferson — actually Jefferson."
+  const explicitReal = r.answer && r.answer.realAuthorName;
+  const real = explicitReal || (r.answer && r.answer.authorName) || 'Unknown';
+  // r.author.slug is the CREDITED author's page (that's what the author block links to), so it is
+  // only a valid stand-in for the real author on records that never distinguished the two.
+  const trueSlug = explicitReal ? kebab(explicitReal) : ((r.author && r.author.slug) || kebab(real));
   if (!credSlug || credSlug === trueSlug) continue;
-  (misattrBy[credSlug] = misattrBy[credSlug] || []).push({ slug: r.quoteSlug, quote: r.displayQuote, real: (r.answer && r.answer.authorName) || 'Unknown' });
+  (misattrBy[credSlug] = misattrBy[credSlug] || []).push({ slug: r.quoteSlug, quote: r.displayQuote, real });
 }
 // "Under review — pinned on X": queued backlog candidates grouped by magnet author.
 const reviewBy = {};

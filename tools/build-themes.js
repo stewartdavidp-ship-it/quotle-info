@@ -43,7 +43,10 @@ for (const t of THEMES) byTheme[t.slug] = { real: [], fake: [] };
 for (const r of records) {
   const themes = Array.isArray(r.themes) ? r.themes.filter(isTheme) : [];
   if (!themes.length) continue;
-  const who = plain((r.answer && r.answer.authorName) || (r.author && r.author.name) || 'Unknown');
+  // Who really said it — answer.realAuthorName first (see the note on it in template.js). A disputed
+  // record's answer.authorName is often the FALSELY CREDITED name, and a theme page listing a fake
+  // quote under the fake author's byline asserts the very misattribution the entry exists to flag.
+  const who = plain((r.answer && (r.answer.realAuthorName || r.answer.authorName)) || (r.author && r.author.name) || 'Unknown');
   const entry = {
     slug: r.quoteSlug, quote: plain(r.displayQuote), author: who,
     confidence: r.confidence, rights: (r.source && r.source.rights) || null,

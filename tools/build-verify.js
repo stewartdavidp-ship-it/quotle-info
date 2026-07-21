@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 // Reuse template.js's plain() — it decodes accented named entities (æ, è, é…) instead of dropping
 // them to a space, so citations/credits like "De Hæresibus" or "Barère" come out right.
-const { creditLine, buildImagePrompts, plain } = require('./template');
+const { creditLine, buildImagePrompts, plain, realAuthorName } = require('./template');
 const ROOT = path.resolve(__dirname, '..');
 const QUOTES_DIR = path.join(ROOT, 'data', 'quotes');
 const ORIGIN = 'https://quotle.info';
@@ -28,7 +28,7 @@ for (const f of fs.readdirSync(QUOTES_DIR)) {
     q,
     n: norm(q),
     c: r.confidence,                                   // verified | attributed | disputed
-    real: plain((r.answer && r.answer.authorName) || ''), // who really said it
+    real: realAuthorName(r),                           // who really said it (NOT answer.authorName — see template.js)
     credited: plain(r.creditedTo || (r.confidence === 'disputed' && r.misattribution && r.misattribution.items && r.misattribution.items[0] && r.misattribution.items[0].who) || ''), // who it's falsely credited to
     credit: plain(creditLine(r)),                       // paste-ready CORRECT credit line (quote already implied)
     cite: plain((r.cite && r.cite.sourceCitation) || ''), // full authored Chicago citation (for a references slide)

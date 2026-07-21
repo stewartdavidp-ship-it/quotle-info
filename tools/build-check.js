@@ -350,12 +350,13 @@ const PAGE_SCRIPT = `    <script>
             var reuseHtml='<div class="r-reuse '+ru.t+'"><span class="ric">'+ru.ic+'</span><span>'+ru.x+'</span></div>';
             if(hit.c==='disputed'){
                 var really = hit.real ? ('<strong>'+esc(hit.real)+'</strong>') : 'no verified author (anonymous / unsourced)';
-                // real == credited covers TWO different cases and we cannot tell them apart from the
-                // index alone: (a) genuine right-person-wrong-words (Lincoln's Lyceum paraphrase), and
-                // (b) records where answer.authorName holds the FALSELY credited author, so the index
-                // reports the fake author as real (73 such records - a known data defect). Asserting
-                // either reading would be confidently wrong half the time, so say only what is true of
-                // both: the credit is commonly made, and something about it is disputed.
+                // real == credited now means exactly one thing: right-person-wrong-words. The name is
+                // right and the WORDING, source, or exact claim is what's disputed (Churchill really
+                // said "blood, toil, tears and sweat"). The old second case - answer.authorName
+                // holding the FALSELY credited author, so the index reported the fake author as real -
+                // is fixed at the source: every disputed record whose real author differs now carries
+                // answer.realAuthorName, which build-verify derives the real field from. Do NOT reintroduce
+                // "commonly misattributed" wording here: on a same-name record nobody is misattributed.
                 var sameName = hit.credited && hit.real && hit.credited.trim().toLowerCase()===hit.real.trim().toLowerCase();
                 var vhead = sameName ? 'Careful &mdash; disputed as quoted' : 'Careful &mdash; commonly misattributed';
                 var vline = sameName

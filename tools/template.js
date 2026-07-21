@@ -1246,4 +1246,21 @@ const STYLE = `${ROOT_CSS}
             .pager .next { text-align: left; }
         }`;
 
-module.exports = { renderPage, canonicalUrl, CONFIDENCE, creditLine, plain, buildImagePrompts };
+// Who REALLY said it — the one field a machine consumer must not get wrong.
+//
+// `answer.authorName` cannot answer that question. It also drives the page's author block and
+// `answer.authorHref`, so on a disputed record it routinely holds the FALSELY CREDITED name: the
+// "Not Thomas Jefferson" page carries authorName "Thomas Jefferson" because that's whose author
+// page it links to. Deriving "real" from it published the fake author as the real one on 69
+// records, straight through the public /verify API.
+//
+// `answer.realAuthorName` is the explicit override: the author the page's own prose establishes,
+// or the string "Unknown" where the honest answer is that nobody knows (a correct and common value
+// in this corpus). It is absent on the ~1,900 records where authorName is already the real author,
+// hence the fallback. Set it whenever the two differ — never leave the reader to infer it.
+function realAuthorName(r) {
+  const a = (r && r.answer) || {};
+  return plain(a.realAuthorName || a.authorName || '');
+}
+
+module.exports = { renderPage, canonicalUrl, CONFIDENCE, creditLine, plain, buildImagePrompts, realAuthorName };
