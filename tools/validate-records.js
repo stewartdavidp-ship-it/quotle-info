@@ -42,7 +42,7 @@ const THEMES = new Set(['wisdom', 'character', 'purpose', 'courage', 'truth', 'h
   'justice', 'change', 'simplicity', 'happiness', 'love', 'time', 'kindness', 'leadership',
   'humility', 'mortality', 'failure', 'friendship', 'gratitude']);
 
-const ENTITY = /&(?:[a-zA-Z]+|#\d+);/;
+const DOUBLE_ESC = /&amp;(?:[a-zA-Z]+|#\d+);/;
 const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
 const dir = path.join(ROOT, 'data', 'quotes');
@@ -72,8 +72,11 @@ for (const { file, r } of recs) {
     w.push('no rights and no rightsNote — reuse guidance missing');
   }
 
+  // themes drive the generated /themes pages. Count is free-form in this corpus (1-4 in use);
+  // only membership in the vocabulary matters, since an unknown theme would mint a stray page.
   const th = r.themes || [];
-  if (th.length !== 2) p.push(`themes must be exactly 2, got ${th.length}`);
+  if (!th.length) w.push('no themes — quote will not appear on any theme page');
+  if (th.length > 4) w.push(`${th.length} themes is more than any existing record uses`);
   for (const t of th) if (!THEMES.has(t)) p.push(`theme "${t}" not in vocabulary`);
 
   // copyAttribution convention
@@ -81,18 +84,23 @@ for (const { file, r } of recs) {
   if (!ca) { w.push('no copyAttribution'); }
   else {
     const lead = ca.match(/^\s*["“]([^"”]*)["”]/);
+    // A record whose displayQuote is a popular CLIPPING sets presentation.verifiedQuote to the
+    // full sourced text; copyAttribution then legitimately leads with that fuller wording.
+    const full = (r.presentation && r.presentation.verifiedQuote) || r.displayQuote;
     if (lead) {
-      const a = norm(lead[1]).slice(0, 40), b = norm(r.displayQuote).slice(0, 40);
-      if (a && b && !b.startsWith(a.slice(0, 25)) && !a.startsWith(b.slice(0, 25))) {
-        p.push('copyAttribution leads with a DIFFERENT quote than displayQuote — will render mangled');
-      }
-    } else if (!/^[A-Z—–—-]/.test(ca.trim())) {
+      const a = norm(lead[1]).slice(0, 40);
+      const cands = [norm(r.displayQuote), norm(full)];
+      const ok = cands.some((b) => a && b && (b.startsWith(a.slice(0, 25)) || a.startsWith(b.slice(0, 25))));
+      if (!ok) w.push('copyAttribution leads with a quote matching neither displayQuote nor presentation.verifiedQuote — check it renders');
+    } else if (!/^[A-Z—–-]/.test(ca.trim())) {
       w.push(`copyAttribution tail should start with a capital: "${ca.slice(0, 42)}…"`);
     }
   }
 
+  // source.excerpt is interpolated RAW into the page (template.js ~line 544), so HTML entities
+  // are correct and 459 records use them. The real bug class is DOUBLE escaping.
   const ex = r.source && r.source.excerpt;
-  if (ex && ENTITY.test(ex)) p.push('source.excerpt contains HTML entities (it is escaped — use plain unicode)');
+  if (ex && DOUBLE_ESC.test(ex)) p.push('source.excerpt has double-escaped entities (&amp;mdash; etc.)');
 
   const real = r.answer && r.answer.authorName;
   if (!real) p.push('no answer.authorName');
@@ -103,9 +111,13 @@ for (const { file, r } of recs) {
     }
   }
 
-  if (r.dayNumber == null) p.push('no dayNumber');
-  else if (seenDay.has(r.dayNumber)) p.push(`dayNumber ${r.dayNumber} collides with ${seenDay.get(r.dayNumber)}`);
-  else seenDay.set(r.dayNumber, file);
+  // dayNumber is OPTIONAL and explicitly nullable — 481 records ship with `dayNumber: null`.
+  // It maps a quote to a Quotle puzzle day; most corpus entries have no puzzle. Only collisions
+  // among records that DO claim a day are a problem.
+  if (r.dayNumber != null) {
+    if (seenDay.has(r.dayNumber)) p.push(`dayNumber ${r.dayNumber} collides with ${seenDay.get(r.dayNumber)}`);
+    else seenDay.set(r.dayNumber, file);
+  }
 
   if (p.length) {
     failed++;
