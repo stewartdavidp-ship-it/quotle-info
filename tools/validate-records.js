@@ -117,6 +117,10 @@ for (const { file, r } of recs) {
     ['misattribution.heading', r.misattribution && r.misattribution.heading],
     ['context.kicker', r.context && r.context.kicker],
     ['context.heading', r.context && r.context.heading],
+    // copyAttribution is a PLAIN-TEXT share string: it renders esc()'d into .pkit-cite and is
+    // written to the clipboard verbatim. Markup there leaks as literal &lt;em&gt; on the page and
+    // as raw tags in whatever the user pastes. Caught on the Sound of Music record.
+    ['copyAttribution', r.copyAttribution],
   ];
   for (const [name, val] of ESC_ONLY) {
     if (typeof val === 'string' && /<[a-zA-Z/]/.test(val)) {
