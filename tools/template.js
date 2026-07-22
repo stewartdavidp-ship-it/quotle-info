@@ -512,7 +512,14 @@ function renderAnswer(q) {
                     <span class="dot" aria-hidden="true">${conf.glyph}</span>
                     <span><span class="visually-hidden">Attribution status: </span>${escEm(confText)}</span>
                 </span>
-                ${(() => { const rc = REUSE_CHIP[(q.source && q.source.rights) || 'uncertain'] || REUSE_CHIP.uncertain; return `<a class="reuse-chip ${rc.cls}" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">${rc.glyph}</span><span><span class="visually-hidden">Reuse status: </span>${rc.label}</span></a>`; })()}
+                ${(() => { const rc = REUSE_CHIP[(q.source && q.source.rights) || 'uncertain'] || REUSE_CHIP.uncertain;
+                  // The chip's rights state is site-wide, but on a SCOPED-rights page (e.g. a public-domain
+                  // 1838 passage carried alongside an unowned modern rewrite) the blanket "Free to reuse"
+                  // over-promises — the pkit useLine and copyAttribution are already scoped, so only the chip
+                  // still reads unscoped. source.reuseChipLabel narrows just the chip's text; the state class
+                  // (colour/glyph) is unchanged, so absent → default label and every unflagged page is intact.
+                  const chipLabel = (q.source && q.source.reuseChipLabel) || rc.label;
+                  return `<a class="reuse-chip ${rc.cls}" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">${rc.glyph}</span><span><span class="visually-hidden">Reuse status: </span>${esc(chipLabel)}</span></a>`; })()}
             </div>
             <p class="source-line">${ans.sourceLine}</p>
             <div class="actions">
