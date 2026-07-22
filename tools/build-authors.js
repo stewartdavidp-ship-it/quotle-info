@@ -33,7 +33,13 @@ const jsonLd = (obj) => JSON.stringify(obj, null, 2).split('\n').map((l, i) => (
 
 const records = fs.readdirSync(QUOTES_DIR).filter((f) => f.endsWith('.json'))
   .map((f) => JSON.parse(fs.readFileSync(path.join(QUOTES_DIR, f), 'utf8')));
-const authors = aggregateAuthors(records);
+// Song-misattribution records contribute author hubs too (original recorder / cover artist / writer).
+let songRecords = [];
+try {
+  songRecords = fs.readdirSync(path.join(ROOT, 'data', 'songs')).filter((f) => f.endsWith('.json'))
+    .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'songs', f), 'utf8')));
+} catch (_) { /* no songs yet */ }
+const authors = aggregateAuthors(records, songRecords);
 
 // ---- misattribution intelligence for author pages ----
 // Same slug function the records were built with — these keys are matched against author.slug.
@@ -252,17 +258,42 @@ const quoteCard = (q) => {
                 </a>`;
 };
 
+// A song entry on an author hub. The relationship line is role-aware: the cover artist's hub frames
+// its songs as "actually a cover" (the misattribution), the original recorder's as "recorded first".
+const songCard = (s) => {
+  const rel = s.role === 'cover' ? `Cover &mdash; originally recorded by ${esc(s.originalArtist)}`
+    : s.role === 'writer' ? `Written by them &mdash; first recorded by ${esc(s.originalArtist)}`
+    : `Recorded it first &mdash; now often credited to ${esc(s.creditedTo)}`;
+  const cls = s.role === 'cover' ? 'disputed' : 'verified';
+  return `                <a class="q-card ${cls}" href="/who-recorded/${s.slug}/">
+                    <p class="q-text">${esc(s.title)}</p>
+                    <span class="q-conf"><span class="dot" aria-hidden="true">♪</span>${rel}</span>
+                </a>`;
+};
+const songSectionHeading = (a) => {
+  const roles = new Set(a.songs.map((s) => s.role));
+  if (roles.size === 1 && roles.has('cover')) return `Songs credited to ${esc(a.name)} that are covers`;
+  if (roles.size === 1 && roles.has('writer')) return `Songs written by ${esc(a.name)}`;
+  if (roles.size === 1 && roles.has('original')) return `Songs ${esc(a.name)} recorded first`;
+  return `Songs involving ${esc(a.name)}`;
+};
+
 // ---- per-author pages ----
 fs.mkdirSync(OUT, { recursive: true });
 for (const a of authors) {
   const n = a.quotes.length;
+  const ns = a.songs.length;
+  const parts = [];
+  if (n) parts.push(`${n} quote${n === 1 ? '' : 's'}`);
+  if (ns) parts.push(`${ns} song${ns === 1 ? '' : 's'}`);
+  const summary = parts.join(' and ') || 'entries';
   const mis = misattrBy[a.slug] || [];
   const rev = reviewBy[a.slug] || [];
-  const head = `    <title>${esc(a.name)} — quotes traced to source · Quotle.info</title>
-    <meta name="description" content="${esc(a.name)}: ${n} quote${n === 1 ? '' : 's'} traced to a primary source, with attribution verified and misattributions untangled.">
+  const head = `    <title>${esc(a.name)} — provenance traced to source · Quotle.info</title>
+    <meta name="description" content="${esc(a.name)}: ${summary} traced to a primary source, with attribution verified and misattributions untangled.">
     <link rel="canonical" href="${ORIGIN}/authors/${a.slug}">
     <meta property="og:type" content="profile">
-    <meta property="og:title" content="${esc(a.name)} — quotes traced to source">
+    <meta property="og:title" content="${esc(a.name)} — provenance traced to source">
     <meta property="og:url" content="${ORIGIN}/authors/${a.slug}">
     <meta property="og:site_name" content="Quotle.info">
 ${OG_IMAGE_TAGS}
@@ -276,7 +307,10 @@ ${OG_IMAGE_TAGS}
         '@id': `${ORIGIN}/authors/${a.slug}#person`,
         name: plain(a.name),
         description: plain(a.metaLine),
-        subjectOf: a.quotes.map((q) => ({ '@type': 'Quotation', '@id': `${ORIGIN}/who-said/${q.slug}#quotation`, text: plain(q.quote), url: `${ORIGIN}/who-said/${q.slug}` })),
+        subjectOf: [
+          ...a.quotes.map((q) => ({ '@type': 'Quotation', '@id': `${ORIGIN}/who-said/${q.slug}#quotation`, text: plain(q.quote), url: `${ORIGIN}/who-said/${q.slug}` })),
+          ...a.songs.map((s) => ({ '@type': 'MusicRecording', '@id': `${ORIGIN}/who-recorded/${s.slug}#recording`, name: plain(s.title), url: `${ORIGIN}/who-recorded/${s.slug}` })),
+        ],
       },
     })}
     </script>`;
@@ -294,12 +328,18 @@ ${OG_IMAGE_TAGS}
             </div>
         </header>
         <div class="author-bio">${a.bio}</div>
-        <section aria-labelledby="q-h">
+${n ? `        <section aria-labelledby="q-h">
             <div class="sec-head"><p class="kicker">Traced to source</p><h2 id="q-h">${n} quote${n === 1 ? '' : 's'} we&rsquo;ve traced${n > 1 ? ` to ${esc(a.name)}` : ''}</h2></div>
             <div class="q-grid">
 ${a.quotes.map(quoteCard).join('\n')}
             </div>
-        </section>
+        </section>` : ''}
+${ns ? `        <section aria-labelledby="s-h">
+            <div class="sec-head"><p class="kicker">Who recorded it</p><h2 id="s-h">${songSectionHeading(a)}</h2></div>
+            <div class="q-grid">
+${a.songs.map(songCard).join('\n')}
+            </div>
+        </section>` : ''}
 ${mis.length ? `        <section aria-labelledby="mis-h">
             <div class="sec-head"><p class="kicker">Not actually ${esc(a.name)}</p><h2 id="mis-h">Often misattributed to ${esc(a.name)}</h2><p class="sec-sub">Famous lines widely pinned on ${esc(a.name)} that we&rsquo;ve traced to someone else.</p></div>
             <div class="mis-grid">
@@ -376,7 +416,7 @@ const authorCard = (a) => `                <a class="ac" href="/authors/${a.slug
                     <div>
                         <p class="ac-name">${esc(a.name)}</p>
                         <p class="ac-meta">${esc(a.metaLine || '')}</p>
-                        <p class="ac-count">${a.quotes.length} quote${a.quotes.length === 1 ? '' : 's'}</p>
+                        <p class="ac-count">${[a.quotes.length ? `${a.quotes.length} quote${a.quotes.length === 1 ? '' : 's'}` : '', a.songs.length ? `${a.songs.length} song${a.songs.length === 1 ? '' : 's'}` : ''].filter(Boolean).join(' &middot; ') || 'no entries'}</p>
                         ${a.mag ? `<p class="ac-mag">${a.mag} quote${a.mag === 1 ? '' : 's'} wrongly credited to them</p>` : ''}
                     </div>
                 </a>`;

@@ -18,13 +18,13 @@ const ORIGIN = 'https://quotle.info';
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.json'), 'utf8'));
 const records = fs.readdirSync(path.join(ROOT, 'data', 'quotes')).filter((f) => f.endsWith('.json'))
   .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'quotes', f), 'utf8')));
-const authors = aggregateAuthors(records);
 // song-misattribution pages (/who-recorded/{slug}/) — a sibling object, included so crawlers find them
 let songs = [];
 try {
   songs = fs.readdirSync(path.join(ROOT, 'data', 'songs')).filter((f) => f.endsWith('.json'))
     .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'songs', f), 'utf8')));
 } catch (_) { /* no songs yet */ }
+const authors = aggregateAuthors(records, songs); // song artists get hubs too → include them here
 
 // themes that actually have a page (≥1 tagged record)
 const themePresent = new Set();

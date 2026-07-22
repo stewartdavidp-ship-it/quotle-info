@@ -13,20 +13,40 @@ const hasAuthorPage = (slug) => !!slug && !/^(anonymous|unknown)(-|$)/.test(slug
 // the canonical bio/meta/initials/name come from their richest record (longest bio) — we never
 // synthesize new biography, only reuse what a record already carries. Quotes are listed newest
 // data first by confidence then quote text.
-function aggregateAuthors(records) {
+// Aggregate quote records — and, optionally, SONG records — into one entry per profile-able author.
+// A song contributes an author entry for each of its people (original recorder / cover artist /
+// writer), so a song artist gets a real /authors/{slug} hub even with no quotes. Each author entry
+// carries both `quotes` and `songs`; the render decides which sections to show.
+function aggregateAuthors(records, songs = []) {
   const bySlug = new Map();
+  const get = (a) => {
+    let e = bySlug.get(a.slug);
+    if (!e) { e = { slug: a.slug, name: a.name, bio: a.bio || '', metaLine: a.metaLine || '', initials: a.initials || '', quotes: [], songs: [] }; bySlug.set(a.slug, e); }
+    // richest bio wins as canonical; keep its name/meta/initials together
+    if ((a.bio || '').length > e.bio.length) { e.bio = a.bio; e.name = a.name; e.metaLine = a.metaLine || e.metaLine; e.initials = a.initials || e.initials; }
+    return e;
+  };
   for (const r of records) {
     const a = r.author || {};
     if (!hasAuthorPage(a.slug)) continue;
-    let e = bySlug.get(a.slug);
-    if (!e) { e = { slug: a.slug, name: a.name, bio: a.bio || '', metaLine: a.metaLine || '', initials: a.initials || '', quotes: [] }; bySlug.set(a.slug, e); }
-    // richest bio wins as canonical; keep its name/meta/initials together
-    if ((a.bio || '').length > e.bio.length) { e.bio = a.bio; e.name = a.name; e.metaLine = a.metaLine || e.metaLine; e.initials = a.initials || e.initials; }
-    e.quotes.push({ slug: r.quoteSlug, quote: r.displayQuote, confidence: r.confidence });
+    get(a).quotes.push({ slug: r.quoteSlug, quote: r.displayQuote, confidence: r.confidence });
+  }
+  for (const s of songs) {
+    for (const a of (s.authors || [])) {
+      if (!hasAuthorPage(a.slug)) continue;
+      get(a).songs.push({
+        slug: s.songSlug, title: s.title, role: a.role || '',
+        creditedTo: s.creditedTo || '',
+        originalArtist: (s.answer && s.answer.originalArtist) || '',
+      });
+    }
   }
   const CONF_ORDER = { verified: 0, attributed: 1, disputed: 2 };
   const authors = [...bySlug.values()];
-  authors.forEach((e) => e.quotes.sort((x, y) => (CONF_ORDER[x.confidence] - CONF_ORDER[y.confidence]) || x.quote.localeCompare(y.quote)));
+  authors.forEach((e) => {
+    e.quotes.sort((x, y) => (CONF_ORDER[x.confidence] - CONF_ORDER[y.confidence]) || x.quote.localeCompare(y.quote));
+    e.songs.sort((x, y) => x.title.localeCompare(y.title));
+  });
   authors.sort((a, b) => a.name.localeCompare(b.name));
   return authors;
 }

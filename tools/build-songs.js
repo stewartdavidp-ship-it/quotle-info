@@ -39,7 +39,7 @@ const COMMUNITY = !!(CFG.votesApi && CFG.turnstileSitekey);
 // — render names as plain text rather than ship dead links. The NEXT step is to feed song artists
 // into build-authors.js so Gloria Jones / Soft Cell / Ed Cobb get real hub pages ("songs wrongly
 // credited to…", the operator's "add them as authors"); then this flips to link only real pages.
-const authorLink = (a) => (a && a.slug && fs.existsSync(path.join(ROOT, 'authors', a.slug)) ? `/authors/${a.slug}` : null);
+const authorLink = (a) => (a && a.slug && fs.existsSync(path.join(ROOT, 'authors', a.slug)) ? `/authors/${a.slug}/` : null);
 
 // ---- JSON-LD: MusicRecording (+ composition) the claim is really about, ClaimReview, FAQ, crumb --
 function buildJsonLd(s, url) {
