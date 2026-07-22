@@ -175,7 +175,7 @@ function cmdSync(inputs) {
   const byNorm = new Map(data.candidates.map((c) => [norm(c.quote), c]));
   let swept = 0;
   for (const c of data.candidates) if ((c.status === 'queued' || c.status === 'selected') && corpus.has(c.quote)) { c.status = 'ingested'; if (!c.resultSlug) c.resultSlug = slugify(String(c.quote).replace(/\s*\.\s*$/, '')); swept++; }
-  let added = 0, dupCorpus = 0, dupBacklog = 0;
+  let added = 0, dupCorpus = 0, dupBacklog = 0, normalisedNames = 0;
   for (const src of inputs) {
     const raw = JSON.parse(fs.readFileSync(src, 'utf8'));
     const cands = Array.isArray(raw) ? raw : Array.isArray(raw.candidates) ? raw.candidates
@@ -186,22 +186,40 @@ function cmdSync(inputs) {
       const n = norm(q);
       if (corpus.has(q)) { dupCorpus++; continue; }
       if (byNorm.has(n)) { dupBacklog++; continue; }
+      // A harvest agent sometimes writes a research note INTO the name field, e.g.
+      //   "Yogi Berra (also credited to Casey Stengel via his Kansas City remark)"
+      // That is not cosmetic: magnetAuthor becomes creditedTo, which renders as the crediting
+      // author's NAME on the page and drives the author-page "misattributed to X" feature — so the
+      // parenthetical would have produced an author entry named after a footnote. Two waves in a
+      // row hit the same string. Split it here rather than asking every wave to notice: the name
+      // keeps the name, the note goes to `notes` where the schema already has a home for it.
+      const splitNote = (name) => {
+        const s = String(name || '').trim();
+        const i = s.indexOf('(');
+        if (i < 1) return { name: s, note: '' };
+        return { name: s.slice(0, i).trim().replace(/[,;]$/, ''), note: s.slice(i).replace(/^\(|\)$/g, '').trim() };
+      };
+      const magnet = splitNote(c.magnetAuthor || c.creditedTo || '');
+      const credited = splitNote(c.creditedTo || '');
+      const carriedNote = [c.notes || '', magnet.note, credited.note].filter(Boolean).join(' · ');
+      if (magnet.note || credited.note) normalisedNames++;
+
       const rec = {
         slug: slugify(q.replace(/\s*\.\s*$/, '')), quote: q,
-        magnetAuthor: c.magnetAuthor || c.creditedTo || '', creditedTo: c.creditedTo || '',
+        magnetAuthor: magnet.name, creditedTo: credited.name,
         trueOrigin: c.trueOrigin || '', category: c.category || '', whyNotable: c.whyNotable || '',
         likelyConfidence: c.likelyConfidence || '', rightsEra: c.rightsEra || '', documentedAt: c.documentedAt || '',
         // The Quotle game's slot number, when the candidate came from the game. Carried into the
         // batch as `index` → becomes the record's dayNumber (prep-wave.js), which is what the game
         // resolves its "Who really said it?" link through. null for candidates with no game slot.
         gameIndex: (typeof c.gameIndex === 'number') ? c.gameIndex : null,
-        status: 'queued', wave: null, resultSlug: null, harvestedFrom: path.basename(src), harvestedOn: today(), notes: '',
+        status: 'queued', wave: null, resultSlug: null, harvestedFrom: path.basename(src), harvestedOn: today(), notes: carriedNote,
       };
       data.candidates.push(rec); byNorm.set(n, rec); added++;
     }
   }
   save(data);
-  console.log(`sync: +${added} new · dropped ${dupCorpus} in-corpus + ${dupBacklog} already-queued · swept ${swept} → ingested`);
+  console.log(`sync: +${added} new · dropped ${dupCorpus} in-corpus + ${dupBacklog} already-queued · swept ${swept} → ingested${normalisedNames ? ` · normalised ${normalisedNames} magnetAuthor/creditedTo name(s) with a parenthetical → notes` : ''}`);
   printSummary(data);
 }
 
