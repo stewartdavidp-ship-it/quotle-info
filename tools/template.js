@@ -759,13 +759,25 @@ function renderPresentationKit(q) {
 }
 
 // ---- Often misattributed (optional) --------------------------------------
+// The list marker is a claim of its own: the burgundy ✕ reads "refuted false credit". That is right
+// for the common case, but the fact-check list also carries rows the ✕ actively contradicts —
+// documented-but-not-the-origin citations (e.g. Cordell Hull's 1948 memoirs), genuine passages the
+// page holds UP as the real thing, and non-credit wording notes ("no canonical form"). An optional
+// per-item `kind` tracks the verdict instead of the list position: 'context' → a neutral marker,
+// 'genuine' → the sage ✓. Absent (or 'refuted') → the ✕, so every unflagged item is unchanged.
+const MIS_MARK = {
+  refuted: { cls: 'false-x', glyph: '✕' },
+  context: { cls: 'false-x false-mark-ctx', glyph: '~' },
+  genuine: { cls: 'false-x false-mark-true', glyph: '✓' },
+};
 function renderMisattribution(q) {
   const m = q.misattribution;
   if (!m) return '';
   const items = (m.items || []).map((it) => {
     const tag = it.tag ? ` <span class="false-tag">${esc(it.tag)}</span>` : '';
+    const mk = MIS_MARK[it.kind] || MIS_MARK.refuted;
     return `                    <div class="false-item">
-                        <span class="false-x" aria-hidden="true">✕</span>
+                        <span class="${mk.cls}" aria-hidden="true">${mk.glyph}</span>
                         <div>
                             <div class="false-who"><span class="visually-hidden">${escEm(it.scope || 'Incorrectly attributed to ')}</span>${it.who}${tag}</div>
                             <p class="false-why">${it.why}</p>
@@ -1182,6 +1194,9 @@ const STYLE = `${ROOT_CSS}
         .false-item { display: flex; gap: 14px; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
         .false-item:last-child { border-bottom: none; padding-bottom: 0; }
         .false-x { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; background: rgba(212,98,122,0.15); color: var(--burgundy); display: grid; place-items: center; font-weight: 700; font-size: 0.85rem; margin-top: 2px; }
+        /* Verdict-tracking markers: a neutral tilde for documented-but-not-origin / wording notes, a sage tick for genuine passages — so the glyph never contradicts the row's prose. */
+        .false-mark-ctx { background: rgba(154,162,178,0.15); color: var(--slate); }
+        .false-mark-true { background: var(--sage-dim); color: var(--sage); }
         .false-who { font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--ink); }
         .false-tag { font-family: 'DM Sans', sans-serif; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; }
         .false-why { font-size: 0.92rem; color: var(--slate); margin-top: 2px; }

@@ -313,6 +313,9 @@
         .false-item { display: flex; gap: 14px; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
         .false-item:last-child { border-bottom: none; padding-bottom: 0; }
         .false-x { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; background: rgba(212,98,122,0.15); color: var(--burgundy); display: grid; place-items: center; font-weight: 700; font-size: 0.85rem; margin-top: 2px; }
+        /* Verdict-tracking markers: a neutral tilde for documented-but-not-origin / wording notes, a sage tick for genuine passages — so the glyph never contradicts the row's prose. */
+        .false-mark-ctx { background: rgba(154,162,178,0.15); color: var(--slate); }
+        .false-mark-true { background: var(--sage-dim); color: var(--sage); }
         .false-who { font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--ink); }
         .false-tag { font-family: 'DM Sans', sans-serif; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; }
         .false-why { font-size: 0.92rem; color: var(--slate); margin-top: 2px; }
@@ -658,7 +661,7 @@
                         </div>
                     </div>
                     <div class="false-item">
-                        <span class="false-x" aria-hidden="true">✕</span>
+                        <span class="false-x false-mark-ctx" aria-hidden="true">~</span>
                         <div>
                             <div class="false-who"><span class="visually-hidden">The best real 20th-century match</span>Cordell Hull, 1948 <span class="false-tag">documented, but not the origin</span></div>
                             <p class="false-why">Roosevelt&rsquo;s Secretary of State wrote in his memoirs that a lie will gallop halfway round the world before the truth has time to pull its breeches on. That is a real, citable, dated sentence &mdash; but it is 1948, and the proverb was already old when Spurgeon called it old in the 1850s.</p>
@@ -672,7 +675,7 @@
                         </div>
                     </div>
                     <div class="false-item">
-                        <span class="false-x" aria-hidden="true">✕</span>
+                        <span class="false-x false-mark-ctx" aria-hidden="true">~</span>
                         <div>
                             <div class="false-who"><span class="visually-hidden">The wording</span>It has no canonical form <span class="false-tag">boots, shoes, breeches, pants</span></div>
                             <p class="false-why">Truth pulls on boots (1820), laces them (1921), puts on shoes (1924), pulls on breeches (1948) and puts on its pants (American, modern). Searching for one of these will convince you the others do not exist. They all do.</p>
