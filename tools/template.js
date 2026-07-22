@@ -903,7 +903,14 @@ ${cards}
 
 // ---- Dig deeper (always) -------------------------------------------------
 function renderResearch(q) {
-  const items = (q.externalLinks || []).map((l, idx) => `                <a class="research-item" href="/cite/?q=${encodeURIComponent(q.quoteSlug)}&i=${idx}" data-ext="${attr(l.url)}">
+  // rel="nofollow": /cite/ is a noindex utility interstitial, and the site links 5,205 distinct
+  // permutations of it (one per quote × external source). Every one Googlebot discovers spends
+  // crawl budget on a page that can never be indexed — budget owed to the 1,716 real content URLs,
+  // of which Google currently knows only ~431. nofollow stops the discovery; the existing noindex
+  // keeps the already-found ones out. (Deliberately NOT robots.txt Disallow: these URLs are already
+  // in GSC as "Excluded by noindex", and blocking crawl would strand them there — Google could no
+  // longer re-read the noindex, and blocked-but-linked URLs can surface as bare URLs instead.)
+  const items = (q.externalLinks || []).map((l, idx) => `                <a class="research-item" rel="nofollow" href="/cite/?q=${encodeURIComponent(q.quoteSlug)}&i=${idx}" data-ext="${attr(l.url)}">
                     <div class="research-top"><span class="research-label">${escEm(l.label)}</span><span class="research-host">${esc(l.host)}</span><span class="research-arrow" aria-hidden="true">→</span></div>
                     <p class="research-what">${l.what}</p>
                 </a>`).join('\n');
