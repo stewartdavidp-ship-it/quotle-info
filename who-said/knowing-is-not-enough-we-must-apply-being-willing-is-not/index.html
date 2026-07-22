@@ -266,6 +266,12 @@
         .doc-meta dt { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); padding-top: 4px; }
         .doc-meta dd { font-size: 0.98rem; }
         .doc-meta dd.title { font-style: italic; }
+        /* Utility classes for record prose. Records used to carry inline style="" for these two
+           effects; presentation belongs in CSS, and tools/html-safety.js now REJECTS style= in
+           record data (an inline style attribute in agent-authored content is an avoidable
+           attack surface). Records use class="muted" / class="dim" instead. */
+        .muted { color: var(--text-muted); font-style: normal; }
+        .dim { opacity: 0.7; }
         .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
@@ -299,6 +305,10 @@
         .rights-body { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); line-height: 1.6; margin: 0; }
         .rights-body strong { color: var(--ink); }
         .rights-caveat { margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--border); color: var(--amber); }
+        /* Quieter than the caveat above it: this is a standing legal note on every rights badge, not
+           a per-quote warning, so it must not compete with the actual finding. */
+        .rights-disclaimer { margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.78rem; }
+        .rights-disclaimer a { color: var(--burgundy-link); }
         .rights-caveat strong { color: var(--amber); }
 
         /* ===== MISATTRIBUTION ===== */
@@ -654,6 +664,7 @@
                     </ul>
                 </div>
                 <p class="rights-note">Two separate clocks here. Goethe's <em>German</em> is unambiguously public domain &mdash; published 1829, author died 1832. The rights that matter for the English sentence people actually quote attach to the <em>translation</em>, and that particular rendering has no identifiable translator or edition. This is not for want of a public-domain English text: T. Bailey Saunders's <em>The Maxims and Reflections of Goethe</em> (Macmillan, 1906) carries this exact aphorism as no. 324 &mdash; &ldquo;It is not enough to know, we must also apply; it is not enough to will, we must also do&rdquo; &mdash; and is free to reuse. It simply isn't the wording in circulation. Thomas Carlyle's 1827 <em>Wilhelm Meister's Travels</em> is the obvious candidate for the novel as a whole, not a route to this aphorism: Carlyle translated the 1821 first edition and expressly declined to revisit Goethe's later expansion, and the word &ldquo;Makarie&rdquo; appears nowhere in his text. Until the specific English rendering everyone quotes is tied to a datable edition, Quotle asserts no rights status for it. Reproduce the German or Saunders's 1906 version freely; treat the circulating English wording as unresolved.</p>
+                <p class="rights-note rights-disclaimer">Rights status is our research, not legal advice &mdash; and copyright varies by country and edition. For commercial or published use, confirm with the rightsholder. See <a href="/terms">terms</a>.</p>
             </div>
         </section>
         <!-- ============ ADD A SOURCE (reader evidence, not an edit) ============ -->

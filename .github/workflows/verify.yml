@@ -1,0 +1,58 @@
+# verify.yml — turns every gate in this repo from advisory into enforced.
+#
+# WHY THIS EXISTS
+# Until now there was no CI and no git hooks, and GitHub Pages serves committed HTML straight from
+# main. So the source-record validators and the 26 corpus invariants only ran when a human
+# remembered `node tools/build.js` before committing. Anything committed without that shipped
+# unverified — and this repo's worst defects were all SILENT (a canonical pointing at a redirect
+# returns 200 and looks perfect while it quietly caps indexing of the whole site).
+#
+# The three steps below are the same ones a wave runs locally. The third is the one a human cannot
+# do reliably: it rebuilds from the generators and fails if the result differs from what was
+# committed — catching a record edited without a rebuild, or hand-edited HTML that no generator
+# would produce. The build is deterministic (verified: two consecutive builds leave the tree clean),
+# so a non-empty diff always means the commit is stale, never noise.
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 1 · SOURCE GATES — record shape/vocab/conventions, before anything renders.
+      #     build.js runs these too; running them first means a bad record fails with the
+      #     validator's own message rather than a downstream render error.
+      - name: Validate quote records
+        run: node tools/validate-records.js --quiet
+
+      - name: Validate song records
+        run: node tools/validate-songs.js --quiet
+
+      # 2 · BUILD + INVARIANTS — build.js ends with verify-corpus.js, which exits non-zero on any
+      #     of the 26 checks (figures reconcile, rendered pages match records, search/sitemap match
+      #     the corpus, the URL contract holds across all ~1,700 pages, snapshot not stale).
+      - name: Build and verify corpus invariants
+        run: node tools/build.js
+
+      # 3 · COMMITTED OUTPUT IS CURRENT — the check a human cannot be trusted to do.
+      - name: Committed output matches the generators
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::Committed output is stale — rebuilding changed files that were not committed."
+            echo ""
+            echo "Run 'node tools/build.js' and commit the result. Files that differ:"
+            git status --porcelain | head -40
+            echo ""
+            git --no-pager diff --stat | tail -20
+            exit 1
+          fi
+          echo "Committed HTML, sitemap, search index and corpus-state match the generators."

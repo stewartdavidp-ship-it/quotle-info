@@ -15,6 +15,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { scanRecord } = require('./html-safety');
 const { THEMES } = require('./themes');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -62,9 +63,15 @@ const seenSlugs = new Map();
 
 for (const f of files) {
   const p = []; const w = [];
+
+  // HTML SAFETY — song records inject raw prose too (authors[].bio, misattribution items, context).
+  // Same stored-XSS route as quote records: agent writes the record from a fetched page.
+  // Shared implementation (tools/html-safety.js) so the two validators cannot diverge on what is safe.
   const raw = fs.readFileSync(path.join(DIR, f), 'utf8');
   let s;
   try { s = JSON.parse(raw); } catch (e) { console.log(`✗ ${f}\n     - unparseable JSON: ${e.message}`); failed++; continue; }
+
+  scanRecord(s).forEach((m) => p.push(`UNSAFE HTML — ${m}`));
 
   for (const k of REQUIRED) if (s[k] === undefined) p.push(`missing required field: ${k}`);
   if (s.songSlug && s.songSlug !== f.replace(/\.json$/, '')) p.push(`songSlug "${s.songSlug}" does not match filename ${f}`);

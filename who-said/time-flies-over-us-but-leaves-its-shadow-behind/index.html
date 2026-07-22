@@ -276,6 +276,12 @@
         .doc-meta dt { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); padding-top: 4px; }
         .doc-meta dd { font-size: 0.98rem; }
         .doc-meta dd.title { font-style: italic; }
+        /* Utility classes for record prose. Records used to carry inline style="" for these two
+           effects; presentation belongs in CSS, and tools/html-safety.js now REJECTS style= in
+           record data (an inline style attribute in agent-authored content is an avoidable
+           attack surface). Records use class="muted" / class="dim" instead. */
+        .muted { color: var(--text-muted); font-style: normal; }
+        .dim { opacity: 0.7; }
         .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
@@ -309,6 +315,10 @@
         .rights-body { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); line-height: 1.6; margin: 0; }
         .rights-body strong { color: var(--ink); }
         .rights-caveat { margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--border); color: var(--amber); }
+        /* Quieter than the caveat above it: this is a standing legal note on every rights badge, not
+           a per-quote warning, so it must not compete with the actual finding. */
+        .rights-disclaimer { margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.78rem; }
+        .rights-disclaimer a { color: var(--burgundy-link); }
         .rights-caveat strong { color: var(--amber); }
 
         /* ===== MISATTRIBUTION ===== */
@@ -664,6 +674,7 @@
                 <div class="rights rights-public-domain">
                     <span class="rights-badge"><span class="rights-mark" aria-hidden="true">✓</span>Public domain</span>
                     <p class="rights-body"><em>The Marble Faun</em> was first published in 1860, well before the 1931 threshold, so the text &mdash; including this line &mdash; is in the public domain in the United States.</p>
+                    <p class="rights-body rights-disclaimer">Rights status is our research, not legal advice &mdash; and copyright varies by country and edition. For commercial or published use, confirm with the rightsholder. See <a href="/terms">terms</a>.</p>
                 </div>
             </div>
         </section>
