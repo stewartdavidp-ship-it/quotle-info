@@ -69,6 +69,18 @@ for (const { file, r } of recs) {
   // Hard failure, never a warning: there is no benign reason for a script tag in a quote record.
   scanRecord(r).forEach((m) => p.push(`UNSAFE HTML — ${m}`));
 
+  // copyAttribution is the ONE string designed to leave the site — it is written to the clipboard
+  // and pasted into slides, books and posts, with no page around it to qualify it. So it must never
+  // claim more certainty than the record carries. Six records shipped prose that correctly said
+  // "NOT Charlie Chaplin" / "Misattributed to Marcus Aurelius" and then closed with "Verified by
+  // Quotle.info" — the only string that travels asserted the opposite of the page it came from.
+  // Found by an r25 audit; template.js passes copyAttribution through verbatim, so nothing else
+  // was checking it. This is the site's core claim, so it is a hard failure.
+  if (typeof r.copyAttribution === 'string' && r.confidence !== 'verified'
+      && /\bverified by quotle\.info/i.test(r.copyAttribution)) {
+    p.push(`copyAttribution claims "verified by Quotle.info" on a ${r.confidence} record — the clipboard string must not overclaim (use "traced by")`);
+  }
+
   if (r.quoteSlug !== file.replace(/\.json$/, '')) p.push(`quoteSlug "${r.quoteSlug}" != filename`);
   if (!r.displayQuote) p.push('no displayQuote');
 

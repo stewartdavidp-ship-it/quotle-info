@@ -621,7 +621,7 @@
             <div class="pkit-card pkit-card-attributed">
                 <div class="pkit-block">
                     <p class="pkit-lbl">Unconfirmed quote &amp; credit</p>
-                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;The best time to plan a book is while you're doing the dishes&rdquo; <span class="pkit-cite">attributed to Agatha Christie, but not her wording. The line began as a columnist's paraphrase in the Detroit Free Press, March 1954. Christie's own documented words: &quot;I've gotten others walking, or washing up the dishes&quot; (Parade, December 1974). Verified by quotle.info</span></blockquote>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;The best time to plan a book is while you're doing the dishes&rdquo; <span class="pkit-cite">attributed to Agatha Christie, but not her wording. The line began as a columnist's paraphrase in the Detroit Free Press, March 1954. Christie's own documented words: &quot;I've gotten others walking, or washing up the dishes&quot; (Parade, December 1974). Traced by quotle.info</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                 </div>
                 <div class="pkit-block pkit-use pkit-tone-warn">
@@ -857,7 +857,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The best time to plan a book is while you're doing the dishes";
-        const copyAttribution = "attributed to Agatha Christie, but not her wording. The line began as a columnist's paraphrase in the Detroit Free Press, March 1954. Christie's own documented words: \"I've gotten others walking, or washing up the dishes\" (Parade, December 1974). Verified by quotle.info";
+        const copyAttribution = "attributed to Agatha Christie, but not her wording. The line began as a columnist's paraphrase in the Detroit Free Press, March 1954. Christie's own documented words: \"I've gotten others walking, or washing up the dishes\" (Parade, December 1974). Traced by quotle.info";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));
