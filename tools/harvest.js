@@ -41,7 +41,26 @@ const QUOTES_DIR = path.join(ROOT, 'data', 'quotes');
 const BACKLOG = path.join(ROOT, 'data', 'harvest-queue.json');
 const DIGEST = path.join(ROOT, 'data', 'harvest-queue.md');
 
-const CAT_RANK = { misattributed: 1, disputed: 2, 'genuine-famous': 3 };
+// Ranks what a default `select` draws. Anything unlisted falls to 9 — LAST — which is how 37
+// candidates that are squarely the site's thesis ended up sorting BELOW 278 generic famous quotes:
+// this table only knew three categories and the harvesters have since added six more. A
+// political fabrication or a fake Einstein science line IS a misattribution; that is the product.
+//
+// film-misquote is deliberately NOT promoted yet. Those records need Schema.org `spokenByCharacter`
+// (a character said the line, not a person) and the generator does not emit it — an audit agent
+// found that setting it on a record would LOOK fixed while shipping unchanged markup. Promote it
+// once that lands, or the wave ships 7 pages with a known structured-data gap.
+const CAT_RANK = {
+  misattributed: 1,
+  'political-fabrication': 1,
+  'meme-misattribution': 1,
+  'science-tech-misattribution': 1,
+  disputed: 2,
+  'shakespeare-misquote': 2,
+  'scripture-misquote': 2,
+  'film-misquote': 4,          // ahead of nothing-else, behind genuine-famous — see note above
+  'genuine-famous': 3,
+};
 const RIGHTS_RANK = { 'public-domain': 0, uncertain: 1, 'in-copyright': 2 };
 const STATUS_RANK = { selected: 0, queued: 1, ingested: 2, skipped: 3 };
 

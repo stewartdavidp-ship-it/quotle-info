@@ -134,9 +134,14 @@ git status --porcelain -- tools workflows | grep . && echo "^^ fix agents escape
 node tools/build.js
 #    Spot-check any reassigned heroes (disputed pages must show the TRUE author, not the magnet).
 
-# 6. THEME-TAG the new records (needed so they appear on /themes). Tag only the UNTAGGED ones.
-#    tag-themes.js already takes a `manifest` arg for exactly this — build a mini-manifest of the
-#    untagged records and point it there. No hand-editing:
+# 6. THEME-TAG — USUALLY A NO-OP NOW. generate.js emits `themes` itself (schema-enforced, 2-4 from
+#    the fixed vocabulary), because the researching agent has just read and sourced the quote and is
+#    the best-placed thing in the pipeline to say what it is ABOUT. That removed a whole stage: a
+#    second workflow launch, ~4 agents, apply-tags.js and an extra full rebuild, every wave.
+#    RUN THE ONE-LINER ANYWAY — it costs nothing and prints the count. If it says 0 untagged, SKIP
+#    the rest of this step. It will find records only when a wave predates this change, or an agent
+#    somehow returned none. (validate-records.js still gates the vocabulary, so a bad slug fails the
+#    build either way.)
 node -e "const fs=require('fs');const out=fs.readdirSync('data/quotes').filter(f=>f.endsWith('.json')).map(f=>JSON.parse(fs.readFileSync('data/quotes/'+f))).filter(r=>!Array.isArray(r.themes)||!r.themes.length).map(r=>({quoteSlug:r.quoteSlug,quote:r.displayQuote,author:(r.answer&&r.answer.authorName)||'',confidence:r.confidence}));fs.mkdirSync('workflows/.scratch',{recursive:true});fs.writeFileSync('workflows/.scratch/untagged-rN.json',JSON.stringify(out,null,2));console.log(out.length+' untagged → workflows/.scratch/untagged-rN.json')"
 Workflow tag-themes.js  args={ chunks: 4, total: <the count printed above>, manifest: "$(pwd)/workflows/.scratch/untagged-rN.json", repo: "$(pwd)" }
 node workflows/apply-tags.js --journal <tagTranscriptDir>/journal.jsonl

@@ -150,17 +150,30 @@ function toRecord(d, item) {
     if (!item.author && out.quotationText && displayQuote !== out.quotationText) out.claimQuoteText = displayQuote;
     rec.schema = out;
   }
+  // themes now come from the RESEARCHING agent (schema-enforced, 2-4 from the fixed vocabulary),
+  // which removes the separate tag-themes workflow stage. Older journals predate this, so tolerate
+  // absence rather than writing an empty array the theme pages would treat as tagged.
+  if (Array.isArray(d.themes) && d.themes.length) rec.themes = d.themes;
   return rec;
 }
 
 // ---------- dossier schema (StructuredOutput-enforced) ----------
 const DOSSIER_SCHEMA = {
   type: 'object', additionalProperties: false,
-  required: ['confidence', 'confidenceReason', 'meta', 'answer', 'source', 'externalLinks', 'author', 'cite', 'sourcesVerified'],
+  required: ['confidence', 'confidenceReason', 'meta', 'answer', 'source', 'externalLinks', 'author', 'cite', 'sourcesVerified', 'themes'],
   properties: {
     confidence: { type: 'string', enum: ['verified', 'attributed', 'disputed'] },
     confidenceReason: { type: 'string' },
     copyAttribution: { type: 'string' },
+    // Themes used to be a whole separate pipeline stage (a second workflow, 4 agents, apply-tags.js
+    // and an extra full rebuild) — even though the researching agent has just read and sourced the
+    // quote and is the best-placed thing in the pipeline to say what it is ABOUT. Enforced by the
+    // schema so a dossier cannot come back untagged. Vocabulary is re-checked by
+    // tools/validate-records.js, so a wrong slug still fails the build.
+    themes: {
+      type: 'array', minItems: 2, maxItems: 4,
+      items: { type: 'string', enum: ['resilience', 'courage', 'leadership', 'change', 'growth', 'failure', 'success', 'creativity', 'wisdom', 'knowledge', 'truth', 'justice', 'freedom', 'love', 'friendship', 'kindness', 'gratitude', 'happiness', 'purpose', 'time', 'mortality', 'hope', 'work', 'simplicity', 'doubt', 'power', 'character', 'humility'] },
+    },
     meta: {
       type: 'object', additionalProperties: false, required: ['title', 'description', 'ogTitle', 'ogDescription'],
       properties: { title: { type: 'string' }, description: { type: 'string' }, ogTitle: { type: 'string' }, ogDescription: { type: 'string' } },
@@ -319,6 +332,14 @@ CITATION DISCIPLINE (a page fails audit on any of these):
  • answer.authorDates and author.metaLine are PLAIN TEXT — no tags; entities like &middot; &ndash; are fine.
  • source.sourceLink.text and artifact.linkText must NOT end with ↗ or any arrow — the renderer adds it.
  • copyAttribution (if provided) is PLAIN TEXT for the clipboard — literal Unicode (— ' ' " "), NO HTML tags, NO named entities.
+
+THE FOUR THAT KEEP FAILING (every one of these was a real audit FAIL on a recent wave — they are the reason the fix stage is expensive, so read them twice):
+ • NEVER COMPUTE a duration, interval, or age from a date you have not verified. "twenty-two years later", "a decade before", "in his sixties" — if the underlying date is not confirmed in a source you fetched, do not write the derived figure at all. A wave shipped "twenty-two years" computed from an unsupported 1984 date while three other places on the same page implied 2010.
+ • A RESEARCH HEADLINE IS NOT A PERIOD QUOTATION. Quote Investigator and Wikiquote write their own summary headings; those are the researcher's words, not the historical source's. Never put a QI/Wikiquote heading in typographic quotes and pin it to a newspaper, book or speaker. If you cite a period wording, it must be one the source literally transcribes.
+ • DO NOT CLAIM "earliest documented" UNLESS your source says so. If QI lists earlier attestations than the one you are about to call earliest, you are contradicting the very page you are linking. A wave asserted a Jan-1974 "earliest documented spoken version" inside a copy-pasteable citation while the Popik page linked three times on that same page documented 1971 and 1973.
+ • THE PAGE MUST AGREE WITH ITSELF. Before returning, re-read your own dossier as one document: every date, year, span and attribution must be consistent across answer, source, misattribution, context and copyAttribution. A single page contradicting itself is the most damaging defect here, because the citation is designed to be copied and travel.
+
+THEMES — pick 2-4 from the fixed vocabulary in the schema, chosen by what the quote is ABOUT (its meaning), not by incidental words. Prefer fewer, stronger tags. "Fall seven times, stand up eight" → resilience, hope (NOT time). A leadership maxim about serving others → leadership, character. If the line is a fabrication or misattribution, tag it by what the LINE says anyway — someone still searches for its theme. These drive the /themes pages, so a wrong tag is a wrong page.
 
 Return the dossier via the structured schema. Do not invent sources or translations; if you cannot verify a primary source, choose "attributed" or "disputed" and set rights honestly ("uncertain" when the wording's origin is unknown).`
 }
