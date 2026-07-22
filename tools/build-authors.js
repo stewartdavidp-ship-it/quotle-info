@@ -404,13 +404,18 @@ const ERAS = [
   { id: 'nineteenth', label: '1800s', max: 1900 },
   { id: 'modern', label: 'Modern', max: 9999 },
 ];
+// Everyone with no parseable birth year lands in 'undated' rather than falling out of the row
+// entirely — mostly bands and duos, whose metaLine is "English synth-pop duo · formed 1977" with no
+// birth year to bucket on, plus a handful of anonymous/collective authors. Without this the era
+// chips summed to 527 against an "All" of 593, which reads as a miscount.
+const UNDATED = 'undated';
 function eraOf(metaLine) {
   const head = plain(metaLine).split('·')[0];
   if (/\bBCE?\b/i.test(head)) return 'ancient';
   const yrs = head.match(/\d{3,4}/g);
-  if (!yrs) return '';
+  if (!yrs) return UNDATED;
   const birth = parseInt(yrs[0], 10);
-  return (ERAS.find((e) => birth < e.max) || {}).id || '';
+  return (ERAS.find((e) => birth < e.max) || {}).id || UNDATED;
 }
 
 authors.forEach((a) => { a.mag = magnetCount[plain(a.name)] || 0; a.era = eraOf(a.metaLine); });
@@ -418,6 +423,13 @@ const magnets = authors.filter((a) => a.mag > 0).length;
 const deep = authors.filter((a) => a.quotes.length >= 3).length;
 const eraCounts = {};
 authors.forEach((a) => { if (a.era) eraCounts[a.era] = (eraCounts[a.era] || 0) + 1; });
+// The era row is a partition: every author lands in exactly one bucket, so the chips must sum to
+// "All". If they ever stop, a metaLine shape has appeared that eraOf can't read and the row would
+// silently under-report again — fail loudly at build time instead.
+const eraSum = Object.keys(eraCounts).reduce((s, k) => s + eraCounts[k], 0);
+if (eraSum !== authors.length) {
+  console.warn(`  ⚠ era buckets sum to ${eraSum} but there are ${authors.length} authors — eraOf missed ${authors.length - eraSum}`);
+}
 // default order = the ranked head: biggest misattribution magnets, then depth, then name
 authors.sort((a, b) => (b.mag - a.mag) || (b.quotes.length - a.quotes.length) || a.name.localeCompare(b.name));
 
@@ -463,6 +475,7 @@ const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb">
                 <span class="fbar-lbl">Era</span>
                 <button class="chip" data-era="" aria-pressed="true">All <span class="n">${authors.length}</span></button>
 ${ERAS.map((e) => `                <button class="chip" data-era="${e.id}" aria-pressed="false">${e.label} <span class="n">${eraCounts[e.id] || 0}</span></button>`).join('\n')}
+                <button class="chip" data-era="${UNDATED}" aria-pressed="false">Undated <span class="n">${eraCounts[UNDATED] || 0}</span></button>
             </div>
             <p id="f-count" class="f-count" role="status" aria-live="polite"></p>
         </div>
