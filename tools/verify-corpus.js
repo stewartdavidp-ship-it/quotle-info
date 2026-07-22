@@ -177,7 +177,24 @@ scanForNoSlash(allPages, `all ${allPages.length} built pages`);
 
 scanForNoSlash(['sitemap.xml'], 'sitemap.xml');
 
-// ---- 8. the committed snapshot is not stale ----
+// ---- 8. the generator's theme vocabulary matches ours ----
+// generate.js now emits `themes` directly (schema-enforced), which removed a whole pipeline stage.
+// But workflow scripts run sandboxed and cannot require() repo modules, so that enum is a
+// hand-maintained COPY of tools/themes.js. If they drift, the researching agent is offered a slug
+// validate-records.js will reject — the wave fails at the very end, after all the research spend.
+// Cheap to check here, expensive to discover there.
+try {
+  const genSrc = fs.readFileSync(path.join(ROOT, 'workflows', 'generate.js'), 'utf8');
+  const m = genSrc.match(/themes:\s*\{[\s\S]*?enum:\s*\[([^\]]+)\]/);
+  if (m) {
+    const offered = m[1].split(',').map((s) => s.trim().replace(/'/g, '')).filter(Boolean).sort().join(',');
+    const vocab = require('./themes').THEMES.map((t) => t.slug).sort().join(',');
+    check('generate.js theme enum matches tools/themes.js', vocab, offered,
+      'the sandboxed copy in generate.js has drifted — an agent would be offered a slug validate-records rejects');
+  }
+} catch (_) { /* generate.js optional */ }
+
+// ---- 9. the committed snapshot is not stale ----
 const state = readJson('data/corpus-state.json');
 if (state && state.figures) {
   const same = JSON.stringify(state.figures) === JSON.stringify(CORPUS);

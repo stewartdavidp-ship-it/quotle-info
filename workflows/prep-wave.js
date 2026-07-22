@@ -86,6 +86,10 @@ function toRecord(d, item) {
     if (!item.author && out.quotationText && displayQuote !== out.quotationText) out.claimQuoteText = displayQuote;
     rec.schema = out;
   }
+  // themes now come from the RESEARCHING agent (schema-enforced, 2-4 from the fixed vocabulary),
+  // which removes the separate tag-themes workflow stage. Older journals predate this, so tolerate
+  // absence rather than writing an empty array the theme pages would treat as tagged.
+  if (Array.isArray(d.themes) && d.themes.length) rec.themes = d.themes;
   return rec;
 }
 
