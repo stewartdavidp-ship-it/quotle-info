@@ -275,6 +275,12 @@
         .doc-meta dt { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); padding-top: 4px; }
         .doc-meta dd { font-size: 0.98rem; }
         .doc-meta dd.title { font-style: italic; }
+        /* Utility classes for record prose. Records used to carry inline style="" for these two
+           effects; presentation belongs in CSS, and tools/html-safety.js now REJECTS style= in
+           record data (an inline style attribute in agent-authored content is an avoidable
+           attack surface). Records use class="muted" / class="dim" instead. */
+        .muted { color: var(--text-muted); font-style: normal; }
+        .dim { opacity: 0.7; }
         .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
@@ -308,6 +314,10 @@
         .rights-body { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); line-height: 1.6; margin: 0; }
         .rights-body strong { color: var(--ink); }
         .rights-caveat { margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--border); color: var(--amber); }
+        /* Quieter than the caveat above it: this is a standing legal note on every rights badge, not
+           a per-quote warning, so it must not compete with the actual finding. */
+        .rights-disclaimer { margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.78rem; }
+        .rights-disclaimer a { color: var(--burgundy-link); }
         .rights-caveat strong { color: var(--amber); }
 
         /* ===== MISATTRIBUTION ===== */
@@ -663,6 +673,7 @@
                 <div class="rights rights-in-copyright">
                     <span class="rights-badge"><span class="rights-mark" aria-hidden="true">©</span>In copyright</span>
                     <p class="rights-body">In copyright until the end of 2035 in the UK and EU (Churchill died 24 January 1965; life plus 70), with the US term for 1940s works running to broadly the same period. Permissions are administered by Curtis Brown for the Churchill Literary Estate. Quoting a sentence with attribution in a talk, article or book is ordinary practice. <strong>Reproducing the peroration at length &mdash; which is what people usually want to do with this one &mdash; is a substantial part of the work and is routinely cleared with the estate</strong>, and merchandise use is licensed and enforced. This is not legal advice.</p>
+                    <p class="rights-body rights-disclaimer">Rights status is our research, not legal advice &mdash; and copyright varies by country and edition. For commercial or published use, confirm with the rightsholder. See <a href="/terms">terms</a>.</p>
                 </div>
             </div>
         </section>

@@ -260,6 +260,12 @@
         .doc-meta dt { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); padding-top: 4px; }
         .doc-meta dd { font-size: 0.98rem; }
         .doc-meta dd.title { font-style: italic; }
+        /* Utility classes for record prose. Records used to carry inline style="" for these two
+           effects; presentation belongs in CSS, and tools/html-safety.js now REJECTS style= in
+           record data (an inline style attribute in agent-authored content is an avoidable
+           attack surface). Records use class="muted" / class="dim" instead. */
+        .muted { color: var(--text-muted); font-style: normal; }
+        .dim { opacity: 0.7; }
         .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
@@ -293,6 +299,10 @@
         .rights-body { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); line-height: 1.6; margin: 0; }
         .rights-body strong { color: var(--ink); }
         .rights-caveat { margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--border); color: var(--amber); }
+        /* Quieter than the caveat above it: this is a standing legal note on every rights badge, not
+           a per-quote warning, so it must not compete with the actual finding. */
+        .rights-disclaimer { margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.78rem; }
+        .rights-disclaimer a { color: var(--burgundy-link); }
         .rights-caveat strong { color: var(--amber); }
 
         /* ===== MISATTRIBUTION ===== */
@@ -648,6 +658,7 @@
                     </ul>
                 </div>
                 <p class="rights-note">No rights status can honestly be asserted, because no source work has been identified. Copyright attaches to a specific published work on a specific date &mdash; and here there is no located speech, book, or article to attach it to. Anyone reproducing the line should note that it is <em>attributed to</em> Reagan without documentation rather than presenting it as a sourced presidential quotation; it should <strong>not</strong> be assumed public domain simply because its origin is untraceable. (Had it come from a Reagan presidential speech, it would in fact be a U.S. Government work and free of copyright &mdash; but that is precisely the source no one has been able to produce.)</p>
+                <p class="rights-note rights-disclaimer">Rights status is our research, not legal advice &mdash; and copyright varies by country and edition. For commercial or published use, confirm with the rightsholder. See <a href="/terms">terms</a>.</p>
             </div>
         </section>
         <!-- ============ ADD A SOURCE (reader evidence, not an edit) ============ -->

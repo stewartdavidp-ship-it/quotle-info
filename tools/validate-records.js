@@ -29,6 +29,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { scanRecord } = require('./html-safety');
 
 const ROOT = path.resolve(__dirname, '..');
 const argv = process.argv.slice(2);
@@ -61,6 +62,12 @@ let failed = 0, warned = 0;
 for (const { file, r } of recs) {
   const p = [];   // hard problems
   const w = [];   // warnings
+
+  // HTML SAFETY — ~10 record fields are injected into pages RAW (author.bio, answer.sourceLine,
+  // misattribution.intro/truthLine, context.pull …). Records are written by agents from fetched web
+  // pages, so "attacker's page → agent → record → every rendered page" is a real stored-XSS route.
+  // Hard failure, never a warning: there is no benign reason for a script tag in a quote record.
+  scanRecord(r).forEach((m) => p.push(`UNSAFE HTML — ${m}`));
 
   if (r.quoteSlug !== file.replace(/\.json$/, '')) p.push(`quoteSlug "${r.quoteSlug}" != filename`);
   if (!r.displayQuote) p.push('no displayQuote');
