@@ -372,6 +372,11 @@ const totalQuotes = authors.reduce((s, a) => s + a.quotes.length, 0);
 // state quotes and songs as separate totals rather than pairing one headcount with one quote total.
 const songArtists = authors.filter((a) => a.songs.length).length;
 const totalSongs = songRecords.length;
+// Say the CORPUS size (1058), not the quote→hub link count (1041). They differ by the ~17 quotes
+// whose author is Anonymous/Unknown and so has no hub — a distinction nobody reading a summary
+// line cares about, but showing 1041 here against 1058 on the home page and /who-said/ reads as a
+// bug. One corpus number, stated the same way everywhere.
+const corpusQuotes = records.length;
 
 // Browse facets. A flat A–Z list of every author is useless past a few hundred (66% of authors
 // carry a single quote), so the index ships three lenses instead of an alphabet:
@@ -426,7 +431,7 @@ const authorCard = (a) => `                <a class="ac" href="/authors/${a.slug
                     </div>
                 </a>`;
 const idxHead = `    <title>The authors — every voice traced to source · Quotle.info</title>
-    <meta name="description" content="${authors.length} authors and artists, ${totalQuotes} quotes and ${totalSongs} songs traced to a primary source on Quotle.info. Who really said it — and who really recorded it — with receipts.">
+    <meta name="description" content="${authors.length} authors and artists, ${corpusQuotes} quotes and ${totalSongs} songs traced to a primary source on Quotle.info. Who really said it — and who really recorded it — with receipts.">
     <link rel="canonical" href="${ORIGIN}/authors/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="The authors — Quotle.info">
@@ -441,7 +446,7 @@ const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb">
         <header class="idx-hero">
             <p class="kicker">Every voice, traced</p>
             <h1>The authors</h1>
-            <p class="lede"><b>${authors.length}</b> authors &amp; artists &middot; <b>${totalQuotes}</b> quotes and <b>${totalSongs}</b> songs traced to a primary source, with the misattributions untangled.</p>
+            <p class="lede"><b>${authors.length}</b> authors &amp; artists &middot; <b>${corpusQuotes}</b> quotes and <b>${totalSongs}</b> songs traced to a primary source, with the misattributions untangled.</p>
         </header>
         <div class="fbar">
             <div class="fbar-row">
