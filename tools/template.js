@@ -438,6 +438,48 @@ function buildJsonLd(q, url) {
     }),
   };
 
+  // Quotation.disambiguatingDescription — THE PAGE'S VERDICT, in the machine-readable layer.
+  //
+  // Without this, a consumer that reads only the Quotation node gets an unqualified assertion:
+  //   - on an `attributed` page, `creator` is emitted flatly even though no primary source was found;
+  //   - on a `disputed` page where the true author IS known, `creator` is emitted with no signal that
+  //     the popular attribution is contested;
+  //   - on a `disputed` page where it is NOT known, `creator` is suppressed entirely (creatorOk) and
+  //     the node simply goes quiet — a machine cannot tell "no author" from "author disputed".
+  // The ClaimReview does carry the dispute, but it is a SEPARATE node and nothing obliges a consumer
+  // to read it. That gap was r25's largest issue class: 20 of 66 issues were structured data
+  // disagreeing with the prose on the same page — a site whose whole thesis is "this attribution is
+  // wrong" telling Google the attribution is fine.
+  //
+  // Schema.org defines disambiguatingDescription as a short description used to disambiguate the item
+  // from similar ones, which is exactly the job: it disambiguates THIS quotation from the naive
+  // reading of its own creator field. It is emitted for all three confidence states so a consumer can
+  // always read the verdict rather than inferring it from a field's absence.
+  const verdictNote = (() => {
+    if (q.confidence === 'disputed') {
+      const wrong = plain(magnet || misWho || '');
+      const who = quotation.creator && quotation.creator.name ? plain(quotation.creator.name) : '';
+      // RIGHT PERSON, WRONG WORDS. When the magnet IS the true author the dispute is about the
+      // WORDING, not the attribution — "Commonly misattributed to X. Actually by X." is gibberish,
+      // and it is the very self-contradiction this field exists to prevent. validate-records already
+      // warns on this shape ("real == credited"); ~a fifth of disputed records are it.
+      if (who && wrong && who.toLowerCase() === wrong.toLowerCase()) {
+        return `${who} is the author, but this popular wording is not what they wrote — it is a later paraphrase or misquotation.`;
+      }
+      const lead = wrong ? `Commonly misattributed to ${wrong}.` : 'This attribution is disputed.';
+      if (who) return `${lead} Actually by ${who}.`;
+      return `${lead} The true author is not established; no creator is asserted here.`;
+    }
+    if (q.confidence === 'attributed') {
+      const who = trueAuthor || (quotation.creator && plain(quotation.creator.name)) || '';
+      return who
+        ? `Widely attributed to ${who}, but not traced to a primary source. Treat the attribution as unconfirmed.`
+        : 'Widely repeated, but not traced to a primary source. Treat the attribution as unconfirmed.';
+    }
+    return 'Attribution traced to a primary source.';
+  })();
+  if (verdictNote) quotation.disambiguatingDescription = verdictNote;
+
   return { '@context': 'https://schema.org', '@graph': [quotation, claimReview, webpage, faq, breadcrumb] };
 }
 
