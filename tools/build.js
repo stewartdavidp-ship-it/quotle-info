@@ -57,7 +57,27 @@ function validateCorpus(records) {
   return problems;
 }
 
+// SOURCE GATES — run before anything is rendered, inside the one build command so they cannot be
+// skipped. validate-records.js existed for months but was wired into NOTHING: it only ran when a
+// human remembered, which meant it did not run. validate-songs.js is new — song records had no
+// gate at all, which is how 27 of them entered the corpus unchecked. Both exit non-zero on
+// failure, aborting the build before a bad record can reach a page.
+// (No package.json/npm script: CLAUDE.md constrains this repo to no build tooling, so the gates
+// live in the single `node tools/build.js` entry point instead.)
+function runSourceGates() {
+  const { execFileSync } = require('child_process');
+  for (const gate of ['validate-records.js', 'validate-songs.js']) {
+    try {
+      execFileSync(process.execPath, [path.join(__dirname, gate), '--quiet'], { stdio: 'inherit' });
+    } catch (_) {
+      console.error(`\n  ✗ ${gate} failed — fix the records above before building.\n`);
+      process.exit(1);
+    }
+  }
+}
+
 function build() {
+  runSourceGates();
   const records = loadRecords();
   console.log(`Loaded ${records.length} verified record(s).`);
 
@@ -109,6 +129,11 @@ function build() {
     require('./build-check'); // regenerate /check paste-a-quote verifier
     require('./build-discovery'); // regenerate openapi.json + .well-known/ai-plugin.json (agent API discovery)
     require('./build-sitemap'); // regenerate sitemap.xml + llms.txt (machine discoverability)
+    require('./build-state'); // write data/corpus-state.json — the committed snapshot of every figure
+    // LAST: assert the rendered output reconciles with CORPUS. Exits non-zero on any mismatch, so a
+    // build that would publish contradictory numbers fails here instead of shipping (which is how
+    // "526 Authors" reached production on a tile linking to an index headed "593").
+    require('./verify-corpus');
   }
   console.log('Done.');
 }

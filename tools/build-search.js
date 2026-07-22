@@ -11,20 +11,15 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { aggregateAuthors } = require('./authors');
 const { THEMES, isTheme } = require('./themes');
 const ROOT = path.resolve(__dirname, '..');
 
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.json'), 'utf8'));
-// full records + songs → the SAME author aggregation build-authors uses, so search links only ever
-// point at hubs that actually exist (and song-only artists like Gloria Jones become searchable).
-const records = fs.readdirSync(path.join(ROOT, 'data', 'quotes')).filter((f) => f.endsWith('.json'))
-  .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'quotes', f), 'utf8')));
-let songs = [];
-try {
-  songs = fs.readdirSync(path.join(ROOT, 'data', 'songs')).filter((f) => f.endsWith('.json'))
-    .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'songs', f), 'utf8')));
-} catch (_) { /* no songs yet */ }
+// Records, songs and the author aggregation come from corpus.js — the SAME objects build-authors
+// renders pages from, so a search result can never point at a hub that was not built, and the
+// index's author count can never disagree with the site's. (Counting authors here independently,
+// from the manifest, is precisely what produced "526" in search against 593 real hubs.)
+const { records, songs, authors: hubAuthors } = require('./corpus');
 
 const entries = [];
 
@@ -39,7 +34,7 @@ for (const s of songs) {
 }
 
 // authors (quotes + songs) — from the authoritative hub aggregation; carries a quote count (n) and a song count (ns)
-for (const a of aggregateAuthors(records, songs)) {
+for (const a of hubAuthors) {
   entries.push({ t: 'a', x: a.name, n: a.quotes.length, ns: a.songs.length, u: `/authors/${a.slug}/` });
 }
 

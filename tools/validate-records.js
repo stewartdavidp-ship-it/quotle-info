@@ -34,6 +34,9 @@ const ROOT = path.resolve(__dirname, '..');
 const argv = process.argv.slice(2);
 const argOf = (f) => { const i = argv.indexOf(f); return i > -1 ? argv[i + 1] : null; };
 const since = argOf('--since') ? Number(argOf('--since')) : null;
+// --quiet: print only failures/warnings, not the per-record ✓ roll. Lets this run as a mandatory
+// pre-build gate (npm run build) without burying the build log under 1058 lines of success.
+const QUIET = argv.includes('--quiet');
 
 const CONFIDENCE = new Set(['verified', 'attributed', 'disputed']);
 const RIGHTS = new Set(['public-domain', 'in-copyright', 'licensed']);
@@ -152,9 +155,15 @@ for (const { file, r } of recs) {
     w.forEach((m) => console.log(`     ? ${m}`));
   } else if (w.length) {
     warned++;
-    console.log(`⚠ ${String(r.dayNumber ?? '—').padStart(4)}  ${r.quoteSlug}`);
-    w.forEach((m) => console.log(`     ? ${m}`));
-  } else {
+    // Under --quiet (the in-build gate) warnings are counted, not printed: there is a standing
+    // backlog of ~240, and dumping it at the head of every build would bury the failures that
+    // actually stop the build and teach everyone to scroll past this tool. The closing summary
+    // states the count and how to see them.
+    if (!QUIET) {
+      console.log(`⚠ ${String(r.dayNumber ?? '—').padStart(4)}  ${r.quoteSlug}`);
+      w.forEach((m) => console.log(`     ? ${m}`));
+    }
+  } else if (!QUIET) {
     console.log(`✓ ${String(r.dayNumber ?? '—').padStart(4)}  ${r.quoteSlug.slice(0, 56)}`);
   }
 }
@@ -164,4 +173,8 @@ if (failed) {
   console.log(`*** ${failed} record(s) FAILED, ${warned} with warnings — fix before building ***`);
   process.exit(1);
 }
-console.log(`All ${recs.length} record(s) valid${warned ? ` (${warned} with warnings to review)` : ''}.`);
+if (QUIET) {
+  console.log(`  ✓ ${recs.length} quote record(s) valid${warned ? ` — ${warned} with warnings (node tools/validate-records.js to review)` : ''}`);
+} else {
+  console.log(`All ${recs.length} record(s) valid${warned ? ` (${warned} with warnings to review)` : ''}.`);
+}
