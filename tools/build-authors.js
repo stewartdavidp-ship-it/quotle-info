@@ -75,7 +75,10 @@ const misattrCard = (m) => `                <a class="mis-card" href="/who-said/
                     <p class="mis-real"><span class="mis-lbl">actually</span> ${esc(m.real)}</p>
                 </a>`;
 const REV_LABEL = { misattributed: 'Likely misattributed', disputed: 'Disputed', 'genuine-famous': 'Verifying' };
-const reviewCard = (c) => `                <a class="rev-card" href="/flagged/?q=${esc(c.slug)}">
+// rel="nofollow" — /flagged/ is a noindex research-bench page and the site links 441 distinct
+// ?q= permutations of it. Same reasoning as the /cite/ links in template.js: stop Googlebot
+// spending crawl budget discovering URLs it can never index.
+const reviewCard = (c) => `                <a class="rev-card" rel="nofollow" href="/flagged/?q=${esc(c.slug)}">
                     <p class="rev-q">&ldquo;${esc(c.quote)}&rdquo;</p>
                     <p class="rev-tag">${REV_LABEL[c.category] || 'Queued'} <span aria-hidden="true">→</span></p>
                 </a>`;

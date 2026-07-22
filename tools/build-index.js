@@ -82,7 +82,7 @@ const benchCard = (c) => `                <article class="bench-card ${c.categor
                     </div>
                     <div class="bench-actions">
 ${INTERACTIVE ? `                        ${voteBtn(c)}` : ''}
-${c.documentedAt ? `                        <a class="bench-src" href="/flagged/?q=${esc(c.slug)}">Why we flagged it <span aria-hidden="true">→</span></a>` : ''}
+${c.documentedAt ? `                        <a class="bench-src" rel="nofollow" href="/flagged/?q=${esc(c.slug)}">Why we flagged it <span aria-hidden="true">→</span></a>` : ''}
                     </div>
                 </article>`;
 
