@@ -148,7 +148,7 @@ function renderSong(s) {
   const a = s.answer, o = s.original, m = s.misattribution, c = s.context;
   const jsonld = JSON.stringify(buildJsonLd(s, url));
   const oa = s.authors && s.authors.find((x) => x.role === 'original');
-  const origName = authorLink(oa || {}) ? `<a href="/authors/${(oa || {}).slug}">${esc(a.originalArtist)}</a>` : esc(a.originalArtist);
+  const origName = authorLink(oa || {}) ? `<a href="/authors/${(oa || {}).slug}/">${esc(a.originalArtist)}</a>` : esc(a.originalArtist);
 
   const submitJs = COMMUNITY ? `
     <script>

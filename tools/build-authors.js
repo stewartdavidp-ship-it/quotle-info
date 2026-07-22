@@ -290,25 +290,25 @@ for (const a of authors) {
   const rev = reviewBy[a.slug] || [];
   const head = `    <title>${esc(a.name)} — provenance traced to source · Quotle.info</title>
     <meta name="description" content="${esc(a.name)}: ${summary} traced to a primary source, with attribution verified and misattributions untangled.">
-    <link rel="canonical" href="${ORIGIN}/authors/${a.slug}">
+    <link rel="canonical" href="${ORIGIN}/authors/${a.slug}/">
     <meta property="og:type" content="profile">
     <meta property="og:title" content="${esc(a.name)} — provenance traced to source">
-    <meta property="og:url" content="${ORIGIN}/authors/${a.slug}">
+    <meta property="og:url" content="${ORIGIN}/authors/${a.slug}/">
     <meta property="og:site_name" content="Quotle.info">
 ${OG_IMAGE_TAGS}
     <script type="application/ld+json">
     ${jsonLd({
       '@context': 'https://schema.org',
       '@type': 'ProfilePage',
-      '@id': `${ORIGIN}/authors/${a.slug}`,
+      '@id': `${ORIGIN}/authors/${a.slug}/`,
       mainEntity: {
         '@type': 'Person',
-        '@id': `${ORIGIN}/authors/${a.slug}#person`,
+        '@id': `${ORIGIN}/authors/${a.slug}/#person`,
         name: plain(a.name),
         description: plain(a.metaLine),
         subjectOf: [
-          ...a.quotes.map((q) => ({ '@type': 'Quotation', '@id': `${ORIGIN}/who-said/${q.slug}#quotation`, text: plain(q.quote), url: `${ORIGIN}/who-said/${q.slug}` })),
-          ...a.songs.map((s) => ({ '@type': 'MusicRecording', '@id': `${ORIGIN}/who-recorded/${s.slug}#recording`, name: plain(s.title), url: `${ORIGIN}/who-recorded/${s.slug}` })),
+          ...a.quotes.map((q) => ({ '@type': 'Quotation', '@id': `${ORIGIN}/who-said/${q.slug}/#quotation`, text: plain(q.quote), url: `${ORIGIN}/who-said/${q.slug}/` })),
+          ...a.songs.map((s) => ({ '@type': 'MusicRecording', '@id': `${ORIGIN}/who-recorded/${s.slug}/#recording`, name: plain(s.title), url: `${ORIGIN}/who-recorded/${s.slug}/` })),
         ],
       },
     })}

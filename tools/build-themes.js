@@ -186,7 +186,7 @@ for (const t of THEMES) {
   if (!real.length && !fake.length) continue; // no page for an untagged theme
   pageCount++;
 
-  const url = `${ORIGIN}/themes/${t.slug}`;
+  const url = `${ORIGIN}/themes/${t.slug}/`;
   const headExtra = `    <title>Verified quotes about ${esc(t.label)} | Quotle.info</title>
     <meta name="description" content="Provenance-checked quotes about ${esc(t.label.toLowerCase())} — correctly credited, with rights cleared for reuse and image directions. ${esc(t.blurb)}">
     <link rel="canonical" href="${url}">
@@ -203,7 +203,7 @@ ${OG_IMAGE_TAGS}
         '@type': 'ItemList', numberOfItems: real.length,
         itemListElement: real.slice(0, 25).map((q, i) => ({
           '@type': 'ListItem', position: i + 1,
-          item: { '@type': 'Quotation', text: q.quote, creator: { '@type': 'Person', name: q.author }, url: `${ORIGIN}/who-said/${q.slug}` },
+          item: { '@type': 'Quotation', text: q.quote, creator: { '@type': 'Person', name: q.author }, url: `${ORIGIN}/who-said/${q.slug}/` },
         })),
       },
     })}
@@ -252,9 +252,9 @@ ${realSection}${fakeSection}
   // worse-to-reuse pick). `rights` is carried per quote so an agent can still filter precisely.
   const jsonReal = [...real].sort((a, b) => (a.rights === 'public-domain' ? 0 : 1) - (b.rights === 'public-domain' ? 0 : 1));
   jsonIndex.push({
-    theme: t.slug, label: t.label, url: `${ORIGIN}/themes/${t.slug}`,
-    verified: jsonReal.map((q) => ({ quote: q.quote, author: q.author, url: `${ORIGIN}/who-said/${q.slug}`, confidence: q.confidence, rights: q.rights, clearedForCommercialUse: q.rights === 'public-domain' })),
-    misattributed: fake.map((q) => ({ quote: q.quote, reallyBy: q.author, oftenCreditedTo: q.credited, url: `${ORIGIN}/who-said/${q.slug}` })),
+    theme: t.slug, label: t.label, url: `${ORIGIN}/themes/${t.slug}/`,
+    verified: jsonReal.map((q) => ({ quote: q.quote, author: q.author, url: `${ORIGIN}/who-said/${q.slug}/`, confidence: q.confidence, rights: q.rights, clearedForCommercialUse: q.rights === 'public-domain' })),
+    misattributed: fake.map((q) => ({ quote: q.quote, reallyBy: q.author, oftenCreditedTo: q.credited, url: `${ORIGIN}/who-said/${q.slug}/` })),
   });
 }
 
