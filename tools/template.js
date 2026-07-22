@@ -182,9 +182,16 @@ function buildJsonLd(q, url) {
   // a wording-drift page, where magnet == true author by definition). This catches records where
   // generate left answer.authorName as the wrongly-credited name (else the machine-readable creator
   // would assert the very misattribution the page debunks).
+  //   EXCEPTION: when the true author is itself Unknown/Anonymous AND the record's creator names that
+  //   same anonymous origin (never the magnet), emit it. Otherwise anonymous disputed pages shipped
+  //   NO Quotation.creator at all — a CLAUDE.md RULE violation the audit flagged on ~30 pages — and an
+  //   honest creator:"Unknown" asserts nothing false. (Guarded so a record can't sneak the magnet in
+  //   under an "unknown" hero: the creator name must itself be the anonymous token.)
+  const creatorIsAnon = s.creator && /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(plain(s.creator.name));
   const creatorOk = s.creator && (q.confidence !== 'disputed'
     || (!heroUnknown && plain(s.creator.name).toLowerCase() === heroName.toLowerCase()
-      && (wordingDrift || heroName.toLowerCase() !== magnetName)));
+      && (wordingDrift || heroName.toLowerCase() !== magnetName))
+    || (heroUnknown && creatorIsAnon));
   if (creatorOk) {
     quotation.creator = { '@type': 'Person', name: s.creator.name };
     if (s.creator.birthDate) quotation.creator.birthDate = s.creator.birthDate;
