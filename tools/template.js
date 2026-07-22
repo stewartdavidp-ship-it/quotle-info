@@ -258,7 +258,16 @@ function buildJsonLd(q, url) {
   // the popularly-credited (wrong) name, false (1). The Quotation.creator still names the REAL
   // author, so a machine reads both "the claim about {who} is {rating}" and "actually by {creator}".
   const RATING = { verified: [5, 'Verified'], attributed: [3, 'Attributed'], disputed: [1, 'Disputed'] };
-  const [ratingValue, defaultRatingName] = RATING[q.confidence] || RATING.verified;
+  const [defaultRatingValue, defaultRatingName] = RATING[q.confidence] || RATING.verified;
+  // The confidence→value map is right for the common case, but disputed's 1/5 is machine-readable
+  // "entirely false" — correct for pure fabrications and plain misattributions, WRONG for the
+  // minority the audit flagged: hedged fact-checks (PolitiFact "Mostly False" / Snopes "Mixture")
+  // and used-but-not-coined lines (a real utterance the speaker didn't originate). Those set
+  // schema.claimRatingValue (2 or 3) so the numeric rating matches the page's verdict instead of
+  // overclaiming — the value twin of the schema.claimRatingName label override just below. Absent
+  // (or non-numeric) → the confidence default, so every unflagged page is unchanged.
+  const ratingValue = (q.schema && typeof q.schema.claimRatingValue === 'number')
+    ? q.schema.claimRatingValue : defaultRatingValue;
   // `confidence` describes the quote's ORIGIN; this ClaimReview rates the narrower "{who} said it"
   // claim, which can be flatly false even while the origin stays disputed. Records where the cited
   // fact-checks are decisive (e.g. Monticello "Spurious" + CheckYourFact "False") can override the
