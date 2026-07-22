@@ -621,7 +621,7 @@
             <div class="pkit-card pkit-card-attributed">
                 <div class="pkit-block">
                     <p class="pkit-lbl">Unconfirmed quote &amp; credit</p>
-                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;I must also have a dark side if I am to be whole&rdquo; <span class="pkit-cite">Carl Jung (1875–1961) — attributed. The popular line &quot;I must also have a dark side if I am to be whole&quot; is a trimmed, reordered form of a documented sentence in Jung's Collected Works vol. 16, &quot;Problems of Modern Psychotherapy,&quot; p. 59: &quot;How can I be substantial without casting a shadow? I must have a dark side too if I am to be whole.&quot; The short form itself is unsourced; Wikiquote lists it under &quot;Attributed.&quot; Verified by Quotle.info, 22 July 2026.</span></blockquote>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;I must also have a dark side if I am to be whole&rdquo; <span class="pkit-cite">Carl Jung (1875–1961) — attributed. The popular line &quot;I must also have a dark side if I am to be whole&quot; is a trimmed, reordered form of a documented sentence in Jung's Collected Works vol. 16, &quot;Problems of Modern Psychotherapy,&quot; p. 59: &quot;How can I be substantial without casting a shadow? I must have a dark side too if I am to be whole.&quot; The short form itself is unsourced; Wikiquote lists it under &quot;Attributed.&quot; Traced by Quotle.info, 22 July 2026.</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                 </div>
                 <div class="pkit-block pkit-use pkit-tone-warn">
@@ -844,7 +844,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I must also have a dark side if I am to be whole";
-        const copyAttribution = "Carl Jung (1875–1961) — attributed. The popular line \"I must also have a dark side if I am to be whole\" is a trimmed, reordered form of a documented sentence in Jung's Collected Works vol. 16, \"Problems of Modern Psychotherapy,\" p. 59: \"How can I be substantial without casting a shadow? I must have a dark side too if I am to be whole.\" The short form itself is unsourced; Wikiquote lists it under \"Attributed.\" Verified by Quotle.info, 22 July 2026.";
+        const copyAttribution = "Carl Jung (1875–1961) — attributed. The popular line \"I must also have a dark side if I am to be whole\" is a trimmed, reordered form of a documented sentence in Jung's Collected Works vol. 16, \"Problems of Modern Psychotherapy,\" p. 59: \"How can I be substantial without casting a shadow? I must have a dark side too if I am to be whole.\" The short form itself is unsourced; Wikiquote lists it under \"Attributed.\" Traced by Quotle.info, 22 July 2026.";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));
