@@ -133,7 +133,51 @@ if (songsIdx) {
   if (m) check('/who-recorded/ index states the song total', CORPUS.songs.total, num(m[1]));
 }
 
-// ---- 7. the committed snapshot is not stale ----
+// ---- 7. THE URL CONTRACT: no emitted URL may point at a redirect ----
+// Pages live at directory URLs WITH a trailing slash; the no-slash form 301s. A canonical, og:url,
+// Schema @id or sitemap <loc> pointing at the no-slash form points at a redirect — which is close
+// to un-indexable and fails SILENTLY (the page returns 200 and looks perfect).
+//
+// This invariant exists because checks 1–6 did NOT catch it. They verify figures and artifacts; the
+// URL contract is just as load-bearing and just as silent when broken. It was violated in 18 places
+// across 5 generators — canonicals on 600 author + 28 theme pages, 628 sitemap entries, ~2,900
+// internal links and 1,031 BreadcrumbList items — for weeks, with no error anywhere.
+const { SECTIONS } = require('./urls');
+const noSlash = new RegExp(`(?:href="|content="|"@id":\\s*"|"url":\\s*"|<loc>)(?:https://quotle\\.info)?/(${SECTIONS.join('|')})/[a-z0-9-]+(?=["'<#?])`, 'g');
+
+function scanForNoSlash(files, label) {
+  const offenders = new Map();
+  for (const rel of files) {
+    const body = html(rel);
+    if (!body) continue;
+    const hits = body.match(noSlash) || [];
+    if (hits.length) offenders.set(rel, hits.length);
+  }
+  const total = [...offenders.values()].reduce((s, n) => s + n, 0);
+  check(`URL contract: no no-slash section URLs in ${label}`, 0, total,
+    total ? `e.g. ${[...offenders.keys()].slice(0, 3).join(', ')} — build every internal URL via tools/urls.js` : null);
+}
+
+// Scan EVERY built page, not a sample. A sample was the first instinct — the defect is usually
+// systemic (one template literal) so one page per section "should" catch it. It did not: sampling
+// passed while 10 real violations survived in record PROSE (inline links authors hand-wrote) and in
+// data-fed href fields, which vary per record and are invisible to any sample. ~1,700 files is a
+// couple of seconds; a silent 301 in a canonical is weeks of lost indexing.
+const allPages = [];
+for (const section of ['who-said', 'authors', 'themes', 'who-recorded']) {
+  const dir = path.join(ROOT, section);
+  if (!fs.existsSync(dir)) continue;
+  allPages.push(`${section}/index.html`);
+  for (const d of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (d.isDirectory()) allPages.push(`${section}/${d.name}/index.html`);
+  }
+}
+allPages.push('index.html');
+scanForNoSlash(allPages, `all ${allPages.length} built pages`);
+
+scanForNoSlash(['sitemap.xml'], 'sitemap.xml');
+
+// ---- 8. the committed snapshot is not stale ----
 const state = readJson('data/corpus-state.json');
 if (state && state.figures) {
   const same = JSON.stringify(state.figures) === JSON.stringify(CORPUS);

@@ -29,7 +29,14 @@ const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { esc, escEm } = require('./esc'); // one shared entity-aware escape (also used by build-index.js); escEm preserves inline <em>
 
-const { hasAuthorPage } = require('./authors'); // which authors have a /authors/{slug} profile
+const { hasAuthorPage } = require('./authors');
+const { SECTIONS } = require('./urls');
+
+// Normalise a root-relative section href to the trailing-slash URL contract. 853 records carry the
+// pre-contract form (`/authors/x`), which 301s. The template must never trust a data field to
+// satisfy the contract, or the next generated record silently reintroduces the redirect.
+const SECTION_HREF = new RegExp(`^/(${SECTIONS.join('|')})/([a-z0-9-]+)$`);
+const contractHref = (h) => (typeof h === 'string' ? h.replace(SECTION_HREF, '/$1/$2/') : h); // which authors have a /authors/{slug} profile
 const { THEME_BY_SLUG } = require('./themes'); // controlled vocab → labels for the theme links
 const { NAV: siteNav, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome'); // shared nav + universal search
 const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
@@ -451,8 +458,11 @@ function crumbTrail(q) {
   // as an in-body reference.
   const sec = q.breadcrumbSection;
   const trail = [{ name: 'Home', href: '/' }];
-  if (sec) trail.push({ name: sec.name, href: sec.href || null });
-  else if (a.name) trail.push({ name: a.name, href: authorLinked(a.slug) ? `/authors/${a.slug}` : null });
+  // sec.href is record data (like ans.authorHref) — normalise it to the trailing-slash contract
+  // rather than trusting it, or a record written before the fix puts a 301 in the breadcrumb AND
+  // in the BreadcrumbList JSON-LD, which both derive from this trail.
+  if (sec) trail.push({ name: sec.name, href: contractHref(sec.href) || null });
+  else if (a.name) trail.push({ name: a.name, href: authorLinked(a.slug) ? `/authors/${a.slug}/` : null });
   trail.push({ name: q.breadcrumbLeaf || q.displayQuote, href: null, current: true });
   return trail;
 }
@@ -508,7 +518,7 @@ function renderAnswer(q) {
   const label = ans.label || conf.label;
   const confText = ans.confidenceText || conf.text;
   const nameInner = (ans.authorHref && authorLinked(q.author && q.author.slug))
-    ? `<a href="${attr(ans.authorHref)}">${esc(ans.authorName)}</a>`
+    ? `<a href="${attr(contractHref(ans.authorHref))}">${esc(ans.authorName)}</a>`
     : esc(ans.authorName);
   const dates = ans.authorDates
     ? `\n                    <span class="author-dates">${escEm(ans.authorDates)}</span>`
@@ -887,7 +897,7 @@ ${lead}${pull}${details}
 // ---- Related quotes (optional) -------------------------------------------
 function renderRelated(q) {
   if (!q.related || !q.related.length) return '';
-  const cards = q.related.map((r) => `                <a class="connect-card" href="/who-said/${r.slug}">
+  const cards = q.related.map((r) => `                <a class="connect-card" href="/who-said/${r.slug}/">
                     <p class="connect-quote">&ldquo;${r.quote}&rdquo;</p>
                     <div class="connect-foot"><span class="connect-author">${esc(r.author)}</span><span class="connect-rel">${r.rel}</span></div>
                 </a>`).join('\n');
@@ -938,7 +948,7 @@ ${items}
 // ---- About the author (always) -------------------------------------------
 function renderAuthor(q) {
   const a = q.author || {};
-  const nameInner = authorLinked(a.slug) ? `<a href="/authors/${a.slug}">${esc(a.name)}</a>` : esc(a.name);
+  const nameInner = authorLinked(a.slug) ? `<a href="/authors/${a.slug}/">${esc(a.name)}</a>` : esc(a.name);
   return `
         <!-- ============ ABOUT THE AUTHOR ============ -->
         <section aria-labelledby="author-h">
@@ -983,12 +993,12 @@ function renderPager(q) {
   if (!q.pager) return '';
   const p = q.pager;
   const prev = p.prev ? `
-            <a href="/who-said/${p.prev.slug}">
+            <a href="/who-said/${p.prev.slug}/">
                 <div class="dir">← Previous</div>
                 <div class="pq">${p.prev.pq}</div>
             </a>` : '';
   const next = p.next ? `
-            <a class="next" href="/who-said/${p.next.slug}">
+            <a class="next" href="/who-said/${p.next.slug}/">
                 <div class="dir">Next →</div>
                 <div class="pq">${p.next.pq}</div>
             </a>` : '';

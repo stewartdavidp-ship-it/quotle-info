@@ -43,8 +43,8 @@ const urls = [
   { loc: `${ORIGIN}/check/`, lastmod: latest },
   { loc: `${ORIGIN}/who-recorded/`, lastmod: latest },
   { loc: `${ORIGIN}/themes/`, lastmod: latest },
-  ...themePages.map((t) => ({ loc: `${ORIGIN}/themes/${t.slug}`, lastmod: latest })),
-  ...authors.map((a) => ({ loc: `${ORIGIN}/authors/${a.slug}`, lastmod: latest })),
+  ...themePages.map((t) => ({ loc: `${ORIGIN}/themes/${t.slug}/`, lastmod: latest })),
+  ...authors.map((a) => ({ loc: `${ORIGIN}/authors/${a.slug}/`, lastmod: latest })),
   ...manifest.map((m) => ({ loc: m.url, lastmod: modOf[m.quoteSlug] || latest })),
   ...songs.map((s) => ({ loc: `${ORIGIN}/who-recorded/${s.songSlug}/`, lastmod: s.dateModified || latest })),
 ];
@@ -86,11 +86,11 @@ Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built 
 
 ## Themes (browse verified quotes by intent)
 - [All themes](${ORIGIN}/themes/)
-${themePages.map((t) => `- [${t.label}](${ORIGIN}/themes/${t.slug}) — ${stripTags(t.blurb)}`).join('\n')}
+${themePages.map((t) => `- [${t.label}](${ORIGIN}/themes/${t.slug}/) — ${stripTags(t.blurb)}`).join('\n')}
 
 ## Authors
 - [All authors](${ORIGIN}/authors/)
-${authors.map((a) => `- [${stripTags(a.name)}](${ORIGIN}/authors/${a.slug}) — ${stripTags(a.metaLine)}`).join('\n')}
+${authors.map((a) => `- [${stripTags(a.name)}](${ORIGIN}/authors/${a.slug}/) — ${stripTags(a.metaLine)}`).join('\n')}
 
 ## Quotes — disputed / misattributed (who really said it)
 ${byConf.disputed.map((m) => `- [${stripTags(m.quote)}](${m.url}) — really: ${stripTags(m.author || 'unknown')}`).join('\n')}
