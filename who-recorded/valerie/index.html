@@ -105,6 +105,14 @@
         .song-trail-title { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; color: var(--slate); margin: 6px 0 10px; }
         .song-trail { font-size: 0.98rem; margin-bottom: 10px; color: var(--ink); }
         .song-srclink { display: inline-block; margin-top: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--burgundy-link); text-decoration: none; }
+        /* "Hear the original" — a LINK, never an embedded player: a player costs page weight,
+           sets third-party cookies on a site that sets none, and breaks the text-first character. */
+        .song-listen { display: flex; align-items: center; gap: 12px; margin: 16px 0 4px; padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--sage); border-radius: var(--radius-md); text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
+        .song-listen:hover { border-left-color: var(--gold); transform: translateY(-1px); }
+        .song-listen-cue { color: var(--sage); font-size: 0.9rem; }
+        .song-listen-body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+        .song-listen-what { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+        .song-listen-src { font-family: 'DM Sans', sans-serif; font-size: 0.75rem; color: var(--text-muted); }
         .song-intro { font-size: 1rem; color: var(--slate); margin-bottom: 16px; }
         .mis-item { border-left: 2px solid var(--border); padding: 4px 0 4px 16px; margin: 14px 0; }
         .mis-item-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
@@ -260,6 +268,7 @@
                     <dt>First released</dt><dd>June 2006 (Deltasonic) &mdash; UK No. 9</dd>
                     <dt>Made famous by</dt><dd>Mark Ronson ft. Amy Winehouse, 2007 (UK No. 2)</dd>
             </dl>
+
             <p class="song-trail-title">How we traced it</p>
             <p class="song-trail">&lsquo;Valerie&rsquo; was written and first recorded by <strong>The Zutons</strong>, a Liverpool band, and released as a single in 2006 from their second album <em>Tired of Hanging Around</em>. The songwriting is credited to all five members, with frontman <strong>Dave McCabe</strong> as principal writer <a href="https://en.wikipedia.org/wiki/Valerie_(The_Zutons_song)" target="_blank" rel="noopener">Wikipedia ↗</a>.</p>
             <p class="song-trail">The original was a real hit &mdash; No. 9 on the UK Singles Chart &mdash; but a distinctly indie-rock record, and outside Britain it was little known.</p>

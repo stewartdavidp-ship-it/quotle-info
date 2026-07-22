@@ -105,6 +105,14 @@
         .song-trail-title { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; color: var(--slate); margin: 6px 0 10px; }
         .song-trail { font-size: 0.98rem; margin-bottom: 10px; color: var(--ink); }
         .song-srclink { display: inline-block; margin-top: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--burgundy-link); text-decoration: none; }
+        /* "Hear the original" — a LINK, never an embedded player: a player costs page weight,
+           sets third-party cookies on a site that sets none, and breaks the text-first character. */
+        .song-listen { display: flex; align-items: center; gap: 12px; margin: 16px 0 4px; padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--sage); border-radius: var(--radius-md); text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
+        .song-listen:hover { border-left-color: var(--gold); transform: translateY(-1px); }
+        .song-listen-cue { color: var(--sage); font-size: 0.9rem; }
+        .song-listen-body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+        .song-listen-what { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+        .song-listen-src { font-family: 'DM Sans', sans-serif; font-size: 0.75rem; color: var(--text-muted); }
         .song-intro { font-size: 1rem; color: var(--slate); margin-bottom: 16px; }
         .mis-item { border-left: 2px solid var(--border); padding: 4px 0 4px 16px; margin: 14px 0; }
         .mis-item-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
@@ -260,6 +268,7 @@
                     <dt>First released</dt><dd>August 1985 (Paisley Park) &mdash; album track, no single, did not chart</dd>
                     <dt>Made famous by</dt><dd>Sin&eacute;ad O&rsquo;Connor, 1990 (UK &amp; US No. 1)</dd>
             </dl>
+
             <p class="song-trail-title">How we traced it</p>
             <p class="song-trail">The song was written by <strong>Prince</strong> and first recorded by <strong>The Family</strong>, one of the first acts on his Paisley Park label, for their self-titled 1985 album &mdash; the one song on it he kept under his own name rather than crediting to the band <a href="https://en.wikipedia.org/wiki/The_Family_(band)" target="_blank" rel="noopener">Wikipedia ↗</a>.</p>
             <p class="song-trail">The Family&rsquo;s version was never released as a single and &lsquo;received little recognition&rsquo;; the band dissolved after one album. That left the composition all but unheard until <strong>Sin&eacute;ad O&rsquo;Connor</strong> recorded it.</p>
