@@ -5,9 +5,19 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1058** quotes. **Target: 2000.**
-- **Next wave number: r22.** (Waves r6–r20 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
-- Harvest backlog: `data/harvest-queue.json` (committed) — 318 queued. `node tools/harvest.js report`.
+- **Corpus: 1068** quotes + 27 songs. **Target: 2000.**
+- **Next wave number: r23.** (Waves r6–r22 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- Harvest backlog: `data/harvest-queue.json` (committed) — 441 queued.
+
+> **Do not trust the three lines above** — they are hand-maintained and have been wrong before (they
+> read "1058 / r22 / 318 queued" while the real backlog was 451). The numbers that are *derived* and
+> therefore always correct live in **`data/corpus-state.json`**, rewritten by every build and
+> asserted by `tools/verify-corpus.js`. For live state run:
+> ```bash
+> node -e "const{CORPUS}=require('./tools/corpus');console.log(JSON.stringify(CORPUS,null,2))"
+> node tools/harvest.js report
+> ```
+> Still bump the lines above each wave — but check them against those two commands, not memory.
 
 > ⚠️ **Waves of 2026-07-20/21 (dayNumbers 502–612, +102 quotes) were built OUTSIDE this pipeline** —
 > hand-rolled agents and inline dedup instead of `harvest.js sync` → `generate.js` → `prep-wave.js` →
@@ -98,9 +108,18 @@ node tools/_ingest.js workflows/.scratch/records-rN.json
 node tools/build.js
 
 # 5. AUDIT → FIX
-Workflow audit.js  args=<contents of workflows/.scratch/audit-args-rN.json>
-node workflows/parse-audit.js --journal <auditTranscriptDir>/journal.jsonl   # writes .scratch/current-fixes.json + prints FAIL slugs
-Workflow fix.js  args=<the FAIL slug list printed above>
+#    !! IF YOU ARE IN A GIT WORKTREE (you are, if this session was started from a task chip), you
+#    MUST pass the OBJECT form with `repo`, or every audit agent silently Reads the MAIN checkout's
+#    pages instead of the ones you just built — a clean-looking PASS against the wrong site. The
+#    array form below is the legacy shape and is ONLY safe in the primary checkout.
+#        Workflow audit.js args={ pages:[...contents of .scratch/audit-args-rN.json], repo:"$(pwd)" }
+#        Workflow fix.js   args={ slugs:[...FAIL slugs], repo:"$(pwd)" }
+#        Workflow tag-themes.js args={ chunks, total, manifest:"$(pwd)/…", repo:"$(pwd)" }
+#    parse-audit.js --out ALSO defaults to the main checkout — always pass it explicitly:
+Workflow audit.js  args=<contents of workflows/.scratch/audit-args-rN.json>   # + repo: in a worktree
+node workflows/parse-audit.js --journal <auditTranscriptDir>/journal.jsonl \
+     --out "$(pwd)/workflows/.scratch/current-fixes.json"
+Workflow fix.js  args=<the FAIL slug list printed above>                      # + repo: in a worktree
 #    !! SCOPE GATE — fix.js agents may edit ONLY their own data/quotes/{slug}.json. Before you build,
 #    check that they did. They run in PARALLEL on a generator that renders every page, so an edit
 #    there is both a race and a blast radius nobody chose. r19's agents correctly refused and
@@ -115,9 +134,11 @@ git status --porcelain -- tools workflows | grep . && echo "^^ fix agents escape
 node tools/build.js
 #    Spot-check any reassigned heroes (disputed pages must show the TRUE author, not the magnet).
 
-# 6. THEME-TAG the new records (needed so they appear on /themes). Tag only the untagged ones:
-#    extract untagged {slug,quote} from data/quotes, run the tag workflow (see tag-themes.js / the
-#    persisted tag-themes-r14 script), then:
+# 6. THEME-TAG the new records (needed so they appear on /themes). Tag only the UNTAGGED ones.
+#    tag-themes.js already takes a `manifest` arg for exactly this — build a mini-manifest of the
+#    untagged records and point it there. No hand-editing:
+node -e "const fs=require('fs');const out=fs.readdirSync('data/quotes').filter(f=>f.endsWith('.json')).map(f=>JSON.parse(fs.readFileSync('data/quotes/'+f))).filter(r=>!Array.isArray(r.themes)||!r.themes.length).map(r=>({quoteSlug:r.quoteSlug,quote:r.displayQuote,author:(r.answer&&r.answer.authorName)||'',confidence:r.confidence}));fs.mkdirSync('workflows/.scratch',{recursive:true});fs.writeFileSync('workflows/.scratch/untagged-rN.json',JSON.stringify(out,null,2));console.log(out.length+' untagged → workflows/.scratch/untagged-rN.json')"
+Workflow tag-themes.js  args={ chunks: 4, total: <the count printed above>, manifest: "$(pwd)/workflows/.scratch/untagged-rN.json", repo: "$(pwd)" }
 node workflows/apply-tags.js --journal <tagTranscriptDir>/journal.jsonl
 node tools/build.js
 

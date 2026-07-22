@@ -32,17 +32,26 @@ const ROLES = new Set(['original', 'cover', 'writer']);
 // the shape it takes when it slips in: a quoted run of ordinary words that is not a title. Titles
 // are Capitalised And Short; lyric lines are longer and sentence-cased. This caught two real hook
 // fragments ("sock it to me", the spelled-out R-E-S-P-E-C-T) on the Respect page in review.
-const QUOTED = /&lsquo;([^&]{2,80})&rsquo;/g;
-function lyricSuspects(json) {
-  const out = [];
-  let m;
-  while ((m = QUOTED.exec(json))) {
-    const phrase = m[1].trim();
-    const words = phrase.split(/\s+/);
-    if (words.length < 4) continue;                       // too short to be a lyric line
-    const capitalised = words.filter((w) => /^[A-Z(]/.test(w)).length;
-    if (capitalised / words.length >= 0.5) continue;      // Title Case → a work title, fine
-    out.push(phrase);
+const QUOTED = /&lsquo;([^&]{2,80})&rsquo;/;
+// Walks the PARSED record rather than the raw JSON text, so a hit can name the field it came from
+// ("authors[0].bio") instead of just the phrase. Reviewing a warning meant grepping the record to
+// find it; the field path makes the message actionable on its own.
+function lyricSuspects(node, path = '', out = []) {
+  if (typeof node === 'string') {
+    const re = new RegExp(QUOTED.source, 'g');
+    let m;
+    while ((m = re.exec(node))) {
+      const phrase = m[1].trim();
+      const words = phrase.split(/\s+/);
+      if (words.length < 4) continue;                       // too short to be a lyric line
+      const capitalised = words.filter((w) => /^[A-Z(]/.test(w)).length;
+      if (capitalised / words.length >= 0.5) continue;      // Title Case → a work title, fine
+      out.push({ phrase, path: path || '(root)' });
+    }
+  } else if (Array.isArray(node)) {
+    node.forEach((v, i) => lyricSuspects(v, `${path}[${i}]`, out));
+  } else if (node && typeof node === 'object') {
+    for (const k of Object.keys(node)) lyricSuspects(node[k], path ? `${path}.${k}` : k, out);
   }
   return out;
 }
@@ -93,8 +102,8 @@ for (const f of files) {
   // sang it first"), which look identical to a lyric line to any regex. A gate that blocks those
   // would be disabled within a week and protect nothing. So: surface every candidate for a human
   // to eyeball, always — these print even under --quiet — and never silently pass one either.
-  const lyrics = lyricSuspects(raw);
-  lyrics.forEach((l) => w.push(`LYRIC REVIEW: “${l}” — confirm this is quoted speech or a work title, not a lyric`));
+  const lyrics = lyricSuspects(s);
+  lyrics.forEach((l) => w.push(`LYRIC REVIEW: ${l.path} — “${l.phrase}” — confirm this is quoted speech or a work title, not a lyric`));
 
   if (p.length) {
     failed++;
