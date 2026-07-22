@@ -396,6 +396,25 @@
         .game-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 32px; background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep)); border-radius: var(--radius-md); font-family: 'DM Sans', sans-serif; font-weight: 600; color: white; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
         .game-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,98,122,0.4); }
 
+        /* add-a-source (reader evidence) — understated, collapsed by default */
+        .src-add { margin: 22px 0 4px; font-family: 'DM Sans', sans-serif; }
+        .src-add > summary { list-style: none; cursor: pointer; font-size: 0.86rem; color: var(--text-muted); padding: 8px 0; border-top: 1px dashed var(--border); }
+        .src-add > summary::-webkit-details-marker { display: none; }
+        .src-add > summary:hover { color: var(--slate); }
+        .src-add-cue { color: var(--burgundy-link); font-weight: 600; white-space: nowrap; }
+        .src-add-form { margin-top: 12px; padding: 16px 18px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 10px; }
+        .src-add-lede { font-size: 0.82rem; color: var(--slate); line-height: 1.55; margin: 0; }
+        .src-add-stance { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; color: var(--ink); }
+        .src-add-stance label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+        .src-add-url, .src-add-note { width: 100%; padding: 10px 12px; background: var(--bg-deep); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; }
+        .src-add-url:focus, .src-add-note:focus { outline: none; border-color: var(--burgundy); }
+        .src-add-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .src-add-btn { padding: 9px 20px; background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep)); border: none; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.85rem; color: white; cursor: pointer; }
+        .src-add-btn:disabled { opacity: 0.55; cursor: default; }
+        .src-add-msg { font-size: 0.82rem; }
+        .src-add-msg.ok { color: var(--sage); }
+        .src-add-msg.err { color: var(--caution); }
+
         footer { text-align: center; padding: 40px 24px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: 40px; }
         footer a { color: var(--burgundy-link); text-decoration: none; }
         .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--sage); color: var(--bg-deep); font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.85rem; padding: 10px 22px; border-radius: 999px; opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s; z-index: 200; }
@@ -507,6 +526,7 @@
             .disp { display: none !important; }
         }
     </style>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -640,6 +660,23 @@
                 <p class="rights-note">Two different rights situations sit on this page. The Dhammapada excerpt is <strong>free</strong> &mdash; M&uuml;ller&rsquo;s 1881 translation is public domain worldwide. The quotation itself is <strong>not</strong> ancient and should not be treated as free: it derives from Eknath Easwaran&rsquo;s 1993 prose, which remains in copyright, and the &lsquo;you&rsquo; form was shaped by later authors whose books are also in copyright. A single aphoristic sentence quoted with attribution is a normal, ordinary use; reprinting it as if it were unowned scripture is the thing to avoid. Because we cannot cleanly assign the modern wording to one holder, we make no rights claim about it. This is not legal advice.</p>
             </div>
         </section>
+        <!-- ============ ADD A SOURCE (reader evidence, not an edit) ============ -->
+        <details class="src-add">
+            <summary>Know a source that supports or challenges this? <span class="src-add-cue">Add a link &rarr;</span></summary>
+            <form class="src-add-form" id="srcForm" data-slug="you-will-not-be-punished-for-your-anger-you-will-be">
+                <p class="src-add-lede">Paste a URL and we&rsquo;ll check it. This doesn&rsquo;t change the page &mdash; it goes to our review queue, and if it holds up we update the record with a citation.</p>
+                <div class="src-add-stance" role="radiogroup" aria-label="Does this source support or challenge the page?">
+                    <label><input type="radio" name="stance" value="supports" checked> It supports this</label>
+                    <label><input type="radio" name="stance" value="refutes"> It challenges this</label>
+                </div>
+                <input class="src-add-url" name="url" type="url" inputmode="url" placeholder="https://&hellip; link to the source" required>
+                <input class="src-add-note" name="note" type="text" maxlength="600" placeholder="Optional: what does it show?">
+                <div class="src-add-actions">
+                    <button class="src-add-btn" type="submit">Submit source</button>
+                    <span class="src-add-msg" id="srcMsg" hidden></span>
+                </div>
+            </form>
+        </details>
         <!-- ============ OFTEN MISATTRIBUTED ============ -->
         <section aria-labelledby="misattr-h">
             <div class="sec-head"><p class="kicker">Fact-check</p><h2 id="misattr-h">The attribution problem</h2></div>
@@ -936,5 +973,26 @@
     </script>
     <!-- Privacy-friendly, cookieless analytics (GoatCounter) — injected site-wide via SCRIPT -->
     <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script>
+        (function(){
+            var f=document.getElementById('srcForm'); if(!f) return;
+            var API="https://quotle-community.stewartd.workers.dev", SITEKEY="0x4AAAAAADysaU1PLLBRvId3";
+            var wid=null, pending=null;
+            function ensure(){ if(wid!==null||!window.turnstile) return; var el=document.createElement('div'); el.style.display='none'; document.body.appendChild(el);
+                wid=window.turnstile.render(el,{sitekey:SITEKEY,size:'invisible',callback:function(t){ var c=pending; pending=null; if(c)c(t); },'error-callback':function(){ var c=pending; pending=null; if(c)c(null); }}); }
+            function token(cb){ ensure(); if(wid===null){ cb(null); return; } pending=cb; try{ window.turnstile.reset(wid); window.turnstile.execute(wid); }catch(e){ pending=null; cb(null); } }
+            var msg=document.getElementById('srcMsg');
+            function show(t,err){ msg.textContent=t; msg.hidden=false; msg.className='src-add-msg'+(err?' err':' ok'); }
+            f.addEventListener('submit',function(e){ e.preventDefault();
+                var url=f.url.value.trim(), note=f.note.value.trim(), slug=f.getAttribute('data-slug');
+                var stance='supports', r=f.querySelector('input[name="stance"]:checked'); if(r) stance=r.value;
+                if(!url){ show('Add a source URL.',true); return; }
+                var btn=f.querySelector('.src-add-btn'); btn.disabled=true; show('Checking\u2026',false);
+                token(function(t){ if(!t){ btn.disabled=false; show('Verification failed \u2014 please try again.',true); return; }
+                    fetch(API+'/submit-source',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug,url:url,stance:stance,note:note,token:t})})
+                    .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); btn.disabled=false; show('Thank you \u2014 sent to our review queue.',false); } else { btn.disabled=false; show((d&&d.error)||'Something went wrong.',true); } })
+                    .catch(function(){ btn.disabled=false; show('Network error \u2014 please try again.',true); }); }); });
+        })();
+    </script>
 </body>
 </html>

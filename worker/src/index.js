@@ -15,6 +15,9 @@
  *   POST /vote        {slug,token}  → { ok, count }            (Turnstile + 1/IP/slug dedupe)
  *   POST /nominate    {author,quote?,note?,token} → { ok }     (Turnstile + daily per-IP cap)
  *   GET  /nominations?token=&status=pending → { nominations } (ADMIN_TOKEN only)
+ *   POST /submit-source {slug,url,stance,note?,token} → { ok } (Turnstile + daily per-IP cap;
+ *                       reader-submitted source EVIDENCE, never an edit — a URL to validate)
+ *   GET  /sources?token=&status=pending → { sources }         (ADMIN_TOKEN only)
  */
 
 const ALLOWED_ORIGINS = ['https://quotle.info', 'https://www.quotle.info', 'http://localhost:8099'];
@@ -172,6 +175,47 @@ export default {
           'SELECT id,quote,author,note,status,created FROM nominations WHERE status=? ORDER BY created DESC LIMIT 200'
         ).bind(status).all();
         return send({ nominations: results });
+      }
+
+      // Reader-submitted SOURCE EVIDENCE for a quote page: a URL that supports or refutes what the
+      // page says. This is NOT an edit — it only enqueues a link for a human to validate, exactly
+      // like /nominate. Same anti-abuse gate (Turnstile + per-IP daily cap). Nothing here ever
+      // changes a live page; a human reviews via /sources and, if it holds up, updates the record
+      // through the normal build.
+      if (url.pathname === '/submit-source' && req.method === 'POST') {
+        const body = await req.json().catch(() => ({}));
+        const slug = String(body.slug || '').trim().slice(0, 120);
+        let submittedUrl = String(body.url || '').trim().slice(0, 500);
+        const stance = body.stance === 'refutes' ? 'refutes' : 'supports';
+        const note = String(body.note || '').trim().slice(0, 600);
+        // Require a real absolute http(s) URL — that is the whole point of the submission.
+        let parsed;
+        try { parsed = new URL(submittedUrl); } catch (_) { parsed = null; }
+        if (!parsed || (parsed.protocol !== 'http:' && parsed.protocol !== 'https:')) {
+          return send({ error: 'Please provide a valid http(s) source URL.' }, 400);
+        }
+        submittedUrl = parsed.href;
+        if (!(await verifyTurnstile(env, body.token, req))) return send({ error: 'verification failed' }, 403);
+
+        const iphash = await ipHash(req, env);
+        const since = new Date(Date.now() - 86400000).toISOString();
+        const cnt = await env.DB.prepare('SELECT COUNT(*) AS n FROM source_submissions WHERE iphash=? AND created>?').bind(iphash, since).first();
+        if (cnt && cnt.n >= MAX_NOMS_PER_DAY) return send({ error: 'daily submission limit reached — thank you!' }, 429);
+
+        await env.DB.prepare('INSERT INTO source_submissions (slug,url,stance,note,status,created,iphash) VALUES (?,?,?,?,?,?,?)')
+          .bind(slug, submittedUrl, stance, note, 'pending', new Date().toISOString(), iphash).run();
+        return send({ ok: true });
+      }
+
+      // Admin review queue for submitted source evidence (mirrors /nominations).
+      if (url.pathname === '/sources' && req.method === 'GET') {
+        const token = url.searchParams.get('token') || '';
+        if (!env.ADMIN_TOKEN || token !== env.ADMIN_TOKEN) return send({ error: 'unauthorized' }, 401);
+        const status = url.searchParams.get('status') || 'pending';
+        const { results } = await env.DB.prepare(
+          'SELECT id,slug,url,stance,note,status,created FROM source_submissions WHERE status=? ORDER BY created DESC LIMIT 200'
+        ).bind(status).all();
+        return send({ sources: results });
       }
 
       // /check "is this real?" escalation. The /check page matches the corpus in the browser; on a
