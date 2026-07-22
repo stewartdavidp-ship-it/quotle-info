@@ -207,7 +207,7 @@
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
-(active) => `    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">Skip to content</a>
     <nav class="topnav">
         <a class="brand" href="/"><span class="brand-icon" aria-hidden="true">📖</span>quotle<span>.info</span></a>
         <div class="nav-search">
@@ -215,11 +215,32 @@
             <div id="gsearch-panel" class="gs-panel" role="listbox" aria-label="Search results" hidden></div>
         </div>
         <div class="nav-links">
-${NAV_LINKS.map((l) => `            <a class="nav-link${active === l.key ? ' active' : ''}" href="${l.href}">${l.label}</a>`).join('\n')}
+            <a class="nav-link" href="/who-said/">Quotes</a>
+            <a class="nav-link" href="/themes/">Themes</a>
+            <a class="nav-link" href="/authors/">Authors</a>
+            <a class="nav-link" href="/check/">Check a quote</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
-            ${CONTROL}
+            <div class="disp">
+                <button class="disp-btn" id="dispBtn" type="button" aria-label="Display settings: theme and text size" aria-haspopup="dialog" aria-expanded="false" aria-controls="dispPanel"><span class="a1">A</span><span class="a2">a</span></button>
+                <div class="disp-panel" id="dispPanel" role="dialog" aria-label="Display settings">
+                    <p class="dph" id="dispThemeLbl">Theme</p>
+                    <div class="disp-row" id="dispTheme" role="group" aria-labelledby="dispThemeLbl">
+                        <button type="button" data-theme-choice="auto" aria-pressed="true" title="Match your device">Auto</button>
+                        <button type="button" data-theme-choice="light" aria-pressed="false" title="Light theme">Light</button>
+                        <button type="button" data-theme-choice="dark" aria-pressed="false" title="Dark theme">Dark</button>
+                    </div>
+                    <p class="dph mt" id="dispSizeLbl">Text size</p>
+                    <div class="disp-sizes" role="group" aria-labelledby="dispSizeLbl">
+                        <button type="button" data-size="normal" aria-pressed="true" aria-label="Normal text size" title="Normal">A</button>
+                        <button type="button" data-size="large" aria-pressed="false" aria-label="Large text size" title="Large">A</button>
+                        <button type="button" data-size="xl" aria-pressed="false" aria-label="Extra-large text size" title="Extra large">A</button>
+                        <button type="button" data-size="xxl" aria-pressed="false" aria-label="Largest text size" title="Largest">A</button>
+                    </div>
+                    <p class="disp-note">Saved on this device.</p>
+                </div>
+            </div>
         </div>
-    </nav>`
+    </nav>
     <main id="main">
         <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep" aria-hidden="true">›</span><a href="/who-recorded/">Who recorded it</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">Tainted Love</span></nav>
 

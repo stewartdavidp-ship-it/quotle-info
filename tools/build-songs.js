@@ -199,7 +199,7 @@ ${SONG_CSS}
 ${THEME_CSS}${COMMUNITY ? '\n    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>' : ''}
 </head>
 <body>
-${NAV}
+${NAV('')}
     <main id="main">
         <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep" aria-hidden="true">›</span><a href="/who-recorded/">Who recorded it</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">${esc(s.title)}</span></nav>
 
