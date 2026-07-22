@@ -21,8 +21,11 @@
   - `build.js` — records → pages + `data/manifest.json`; `require`s build-index at the end. **Run `node tools/build.js` to regenerate everything.**
 - **Output = real prerendered files at real paths** (`who-said/{slug}/index.html`, root `index.html`).
   Deployed to GitHub Pages (repo `stewartdavidp-ship-it/quotle-info`, branch `main`, custom domain quotle.info).
-- **URL contract (locked):** `https://quotle.info/who-said/{quoteSlug}` — one canonical string drives
+- **URL contract (locked):** `https://quotle.info/who-said/{quoteSlug}/` — one canonical string drives
   canonical/og/Schema `@id`s/breadcrumb/cite/pager. quoteSlug is kebab-case of the quote text.
+  **Trailing slash REQUIRED** (fixed 2026-07-22): GitHub Pages serves `who-said/{slug}/index.html` at
+  the directory URL; the no-slash form 301-redirects to it. The contract originally omitted the slash,
+  so every canonical pointed at a redirect — Google left the pages "unknown, no referring sitemaps."
 - **Standards alignment (2026-07):** adopted the Game Shelf convention — settings live in a header
   control (theme Auto/Light/Dark + 4-step text size), NOT a floating button; tokens follow the Quotle
   game's semantic scheme via the shared `tokens.js`. localStorage keys `quotle-theme` / `quotle-text-size`

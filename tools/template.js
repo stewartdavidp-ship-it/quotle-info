@@ -3,9 +3,15 @@
  * template.js — the frozen per-quote page renderer for quotle.info.
  *
  * ONE canonical string drives every identity field (locked contract, CLAUDE.md 7 Jul 2026):
- *     https://quotle.info/who-said/{quoteSlug}
+ *     https://quotle.info/who-said/{quoteSlug}/
  * canonical, og:url, all Schema @ids, breadcrumb current node, cite permalink, and
  * prev/next/related all derive from it here — nothing is hand-written per page.
+ *
+ * TRAILING SLASH IS REQUIRED (fixed 2026-07-22). GitHub Pages serves who-said/{slug}/index.html
+ * at the DIRECTORY URL (with slash); the no-slash form 301-redirects to it. The contract originally
+ * omitted the slash, so every page's canonical pointed at a URL that redirects to the real page —
+ * Google saw "canonical is a redirect" and left the pages "unknown … no referring sitemaps detected"
+ * (the +289-indexed plateau). Matching the served URL removes the redirect and consolidates signals.
  *
  * Rendering renderPage(ulrichRecord) reproduces prototypes/quote-v3.html (regression anchor),
  * except the JSON-LD block, which is emitted programmatically (semantically identical).
@@ -39,7 +45,7 @@ const authorLinked = (slug) => AUTHORS_ENABLED && hasAuthorPage(slug);
 // ---- small helpers -------------------------------------------------------
 // escape only for a double-quoted HTML attribute (keeps &lt; etc. out of the way)
 const attr = (s) => esc(s);
-const canonicalUrl = (slug) => `${ORIGIN}/who-said/${slug}`;
+const canonicalUrl = (slug) => `${ORIGIN}/who-said/${slug}/`;
 // decode entities + strip tags → plain text for JSON-LD string values
 // Named HTML entities that show up in our prose/author names, mapped to their literal characters.
 // Anything not here is decoded to its unicode char via the numeric fallback below when possible;
