@@ -1030,7 +1030,11 @@ function validate(q) {
   const need = ['quoteSlug', 'displayQuote', 'confidence', 'meta', 'answer', 'source', 'author'];
   for (const k of need) if (!q[k]) throw new Error(`record ${q.quoteSlug || '?'} missing required field: ${k}`);
   if (!CONFIDENCE[q.confidence]) throw new Error(`record ${q.quoteSlug}: bad confidence "${q.confidence}"`);
-  if (q.source.rights && !RIGHTS[q.source.rights]) throw new Error(`record ${q.quoteSlug}: bad rights "${q.source.rights}" (use public-domain|in-copyright|licensed)`);
+  // "uncertain" is deliberately NOT accepted here: an OMITTED source.rights already yields the correct
+  // uncertain semantics everywhere (renderRights falls back to the prose note, the Layer-1 chip keys
+  // REUSE_CHIP['uncertain'], and buildJsonLd emits no license), so an explicit "uncertain" would be a
+  // redundant second spelling of "absent". Records express uncertain rights by leaving the key off.
+  if (q.source.rights && !RIGHTS[q.source.rights]) throw new Error(`record ${q.quoteSlug}: bad rights "${q.source.rights}" (use public-domain|in-copyright|licensed, or omit for uncertain)`);
   if (!/^[a-z0-9-]+$/.test(q.quoteSlug)) throw new Error(`record ${q.quoteSlug}: slug must be kebab-case`);
 }
 
