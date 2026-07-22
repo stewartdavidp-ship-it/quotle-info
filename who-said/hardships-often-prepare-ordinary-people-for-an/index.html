@@ -886,10 +886,14 @@
             function load(cb){ if(idx){cb();return;} if(loading) return; loading=true;
                 fetch('/search.json').then(function(r){return r.json();}).then(function(d){ idx=d||[]; loading=false; cb(); }).catch(function(){ loading=false; }); }
             function esc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':String(s)); return d.innerHTML; }
-            var LABEL={q:'Verified quotes',t:'Themes',a:'Authors',b:'Under review'}, ALL={q:'/who-said/',t:'/themes/',a:'/authors/',b:'/under-review/'};
+            var LABEL={q:'Verified quotes',s:'Songs',t:'Themes',a:'Authors',b:'Under review'}, ALL={q:'/who-said/',s:'/who-recorded/',t:'/themes/',a:'/authors/',b:'/under-review/'};
+            function count(n,w){ return n+' '+w+(n===1?'':'s'); }
             function row(e){
                 var wrap = (e.t==='q'||e.t==='b');
-                var sub = (e.t==='a'||e.t==='t') ? (e.n+' quote'+(e.n===1?'':'s')) : esc(e.a||'');
+                var sub;
+                if(e.t==='t'){ sub=count(e.n,'quote'); }
+                else if(e.t==='a'){ var p=[]; if(e.n)p.push(count(e.n,'quote')); if(e.ns)p.push(count(e.ns,'song')); sub=p.join(' &middot; '); }
+                else { sub=esc(e.a||''); }
                 return '<a class="gs-row" href="'+esc(e.u)+'"><span class="gs-x">'+(wrap?'&ldquo;':'')+esc(e.x)+(wrap?'&rdquo;':'')+'</span><span class="gs-sub">'+sub+'</span></a>';
             }
             function group(t,items,term){
@@ -901,10 +905,10 @@
             function render(term){
                 var t=term.trim().toLowerCase();
                 if(!t){ panel.hidden=true; panel.innerHTML=''; return; }
-                var g={q:[],t:[],a:[],b:[]};
+                var g={q:[],s:[],t:[],a:[],b:[]};
                 for(var i=0;i<idx.length;i++){ var e=idx[i]; var hay=(e.x+' '+(e.a||'')).toLowerCase();
                     if(hay.indexOf(t)>-1 && g[e.t] && g[e.t].length<200) g[e.t].push(e); }
-                var html=group('q',g.q,t)+group('t',g.t,t)+group('a',g.a,t)+group('b',g.b,t);
+                var html=group('q',g.q,t)+group('s',g.s,t)+group('t',g.t,t)+group('a',g.a,t)+group('b',g.b,t);
                 panel.innerHTML = html || ('<p class="gs-none">No matches for &ldquo;'+esc(term)+'&rdquo;.</p>');
                 panel.hidden=false;
             }
