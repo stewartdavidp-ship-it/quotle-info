@@ -258,7 +258,16 @@ function buildJsonLd(q, url) {
   // the popularly-credited (wrong) name, false (1). The Quotation.creator still names the REAL
   // author, so a machine reads both "the claim about {who} is {rating}" and "actually by {creator}".
   const RATING = { verified: [5, 'Verified'], attributed: [3, 'Attributed'], disputed: [1, 'Disputed'] };
-  const [ratingValue, defaultRatingName] = RATING[q.confidence] || RATING.verified;
+  const [defaultRatingValue, defaultRatingName] = RATING[q.confidence] || RATING.verified;
+  // The confidence→value map is right for the common case, but disputed's 1/5 is machine-readable
+  // "entirely false" — correct for pure fabrications and plain misattributions, WRONG for the
+  // minority the audit flagged: hedged fact-checks (PolitiFact "Mostly False" / Snopes "Mixture")
+  // and used-but-not-coined lines (a real utterance the speaker didn't originate). Those set
+  // schema.claimRatingValue (2 or 3) so the numeric rating matches the page's verdict instead of
+  // overclaiming — the value twin of the schema.claimRatingName label override just below. Absent
+  // (or non-numeric) → the confidence default, so every unflagged page is unchanged.
+  const ratingValue = (q.schema && typeof q.schema.claimRatingValue === 'number')
+    ? q.schema.claimRatingValue : defaultRatingValue;
   // `confidence` describes the quote's ORIGIN; this ClaimReview rates the narrower "{who} said it"
   // claim, which can be flatly false even while the origin stays disputed. Records where the cited
   // fact-checks are decisive (e.g. Monticello "Spurious" + CheckYourFact "False") can override the
@@ -344,6 +353,17 @@ function buildJsonLd(q, url) {
   // such a record state the reviewed claim in full.
   const claimReviewedText = plain(s.claimReviewed)
     || (claimant ? `${claimant} said: "${claimQuoteText}"` : `"${claimQuoteText}"`);
+  // itemReviewed.appearance defaults to #quotation — fine when #quotation carries the DISPUTED
+  // string. But on right-person-wrong-words and paraphrase pages #quotation carries the GENUINE,
+  // documented passage, so linking the reviewed (false) claim's appearance there asserts the claim
+  // "appeared" in the author's authentic text — the opposite of the page's finding, and it drags the
+  // Disputed rating onto the real quote for any consumer that follows the edge. Record-driven:
+  // schema.claimAppearanceUrl points appearance at a real viral instance of the claim; else
+  // schema.suppressClaimAppearance drops it entirely (the audit's primary remedy, since #quotation is
+  // still reachable via the Quotation/WebPage nodes). Neither set → the #quotation default, unchanged.
+  let appearance;
+  if (s.claimAppearanceUrl) appearance = { '@id': s.claimAppearanceUrl };
+  else if (!s.suppressClaimAppearance) appearance = { '@id': `${url}#quotation` };
   const claimReview = {
     '@type': 'ClaimReview',
     '@id': `${url}#claimreview`,
@@ -354,7 +374,7 @@ function buildJsonLd(q, url) {
     itemReviewed: {
       '@type': 'Claim',
       author: claimant ? { '@type': 'Person', name: claimant } : undefined,
-      appearance: { '@id': `${url}#quotation` },
+      appearance,
     },
     reviewRating: {
       '@type': 'Rating',
@@ -363,6 +383,7 @@ function buildJsonLd(q, url) {
     },
   };
   if (!claimReview.itemReviewed.author) delete claimReview.itemReviewed.author;
+  if (!claimReview.itemReviewed.appearance) delete claimReview.itemReviewed.appearance;
 
   // FAQPage — the literal "Did {who} say {quote}?" Q&A, so AI answer-engines and snippets can
   // lift the verdict verbatim. The yes/no lead ("No." / "Not confirmed." / "Yes.") only answers the
@@ -491,7 +512,14 @@ function renderAnswer(q) {
                     <span class="dot" aria-hidden="true">${conf.glyph}</span>
                     <span><span class="visually-hidden">Attribution status: </span>${escEm(confText)}</span>
                 </span>
-                ${(() => { const rc = REUSE_CHIP[(q.source && q.source.rights) || 'uncertain'] || REUSE_CHIP.uncertain; return `<a class="reuse-chip ${rc.cls}" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">${rc.glyph}</span><span><span class="visually-hidden">Reuse status: </span>${rc.label}</span></a>`; })()}
+                ${(() => { const rc = REUSE_CHIP[(q.source && q.source.rights) || 'uncertain'] || REUSE_CHIP.uncertain;
+                  // The chip's rights state is site-wide, but on a SCOPED-rights page (e.g. a public-domain
+                  // 1838 passage carried alongside an unowned modern rewrite) the blanket "Free to reuse"
+                  // over-promises — the pkit useLine and copyAttribution are already scoped, so only the chip
+                  // still reads unscoped. source.reuseChipLabel narrows just the chip's text; the state class
+                  // (colour/glyph) is unchanged, so absent → default label and every unflagged page is intact.
+                  const chipLabel = (q.source && q.source.reuseChipLabel) || rc.label;
+                  return `<a class="reuse-chip ${rc.cls}" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">${rc.glyph}</span><span><span class="visually-hidden">Reuse status: </span>${esc(chipLabel)}</span></a>`; })()}
             </div>
             <p class="source-line">${ans.sourceLine}</p>
             <div class="actions">
@@ -627,11 +655,56 @@ function buildImagePrompts(q) {
     return q.presentation.imagePrompts.slice(0, 2);
   }
   const quote = plain(q.displayQuote);
-  const who = plain((q.author && q.author.name) || (q.answer && q.answer.authorName) || '').trim();
-  // metaLine is "dates · role · role" — drop the leading date clause, keep the role/era cues.
-  const meta = plain((q.author && q.author.metaLine) || '');
-  const era = meta.includes('·') ? meta.slice(meta.indexOf('·') + 1).trim() : meta.trim();
-  const ground = era ? `evoking the world of ${who} — ${era}` : (who ? `evoking the world of ${who}` : 'evoking the theme of the line');
+  // The "In context" grounding must come from the quote's REAL context — its true author when there is
+  // one, or the LINE'S OWN SUBJECT when there isn't — never the misattributed name. On a disputed or
+  // unattributed page q.author is routinely still the magnet, so grounding in "the world of
+  // {q.author.name} — {their era}" reproduced exactly the slide the page warns against: the Lenin-
+  // credited line pulled Soviet imagery, the Goebbels-credited line Nazi imagery. Identify the true
+  // author the same way the JSON-LD does (a real named person who is NOT the magnet); only evoke a
+  // person when that holds, and take the era from THAT person's metaLine.
+  // The verdict-bearing hero often trails a caveat, and on a disputed page that caveat leads WITH the
+  // magnet ("Plato (idea) — wording modern", "A. A. Milne (falsely credited)"). Take just the leading
+  // name — the text before the first qualifier separator — so a magnet wearing a caveat can't slip
+  // through as if it were a reassigned author. Detect off the answer hero (it states the verdict);
+  // display the cleaner author-card name where it's safe to.
+  const leadName = (s) => String(s || '').split(/\s*[—–(,]|\s-\s/)[0].trim();
+  const heroLead = leadName(plain((q.answer && q.answer.authorName) || ''));
+  const cardName = plain((q.author && q.author.name) || '');
+  const heroForDetect = heroLead || cardName;
+  const heroUnknown = !heroForDetect || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroForDetect);
+  const magnetName = plain(q.creditedTo || '').toLowerCase();
+  const disputed = q.confidence === 'disputed';
+  // Evoke a real person's world only when the page stands behind the attribution: verified/attributed
+  // pages name the (plausible) real author, so their world is legitimate context. On a DISPUTED page the
+  // credited name is wrong — evoke a person only if the hero is a genuinely different, reassigned author,
+  // never the magnet; otherwise ground in the line's own subject.
+  const evokePerson = !heroUnknown && (!disputed || heroForDetect.toLowerCase() !== magnetName);
+  let ground;
+  if (evokePerson) {
+    // The author-card name is the cleanest ("Toni Morrison", not "The Buddha (Siddhartha…)") and its
+    // metaLine carries the era. The guard bites only on a DISPUTED page whose card still equals the
+    // magnet — a mis-framed record — where we drop to the reassigned hero and suppress the era so
+    // neither the magnet's name nor its era can leak. On verified/attributed pages the card legitimately
+    // IS the (plausible) author even when it matches creditedTo, so name and era stay intact.
+    // metaLine is "dates · role · role" — keep the role/era cues after the date clause.
+    const cardIsMagnet = disputed && leadName(cardName).toLowerCase() === magnetName;
+    const name = cardIsMagnet ? heroLead : (cardName || heroLead);
+    const meta = plain((q.author && q.author.metaLine) || '');
+    const era = cardIsMagnet ? '' : (meta.includes('·') ? meta.slice(meta.indexOf('·') + 1).trim() : meta.trim());
+    ground = era ? `evoking the world of ${name} — ${era}` : `evoking the world of ${name}`;
+  } else {
+    // Nobody identified (or the only name on file is the magnet): ground in the line's subject, never a
+    // person or era. A record may author a vivid scene phrase in presentation.imageContext; else derive
+    // it from the quote's controlled-vocab themes; else the bare theme of the words. The `Theme: "…"`
+    // clause below always carries the actual sentence, so even the generic fallback stays on-topic.
+    const labels = (q.themes || []).map((s) => THEME_BY_SLUG[s] && THEME_BY_SLUG[s].label)
+      .filter(Boolean).slice(0, 3).map((l) => l.toLowerCase());
+    const themePhrase = labels.length > 1
+      ? `themes of ${labels.slice(0, -1).join(', ')} and ${labels[labels.length - 1]}`
+      : labels.length ? `theme of ${labels[0]}` : '';
+    ground = plain((q.presentation && q.presentation.imageContext))
+      || (themePhrase ? `evoking the ${themePhrase}` : 'evoking the theme of the line');
+  }
   const inContext = `${cap(ground)}. Theme: "${quote}". Atmospheric and restrained, cinematic directional light, a muted period-appropriate palette, fine grain and texture. Compose with generous empty space for the quote and a small credit line. No lettering in the image itself.`;
   const minimalist = `Minimalist editorial slide for the quote "${quote}". Clean background, a single muted accent color, generous negative space, subtle paper or linen texture, no literal illustration — let the words carry it. Reserve clear space for a serif quote and a small credit line. No lettering in the image itself.`;
   return [inContext, minimalist];
@@ -731,13 +804,25 @@ function renderPresentationKit(q) {
 }
 
 // ---- Often misattributed (optional) --------------------------------------
+// The list marker is a claim of its own: the burgundy ✕ reads "refuted false credit". That is right
+// for the common case, but the fact-check list also carries rows the ✕ actively contradicts —
+// documented-but-not-the-origin citations (e.g. Cordell Hull's 1948 memoirs), genuine passages the
+// page holds UP as the real thing, and non-credit wording notes ("no canonical form"). An optional
+// per-item `kind` tracks the verdict instead of the list position: 'context' → a neutral marker,
+// 'genuine' → the sage ✓. Absent (or 'refuted') → the ✕, so every unflagged item is unchanged.
+const MIS_MARK = {
+  refuted: { cls: 'false-x', glyph: '✕' },
+  context: { cls: 'false-x false-mark-ctx', glyph: '~' },
+  genuine: { cls: 'false-x false-mark-true', glyph: '✓' },
+};
 function renderMisattribution(q) {
   const m = q.misattribution;
   if (!m) return '';
   const items = (m.items || []).map((it) => {
     const tag = it.tag ? ` <span class="false-tag">${esc(it.tag)}</span>` : '';
+    const mk = MIS_MARK[it.kind] || MIS_MARK.refuted;
     return `                    <div class="false-item">
-                        <span class="false-x" aria-hidden="true">✕</span>
+                        <span class="${mk.cls}" aria-hidden="true">${mk.glyph}</span>
                         <div>
                             <div class="false-who"><span class="visually-hidden">${escEm(it.scope || 'Incorrectly attributed to ')}</span>${it.who}${tag}</div>
                             <p class="false-why">${it.why}</p>
@@ -990,7 +1075,11 @@ function validate(q) {
   const need = ['quoteSlug', 'displayQuote', 'confidence', 'meta', 'answer', 'source', 'author'];
   for (const k of need) if (!q[k]) throw new Error(`record ${q.quoteSlug || '?'} missing required field: ${k}`);
   if (!CONFIDENCE[q.confidence]) throw new Error(`record ${q.quoteSlug}: bad confidence "${q.confidence}"`);
-  if (q.source.rights && !RIGHTS[q.source.rights]) throw new Error(`record ${q.quoteSlug}: bad rights "${q.source.rights}" (use public-domain|in-copyright|licensed)`);
+  // "uncertain" is deliberately NOT accepted here: an OMITTED source.rights already yields the correct
+  // uncertain semantics everywhere (renderRights falls back to the prose note, the Layer-1 chip keys
+  // REUSE_CHIP['uncertain'], and buildJsonLd emits no license), so an explicit "uncertain" would be a
+  // redundant second spelling of "absent". Records express uncertain rights by leaving the key off.
+  if (q.source.rights && !RIGHTS[q.source.rights]) throw new Error(`record ${q.quoteSlug}: bad rights "${q.source.rights}" (use public-domain|in-copyright|licensed, or omit for uncertain)`);
   if (!/^[a-z0-9-]+$/.test(q.quoteSlug)) throw new Error(`record ${q.quoteSlug}: slug must be kebab-case`);
 }
 
@@ -1154,6 +1243,9 @@ const STYLE = `${ROOT_CSS}
         .false-item { display: flex; gap: 14px; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
         .false-item:last-child { border-bottom: none; padding-bottom: 0; }
         .false-x { width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0; background: rgba(212,98,122,0.15); color: var(--burgundy); display: grid; place-items: center; font-weight: 700; font-size: 0.85rem; margin-top: 2px; }
+        /* Verdict-tracking markers: a neutral tilde for documented-but-not-origin / wording notes, a sage tick for genuine passages — so the glyph never contradicts the row's prose. */
+        .false-mark-ctx { background: rgba(154,162,178,0.15); color: var(--slate); }
+        .false-mark-true { background: var(--sage-dim); color: var(--sage); }
         .false-who { font-family: 'DM Sans', sans-serif; font-weight: 600; color: var(--ink); }
         .false-tag { font-family: 'DM Sans', sans-serif; font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; margin-left: 8px; vertical-align: middle; }
         .false-why { font-size: 0.92rem; color: var(--slate); margin-top: 2px; }
