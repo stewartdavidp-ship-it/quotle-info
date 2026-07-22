@@ -4,4 +4,19 @@
 User-agent: *
 Allow: /
 
+# Editorial working files. These are build INPUTS, not site content — nothing on the site links to
+# them and nothing reads them at runtime. harvest-queue.json in particular carries the unpublished
+# candidate backlog and, necessarily, the full text of candidates we DECLINED to publish under the
+# hate/harm skip bar (the dedup that stops them being re-harvested matches on that text, so it
+# cannot simply be removed). Keeping them out of search indexes is the point here.
+# NOTE: this stops crawling, not direct access — the file is still served, because GitHub Pages
+# with .nojekyll serves everything committed. The structural fix is to publish Pages from a
+# subdirectory so working files are not in the web root at all.
+Disallow: /data/harvest-queue.json
+Disallow: /data/harvest-queue.md
+Disallow: /data/harvest-config.json
+Disallow: /data/harvest-config.example.json
+Disallow: /data/song-queue.json
+Disallow: /data/demand-cache.json
+
 Sitemap: https://quotle.info/sitemap.xml
