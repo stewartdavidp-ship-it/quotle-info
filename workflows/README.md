@@ -5,9 +5,19 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 718** quotes. **Target: 2000.**
-- **Next wave number: r21.** (Waves r6–r20 shipped. Numbering is just a label for batch/scratch files.)
-- Harvest backlog: `data/harvest-queue.json` (committed) — ~500 queued. `node tools/harvest.js report`.
+- **Corpus: 1058** quotes. **Target: 2000.**
+- **Next wave number: r22.** (Waves r6–r20 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- Harvest backlog: `data/harvest-queue.json` (committed) — 318 queued. `node tools/harvest.js report`.
+
+> ⚠️ **Waves of 2026-07-20/21 (dayNumbers 502–612, +102 quotes) were built OUTSIDE this pipeline** —
+> hand-rolled agents and inline dedup instead of `harvest.js sync` → `generate.js` → `prep-wave.js` →
+> `audit.js`. They shipped straight to `main` rather than via a `wave-rN` branch + PR. Consequences to
+> know about: the harvest queue was not driving them (so `select`/`batch` were never used and the
+> wave-number sequence skips), `prep-wave.js`'s escaping-scan and stub-detection never ran, and
+> `audit.js` was run only retroactively. **Do not take those waves as a model — follow the runbook
+> below.** The gap they exposed is real though: see `tools/validate-records.js`, added during them,
+> which gates record SOURCE conventions before build (complements `prep-wave.js`, which gates
+> generator OUTPUT after it).
 - Four tracks (see below). Track A ≈ 70 magnet authors harvested; Track B covered 24 themes;
   Track C (film) seeded; Track D (Quotle game) has **161 queued — ~4 waves**, and every one of them
   is a puzzle the game currently refuses to show.
