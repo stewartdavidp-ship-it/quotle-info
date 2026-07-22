@@ -19,6 +19,12 @@ const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.js
 const records = fs.readdirSync(path.join(ROOT, 'data', 'quotes')).filter((f) => f.endsWith('.json'))
   .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'quotes', f), 'utf8')));
 const authors = aggregateAuthors(records);
+// song-misattribution pages (/who-recorded/{slug}/) — a sibling object, included so crawlers find them
+let songs = [];
+try {
+  songs = fs.readdirSync(path.join(ROOT, 'data', 'songs')).filter((f) => f.endsWith('.json'))
+    .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'songs', f), 'utf8')));
+} catch (_) { /* no songs yet */ }
 
 // themes that actually have a page (≥1 tagged record)
 const themePresent = new Set();
@@ -44,6 +50,7 @@ const urls = [
   ...themePages.map((t) => ({ loc: `${ORIGIN}/themes/${t.slug}`, lastmod: latest })),
   ...authors.map((a) => ({ loc: `${ORIGIN}/authors/${a.slug}`, lastmod: latest })),
   ...manifest.map((m) => ({ loc: m.url, lastmod: modOf[m.quoteSlug] || latest })),
+  ...songs.map((s) => ({ loc: `${ORIGIN}/who-recorded/${s.songSlug}/`, lastmod: s.dateModified || latest })),
 ];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

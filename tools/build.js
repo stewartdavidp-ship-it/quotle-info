@@ -104,6 +104,7 @@ function build() {
     require('./build-flagged'); // regenerate /flagged research-bench context page
     require('./build-cite'); // regenerate /cite "how we used this source" interstitial
     require('./build-authors'); // regenerate /authors/{slug} profiles + index
+    require('./build-songs'); // regenerate /who-recorded/{slug} song-misattribution pages
     require('./build-themes'); // regenerate /themes/{slug} intent pages + index + themes.json
     require('./build-check'); // regenerate /check paste-a-quote verifier
     require('./build-discovery'); // regenerate openapi.json + .well-known/ai-plugin.json (agent API discovery)
