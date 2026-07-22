@@ -367,6 +367,11 @@ ${ASK_JS}`;
 
 // ---- authors index ----
 const totalQuotes = authors.reduce((s, a) => s + a.quotes.length, 0);
+// Song artists share the /authors/ hubs but carry NO quotes, so the index summary must not imply
+// every listed person is a quote author: 67 of them are here purely for a song. Count them, and
+// state quotes and songs as separate totals rather than pairing one headcount with one quote total.
+const songArtists = authors.filter((a) => a.songs.length).length;
+const totalSongs = songRecords.length;
 
 // Browse facets. A flat A–Z list of every author is useless past a few hundred (66% of authors
 // carry a single quote), so the index ships three lenses instead of an alphabet:
@@ -411,7 +416,7 @@ authors.forEach((a) => { if (a.era) eraCounts[a.era] = (eraCounts[a.era] || 0) +
 // default order = the ranked head: biggest misattribution magnets, then depth, then name
 authors.sort((a, b) => (b.mag - a.mag) || (b.quotes.length - a.quotes.length) || a.name.localeCompare(b.name));
 
-const authorCard = (a) => `                <a class="ac" href="/authors/${a.slug}/" data-name="${esc(plain(a.name).toLowerCase())}" data-n="${a.quotes.length}" data-mag="${a.mag}" data-era="${a.era}">
+const authorCard = (a) => `                <a class="ac" href="/authors/${a.slug}/" data-name="${esc(plain(a.name).toLowerCase())}" data-n="${a.quotes.length}" data-s="${a.songs.length}" data-mag="${a.mag}" data-era="${a.era}">
                     <div class="author-avatar" aria-hidden="true">${esc(a.initials || '')}</div>
                     <div>
                         <p class="ac-name">${esc(a.name)}</p>
@@ -421,7 +426,7 @@ const authorCard = (a) => `                <a class="ac" href="/authors/${a.slug
                     </div>
                 </a>`;
 const idxHead = `    <title>The authors — every voice traced to source · Quotle.info</title>
-    <meta name="description" content="${authors.length} authors, ${totalQuotes} quotes traced to a primary source on Quotle.info. Who really said it, with receipts.">
+    <meta name="description" content="${authors.length} authors and artists, ${totalQuotes} quotes and ${totalSongs} songs traced to a primary source on Quotle.info. Who really said it — and who really recorded it — with receipts.">
     <link rel="canonical" href="${ORIGIN}/authors/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="The authors — Quotle.info">
@@ -436,7 +441,7 @@ const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb">
         <header class="idx-hero">
             <p class="kicker">Every voice, traced</p>
             <h1>The authors</h1>
-            <p class="lede"><b>${authors.length}</b> authors · <b>${totalQuotes}</b> quotes traced to a primary source, with the misattributions untangled.</p>
+            <p class="lede"><b>${authors.length}</b> authors &amp; artists &middot; <b>${totalQuotes}</b> quotes and <b>${totalSongs}</b> songs traced to a primary source, with the misattributions untangled.</p>
         </header>
         <div class="fbar">
             <div class="fbar-row">
@@ -446,6 +451,7 @@ const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb">
                 <span class="fbar-lbl">Show</span>
                 <button class="chip" data-lens="mag" aria-pressed="true">Most misattributed <span class="n">${magnets}</span></button>
                 <button class="chip" data-lens="deep" aria-pressed="false">3+ quotes <span class="n">${deep}</span></button>
+                <button class="chip" data-lens="song" aria-pressed="false">Song artists <span class="n">${songArtists}</span></button>
                 <button class="chip" data-lens="all" aria-pressed="false">Everyone <span class="n">${authors.length}</span></button>
             </div>
             <div class="fbar-row">
@@ -473,6 +479,7 @@ ${authors.map(authorCard).join('\n')}
                 if (era && c.getAttribute('data-era') !== era) return false;
                 if (lens === 'mag' && +c.getAttribute('data-mag') === 0) return false;
                 if (lens === 'deep' && +c.getAttribute('data-n') < 3) return false;
+                if (lens === 'song' && +c.getAttribute('data-s') === 0) return false;
                 return true;
             }
             function render(){
@@ -540,4 +547,4 @@ ${authors.map(authorCard).join('\n')}
     </script>`;
 fs.writeFileSync(path.join(OUT, 'index.html'), page(idxInner, idxHead));
 
-console.log(`  ✓ authors/ (${authors.length} author pages + index, ${totalQuotes} quotes linked)`);
+console.log(`  ✓ authors/ (${authors.length} author pages + index, ${totalQuotes} quotes linked, ${songArtists} song artists across ${totalSongs} songs)`);
