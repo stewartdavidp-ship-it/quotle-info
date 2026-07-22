@@ -353,6 +353,17 @@ function buildJsonLd(q, url) {
   // such a record state the reviewed claim in full.
   const claimReviewedText = plain(s.claimReviewed)
     || (claimant ? `${claimant} said: "${claimQuoteText}"` : `"${claimQuoteText}"`);
+  // itemReviewed.appearance defaults to #quotation — fine when #quotation carries the DISPUTED
+  // string. But on right-person-wrong-words and paraphrase pages #quotation carries the GENUINE,
+  // documented passage, so linking the reviewed (false) claim's appearance there asserts the claim
+  // "appeared" in the author's authentic text — the opposite of the page's finding, and it drags the
+  // Disputed rating onto the real quote for any consumer that follows the edge. Record-driven:
+  // schema.claimAppearanceUrl points appearance at a real viral instance of the claim; else
+  // schema.suppressClaimAppearance drops it entirely (the audit's primary remedy, since #quotation is
+  // still reachable via the Quotation/WebPage nodes). Neither set → the #quotation default, unchanged.
+  let appearance;
+  if (s.claimAppearanceUrl) appearance = { '@id': s.claimAppearanceUrl };
+  else if (!s.suppressClaimAppearance) appearance = { '@id': `${url}#quotation` };
   const claimReview = {
     '@type': 'ClaimReview',
     '@id': `${url}#claimreview`,
@@ -363,7 +374,7 @@ function buildJsonLd(q, url) {
     itemReviewed: {
       '@type': 'Claim',
       author: claimant ? { '@type': 'Person', name: claimant } : undefined,
-      appearance: { '@id': `${url}#quotation` },
+      appearance,
     },
     reviewRating: {
       '@type': 'Rating',
@@ -372,6 +383,7 @@ function buildJsonLd(q, url) {
     },
   };
   if (!claimReview.itemReviewed.author) delete claimReview.itemReviewed.author;
+  if (!claimReview.itemReviewed.appearance) delete claimReview.itemReviewed.appearance;
 
   // FAQPage — the literal "Did {who} say {quote}?" Q&A, so AI answer-engines and snippets can
   // lift the verdict verbatim. The yes/no lead ("No." / "Not confirmed." / "Yes.") only answers the
