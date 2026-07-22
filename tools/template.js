@@ -655,11 +655,56 @@ function buildImagePrompts(q) {
     return q.presentation.imagePrompts.slice(0, 2);
   }
   const quote = plain(q.displayQuote);
-  const who = plain((q.author && q.author.name) || (q.answer && q.answer.authorName) || '').trim();
-  // metaLine is "dates · role · role" — drop the leading date clause, keep the role/era cues.
-  const meta = plain((q.author && q.author.metaLine) || '');
-  const era = meta.includes('·') ? meta.slice(meta.indexOf('·') + 1).trim() : meta.trim();
-  const ground = era ? `evoking the world of ${who} — ${era}` : (who ? `evoking the world of ${who}` : 'evoking the theme of the line');
+  // The "In context" grounding must come from the quote's REAL context — its true author when there is
+  // one, or the LINE'S OWN SUBJECT when there isn't — never the misattributed name. On a disputed or
+  // unattributed page q.author is routinely still the magnet, so grounding in "the world of
+  // {q.author.name} — {their era}" reproduced exactly the slide the page warns against: the Lenin-
+  // credited line pulled Soviet imagery, the Goebbels-credited line Nazi imagery. Identify the true
+  // author the same way the JSON-LD does (a real named person who is NOT the magnet); only evoke a
+  // person when that holds, and take the era from THAT person's metaLine.
+  // The verdict-bearing hero often trails a caveat, and on a disputed page that caveat leads WITH the
+  // magnet ("Plato (idea) — wording modern", "A. A. Milne (falsely credited)"). Take just the leading
+  // name — the text before the first qualifier separator — so a magnet wearing a caveat can't slip
+  // through as if it were a reassigned author. Detect off the answer hero (it states the verdict);
+  // display the cleaner author-card name where it's safe to.
+  const leadName = (s) => String(s || '').split(/\s*[—–(,]|\s-\s/)[0].trim();
+  const heroLead = leadName(plain((q.answer && q.answer.authorName) || ''));
+  const cardName = plain((q.author && q.author.name) || '');
+  const heroForDetect = heroLead || cardName;
+  const heroUnknown = !heroForDetect || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroForDetect);
+  const magnetName = plain(q.creditedTo || '').toLowerCase();
+  const disputed = q.confidence === 'disputed';
+  // Evoke a real person's world only when the page stands behind the attribution: verified/attributed
+  // pages name the (plausible) real author, so their world is legitimate context. On a DISPUTED page the
+  // credited name is wrong — evoke a person only if the hero is a genuinely different, reassigned author,
+  // never the magnet; otherwise ground in the line's own subject.
+  const evokePerson = !heroUnknown && (!disputed || heroForDetect.toLowerCase() !== magnetName);
+  let ground;
+  if (evokePerson) {
+    // The author-card name is the cleanest ("Toni Morrison", not "The Buddha (Siddhartha…)") and its
+    // metaLine carries the era. The guard bites only on a DISPUTED page whose card still equals the
+    // magnet — a mis-framed record — where we drop to the reassigned hero and suppress the era so
+    // neither the magnet's name nor its era can leak. On verified/attributed pages the card legitimately
+    // IS the (plausible) author even when it matches creditedTo, so name and era stay intact.
+    // metaLine is "dates · role · role" — keep the role/era cues after the date clause.
+    const cardIsMagnet = disputed && leadName(cardName).toLowerCase() === magnetName;
+    const name = cardIsMagnet ? heroLead : (cardName || heroLead);
+    const meta = plain((q.author && q.author.metaLine) || '');
+    const era = cardIsMagnet ? '' : (meta.includes('·') ? meta.slice(meta.indexOf('·') + 1).trim() : meta.trim());
+    ground = era ? `evoking the world of ${name} — ${era}` : `evoking the world of ${name}`;
+  } else {
+    // Nobody identified (or the only name on file is the magnet): ground in the line's subject, never a
+    // person or era. A record may author a vivid scene phrase in presentation.imageContext; else derive
+    // it from the quote's controlled-vocab themes; else the bare theme of the words. The `Theme: "…"`
+    // clause below always carries the actual sentence, so even the generic fallback stays on-topic.
+    const labels = (q.themes || []).map((s) => THEME_BY_SLUG[s] && THEME_BY_SLUG[s].label)
+      .filter(Boolean).slice(0, 3).map((l) => l.toLowerCase());
+    const themePhrase = labels.length > 1
+      ? `themes of ${labels.slice(0, -1).join(', ')} and ${labels[labels.length - 1]}`
+      : labels.length ? `theme of ${labels[0]}` : '';
+    ground = plain((q.presentation && q.presentation.imageContext))
+      || (themePhrase ? `evoking the ${themePhrase}` : 'evoking the theme of the line');
+  }
   const inContext = `${cap(ground)}. Theme: "${quote}". Atmospheric and restrained, cinematic directional light, a muted period-appropriate palette, fine grain and texture. Compose with generous empty space for the quote and a small credit line. No lettering in the image itself.`;
   const minimalist = `Minimalist editorial slide for the quote "${quote}". Clean background, a single muted accent color, generous negative space, subtle paper or linen texture, no literal illustration — let the words carry it. Reserve clear space for a serif quote and a small credit line. No lettering in the image itself.`;
   return [inContext, minimalist];
