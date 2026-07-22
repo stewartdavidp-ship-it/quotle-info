@@ -137,6 +137,35 @@ gh pr merge <#> --squash
 #    actually there. The og revert was invisible in a green merge + green deploy.
 ```
 
+## The numbers are not yours to compute (added 2026-07-22)
+**`tools/corpus.js` is the ONE source of truth for every figure the site states about itself.**
+No generator may count anything itself — it imports `CORPUS` and reads a field. This exists because
+every generator used to rediscover its own counts and they disagreed *in production*: the home page
+advertised **"526 Authors"** on a tile linking to an index headed **"593 authors"**, and `/authors/`
+said **"1041 quotes"** against **1058** everywhere else. Nothing caught either, because nothing ever
+compared one generator's arithmetic to another's.
+
+- **`tools/corpus.js`** — reads the records once, derives every figure + the shared aggregates
+  (`records`, `songs`, `authors`, era buckets). Import it; do not `readdirSync` the data dirs.
+- **`data/corpus-state.json`** — the committed, diffable snapshot, rewritten every build by
+  `tools/build-state.js`. A content wave shows up in its PR as `"total": 1058 → 1076`. **Commit it.**
+- **`tools/verify-corpus.js`** — 24 invariants, run last in `build.js`, **exits 1** on any mismatch.
+  It asserts the parts sum to the wholes, the rendered pages match the records, `search.json` and
+  `sitemap.xml` match the corpus, the committed snapshot is not stale, **and the figures printed
+  into the HTML equal the corpus** (that last group is what catches a hardcoded literal — verified
+  by reintroducing the 526 bug, which now fails the build).
+- **Source gates run inside `build.js`** and cannot be skipped: `validate-records.js --quiet`
+  (which was orphaned for months — wired into nothing, so it never ran) and the new
+  `validate-songs.js` (song records had **no** gate at all; all 27 were written straight into
+  `data/songs/` by agents). Both abort the build on failure.
+- **`validate-songs.js` LYRIC REVIEW warnings always print, even under `--quiet`.** Whether a quoted
+  phrase is a lyric is not mechanically decidable — these records legitimately quote speech and
+  belief statements — so it surfaces candidates for a human instead of blocking, by design.
+
+If you add a content type, it needs: a record dir, a `validate-*.js` gate wired into
+`runSourceGates()`, figures in `corpus.js`, and invariants in `verify-corpus.js`. Skipping that is
+how songs got in unchecked.
+
 ## Gotchas (all learned the hard way — do not skip)
 - **Reconstruct from the JOURNAL, never the task-notification `<result>`** — it's truncated for big waves.
   (The double-escaping you may SEE in the notification is a transport artifact; the journal data is clean.)

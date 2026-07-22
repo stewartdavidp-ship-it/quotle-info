@@ -31,15 +31,11 @@ const plain = (s) => String(s || '').replace(/<[^>]+>/g, '')
   .replace(/&#(\d+);/g, (m, d) => String.fromCharCode(+d)).replace(/\s+/g, ' ').trim();
 const jsonLd = (obj) => JSON.stringify(obj, null, 2).split('\n').map((l, i) => (i === 0 ? l : '    ' + l)).join('\n');
 
-const records = fs.readdirSync(QUOTES_DIR).filter((f) => f.endsWith('.json'))
-  .map((f) => JSON.parse(fs.readFileSync(path.join(QUOTES_DIR, f), 'utf8')));
-// Song-misattribution records contribute author hubs too (original recorder / cover artist / writer).
-let songRecords = [];
-try {
-  songRecords = fs.readdirSync(path.join(ROOT, 'data', 'songs')).filter((f) => f.endsWith('.json'))
-    .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'songs', f), 'utf8')));
-} catch (_) { /* no songs yet */ }
-const authors = aggregateAuthors(records, songRecords);
+// Source data and the author aggregation come from corpus.js — ONE read, ONE aggregation, shared
+// with build-index/build-search/build-sitemap. This file used to read the directories and call
+// aggregateAuthors itself, which is how its author total could differ from the home page's.
+// (Song-misattribution records contribute hubs too: original recorder / cover artist / writer.)
+const { CORPUS, records, songs: songRecords, authors, ERAS, UNDATED, eraOf } = require('./corpus');
 
 // ---- misattribution intelligence for author pages ----
 // Same slug function the records were built with — these keys are matched against author.slug.
@@ -366,17 +362,17 @@ ${ASK_JS}`;
 }
 
 // ---- authors index ----
-const totalQuotes = authors.reduce((s, a) => s + a.quotes.length, 0);
+// Every figure below is PULLED from CORPUS (tools/corpus.js) — this file counts nothing itself.
+const totalQuotes = CORPUS.quotes.linkedToAuthor; // internal bookkeeping only (build log), never printed on a page
 // Song artists share the /authors/ hubs but carry NO quotes, so the index summary must not imply
-// every listed person is a quote author: 67 of them are here purely for a song. Count them, and
-// state quotes and songs as separate totals rather than pairing one headcount with one quote total.
-const songArtists = authors.filter((a) => a.songs.length).length;
-const totalSongs = songRecords.length;
-// Say the CORPUS size (1058), not the quote→hub link count (1041). They differ by the ~17 quotes
-// whose author is Anonymous/Unknown and so has no hub — a distinction nobody reading a summary
-// line cares about, but showing 1041 here against 1058 on the home page and /who-said/ reads as a
-// bug. One corpus number, stated the same way everywhere.
-const corpusQuotes = records.length;
+// every listed person is a quote author — a large minority are here purely for a song. State
+// quotes and songs as separate totals rather than pairing one headcount with one quote total.
+const songArtists = CORPUS.authors.songArtists;
+const totalSongs = CORPUS.songs.total;
+// The page states the CORPUS size, not the quote→hub link count: they differ by the quotes whose
+// author is Anonymous/Unknown and so has no hub, a distinction nobody reading a summary line cares
+// about — but showing the link count here against the corpus size elsewhere reads as a bug.
+const corpusQuotes = CORPUS.quotes.total;
 
 // Browse facets. A flat A–Z list of every author is useless past a few hundred (66% of authors
 // carry a single quote), so the index ships three lenses instead of an alphabet:
@@ -395,41 +391,13 @@ const corpusQuotes = records.length;
 const magnetCount = {};
 for (const r of records) if (r.creditedTo && r.confidence === 'disputed') magnetCount[plain(r.creditedTo)] = (magnetCount[plain(r.creditedTo)] || 0) + 1;
 
-// Buckets are keyed on BIRTH year and must be labelled for what they actually catch: the second
-// bucket takes everyone from the fall of Rome to 1800 (Aquinas and Machiavelli live there too), so
-// it says "Pre-1800" rather than naming a narrower window it would misdescribe.
-const ERAS = [
-  { id: 'ancient', label: 'Ancient', max: 500 },
-  { id: 'pre1800', label: 'Pre-1800', max: 1800 },
-  { id: 'nineteenth', label: '1800s', max: 1900 },
-  { id: 'modern', label: 'Modern', max: 9999 },
-];
-// Everyone with no parseable birth year lands in 'undated' rather than falling out of the row
-// entirely — mostly bands and duos, whose metaLine is "English synth-pop duo · formed 1977" with no
-// birth year to bucket on, plus a handful of anonymous/collective authors. Without this the era
-// chips summed to 527 against an "All" of 593, which reads as a miscount.
-const UNDATED = 'undated';
-function eraOf(metaLine) {
-  const head = plain(metaLine).split('·')[0];
-  if (/\bBCE?\b/i.test(head)) return 'ancient';
-  const yrs = head.match(/\d{3,4}/g);
-  if (!yrs) return UNDATED;
-  const birth = parseInt(yrs[0], 10);
-  return (ERAS.find((e) => birth < e.max) || {}).id || UNDATED;
-}
-
-authors.forEach((a) => { a.mag = magnetCount[plain(a.name)] || 0; a.era = eraOf(a.metaLine); });
+// ERAS / UNDATED / eraOf and the bucket counts all live in corpus.js — the era row is a PARTITION
+// of the author set, so its definition belongs with the figures it has to reconcile against.
+// tools/verify-corpus.js fails the build if the buckets ever stop summing to the author total.
+authors.forEach((a) => { a.mag = magnetCount[plain(a.name)] || 0; a.era = a.era || eraOf(a.metaLine); });
 const magnets = authors.filter((a) => a.mag > 0).length;
 const deep = authors.filter((a) => a.quotes.length >= 3).length;
-const eraCounts = {};
-authors.forEach((a) => { if (a.era) eraCounts[a.era] = (eraCounts[a.era] || 0) + 1; });
-// The era row is a partition: every author lands in exactly one bucket, so the chips must sum to
-// "All". If they ever stop, a metaLine shape has appeared that eraOf can't read and the row would
-// silently under-report again — fail loudly at build time instead.
-const eraSum = Object.keys(eraCounts).reduce((s, k) => s + eraCounts[k], 0);
-if (eraSum !== authors.length) {
-  console.warn(`  ⚠ era buckets sum to ${eraSum} but there are ${authors.length} authors — eraOf missed ${authors.length - eraSum}`);
-}
+const eraCounts = CORPUS.authors.eraCounts;
 // default order = the ranked head: biggest misattribution magnets, then depth, then name
 authors.sort((a, b) => (b.mag - a.mag) || (b.quotes.length - a.quotes.length) || a.name.localeCompare(b.name));
 

@@ -15,6 +15,11 @@ const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc');
 const { NAV, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
+// Every number this page states is PULLED from CORPUS (tools/corpus.js) — the one derivation.
+// This file counts nothing itself. The Authors tile in particular must report what /authors/
+// actually lists (all hubs, song artists included); counting distinct quote-authors here instead
+// published "526" on a tile linking to an index headed "593".
+const { CORPUS } = require('./corpus');
 const ROOT = path.resolve(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.json'), 'utf8'));
 const bySlug = Object.fromEntries(manifest.map((m) => [m.quoteSlug, m]));
@@ -30,25 +35,13 @@ try { CFG = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'harvest-config.j
 const INTERACTIVE = !!(CFG.votesApi && CFG.turnstileSitekey);
 const BENCH_LABEL = { misattributed: 'Likely misattributed', disputed: 'Disputed', 'genuine-famous': 'Verifying source' };
 
-const total = manifest.length;
+// byConf groups the manifest entries for RENDERING (each bucket is a list of quotes to lay out).
+// The COUNTS this page prints come from CORPUS, never from these arrays — see the stat line below.
+const total = CORPUS.quotes.total;
 const byConf = { verified: [], attributed: [], disputed: [] };
 manifest.forEach((m) => { (byConf[m.confidence] || (byConf[m.confidence] = [])).push(m); });
-// Count PROFILE-ABLE authors (those with an /authors/{slug} page), so the homepage tile matches the
-// /authors/ index it links to — not distinct name strings, which double-count anon/unknown + variants.
-// The Authors tile LINKS to /authors/, so it must count what that page actually lists: every hub,
-// including the song artists the song vertical folds in. Counting distinct quote-authors from the
-// manifest instead reported 526 against an index showing 593 — a mismatch the moment you clicked.
-// Same aggregation build-authors + build-search use, so all three can never drift apart again.
-const { aggregateAuthors } = require('./authors');
-const authorRecords = fs.readdirSync(path.join(ROOT, 'data', 'quotes')).filter((f) => f.endsWith('.json'))
-  .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'quotes', f), 'utf8')));
-let authorSongs = [];
-try {
-  authorSongs = fs.readdirSync(path.join(ROOT, 'data', 'songs')).filter((f) => f.endsWith('.json'))
-    .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'songs', f), 'utf8')));
-} catch (_) { /* no songs yet */ }
-const authorCount = aggregateAuthors(authorRecords, authorSongs).length;
-const songCount = authorSongs.length;
+const authorCount = CORPUS.authors.total;
+const songCount = CORPUS.songs.total;
 
 // ---- shared renderers ----
 const searchText = (s) => String(s || '').replace(/&mdash;|&ndash;/g, '-').replace(/&ldquo;|&rdquo;/g, '"')
@@ -160,7 +153,7 @@ const homeJsonLd = `    <script type="application/ld+json">
 const homeBody = `        <header class="hero">
             <h1>Real quote? <em>Cleared</em> to use?</h1>
             <p class="lede">Before you put a quote on a slide or in print: Quotle.info traces it to its <strong>real source</strong> — who actually said it — and tells you whether it&rsquo;s <strong>cleared to reproduce</strong> (public domain, or still under copyright). The part an AI usually gets wrong.</p>
-            <p class="stat"><b>${total}</b> quotes fact&#8209;checked &mdash; ${(byConf.verified || []).length} verified, ${(byConf.attributed || []).length} attributed, ${(byConf.disputed || []).length} flagged as misquoted &mdash; each traced as far as the record allows, with its reuse rights marked</p>
+            <p class="stat"><b>${total}</b> quotes fact&#8209;checked &mdash; ${CORPUS.quotes.byConfidence.verified} verified, ${CORPUS.quotes.byConfidence.attributed} attributed, ${CORPUS.quotes.byConfidence.disputed} flagged as misquoted &mdash; each traced as far as the record allows, with its reuse rights marked</p>
         </header>
 ${FEATURED.length ? `        <section class="featured" aria-label="Notable reattributions">
             <p class="feat-kicker">Not who you think</p>
