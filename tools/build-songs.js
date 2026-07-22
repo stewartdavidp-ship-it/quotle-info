@@ -199,7 +199,7 @@ ${SONG_CSS}
 ${THEME_CSS}${COMMUNITY ? '\n    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>' : ''}
 </head>
 <body>
-${NAV('')}
+${NAV('songs')}
     <main id="main">
         <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep" aria-hidden="true">›</span><a href="/who-recorded/">Who recorded it</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">${esc(s.title)}</span></nav>
 
@@ -323,19 +323,81 @@ const SONG_CSS = `
         .game-cta p { color: var(--slate); font-size: 0.92rem; margin-bottom: 18px; }
         .game-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 28px; background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep)); border-radius: var(--radius-md); font-family: 'DM Sans', sans-serif; font-weight: 600; color: white; text-decoration: none; }`;
 
+// ---- /who-recorded/ browse index ----
+function renderIndex(songs) {
+  const url = `${ORIGIN}/who-recorded/`;
+  const cards = songs.map((s) => `                <a class="song-idx-card" href="/who-recorded/${s.songSlug}/">
+                    <p class="song-idx-title">${esc(s.title)}</p>
+                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to ${esc(s.creditedTo)}</span> &mdash; first recorded by <strong>${esc(s.answer.originalArtist)}</strong>${s.original && s.answer ? '' : ''}</p>
+                </a>`).join('\n');
+  const n = songs.length;
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who recorded it? — songs credited to the wrong artist | Quotle.info</title>
+    <meta name="description" content="Songs everyone thinks a famous act originated — but that were first recorded by someone else. ${n} traced to the original recording.">
+    <link rel="canonical" href="${url}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="${url}">
+    <meta property="og:title" content="Who recorded it? — songs credited to the wrong artist">
+    <meta property="og:description" content="Famous covers mistaken for originals, traced to who recorded them first.">
+${OG_IMAGE_TAGS}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+${HEAD_SCRIPT}
+    <style>
+${ROOT_CSS}${CHROME_CSS}
+${SONG_CSS}
+        .song-idx-grid { display: grid; gap: 14px; margin-top: 26px; }
+        @media (min-width: 620px) { .song-idx-grid { grid-template-columns: 1fr 1fr; } }
+        .song-idx-card { display: block; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--caution); border-radius: var(--radius-md); padding: 18px 20px; text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
+        .song-idx-card:hover { border-left-color: var(--burgundy); transform: translateY(-2px); }
+        .song-idx-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--ink); }
+        .song-idx-rel { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--slate); margin-top: 6px; }
+        .song-idx-credit { color: var(--text-muted); }
+    </style>
+${THEME_CSS}
+</head>
+<body>
+${NAV('songs')}
+    <main id="main">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">Who recorded it</span></nav>
+        <header class="song-hero">
+            <p class="kicker">Who recorded it first</p>
+            <h1>Songs credited to the wrong artist</h1>
+            <p class="song-lede">Famous versions everyone takes for the original &mdash; but the song was first recorded by someone else, and a later cover took the credit. ${n === 1 ? 'One song' : `${n} songs`} traced to the original recording. No lyrics, just the record.</p>
+        </header>
+        <div class="song-idx-grid">
+${cards}
+        </div>
+        <aside class="song-rights" style="margin-top:34px"><p class="kicker">The scope</p><p>These are songs a band <strong>covered</strong> where the cover is mistaken for the original recording. We correct who recorded it first &mdash; the songwriter is noted as context, and we never reproduce lyrics.</p></aside>
+    </main>
+${FOOTER}
+${SEARCH_JS}
+${SCRIPT}
+</body>
+</html>`;
+}
+
 // ---- build ----
 function build() {
   if (!fs.existsSync(SONGS_DIR)) return;
   const files = fs.readdirSync(SONGS_DIR).filter((f) => f.endsWith('.json'));
-  let n = 0;
+  const songs = [];
   for (const f of files) {
     const s = JSON.parse(fs.readFileSync(path.join(SONGS_DIR, f), 'utf8'));
     const dir = path.join(ROOT, 'who-recorded', s.songSlug);
     fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, 'index.html'), renderSong(s));
-    n++;
+    songs.push(s);
   }
-  console.log(`  ✓ who-recorded/ (${n} song page${n === 1 ? '' : 's'})`);
+  songs.sort((a, b) => a.title.localeCompare(b.title));
+  fs.mkdirSync(path.join(ROOT, 'who-recorded'), { recursive: true });
+  fs.writeFileSync(path.join(ROOT, 'who-recorded', 'index.html'), renderIndex(songs));
+  console.log(`  ✓ who-recorded/ (${songs.length} song page${songs.length === 1 ? '' : 's'} + index)`);
 }
 
 build();

@@ -17,6 +17,7 @@ const { CONTROL } = require('./a11y-widget');
 
 const NAV_LINKS = [
   { key: 'quotes', label: 'Quotes', href: '/who-said/' },
+  { key: 'songs', label: 'Songs', href: '/who-recorded/' },
   { key: 'themes', label: 'Themes', href: '/themes/' },
   { key: 'authors', label: 'Authors', href: '/authors/' },
   { key: 'check', label: 'Check a quote', href: '/check/' },
