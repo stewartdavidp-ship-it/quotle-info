@@ -46,11 +46,17 @@ function buildJsonLd(s, url) {
   const sc = s.schema || {};
   const orig = s.answer.originalArtist;
   const cover = s.creditedTo;
+  // sameAs = STABLE identifiers for the original recording (MusicBrainz, Wikidata). These are the
+  // durable half of "where can I hear it": they never rot, they are non-commercial, and they let a
+  // search engine resolve THIS recording as the same entity it already knows — which is the whole
+  // claim the page is making. The human-facing streaming link (s.listen) is deliberately NOT put
+  // here: those rot, and a dead identifier in structured data is worse than none.
   const recording = {
     '@type': 'MusicRecording',
     '@id': `${url}#recording`,
     name: sc.recordingName || s.title,
     byArtist: { '@type': 'MusicGroup', name: (sc.byArtist && sc.byArtist.name) || orig },
+    ...(Array.isArray(s.sameAs) && s.sameAs.length ? { sameAs: s.sameAs } : {}),
     datePublished: sc.datePublished || undefined,
     recordingOf: {
       '@type': 'MusicComposition',
@@ -120,6 +126,28 @@ function renderAuthors(s) {
                     </div>
                 </div>`;
   }).join('\n');
+}
+
+// The ORIGINAL recording only — never the famous cover. The page's whole argument is "X recorded
+// this first", and the persuasive artifact is the record almost nobody has heard; the cover is one
+// search away for anyone. Optional by design: several originals (Numarx, Lulu and the Lampshades)
+// have no legitimate official upload, and an absent link is better than a dubious one.
+//
+// The host and provenance are shown, not hidden behind a bare "Listen" — a reader deciding whether
+// to click deserves to know where they are going and why we consider this copy legitimate. Rights
+// posture matches the rest of the site: official artist/label/service uploads only, never "the
+// first YouTube result", which on a 1964 recording is usually someone else's rip.
+function renderListen(s) {
+  const l = s.listen;
+  if (!l || !l.url) return '';
+  return `            <a class="song-listen" href="${esc(l.url)}" target="_blank" rel="noopener">
+                <span class="song-listen-cue" aria-hidden="true">▶</span>
+                <span class="song-listen-body">
+                    <span class="song-listen-what">Hear ${esc(l.what || 'the original recording')}</span>
+                    <span class="song-listen-src">${esc(l.host || '')}${l.source ? ` &middot; ${esc(l.source)}` : ''}</span>
+                </span>
+                <span aria-hidden="true">↗</span>
+            </a>`;
 }
 
 function renderSubmit(s) {
@@ -215,6 +243,7 @@ ${NAV('songs')}
             <dl class="doc-meta">
 ${docMetaRows(o.docMeta)}
             </dl>
+${renderListen(s)}
             <p class="song-trail-title">${esc(o.trailTitle || 'How we traced it')}</p>
             ${(o.trail || []).map((t) => `<p class="song-trail">${t}</p>`).join('\n            ')}
             ${o.sourceLink ? `<a class="song-srclink" href="${esc(o.sourceLink.url)}" target="_blank" rel="noopener">${esc(o.sourceLink.text)} <span aria-hidden="true">↗</span></a>` : ''}
@@ -278,6 +307,14 @@ const SONG_CSS = `
         .song-trail-title { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; color: var(--slate); margin: 6px 0 10px; }
         .song-trail { font-size: 0.98rem; margin-bottom: 10px; color: var(--ink); }
         .song-srclink { display: inline-block; margin-top: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--burgundy-link); text-decoration: none; }
+        /* "Hear the original" — a LINK, never an embedded player: a player costs page weight,
+           sets third-party cookies on a site that sets none, and breaks the text-first character. */
+        .song-listen { display: flex; align-items: center; gap: 12px; margin: 16px 0 4px; padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--sage); border-radius: var(--radius-md); text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
+        .song-listen:hover { border-left-color: var(--gold); transform: translateY(-1px); }
+        .song-listen-cue { color: var(--sage); font-size: 0.9rem; }
+        .song-listen-body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+        .song-listen-what { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--ink); }
+        .song-listen-src { font-family: 'DM Sans', sans-serif; font-size: 0.75rem; color: var(--text-muted); }
         .song-intro { font-size: 1rem; color: var(--slate); margin-bottom: 16px; }
         .mis-item { border-left: 2px solid var(--border); padding: 4px 0 4px 16px; margin: 14px 0; }
         .mis-item-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }

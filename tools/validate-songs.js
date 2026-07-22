@@ -97,6 +97,31 @@ for (const f of files) {
     });
   }
 
+  // listen — optional "hear the original" link. Shape only: whether the link is LEGITIMATE (an
+  // official artist/label/service upload rather than someone's rip) is a human judgement recorded
+  // in `source`, and whether it still resolves is checked separately, not at build time (external
+  // link checks are flaky enough to get a build gate disabled).
+  if (s.listen) {
+    const l = s.listen;
+    if (!l.url) p.push('listen.url is missing — drop the listen block rather than shipping it empty');
+    else if (!/^https:\/\//.test(l.url)) p.push(`listen.url must be https: ${String(l.url).slice(0, 60)}`);
+    else if (/\/embed\/|player\.|autoplay=/.test(l.url)) p.push('listen.url looks like an EMBED — link to the page, never embed a player (weight + third-party cookies)');
+    if (!l.source) w.push('listen.source is empty — record WHY this copy is legitimate (official channel/label/service), or someone will assume it was the first search result');
+    if (!l.what) w.push('listen.what is empty — say which recording is being linked, so it is clear this is the ORIGINAL and not the famous cover');
+  }
+
+  // sameAs — STABLE identifiers only. The point of this field is that it does not rot; a streaming
+  // URL here would defeat it and put a dead identifier in structured data.
+  if (s.sameAs !== undefined) {
+    if (!Array.isArray(s.sameAs)) p.push('sameAs must be an array of stable identifier URLs');
+    else s.sameAs.forEach((u) => {
+      if (!/^https:\/\//.test(String(u))) p.push(`sameAs entry must be https: ${String(u).slice(0, 60)}`);
+      else if (!/^https:\/\/(musicbrainz\.org|www\.wikidata\.org|secondhandsongs\.com)\//.test(String(u))) {
+        p.push(`sameAs entry is not a stable identifier: ${String(u).slice(0, 60)} (use musicbrainz.org / wikidata.org / secondhandsongs.com — streaming URLs rot and belong in listen.url)`);
+      }
+    });
+  }
+
   // themes must come from the shared vocabulary or the song will not appear on /themes/
   if (Array.isArray(s.themes)) {
     if (s.themes.length !== 2) w.push(`${s.themes.length} themes (convention is 2)`);
