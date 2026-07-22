@@ -77,7 +77,10 @@ const N = cfg.chunks || 15
 const total = cfg.total || 434
 
 const tagged = (await parallel(Array.from({ length: N }, (_, k) => () =>
-  agent(tagPrompt(k, N), { label: `tag:slice${k + 1}/${N}`, phase: 'Tag', schema: TAG_SCHEMA, model: 'sonnet', effort: 'low' })
+  // Opus, per the standing operator rule: Sonnet was tested against Opus on this corpus and
+  // produced materially more errors, so the higher cost is an accepted trade for correctness.
+  // This step is cheap either way (one call per slice); it is not the place to economise.
+  agent(tagPrompt(k, N), { label: `tag:slice${k + 1}/${N}`, phase: 'Tag', schema: TAG_SCHEMA, model: 'opus', effort: 'low' })
     .then((r) => (r && r.results ? r.results : []))
 ))).flat()
 
