@@ -194,7 +194,38 @@ try {
   }
 } catch (_) { /* generate.js optional */ }
 
-// ---- 9. the committed snapshot is not stale ----
+// ---- 9. the generate.js output schema stays under the platform's classifier ceiling ----
+// This is the guard that should have existed before wave r24. Adding one property to
+// DOSSIER_SCHEMA (themes, with a 28-slug enum) grew it 4,072 -> 4,454 serialized bytes, and the
+// platform then rejected EVERY research agent before it ran: "output schema too large to classify
+// safely" — 20/20 agents, 19ms, 0 tokens, no content error to read. A whole wave died at a layer
+// nothing in this repo was watching.
+// Measured: 4,072 shipped (r23) · 4,159 rejected · 4,454 rejected. Ceiling is in (4072, 4159].
+// The budget is the proven-good size. Raising it is a deliberate act that needs a real wave to
+// confirm — not something to nudge because a new field would be convenient.
+const SCHEMA_BUDGET = 4072;
+try {
+  const gen = fs.readFileSync(path.join(ROOT, 'workflows', 'generate.js'), 'utf8');
+  const i = gen.indexOf('const DOSSIER_SCHEMA = {');
+  if (i > -1) {
+    const seg = gen.slice(i);
+    let depth = 0, end = 0;
+    for (let k = seg.indexOf('{'); k < seg.length; k++) {
+      if (seg[k] === '{') depth++;
+      else if (seg[k] === '}') { depth--; if (depth === 0) { end = k + 1; break; } }
+    }
+    // eslint-disable-next-line no-eval
+    const schema = eval('(' + seg.slice(seg.indexOf('{'), end) + ')');
+    const bytes = JSON.stringify(schema).length;
+    const ok = bytes <= SCHEMA_BUDGET;
+    checks.push({ name: 'generate.js DOSSIER_SCHEMA within the classifier budget', expected: `<= ${SCHEMA_BUDGET}`, actual: bytes, ok });
+    if (!ok) {
+      failures.push(`generate.js DOSSIER_SCHEMA within the classifier budget\n      ${bytes} bytes, budget ${SCHEMA_BUDGET}\n      → the platform rejects an oversized output schema BEFORE any agent runs (0 tokens, no content error).\n      → free space in the schema before adding fields; do not raise the budget without a real wave to prove it.`);
+    }
+  }
+} catch (_) { /* generate.js optional */ }
+
+// ---- 10. the committed snapshot is not stale ----
 const state = readJson('data/corpus-state.json');
 if (state && state.figures) {
   const same = JSON.stringify(state.figures) === JSON.stringify(CORPUS);

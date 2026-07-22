@@ -38,7 +38,7 @@ jobs:
         run: node tools/validate-songs.js --quiet
 
       # 2 · BUILD + INVARIANTS — build.js ends with verify-corpus.js, which exits non-zero on any
-      #     of the 26 checks (figures reconcile, rendered pages match records, search/sitemap match
+      #     of the 27 checks (figures reconcile, rendered pages match records, search/sitemap match
       #     the corpus, the URL contract holds across all ~1,700 pages, snapshot not stale).
       - name: Build and verify corpus invariants
         run: node tools/build.js

@@ -160,20 +160,23 @@ function toRecord(d, item) {
 // ---------- dossier schema (StructuredOutput-enforced) ----------
 const DOSSIER_SCHEMA = {
   type: 'object', additionalProperties: false,
-  required: ['confidence', 'confidenceReason', 'meta', 'answer', 'source', 'externalLinks', 'author', 'cite', 'sourcesVerified', 'themes'],
+  required: ['confidence', 'confidenceReason', 'meta', 'answer', 'source', 'externalLinks', 'author', 'cite', 'sourcesVerified'],
   properties: {
     confidence: { type: 'string', enum: ['verified', 'attributed', 'disputed'] },
     confidenceReason: { type: 'string' },
     copyAttribution: { type: 'string' },
-    // Themes used to be a whole separate pipeline stage (a second workflow, 4 agents, apply-tags.js
-    // and an extra full rebuild) — even though the researching agent has just read and sourced the
-    // quote and is the best-placed thing in the pipeline to say what it is ABOUT. Enforced by the
-    // schema so a dossier cannot come back untagged. Vocabulary is re-checked by
-    // tools/validate-records.js, so a wrong slug still fails the build.
-    themes: {
-      type: 'array', minItems: 2, maxItems: 4,
-      items: { type: 'string', enum: ['resilience', 'courage', 'leadership', 'change', 'growth', 'failure', 'success', 'creativity', 'wisdom', 'knowledge', 'truth', 'justice', 'freedom', 'love', 'friendship', 'kindness', 'gratitude', 'happiness', 'purpose', 'time', 'mortality', 'hope', 'work', 'simplicity', 'doubt', 'power', 'character', 'humility'] },
-    },
+    // NO `themes` HERE — and this is load-bearing, not an oversight.
+    // Folding themes in (to remove the separate tag stage) grew this schema from 4,072 to 4,454
+    // serialized bytes, and the platform then rejected EVERY agent before it ran: "output schema
+    // too large to classify safely", 20/20 agents, 19ms, 0 tokens. Generation was dead — a silent
+    // platform-layer failure with no content error to read. Measured bounds:
+    //     4,072 bytes -> shipped fine (wave r23)
+    //     4,159 bytes -> rejected (themes present, enum collapsed to a plain string)
+    //     4,454 bytes -> rejected
+    // So the ceiling sits between 4,072 and 4,159, and this schema lives ~87 bytes under it.
+    // tools/verify-corpus.js now fails the build if it grows past the budget. Before adding ANY
+    // property here, free space elsewhere first — the tag-themes stage is cheap next to a
+    // generator that cannot run.
     meta: {
       type: 'object', additionalProperties: false, required: ['title', 'description', 'ogTitle', 'ogDescription'],
       properties: { title: { type: 'string' }, description: { type: 'string' }, ogTitle: { type: 'string' }, ogDescription: { type: 'string' } },
@@ -338,8 +341,6 @@ THE FOUR THAT KEEP FAILING (every one of these was a real audit FAIL on a recent
  • A RESEARCH HEADLINE IS NOT A PERIOD QUOTATION. Quote Investigator and Wikiquote write their own summary headings; those are the researcher's words, not the historical source's. Never put a QI/Wikiquote heading in typographic quotes and pin it to a newspaper, book or speaker. If you cite a period wording, it must be one the source literally transcribes.
  • DO NOT CLAIM "earliest documented" UNLESS your source says so. If QI lists earlier attestations than the one you are about to call earliest, you are contradicting the very page you are linking. A wave asserted a Jan-1974 "earliest documented spoken version" inside a copy-pasteable citation while the Popik page linked three times on that same page documented 1971 and 1973.
  • THE PAGE MUST AGREE WITH ITSELF. Before returning, re-read your own dossier as one document: every date, year, span and attribution must be consistent across answer, source, misattribution, context and copyAttribution. A single page contradicting itself is the most damaging defect here, because the citation is designed to be copied and travel.
-
-THEMES — pick 2-4 from the fixed vocabulary in the schema, chosen by what the quote is ABOUT (its meaning), not by incidental words. Prefer fewer, stronger tags. "Fall seven times, stand up eight" → resilience, hope (NOT time). A leadership maxim about serving others → leadership, character. If the line is a fabrication or misattribution, tag it by what the LINE says anyway — someone still searches for its theme. These drive the /themes pages, so a wrong tag is a wrong page.
 
 Return the dossier via the structured schema. Do not invent sources or translations; if you cannot verify a primary source, choose "attributed" or "disputed" and set rights honestly ("uncertain" when the wording's origin is unknown).`
 }
