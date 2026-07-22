@@ -199,8 +199,19 @@ how songs got in unchecked.
 - **Track A → `--credited`; Track B → omit it** and theme-tag the new records.
 - **Hero framing on reassigned disputed pages**: answer.authorName + author.* + schema.creator must be the
   TRUE author; the magnet lives only in the misattribution section (Jobs→Brand / Lincoln→Anonymous).
-- **`REPO` absolute paths** in audit.js/fix.js/harvest-dedup.js/apply-tags.js = `/Users/davidstewart/
-  Developer/quotle-info`. Update if the repo moves.
+- **NEVER read a journal before the workflow finishes.** `journal.jsonl` is appended LIVE and holds
+  `started` lines as well as `result` lines, so a line count is not a result count — and a partial
+  read looks exactly like a smaller successful run. r23 hit this twice: `prep-wave.js` reported
+  "dossiers: 2" for a 10-quote batch, and `parse-audit.js` saw 8 of 10 page audits. Both looked
+  clean; either would have silently shipped a fraction of the wave. **Wait for the workflow's own
+  completion notification.** `prep-wave.js` and `parse-audit.js` now ABORT on a started-without-
+  result imbalance (and prep-wave also aborts if dossiers < batch size) — `--allow-partial`
+  overrides only when an agent genuinely died and you accept the shortfall. To check by hand use
+  `grep -c '"type":"result"'`, never `wc -l`. Note `audit.js` emits skeptic re-checks into the same
+  journal, so results legitimately EXCEED the page count (19 results for 10 pages in r23).
+- **`REPO` default paths** in audit.js/fix.js/harvest-dedup.js/apply-tags.js fall back to
+  `/Users/davidstewart/Developer/quotle-info` — but they all accept an object-form `repo` arg, which
+  is MANDATORY in a worktree (see step 5). The fallback only applies in the primary checkout.
 - **A slow fix/audit agent is not a hung one** — a fix agent hunting a live source can run ~8 min; its Edits
   land on disk incrementally, so its work is safe even before it returns. Check `agent-*.jsonl` mtime.
 - **Auto-merge** may be disabled on the repo — use `gh pr merge <#> --squash` (not `--auto`).

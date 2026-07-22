@@ -17,6 +17,12 @@ const JOURNAL = arg('journal');
 const OUT = arg('out', '/Users/davidstewart/Developer/quotle-info/workflows/.scratch/current-fixes.json');
 if (!JOURNAL) { console.error('usage: parse-audit.js --journal <audit journal.jsonl> [--out current-fixes.json]'); process.exit(1); }
 
+// Same trap as prep-wave: the journal is written live, and a partial read looks like a clean
+// smaller run — r23 parsed 8 of 10 page audits this way and it appeared to succeed. Note audit.js
+// also emits skeptic re-checks here, so results legitimately EXCEED the page count; only a
+// started-without-result imbalance means "still running".
+require('./_journal').assertComplete(JOURNAL, { allowPartial: process.argv.includes('--allow-partial'), label: 'audit journal' });
+
 const pages = [];
 for (const l of fs.readFileSync(JOURNAL, 'utf8').trim().split('\n')) {
   let j; try { j = JSON.parse(l); } catch (e) { continue; }

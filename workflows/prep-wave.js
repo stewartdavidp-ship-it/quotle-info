@@ -40,6 +40,11 @@ const STAMP_CREDITED = has('credited');
 if (!JOURNAL || !BATCH || !OUT) { console.error('usage: prep-wave.js --journal <journal.jsonl> --batch <batch.json> --out <records.json> --verified-date "D Mon YYYY" --date-modified "YYYY-MM-DD" [--credited]'); process.exit(1); }
 if (!VERIFIED_DATE || !DATE_MODIFIED) { console.error('ERROR: pass --verified-date and --date-modified (must match what generate.js was launched with).'); process.exit(1); }
 
+// The journal is appended LIVE. Reading it mid-run yields a fraction of the wave and looks like
+// success — r23 got "dossiers: 2" from a 10-quote batch this way. Abort unless every started agent
+// has reported. --allow-partial to override on a run where an agent genuinely died.
+require('./_journal').assertComplete(JOURNAL, { allowPartial: has('allow-partial'), label: 'generate journal' });
+
 const norm = (s) => String(s).toLowerCase().replace(/[’‘`"“”']/g, '').replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
 // slugify lives in tools/slugify.js — generate.js inlines a verbatim copy (sandbox, no require).
 const { slugify, authorSlugOf } = require(path.join(__dirname, '..', 'tools', 'slugify.js'));
@@ -95,6 +100,17 @@ for (const l of fs.readFileSync(JOURNAL, 'utf8').trim().split('\n')) {
   dossiers.push(j.result);
 }
 console.log('dossiers:', dossiers.length);
+// The batch says how many quotes this wave asked for. Fewer dossiers than that means either a
+// partial journal (caught above) or agents that returned nothing usable — either way the wave is
+// short, and shipping it silently drops quotes that stay marked "selected" in the backlog.
+// State it as a hard stop, not a line of output someone has to notice.
+if (dossiers.length < batch.length && !has('allow-partial')) {
+  console.error(`\n  ✗ ${dossiers.length} dossiers for a ${batch.length}-quote batch — ${batch.length - dossiers.length} missing.\n`);
+  console.error('      Building this would silently ship a FRACTION of the wave.');
+  console.error('      Check the generate workflow actually finished, then re-run.');
+  console.error('      If some agents genuinely failed and you accept the shortfall: --allow-partial\n');
+  process.exit(1);
+}
 
 const records = []; const unmatched = [];
 for (const d of dossiers) {
