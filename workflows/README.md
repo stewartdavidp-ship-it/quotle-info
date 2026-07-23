@@ -268,11 +268,6 @@ All ten pages passed the three headline claims (`firstRecordingHolds`, `confusio
   Gerbeau"*. The FAQ answer was **hardcoded from the page title**, so no record edit could reach it.
   Prose and structured data contradicted each other, and only the structured data is what an
   assistant reads. `schema.faqAnswer` now overrides it.
-- **The listen-link duration check failed silently.** `everybodys-talkin`'s generator note claimed the
-  runtime matched "the MusicBrainz recording on Capitol's release of that album". The auditor queried
-  the MB web service: that recording is **first-release-date 1969**, from the retitled reissue, not
-  the 1966 original. **The generator's self-reported verification is not evidence** — this is the one
-  finding that proves the audit stage cannot be replaced by a better prompt.
 - **`original.released` and `original.charted` were never rendered.** Researched, validated and stored
   on every song record since the first 27 — and dropped by the renderer. Dead data on 37 pages, found
   only because a fix agent went looking for the caveat it had written. Now rendered (37/37).
@@ -280,6 +275,18 @@ All ten pages passed the three headline claims (`firstRecordingHolds`, `confusio
   `delta-dawn` on how many releases preceded Reddy).
 
 Result: 6 PASS / 4 FAIL, 31 issues, 22 fixed in-record, the rest applied centrally to the generator.
+
+> **CORRECTION (2026-07-23).** This section originally cited a fifth finding: that `everybodys-talkin`'s
+> listen link pointed at a 1969 reissue master rather than the 1966 original, and used it as proof
+> that "the generator's self-reported verification is not evidence". **That finding was REFUTED by its
+> own skeptic and should never have been written up as confirmed.** MusicBrainz has partially-unmerged
+> duplicate recording entities across that release group — its 1967 LP entry is a Wikipedia-derived
+> stub with timings short across the *whole* album (the Raga is out by 45 seconds) — so the two MBIDs
+> are a database artifact, not two masters. "Fixing" it would have swapped in the *less* well-sourced
+> identifier. It was reported as confirmed because `parse-audit.js` read the auditor's raw issues and
+> never saw the skeptic verdicts; that bug is fixed (see the gotcha below). The real lesson is the
+> opposite one: **an adversarial pass told to find problems WILL manufacture some. The skeptic is what
+> makes the audit trustworthy — and its verdicts have to actually be applied.**
 
 ### "Hear the original" — the `listen` link has a fixed procedure
 The most persuasive artifact on a song page is the recording almost nobody has heard. It is also the
@@ -307,6 +314,25 @@ QID. Streaming URLs are rejected on purpose — they rot, and a dead identifier 
 worse than none.
 
 ### Song-specific gotchas
+- **THE SKEPTIC VERDICTS ARE APPLIED BY `parse-audit.js`, NOT BY THE JOURNAL.** The audit workflow
+  drops refuted findings in its own `.then()`, but the journal records each agent's RAW return — so
+  for several waves `parse-audit.js` handed `fix.js` findings the skeptics had already thrown out
+  (wave s2 sent 5; a wave-s1 finding was reported as "skeptic-confirmed" when it had been refuted).
+  Fixed: verdicts now echo `{slug, location}` and `parse-audit.js` pairs and drops them, printing
+  each drop. **A journal from before that change cannot be paired** — the parser says so loudly
+  rather than silently passing them through; review those by hand.
+- **Wave size is a parameter, not 10.** `songs.js select <N>` takes any N; the recipe uses 10 for
+  readability. For scale: **wave s2 ran 27 songs for ~7.5M subagent tokens and ~44 minutes** of
+  workflow time across generate + audit + fix. Budget accordingly; the audit stage is the expensive
+  half, because every page gets an agent and every high/blocker gets a second one.
+- **`verifiedDate` format is `"D Mon YYYY"`** — e.g. `"22 Jul 2026"`, matching `answer.lastVerified`
+  in the records. `dateModified` is ISO `"YYYY-MM-DD"`. Pass TODAY's date, per wave.
+- **A dead agent is hard to identify from the journal.** `started` lines carry an opaque agent id and
+  no label, so "which page did I lose?" cannot be answered from the journal directly. Diff the slugs
+  present in the `result` lines against the batch you submitted — that is the only reliable method,
+  and it is what the documented `--allow-partial` decision actually depends on.
+- **`prep-songs.js` LYRIC REVIEW is silent when it finds nothing.** Unlike `validate-songs.js` (which
+  always prints), no output means zero hits — not that the scan was skipped.
 - **The batch carries the WHOLE lead**, not a bare title — the harvest already established who
   recorded it first and a human reviewed the queue on that. The generator's job is to CONFIRM and
   deepen, and to **report a contradiction rather than quietly publishing a different answer**.
