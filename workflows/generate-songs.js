@@ -245,7 +245,12 @@ answer.sourceLine = 2-4 sentences: the belief, the correction, who wrote it, wha
 
 original.released (how/when the original was issued — single? B-side? album track?), .charted (honestly: "Did not chart" is a strong fact here), .cover (what the famous version did — label, year, chart peak), .docMeta (3-4 {dt,dd}; ddClass:"title" on the record title row), .trail (2-4 HTML strings, each with an inline confirmed <a>), .sourceLink ({text,url} — the best single "originals & covers" page; text must NOT end with an arrow, the renderer adds it).
 
-authors[] = 2-3 cards and they must include role "original" (who recorded it first) and role "cover" (the act mistaken for the originator); add role "writer" when the songwriter is neither. kicker is a short label ("The original recording artist" / "Popularly credited as the original" / "The songwriter"). metaLine is PLAIN TEXT. bio is 2-4 sentences. Be generous to the cover act — their record is usually genuinely great and the only error is chronological.
+authors[] = 2-3 cards. The roles are a CLOSED SET and each means one specific person:
+ • "original" — who RECORDED IT FIRST (${it.originalArtist}). Required.
+ • "cover" — the act mistaken for the originator (${it.creditedTo}). Required.
+ • "writer" — THE SONGWRITER, and nobody else. Here that is: ${it.writer}. Include this card only when the songwriter is neither of the two above.
+ >> DO NOT use "writer" as a slot for a third interesting person. A producer, a session player, a label boss, an intermediate cover act, or the artist who had the hit in between are NOT the writer. They are often the best detail on the page — put them in context.lead, context.detailsBody or a misattribution item, where they can be described accurately. A card whose bio has to say "he is not the song's writer" is a card in the wrong slot. Two cards is a perfectly good page.
+ kicker is a short label ("The original recording artist" / "Popularly credited as the original" / "The songwriter"). metaLine is PLAIN TEXT. bio is 2-4 sentences. Be generous to the cover act — their record is usually genuinely great and the only error is chronological.
 
 misattribution.intro / items[{scope, who, tag, why}] / truthLine — the fact-check block. Typical items: "The belief", "The original", "The writer".
 

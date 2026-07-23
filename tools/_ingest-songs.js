@@ -60,7 +60,16 @@ function normalize(rec) {
   }
   const m = rec.misattribution;
   if (m && Array.isArray(m.items)) m.items.forEach((it) => { if (typeof it.why === 'string') it.why = unwrap(it.why, 'p'); });
-  if (Array.isArray(rec.externalLinks)) rec.externalLinks.forEach((l) => { if (typeof l.what === 'string') l.what = unwrap(l.what, 'p'); });
+  // DERIVE the host from the URL rather than trusting the agent's field. Wave s1 came back with
+  // three records using display names ("Wikipedia", "MusicBrainz", "Wikidata") and seven using
+  // hostnames, against a corpus where all 27 existing records use hostnames only. It renders on the
+  // page, so the inconsistency is visible. This is deterministic data — asking an agent for it and
+  // hoping is how you get two conventions.
+  if (Array.isArray(rec.externalLinks)) rec.externalLinks.forEach((l) => {
+    if (typeof l.what === 'string') l.what = unwrap(l.what, 'p');
+    if (l.url) { try { l.host = new URL(l.url).host; } catch (_) { /* leave whatever was there */ } }
+  });
+  if (rec.listen && rec.listen.url) { try { rec.listen.host = new URL(rec.listen.url).host; } catch (_) {} }
   if (Array.isArray(rec.authors)) rec.authors.forEach((a) => {
     if (typeof a.bio === 'string') a.bio = unwrap(a.bio, 'p');
     // Re-derive the slug rather than trusting the field: an entity-blind slug silently broke
@@ -68,6 +77,19 @@ function normalize(rec) {
     if (a.name) a.slug = slugify(a.name);
   });
   if (rec.answer && rec.answer.originalArtist) rec.answer.originalArtistSlug = slugify(rec.answer.originalArtist);
+  // schema.composer.name is STRUCTURED DATA — it must be a name, not a note. The queue's `writer`
+  // field legitimately carries editorial nuance ("Charles Trenet (French original 'La Mer'); Jack
+  // Lawrence (English lyrics)"), and toRecord copies it straight into the JSON-LD, where it ships
+  // as a Person's name to every consumer. Same defect class harvest.js's splitNote() fixes for
+  // quotes. Strip the parentheticals and join the clauses; the DISPLAY writer keeps the nuance.
+  if (rec.schema && rec.schema.composer && rec.schema.composer.name) {
+    const clean = String(rec.schema.composer.name)
+      .replace(/\([^)]*\)/g, ' ')
+      .split(/\s*;\s*/).map((s) => s.trim().replace(/[,;]$/, '')).filter(Boolean)
+      .join(' and ')
+      .replace(/\s+/g, ' ').trim();
+    if (clean) rec.schema.composer.name = clean;
+  }
   return rec;
 }
 

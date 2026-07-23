@@ -197,6 +197,33 @@ if (brokenAxis.length) {
   good = good.filter((r) => !brokenAxis.includes(r));
 }
 
+// 4b. WRITER-ROLE CHECK — the author roles are a closed set (original / cover / writer), and agents
+// treat the third slot as "one more interesting person" rather than "the songwriter". Wave s1 shipped
+// Rico Rodriguez (a session trombonist) and The Yardbirds (an intermediate cover act) as role
+// "writer"; the Rodriguez card's own bio said he was NOT the writer, so it contradicted its own
+// label. validate-songs.js cannot see this — it only checks the role is in the allowed set.
+// Heuristic, so it WARNS rather than excluding: a writer may legitimately be credited under a
+// different name than the record's writer string.
+const normName = (s) => String(s).toLowerCase().replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim();
+const STOP = new Set(['the', 'and', 'his', 'her', 'band', 'orchestra', 'brothers']);
+const roleMismatch = [];
+for (const r of good) {
+  for (const a of (r.authors || [])) {
+    if (a.role !== 'writer') continue;
+    const w = normName(r.original.writer || '');
+    const words = normName(a.name).split(' ').filter((x) => x.length >= 4 && !STOP.has(x));
+    if (words.length && !words.some((x) => w.includes(x))) {
+      roleMismatch.push(`${r.songSlug} · "${a.name}" is carded as role "writer", but the record's writer is "${r.original.writer}"`);
+    }
+  }
+}
+if (roleMismatch.length) {
+  console.log(`\n  ⚠ WRITER-ROLE REVIEW — ${roleMismatch.length} card(s) look mislabelled:`);
+  roleMismatch.forEach((m) => console.log('     ? ' + m));
+  console.log('     The third author card is for the SONGWRITER. A producer, session player, label boss or');
+  console.log('     intermediate cover act belongs in the prose (context / misattribution), not an author card.\n');
+}
+
 const conf = {}; for (const r of good) conf[r.confidence] = (conf[r.confidence] || 0) + 1;
 console.log('confidences:', JSON.stringify(conf));
 
