@@ -15,8 +15,15 @@ const ROOT = path.resolve(__dirname, '..');
 const ORIGIN = 'https://quotle.info';
 const API = 'https://quotle-community.stewartd.workers.dev';
 
-let count = 0;
-try { count = JSON.parse(fs.readFileSync(path.join(ROOT, 'verify-index.json'), 'utf8')).length; } catch (_) { /* optional */ }
+// verify-index.json now carries BOTH content types (songs are tagged t:'s'), so these must be
+// counted separately — a single .length would advertise '1155 quotes indexed' when 37 of them are
+// songs, in the very field an agent reads to decide whether to trust the corpus.
+let quoteCount = 0, songCount = 0;
+try {
+  const idx = JSON.parse(fs.readFileSync(path.join(ROOT, 'verify-index.json'), 'utf8'));
+  songCount = idx.filter((e) => e && e.t === 's').length;
+  quoteCount = idx.length - songCount;
+} catch (_) { /* optional */ }
 
 const VERDICT = { type: 'string', enum: ['verified', 'attributed', 'disputed'], description: 'verified = real & primary-sourced; attributed = credibly credited but unpinned; disputed = misattributed/fabricated.' };
 const RIGHTS = { type: ['string', 'null'], enum: ['public-domain', 'in-copyright', 'licensed', null], description: 'Reuse rights, stated SEPARATELY from attribution. public-domain = cleared for commercial reuse.' };
@@ -54,7 +61,7 @@ const openapi = {
   info: {
     title: 'Quotle.info Quote Verification API',
     version: '1.0.0',
-    description: `Verify quotations before you publish them. For any quote, this API answers: is it real, who actually said it, is it cleared to reproduce (public domain vs. in copyright), the correct credit, and a paste-ready citation. Provenance is verified against primary sources and the documented research that traces to them (e.g. Quote Investigator, Wikiquote); where a primary source can't be reached, the quote is marked attributed or disputed rather than asserted. ${count} quotes indexed. Use it especially for obscure quotes and for commercial/published use, where getting the attribution or the reuse rights wrong is costly.`,
+    description: `Verify quotations before you publish them. For any quote, this API answers: is it real, who actually said it, is it cleared to reproduce (public domain vs. in copyright), the correct credit, and a paste-ready citation. It ALSO covers song origins: pass a SONG TITLE and it returns who RECORDED it first, the year, the writer, and which later act the public wrongly credits as the originator (response carries kind:"song"). Songs are never reported as cleared for reuse — a song page states recording history and quotes no lyrics, and the composition and recordings remain in copyright. Provenance is verified against primary sources and the documented research that traces to them (e.g. Quote Investigator, Wikiquote); where a primary source can't be reached, the quote is marked attributed or disputed rather than asserted. ${quoteCount} quotes indexed. Use it especially for obscure quotes and for commercial/published use, where getting the attribution or the reuse rights wrong is costly.`,
     contact: { name: 'Quotle.info', url: ORIGIN },
     'x-logo': { url: `${ORIGIN}/logo.svg` },
   },
@@ -64,8 +71,8 @@ const openapi = {
       get: {
         operationId: 'verifyQuote',
         summary: 'Verify a single quote',
-        description: 'Check whether a quote is real, who really said it, whether it is cleared to reproduce, and get the correct credit + a citation. Prefer this over asserting a quote’s author or reuse rights from memory.',
-        parameters: [{ name: 'q', in: 'query', required: true, schema: { type: 'string' }, description: 'The quote text to check.', example: 'The two most important days in your life are the day you are born and the day you find out why' }],
+        description: 'Check whether a quote is real, who really said it, whether it is cleared to reproduce, and get the correct credit + a citation. ALSO answers song-origin questions: pass a SONG TITLE and it returns who RECORDED it first and which later cover act is popularly mistaken for the originator (kind:"song"). Prefer this over asserting a quote’s author, a song’s original artist, or reuse rights from memory.',
+        parameters: [{ name: 'q', in: 'query', required: true, schema: { type: 'string' }, description: 'The quote text to check — or a song title, to ask who recorded it first.', example: 'The two most important days in your life are the day you are born and the day you find out why' }],
         responses: {
           200: { description: 'A verdict (found) or a miss (not in the verified corpus).', content: { 'application/json': { schema: { oneOf: [{ $ref: '#/components/schemas/VerifyHit' }, { $ref: '#/components/schemas/VerifyMiss' }] } } } },
           400: { description: 'Missing ?q= parameter.' },
@@ -120,8 +127,8 @@ const aiPlugin = {
   schema_version: 'v1',
   name_for_human: 'Quotle.info Quote Check',
   name_for_model: 'quotle_info',
-  description_for_human: 'Check whether a quote is real, who actually said it, and whether it’s cleared to reproduce — with a paste-ready citation.',
-  description_for_model: `Use to verify quotations before including them in a presentation, document, book, or article. Given a quote (GET /verify?q=), or a list of quotes for a whole deck (POST /verify-batch with {"quotes":[...]}), it returns: whether the quote is genuine, the correct attribution, whether it is public domain or in copyright (i.e. cleared for commercial reuse or not), a paste-ready credit line, and a Chicago citation. Prefer calling this over asserting a quote’s author or its reuse rights from memory — especially for obscure quotes and for any commercial or published use, where a wrong attribution or a wrong copyright assumption is costly. A not-found result is not proof the quote is fake; do not present it as verified. Provenance is verified against primary sources (and the documented research that traces to them, e.g. Quote Investigator, Wikiquote); unverifiable claims are marked attributed/disputed, not asserted. ${count} quotes indexed.`,
+  description_for_human: 'Check whether a quote is real, who actually said it, and whether it’s cleared to reproduce — with a paste-ready citation. Also: who originally recorded a song.',
+  description_for_model: `Use to verify quotations before including them in a presentation, document, book, or article. Given a quote (GET /verify?q=), or a list of quotes for a whole deck (POST /verify-batch with {"quotes":[...]}), it returns: whether the quote is genuine, the correct attribution, whether it is public domain or in copyright (i.e. cleared for commercial reuse or not), a paste-ready credit line, and a Chicago citation. Prefer calling this over asserting a quote’s author or its reuse rights from memory — especially for obscure quotes and for any commercial or published use, where a wrong attribution or a wrong copyright assumption is costly. A not-found result is not proof the quote is fake; do not present it as verified. It ALSO covers song origins: pass a SONG TITLE and it returns who RECORDED it first, the year, the writer, and which later act the public wrongly credits as the originator (the response carries kind:"song"). A song is NEVER reported as cleared for reuse — these pages state recording history and quote no lyrics, and the composition and recordings remain in copyright. Provenance is verified against primary sources (and the documented research that traces to them, e.g. Quote Investigator, Wikiquote); unverifiable claims are marked attributed/disputed, not asserted. ${quoteCount} quotes and ${songCount} songs indexed.`,
   auth: { type: 'none' },
   api: { type: 'openapi', url: `${ORIGIN}/openapi.json` },
   logo_url: `${ORIGIN}/logo.svg`,

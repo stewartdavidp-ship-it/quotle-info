@@ -3,7 +3,7 @@
   "info": {
     "title": "Quotle.info Quote Verification API",
     "version": "1.0.0",
-    "description": "Verify quotations before you publish them. For any quote, this API answers: is it real, who actually said it, is it cleared to reproduce (public domain vs. in copyright), the correct credit, and a paste-ready citation. Provenance is verified against primary sources and the documented research that traces to them (e.g. Quote Investigator, Wikiquote); where a primary source can't be reached, the quote is marked attributed or disputed rather than asserted. 1118 quotes indexed. Use it especially for obscure quotes and for commercial/published use, where getting the attribution or the reuse rights wrong is costly.",
+    "description": "Verify quotations before you publish them. For any quote, this API answers: is it real, who actually said it, is it cleared to reproduce (public domain vs. in copyright), the correct credit, and a paste-ready citation. It ALSO covers song origins: pass a SONG TITLE and it returns who RECORDED it first, the year, the writer, and which later act the public wrongly credits as the originator (response carries kind:\"song\"). Songs are never reported as cleared for reuse — a song page states recording history and quotes no lyrics, and the composition and recordings remain in copyright. Provenance is verified against primary sources and the documented research that traces to them (e.g. Quote Investigator, Wikiquote); where a primary source can't be reached, the quote is marked attributed or disputed rather than asserted. 1118 quotes indexed. Use it especially for obscure quotes and for commercial/published use, where getting the attribution or the reuse rights wrong is costly.",
     "contact": {
       "name": "Quotle.info",
       "url": "https://quotle.info"
@@ -23,7 +23,7 @@
       "get": {
         "operationId": "verifyQuote",
         "summary": "Verify a single quote",
-        "description": "Check whether a quote is real, who really said it, whether it is cleared to reproduce, and get the correct credit + a citation. Prefer this over asserting a quote’s author or reuse rights from memory.",
+        "description": "Check whether a quote is real, who really said it, whether it is cleared to reproduce, and get the correct credit + a citation. ALSO answers song-origin questions: pass a SONG TITLE and it returns who RECORDED it first and which later cover act is popularly mistaken for the originator (kind:\"song\"). Prefer this over asserting a quote’s author, a song’s original artist, or reuse rights from memory.",
         "parameters": [
           {
             "name": "q",
@@ -32,7 +32,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The quote text to check.",
+            "description": "The quote text to check — or a song title, to ask who recorded it first.",
             "example": "The two most important days in your life are the day you are born and the day you find out why"
           }
         ],
