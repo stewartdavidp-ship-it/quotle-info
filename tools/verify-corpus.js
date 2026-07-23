@@ -75,6 +75,31 @@ if (search) {
   check('search index under-review entries match the queue', CORPUS.review.queued, n.b || 0);
 }
 
+// ---- 4b. the /verify API index matches the corpus ----
+// verify-index.json is the DATA BEHIND THE PUBLIC API: the Cloudflare Worker fetches it from the
+// live site, so whatever ships here is what every agent asking "who really said this?" is told.
+// Nothing asserted anything about it until now — and it silently carried quotes ONLY, so the entire
+// song vertical was invisible to the agent-facing surface for its whole existence.
+const vIdx = readJson('verify-index.json');
+if (Array.isArray(vIdx)) {
+  const songs = vIdx.filter((e) => e && e.t === 's');
+  check('verify-index covers every quote', CORPUS.quotes.total, vIdx.length - songs.length,
+    'the /verify API answers from this file — a missing entry is a quote the API cannot confirm');
+  check('verify-index covers every song', CORPUS.songs.total, songs.length,
+    'songs must carry t:"s"; without them /verify cannot answer "who originally recorded X?"');
+  // Quotes MUST come first: the Worker's exact match is a .find(), so on a collision between a short
+  // song title and a quote the first entry wins, and the primary corpus must not be displaced.
+  const firstSong = vIdx.findIndex((e) => e && e.t === 's');
+  const lastQuote = vIdx.map((e) => (e && e.t === 's' ? 0 : 1)).lastIndexOf(1);
+  check('verify-index emits all quotes before any song', true, firstSong === -1 || firstSong > lastQuote,
+    'a song ahead of a quote can win an exact-match collision in the Worker and displace the quote');
+  // A song page states recording history and quotes no lyrics; the composition and the recordings
+  // remain in copyright. A "public-domain" verdict here would be published, machine-readable, and
+  // wrong — the costliest error this site can make.
+  check('no song claims public-domain reuse rights', 0, songs.filter((e) => e.rights === 'public-domain').length,
+    'song entries must be rights:"uncertain" — there is no per-song rights research behind these records');
+}
+
 // ---- 5. the sitemap covers every page ----
 const sitemap = (() => { try { return fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8'); } catch (_) { return ''; } })();
 if (sitemap) {

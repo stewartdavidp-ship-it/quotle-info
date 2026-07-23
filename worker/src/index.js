@@ -68,6 +68,42 @@ export default {
             ...corpusMeta(vIdx),
           }), { headers: pub });
         }
+        // SONGS (hit.t === 's') answer a DIFFERENT question — "who RECORDED it first?" — so they get
+        // their own field names. The legacy keys stay populated too, because the index ships songs
+        // BEFORE this Worker knows about them: build-verify.js deliberately writes them into the
+        // same array so the deployed Worker answers song titles with no redeploy, just under
+        // quote-ish names. The song-shaped keys are additive, never a replacement.
+        if (hit.t === 's') {
+          return new Response(JSON.stringify({
+            found: true, query: term, kind: 'song', song: hit.q,
+            verdict: hit.c,
+            recordedFirstBy: hit.real || null,
+            originalYear: hit.year || null,
+            writtenBy: hit.writer || null,
+            popularlyCreditedTo: hit.credited || null,   // the cover act mistaken for the originator
+            madeFamousBy: hit.cover || null,
+            coverYear: hit.coverYear || null,
+            // ALWAYS prefer the index's authored `answer`. Composing "<title> was first recorded by
+            // <artist>" here is FALSE whenever the original was released under a different title —
+            // Roland Gerbeau recorded "La Mer", not "Beyond the Sea". build-verify.js resolves that
+            // from the record; this fallback is only for entries predating that field.
+            answer: hit.answer
+              || `"${hit.q}" was first recorded by ${hit.real}${hit.year ? ` in ${hit.year}` : ''}`
+                 + `${hit.credited ? `; ${hit.credited}'s version is a cover` : ''}.`,
+            originalTitle: hit.originalTitle || null,   // set only when it differs from the page title
+            // Deliberately NOT reuseVerdict(): a song page states recording history and quotes no
+            // lyrics. The composition and every recording remain in copyright to their owners, and
+            // there is no per-song rights research behind these records — so the API must never
+            // imply a reuse right.
+            reuse: 'Not cleared — this page states recording history only. The composition and the recordings remain in copyright to their owners.',
+            rights: hit.rights || 'uncertain',
+            citation: hit.cite || null,
+            // legacy field names, same data, for clients written against the quote shape
+            quote: hit.q, reallySaidBy: hit.real || null, misattributedTo: hit.credited || null,
+            safeToQuoteAs: hit.credit || null,
+            url: hit.u, source: 'quotle.info', ...corpusMeta(vIdx),
+          }), { headers: pub });
+        }
         return new Response(JSON.stringify({
           found: true, query: term, quote: hit.q,
           verdict: hit.c,                          // verified | attributed | disputed
