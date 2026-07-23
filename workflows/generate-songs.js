@@ -257,9 +257,17 @@ themes: exactly 2, from this fixed vocabulary and nothing else: ${THEME_VOCAB}.
 
 externalLinks: 3-5 {label, host, url, what} — Wikipedia, a cover database, artist pages. Each confirmed relevant.
 
-listen: OPTIONAL and only if you can justify it. A link to hear the ORIGINAL recording, on an OFFICIAL channel (artist/label/topic channel or a streaming service page) — never an embed URL, never someone's rip. The "source" field must say WHY that copy is legitimate. OMIT the whole block rather than guess.
+listen: OPTIONAL — a link to HEAR THE ORIGINAL. This is the most persuasive artifact on the page: reading that a ${it.originalYear} ${it.originalArtist} recording exists is weak, hearing it is proof. It is also the easiest thing on the page to get WRONG, so it has a fixed procedure. Follow all four steps or omit the block.
+ 1. Link the ORIGINAL only — NEVER the famous ${it.coverArtist} version. The cover is one search away and the page is not arguing about it.
+ 2. FETCH THE WATCH PAGE and read the uploader and the &#8471; line. Do not trust a search result, a title, or a thumbnail. Accept ONLY: an official artist/label channel, a VEVO channel, or an auto-generated "Provided to YouTube by <distributor>" upload. A fan upload, a rip, or a compilation channel is NOT acceptable however good the audio is.
+ 3. *** CHECK THE DURATION AGAINST THE MUSICBRAINZ RECORDING. *** An artist's own channel very often hosts a LATER RE-RECORDING under the original title, and it will pass every check in step 2 while being the wrong record by decades. This single check caught three of them on the last pass: a 2003 re-cut, a set of 1995/2009/2022 re-recordings, and a 2002 re-do — all on legitimate official channels, all wearing the original's name. If the duration does not match, or you cannot establish the original's duration, OMIT.
+ 4. Never an embed URL (no /embed/, no player., no autoplay=) — the page renders a LINK, not a player. The "source" field must state WHY that copy is legitimate (which channel, and what you confirmed).
+ AN ABSENT LINK BEATS A DUBIOUS ONE. On the last pass 4 of 27 songs correctly got no link because no legitimate copy of the original exists. Omitting is a valid, expected outcome — not a failure.
 
-sameAs: OPTIONAL. STABLE identifiers only — musicbrainz.org, wikidata.org or secondhandsongs.com URLs. Never a streaming link.`
+sameAs: OPTIONAL but preferred. STABLE identifiers ONLY — musicbrainz.org, wikidata.org, secondhandsongs.com. Never a streaming URL: those rot, and a dead identifier inside structured data is worse than none.
+ • Prefer a MusicBrainz **recording** MBID for the ORIGINAL, confirmed against the release it first appeared on (the ${it.originalYear} ${it.originalLabel || 'original'} release) — not just any recording of the song.
+ • Fall back to a **work** MBID only where no reliable recording entity exists.
+ • Include the Wikidata QID as well wherever one exists.`
 
 // ---------- run: one agent per song ----------
 phase('Research')

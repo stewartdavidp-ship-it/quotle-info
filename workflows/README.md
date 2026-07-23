@@ -239,6 +239,31 @@ node tools/songs.js sync /tmp/empty.json    # echo '[]' > /tmp/empty.json — sw
 git checkout -b songs-sN && git add -A && git commit && git push && gh pr create ...
 ```
 
+### "Hear the original" — the `listen` link has a fixed procedure
+The most persuasive artifact on a song page is the recording almost nobody has heard. It is also the
+easiest thing to get wrong, because **an artist's own official channel very often hosts a LATER
+RE-RECORDING under the original title** — legitimate uploader, legitimate ℗ line, wrong record by
+decades. The research pass behind #118 caught three of exactly that: a 2003 re-cut of "Brændt",
+Lori Lieberman's 1995/2009/2022 re-recordings of "Killing Me Softly", and The Arrows' 2002 re-do of
+"I Love Rock 'n' Roll". The procedure, encoded in the `generate-songs.js` prompt:
+
+1. Link the **ORIGINAL only** — never the famous cover; the cover is one search away.
+2. **Fetch the watch page**; read the uploader and the ℗ line. Accept only an official artist/label
+   channel, a VEVO channel, or a "Provided to YouTube by \<distributor\>" auto-upload.
+3. **Cross-check the duration against the MusicBrainz recording.** This is the step that separates
+   the original from a re-recording, and nothing else does. No match, or no established duration → omit.
+4. Never an embed URL — the page renders a link, not a player (weight + third-party cookies).
+
+**An absent link beats a dubious one** — 4 of the first 27 correctly have none. `prep-songs.js` prints
+every proposed link with its claimed provenance *and* names the omissions, so both are a noticed
+decision rather than a default. `validate-songs.js` gates the SHAPE only (https, no embed, `source`
+present); whether the link is the right *recording* is a human call.
+
+`sameAs` is the durable half: prefer a MusicBrainz **recording** MBID for the original, confirmed
+against the release it first appeared on; fall back to a **work** MBID; always include the Wikidata
+QID. Streaming URLs are rejected on purpose — they rot, and a dead identifier in structured data is
+worse than none.
+
 ### Song-specific gotchas
 - **The batch carries the WHOLE lead**, not a bare title — the harvest already established who
   recorded it first and a human reviewed the queue on that. The generator's job is to CONFIRM and

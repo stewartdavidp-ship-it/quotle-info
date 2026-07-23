@@ -200,6 +200,27 @@ if (brokenAxis.length) {
 const conf = {}; for (const r of good) conf[r.confidence] = (conf[r.confidence] || 0) + 1;
 console.log('confidences:', JSON.stringify(conf));
 
+// 5. LISTEN / SAMEAS REPORT — surfaced for a human, never auto-approved. Whether a link is the
+// ORIGINAL recording (and not a later re-recording on the same artist's official channel) cannot be
+// decided mechanically: the last research pass caught a 2003 re-cut, a set of 1995/2009/2022
+// re-recordings and a 2002 re-do that all sat on legitimate channels under the original's name, and
+// only a duration cross-check against MusicBrainz separated them. So print every proposed link with
+// the provenance the agent claimed, and make the omissions visible too — an absent link is a valid
+// outcome (4 of the first 27 correctly have none), but it should be a noticed one.
+const withListen = good.filter((r) => r.listen && r.listen.url);
+const noListen = good.filter((r) => !r.listen || !r.listen.url);
+console.log(`\nlisten links: ${withListen.length}/${good.length} proposed — CHECK EACH before ingest:`);
+withListen.forEach((r) => {
+  console.log(`   ♪ ${r.songSlug}`);
+  console.log(`       ${r.listen.url}`);
+  console.log(`       what:   ${r.listen.what || '(missing)'}`);
+  console.log(`       source: ${r.listen.source || '(missing — validate-songs will warn)'}`);
+});
+if (noListen.length) console.log(`   (no link: ${noListen.map((r) => r.songSlug).join(', ')} — fine if no legitimate official copy of the ORIGINAL exists)`);
+const noSameAs = good.filter((r) => !Array.isArray(r.sameAs) || !r.sameAs.length);
+if (noSameAs.length) console.log(`sameAs missing on: ${noSameAs.map((r) => r.songSlug).join(', ')} — prefer a MusicBrainz recording MBID for the original + the Wikidata QID`);
+console.log('');
+
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(good, null, 2));
 const redo = [...stubs.map((r) => r.title), ...brokenAxis.map((r) => r.title), ...unmatched];
