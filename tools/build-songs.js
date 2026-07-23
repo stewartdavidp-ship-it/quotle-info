@@ -61,7 +61,13 @@ function buildJsonLd(s, url) {
     .split(/\s*,\s*|\s+and\s+|\s*&\s*|\s*;\s*/)
     .map((x) => x.trim())
     .filter((x) => x.length > 1);
-  const composers = splitPeople(sc.composer && sc.composer.name);
+  // Accept BOTH shapes. Records carry a prose string ("Bert Berns, Solomon Burke and Jerry
+  // Wexler"), but a generate agent that knows better may write a proper array — pass-the-dutchie did,
+  // and because this only read `.name` that page silently emitted NO composer node at all. A record
+  // being MORE correct than the generator expects must never produce less output than a sloppy one.
+  const composers = Array.isArray(sc.composer)
+    ? sc.composer.flatMap((c) => splitPeople(c && c.name))
+    : splitPeople(sc.composer && sc.composer.name);
 
   // The ORIGINAL is sometimes released under a different title than the page carries ("La Mer" vs
   // "Beyond the Sea"). alternateName lets the two resolve as ONE composition rather than looking
