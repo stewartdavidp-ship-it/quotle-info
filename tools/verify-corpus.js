@@ -99,6 +99,8 @@ if (home) {
     return m ? num(m[1]) : null;
   };
   check('home page "Quotes" tile states the corpus total', CORPUS.quotes.total, tile('Quotes'));
+  check('home page "Songs" tile states the song total', CORPUS.songs.total, tile('Songs'),
+    'songs are a separate content type from quotes — the tile must state CORPUS.songs.total, never be folded into the quote count');
   check('home page "Authors" tile states the author total', CORPUS.authors.total, tile('Authors'),
     'the tile links to /authors/ — if it disagrees with that page, the mismatch is visible on the first click');
   check('home page "Under review" tile states the queue', CORPUS.review.queued, tile('Under review'));
