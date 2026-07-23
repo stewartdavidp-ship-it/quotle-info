@@ -4,458 +4,13 @@
   "description": "Song-misattribution backlog for /who-recorded/. A cover mistaken for the ORIGINAL recording. Managed by tools/songs.js — do not hand-edit counts. Lifecycle: queued → selected → ingested (or dropped).",
   "updated": "2026-07-23",
   "total": 90,
-  "queued": 26,
+  "queued": 0,
   "selected": 0,
-  "ingested": 63,
+  "ingested": 89,
   "dropped": 1,
-  "queuedByConfusion": {
-   "high": 10,
-   "medium": 16
-  }
+  "queuedByConfusion": {}
  },
  "songs": [
-  {
-   "songSlug": "the-train-kept-a-rollin",
-   "title": "The Train Kept A-Rollin'",
-   "creditedTo": "Aerosmith",
-   "originalArtist": "Tiny Bradshaw",
-   "originalYear": "1951",
-   "originalLabel": "King Records",
-   "writer": "Tiny Bradshaw, Lois Mann and Howard Kay",
-   "coverArtist": "Aerosmith",
-   "coverYear": "1974",
-   "confusion": "high",
-   "whyNotable": "A classic-rock staple most listeners file under Aerosmith began as a jump-blues record cut by bandleader Tiny Bradshaw in Cincinnati on 6 October 1951. 'Lois Mann' is a pseudonym of King Records owner Syd Nathan, added so the label boss could collect publishing royalties.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Train_Kept_A-Rollin%27"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "time-is-on-my-side",
-   "title": "Time Is on My Side",
-   "creditedTo": "The Rolling Stones",
-   "originalArtist": "Kai Winding and His Orchestra",
-   "originalYear": "1963",
-   "originalLabel": "Verve Records",
-   "writer": "Jerry Ragovoy (as 'Norman Meade'), with lyrics by Jimmy Norman",
-   "coverArtist": "The Rolling Stones",
-   "coverYear": "1964",
-   "confusion": "high",
-   "whyNotable": "The Stones' first US top ten is a cover twice over: Irma Thomas cut it in April 1964, but the first recording was jazz trombonist Kai Winding's, released on Verve in October 1963. The verse lyrics everyone knows were written by session singer Jimmy Norman at the Thomas session.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Time_Is_on_My_Side"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "try-a-little-tenderness",
-   "title": "Try a Little Tenderness",
-   "creditedTo": "Otis Redding",
-   "originalArtist": "Ray Noble Orchestra (vocal by Val Rosing)",
-   "originalYear": "1932",
-   "originalLabel": "",
-   "writer": "Harry M. Woods, Jimmy Campbell and Reg Connelly",
-   "coverArtist": "Otis Redding",
-   "coverYear": "1966",
-   "confusion": "high",
-   "whyNotable": "Published November 1932 and first recorded that December by the Ray Noble Orchestra. Otis Redding's 1966 Volt/Atco reading is so definitive that almost nobody knows it is a cover of a pre-war standard.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Try_a_Little_Tenderness"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "unchained-melody",
-   "title": "Unchained Melody",
-   "creditedTo": "The Righteous Brothers",
-   "originalArtist": "Todd Duncan",
-   "originalYear": "1955",
-   "originalLabel": "",
-   "writer": "Alex North (music) and Hy Zaret (lyrics)",
-   "coverArtist": "The Righteous Brothers",
-   "coverYear": "1965",
-   "confusion": "high",
-   "whyNotable": "Written for the 1955 prison film Unchained and first recorded by Todd Duncan for that film. The Righteous Brothers cut their version in March 1965 for Philles, originally a B-side, and the 1990 film Ghost made that recording the version an entire generation met first - and assumes is the original.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Unchained_Melody"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "wagon-wheel",
-   "title": "Wagon Wheel",
-   "creditedTo": "Darius Rucker",
-   "originalArtist": "Old Crow Medicine Show",
-   "originalYear": "2004",
-   "originalLabel": "Nettwerk",
-   "writer": "Bob Dylan and Ketch Secor",
-   "coverArtist": "Darius Rucker",
-   "coverYear": "2013",
-   "confusion": "high",
-   "whyNotable": "Old Crow Medicine Show's string-band version, released 10 February 2004, spread by word of mouth and never charted mainstream; Rucker's 2013 Capitol single hit No. 1 country and went 11x platinum. The chorus itself is an unfinished 1973 Dylan sketch that Secor built verses around.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Wagon_Wheel_(song)"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "war",
-   "title": "War",
-   "creditedTo": "Edwin Starr",
-   "originalArtist": "The Temptations",
-   "originalYear": "1970",
-   "originalLabel": "Gordy",
-   "writer": "Norman Whitfield and Barrett Strong",
-   "coverArtist": "Edwin Starr",
-   "coverYear": "1970",
-   "confusion": "high",
-   "whyNotable": "The Temptations recorded it first, on the March 1970 album Psychedelic Shack, but Motown refused to release it as their single for fear of the group's image - so Whitfield re-recorded it with Edwin Starr, whose June 1970 Gordy single went to No. 1.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/War_(The_Temptations_song)"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "when-the-levee-breaks",
-   "title": "When the Levee Breaks",
-   "creditedTo": "Led Zeppelin",
-   "originalArtist": "Kansas Joe McCoy and Memphis Minnie",
-   "originalYear": "1929",
-   "originalLabel": "Columbia Records",
-   "writer": "Kansas Joe McCoy and Memphis Minnie",
-   "coverArtist": "Led Zeppelin",
-   "coverYear": "1971",
-   "confusion": "high",
-   "whyNotable": "One of the most sampled drum tracks in music history is a 1971 rearrangement of a Delta blues record cut in June 1929. Zeppelin's version credits Memphis Minnie alongside the band; McCoy, whom Charles Shaar Murray identifies as the actual songwriter, is not on the Zeppelin credit.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/When_the_Levee_Breaks"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "you-are-my-sunshine",
-   "title": "You Are My Sunshine",
-   "creditedTo": "Jimmie Davis",
-   "originalArtist": "The Pine Ridge Boys",
-   "originalYear": "1939",
-   "originalLabel": "Bluebird",
-   "writer": "Credited to Jimmie Davis and Charles Mitchell (authorship disputed)",
-   "coverArtist": "Jimmie Davis",
-   "coverYear": "1940",
-   "confusion": "high",
-   "whyNotable": "The Pine Ridge Boys recorded it 22 August 1939 and Bluebird released it 6 October 1939, with no songwriter listed; the Rice Brothers' Gang cut it for Decca on 13 September 1939. Davis did not record it until 5 February 1940, after buying the rights from Paul Rice - yet he is universally treated as both author and first recorder.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/You_Are_My_Sunshine"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "you-dont-have-to-say-you-love-me",
-   "title": "You Don't Have to Say You Love Me",
-   "creditedTo": "Dusty Springfield",
-   "originalArtist": "Pino Donaggio",
-   "originalYear": "1965",
-   "originalLabel": "",
-   "writer": "Pino Donaggio and Vito Pallavicini (original); Vicki Wickham and Simon Napier-Bell (English lyrics)",
-   "coverArtist": "Dusty Springfield",
-   "coverYear": "1966",
-   "confusion": "high",
-   "whyNotable": "Donaggio debuted 'Io che non vivo (senza te)' at the 1965 Sanremo Festival and took it to No. 1 in Italy that March. Springfield, who heard it at Sanremo, taped her English version in London on 9-10 March 1966.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/You_Don%27t_Have_to_Say_You_Love_Me"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "you-got-the-love",
-   "title": "You Got the Love",
-   "creditedTo": "Florence + the Machine",
-   "originalArtist": "The Source featuring Candi Staton",
-   "originalYear": "1986",
-   "originalLabel": "Streetwave",
-   "writer": "Anthony B. Stephens, Arnecia Michelle Harris and John Bellamy",
-   "coverArtist": "Florence + the Machine",
-   "coverYear": "2009",
-   "confusion": "high",
-   "whyNotable": "A pure TV-sync case. The Source featuring Candi Staton released it in 1986; Florence + the Machine's 2009 Island version was carried into mass awareness by the Gossip Girl and Gavin & Stacey finales and Sky Sports football coverage, and a large cohort has never encountered the 1986 record at all.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/You_Got_the_Love"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "baby-please-dont-go",
-   "title": "Baby, Please Don't Go",
-   "creditedTo": "Them",
-   "originalArtist": "Big Joe Williams",
-   "originalYear": "1935",
-   "originalLabel": "Bluebird Records",
-   "writer": "Traditional (Joe Williams credited on the record)",
-   "coverArtist": "Them",
-   "coverYear": "1964",
-   "confusion": "medium",
-   "whyNotable": "Big Joe Williams cut it in Chicago on 31 October 1935, billed as Joe Williams' Washboard Blues Singers. Them's October 1964 Decca recording with the 19-year-old Van Morrison is now treated as definitive, and AC/DC's 1975 version added another layer.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Baby,_Please_Don%27t_Go"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "bang-bang-my-baby-shot-me-down",
-   "title": "Bang Bang (My Baby Shot Me Down)",
-   "creditedTo": "Nancy Sinatra",
-   "originalArtist": "Cher",
-   "originalYear": "1966",
-   "originalLabel": "Imperial Records",
-   "writer": "Sonny Bono",
-   "coverArtist": "Nancy Sinatra",
-   "coverYear": "1966",
-   "confusion": "medium",
-   "whyNotable": "Cher recorded it first, on 11 February 1966, released later that month on Imperial. Nancy Sinatra's cover from the same year was placed over the opening credits of Kill Bill: Volume 1, and post-Tarantino audiences overwhelmingly treat the Sinatra recording as the original.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Bang_Bang_(My_Baby_Shot_Me_Down)"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "both-sides-now",
-   "title": "Both Sides, Now",
-   "creditedTo": "Joni Mitchell",
-   "originalArtist": "Dave Van Ronk and the Hudson Dusters",
-   "originalYear": "1967",
-   "originalLabel": "",
-   "writer": "Joni Mitchell",
-   "coverArtist": "Joni Mitchell",
-   "coverYear": "1969",
-   "confusion": "medium",
-   "whyNotable": "Mitchell wrote it, but she was the third act to put it on record: Dave Van Ronk and the Hudson Dusters released it as 'Clouds' in June 1967 and Judy Collins cut it for Wildflowers the same year. Mitchell's own recording did not appear until the 1969 Reprise album Clouds.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Both_Sides,_Now"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "everything-i-own",
-   "title": "Everything I Own",
-   "creditedTo": "Ken Boothe",
-   "originalArtist": "Bread",
-   "originalYear": "1972",
-   "originalLabel": "",
-   "writer": "David Gates",
-   "coverArtist": "Ken Boothe",
-   "coverYear": "1974",
-   "confusion": "medium",
-   "whyNotable": "In Britain the song reads as a reggae standard thanks to Ken Boothe's 1974 UK No. 1 and Boy George's 1987 number one, but David Gates wrote it for Bread as an elegy for his father and their version charted in the US in 1972.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Everything_I_Own"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "girl-youll-be-a-woman-soon",
-   "title": "Girl, You'll Be a Woman Soon",
-   "creditedTo": "Urge Overkill",
-   "originalArtist": "Neil Diamond",
-   "originalYear": "1967",
-   "originalLabel": "Bang Records",
-   "writer": "Neil Diamond",
-   "coverArtist": "Urge Overkill",
-   "coverYear": "1992",
-   "confusion": "medium",
-   "whyNotable": "Neil Diamond wrote and first recorded it, released March 1967 on Bang. Urge Overkill's version, cut for their 1992 EP Stull, became the definitive one for a generation after its use in Pulp Fiction - many viewers meet it as an Urge Overkill song with no idea a 1967 original exists.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Girl,_You%27ll_Be_a_Woman_Soon"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "iko-iko",
-   "title": "Iko Iko",
-   "creditedTo": "The Dixie Cups",
-   "originalArtist": "James \"Sugar Boy\" Crawford and His Cane Cutters",
-   "originalYear": "1953",
-   "originalLabel": "Checker Records",
-   "writer": "James \"Sugar Boy\" Crawford",
-   "coverArtist": "The Dixie Cups",
-   "coverYear": "1965",
-   "confusion": "medium",
-   "whyNotable": "First recorded in November 1953 as 'Jock-A-Mo' by James 'Sugar Boy' Crawford on Checker. The Dixie Cups' March 1965 Red Bird version renamed it and is treated as the source; the Belle Stars' 1982 cover charted in the US only after Rain Man, adding a third generation of confusion.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Iko_Iko"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "let-it-be-me",
-   "title": "Let It Be Me",
-   "creditedTo": "The Everly Brothers",
-   "originalArtist": "Gilbert Bécaud",
-   "originalYear": "1955",
-   "originalLabel": "His Master's Voice",
-   "writer": "Gilbert Bécaud (music) and Pierre Delanoë (French lyrics); Manny Curtis (English lyrics)",
-   "coverArtist": "The Everly Brothers",
-   "coverYear": "1960",
-   "confusion": "medium",
-   "whyNotable": "The song began as the French 'Je t'appartiens', sung by Bécaud and released as an HMV single in 1955. Jill Corey sang the first English version on television in 1957; the Everly Brothers recorded theirs in December 1959, and Cadence released it in 1960.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Let_It_Be_Me_(Everly_Brothers_song)"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "mas-que-nada",
-   "title": "Mas que Nada",
-   "creditedTo": "Sérgio Mendes & Brasil '66",
-   "originalArtist": "Jorge Ben",
-   "originalYear": "1963",
-   "originalLabel": "Philips Records",
-   "writer": "Jorge Ben",
-   "coverArtist": "Sérgio Mendes & Brasil '66",
-   "coverYear": "1966",
-   "confusion": "medium",
-   "whyNotable": "Jorge Ben recorded his own song on his 1963 Philips debut Samba Esquema Novo. Mendes' 1966 Brasil '66 version is so dominant outside Brazil that it is widely treated as definitive.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Mas_que_Nada"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "money-thats-what-i-want",
-   "title": "Money (That's What I Want)",
-   "creditedTo": "The Beatles",
-   "originalArtist": "Barrett Strong",
-   "originalYear": "1959",
-   "originalLabel": "Tamla",
-   "writer": "Berry Gordy and Janie Bradford",
-   "coverArtist": "The Beatles",
-   "coverYear": "1963",
-   "confusion": "medium",
-   "whyNotable": "Barrett Strong's 1959 Tamla single became Motown's first hit in June 1960; the Beatles' 1963 closer on With the Beatles is the version most listeners meet first. The Rolling Stones cut it too, in January 1964.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Money_(That%27s_What_I_Want)"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "monkey-man",
-   "title": "Monkey Man",
-   "creditedTo": "The Specials",
-   "originalArtist": "The Maytals",
-   "originalYear": "1969",
-   "originalLabel": "Beverley's (Jamaica) / Trojan (UK)",
-   "writer": "Toots Hibbert",
-   "coverArtist": "The Specials",
-   "coverYear": "1979",
-   "confusion": "medium",
-   "whyNotable": "A staple of the Specials' 1979 debut and widely taken for a 2 Tone original, it is Toots Hibbert's 1969 Leslie Kong-produced single, a modest UK No. 47 whose British fame arrived a decade later.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Monkey_Man_(Toots_%26_the_Maytals_song)"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "mr-bojangles",
-   "title": "Mr. Bojangles",
-   "creditedTo": "Nitty Gritty Dirt Band",
-   "originalArtist": "Jerry Jeff Walker",
-   "originalYear": "1968",
-   "originalLabel": "Atco",
-   "writer": "Jerry Jeff Walker",
-   "coverArtist": "Nitty Gritty Dirt Band",
-   "coverYear": "1970",
-   "confusion": "medium",
-   "whyNotable": "Walker wrote it about a street performer he met in a New Orleans jail and cut it at Phillips Recording in Memphis, released by Atco on 20 June 1968; the Dirt Band's 1970 recording became a No. 9 hit in 1971, and Sammy Davis Jr.'s 1972 showpiece muddies the attribution further.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Mr._Bojangles_(song)"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "need-your-love-so-bad",
-   "title": "Need Your Love So Bad",
-   "creditedTo": "Fleetwood Mac",
-   "originalArtist": "Little Willie John",
-   "originalYear": "1955",
-   "originalLabel": "King Records",
-   "writer": "Mertis John Jr. and William Edward John",
-   "coverArtist": "Fleetwood Mac",
-   "coverYear": "1968",
-   "confusion": "medium",
-   "whyNotable": "Little Willie John released it on King on 20 October 1955 and it reached No. 5 on the Billboard R&B chart in 1956. Peter Green's string-laden Blue Horizon single from July 1968 is the version British audiences know, and it is routinely assumed to be a Fleetwood Mac original.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Need_Your_Love_So_Bad"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "rollin-and-tumblin",
-   "title": "Rollin' and Tumblin'",
-   "creditedTo": "Muddy Waters",
-   "originalArtist": "Hambone Willie Newbern",
-   "originalYear": "1929",
-   "originalLabel": "Okeh Records",
-   "writer": "Unknown (Newbern credited on the single)",
-   "coverArtist": "Muddy Waters",
-   "coverYear": "1950",
-   "confusion": "medium",
-   "whyNotable": "Even blues listeners name Muddy Waters, who cut it in 1950, but the first recording was made in Atlanta on 14 March 1929 by the near-forgotten Hambone Willie Newbern for Okeh. Cream's 1966 Fresh Cream version added a third layer for rock audiences.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Rollin%27_and_Tumblin%27"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "take-me-to-the-river",
-   "title": "Take Me to the River",
-   "creditedTo": "Talking Heads",
-   "originalArtist": "Al Green",
-   "originalYear": "1974",
-   "originalLabel": "Hi Records",
-   "writer": "Al Green and Mabon 'Teenie' Hodges",
-   "coverArtist": "Talking Heads",
-   "coverYear": "1978",
-   "confusion": "medium",
-   "whyNotable": "Al Green co-wrote and first recorded it on Al Green Explores Your Mind in 1974, but Hi Records never issued his version as a single - it released Syl Johnson's 1975 cover instead. Talking Heads' 1978 Sire single reached No. 26 and is often taken for the source.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Take_Me_to_the_River"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "turn-turn-turn",
-   "title": "Turn! Turn! Turn!",
-   "creditedTo": "The Byrds",
-   "originalArtist": "The Limeliters",
-   "originalYear": "1962",
-   "originalLabel": "RCA Victor",
-   "writer": "Pete Seeger",
-   "coverArtist": "The Byrds",
-   "coverYear": "1965",
-   "confusion": "medium",
-   "whyNotable": "Seeger wrote it in 1959, but the first released recording was the Limeliters' 'To Everything There Is a Season' on their 1962 RCA Victor album Folk Matinee, ahead of Seeger's own version that same year; the Byrds' October 1965 Columbia single went to No. 1 and owns the song publicly.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Turn!_Turn!_Turn!"
-   ],
-   "status": "queued"
-  },
-  {
-   "songSlug": "what-a-difference-a-day-makes",
-   "title": "What a Diff'rence a Day Makes",
-   "creditedTo": "Dinah Washington",
-   "originalArtist": "Orquesta Pedro Vía",
-   "originalYear": "1934",
-   "originalLabel": "",
-   "writer": "María Grever (original); Stanley Adams (English lyrics)",
-   "coverArtist": "Dinah Washington",
-   "coverYear": "1959",
-   "confusion": "medium",
-   "whyNotable": "María Grever's Spanish song 'Cuando vuelva a tu lado' was written and first recorded in 1934, by Orquesta Pedro Vía. Washington's 1959 Mercury single won a Grammy and is treated as the song's origin point, twenty-five years late.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/What_a_Diff%27rence_a_Day_Made"
-   ],
-   "status": "queued"
-  },
   {
    "songSlug": "a-message-to-you-rudy",
    "title": "A Message to You, Rudy",
@@ -1383,6 +938,42 @@
    "wave": "s2"
   },
   {
+   "songSlug": "the-train-kept-a-rollin",
+   "title": "The Train Kept A-Rollin'",
+   "creditedTo": "Aerosmith",
+   "originalArtist": "Tiny Bradshaw",
+   "originalYear": "1951",
+   "originalLabel": "King Records",
+   "writer": "Tiny Bradshaw, Lois Mann and Howard Kay",
+   "coverArtist": "Aerosmith",
+   "coverYear": "1974",
+   "confusion": "high",
+   "whyNotable": "A classic-rock staple most listeners file under Aerosmith began as a jump-blues record cut by bandleader Tiny Bradshaw in Cincinnati on 6 October 1951. 'Lois Mann' is a pseudonym of King Records owner Syd Nathan, added so the label boss could collect publishing royalties.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Train_Kept_A-Rollin%27"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "time-is-on-my-side",
+   "title": "Time Is on My Side",
+   "creditedTo": "The Rolling Stones",
+   "originalArtist": "Kai Winding and His Orchestra",
+   "originalYear": "1963",
+   "originalLabel": "Verve Records",
+   "writer": "Jerry Ragovoy (as 'Norman Meade'), with lyrics by Jimmy Norman",
+   "coverArtist": "The Rolling Stones",
+   "coverYear": "1964",
+   "confusion": "high",
+   "whyNotable": "The Stones' first US top ten is a cover twice over: Irma Thomas cut it in April 1964, but the first recording was jazz trombonist Kai Winding's, released on Verve in October 1963. The verse lyrics everyone knows were written by session singer Jimmy Norman at the Thomas session.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Time_Is_on_My_Side"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
    "songSlug": "torn",
    "title": "Torn",
    "creditedTo": "Natalie Imbruglia",
@@ -1398,6 +989,24 @@
     "https://en.wikipedia.org/wiki/Torn_(Ednaswap_song)"
    ],
    "status": "ingested"
+  },
+  {
+   "songSlug": "try-a-little-tenderness",
+   "title": "Try a Little Tenderness",
+   "creditedTo": "Otis Redding",
+   "originalArtist": "Ray Noble Orchestra (vocal by Val Rosing)",
+   "originalYear": "1932",
+   "originalLabel": "",
+   "writer": "Harry M. Woods, Jimmy Campbell and Reg Connelly",
+   "coverArtist": "Otis Redding",
+   "coverYear": "1966",
+   "confusion": "high",
+   "whyNotable": "Published November 1932 and first recorded that December by the Ray Noble Orchestra. Otis Redding's 1966 Volt/Atco reading is so definitive that almost nobody knows it is a cover of a pre-war standard.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Try_a_Little_Tenderness"
+   ],
+   "status": "ingested",
+   "wave": "s3"
   },
   {
    "songSlug": "twist-and-shout",
@@ -1417,6 +1026,24 @@
    "status": "ingested"
   },
   {
+   "songSlug": "unchained-melody",
+   "title": "Unchained Melody",
+   "creditedTo": "The Righteous Brothers",
+   "originalArtist": "Todd Duncan",
+   "originalYear": "1955",
+   "originalLabel": "",
+   "writer": "Alex North (music) and Hy Zaret (lyrics)",
+   "coverArtist": "The Righteous Brothers",
+   "coverYear": "1965",
+   "confusion": "high",
+   "whyNotable": "Written for the 1955 prison film Unchained and first recorded by Todd Duncan for that film. The Righteous Brothers cut their version in March 1965 for Philles, originally a B-side, and the 1990 film Ghost made that recording the version an entire generation met first - and assumes is the original.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Unchained_Melody"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
    "songSlug": "valerie",
    "title": "Valerie",
    "creditedTo": "Mark Ronson ft. Amy Winehouse",
@@ -1434,6 +1061,168 @@
    "status": "ingested"
   },
   {
+   "songSlug": "wagon-wheel",
+   "title": "Wagon Wheel",
+   "creditedTo": "Darius Rucker",
+   "originalArtist": "Old Crow Medicine Show",
+   "originalYear": "2004",
+   "originalLabel": "Nettwerk",
+   "writer": "Bob Dylan and Ketch Secor",
+   "coverArtist": "Darius Rucker",
+   "coverYear": "2013",
+   "confusion": "high",
+   "whyNotable": "Old Crow Medicine Show's string-band version, released 10 February 2004, spread by word of mouth and never charted mainstream; Rucker's 2013 Capitol single hit No. 1 country and went 11x platinum. The chorus itself is an unfinished 1973 Dylan sketch that Secor built verses around.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Wagon_Wheel_(song)"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "war",
+   "title": "War",
+   "creditedTo": "Edwin Starr",
+   "originalArtist": "The Temptations",
+   "originalYear": "1970",
+   "originalLabel": "Gordy",
+   "writer": "Norman Whitfield and Barrett Strong",
+   "coverArtist": "Edwin Starr",
+   "coverYear": "1970",
+   "confusion": "high",
+   "whyNotable": "The Temptations recorded it first, on the March 1970 album Psychedelic Shack, but Motown refused to release it as their single for fear of the group's image - so Whitfield re-recorded it with Edwin Starr, whose June 1970 Gordy single went to No. 1.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/War_(The_Temptations_song)"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "when-the-levee-breaks",
+   "title": "When the Levee Breaks",
+   "creditedTo": "Led Zeppelin",
+   "originalArtist": "Kansas Joe McCoy and Memphis Minnie",
+   "originalYear": "1929",
+   "originalLabel": "Columbia Records",
+   "writer": "Kansas Joe McCoy and Memphis Minnie",
+   "coverArtist": "Led Zeppelin",
+   "coverYear": "1971",
+   "confusion": "high",
+   "whyNotable": "One of the most sampled drum tracks in music history is a 1971 rearrangement of a Delta blues record cut in June 1929. Zeppelin's version credits Memphis Minnie alongside the band; McCoy, whom Charles Shaar Murray identifies as the actual songwriter, is not on the Zeppelin credit.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/When_the_Levee_Breaks"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "you-are-my-sunshine",
+   "title": "You Are My Sunshine",
+   "creditedTo": "Jimmie Davis",
+   "originalArtist": "The Pine Ridge Boys",
+   "originalYear": "1939",
+   "originalLabel": "Bluebird",
+   "writer": "Credited to Jimmie Davis and Charles Mitchell (authorship disputed)",
+   "coverArtist": "Jimmie Davis",
+   "coverYear": "1940",
+   "confusion": "high",
+   "whyNotable": "The Pine Ridge Boys recorded it 22 August 1939 and Bluebird released it 6 October 1939, with no songwriter listed; the Rice Brothers' Gang cut it for Decca on 13 September 1939. Davis did not record it until 5 February 1940, after buying the rights from Paul Rice - yet he is universally treated as both author and first recorder.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/You_Are_My_Sunshine"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "you-dont-have-to-say-you-love-me",
+   "title": "You Don't Have to Say You Love Me",
+   "creditedTo": "Dusty Springfield",
+   "originalArtist": "Pino Donaggio",
+   "originalYear": "1965",
+   "originalLabel": "",
+   "writer": "Pino Donaggio and Vito Pallavicini (original); Vicki Wickham and Simon Napier-Bell (English lyrics)",
+   "coverArtist": "Dusty Springfield",
+   "coverYear": "1966",
+   "confusion": "high",
+   "whyNotable": "Donaggio debuted 'Io che non vivo (senza te)' at the 1965 Sanremo Festival and took it to No. 1 in Italy that March. Springfield, who heard it at Sanremo, taped her English version in London on 9-10 March 1966.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/You_Don%27t_Have_to_Say_You_Love_Me"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "you-got-the-love",
+   "title": "You Got the Love",
+   "creditedTo": "Florence + the Machine",
+   "originalArtist": "The Source featuring Candi Staton",
+   "originalYear": "1986",
+   "originalLabel": "Streetwave",
+   "writer": "Anthony B. Stephens, Arnecia Michelle Harris and John Bellamy",
+   "coverArtist": "Florence + the Machine",
+   "coverYear": "2009",
+   "confusion": "high",
+   "whyNotable": "A pure TV-sync case. The Source featuring Candi Staton released it in 1986; Florence + the Machine's 2009 Island version was carried into mass awareness by the Gossip Girl and Gavin & Stacey finales and Sky Sports football coverage, and a large cohort has never encountered the 1986 record at all.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/You_Got_the_Love"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "baby-please-dont-go",
+   "title": "Baby, Please Don't Go",
+   "creditedTo": "Them",
+   "originalArtist": "Big Joe Williams",
+   "originalYear": "1935",
+   "originalLabel": "Bluebird Records",
+   "writer": "Traditional (Joe Williams credited on the record)",
+   "coverArtist": "Them",
+   "coverYear": "1964",
+   "confusion": "medium",
+   "whyNotable": "Big Joe Williams cut it in Chicago on 31 October 1935, billed as Joe Williams' Washboard Blues Singers. Them's October 1964 Decca recording with the 19-year-old Van Morrison is now treated as definitive, and AC/DC's 1975 version added another layer.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Baby,_Please_Don%27t_Go"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "bang-bang-my-baby-shot-me-down",
+   "title": "Bang Bang (My Baby Shot Me Down)",
+   "creditedTo": "Nancy Sinatra",
+   "originalArtist": "Cher",
+   "originalYear": "1966",
+   "originalLabel": "Imperial Records",
+   "writer": "Sonny Bono",
+   "coverArtist": "Nancy Sinatra",
+   "coverYear": "1966",
+   "confusion": "medium",
+   "whyNotable": "Cher recorded it first, on 11 February 1966, released later that month on Imperial. Nancy Sinatra's cover from the same year was placed over the opening credits of Kill Bill: Volume 1, and post-Tarantino audiences overwhelmingly treat the Sinatra recording as the original.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Bang_Bang_(My_Baby_Shot_Me_Down)"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "both-sides-now",
+   "title": "Both Sides, Now",
+   "creditedTo": "Joni Mitchell",
+   "originalArtist": "Dave Van Ronk and the Hudson Dusters",
+   "originalYear": "1967",
+   "originalLabel": "",
+   "writer": "Joni Mitchell",
+   "coverArtist": "Joni Mitchell",
+   "coverYear": "1969",
+   "confusion": "medium",
+   "whyNotable": "Mitchell wrote it, but she was the third act to put it on record: Dave Van Ronk and the Hudson Dusters released it as 'Clouds' in June 1967 and Judy Collins cut it for Wildflowers the same year. Mitchell's own recording did not appear until the 1969 Reprise album Clouds.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Both_Sides,_Now"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
    "songSlug": "cups-when-im-gone",
    "title": "Cups (When I'm Gone)",
    "creditedTo": "Anna Kendrick",
@@ -1449,6 +1238,24 @@
     "https://en.wikipedia.org/wiki/Cups_(song)"
    ],
    "status": "ingested"
+  },
+  {
+   "songSlug": "everything-i-own",
+   "title": "Everything I Own",
+   "creditedTo": "Ken Boothe",
+   "originalArtist": "Bread",
+   "originalYear": "1972",
+   "originalLabel": "",
+   "writer": "David Gates",
+   "coverArtist": "Ken Boothe",
+   "coverYear": "1974",
+   "confusion": "medium",
+   "whyNotable": "In Britain the song reads as a reggae standard thanks to Ken Boothe's 1974 UK No. 1 and Boy George's 1987 number one, but David Gates wrote it for Bread as an elegy for his father and their version charted in the US in 1972.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Everything_I_Own"
+   ],
+   "status": "ingested",
+   "wave": "s3"
   },
   {
    "songSlug": "feeling-good",
@@ -1485,6 +1292,24 @@
    "status": "ingested"
   },
   {
+   "songSlug": "girl-youll-be-a-woman-soon",
+   "title": "Girl, You'll Be a Woman Soon",
+   "creditedTo": "Urge Overkill",
+   "originalArtist": "Neil Diamond",
+   "originalYear": "1967",
+   "originalLabel": "Bang Records",
+   "writer": "Neil Diamond",
+   "coverArtist": "Urge Overkill",
+   "coverYear": "1992",
+   "confusion": "medium",
+   "whyNotable": "Neil Diamond wrote and first recorded it, released March 1967 on Bang. Urge Overkill's version, cut for their 1992 EP Stull, became the definitive one for a generation after its use in Pulp Fiction - many viewers meet it as an Urge Overkill song with no idea a 1967 original exists.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Girl,_You%27ll_Be_a_Woman_Soon"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
    "songSlug": "hallelujah",
    "title": "Hallelujah",
    "creditedTo": "Jeff Buckley",
@@ -1519,6 +1344,24 @@
    "status": "ingested"
   },
   {
+   "songSlug": "iko-iko",
+   "title": "Iko Iko",
+   "creditedTo": "The Dixie Cups",
+   "originalArtist": "James \"Sugar Boy\" Crawford and His Cane Cutters",
+   "originalYear": "1953",
+   "originalLabel": "Checker Records",
+   "writer": "James \"Sugar Boy\" Crawford",
+   "coverArtist": "The Dixie Cups",
+   "coverYear": "1965",
+   "confusion": "medium",
+   "whyNotable": "First recorded in November 1953 as 'Jock-A-Mo' by James 'Sugar Boy' Crawford on Checker. The Dixie Cups' March 1965 Red Bird version renamed it and is treated as the source; the Belle Stars' 1982 cover charted in the US only after Rain Man, adding a third generation of confusion.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Iko_Iko"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
    "songSlug": "killing-me-softly",
    "title": "Killing Me Softly with His Song",
    "creditedTo": "Fugees",
@@ -1534,6 +1377,24 @@
     "https://en.wikipedia.org/wiki/Killing_Me_Softly_with_His_Song"
    ],
    "status": "ingested"
+  },
+  {
+   "songSlug": "let-it-be-me",
+   "title": "Let It Be Me",
+   "creditedTo": "The Everly Brothers",
+   "originalArtist": "Gilbert Bécaud",
+   "originalYear": "1955",
+   "originalLabel": "His Master's Voice",
+   "writer": "Gilbert Bécaud (music) and Pierre Delanoë (French lyrics); Manny Curtis (English lyrics)",
+   "coverArtist": "The Everly Brothers",
+   "coverYear": "1960",
+   "confusion": "medium",
+   "whyNotable": "The song began as the French 'Je t'appartiens', sung by Bécaud and released as an HMV single in 1955. Jill Corey sang the first English version on television in 1957; the Everly Brothers recorded theirs in December 1959, and Cadence released it in 1960.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Let_It_Be_Me_(Everly_Brothers_song)"
+   ],
+   "status": "ingested",
+   "wave": "s3"
   },
   {
    "songSlug": "mad-world",
@@ -1553,6 +1414,132 @@
    "status": "ingested"
   },
   {
+   "songSlug": "mas-que-nada",
+   "title": "Mas que Nada",
+   "creditedTo": "Sérgio Mendes & Brasil '66",
+   "originalArtist": "Jorge Ben",
+   "originalYear": "1963",
+   "originalLabel": "Philips Records",
+   "writer": "Jorge Ben",
+   "coverArtist": "Sérgio Mendes & Brasil '66",
+   "coverYear": "1966",
+   "confusion": "medium",
+   "whyNotable": "Jorge Ben recorded his own song on his 1963 Philips debut Samba Esquema Novo. Mendes' 1966 Brasil '66 version is so dominant outside Brazil that it is widely treated as definitive.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Mas_que_Nada"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "money-thats-what-i-want",
+   "title": "Money (That's What I Want)",
+   "creditedTo": "The Beatles",
+   "originalArtist": "Barrett Strong",
+   "originalYear": "1959",
+   "originalLabel": "Tamla",
+   "writer": "Berry Gordy and Janie Bradford",
+   "coverArtist": "The Beatles",
+   "coverYear": "1963",
+   "confusion": "medium",
+   "whyNotable": "Barrett Strong's 1959 Tamla single became Motown's first hit in June 1960; the Beatles' 1963 closer on With the Beatles is the version most listeners meet first. The Rolling Stones cut it too, in January 1964.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Money_(That%27s_What_I_Want)"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "monkey-man",
+   "title": "Monkey Man",
+   "creditedTo": "The Specials",
+   "originalArtist": "The Maytals",
+   "originalYear": "1969",
+   "originalLabel": "Beverley's (Jamaica) / Trojan (UK)",
+   "writer": "Toots Hibbert",
+   "coverArtist": "The Specials",
+   "coverYear": "1979",
+   "confusion": "medium",
+   "whyNotable": "A staple of the Specials' 1979 debut and widely taken for a 2 Tone original, it is Toots Hibbert's 1969 Leslie Kong-produced single, a modest UK No. 47 whose British fame arrived a decade later.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Monkey_Man_(Toots_%26_the_Maytals_song)"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "mr-bojangles",
+   "title": "Mr. Bojangles",
+   "creditedTo": "Nitty Gritty Dirt Band",
+   "originalArtist": "Jerry Jeff Walker",
+   "originalYear": "1968",
+   "originalLabel": "Atco",
+   "writer": "Jerry Jeff Walker",
+   "coverArtist": "Nitty Gritty Dirt Band",
+   "coverYear": "1970",
+   "confusion": "medium",
+   "whyNotable": "Walker wrote it about a street performer he met in a New Orleans jail and cut it at Phillips Recording in Memphis, released by Atco on 20 June 1968; the Dirt Band's 1970 recording became a No. 9 hit in 1971, and Sammy Davis Jr.'s 1972 showpiece muddies the attribution further.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Mr._Bojangles_(song)"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "need-your-love-so-bad",
+   "title": "Need Your Love So Bad",
+   "creditedTo": "Fleetwood Mac",
+   "originalArtist": "Little Willie John",
+   "originalYear": "1955",
+   "originalLabel": "King Records",
+   "writer": "Mertis John Jr. and William Edward John",
+   "coverArtist": "Fleetwood Mac",
+   "coverYear": "1968",
+   "confusion": "medium",
+   "whyNotable": "Little Willie John released it on King on 20 October 1955 and it reached No. 5 on the Billboard R&B chart in 1956. Peter Green's string-laden Blue Horizon single from July 1968 is the version British audiences know, and it is routinely assumed to be a Fleetwood Mac original.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Need_Your_Love_So_Bad"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "rollin-and-tumblin",
+   "title": "Rollin' and Tumblin'",
+   "creditedTo": "Muddy Waters",
+   "originalArtist": "Hambone Willie Newbern",
+   "originalYear": "1929",
+   "originalLabel": "Okeh Records",
+   "writer": "Unknown (Newbern credited on the single)",
+   "coverArtist": "Muddy Waters",
+   "coverYear": "1950",
+   "confusion": "medium",
+   "whyNotable": "Even blues listeners name Muddy Waters, who cut it in 1950, but the first recording was made in Atlanta on 14 March 1929 by the near-forgotten Hambone Willie Newbern for Okeh. Cream's 1966 Fresh Cream version added a third layer for rock audiences.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Rollin%27_and_Tumblin%27"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "take-me-to-the-river",
+   "title": "Take Me to the River",
+   "creditedTo": "Talking Heads",
+   "originalArtist": "Al Green",
+   "originalYear": "1974",
+   "originalLabel": "Hi Records",
+   "writer": "Al Green and Mabon 'Teenie' Hodges",
+   "coverArtist": "Talking Heads",
+   "coverYear": "1978",
+   "confusion": "medium",
+   "whyNotable": "Al Green co-wrote and first recorded it on Al Green Explores Your Mind in 1974, but Hi Records never issued his version as a single - it released Syl Johnson's 1975 cover instead. Talking Heads' 1978 Sire single reached No. 26 and is often taken for the source.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Take_Me_to_the_River"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
    "songSlug": "the-man-who-sold-the-world",
    "title": "The Man Who Sold the World",
    "creditedTo": "Nirvana",
@@ -1568,6 +1555,42 @@
     "https://en.wikipedia.org/wiki/The_Man_Who_Sold_the_World_(song)"
    ],
    "status": "ingested"
+  },
+  {
+   "songSlug": "turn-turn-turn",
+   "title": "Turn! Turn! Turn!",
+   "creditedTo": "The Byrds",
+   "originalArtist": "The Limeliters",
+   "originalYear": "1962",
+   "originalLabel": "RCA Victor",
+   "writer": "Pete Seeger",
+   "coverArtist": "The Byrds",
+   "coverYear": "1965",
+   "confusion": "medium",
+   "whyNotable": "Seeger wrote it in 1959, but the first released recording was the Limeliters' 'To Everything There Is a Season' on their 1962 RCA Victor album Folk Matinee, ahead of Seeger's own version that same year; the Byrds' October 1965 Columbia single went to No. 1 and owns the song publicly.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Turn!_Turn!_Turn!"
+   ],
+   "status": "ingested",
+   "wave": "s3"
+  },
+  {
+   "songSlug": "what-a-difference-a-day-makes",
+   "title": "What a Diff'rence a Day Makes",
+   "creditedTo": "Dinah Washington",
+   "originalArtist": "Orquesta Pedro Vía",
+   "originalYear": "1934",
+   "originalLabel": "",
+   "writer": "María Grever (original); Stanley Adams (English lyrics)",
+   "coverArtist": "Dinah Washington",
+   "coverYear": "1959",
+   "confusion": "medium",
+   "whyNotable": "María Grever's Spanish song 'Cuando vuelva a tu lado' was written and first recorded in 1934, by Orquesta Pedro Vía. Washington's 1959 Mercury single won a Grammy and is treated as the song's origin point, twenty-five years late.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/What_a_Diff%27rence_a_Day_Made"
+   ],
+   "status": "ingested",
+   "wave": "s3"
   },
   {
    "songSlug": "higher-ground",

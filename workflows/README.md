@@ -5,10 +5,10 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1118** quotes + **64** songs. **Target: 2000** quotes.
+- **Corpus: 1118** quotes + **90** songs. **Target: 2000** quotes.
 - **Next wave number: r26.** (Waves r6–r25 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
 - Harvest backlog: `data/harvest-queue.json` (committed) — 391 queued.
-- **Songs: next wave number s3.** (s1 shipped 2026-07-22: 10 records. s2 2026-07-23: 27 records, 27/27 survived — the first wave big enough to stress the runbook.) Song backlog `data/song-queue.json` — 26 queued (10 high, 16 medium), 63 ingested, 1 dropped. Digest: `data/song-queue.md`.
+- **Songs: next wave number s4 — but the backlog is EMPTY.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **0 queued**, 89 ingested, 1 dropped. **A new wave needs a `harvest-songs.js` run first** (step 0 of the song recipe). Digest: `data/song-queue.md`.
 
 > **Do not trust the three lines above** — they are hand-maintained and have been wrong before (they
 > read "1058 / r22 / 318 queued" while the real backlog was 451). The numbers that are *derived* and
@@ -320,6 +320,15 @@ findings are medium/minor. **Judge a wave by its three headline booleans**
 (`firstRecordingHolds` / `confusionBarHolds` / `noLyrics`), by how many blockers survive the skeptic,
 and by whether the fix agents stayed in their lane — not by the PASS/FAIL split.
 
+Wave s3 (26 songs, the backlog tail) came out **12 PASS / 14 FAIL, 84 issues** (5 blocker · 17 high ·
+25 medium · 37 minor) with **3 of 25 skeptic-checked findings refuted**. All 26 held
+`confusionBarHolds` and `noLyrics` — including the 16 medium-confusion candidates, so a weak-looking
+queue tail is not automatically a drop. But **7 of 26 failed `firstRecordingHolds`**, well above the
+1–2 the line below predicts: on a mature backlog the harvest lead is wrong or incomplete often enough
+that **the audit, not the generator, is what establishes who was first.** In 4 of those 7 the JSON-LD
+FAQ answer asserted a flat priority claim the visible prose had already hedged — check that pairing
+explicitly, it is the failure mode this vertical keeps reproducing.
+
 Expect, per wave: **1–2 blockers** (a genuinely wrong first recorder — s2 found two), a handful of
 `sameAs` entries pointing at the COVER, several real links that do not carry the claim pinned to
 them, and a long tail of structured-data nits. Expect roughly **15–20% of skeptic-checked findings to
@@ -355,6 +364,12 @@ be REFUTED** — that is the skeptic working, not a wasted stage.
   song dossier is richer than a quote's, so it is the one most likely to drift over. Fields the batch
   already knows (artist, year, label, writer) and everything fixed or derivable (kickers, headings,
   slugs, initials) are applied in `toRecord`, NOT asked of the agent — that is what buys the room.
+- **Reassigning `original.artist` orphans an author hub, and the build only tells you the COUNT.**
+  When a fix agent corrects the first recorder, the old artist's `authors/{slug}/` directory survives
+  and `verify-corpus.js` aborts with "expected 786, got 788" — no names. The dirs are tracked, so
+  `git status --untracked=all` shows only the NEW hubs, not the stale ones. What works:
+  `find authors -name index.html -mmin +8` — the build rewrites every live hub, so anything with an
+  old mtime is the orphan. Then `git rm -r` those and rebuild. (s3 hit this twice.)
 - **Deleting a record does not delete its rendered pages.** The build writes pages but never removes
   orphan directories, so a removed song leaves `who-recorded/{slug}/` and its author hubs behind and
   the "rendered pages match hubs" invariant fails the build. That is the invariant working — `rm -rf`
