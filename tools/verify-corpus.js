@@ -18,7 +18,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { CORPUS } = require('./corpus');
+const { CORPUS, authors } = require('./corpus');
 
 const ROOT = path.resolve(__dirname, '..');
 const failures = [];
@@ -57,8 +57,29 @@ if (manifest) {
 }
 
 // ---- 3. rendered pages match the corpus ----
+// This check used to report only "expected 786, got 788" — no names. The usual cause is a song
+// record whose original.artist was REASSIGNED (wave s3 corrected 7 first-recorders), which orphans
+// the old artist's hub; the dirs are tracked, so `git status --untracked=all` shows the NEW hubs and
+// hides the stale ones, and finding them meant guessing from mtimes. Name them instead.
 check('rendered author pages match author hubs', CORPUS.authors.total, countDirs('authors'),
-  'build-authors did not emit one page per hub (or stale directories remain from a deleted record)');
+  (() => {
+    const live = new Set(authors.map((a) => a.slug));
+    const dir = path.join(ROOT, 'authors');
+    const onDisk = fs.existsSync(dir)
+      ? fs.readdirSync(dir, { withFileTypes: true })
+        .filter((d) => d.isDirectory() && fs.existsSync(path.join(dir, d.name, 'index.html')))
+        .map((d) => d.name)
+      : [];
+    const stale = onDisk.filter((d) => !live.has(d));
+    const missing = [...live].filter((s) => !onDisk.includes(s));
+    if (stale.length) {
+      return `STALE author directories — no record points at them any more (usually a reassigned `
+        + `song original.artist, or a deleted record). Remove them and rebuild:\n`
+        + `        git rm -r ${stale.map((s) => `authors/${s}`).join(' ')}`;
+    }
+    if (missing.length) return `build-authors did not emit a page for: ${missing.join(', ')}`;
+    return 'build-authors did not emit one page per hub';
+  })());
 check('rendered song pages match song records', CORPUS.songs.total, countDirs('who-recorded'),
   'build-songs did not emit one page per record in data/songs/');
 check('rendered quote pages match quote records', CORPUS.quotes.total, countDirs('who-said'),

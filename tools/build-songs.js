@@ -23,6 +23,7 @@ const { esc, escEm } = require('./esc');
 const { ROOT_CSS } = require('./tokens');
 const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { NAV, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
+const { plain } = require('./template');
 const { OG_IMAGE_TAGS } = require('./og');
 const { hasAuthorPage } = require('./authors');
 
@@ -56,6 +57,14 @@ function buildJsonLd(s, url) {
   // literally called "Bert Berns, Solomon Burke and Jerry Wexler". Split it into real Person nodes.
   // Done HERE rather than by migrating 37 records: the split is deterministic, so the records stay
   // the human-readable prose they already are and nothing needs re-researching.
+  // Band names ending in s took a naive 's — "The Rolling Stones's version is a cover" — and the FAQ
+  // answer is the one string a voice assistant reads ALOUD, so it is the worst place for it.
+  const possessive = (name) => {
+    const n = String(name || '').trim();
+    // Plain ASCII apostrophe on purpose: this string lands inside <script type="application/ld+json">,
+    // where HTML entities are NOT decoded — an &rsquo; here would be read out literally.
+    return /s$/i.test(n) ? `${n}'` : `${n}'s`;
+  };
   const splitPeople = (name) => String(name || '')
     .replace(/\([^)]*\)/g, ' ')                      // drop parentheticals: "(credited as John Davenport)"
     .split(/\s*,\s*|\s+and\s+|\s*&\s*|\s*;\s*/)
@@ -76,9 +85,19 @@ function buildJsonLd(s, url) {
   // A musicbrainz /work/ MBID identifies the COMPOSITION, not the recording — 16 of them sat on the
   // MusicRecording node asserting they identified that specific recording. Route by URL shape; only
   // the /work/ case is unambiguous, so everything else stays on the recording where it was.
+  //
+  // URL shape is not enough for Wikidata: a QID is opaque, and the SONG item ("original song
+  // written and composed by …") and the RECORDING item look identical as strings. Seven wave-s3
+  // fix agents filed this independently — Q3645800, Q2707288, Q1488986, Q5996063 and others are
+  // composition entities that were being emitted as identifiers OF a specific recording. A record
+  // cannot express the distinction in one flat array, so it declares it: `schema.workSameAs` is
+  // merged into recordingOf.sameAs and removed from the recording node. Two records had good
+  // identifiers DELETED as the only available workaround; both are restored via this field.
   const allSameAs = Array.isArray(s.sameAs) ? s.sameAs : [];
-  const workSameAs = allSameAs.filter((u) => /musicbrainz\.org\/work\//.test(String(u)));
-  const recSameAs = allSameAs.filter((u) => !workSameAs.includes(u));
+  const declaredWork = Array.isArray(sc.workSameAs) ? sc.workSameAs.map(String) : [];
+  const isWork = (u) => /musicbrainz\.org\/work\//.test(String(u)) || declaredWork.includes(String(u));
+  const workSameAs = [...new Set([...allSameAs.filter(isWork), ...declaredWork])];
+  const recSameAs = allSameAs.filter((u) => !isWork(u));
   const compName = sc.recordingName || s.title;
   const altName = compName && s.title && compName !== s.title ? s.title : null;
 
@@ -145,7 +164,7 @@ function buildJsonLd(s, url) {
         // only the structured data is what an assistant reads. Records where the two titles differ
         // must be able to state the answer themselves.
         text: sc.faqAnswer
-          || `No. "${s.title}" was first recorded by ${orig}${sc.datePublished ? ' in ' + sc.datePublished : ''}; ${cover}'s version is a cover.`,
+          || `No. "${s.title}" was first recorded by ${orig}${sc.datePublished ? ' in ' + sc.datePublished : ''}; ${possessive(cover)} version is a cover.`,
       },
     }],
   };
@@ -225,10 +244,28 @@ function renderSubmit(s) {
         </details>`;
 }
 
+// Decode entities in every string of a JSON-LD graph. URLs are left alone: plain() strips tags and
+// collapses whitespace, which is right for prose and wrong for an identifier.
+function deEntity(node) {
+  if (typeof node === 'string') return /^https?:\/\//.test(node) ? node : plain(node);
+  if (Array.isArray(node)) return node.map(deEntity);
+  if (node && typeof node === 'object') {
+    const out = {};
+    for (const [k, v] of Object.entries(node)) out[k] = deEntity(v);
+    return out;
+  }
+  return node;
+}
+
 function renderSong(s) {
   const url = canonicalUrl(s.songSlug);
   const a = s.answer, o = s.original, m = s.misattribution, c = s.context;
-  const jsonld = JSON.stringify(buildJsonLd(s, url));
+  // Song records store PROSE with HTML entities (&rsquo;, &mdash;) because that prose renders into
+  // HTML. JSON-LD lives inside <script type="application/ld+json">, where entities are NOT decoded —
+  // so a record-authored schema.faqAnswer shipped "Milli Vanilli&rsquo;s version is a cover" to the
+  // one consumer that reads it aloud. The quote template has solved this since day one via plain();
+  // the song builder simply never applied it. Walk every string in the graph through it.
+  const jsonld = JSON.stringify(deEntity(buildJsonLd(s, url)));
   const oa = s.authors && s.authors.find((x) => x.role === 'original');
   const origName = authorLink(oa || {}) ? `<a href="/authors/${(oa || {}).slug}/">${esc(a.originalArtist)}</a>` : esc(a.originalArtist);
 
