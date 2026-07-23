@@ -91,7 +91,16 @@ function buildJsonLd(s, url) {
       name: `Did ${cover} originally record "${s.title}"?`,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: `No. "${s.title}" was first recorded by ${orig}${sc.datePublished ? ' in ' + sc.datePublished : ''}; ${cover}'s version is a cover.`,
+        // WELDING THE PAGE TITLE TO THE ORIGINAL ARTIST PUBLISHES A FALSE CLAIM when the original
+        // was released under a DIFFERENT TITLE. "Beyond the Sea" is the case that found this: the
+        // page correctly spends four paragraphs explaining that Roland Gerbeau recorded the French
+        // "La Mer" in 1945, and that the first recording of the English "Beyond the Sea" was Harry
+        // James in 1947 — while this string asserted, in machine-readable form, that Gerbeau first
+        // recorded "Beyond the Sea". The prose and the structured data contradicted each other, and
+        // only the structured data is what an assistant reads. Records where the two titles differ
+        // must be able to state the answer themselves.
+        text: sc.faqAnswer
+          || `No. "${s.title}" was first recorded by ${orig}${sc.datePublished ? ' in ' + sc.datePublished : ''}; ${cover}'s version is a cover.`,
       },
     }],
   };
@@ -212,7 +221,6 @@ function renderSong(s) {
     <meta property="og:title" content="${esc(s.meta.ogTitle || s.meta.title)}">
     <meta property="og:description" content="${esc(s.meta.ogDescription || s.meta.description)}">
 ${OG_IMAGE_TAGS}
-    <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -243,6 +251,15 @@ ${NAV('songs')}
             <dl class="doc-meta">
 ${docMetaRows(o.docMeta)}
             </dl>
+${[
+    // `released` (how the original was actually issued — single? B-side? album track?) and
+    // `charted` (very often "did not chart", which is the whole reason the cover could eclipse it)
+    // were researched, validated and stored on every song record since the first 27 — and never
+    // rendered. They were dead data on all 37 pages until the wave-s1 audit noticed the honest
+    // caveat it had written was nowhere on the page. These are inner HTML like o.trail, not esc()'d.
+    o.released ? `            <p class="song-fact"><span>Released</span> ${o.released}</p>` : '',
+    o.charted ? `            <p class="song-fact"><span>Charted</span> ${o.charted}</p>` : '',
+  ].filter(Boolean).join('\n')}
 ${renderListen(s)}
             <p class="song-trail-title">${esc(o.trailTitle || 'How we traced it')}</p>
             ${(o.trail || []).map((t) => `<p class="song-trail">${t}</p>`).join('\n            ')}
@@ -306,6 +323,8 @@ const SONG_CSS = `
         .doc-meta dd.title { font-weight: 700; }
         .song-trail-title { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; color: var(--slate); margin: 6px 0 10px; }
         .song-trail { font-size: 0.98rem; margin-bottom: 10px; color: var(--ink); }
+        .song-fact { font-size: 0.95rem; margin-bottom: 8px; color: var(--ink); }
+        .song-fact > span { font-family: 'DM Sans', sans-serif; text-transform: uppercase; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); margin-right: 8px; }
         .song-srclink { display: inline-block; margin-top: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--burgundy-link); text-decoration: none; }
         /* "Hear the original" — a LINK, never an embedded player: a player costs page weight,
            sets third-party cookies on a site that sets none, and breaks the text-first character. */

@@ -212,6 +212,7 @@ const AGENT_SCHEMAS = [
   ['generate.js', 'DOSSIER_SCHEMA'],
   ['generate-songs.js', 'SONG_DOSSIER_SCHEMA'],
   ['harvest-songs.js', 'CANDIDATE_SCHEMA'],
+  ['audit-songs.js', 'AUDIT_SCHEMA'],
 ];
 for (const [file, constName] of AGENT_SCHEMAS) {
   try {

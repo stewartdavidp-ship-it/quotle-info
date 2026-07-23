@@ -66,6 +66,7 @@ the bar is bright-line so it needs no judgement. `harvest.js unskip <slug>` reve
 | `parse-audit.js` | node CLI | Audit journal → `current-fixes.json` + FAIL slug list. |
 | `apply-tags.js` | node CLI | Tag-workflow journal → write `record.themes`. |
 | `harvest-dedup.js` | node CLI | Standalone dedup (reference; superseded by `tools/harvest.js sync`). |
+| `audit-songs.js` | Workflow | **Songs:** adversarial audit of built /who-recorded/ pages + skeptic. args `{pages, repo}` |
 | `harvest-songs.js` | Workflow | **Songs:** candidate sweep, one agent per vein. args `{veins:[...], perVein:12, exclude:[slugs]}` |
 | `generate-songs.js` | Workflow | **Songs:** research each queued song → dossier. args `{items:[...], verifiedDate, dateModified}` |
 | `prep-songs.js` | node CLI | **Songs:** journal → ingest-ready records (toRecord + escaping + stub + LYRIC + axis checks). |
@@ -234,10 +235,50 @@ node workflows/prep-songs.js --journal <genTranscriptDir>/journal.jsonl --batch 
 node tools/_ingest-songs.js workflows/.scratch/songs-sN.json   # refuses to overwrite; --force is explicit
 node tools/build.js                                            # validate-songs.js gates it
 
-# 5. SWEEP + SHIP
+# 5. AUDIT → FIX  (do NOT skip — see "what the audit caught" below)
+#    !! IN A WORKTREE you MUST pass `repo`, or every agent audits the MAIN checkout's pages
+#    instead of the ones you just built — a clean-looking PASS against the wrong site.
+Workflow {scriptPath:"workflows/audit-songs.js", args:{ pages:[{slug,confidence},...], repo:"$(pwd)" }}
+node workflows/parse-audit.js --journal <auditTranscriptDir>/journal.jsonl \
+     --out "$(pwd)/workflows/.scratch/current-fixes.json"     # parse-audit.js is shared with quotes
+Workflow {scriptPath:"workflows/fix.js", args:{ slugs:[...FAIL slugs], repo:"$(pwd)", kind:"song" }}
+#    !! `kind:"song"` is REQUIRED — without it fix.js edits data/quotes/ and the agents find nothing.
+#    !! SCOPE GATE — fix agents may edit ONLY their own data/songs/{slug}.json. This must print nothing:
+git status --porcelain -- tools workflows | grep . && echo "^^ fix agents escaped their lane"
+#       (COMMIT your own pipeline edits BEFORE this step, or your changes make the gate unreadable.)
+#    Their generator findings arrive in the fix report's `remaining` — they are told to REPORT, not
+#    edit, because tools/build-songs.js renders every page and parallel agents would race on it.
+#    Apply each ONCE, centrally, as its own commit. They are often the most valuable output of the
+#    whole wave (see below).
+node tools/build.js
+
+# 6. SWEEP + SHIP
 node tools/songs.js sync /tmp/empty.json    # echo '[]' > /tmp/empty.json — sweeps selected → ingested
 git checkout -b songs-sN && git add -A && git commit && git push && gh pr create ...
 ```
+
+### What the audit caught on its first run (wave s1) — why step 5 is not optional
+All ten pages passed the three headline claims (`firstRecordingHolds`, `confusionBarHolds`,
+`noLyrics`). Every real defect was *below* the headline, which is exactly where a human read stops:
+
+- **A false machine-readable claim.** `beyond-the-sea`'s prose correctly explains that Roland Gerbeau
+  recorded the French "La Mer" in 1945 and that the English "Beyond the Sea" was first recorded by
+  Harry James in 1947 — while the JSON-LD asserted *"Beyond the Sea was first recorded by Roland
+  Gerbeau"*. The FAQ answer was **hardcoded from the page title**, so no record edit could reach it.
+  Prose and structured data contradicted each other, and only the structured data is what an
+  assistant reads. `schema.faqAnswer` now overrides it.
+- **The listen-link duration check failed silently.** `everybodys-talkin`'s generator note claimed the
+  runtime matched "the MusicBrainz recording on Capitol's release of that album". The auditor queried
+  the MB web service: that recording is **first-release-date 1969**, from the retitled reissue, not
+  the 1966 original. **The generator's self-reported verification is not evidence** — this is the one
+  finding that proves the audit stage cannot be replaced by a better prompt.
+- **`original.released` and `original.charted` were never rendered.** Researched, validated and stored
+  on every song record since the first 27 — and dropped by the renderer. Dead data on 37 pages, found
+  only because a fix agent went looking for the caveat it had written. Now rendered (37/37).
+- Two pages contradicted their own cited sources (`bring-it-on-home` on the Dixon credit,
+  `delta-dawn` on how many releases preceded Reddy).
+
+Result: 6 PASS / 4 FAIL, 31 issues, 22 fixed in-record, the rest applied centrally to the generator.
 
 ### "Hear the original" — the `listen` link has a fixed procedure
 The most persuasive artifact on a song page is the recording almost nobody has heard. It is also the
