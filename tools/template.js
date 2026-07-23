@@ -192,18 +192,49 @@ function buildJsonLd(q, url) {
   const heroName = plain((q.answer && q.answer.authorName) || '');
   const heroUnknown = !heroName || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroName);
   const magnetName = plain(q.creditedTo || '').toLowerCase();
-  // A WORDING-DRIFT page: the credited name IS the true author and the dispute is the WORDING, not
-  // the attribution — the paraphrase in circulation (schema.claimQuoteText) differs from the
-  // documented sentence carried by Quotation.text. There the "hero must not be the magnet" test
-  // below is a false positive: creator names whoever wrote `text`, which is exactly right, and the
-  // ClaimReview separately rates the paraphrase claim. Keyed on claimQuoteText, so records that
-  // don't distinguish the two strings are unaffected.
+  // A page with TWO quote strings: the paraphrase in circulation (schema.claimQuoteText) differs
+  // from the documented sentence carried by Quotation.text. Used below to pick the ClaimReview
+  // claimant — a page like that may have no magnet at all (a film misquote credits the right film),
+  // so `misattribution.items[0].who` must not be pressed into service as one.
+  //
+  // This is NOT the test for "right person, wrong words" — see rightPersonWrongWords below. Two
+  // different strings is a property of the WORDING; whether the credited person is nonetheless the
+  // true author is a property of the ATTRIBUTION, and the corpus carries both shapes independently.
   const wordingDrift = !!(s.claimQuoteText && plain(s.claimQuoteText) !== plain(quotation.text));
+  // RIGHT PERSON, WRONG WORDS — the credited name IS the true author and the dispute is the WORDING,
+  // not the attribution (Franklin really wrote it, but about wine; Durocher really said it, but
+  // differently). There the "hero must not be the magnet" test below is a false positive: creator
+  // names whoever wrote `text`, which is exactly right, and the ClaimReview separately rates the
+  // paraphrase claim.
+  //
+  // The exemption used to be keyed on `wordingDrift`, i.e. on claimQuoteText being present and
+  // different. That proxy was wrong in BOTH directions:
+  //   - too narrow — a record can state the same shape in prose without splitting the two strings.
+  //     12 genuine right-person-wrong-words pages carried no claimQuoteText, so creator was suppressed
+  //     and disambiguatingDescription fell through to "…The true author is not established", flatly
+  //     contradicting the page's own prose and dropping the Schema.org creator the CLAUDE.md RULE asks
+  //     for, undeclared.
+  //   - too broad — claimQuoteText also differs on pages where the credited name really IS wrong
+  //     (houston-we-have-a-problem: credited Jim Lovell, the words are Jack Swigert's). There the
+  //     exemption let the magnet through as Quotation.creator, asserting the misattribution the page
+  //     exists to debunk.
+  //
+  // The correct condition is about the ATTRIBUTION, and every field it needs already exists. The
+  // record states who really said it in `answer.realAuthorName` — the explicit override, absent
+  // precisely when `answer.authorName` is already the real author (see realAuthorName() at the foot
+  // of this file). So the credited person is the true author exactly when the hero is the magnet AND
+  // the record does not name somebody else as real. "Unknown"/"Anonymous" in realAuthorName counts as
+  // somebody else: it says the true author is NOT established, which is a misattribution page, not a
+  // wording one. No new field; no DOSSIER_SCHEMA change.
+  const explicitReal = plain((q.answer && q.answer.realAuthorName) || '');
+  const rightPersonWrongWords = !!(q.confidence === 'disputed' && !heroUnknown && magnetName
+    && heroName.toLowerCase() === magnetName
+    && (!explicitReal || explicitReal.toLowerCase() === magnetName));
   // On a disputed page, emit Quotation.creator ONLY when it names the TRUE author: it must match the
   // hero, the hero must be a real named person, AND the hero must NOT be the magnet (unless this is
-  // a wording-drift page, where magnet == true author by definition). This catches records where
-  // generate left answer.authorName as the wrongly-credited name (else the machine-readable creator
-  // would assert the very misattribution the page debunks).
+  // a right-person-wrong-words page, where magnet == true author by definition). This catches records
+  // where generate left answer.authorName as the wrongly-credited name (else the machine-readable
+  // creator would assert the very misattribution the page debunks).
   //   EXCEPTION: when the true author is itself Unknown/Anonymous AND the record's creator names that
   //   same anonymous origin (never the magnet), emit it. Otherwise anonymous disputed pages shipped
   //   NO Quotation.creator at all — a CLAUDE.md RULE violation the audit flagged on ~30 pages — and an
@@ -212,7 +243,7 @@ function buildJsonLd(q, url) {
   const creatorIsAnon = s.creator && /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(plain(s.creator.name));
   const creatorOk = s.creator && (q.confidence !== 'disputed'
     || (!heroUnknown && plain(s.creator.name).toLowerCase() === heroName.toLowerCase()
-      && (wordingDrift || heroName.toLowerCase() !== magnetName))
+      && (rightPersonWrongWords || heroName.toLowerCase() !== magnetName))
     || (heroUnknown && creatorIsAnon));
   if (creatorOk) {
     quotation.creator = { '@type': 'Person', name: s.creator.name };
@@ -303,7 +334,7 @@ function buildJsonLd(q, url) {
   // the magnet ("Reader's Digest, June 1954", "ESPN", "Anonymous (internet)"), a work ("Not in the
   // Tao Te Ching"), or plain prose ("Not Mahatma Gandhi"). Using it emitted claimReviewed strings
   // like `Reader's Digest, June 1954 said: "..."` rated Disputed 1/5 — rating a TRUE statement false,
-  // typing a magazine as a Person, and asking voice assistants "Did ESPN say ...?". 59 of 431
+  // typing a magazine as a Person, and asking voice assistants "Is ... really by ESPN?". 59 of 431
   // disputed pages were affected. creditedTo first, with the old chain as fallback for records
   // that predate it.
   const magnet = plain(q.creditedTo);
@@ -311,7 +342,7 @@ function buildJsonLd(q, url) {
   // source is right and only the words drifted. Its fact-check row is about the wording, so the
   // record carries {who: "Luke, I am your father", scope: "The wording"} — `who` holds the QUOTE.
   // Falling back to it emitted `"Luke, I am your father" said: "No. I am your father."`, typed a
-  // quote string as a Person, and asked assistants `Did "Luke, I am your father" say ...?`.
+  // quote string as a Person, and asked assistants `Is ... really by "Luke, I am your father"?`.
   const quoteText = plain(quotation.text);
   // The claim under review is "{who} said {X}". X is the wording that actually CIRCULATES — the H1 /
   // slug / displayQuote, which is definitionally what people claim was said. It is NOT quotation.text
@@ -341,7 +372,7 @@ function buildJsonLd(q, url) {
   // vector bug surviving on ~16 records that carry no creditedTo. A trailing parenthetical is a
   // scope qualifier, not part of the name ("Malcolm X (as popularly quoted)" → "Malcolm X"): strip
   // it. When what remains still doesn't read as a person, degrade to the bare-quote form, which is
-  // always honest ("Who really said X?"). Conservative: over-rejecting only loses the "Did X say it"
+  // always honest ("Who is X really by?"). Conservative: over-rejecting only loses the "is it by X"
   // framing on a page or two; naming the wrong entity ships a falsehood.
   const stripQual = (w) => String(w || '').replace(/\s*\([^)]*\)\s*$/, '').trim();
   const looksLikePerson = (w) => {
@@ -360,7 +391,7 @@ function buildJsonLd(q, url) {
   // person who really DID write the real line — claiming "{writer} said {quote}" and rating it
   // Disputed 1/5 rates a TRUE statement false. That is the Reader's-Digest-as-claimant bug wearing
   // a different hat. With no claimant the template already degrades honestly: claimReviewed becomes
-  // the bare quote and the FAQ asks "Who really said X?" — which is the actual question.
+  // the bare quote and the FAQ asks "Who is X really by?" — which is the actual question.
   // A WORDING-DRIFT page (a film misquote: claimQuoteText differs from the documented quotation.text)
   // has NO magnet — nobody is falsely credited, the source is right and only the words drifted. So on
   // a drift page with no explicit creditedTo, do NOT fall back to misWho: items[0].who there is the
@@ -407,12 +438,24 @@ function buildJsonLd(q, url) {
   if (!claimReview.itemReviewed.author) delete claimReview.itemReviewed.author;
   if (!claimReview.itemReviewed.appearance) delete claimReview.itemReviewed.appearance;
 
-  // FAQPage — the literal "Did {who} say {quote}?" Q&A, so AI answer-engines and snippets can
-  // lift the verdict verbatim. The yes/no lead ("No." / "Not confirmed." / "Yes.") only answers the
-  // yes/no QUESTION form. When there is no claimant the question is "Who really said X?", which a
-  // "No." does not answer — and pairing them was actively self-contradictory ("Who really said X?"
-  // → "No. Wiesel really did say this"). So only prepend the lead on the "Did {claimant} say" form;
-  // the who-form answer opens with the verdict sentence itself. (42 pages carried the mismatch.)
+  // FAQPage — the literal attribution Q&A, so AI answer-engines and snippets can lift the verdict
+  // verbatim.
+  //
+  // The question is phrased "Is {quote} really by {who}?", NOT "Did {who} say {quote}?". `say` is a
+  // SPOKEN verb, and most of this corpus is written: essays, letters, poems, novels, pamphlets. On
+  // those pages "Did Emerson say '…'?" asks about an utterance nobody ever made, and an answer engine
+  // lifting it repeats the category error. Nothing in the record distinguishes spoken from written
+  // (no utterance-kind field exists, isPartOf.type is set on 28 of 1118 records, and source.docMeta
+  // is free prose), so the question has to be verb-NEUTRAL rather than verb-correct. "by" covers
+  // wrote / said / recorded / delivered alike, keeps the yes/no shape the verdict lead depends on and
+  // the same polarity ("No." still means "not by them"), and still reads like a query a person types.
+  // Same fix on the no-claimant branch, which asked "Who really said …?".
+  //
+  // The yes/no lead ("No." / "Not confirmed." / "Yes.") only answers the yes/no QUESTION form. When
+  // there is no claimant the question is "Who is X really by?", which a "No." does not answer — and
+  // pairing them was actively self-contradictory ("Who is X really by?" → "No. Wiesel really did say
+  // this"). So only prepend the lead on the "Is … really by {claimant}?" form; the who-form answer
+  // opens with the verdict sentence itself. (42 pages carried the mismatch.)
   const verdictLead = !claimant ? '' : q.confidence === 'disputed' ? 'No. ' : q.confidence === 'attributed' ? 'Not confirmed. ' : 'Yes. ';
   const answerText = (verdictLead + plain((q.answer && q.answer.sourceLine) || (q.answer && q.answer.label) || '')).replace(/\s+/g, ' ').trim();
   const faq = {
@@ -420,7 +463,7 @@ function buildJsonLd(q, url) {
     '@id': `${url}#faq`,
     mainEntity: [{
       '@type': 'Question',
-      name: claimant ? `Did ${claimant} say "${claimQuoteText}"?` : `Who really said "${claimQuoteText}"?`,
+      name: claimant ? `Is "${claimQuoteText}" really by ${claimant}?` : `Who is "${claimQuoteText}" really by?`,
       acceptedAnswer: { '@type': 'Answer', text: answerText, url },
     }],
   };
