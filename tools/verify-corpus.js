@@ -99,6 +99,29 @@ if (Array.isArray(vIdx)) {
   check('no song claims public-domain reuse rights', 0, songs.filter((e) => e.rights === 'public-domain').length,
     'song entries must be rights:"uncertain" — there is no per-song rights research behind these records');
 }
+// ---- 4c. song JSON-LD names a PERSON per composer, never a joined string ----
+// The composer field is prose in the record ("Bert Berns, Solomon Burke and Jerry Wexler") and was
+// emitted as one Person carrying all three names, so every machine consumer read a single songwriter
+// with that literal name. build-songs.js now splits it; this asserts nothing re-joins them. Cheap to
+// check and impossible to notice by eye — the page prose reads correctly either way.
+const joinedComposers = [];
+for (const d of (fs.existsSync(path.join(ROOT, 'who-recorded')) ? fs.readdirSync(path.join(ROOT, 'who-recorded'), { withFileTypes: true }) : [])) {
+  if (!d.isDirectory()) continue;
+  const p = path.join(ROOT, 'who-recorded', d.name, 'index.html');
+  if (!fs.existsSync(p)) continue;
+  const h = fs.readFileSync(p, 'utf8');
+  for (const m of h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    let j; try { j = JSON.parse(m[1]); } catch (_) { continue; }
+    for (const n of (j['@graph'] || [j])) {
+      if (n['@type'] !== 'MusicRecording') continue;
+      const c = n.recordingOf && n.recordingOf.composer;
+      const names = Array.isArray(c) ? c.map((x) => x && x.name) : (c ? [c.name] : []);
+      for (const nm of names) if (nm && /\band\b|,|&|;/.test(nm)) joinedComposers.push(`${d.name}: "${nm}"`);
+    }
+  }
+}
+check('song JSON-LD emits one Person per composer', 0, joinedComposers.length,
+  `a composer node carries several names joined into one Person — consumers read it as a single songwriter with that literal name: ${joinedComposers.slice(0, 3).join(' · ')}`);
 
 // ---- 5. the sitemap covers every page ----
 const sitemap = (() => { try { return fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8'); } catch (_) { return ''; } })();

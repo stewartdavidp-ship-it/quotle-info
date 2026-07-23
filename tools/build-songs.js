@@ -51,20 +51,47 @@ function buildJsonLd(s, url) {
   // search engine resolve THIS recording as the same entity it already knows — which is the whole
   // claim the page is making. The human-facing streaming link (s.listen) is deliberately NOT put
   // here: those rot, and a dead identifier in structured data is worse than none.
+  // The composer field is PROSE in the record ("Bert Berns, Solomon Burke and Jerry Wexler") and was
+  // emitted as ONE Person carrying all three names — so every consumer read a single songwriter
+  // literally called "Bert Berns, Solomon Burke and Jerry Wexler". Split it into real Person nodes.
+  // Done HERE rather than by migrating 37 records: the split is deterministic, so the records stay
+  // the human-readable prose they already are and nothing needs re-researching.
+  const splitPeople = (name) => String(name || '')
+    .replace(/\([^)]*\)/g, ' ')                      // drop parentheticals: "(credited as John Davenport)"
+    .split(/\s*,\s*|\s+and\s+|\s*&\s*|\s*;\s*/)
+    .map((x) => x.trim())
+    .filter((x) => x.length > 1);
+  const composers = splitPeople(sc.composer && sc.composer.name);
+
+  // The ORIGINAL is sometimes released under a different title than the page carries ("La Mer" vs
+  // "Beyond the Sea"). alternateName lets the two resolve as ONE composition rather than looking
+  // like unrelated works — the same title/artist mismatch that made the FAQ answer false until the
+  // record authored its own.
+  const compName = sc.recordingName || s.title;
+  const altName = compName && s.title && compName !== s.title ? s.title : null;
+
   const recording = {
     '@type': 'MusicRecording',
     '@id': `${url}#recording`,
-    name: sc.recordingName || s.title,
-    byArtist: { '@type': 'MusicGroup', name: (sc.byArtist && sc.byArtist.name) || orig },
+    name: compName,
+    // Solo originators are PEOPLE, not bands. Default stays MusicGroup so existing records render
+    // unchanged; a record opts in per-artist with schema.byArtist.type = "Person".
+    byArtist: { '@type': (sc.byArtist && sc.byArtist.type) || 'MusicGroup', name: (sc.byArtist && sc.byArtist.name) || orig },
     ...(Array.isArray(s.sameAs) && s.sameAs.length ? { sameAs: s.sameAs } : {}),
     datePublished: sc.datePublished || undefined,
     recordingOf: {
       '@type': 'MusicComposition',
-      name: sc.recordingName || s.title,
-      composer: { '@type': 'Person', name: (sc.composer && sc.composer.name) || undefined },
+      name: compName,
+      ...(altName ? { alternateName: altName } : {}),
+      ...(composers.length
+        ? {
+          composer: composers.length === 1
+            ? { '@type': 'Person', name: composers[0] }
+            : composers.map((n) => ({ '@type': 'Person', name: n })),
+        }
+        : {}),
     },
   };
-  if (!recording.recordingOf.composer.name) delete recording.recordingOf.composer;
 
   const claimReview = {
     '@type': 'ClaimReview',
