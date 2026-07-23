@@ -530,7 +530,7 @@ ${NAV('songs')}
         <div class="song-idx-grid">
 ${cards}
         </div>
-        <aside class="song-rights" style="margin-top:34px"><p class="kicker">The scope</p><p>These are songs a band <strong>covered</strong> where the cover is mistaken for the original recording. We correct who recorded it first &mdash; the songwriter is noted as context, and we never reproduce lyrics.</p></aside>
+        <aside class="song-rights" style="margin-top:34px"><p class="kicker">The scope</p><p>These are songs a band <strong>covered</strong> where the cover is mistaken for the original recording. We correct who recorded it first &mdash; the songwriter is noted as context, and we never reproduce lyrics.</p><p style="margin-top:10px">Looking for who <strong>wrote</strong> a song rather than who recorded it first? See <a href="/who-wrote/">Who wrote it &rarr;</a></p></aside>
     </main>
 ${FOOTER}
 ${SEARCH_JS}
@@ -784,7 +784,7 @@ ${NAV('')}
         <div class="song-idx-grid">
 ${cards}
         </div>
-        <aside class="song-rights" style="margin-top:34px"><p class="kicker">The scope</p><p>These are songs where the performer is correctly credited &mdash; but a different, often well-known, artist WROTE the song. We name the writer and the definitive recording, and we never reproduce lyrics.</p></aside>
+        <aside class="song-rights" style="margin-top:34px"><p class="kicker">The scope</p><p>These are songs where the performer is correctly credited &mdash; but a different, often well-known, artist WROTE the song. We name the writer and the definitive recording, and we never reproduce lyrics.</p><p style="margin-top:10px">Looking for a famous <strong>cover</strong> mistaken for the original recording? See <a href="/who-recorded/">Who recorded it first &rarr;</a></p></aside>
     </main>
 ${FOOTER}
 ${SEARCH_JS}
