@@ -192,18 +192,49 @@ function buildJsonLd(q, url) {
   const heroName = plain((q.answer && q.answer.authorName) || '');
   const heroUnknown = !heroName || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroName);
   const magnetName = plain(q.creditedTo || '').toLowerCase();
-  // A WORDING-DRIFT page: the credited name IS the true author and the dispute is the WORDING, not
-  // the attribution — the paraphrase in circulation (schema.claimQuoteText) differs from the
-  // documented sentence carried by Quotation.text. There the "hero must not be the magnet" test
-  // below is a false positive: creator names whoever wrote `text`, which is exactly right, and the
-  // ClaimReview separately rates the paraphrase claim. Keyed on claimQuoteText, so records that
-  // don't distinguish the two strings are unaffected.
+  // A page with TWO quote strings: the paraphrase in circulation (schema.claimQuoteText) differs
+  // from the documented sentence carried by Quotation.text. Used below to pick the ClaimReview
+  // claimant — a page like that may have no magnet at all (a film misquote credits the right film),
+  // so `misattribution.items[0].who` must not be pressed into service as one.
+  //
+  // This is NOT the test for "right person, wrong words" — see rightPersonWrongWords below. Two
+  // different strings is a property of the WORDING; whether the credited person is nonetheless the
+  // true author is a property of the ATTRIBUTION, and the corpus carries both shapes independently.
   const wordingDrift = !!(s.claimQuoteText && plain(s.claimQuoteText) !== plain(quotation.text));
+  // RIGHT PERSON, WRONG WORDS — the credited name IS the true author and the dispute is the WORDING,
+  // not the attribution (Franklin really wrote it, but about wine; Durocher really said it, but
+  // differently). There the "hero must not be the magnet" test below is a false positive: creator
+  // names whoever wrote `text`, which is exactly right, and the ClaimReview separately rates the
+  // paraphrase claim.
+  //
+  // The exemption used to be keyed on `wordingDrift`, i.e. on claimQuoteText being present and
+  // different. That proxy was wrong in BOTH directions:
+  //   - too narrow — a record can state the same shape in prose without splitting the two strings.
+  //     12 genuine right-person-wrong-words pages carried no claimQuoteText, so creator was suppressed
+  //     and disambiguatingDescription fell through to "…The true author is not established", flatly
+  //     contradicting the page's own prose and dropping the Schema.org creator the CLAUDE.md RULE asks
+  //     for, undeclared.
+  //   - too broad — claimQuoteText also differs on pages where the credited name really IS wrong
+  //     (houston-we-have-a-problem: credited Jim Lovell, the words are Jack Swigert's). There the
+  //     exemption let the magnet through as Quotation.creator, asserting the misattribution the page
+  //     exists to debunk.
+  //
+  // The correct condition is about the ATTRIBUTION, and every field it needs already exists. The
+  // record states who really said it in `answer.realAuthorName` — the explicit override, absent
+  // precisely when `answer.authorName` is already the real author (see realAuthorName() at the foot
+  // of this file). So the credited person is the true author exactly when the hero is the magnet AND
+  // the record does not name somebody else as real. "Unknown"/"Anonymous" in realAuthorName counts as
+  // somebody else: it says the true author is NOT established, which is a misattribution page, not a
+  // wording one. No new field; no DOSSIER_SCHEMA change.
+  const explicitReal = plain((q.answer && q.answer.realAuthorName) || '');
+  const rightPersonWrongWords = !!(q.confidence === 'disputed' && !heroUnknown && magnetName
+    && heroName.toLowerCase() === magnetName
+    && (!explicitReal || explicitReal.toLowerCase() === magnetName));
   // On a disputed page, emit Quotation.creator ONLY when it names the TRUE author: it must match the
   // hero, the hero must be a real named person, AND the hero must NOT be the magnet (unless this is
-  // a wording-drift page, where magnet == true author by definition). This catches records where
-  // generate left answer.authorName as the wrongly-credited name (else the machine-readable creator
-  // would assert the very misattribution the page debunks).
+  // a right-person-wrong-words page, where magnet == true author by definition). This catches records
+  // where generate left answer.authorName as the wrongly-credited name (else the machine-readable
+  // creator would assert the very misattribution the page debunks).
   //   EXCEPTION: when the true author is itself Unknown/Anonymous AND the record's creator names that
   //   same anonymous origin (never the magnet), emit it. Otherwise anonymous disputed pages shipped
   //   NO Quotation.creator at all — a CLAUDE.md RULE violation the audit flagged on ~30 pages — and an
@@ -212,7 +243,7 @@ function buildJsonLd(q, url) {
   const creatorIsAnon = s.creator && /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(plain(s.creator.name));
   const creatorOk = s.creator && (q.confidence !== 'disputed'
     || (!heroUnknown && plain(s.creator.name).toLowerCase() === heroName.toLowerCase()
-      && (wordingDrift || heroName.toLowerCase() !== magnetName))
+      && (rightPersonWrongWords || heroName.toLowerCase() !== magnetName))
     || (heroUnknown && creatorIsAnon));
   if (creatorOk) {
     quotation.creator = { '@type': 'Person', name: s.creator.name };
