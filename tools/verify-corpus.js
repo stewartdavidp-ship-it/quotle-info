@@ -99,6 +99,8 @@ if (home) {
     return m ? num(m[1]) : null;
   };
   check('home page "Quotes" tile states the corpus total', CORPUS.quotes.total, tile('Quotes'));
+  check('home page "Songs" tile states the song total', CORPUS.songs.total, tile('Songs'),
+    'songs are a separate content type from quotes — the tile must state CORPUS.songs.total, never be folded into the quote count');
   check('home page "Authors" tile states the author total', CORPUS.authors.total, tile('Authors'),
     'the tile links to /authors/ — if it disagrees with that page, the mismatch is visible on the first click');
   check('home page "Under review" tile states the queue', CORPUS.review.queued, tile('Under review'));
@@ -203,11 +205,22 @@ try {
 // Measured: 4,072 shipped (r23) · 4,159 rejected · 4,454 rejected. Ceiling is in (4072, 4159].
 // The budget is the proven-good size. Raising it is a deliberate act that needs a real wave to
 // confirm — not something to nudge because a new field would be convenient.
+// EVERY agent-facing output schema is checked, not just the quote one. The songs pipeline
+// (generate-songs.js) was added later against the same platform ceiling, and its dossier is richer
+// than a quote's — so it is the schema MOST likely to drift over the line, and the one that would
+// take a whole song wave down with it in exactly the same silent way.
 const SCHEMA_BUDGET = 4072;
-try {
-  const gen = fs.readFileSync(path.join(ROOT, 'workflows', 'generate.js'), 'utf8');
-  const i = gen.indexOf('const DOSSIER_SCHEMA = {');
-  if (i > -1) {
+const AGENT_SCHEMAS = [
+  ['generate.js', 'DOSSIER_SCHEMA'],
+  ['generate-songs.js', 'SONG_DOSSIER_SCHEMA'],
+  ['harvest-songs.js', 'CANDIDATE_SCHEMA'],
+  ['audit-songs.js', 'AUDIT_SCHEMA'],
+];
+for (const [file, constName] of AGENT_SCHEMAS) {
+  try {
+    const gen = fs.readFileSync(path.join(ROOT, 'workflows', file), 'utf8');
+    const i = gen.indexOf(`const ${constName} = {`);
+    if (i === -1) continue;
     const seg = gen.slice(i);
     let depth = 0, end = 0;
     for (let k = seg.indexOf('{'); k < seg.length; k++) {
@@ -218,12 +231,13 @@ try {
     const schema = eval('(' + seg.slice(seg.indexOf('{'), end) + ')');
     const bytes = JSON.stringify(schema).length;
     const ok = bytes <= SCHEMA_BUDGET;
-    checks.push({ name: 'generate.js DOSSIER_SCHEMA within the classifier budget', expected: `<= ${SCHEMA_BUDGET}`, actual: bytes, ok });
+    const name = `${file} ${constName} within the classifier budget`;
+    checks.push({ name, expected: `<= ${SCHEMA_BUDGET}`, actual: bytes, ok });
     if (!ok) {
-      failures.push(`generate.js DOSSIER_SCHEMA within the classifier budget\n      ${bytes} bytes, budget ${SCHEMA_BUDGET}\n      → the platform rejects an oversized output schema BEFORE any agent runs (0 tokens, no content error).\n      → free space in the schema before adding fields; do not raise the budget without a real wave to prove it.`);
+      failures.push(`${name}\n      ${bytes} bytes, budget ${SCHEMA_BUDGET}\n      → the platform rejects an oversized output schema BEFORE any agent runs (0 tokens, no content error).\n      → free space in the schema before adding fields; do not raise the budget without a real wave to prove it.`);
     }
-  }
-} catch (_) { /* generate.js optional */ }
+  } catch (_) { /* workflow scripts are optional */ }
+}
 
 // ---- 10. the committed snapshot is not stale ----
 const state = readJson('data/corpus-state.json');
