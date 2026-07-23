@@ -182,6 +182,11 @@ if (lyricHits.length) {
   console.log(`\n  ⚠ LYRIC REVIEW — ${lyricHits.length} quoted phrase(s) need a human eye before ingest:`);
   lyricHits.forEach((h) => console.log('     ? ' + h));
   console.log('     Confirm each is quoted SPEECH or a work TITLE, not a lyric line. NO LYRICS is the site\'s core legal position.\n');
+} else {
+  // Always say something. Silence on zero hits is indistinguishable from "the scan never ran", and
+  // this guards the site's core legal position — the one place an ambiguous absence of output is
+  // worst. validate-songs.js always prints for the same reason.
+  console.log(`lyric review: 0 suspect phrases across ${good.length} record(s)`);
 }
 
 // 4. axis check — validate-songs.js fails the build without both sides of the misattribution, so

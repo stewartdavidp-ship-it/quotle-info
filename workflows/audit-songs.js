@@ -46,10 +46,15 @@ const AUDIT_SCHEMA = {
   },
 }
 
+// slug + location are ECHOED BACK so the verdict can be PAIRED with the issue it judged.
+// Without them the journal holds a bag of unattributable verdicts: workflows/parse-audit.js reads
+// the JOURNAL (each agent's RAW return), while the refuted-issue filtering below happens in this
+// script's .then() and never reaches the journal — so every wave fed fix.js the findings its own
+// skeptics had already thrown out. Wave s2 shipped 5 refuted findings to fix agents that way.
 const VERDICT_SCHEMA = {
   type: 'object', additionalProperties: false,
-  required: ['finding', 'standsUp', 'reasoning'],
-  properties: { finding: { type: 'string' }, standsUp: { type: 'boolean' }, reasoning: { type: 'string' } },
+  required: ['slug', 'location', 'finding', 'standsUp', 'reasoning'],
+  properties: { slug: { type: 'string' }, location: { type: 'string' }, finding: { type: 'string' }, standsUp: { type: 'boolean' }, reasoning: { type: 'string' } },
 }
 
 const auditPrompt = (p) => `You are an adversarial RECORDING-HISTORY auditor for quotle.info. Try to BREAK this page. Assume it is wrong until each claim survives an independent check.
@@ -94,7 +99,7 @@ CLAIMED PROBLEM [${issue.severity}] at ${issue.location}: ${issue.problem}
 The claim in question: ${issue.claim}
 The source link: ${issue.sourceLink}
 
-Independently verify: WebFetch the source link, Read the page and the record at ${RECORDS}/${slug}.json, and search for yourself where the claim is about an earlier recording. Be especially hard on "an earlier recording exists" findings — confirm the earlier version is a RECORDING of the SAME song (not a different song with a similar title, and not a live performance or a publication date), and that a source actually says so. Return finding (what you found), standsUp (true ONLY if the problem is genuinely real and worth fixing), reasoning.`
+Independently verify: WebFetch the source link, Read the page and the record at ${RECORDS}/${slug}.json, and search for yourself where the claim is about an earlier recording. Be especially hard on "an earlier recording exists" findings — confirm the earlier version is a RECORDING of the SAME song (not a different song with a similar title, and not a live performance or a publication date), and that a source actually says so. Return slug exactly "${slug}", location exactly "${issue.location}" (echo them verbatim so this verdict can be paired with the issue it judges), finding (what you found), standsUp (true ONLY if the problem is genuinely real and worth fixing), reasoning.`
 
 phase('Audit')
 if (!pages.length) { log('no pages passed — nothing to audit'); return { pageAudits: [] } }
