@@ -19,7 +19,7 @@ const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.js
 // renders pages from, so a search result can never point at a hub that was not built, and the
 // index's author count can never disagree with the site's. (Counting authors here independently,
 // from the manifest, is precisely what produced "526" in search against 593 real hubs.)
-const { records, songs, authors: hubAuthors } = require('./corpus');
+const { records, songs, writingSongs, authors: hubAuthors } = require('./corpus');
 
 const entries = [];
 
@@ -31,6 +31,12 @@ const stripTags = (s) => String(s == null ? '' : s).replace(/<[^>]+>/g, '');
 for (const s of songs) {
   const orig = (s.answer && s.answer.originalArtist) || '';
   entries.push({ t: 's', x: s.title, a: stripTags(`Credited to ${s.creditedTo} · first recorded by ${orig}`), u: `/who-recorded/${s.songSlug}/` });
+}
+
+// writing-axis songs (a names both the writer and the performer, so the title is findable by either)
+for (const s of writingSongs) {
+  const writer = (s.writing && s.writing.writer) || '';
+  entries.push({ t: 'w', x: s.title, a: stripTags(`Written by ${writer} · recorded by ${s.creditedTo}`), u: `/who-wrote/${s.songSlug}/` });
 }
 
 // authors (quotes + songs) — from the authoritative hub aggregation; carries a quote count (n) and a song count (ns)
@@ -65,4 +71,4 @@ try {
 
 fs.writeFileSync(path.join(ROOT, 'search.json'), JSON.stringify(entries));
 const n = entries.reduce((m, e) => (m[e.t] = (m[e.t] || 0) + 1, m), {});
-console.log(`  ✓ search.json (${entries.length}: ${n.q || 0} quotes, ${n.s || 0} songs, ${n.t || 0} themes, ${n.a || 0} authors, ${n.b || 0} under-review)`);
+console.log(`  ✓ search.json (${entries.length}: ${n.q || 0} quotes, ${n.s || 0} songs, ${n.w || 0} who-wrote, ${n.t || 0} themes, ${n.a || 0} authors, ${n.b || 0} under-review)`);

@@ -18,11 +18,12 @@ const API = 'https://quotle-community.stewartd.workers.dev';
 // verify-index.json now carries BOTH content types (songs are tagged t:'s'), so these must be
 // counted separately — a single .length would advertise '1155 quotes indexed' when 37 of them are
 // songs, in the very field an agent reads to decide whether to trust the corpus.
-let quoteCount = 0, songCount = 0;
+let quoteCount = 0, songCount = 0, wroteCount = 0;
 try {
   const idx = JSON.parse(fs.readFileSync(path.join(ROOT, 'verify-index.json'), 'utf8'));
   songCount = idx.filter((e) => e && e.t === 's').length;
-  quoteCount = idx.length - songCount;
+  wroteCount = idx.filter((e) => e && e.t === 'w').length;
+  quoteCount = idx.filter((e) => e && !e.t).length;   // quotes carry no discriminator
 } catch (_) { /* optional */ }
 
 const VERDICT = { type: 'string', enum: ['verified', 'attributed', 'disputed'], description: 'verified = real & primary-sourced; attributed = credibly credited but unpinned; disputed = misattributed/fabricated.' };

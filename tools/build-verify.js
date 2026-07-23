@@ -18,6 +18,7 @@ const QUOTES_DIR = path.join(ROOT, 'data', 'quotes');
 const SONGS_DIR = path.join(ROOT, 'data', 'songs');
 const ORIGIN = 'https://quotle.info';
 const norm = (s) => String(s).toLowerCase().replace(/[’'‘`"“”]/g, '').replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+const axesOf = (s) => (Array.isArray(s.axes) && s.axes.length ? s.axes : ['recording']);
 
 const entries = [];
 for (const f of fs.readdirSync(QUOTES_DIR)) {
@@ -108,6 +109,50 @@ if (fs.existsSync(SONGS_DIR)) {
   }
 }
 
-const all = entries.concat(songEntries);
+// ---- WRITING AXIS (t:'w') — "who WROTE this song?" ----
+// A writing-axis record answers a different question again: not who said it, not who recorded it
+// first, but who WROTE it. Emitted here so /who-wrote/ pages are answerable by the /verify API and
+// citable by answer engines — the same reason songs were added.
+//
+// SAFE FOR THE UN-UPGRADED WORKER. The deployed Worker has no t:'w' branch yet, so a 'w' entry falls
+// through to the default (quote) branch, which maps real→reallySaidBy and credited→misattributedTo.
+// `real` = the writer is TRUE ("really written by Carole King"). We deliberately OMIT `credited`:
+// on a credit/contested page NOBODY is wrongly credited (the performer performed it), so leaving
+// credited unset keeps misattributedTo null rather than publishing a false "misattributed to
+// James Taylor". The writing-specific fields below are read by a t:'w'-aware Worker and ignored by
+// the current one. Update + deploy the Worker's 'w' branch to return properly-named fields.
+const writingEntries = [];
+if (fs.existsSync(SONGS_DIR)) {
+  for (const f of fs.readdirSync(SONGS_DIR)) {
+    if (!f.endsWith('.json')) continue;
+    let s; try { s = JSON.parse(fs.readFileSync(path.join(SONGS_DIR, f), 'utf8')); } catch (_) { continue; }
+    if (!axesOf(s).includes('writing')) continue;
+    const title = plain(s.title || '');
+    const writer = plain((s.writing && s.writing.writer) || '');
+    const performer = plain(s.creditedTo || '');
+    if (!title || !writer) continue;
+    const answer = plain((s.schema && s.schema.faqAnswer) || '')
+      || `"${title}" was written by ${writer}${performer ? `; ${performer}'s recording is the version most people know` : ''}.`;
+    writingEntries.push({
+      t: 'w',                                            // discriminator: this is a WRITING-axis page
+      slug: s.songSlug,
+      q: title,
+      n: norm(title),
+      c: s.confidence,
+      shape: s.shape || '',                              // credit | misbelief | contested
+      real: writer,                                      // who WROTE it (maps to reallySaidBy on the legacy branch — true)
+      writtenBy: writer,                                 // 'w'-aware field
+      performedBy: performer,                            // the performer (correctly credited AS performer — NOT misattributed)
+      answer,                                            // authored, safe one-sentence verdict
+      credit: `${title} — written by ${writer}`,         // paste-ready CORRECT credit line
+      cite: `${title}. Written by ${writer}.${performer ? ` Definitive recording by ${performer}.` : ''}`,
+      rights: 'uncertain',                               // a song page quotes no lyrics; composition + recordings stay in copyright
+      img: '',
+      u: `${ORIGIN}/who-wrote/${s.songSlug}/`,
+    });
+  }
+}
+
+const all = entries.concat(songEntries, writingEntries);
 fs.writeFileSync(path.join(ROOT, 'verify-index.json'), JSON.stringify(all));
-console.log(`  ✓ verify-index.json (${all.length} verdicts for the /verify API — ${entries.length} quotes + ${songEntries.length} songs)`);
+console.log(`  ✓ verify-index.json (${all.length} verdicts for the /verify API — ${entries.length} quotes + ${songEntries.length} songs + ${writingEntries.length} who-wrote)`);

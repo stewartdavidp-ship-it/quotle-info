@@ -561,12 +561,23 @@ function buildWroteJsonLd(s, url) {
   const workSameAs = [...new Set([...allSameAs.filter(isWork), ...declaredWork])];
   const recSameAs = allSameAs.filter((u) => !isWork(u));
 
+  // Composer nodes come from schema.composer when the record gives one (an array of {name}, or a
+  // single {name}) — the controllable, machine-clean source — and fall back to splitting the prose
+  // `writing.writer` string only when it doesn't. The prose ("… with Matthew Fisher (co-author,
+  // established 2009)") is written for humans and splits messily, so a record that names its
+  // composers explicitly is always preferred.
+  const composers = Array.isArray(sc.composer)
+    ? sc.composer.flatMap((c) => splitPeople(c && c.name))
+    : ((sc.composer && sc.composer.name) ? splitPeople(sc.composer.name) : splitPeople(writer));
+  const composerNode = composers.length === 1
+    ? { '@type': 'Person', name: composers[0] }
+    : composers.map((n) => ({ '@type': 'Person', name: n }));
   const composition = {
     '@type': 'MusicComposition',
     name: compName,
     ...(altName ? { alternateName: altName } : {}),
     ...(workSameAs.length ? { sameAs: workSameAs } : {}),
-    ...(personNodes(writer) ? { composer: personNodes(writer) } : {}),
+    ...(composers.length ? { composer: composerNode } : {}),
   };
   const recording = {
     '@type': 'MusicRecording',

@@ -105,17 +105,22 @@ if (search) {
 // song vertical was invisible to the agent-facing surface for its whole existence.
 const vIdx = readJson('verify-index.json');
 if (Array.isArray(vIdx)) {
+  const isQuote = (e) => e && !e.t;                       // quotes carry no discriminator; songs t:'s', writing t:'w'
+  const quotes = vIdx.filter(isQuote);
   const songs = vIdx.filter((e) => e && e.t === 's');
-  check('verify-index covers every quote', CORPUS.quotes.total, vIdx.length - songs.length,
+  const writing = vIdx.filter((e) => e && e.t === 'w');
+  check('verify-index covers every quote', CORPUS.quotes.total, quotes.length,
     'the /verify API answers from this file — a missing entry is a quote the API cannot confirm');
   check('verify-index covers every song', CORPUS.songs.total, songs.length,
     'songs must carry t:"s"; without them /verify cannot answer "who originally recorded X?"');
+  check('verify-index covers every writing record', CORPUS.whoWrote.total, writing.length,
+    'writing-axis records must carry t:"w"; without them /verify cannot answer "who wrote X?"');
   // Quotes MUST come first: the Worker's exact match is a .find(), so on a collision between a short
-  // song title and a quote the first entry wins, and the primary corpus must not be displaced.
-  const firstSong = vIdx.findIndex((e) => e && e.t === 's');
-  const lastQuote = vIdx.map((e) => (e && e.t === 's' ? 0 : 1)).lastIndexOf(1);
-  check('verify-index emits all quotes before any song', true, firstSong === -1 || firstSong > lastQuote,
-    'a song ahead of a quote can win an exact-match collision in the Worker and displace the quote');
+  // song/writing title and a quote the first entry wins, and the primary corpus must not be displaced.
+  const firstNonQuote = vIdx.findIndex((e) => !isQuote(e));
+  const lastQuote = vIdx.map((e) => (isQuote(e) ? 1 : 0)).lastIndexOf(1);
+  check('verify-index emits all quotes before any song/writing entry', true, firstNonQuote === -1 || firstNonQuote > lastQuote,
+    'a song/writing entry ahead of a quote can win an exact-match collision in the Worker and displace the quote');
   // A song page states recording history and quotes no lyrics; the composition and the recordings
   // remain in copyright. A "public-domain" verdict here would be published, machine-readable, and
   // wrong — the costliest error this site can make.

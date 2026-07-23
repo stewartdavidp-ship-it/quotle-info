@@ -104,6 +104,32 @@ export default {
             url: hit.u, source: 'quotle.info', ...corpusMeta(vIdx),
           }), { headers: pub });
         }
+        // WRITING-AXIS (hit.t === 'w') answers "who WROTE this song?" — distinct from both quotes
+        // ("who said it") and songs ("who recorded it first"). The performer is correctly credited AS
+        // the performer, so nobody is misattributed on a credit/contested page; only the `misbelief`
+        // shape carries a false belief (the public thinks the performer wrote it).
+        if (hit.t === 'w') {
+          return new Response(JSON.stringify({
+            found: true, query: term, kind: 'song-writing', song: hit.q,
+            verdict: hit.c,
+            writtenBy: hit.writtenBy || hit.real || null,
+            performedBy: hit.performedBy || null,        // correctly credited AS the performer
+            shape: hit.shape || null,                    // credit | misbelief | contested
+            answer: hit.answer
+              || `"${hit.q}" was written by ${hit.real}${hit.performedBy ? `; ${hit.performedBy}'s recording is the version most people know` : ''}.`,
+            // A song page quotes no lyrics; the composition and recordings remain in copyright.
+            reuse: 'Not cleared — this page states authorship and recording history only. The composition and the recordings remain in copyright to their owners.',
+            rights: hit.rights || 'uncertain',
+            citation: hit.cite || null,
+            // legacy field names for clients written against the quote shape. reallySaidBy = the WRITER
+            // (true). misattributedTo is set ONLY for `misbelief` (the performer wrongly thought to be
+            // the writer); on credit/contested nobody is wrongly credited, so it stays null.
+            quote: hit.q, reallySaidBy: hit.writtenBy || hit.real || null,
+            misattributedTo: hit.shape === 'misbelief' ? (hit.performedBy || null) : null,
+            safeToQuoteAs: hit.credit || null,
+            url: hit.u, source: 'quotle.info', ...corpusMeta(vIdx),
+          }), { headers: pub });
+        }
         return new Response(JSON.stringify({
           found: true, query: term, quote: hit.q,
           verdict: hit.c,                          // verified | attributed | disputed
