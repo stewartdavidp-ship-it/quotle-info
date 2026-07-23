@@ -313,6 +313,18 @@ against the release it first appeared on; fall back to a **work** MBID; always i
 QID. Streaming URLs are rejected on purpose — they rot, and a dead identifier in structured data is
 worse than none.
 
+### What a normal wave looks like — so a high FAIL count does not read as a broken wave
+Wave s2 (27 songs) came out **10 PASS / 17 FAIL, 122 issues** (3 blocker · 30 high · 37 medium ·
+52 minor), and that is a HEALTHY result, not a bad one. The audit is adversarial by design and most
+findings are medium/minor. **Judge a wave by its three headline booleans**
+(`firstRecordingHolds` / `confusionBarHolds` / `noLyrics`), by how many blockers survive the skeptic,
+and by whether the fix agents stayed in their lane — not by the PASS/FAIL split.
+
+Expect, per wave: **1–2 blockers** (a genuinely wrong first recorder — s2 found two), a handful of
+`sameAs` entries pointing at the COVER, several real links that do not carry the claim pinned to
+them, and a long tail of structured-data nits. Expect roughly **15–20% of skeptic-checked findings to
+be REFUTED** — that is the skeptic working, not a wasted stage.
+
 ### Song-specific gotchas
 - **THE SKEPTIC VERDICTS ARE APPLIED BY `parse-audit.js`, NOT BY THE JOURNAL.** The audit workflow
   drops refuted findings in its own `.then()`, but the journal records each agent's RAW return — so
