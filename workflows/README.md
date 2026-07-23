@@ -5,9 +5,10 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1118** quotes + 27 songs. **Target: 2000.**
+- **Corpus: 1118** quotes + **37** songs. **Target: 2000** quotes.
 - **Next wave number: r26.** (Waves r6–r25 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
 - Harvest backlog: `data/harvest-queue.json` (committed) — 391 queued.
+- **Songs: next wave number s2.** (s1 shipped 2026-07-22: 10 records, the first wave driven by the songs pipeline end to end.) Song backlog `data/song-queue.json` — 53 queued, 36 ingested, 1 dropped. Digest: `data/song-queue.md`.
 
 > **Do not trust the three lines above** — they are hand-maintained and have been wrong before (they
 > read "1058 / r22 / 318 queued" while the real backlog was 451). The numbers that are *derived* and
