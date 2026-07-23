@@ -29,12 +29,14 @@ const quotePath = (slug) => `/who-said/${slug}/`;
 const authorPath = (slug) => `/authors/${slug}/`;
 const themePath = (slug) => `/themes/${slug}/`;
 const songPath = (slug) => `/who-recorded/${slug}/`;
+const wrotePath = (slug) => `/who-wrote/${slug}/`;
 
 // Absolute URLs — for canonical, og:url, sitemap <loc>, JSON-LD url/@id.
 const quoteUrl = (slug) => `${ORIGIN}${quotePath(slug)}`;
 const authorUrl = (slug) => `${ORIGIN}${authorPath(slug)}`;
 const themeUrl = (slug) => `${ORIGIN}${themePath(slug)}`;
 const songUrl = (slug) => `${ORIGIN}${songPath(slug)}`;
+const wroteUrl = (slug) => `${ORIGIN}${wrotePath(slug)}`;
 
 // Fragment ids (`…/#person`). The slash belongs BEFORE the hash: the fragment hangs off the
 // canonical document URL, so `/authors/x#person` names a different document than `/authors/x/`.
@@ -42,11 +44,11 @@ const frag = (url, id) => `${url}#${id}`;
 
 // The section prefixes that follow the directory contract. verify-corpus uses this list so the
 // invariant and the builders can never disagree about what is covered.
-const SECTIONS = ['who-said', 'authors', 'themes', 'who-recorded'];
+const SECTIONS = ['who-said', 'authors', 'themes', 'who-recorded', 'who-wrote'];
 
 module.exports = {
   ORIGIN, SECTIONS,
-  quotePath, authorPath, themePath, songPath,
-  quoteUrl, authorUrl, themeUrl, songUrl,
+  quotePath, authorPath, themePath, songPath, wrotePath,
+  quoteUrl, authorUrl, themeUrl, songUrl, wroteUrl,
   frag,
 };

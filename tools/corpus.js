@@ -37,7 +37,15 @@ const readJsonDir = (dir) => {
 
 // ---- source data, read ONCE ----
 const records = readJsonDir(path.join(ROOT, 'data', 'quotes'));
-const songs = readJsonDir(path.join(ROOT, 'data', 'songs'));
+// A song record declares which axes it carries (default ['recording'] — every record shipped before
+// the writing axis). The RECORDING axis renders /who-recorded/ (who recorded it first); the WRITING
+// axis renders /who-wrote/ (who wrote it). One record may carry both. We split here so every existing
+// consumer (build-authors, build-search, build-verify, home tiles, sitemap) keeps seeing exactly the
+// recording-axis set it saw before the split — the writing axis is purely additive.
+const allSongs = readJsonDir(path.join(ROOT, 'data', 'songs'));
+const axesOf = (s) => (Array.isArray(s.axes) && s.axes.length ? s.axes : ['recording']);
+const songs = allSongs.filter((s) => axesOf(s).includes('recording')); // → /who-recorded/, and the "songs" every other tool means
+const writingSongs = allSongs.filter((s) => axesOf(s).includes('writing')); // → /who-wrote/
 const authors = aggregateAuthors(records, songs); // the authoritative hub set — what /authors/ lists
 
 // ---- era partition ----
@@ -90,6 +98,7 @@ const CORPUS = Object.freeze({
     linkedToAuthor: authors.reduce((s, a) => s + a.quotes.length, 0),
   }),
   songs: Object.freeze({ total: songs.length }),
+  whoWrote: Object.freeze({ total: writingSongs.length }),
   authors: Object.freeze({
     // What /authors/ lists, and therefore what any tile linking there must say.
     total: authors.length,
@@ -102,4 +111,4 @@ const CORPUS = Object.freeze({
   review: Object.freeze({ queued: reviewQueued }),
 });
 
-module.exports = { CORPUS, records, songs, authors, ERAS, UNDATED, eraOf };
+module.exports = { CORPUS, records, songs, writingSongs, authors, ERAS, UNDATED, eraOf };

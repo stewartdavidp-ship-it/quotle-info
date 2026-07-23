@@ -81,7 +81,9 @@ check('rendered author pages match author hubs', CORPUS.authors.total, countDirs
     return 'build-authors did not emit one page per hub';
   })());
 check('rendered song pages match song records', CORPUS.songs.total, countDirs('who-recorded'),
-  'build-songs did not emit one page per record in data/songs/');
+  'build-songs did not emit one /who-recorded/ page per recording-axis record in data/songs/');
+check('rendered who-wrote pages match writing-axis records', CORPUS.whoWrote.total, countDirs('who-wrote'),
+  'build-songs did not emit one /who-wrote/ page per writing-axis record (axes includes "writing")');
 check('rendered quote pages match quote records', CORPUS.quotes.total, countDirs('who-said'),
   'build.js did not emit one page per record in data/quotes/');
 
@@ -254,7 +256,10 @@ function scanForNoSlash(files, label) {
 // data-fed href fields, which vary per record and are invisible to any sample. ~1,700 files is a
 // couple of seconds; a silent 301 in a canonical is weeks of lost indexing.
 const allPages = [];
-for (const section of ['who-said', 'authors', 'themes', 'who-recorded']) {
+// Iterate SECTIONS (the URL contract's own list), not a hardcoded copy. A hardcoded list here
+// silently EXCLUDES any new section from the no-slash scan — exactly how /who-wrote/ could have
+// shipped canonicals pointing at redirects with this invariant reporting all-clear.
+for (const section of SECTIONS) {
   const dir = path.join(ROOT, section);
   if (!fs.existsSync(dir)) continue;
   allPages.push(`${section}/index.html`);

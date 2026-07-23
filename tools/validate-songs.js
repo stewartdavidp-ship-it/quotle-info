@@ -24,10 +24,16 @@ const QUIET = process.argv.includes('--quiet');
 const THEME_IDS = new Set(THEMES.map((t) => t.slug));
 
 // Every field the renderer (build-songs.js) dereferences. A missing one is a broken page, not a
-// cosmetic gap, so these are failures rather than warnings.
-const REQUIRED = ['songSlug', 'title', 'confidence', 'creditedTo', 'meta', 'answer', 'original', 'authors', 'misattribution', 'context', 'rights', 'themes', 'schema'];
+// cosmetic gap, so these are failures rather than warnings. The list is now AXIS-AWARE: a record
+// carries a recording axis (/who-recorded/), a writing axis (/who-wrote/), or both, and each axis's
+// renderer derefs its own fields. BASE holds fields both renderers need.
+const BASE_REQUIRED = ['songSlug', 'title', 'confidence', 'creditedTo', 'meta', 'authors', 'rights', 'themes', 'schema'];
+const RECORDING_REQUIRED = ['answer', 'original', 'misattribution', 'context']; // renderSong derefs these
+const WRITING_REQUIRED = ['writing', 'shape'];                                  // renderWrote derefs these
 const CONFIDENCE = new Set(['verified', 'attributed', 'disputed']);
-const ROLES = new Set(['original', 'cover', 'writer']);
+const ROLES = new Set(['original', 'cover', 'writer', 'performer']);
+const SHAPES = new Set(['credit', 'misbelief', 'contested']);
+const axesOf = (s) => (Array.isArray(s.axes) && s.axes.length ? s.axes : ['recording']);
 
 // The no-lyrics rule, mechanised. We cannot detect "is this a lyric" in general, but we CAN detect
 // the shape it takes when it slips in: a quoted run of ordinary words that is not a title. Titles
@@ -73,25 +79,52 @@ for (const f of files) {
 
   scanRecord(s).forEach((m) => p.push(`UNSAFE HTML — ${m}`));
 
-  for (const k of REQUIRED) if (s[k] === undefined) p.push(`missing required field: ${k}`);
+  const axes = axesOf(s);
+  const hasRecording = axes.includes('recording');
+  const hasWriting = axes.includes('writing');
+  if (s.axes !== undefined && (!Array.isArray(s.axes) || !s.axes.length)) p.push('axes must be a non-empty array (["recording"], ["writing"], or both)');
+  if (Array.isArray(s.axes) && s.axes.some((x) => x !== 'recording' && x !== 'writing')) p.push('axes may only contain "recording" and/or "writing"');
+
+  const required = [...BASE_REQUIRED, ...(hasRecording ? RECORDING_REQUIRED : []), ...(hasWriting ? WRITING_REQUIRED : [])];
+  for (const k of required) if (s[k] === undefined) p.push(`missing required field: ${k}`);
   if (s.songSlug && s.songSlug !== f.replace(/\.json$/, '')) p.push(`songSlug "${s.songSlug}" does not match filename ${f}`);
   if (s.songSlug && !/^[a-z0-9-]+$/.test(s.songSlug)) p.push(`songSlug is not kebab-case: ${s.songSlug}`);
   if (s.songSlug && seenSlugs.has(s.songSlug)) p.push(`duplicate songSlug, also in ${seenSlugs.get(s.songSlug)}`);
   if (s.songSlug) seenSlugs.set(s.songSlug, f);
   if (s.confidence && !CONFIDENCE.has(s.confidence)) p.push(`confidence "${s.confidence}" is outside verified/attributed/disputed`);
+  // creditedTo is required on EITHER axis (base) — it records who the public associates the song
+  // with. On a recording page that is the cover act; on a writing page it is the performer (who is
+  // correctly credited AS the performer — nobody is wrongly credited on a credit/contested page).
+  if (!s.creditedTo) p.push('creditedTo is empty — name who the public associates the song with');
 
-  // the misattribution axis must actually be populated — a song page with no original recorder
-  // has nothing to say
-  if (s.answer && !s.answer.originalArtist) p.push('answer.originalArtist is empty — the page has no "who recorded it first" answer');
-  if (!s.creditedTo) p.push('creditedTo is empty — nothing to correct');
+  // ---- recording axis: the misattribution must be populated, both sides present ----
+  if (hasRecording) {
+    if (s.answer && !s.answer.originalArtist) p.push('answer.originalArtist is empty — the recording page has no "who recorded it first" answer');
+    if (Array.isArray(s.authors)) {
+      const roles = s.authors.map((a) => a.role);
+      if (!roles.includes('original')) p.push('recording axis: no author card with role "original" — nobody is credited with recording it first');
+      if (!roles.includes('cover')) p.push('recording axis: no author card with role "cover" — nobody is named as the act mistaken for the original');
+    }
+  }
 
-  // author cards: roles must be known, and there must be both sides of the misattribution
+  // ---- writing axis: shape drives the verdict vocabulary; it must agree with the data ----
+  if (hasWriting) {
+    if (s.shape && !SHAPES.has(s.shape)) p.push(`shape "${s.shape}" is outside credit/misbelief/contested`);
+    if (s.writing && !s.writing.writer) p.push('writing.writer is empty — the writing page has no "who wrote it" answer');
+    // shape ⇄ data consistency — an unchecked enum is a lie surface. misbelief is the ONLY writing
+    // shape that adjudicates a false belief, so it is the only one that carries a misattribution
+    // block and the only one whose confidence is disputed. credit is a revelation → attributed.
+    if (s.shape === 'misbelief' && s.confidence !== 'disputed') p.push('shape "misbelief" adjudicates a false belief — confidence must be "disputed"');
+    if (s.shape === 'credit' && s.confidence === 'disputed') p.push('shape "credit" is a revelation, not a fact-check — confidence must not be "disputed" (use "attributed")');
+    if (s.shape === 'misbelief' && s.misattribution === undefined) p.push('shape "misbelief" states a false belief — it must carry a misattribution block');
+    if ((s.shape === 'credit' || s.shape === 'contested') && s.misattribution !== undefined) p.push(`shape "${s.shape}" has no false belief to state — remove the misattribution block`);
+    if (Array.isArray(s.authors) && !s.authors.some((a) => a.role === 'writer')) p.push('writing axis: no author card with role "writer" — the writer is the subject of the page');
+  }
+
+  // author cards: roles must be known and slugs valid, on every axis
   if (Array.isArray(s.authors)) {
-    const roles = s.authors.map((a) => a.role);
-    roles.forEach((r) => { if (!ROLES.has(r)) p.push(`author role "${r}" is outside original/cover/writer`); });
-    if (!roles.includes('original')) p.push('no author card with role "original" — nobody is credited with recording it first');
-    if (!roles.includes('cover')) p.push('no author card with role "cover" — nobody is named as the act mistaken for the original');
     s.authors.forEach((a) => {
+      if (!ROLES.has(a.role)) p.push(`author role "${a.role}" is outside original/cover/writer/performer`);
       if (!a.slug || !/^[a-z0-9-]+$/.test(a.slug)) p.push(`author "${a.name}" has a bad slug: ${a.slug}`);
       if (!a.name) p.push('an author card has no name');
     });

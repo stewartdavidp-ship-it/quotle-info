@@ -31,6 +31,10 @@ const ROOT = path.resolve(__dirname, '..');
 const ORIGIN = 'https://quotle.info';
 const SONGS_DIR = path.join(ROOT, 'data', 'songs');
 const canonicalUrl = (slug) => `${ORIGIN}/who-recorded/${slug}/`;
+const wroteUrl = (slug) => `${ORIGIN}/who-wrote/${slug}/`;
+// A song record carries a recording axis (/who-recorded/), a writing axis (/who-wrote/), or both.
+// Default is recording — every record written before the writing axis existed.
+const axesOf = (s) => (Array.isArray(s.axes) && s.axes.length ? s.axes : ['recording']);
 
 let CFG = {};
 try { CFG = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'harvest-config.json'), 'utf8')); } catch (_) { /* optional */ }
@@ -41,6 +45,21 @@ const COMMUNITY = !!(CFG.votesApi && CFG.turnstileSitekey);
 // into build-authors.js so Gloria Jones / Soft Cell / Ed Cobb get real hub pages ("songs wrongly
 // credited to…", the operator's "add them as authors"); then this flips to link only real pages.
 const authorLink = (a) => (a && a.slug && fs.existsSync(path.join(ROOT, 'authors', a.slug)) ? `/authors/${a.slug}/` : null);
+
+// Shared JSON-LD string helpers (used by both the recording and writing renderers). Plain ASCII
+// apostrophe on purpose — these strings land inside <script type="application/ld+json">, where HTML
+// entities are NOT decoded, so an &rsquo; would be read out literally by a voice assistant.
+const possessive = (name) => { const n = String(name || '').trim(); return /s$/i.test(n) ? `${n}'` : `${n}'s`; };
+const splitPeople = (name) => String(name || '')
+  .replace(/\([^)]*\)/g, ' ')                      // drop parentheticals: "(credited as John Davenport)"
+  .split(/\s*,\s*|\s+and\s+|\s*&\s*|\s*;\s*/)
+  .map((x) => x.trim())
+  .filter((x) => x.length > 1);
+const personNodes = (name) => {
+  const people = splitPeople(name);
+  if (!people.length) return null;
+  return people.length === 1 ? { '@type': 'Person', name: people[0] } : people.map((n) => ({ '@type': 'Person', name: n }));
+};
 
 // ---- JSON-LD: MusicRecording (+ composition) the claim is really about, ClaimReview, FAQ, crumb --
 function buildJsonLd(s, url) {
@@ -520,22 +539,281 @@ ${SCRIPT}
 </html>`;
 }
 
+// ======================================================================================
+// THE WRITING AXIS — /who-wrote/ : "who WROTE this song?"
+// A second axis on the music object. The performer is correctly credited AS the performer; the
+// page reveals (or, for a `misbelief` record, corrects a false belief about) who WROTE it. Three
+// shapes, from workflows/SCOPE-who-wrote-it.md:
+//   credit    — the writer is not the definitive performer (revelation → NO ClaimReview)
+//   misbelief — the public thinks the performer wrote it (fact-check → ClaimReview rates it false)
+//   contested — litigated/disputed authorship (disputed by the facts → NO false-claim rating)
+// ======================================================================================
+function buildWroteJsonLd(s, url) {
+  const sc = s.schema || {};
+  const w = s.writing || {};
+  const performer = s.creditedTo;                       // correctly credited AS the performer
+  const writer = w.writer;
+  const compName = sc.recordingName || s.title;
+  const altName = compName && s.title && compName !== s.title ? s.title : null;
+  const allSameAs = Array.isArray(s.sameAs) ? s.sameAs : [];
+  const declaredWork = Array.isArray(sc.workSameAs) ? sc.workSameAs.map(String) : [];
+  const isWork = (u) => /musicbrainz\.org\/work\//.test(String(u)) || declaredWork.includes(String(u));
+  const workSameAs = [...new Set([...allSameAs.filter(isWork), ...declaredWork])];
+  const recSameAs = allSameAs.filter((u) => !isWork(u));
+
+  const composition = {
+    '@type': 'MusicComposition',
+    name: compName,
+    ...(altName ? { alternateName: altName } : {}),
+    ...(workSameAs.length ? { sameAs: workSameAs } : {}),
+    ...(personNodes(writer) ? { composer: personNodes(writer) } : {}),
+  };
+  const recording = {
+    '@type': 'MusicRecording',
+    '@id': `${url}#recording`,
+    name: compName,
+    byArtist: { '@type': (sc.byArtist && sc.byArtist.type) || 'MusicGroup', name: (sc.byArtist && sc.byArtist.name) || performer },
+    ...(recSameAs.length ? { sameAs: recSameAs } : {}),
+    datePublished: sc.datePublished || undefined,
+    recordingOf: composition,
+  };
+
+  const webPage = {
+    '@type': 'WebPage', '@id': url, url,
+    name: sc.webPageName || `Who wrote '${s.title}'?`,
+    dateModified: s.dateModified,
+    mainEntity: { '@id': `${url}#recording` },
+  };
+
+  const faq = {
+    '@type': 'FAQPage', '@id': `${url}#faq`,
+    mainEntity: [{
+      '@type': 'Question',
+      name: `Who wrote "${s.title}"?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: sc.faqAnswer
+          || `"${s.title}" was written by ${writer}. ${possessive(performer)} recording is the version most people know.`,
+      },
+    }],
+  };
+
+  const crumb = {
+    '@type': 'BreadcrumbList', '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${ORIGIN}/` },
+      { '@type': 'ListItem', position: 2, name: 'Who wrote it', item: `${ORIGIN}/who-wrote/` },
+      { '@type': 'ListItem', position: 3, name: s.title },
+    ],
+  };
+
+  const graph = [recording, webPage, faq, crumb];
+
+  // ClaimReview ONLY on `misbelief` — the one writing shape that adjudicates a false belief (the
+  // public thinks the PERFORMER wrote it). credit and contested assert no false claim, so they emit
+  // no ClaimReview: a page whose thesis is "nothing here is false" must not carry a machine-readable
+  // false-rating (the mistake the recording-side ClaimReview note warns about).
+  if (s.shape === 'misbelief') {
+    const claimText = `${performer} wrote "${s.title}".`;
+    graph.splice(1, 0, {
+      '@type': 'ClaimReview',
+      '@id': `${url}#claimreview`,
+      url,
+      datePublished: s.dateModified,
+      claimReviewed: claimText,
+      itemReviewed: { '@type': 'Claim', text: claimText },
+      author: { '@type': 'Organization', name: 'Quotle.info', url: ORIGIN },
+      reviewRating: { '@type': 'Rating', ratingValue: 1, bestRating: 5, worstRating: 1, alternateName: `False — written by ${writer}` },
+    });
+  }
+
+  return { '@context': 'https://schema.org', '@graph': graph };
+}
+
+function renderWrote(s) {
+  const url = wroteUrl(s.songSlug);
+  const w = s.writing || {}, c = s.context, m = s.misattribution;
+  const jsonld = JSON.stringify(deEntity(buildWroteJsonLd(s, url)));
+
+  const factCheck = (s.shape === 'misbelief' && m) ? `
+        <section class="song-card" aria-labelledby="mis-h">
+            <div class="sec-head"><p class="kicker">${esc(m.kicker || 'Fact-check')}</p><h2 id="mis-h">${esc(m.heading || 'The attribution problem')}</h2></div>
+            <p class="song-intro">${m.intro}</p>
+            ${(m.items || []).map((it) => `<div class="mis-item"><div class="mis-item-head"><span class="mis-scope">${esc(it.scope)}</span><span class="mis-tag">${escEm(it.tag)}</span></div><p class="mis-who">${it.who}</p><p class="mis-why">${it.why}</p></div>`).join('\n            ')}
+            <p class="song-truth">${m.truthLine}</p>
+        </section>` : '';
+
+  const contextSec = c ? `
+        <section class="song-card" aria-labelledby="ctx-h">
+            <div class="sec-head"><p class="kicker">${esc(c.kicker || 'Context')}</p><h2 id="ctx-h">${esc(c.heading || 'The story behind the credit')}</h2></div>
+            ${(c.lead || []).map((p) => `<p class="song-ctx">${p}</p>`).join('\n            ')}
+            ${c.detailsBody ? `<details class="song-timeline"><summary>${esc(c.detailsSummary || 'Timeline')}</summary><ul>${c.detailsBody.map((d) => `<li>${d}</li>`).join('')}</ul></details>` : ''}
+            ${c.pull ? `<blockquote class="song-pull">${escEm(c.pull)}</blockquote>` : ''}
+        </section>` : '';
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${esc(s.meta.title)}</title>
+    <meta name="description" content="${esc(s.meta.description)}">
+    <link rel="canonical" href="${url}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="${url}">
+    <meta property="og:title" content="${esc(s.meta.ogTitle || s.meta.title)}">
+    <meta property="og:description" content="${esc(s.meta.ogDescription || s.meta.description)}">
+${OG_IMAGE_TAGS}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+${jsonld}
+    </script>
+${HEAD_SCRIPT}
+    <style>
+${ROOT_CSS}${CHROME_CSS}
+${SONG_CSS}
+    </style>
+${THEME_CSS}
+</head>
+<body>
+${NAV('')}
+    <main id="main">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep" aria-hidden="true">›</span><a href="/who-wrote/">Who wrote it</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">${esc(s.title)}</span></nav>
+
+        <header class="song-hero">
+            <p class="kicker">${esc(w.kicker || 'Who wrote it')}</p>
+            <h1>${esc(s.title)}</h1>
+            <p class="song-verdict">${esc(w.label || '')}</p>
+            <p class="song-lede">${w.sourceLine || ''}</p>
+        </header>
+
+        <section class="song-card" aria-labelledby="rec-h">
+            <div class="sec-head"><p class="kicker">${esc(w.recordKicker || 'The credit')}</p><h2 id="rec-h">${esc(w.recordHeading || 'Who wrote it')}</h2></div>
+            <dl class="doc-meta">
+${docMetaRows(w.docMeta)}
+            </dl>
+${w.definitiveVersion ? `            <p class="song-fact"><span>Definitive version</span> ${w.definitiveVersion}</p>` : ''}
+${renderListen(s)}
+            <p class="song-trail-title">${esc(w.trailTitle || 'How we traced it')}</p>
+            ${(w.trail || []).map((t) => `<p class="song-trail">${t}</p>`).join('\n            ')}
+            ${w.sourceLink ? `<a class="song-srclink" href="${esc(w.sourceLink.url)}" target="_blank" rel="noopener">${esc(w.sourceLink.text)} <span aria-hidden="true">↗</span></a>` : ''}
+        </section>
+${renderSubmit(s)}
+${factCheck}
+${contextSec}
+
+        <section class="song-authors" aria-label="The people behind the song">
+${renderAuthors(s)}
+        </section>
+
+        ${s.rights ? `<aside class="song-rights"><p class="kicker">Reuse &amp; rights</p><p>${s.rights.note}</p></aside>` : ''}
+
+        <aside class="game-cta" aria-label="Related game">
+            <p class="cta-title">Think you know your quotes?</p>
+            <p>Quotle is a daily puzzle: guess the author from the words alone.</p>
+            <a class="game-cta-btn" href="https://gameshelf.co/quotle/" target="_blank" rel="noopener">Play today's Quotle <span aria-hidden="true">→</span></a>
+        </aside>
+    </main>
+${FOOTER}
+${SEARCH_JS}
+${SCRIPT}
+</body>
+</html>`;
+}
+
+// ---- /who-wrote/ browse index ----
+function renderWroteIndex(songs) {
+  const url = `${ORIGIN}/who-wrote/`;
+  const cards = songs.map((s) => `                <a class="song-idx-card" href="/who-wrote/${s.songSlug}/">
+                    <p class="song-idx-title">${esc(s.title)}</p>
+                    <p class="song-idx-rel"><span class="song-idx-credit">Recorded by ${esc(s.creditedTo)}</span> &mdash; written by <strong>${esc((s.writing || {}).writer || '')}</strong></p>
+                </a>`).join('\n');
+  const n = songs.length;
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who wrote it? — the songwriter behind the hit | Quotle.info</title>
+    <meta name="description" content="Songs the public knows by the performer — but written by someone else. ${n} traced to who actually wrote them.">
+    <link rel="canonical" href="${url}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="${url}">
+    <meta property="og:title" content="Who wrote it? — the songwriter behind the hit">
+    <meta property="og:description" content="Songs you know by the singer, written by someone else — traced to who actually wrote them.">
+${OG_IMAGE_TAGS}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+${HEAD_SCRIPT}
+    <style>
+${ROOT_CSS}${CHROME_CSS}
+${SONG_CSS}
+        .song-idx-grid { display: grid; gap: 14px; margin-top: 26px; }
+        @media (min-width: 620px) { .song-idx-grid { grid-template-columns: 1fr 1fr; } }
+        .song-idx-card { display: block; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--caution); border-radius: var(--radius-md); padding: 18px 20px; text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
+        .song-idx-card:hover { border-left-color: var(--burgundy); transform: translateY(-2px); }
+        .song-idx-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--ink); }
+        .song-idx-rel { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--slate); margin-top: 6px; }
+        .song-idx-credit { color: var(--text-muted); }
+    </style>
+${THEME_CSS}
+</head>
+<body>
+${NAV('')}
+    <main id="main">
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">Who wrote it</span></nav>
+        <header class="song-hero">
+            <p class="kicker">Who wrote it</p>
+            <h1>The songwriter behind the hit</h1>
+            <p class="song-lede">Songs the public knows by the singer &mdash; but written by someone else, who often had the bigger career as a writer than a performer. ${n === 1 ? 'One song' : `${n} songs`} traced to who actually wrote them. No lyrics, just the credit.</p>
+        </header>
+        <div class="song-idx-grid">
+${cards}
+        </div>
+        <aside class="song-rights" style="margin-top:34px"><p class="kicker">The scope</p><p>These are songs where the performer is correctly credited &mdash; but a different, often well-known, artist WROTE the song. We name the writer and the definitive recording, and we never reproduce lyrics.</p></aside>
+    </main>
+${FOOTER}
+${SEARCH_JS}
+${SCRIPT}
+</body>
+</html>`;
+}
+
 // ---- build ----
 function build() {
   if (!fs.existsSync(SONGS_DIR)) return;
   const files = fs.readdirSync(SONGS_DIR).filter((f) => f.endsWith('.json'));
-  const songs = [];
+  const recording = [];
+  const writing = [];
   for (const f of files) {
     const s = JSON.parse(fs.readFileSync(path.join(SONGS_DIR, f), 'utf8'));
-    const dir = path.join(ROOT, 'who-recorded', s.songSlug);
-    fs.mkdirSync(dir, { recursive: true });
-    fs.writeFileSync(path.join(dir, 'index.html'), renderSong(s));
-    songs.push(s);
+    const axes = axesOf(s);
+    if (axes.includes('recording')) {
+      const dir = path.join(ROOT, 'who-recorded', s.songSlug);
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, 'index.html'), renderSong(s));
+      recording.push(s);
+    }
+    if (axes.includes('writing')) {
+      const dir = path.join(ROOT, 'who-wrote', s.songSlug);
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, 'index.html'), renderWrote(s));
+      writing.push(s);
+    }
   }
-  songs.sort((a, b) => a.title.localeCompare(b.title));
+  recording.sort((a, b) => a.title.localeCompare(b.title));
   fs.mkdirSync(path.join(ROOT, 'who-recorded'), { recursive: true });
-  fs.writeFileSync(path.join(ROOT, 'who-recorded', 'index.html'), renderIndex(songs));
-  console.log(`  ✓ who-recorded/ (${songs.length} song page${songs.length === 1 ? '' : 's'} + index)`);
+  fs.writeFileSync(path.join(ROOT, 'who-recorded', 'index.html'), renderIndex(recording));
+  console.log(`  ✓ who-recorded/ (${recording.length} song page${recording.length === 1 ? '' : 's'} + index)`);
+  if (writing.length) {
+    writing.sort((a, b) => a.title.localeCompare(b.title));
+    fs.mkdirSync(path.join(ROOT, 'who-wrote'), { recursive: true });
+    fs.writeFileSync(path.join(ROOT, 'who-wrote', 'index.html'), renderWroteIndex(writing));
+    console.log(`  ✓ who-wrote/ (${writing.length} song page${writing.length === 1 ? '' : 's'} + index)`);
+  }
 }
 
 build();
