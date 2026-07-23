@@ -104,7 +104,18 @@ const CORPUS = Object.freeze({
     // no hub. Internal bookkeeping — do NOT put this on a page next to the word "quotes".
     linkedToAuthor: authors.reduce((s, a) => s + a.quotes.length, 0),
   }),
-  songs: Object.freeze({ total: songs.length }),
+  // Songs are ONE collection; "cover" / "writer" / "contested" are facets a song can carry, not
+  // separate kinds. total is the human-facing count (home tile, authors lede, browse). `recordings`
+  // is the recording-axis subset (= /who-recorded/ pages) that the per-route invariants check.
+  songs: Object.freeze({
+    total: allSongs.length,                                              // 95 — every song record
+    recordings: songs.length,                                            // 90 — recording-axis → /who-recorded/
+    facets: Object.freeze({
+      cover: songs.length,                                               // a famous cover mistaken for the original recording
+      writer: writingSongs.length,                                       // written by a different, recognisable artist
+      contested: allSongs.filter((s) => s.shape === 'contested').length, // authorship litigated/disputed
+    }),
+  }),
   whoWrote: Object.freeze({ total: writingSongs.length, pages: writingOnlySongs.length }),
   authors: Object.freeze({
     // What /authors/ lists, and therefore what any tile linking there must say.
@@ -118,4 +129,4 @@ const CORPUS = Object.freeze({
   review: Object.freeze({ queued: reviewQueued }),
 });
 
-module.exports = { CORPUS, records, songs, writingSongs, writingOnlySongs, authors, ERAS, UNDATED, eraOf };
+module.exports = { CORPUS, records, songs, allSongs, writingSongs, writingOnlySongs, authors, ERAS, UNDATED, eraOf };

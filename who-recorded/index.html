@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Who recorded it? — songs credited to the wrong artist | Quotle.info</title>
-    <meta name="description" content="Songs everyone thinks a famous act originated — but that were first recorded by someone else. 90 traced to the original recording.">
+    <title>Songs credited to the wrong artist | Quotle.info</title>
+    <meta name="description" content="Songs whose famous version is mistaken for the original recording, or whose writer is a different, well-known artist. Cover, writer-credit and contested authorship — traced, no lyrics.">
     <link rel="canonical" href="https://quotle.info/who-recorded/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://quotle.info/who-recorded/">
-    <meta property="og:title" content="Who recorded it? — songs credited to the wrong artist">
-    <meta property="og:description" content="Famous covers mistaken for originals, traced to who recorded them first.">
+    <meta property="og:title" content="Songs credited to the wrong artist">
+    <meta property="og:description" content="Covers mistaken for originals, and songs written by someone else — traced.">
     <meta property="og:image" content="https://quotle.info/og/default.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -155,13 +155,23 @@
         .game-cta .cta-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 8px; }
         .game-cta p { color: var(--slate); font-size: 0.92rem; margin-bottom: 18px; }
         .game-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 28px; background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep)); border-radius: var(--radius-md); font-family: 'DM Sans', sans-serif; font-weight: 600; color: white; text-decoration: none; }
-        .song-idx-grid { display: grid; gap: 14px; margin-top: 26px; }
+        .song-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; font-family: 'DM Sans', sans-serif; }
+        .song-pill { display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; color: var(--slate); font-size: 0.82rem; font-weight: 500; cursor: pointer; }
+        .song-pill[aria-pressed="true"] { border-color: var(--burgundy); color: var(--ink); }
+        .song-pill-n { color: var(--text-muted); font-size: 0.76rem; }
+        .song-count { font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--text-muted); margin-top: 14px; }
+        .song-idx-grid { display: grid; gap: 14px; margin-top: 10px; }
         @media (min-width: 620px) { .song-idx-grid { grid-template-columns: 1fr 1fr; } }
         .song-idx-card { display: block; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--caution); border-radius: var(--radius-md); padding: 18px 20px; text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
         .song-idx-card:hover { border-left-color: var(--burgundy); transform: translateY(-2px); }
         .song-idx-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--ink); }
         .song-idx-rel { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--slate); margin-top: 6px; }
         .song-idx-credit { color: var(--text-muted); }
+        .song-idx-tags { margin-top: 9px; display: flex; gap: 6px; flex-wrap: wrap; }
+        .song-tag { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; }
+        .tag-cover { background: var(--caution-dim, rgba(214,98,122,0.14)); color: var(--caution); }
+        .tag-writer { background: var(--sage-dim); color: var(--sage); }
+        .tag-contested { background: var(--gold-dim); color: var(--gold); }
     </style>
     <style>
         :root[data-theme="light"] {
@@ -255,375 +265,497 @@
         </div>
     </nav>
     <main id="main">
-        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">Who recorded it</span></nav>
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">Songs</span></nav>
         <header class="song-hero">
-            <p class="kicker">Who recorded it first</p>
+            <p class="kicker">Who recorded it, who wrote it</p>
             <h1>Songs credited to the wrong artist</h1>
-            <p class="song-lede">Famous versions everyone takes for the original &mdash; but the song was first recorded by someone else, and a later cover took the credit. 90 songs traced to the original recording. No lyrics, just the record.</p>
+            <p class="song-lede">Famous versions the public takes for the original &mdash; or for the performer&rsquo;s own song. Filter by what&rsquo;s wrong: a <strong>cover</strong> mistaken for the original recording, a song <strong>written</strong> by someone else, or authorship that was <strong>contested</strong>.</p>
         </header>
-        <div class="song-idx-grid">
-                <a class="song-idx-card" href="/who-recorded/a-message-to-you-rudy/">
+        <div class="song-filters" role="group" aria-label="Filter songs by type">
+            <button class="song-pill" data-filter="all" aria-pressed="true">All <span class="song-pill-n">95</span></button>
+            <button class="song-pill" data-filter="cover" aria-pressed="false">Cover <span class="song-pill-n">90</span></button>
+            <button class="song-pill" data-filter="writer" aria-pressed="false">Writer <span class="song-pill-n">28</span></button>
+            <button class="song-pill" data-filter="contested" aria-pressed="false">Contested <span class="song-pill-n">3</span></button>
+        </div>
+        <p class="song-count"><b id="songShown">95</b> songs. No lyrics, just the credit.</p>
+        <div class="song-idx-grid" id="songGrid" data-song-total="95">
+                <a class="song-idx-card" href="/who-recorded/a-message-to-you-rudy/" data-title="a message to you, rudy" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">A Message to You, Rudy</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Specials</span> &mdash; first recorded by <strong>Dandy Livingstone</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/babe-im-gonna-leave-you/">
+                <a class="song-idx-card" href="/who-wrote/a-whiter-shade-of-pale/" data-title="a whiter shade of pale" data-cover="0" data-writer="1" data-contested="1">
+                    <p class="song-idx-title">A Whiter Shade of Pale</p>
+                    <p class="song-idx-rel"><span class="song-idx-credit">Recorded by Procol Harum</span> &mdash; written by <strong>Gary Brooker and Keith Reid, with Matthew Fisher (co-author, established 2009)</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-writer">Writer</span><span class="song-tag tag-contested">Contested</span></p>
+                </a>
+                <a class="song-idx-card" href="/who-recorded/babe-im-gonna-leave-you/" data-title="babe i'm gonna leave you" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Babe I'm Gonna Leave You</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Led Zeppelin</span> &mdash; first recorded by <strong>Joan Baez</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/baby-please-dont-go/">
+                <a class="song-idx-card" href="/who-recorded/baby-please-dont-go/" data-title="baby, please don't go" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Baby, Please Don't Go</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Them</span> &mdash; first recorded by <strong>Big Joe Williams</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/bang-bang-my-baby-shot-me-down/">
+                <a class="song-idx-card" href="/who-recorded/bang-bang-my-baby-shot-me-down/" data-title="bang bang (my baby shot me down)" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Bang Bang (My Baby Shot Me Down)</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Nancy Sinatra</span> &mdash; first recorded by <strong>Cher</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Cher</strong> &middot; written by <strong>Sonny Bono</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/beyond-the-sea/">
+                <a class="song-idx-card" href="/who-recorded/beyond-the-sea/" data-title="beyond the sea" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Beyond the Sea</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Bobby Darin</span> &mdash; first recorded by <strong>Roland Gerbeau</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/black-magic-woman/">
+                <a class="song-idx-card" href="/who-wrote/bittersweet-symphony/" data-title="bitter sweet symphony" data-cover="0" data-writer="1" data-contested="1">
+                    <p class="song-idx-title">Bitter Sweet Symphony</p>
+                    <p class="song-idx-rel"><span class="song-idx-credit">Recorded by The Verve</span> &mdash; written by <strong>Richard Ashcroft</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-writer">Writer</span><span class="song-tag tag-contested">Contested</span></p>
+                </a>
+                <a class="song-idx-card" href="/who-recorded/black-magic-woman/" data-title="black magic woman" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Black Magic Woman</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Santana</span> &mdash; first recorded by <strong>Fleetwood Mac</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Fleetwood Mac</strong> &middot; written by <strong>Peter Green</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/blinded-by-the-light/">
+                <a class="song-idx-card" href="/who-recorded/blinded-by-the-light/" data-title="blinded by the light" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Blinded by the Light</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Manfred Mann's Earth Band</span> &mdash; first recorded by <strong>Bruce Springsteen</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Bruce Springsteen</strong> &middot; written by <strong>Bruce Springsteen</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/blue-suede-shoes/">
+                <a class="song-idx-card" href="/who-recorded/blue-suede-shoes/" data-title="blue suede shoes" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Blue Suede Shoes</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Elvis Presley</span> &mdash; first recorded by <strong>Carl Perkins</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Carl Perkins</strong> &middot; written by <strong>Carl Perkins</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/both-sides-now/">
+                <a class="song-idx-card" href="/who-recorded/both-sides-now/" data-title="both sides, now" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Both Sides, Now</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Joni Mitchell</span> &mdash; first recorded by <strong>Dave Van Ronk and the Hudson Dusters</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/bring-it-on-home/">
+                <a class="song-idx-card" href="/who-recorded/bring-it-on-home/" data-title="bring it on home" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Bring It On Home</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Led Zeppelin</span> &mdash; first recorded by <strong>Sonny Boy Williamson II</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/cry-baby/">
+                <a class="song-idx-card" href="/who-recorded/cry-baby/" data-title="cry baby" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Cry Baby</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Janis Joplin</span> &mdash; first recorded by <strong>Garnet Mimms and the Enchanters</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/cups-when-im-gone/">
+                <a class="song-idx-card" href="/who-recorded/cups-when-im-gone/" data-title="cups (when i'm gone)" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Cups (When I'm Gone)</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Anna Kendrick</span> &mdash; first recorded by <strong>Lulu and the Lampshades</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/dazed-and-confused/">
+                <a class="song-idx-card" href="/who-recorded/dazed-and-confused/" data-title="dazed and confused" data-cover="1" data-writer="1" data-contested="1">
                     <p class="song-idx-title">Dazed and Confused</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Led Zeppelin</span> &mdash; first recorded by <strong>Jake Holmes</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Jake Holmes</strong> &middot; written by <strong>Jake Holmes</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span><span class="song-tag tag-contested">Contested</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/delta-dawn/">
+                <a class="song-idx-card" href="/who-recorded/delta-dawn/" data-title="delta dawn" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Delta Dawn</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Helen Reddy</span> &mdash; first recorded by <strong>Alex Harvey</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/dont-turn-around/">
+                <a class="song-idx-card" href="/who-recorded/dont-turn-around/" data-title="don't turn around" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Don't Turn Around</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Ace of Base</span> &mdash; first recorded by <strong>Tina Turner</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/everybody-needs-somebody-to-love/">
+                <a class="song-idx-card" href="/who-recorded/everybody-needs-somebody-to-love/" data-title="everybody needs somebody to love" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Everybody Needs Somebody to Love</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Blues Brothers</span> &mdash; first recorded by <strong>Solomon Burke</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/everybodys-talkin/">
+                <a class="song-idx-card" href="/who-recorded/everybodys-talkin/" data-title="everybody's talkin'" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Everybody's Talkin'</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Harry Nilsson</span> &mdash; first recorded by <strong>Fred Neil</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/everything-i-own/">
+                <a class="song-idx-card" href="/who-recorded/everything-i-own/" data-title="everything i own" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Everything I Own</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Ken Boothe</span> &mdash; first recorded by <strong>Bread</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Bread</strong> &middot; written by <strong>David Gates</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/feeling-good/">
+                <a class="song-idx-card" href="/who-recorded/feeling-good/" data-title="feeling good" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Feeling Good</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Nina Simone</span> &mdash; first recorded by <strong>Cy Grant</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/fever/">
+                <a class="song-idx-card" href="/who-recorded/fever/" data-title="fever" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Fever</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Peggy Lee</span> &mdash; first recorded by <strong>Little Willie John</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/fly-me-to-the-moon/">
+                <a class="song-idx-card" href="/who-recorded/fly-me-to-the-moon/" data-title="fly me to the moon" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Fly Me to the Moon</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Frank Sinatra</span> &mdash; first recorded by <strong>Kaye Ballard</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/girl-you-know-its-true/">
+                <a class="song-idx-card" href="/who-recorded/girl-you-know-its-true/" data-title="girl you know it's true" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Girl You Know It's True</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Milli Vanilli</span> &mdash; first recorded by <strong>Numarx</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/girl-youll-be-a-woman-soon/">
+                <a class="song-idx-card" href="/who-recorded/girl-youll-be-a-woman-soon/" data-title="girl, you'll be a woman soon" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Girl, You'll Be a Woman Soon</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Urge Overkill</span> &mdash; first recorded by <strong>Neil Diamond</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Neil Diamond</strong> &middot; written by <strong>Neil Diamond</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/girls-just-want-to-have-fun/">
+                <a class="song-idx-card" href="/who-recorded/girls-just-want-to-have-fun/" data-title="girls just want to have fun" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Girls Just Want to Have Fun</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Cyndi Lauper</span> &mdash; first recorded by <strong>Robert Hazard</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/hallelujah/">
+                <a class="song-idx-card" href="/who-recorded/hallelujah/" data-title="hallelujah" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Hallelujah</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Jeff Buckley</span> &mdash; first recorded by <strong>Leonard Cohen</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Leonard Cohen</strong> &middot; written by <strong>Leonard Cohen</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/hooked-on-a-feeling/">
+                <a class="song-idx-card" href="/who-recorded/hooked-on-a-feeling/" data-title="hooked on a feeling" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Hooked on a Feeling</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Blue Swede</span> &mdash; first recorded by <strong>B. J. Thomas</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/hound-dog/">
+                <a class="song-idx-card" href="/who-recorded/hound-dog/" data-title="hound dog" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Hound Dog</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Elvis Presley</span> &mdash; first recorded by <strong>Big Mama Thornton</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/hurt/">
+                <a class="song-idx-card" href="/who-recorded/hurt/" data-title="hurt" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Hurt</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Johnny Cash</span> &mdash; first recorded by <strong>Nine Inch Nails</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Nine Inch Nails</strong> &middot; written by <strong>Trent Reznor</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/i-can-see-clearly-now/">
+                <a class="song-idx-card" href="/who-recorded/i-can-see-clearly-now/" data-title="i can see clearly now" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">I Can See Clearly Now</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Jimmy Cliff</span> &mdash; first recorded by <strong>Johnny Nash</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/i-love-rock-n-roll/">
+                <a class="song-idx-card" href="/who-recorded/i-love-rock-n-roll/" data-title="i love rock 'n' roll" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">I Love Rock 'n' Roll</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Joan Jett &amp; the Blackhearts</span> &mdash; first recorded by <strong>The Arrows</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/i-will-always-love-you/">
+                <a class="song-idx-card" href="/who-recorded/i-will-always-love-you/" data-title="i will always love you" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">I Will Always Love You</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Whitney Houston</span> &mdash; first recorded by <strong>Dolly Parton</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Dolly Parton</strong> &middot; written by <strong>Dolly Parton</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/if-you-dont-know-me-by-now/">
+                <a class="song-idx-card" href="/who-wrote/im-a-believer/" data-title="i'm a believer" data-cover="0" data-writer="1" data-contested="0">
+                    <p class="song-idx-title">I'm a Believer</p>
+                    <p class="song-idx-rel"><span class="song-idx-credit">Recorded by The Monkees</span> &mdash; written by <strong>Neil Diamond</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-writer">Writer</span></p>
+                </a>
+                <a class="song-idx-card" href="/who-recorded/if-you-dont-know-me-by-now/" data-title="if you don't know me by now" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">If You Don't Know Me by Now</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Simply Red</span> &mdash; first recorded by <strong>Harold Melvin &amp; the Blue Notes</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/iko-iko/">
+                <a class="song-idx-card" href="/who-recorded/iko-iko/" data-title="iko iko" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Iko Iko</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Dixie Cups</span> &mdash; first recorded by <strong>James &quot;Sugar Boy&quot; Crawford and His Cane Cutters</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/its-all-over-now/">
+                <a class="song-idx-card" href="/who-recorded/its-all-over-now/" data-title="it's all over now" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">It's All Over Now</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Rolling Stones</span> &mdash; first recorded by <strong>The Valentinos</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>The Valentinos</strong> &middot; written by <strong>Bobby Womack</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/killing-me-softly/">
+                <a class="song-idx-card" href="/who-recorded/killing-me-softly/" data-title="killing me softly with his song" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Killing Me Softly with His Song</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Fugees</span> &mdash; first recorded by <strong>Lori Lieberman</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/kingston-town/">
+                <a class="song-idx-card" href="/who-recorded/kingston-town/" data-title="kingston town" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Kingston Town</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to UB40</span> &mdash; first recorded by <strong>Lord Creator</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/land-of-1000-dances/">
+                <a class="song-idx-card" href="/who-recorded/land-of-1000-dances/" data-title="land of 1000 dances" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Land of 1000 Dances</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Wilson Pickett</span> &mdash; first recorded by <strong>Chris Kenner</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/let-it-be-me/">
+                <a class="song-idx-card" href="/who-recorded/let-it-be-me/" data-title="let it be me" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Let It Be Me</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Everly Brothers</span> &mdash; first recorded by <strong>Les Compagnons de la chanson</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/louie-louie/">
+                <a class="song-idx-card" href="/who-recorded/louie-louie/" data-title="louie louie" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Louie Louie</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Kingsmen</span> &mdash; first recorded by <strong>Richard Berry</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/love-hurts/">
+                <a class="song-idx-card" href="/who-recorded/love-hurts/" data-title="love hurts" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Love Hurts</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Nazareth</span> &mdash; first recorded by <strong>The Everly Brothers</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/mad-world/">
+                <a class="song-idx-card" href="/who-recorded/mad-world/" data-title="mad world" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Mad World</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Gary Jules</span> &mdash; first recorded by <strong>Tears for Fears</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Tears for Fears</strong> &middot; written by <strong>Roland Orzabal</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/make-you-feel-my-love/">
+                <a class="song-idx-card" href="/who-recorded/make-you-feel-my-love/" data-title="make you feel my love" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Make You Feel My Love</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Adele</span> &mdash; first recorded by <strong>Billy Joel</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Billy Joel</strong> &middot; written by <strong>Bob Dylan</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/mas-que-nada/">
+                <a class="song-idx-card" href="/who-wrote/manic-monday/" data-title="manic monday" data-cover="0" data-writer="1" data-contested="0">
+                    <p class="song-idx-title">Manic Monday</p>
+                    <p class="song-idx-rel"><span class="song-idx-credit">Recorded by The Bangles</span> &mdash; written by <strong>Prince</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-writer">Writer</span></p>
+                </a>
+                <a class="song-idx-card" href="/who-recorded/mas-que-nada/" data-title="mas que nada" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Mas que Nada</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Sérgio Mendes &amp; Brasil '66</span> &mdash; first recorded by <strong>Jorge Ben</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/me-and-bobby-mcgee/">
+                <a class="song-idx-card" href="/who-recorded/me-and-bobby-mcgee/" data-title="me and bobby mcgee" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Me and Bobby McGee</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Janis Joplin</span> &mdash; first recorded by <strong>Roger Miller</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Roger Miller</strong> &middot; written by <strong>Kris Kristofferson</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/money-thats-what-i-want/">
+                <a class="song-idx-card" href="/who-recorded/money-thats-what-i-want/" data-title="money (that's what i want)" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Money (That's What I Want)</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Beatles</span> &mdash; first recorded by <strong>Barrett Strong</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/monkey-man/">
+                <a class="song-idx-card" href="/who-recorded/monkey-man/" data-title="monkey man" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Monkey Man</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Specials</span> &mdash; first recorded by <strong>The Maytals</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/mr-bojangles/">
+                <a class="song-idx-card" href="/who-recorded/mr-bojangles/" data-title="mr. bojangles" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Mr. Bojangles</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Nitty Gritty Dirt Band</span> &mdash; first recorded by <strong>Jerry Jeff Walker</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/mustang-sally/">
+                <a class="song-idx-card" href="/who-recorded/mustang-sally/" data-title="mustang sally" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Mustang Sally</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Wilson Pickett</span> &mdash; first recorded by <strong>Sir Mack Rice</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/my-way/">
+                <a class="song-idx-card" href="/who-recorded/my-way/" data-title="my way" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">My Way</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Frank Sinatra</span> &mdash; first recorded by <strong>Claude François</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/need-your-love-so-bad/">
+                <a class="song-idx-card" href="/who-recorded/need-your-love-so-bad/" data-title="need your love so bad" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Need Your Love So Bad</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Fleetwood Mac</span> &mdash; first recorded by <strong>Little Willie John</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/nothing-compares-2-u/">
+                <a class="song-idx-card" href="/who-recorded/nothing-compares-2-u/" data-title="nothing compares 2 u" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Nothing Compares 2 U</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Sin&eacute;ad O&rsquo;Connor</span> &mdash; first recorded by <strong>The Family</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>The Family</strong> &middot; written by <strong>Prince</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/papa-was-a-rollin-stone/">
+                <a class="song-idx-card" href="/who-recorded/papa-was-a-rollin-stone/" data-title="papa was a rollin' stone" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Papa Was a Rollin' Stone</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Temptations</span> &mdash; first recorded by <strong>The Undisputed Truth</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/pass-the-dutchie/">
+                <a class="song-idx-card" href="/who-recorded/pass-the-dutchie/" data-title="pass the dutchie" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Pass the Dutchie</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Musical Youth</span> &mdash; first recorded by <strong>The Mighty Diamonds</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/piece-of-my-heart/">
+                <a class="song-idx-card" href="/who-recorded/piece-of-my-heart/" data-title="piece of my heart" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Piece of My Heart</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Janis Joplin</span> &mdash; first recorded by <strong>Erma Franklin</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/red-red-wine/">
+                <a class="song-idx-card" href="/who-recorded/red-red-wine/" data-title="red red wine" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Red Red Wine</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to UB40</span> &mdash; first recorded by <strong>Neil Diamond</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Neil Diamond</strong> &middot; written by <strong>Neil Diamond</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/respect/">
+                <a class="song-idx-card" href="/who-recorded/respect/" data-title="respect" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Respect</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Aretha Franklin</span> &mdash; first recorded by <strong>Otis Redding</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Otis Redding</strong> &middot; written by <strong>Otis Redding</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/rhinestone-cowboy/">
+                <a class="song-idx-card" href="/who-recorded/rhinestone-cowboy/" data-title="rhinestone cowboy" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Rhinestone Cowboy</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Glen Campbell</span> &mdash; first recorded by <strong>Larry Weiss</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/rivers-of-babylon/">
+                <a class="song-idx-card" href="/who-recorded/rivers-of-babylon/" data-title="rivers of babylon" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Rivers of Babylon</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Boney M.</span> &mdash; first recorded by <strong>The Melodians</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/rollin-and-tumblin/">
+                <a class="song-idx-card" href="/who-recorded/rollin-and-tumblin/" data-title="rollin' and tumblin'" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Rollin' and Tumblin'</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Muddy Waters</span> &mdash; first recorded by <strong>Hambone Willie Newbern</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/seasons-in-the-sun/">
+                <a class="song-idx-card" href="/who-recorded/seasons-in-the-sun/" data-title="seasons in the sun" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Seasons in the Sun</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Terry Jacks</span> &mdash; first recorded by <strong>Jacques Brel</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/seven-bridges-road/">
+                <a class="song-idx-card" href="/who-recorded/seven-bridges-road/" data-title="seven bridges road" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Seven Bridges Road</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Eagles</span> &mdash; first recorded by <strong>Steve Young</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/some-kind-of-wonderful/">
+                <a class="song-idx-card" href="/who-recorded/some-kind-of-wonderful/" data-title="some kind of wonderful" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Some Kind of Wonderful</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Grand Funk Railroad</span> &mdash; first recorded by <strong>Soul Brothers Six</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/sukiyaki/">
+                <a class="song-idx-card" href="/who-recorded/sukiyaki/" data-title="sukiyaki" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Sukiyaki</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to A Taste of Honey</span> &mdash; first recorded by <strong>Kyu Sakamoto</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/suspicious-minds/">
+                <a class="song-idx-card" href="/who-recorded/suspicious-minds/" data-title="suspicious minds" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Suspicious Minds</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Elvis Presley</span> &mdash; first recorded by <strong>Mark James</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/sway/">
+                <a class="song-idx-card" href="/who-recorded/sway/" data-title="sway" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Sway</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Dean Martin</span> &mdash; first recorded by <strong>La Sonora Matancera with Nelson Pinedo</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/tainted-love/">
+                <a class="song-idx-card" href="/who-recorded/tainted-love/" data-title="tainted love" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Tainted Love</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Soft Cell</span> &mdash; first recorded by <strong>Gloria Jones</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/take-me-to-the-river/">
+                <a class="song-idx-card" href="/who-recorded/take-me-to-the-river/" data-title="take me to the river" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Take Me to the River</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Talking Heads</span> &mdash; first recorded by <strong>Al Green</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Al Green</strong> &middot; written by <strong>Al Green</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/tennessee-waltz/">
+                <a class="song-idx-card" href="/who-recorded/tennessee-waltz/" data-title="tennessee waltz" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Tennessee Waltz</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Patti Page</span> &mdash; first recorded by <strong>Pee Wee King and His Golden West Cowboys</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/the-best/">
+                <a class="song-idx-card" href="/who-recorded/the-best/" data-title="the best" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">The Best</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Tina Turner</span> &mdash; first recorded by <strong>Bonnie Tyler</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/the-first-cut-is-the-deepest/">
+                <a class="song-idx-card" href="/who-recorded/the-first-cut-is-the-deepest/" data-title="the first cut is the deepest" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">The First Cut Is the Deepest</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Rod Stewart</span> &mdash; first recorded by <strong>P. P. Arnold</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>P. P. Arnold</strong> &middot; written by <strong>Cat Stevens</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/the-girl-from-ipanema/">
+                <a class="song-idx-card" href="/who-recorded/the-girl-from-ipanema/" data-title="the girl from ipanema" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">The Girl from Ipanema</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Stan Getz and Astrud Gilberto</span> &mdash; first recorded by <strong>Pery Ribeiro</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/the-house-of-the-rising-sun/">
+                <a class="song-idx-card" href="/who-recorded/the-house-of-the-rising-sun/" data-title="the house of the rising sun" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">The House of the Rising Sun</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Animals</span> &mdash; first recorded by <strong>Clarence &quot;Tom&quot; Ashley and Gwen Foster</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/the-lion-sleeps-tonight/">
+                <a class="song-idx-card" href="/who-recorded/the-lion-sleeps-tonight/" data-title="the lion sleeps tonight" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">The Lion Sleeps Tonight</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Tokens</span> &mdash; first recorded by <strong>Solomon Linda's Original Evening Birds</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/the-man-who-sold-the-world/">
+                <a class="song-idx-card" href="/who-recorded/the-man-who-sold-the-world/" data-title="the man who sold the world" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">The Man Who Sold the World</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Nirvana</span> &mdash; first recorded by <strong>David Bowie</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>David Bowie</strong> &middot; written by <strong>David Bowie</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/the-tide-is-high/">
+                <a class="song-idx-card" href="/who-recorded/the-tide-is-high/" data-title="the tide is high" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">The Tide Is High</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Blondie</span> &mdash; first recorded by <strong>The Paragons</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/the-train-kept-a-rollin/">
+                <a class="song-idx-card" href="/who-recorded/the-train-kept-a-rollin/" data-title="the train kept a-rollin'" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">The Train Kept A-Rollin'</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Aerosmith</span> &mdash; first recorded by <strong>Tiny Bradshaw</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/time-is-on-my-side/">
+                <a class="song-idx-card" href="/who-recorded/time-is-on-my-side/" data-title="time is on my side" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Time Is on My Side</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Rolling Stones</span> &mdash; first recorded by <strong>Kai Winding and His Orchestra</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/torn/">
+                <a class="song-idx-card" href="/who-recorded/torn/" data-title="torn" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Torn</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Natalie Imbruglia</span> &mdash; first recorded by <strong>Lis S&oslash;rensen</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/try-a-little-tenderness/">
+                <a class="song-idx-card" href="/who-recorded/try-a-little-tenderness/" data-title="try a little tenderness" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Try a Little Tenderness</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Otis Redding</span> &mdash; first recorded by <strong>Jack Payne and His Band</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/turn-turn-turn/">
+                <a class="song-idx-card" href="/who-recorded/turn-turn-turn/" data-title="turn! turn! turn!" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Turn! Turn! Turn!</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Byrds</span> &mdash; first recorded by <strong>The Limeliters</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>The Limeliters</strong> &middot; written by <strong>Pete Seeger</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/twist-and-shout/">
+                <a class="song-idx-card" href="/who-recorded/twist-and-shout/" data-title="twist and shout" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Twist and Shout</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Beatles</span> &mdash; first recorded by <strong>The Top Notes</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/unchained-melody/">
+                <a class="song-idx-card" href="/who-recorded/unchained-melody/" data-title="unchained melody" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Unchained Melody</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to The Righteous Brothers</span> &mdash; first recorded by <strong>Todd Duncan</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/valerie/">
+                <a class="song-idx-card" href="/who-recorded/valerie/" data-title="valerie" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">Valerie</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Amy Winehouse</span> &mdash; first recorded by <strong>The Zutons</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>The Zutons</strong> &middot; written by <strong>The Zutons</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/wagon-wheel/">
+                <a class="song-idx-card" href="/who-recorded/wagon-wheel/" data-title="wagon wheel" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">Wagon Wheel</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Darius Rucker</span> &mdash; first recorded by <strong>Old Crow Medicine Show</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/war/">
+                <a class="song-idx-card" href="/who-recorded/war/" data-title="war" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">War</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Edwin Starr</span> &mdash; first recorded by <strong>The Temptations</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/what-a-difference-a-day-makes/">
+                <a class="song-idx-card" href="/who-recorded/what-a-difference-a-day-makes/" data-title="what a diff'rence a day makes" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">What a Diff'rence a Day Makes</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Dinah Washington</span> &mdash; first recorded by <strong>Dorsey Brothers’ Orchestra</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/when-the-levee-breaks/">
+                <a class="song-idx-card" href="/who-recorded/when-the-levee-breaks/" data-title="when the levee breaks" data-cover="1" data-writer="1" data-contested="0">
                     <p class="song-idx-title">When the Levee Breaks</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to Led Zeppelin</span> &mdash; first recorded by <strong>Kansas Joe McCoy and Memphis Minnie</strong></p>
+                    <p class="song-idx-rel">First recorded by <strong>Kansas Joe McCoy and Memphis Minnie</strong> &middot; written by <strong>Memphis Minnie and Kansas Joe McCoy</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span><span class="song-tag tag-writer">Writer</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/you-are-my-sunshine/">
+                <a class="song-idx-card" href="/who-recorded/you-are-my-sunshine/" data-title="you are my sunshine" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">You Are My Sunshine</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Jimmie Davis</span> &mdash; first recorded by <strong>The Pine Ridge Boys</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/you-dont-have-to-say-you-love-me/">
+                <a class="song-idx-card" href="/who-recorded/you-dont-have-to-say-you-love-me/" data-title="you don't have to say you love me" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">You Don't Have to Say You Love Me</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Dusty Springfield</span> &mdash; first recorded by <strong>Pino Donaggio</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
                 </a>
-                <a class="song-idx-card" href="/who-recorded/you-got-the-love/">
+                <a class="song-idx-card" href="/who-recorded/you-got-the-love/" data-title="you got the love" data-cover="1" data-writer="0" data-contested="0">
                     <p class="song-idx-title">You Got the Love</p>
                     <p class="song-idx-rel"><span class="song-idx-credit">Credited to Florence + the Machine</span> &mdash; first recorded by <strong>The Source featuring Candi Staton</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-cover">Cover</span></p>
+                </a>
+                <a class="song-idx-card" href="/who-wrote/youve-got-a-friend/" data-title="you've got a friend" data-cover="0" data-writer="1" data-contested="0">
+                    <p class="song-idx-title">You've Got a Friend</p>
+                    <p class="song-idx-rel"><span class="song-idx-credit">Recorded by James Taylor</span> &mdash; written by <strong>Carole King</strong></p>
+                    <p class="song-idx-tags"><span class="song-tag tag-writer">Writer</span></p>
                 </a>
         </div>
-        <aside class="song-rights" style="margin-top:34px"><p class="kicker">The scope</p><p>These are songs a band <strong>covered</strong> where the cover is mistaken for the original recording. We correct who recorded it first &mdash; the songwriter is noted as context, and we never reproduce lyrics.</p><p style="margin-top:10px">Looking for who <strong>wrote</strong> a song rather than who recorded it first? See <a href="/who-wrote/">Who wrote it &rarr;</a></p></aside>
+        <aside class="song-rights" style="margin-top:34px"><p class="kicker">The scope</p><p><strong>Cover</strong>: a famous later recording mistaken for the original. <strong>Writer</strong>: written by a different, recognisable artist. <strong>Contested</strong>: authorship that was litigated or genuinely disputed. A song can be more than one. We never reproduce lyrics.</p></aside>
     </main>
     <footer class="site-footer">
         <nav class="foot-links" aria-label="Site">
@@ -723,5 +855,20 @@
     </script>
     <!-- Privacy-friendly, cookieless analytics (GoatCounter) — injected site-wide via SCRIPT -->
     <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script>
+        (function(){
+            var grid=document.getElementById('songGrid'); if(!grid) return;
+            var cards=[].slice.call(grid.querySelectorAll('.song-idx-card'));
+            var pills=[].slice.call(document.querySelectorAll('.song-pill'));
+            var countEl=document.getElementById('songShown');
+            function apply(f){ var shown=0;
+                cards.forEach(function(c){ var ok = f==='all' || c.getAttribute('data-'+f)==='1'; c.style.display=ok?'':'none'; if(ok)shown++; });
+                pills.forEach(function(p){ p.setAttribute('aria-pressed', p.getAttribute('data-filter')===f?'true':'false'); });
+                if(countEl) countEl.textContent=shown;
+            }
+            pills.forEach(function(p){ p.addEventListener('click', function(){ apply(p.getAttribute('data-filter')); }); });
+            apply("all");
+        })();
+    </script>
 </body>
 </html>

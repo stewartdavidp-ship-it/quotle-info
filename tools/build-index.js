@@ -168,7 +168,7 @@ ${FEATURED.map(featuredCard).join('\n')}
                  folded into the quote count — but until this tile existed an entire content type
                  (its own harvest/generate/audit pipeline) was reachable from the home page only
                  via the nav bar, and nothing on the front page said it existed. -->
-            <a class="tile" href="/who-recorded/"><div class="tile-n">${songCount}</div><div class="tile-label">Songs</div><div class="tile-sub">Who <em>recorded</em> it first — covers mistaken for the original.</div></a>
+            <a class="tile" href="/who-recorded/"><div class="tile-n">${songCount}</div><div class="tile-label">Songs</div><div class="tile-sub">Who <em>recorded</em> it first, and who <em>wrote</em> it — credited to the wrong artist.</div></a>
             <a class="tile" href="/authors/"><div class="tile-n">${authorCount}</div><div class="tile-label">Authors</div><div class="tile-sub">Who really said what, quote by quote.</div></a>
             <a class="tile" href="/under-review/"><div class="tile-n">${BENCH.length}</div><div class="tile-label">Under review</div><div class="tile-sub">Flagged as commonly misquoted — queued for a full trace.</div></a>
         </section>

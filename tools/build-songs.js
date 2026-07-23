@@ -501,26 +501,73 @@ const SONG_CSS = `
         .game-cta p { color: var(--slate); font-size: 0.92rem; margin-bottom: 18px; }
         .game-cta-btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 28px; background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep)); border-radius: var(--radius-md); font-family: 'DM Sans', sans-serif; font-weight: 600; color: white; text-decoration: none; }`;
 
-// ---- /who-recorded/ browse index ----
-function renderIndex(songs) {
-  const url = `${ORIGIN}/who-recorded/`;
-  const cards = songs.map((s) => `                <a class="song-idx-card" href="/who-recorded/${s.songSlug}/">
-                    <p class="song-idx-title">${esc(s.title)}</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Credited to ${esc(s.creditedTo)}</span> &mdash; first recorded by <strong>${esc(s.answer.originalArtist)}</strong>${s.original && s.answer ? '' : ''}</p>
-                </a>`).join('\n');
+// ---- the unified Songs browse (served at BOTH /who-recorded/ and /who-wrote/) ----
+// Songs are ONE collection; "cover" / "writer" / "contested" are facets a song carries, not separate
+// kinds. This lists every song and filters client-side by facet. Each card links to the song's
+// CANONICAL page (recording-axis → /who-recorded/, writing-only → /who-wrote/). The two entry points
+// differ only in which pill is pre-selected.
+const songFacets = (s) => {
+  const ax = axesOf(s);
+  return { cover: ax.includes('recording'), writer: ax.includes('writing'), contested: s.shape === 'contested' };
+};
+const songCanonicalPath = (s) => (axesOf(s).includes('recording') ? `/who-recorded/${s.songSlug}/` : `/who-wrote/${s.songSlug}/`);
+const songBrowseLine = (s) => {
+  const f = songFacets(s);
+  const oa = esc((s.answer && s.answer.originalArtist) || '');
+  const wr = esc((s.writing && s.writing.writer) || '');
+  if (f.cover && f.writer) return `First recorded by <strong>${oa}</strong> &middot; written by <strong>${wr}</strong>`;
+  if (f.cover) return `<span class="song-idx-credit">Credited to ${esc(s.creditedTo)}</span> &mdash; first recorded by <strong>${oa}</strong>`;
+  return `<span class="song-idx-credit">Recorded by ${esc(s.creditedTo)}</span> &mdash; written by <strong>${wr}</strong>`;
+};
+const songTags = (s) => {
+  const f = songFacets(s);
+  return [
+    f.cover ? '<span class="song-tag tag-cover">Cover</span>' : '',
+    f.writer ? '<span class="song-tag tag-writer">Writer</span>' : '',
+    f.contested ? '<span class="song-tag tag-contested">Contested</span>' : '',
+  ].filter(Boolean).join('');
+};
+
+function renderSongsBrowse(songs, cfg) {
+  const counts = songs.reduce((m, s) => { const f = songFacets(s); if (f.cover) m.cover++; if (f.writer) m.writer++; if (f.contested) m.contested++; return m; }, { cover: 0, writer: 0, contested: 0 });
   const n = songs.length;
+  const df = cfg.defaultFilter || 'all';
+  const cards = [...songs].sort((a, b) => a.title.localeCompare(b.title)).map((s) => {
+    const f = songFacets(s);
+    return `                <a class="song-idx-card" href="${songCanonicalPath(s)}" data-title="${esc(plain(s.title).toLowerCase())}" data-cover="${f.cover ? 1 : 0}" data-writer="${f.writer ? 1 : 0}" data-contested="${f.contested ? 1 : 0}">
+                    <p class="song-idx-title">${esc(s.title)}</p>
+                    <p class="song-idx-rel">${songBrowseLine(s)}</p>
+                    <p class="song-idx-tags">${songTags(s)}</p>
+                </a>`;
+  }).join('\n');
+  const pill = (id, label, count) => `<button class="song-pill" data-filter="${id}" aria-pressed="${id === df ? 'true' : 'false'}">${label} <span class="song-pill-n">${count}</span></button>`;
+  const FILTER_JS = `    <script>
+        (function(){
+            var grid=document.getElementById('songGrid'); if(!grid) return;
+            var cards=[].slice.call(grid.querySelectorAll('.song-idx-card'));
+            var pills=[].slice.call(document.querySelectorAll('.song-pill'));
+            var countEl=document.getElementById('songShown');
+            function apply(f){ var shown=0;
+                cards.forEach(function(c){ var ok = f==='all' || c.getAttribute('data-'+f)==='1'; c.style.display=ok?'':'none'; if(ok)shown++; });
+                pills.forEach(function(p){ p.setAttribute('aria-pressed', p.getAttribute('data-filter')===f?'true':'false'); });
+                if(countEl) countEl.textContent=shown;
+            }
+            pills.forEach(function(p){ p.addEventListener('click', function(){ apply(p.getAttribute('data-filter')); }); });
+            apply(${JSON.stringify(df)});
+        })();
+    </script>`;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Who recorded it? — songs credited to the wrong artist | Quotle.info</title>
-    <meta name="description" content="Songs everyone thinks a famous act originated — but that were first recorded by someone else. ${n} traced to the original recording.">
-    <link rel="canonical" href="${url}">
+    <title>${esc(cfg.title)}</title>
+    <meta name="description" content="${esc(cfg.description)}">
+    <link rel="canonical" href="${cfg.url}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="${url}">
-    <meta property="og:title" content="Who recorded it? — songs credited to the wrong artist">
-    <meta property="og:description" content="Famous covers mistaken for originals, traced to who recorded them first.">
+    <meta property="og:url" content="${cfg.url}">
+    <meta property="og:title" content="${esc(cfg.ogTitle)}">
+    <meta property="og:description" content="${esc(cfg.ogDescription)}">
 ${OG_IMAGE_TAGS}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -529,33 +576,51 @@ ${HEAD_SCRIPT}
     <style>
 ${ROOT_CSS}${CHROME_CSS}
 ${SONG_CSS}
-        .song-idx-grid { display: grid; gap: 14px; margin-top: 26px; }
+        .song-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; font-family: 'DM Sans', sans-serif; }
+        .song-pill { display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; color: var(--slate); font-size: 0.82rem; font-weight: 500; cursor: pointer; }
+        .song-pill[aria-pressed="true"] { border-color: var(--burgundy); color: var(--ink); }
+        .song-pill-n { color: var(--text-muted); font-size: 0.76rem; }
+        .song-count { font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--text-muted); margin-top: 14px; }
+        .song-idx-grid { display: grid; gap: 14px; margin-top: 10px; }
         @media (min-width: 620px) { .song-idx-grid { grid-template-columns: 1fr 1fr; } }
         .song-idx-card { display: block; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--caution); border-radius: var(--radius-md); padding: 18px 20px; text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
         .song-idx-card:hover { border-left-color: var(--burgundy); transform: translateY(-2px); }
         .song-idx-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--ink); }
         .song-idx-rel { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--slate); margin-top: 6px; }
         .song-idx-credit { color: var(--text-muted); }
+        .song-idx-tags { margin-top: 9px; display: flex; gap: 6px; flex-wrap: wrap; }
+        .song-tag { font-family: 'DM Sans', sans-serif; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; }
+        .tag-cover { background: var(--caution-dim, rgba(214,98,122,0.14)); color: var(--caution); }
+        .tag-writer { background: var(--sage-dim); color: var(--sage); }
+        .tag-contested { background: var(--gold-dim); color: var(--gold); }
     </style>
 ${THEME_CSS}
 </head>
 <body>
 ${NAV('songs')}
     <main id="main">
-        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">Who recorded it</span></nav>
+        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">${esc(cfg.crumb)}</span></nav>
         <header class="song-hero">
-            <p class="kicker">Who recorded it first</p>
-            <h1>Songs credited to the wrong artist</h1>
-            <p class="song-lede">Famous versions everyone takes for the original &mdash; but the song was first recorded by someone else, and a later cover took the credit. ${n === 1 ? 'One song' : `${n} songs`} traced to the original recording. No lyrics, just the record.</p>
+            <p class="kicker">${esc(cfg.kicker)}</p>
+            <h1>${cfg.h1}</h1>
+            <p class="song-lede">${cfg.lede}</p>
         </header>
-        <div class="song-idx-grid">
+        <div class="song-filters" role="group" aria-label="Filter songs by type">
+            ${pill('all', 'All', n)}
+            ${pill('cover', 'Cover', counts.cover)}
+            ${pill('writer', 'Writer', counts.writer)}
+            ${pill('contested', 'Contested', counts.contested)}
+        </div>
+        <p class="song-count"><b id="songShown">${n}</b> songs. No lyrics, just the credit.</p>
+        <div class="song-idx-grid" id="songGrid" data-song-total="${n}">
 ${cards}
         </div>
-        <aside class="song-rights" style="margin-top:34px"><p class="kicker">The scope</p><p>These are songs a band <strong>covered</strong> where the cover is mistaken for the original recording. We correct who recorded it first &mdash; the songwriter is noted as context, and we never reproduce lyrics.</p><p style="margin-top:10px">Looking for who <strong>wrote</strong> a song rather than who recorded it first? See <a href="/who-wrote/">Who wrote it &rarr;</a></p></aside>
+        <aside class="song-rights" style="margin-top:34px"><p class="kicker">The scope</p><p><strong>Cover</strong>: a famous later recording mistaken for the original. <strong>Writer</strong>: written by a different, recognisable artist. <strong>Contested</strong>: authorship that was litigated or genuinely disputed. A song can be more than one. We never reproduce lyrics.</p></aside>
     </main>
 ${FOOTER}
 ${SEARCH_JS}
 ${SCRIPT}
+${FILTER_JS}
 </body>
 </html>`;
 }
@@ -755,65 +820,6 @@ ${SCRIPT}
 </html>`;
 }
 
-// ---- /who-wrote/ browse index ----
-function renderWroteIndex(songs) {
-  const url = `${ORIGIN}/who-wrote/`;
-  const cards = songs.map((s) => `                <a class="song-idx-card" href="/who-wrote/${s.songSlug}/">
-                    <p class="song-idx-title">${esc(s.title)}</p>
-                    <p class="song-idx-rel"><span class="song-idx-credit">Recorded by ${esc(s.creditedTo)}</span> &mdash; written by <strong>${esc((s.writing || {}).writer || '')}</strong></p>
-                </a>`).join('\n');
-  const n = songs.length;
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Who wrote it? — the songwriter behind the hit | Quotle.info</title>
-    <meta name="description" content="Songs the public knows by the performer — but written by someone else. ${n} traced to who actually wrote them.">
-    <link rel="canonical" href="${url}">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="${url}">
-    <meta property="og:title" content="Who wrote it? — the songwriter behind the hit">
-    <meta property="og:description" content="Songs you know by the singer, written by someone else — traced to who actually wrote them.">
-${OG_IMAGE_TAGS}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-${HEAD_SCRIPT}
-    <style>
-${ROOT_CSS}${CHROME_CSS}
-${SONG_CSS}
-        .song-idx-grid { display: grid; gap: 14px; margin-top: 26px; }
-        @media (min-width: 620px) { .song-idx-grid { grid-template-columns: 1fr 1fr; } }
-        .song-idx-card { display: block; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--caution); border-radius: var(--radius-md); padding: 18px 20px; text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
-        .song-idx-card:hover { border-left-color: var(--burgundy); transform: translateY(-2px); }
-        .song-idx-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.2rem; color: var(--ink); }
-        .song-idx-rel { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--slate); margin-top: 6px; }
-        .song-idx-credit { color: var(--text-muted); }
-    </style>
-${THEME_CSS}
-</head>
-<body>
-${NAV('')}
-    <main id="main">
-        <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep" aria-hidden="true">›</span><span aria-current="page">Who wrote it</span></nav>
-        <header class="song-hero">
-            <p class="kicker">Who wrote it</p>
-            <h1>The songwriter behind the hit</h1>
-            <p class="song-lede">Songs the public knows by the singer &mdash; but written by someone else, who often had the bigger career as a writer than a performer. ${n === 1 ? 'One song' : `${n} songs`} traced to who actually wrote them. No lyrics, just the credit.</p>
-        </header>
-        <div class="song-idx-grid">
-${cards}
-        </div>
-        <aside class="song-rights" style="margin-top:34px"><p class="kicker">The scope</p><p>These are songs where the performer is correctly credited &mdash; but a different, often well-known, artist WROTE the song. We name the writer and the definitive recording, and we never reproduce lyrics.</p><p style="margin-top:10px">Looking for a famous <strong>cover</strong> mistaken for the original recording? See <a href="/who-recorded/">Who recorded it first &rarr;</a></p></aside>
-    </main>
-${FOOTER}
-${SEARCH_JS}
-${SCRIPT}
-</body>
-</html>`;
-}
-
 // ---- build ----
 function build() {
   if (!fs.existsSync(SONGS_DIR)) return;
@@ -838,16 +844,31 @@ function build() {
       writing.push(s);
     }
   }
-  recording.sort((a, b) => a.title.localeCompare(b.title));
+  // Both browse entry points render the SAME unified Songs browse over every record — songs are one
+  // collection. They differ only in the pre-selected pill: /who-recorded/ opens on All, /who-wrote/
+  // on Writer. Each card links to the song's canonical page.
+  const all = [...recording, ...writing];
   fs.mkdirSync(path.join(ROOT, 'who-recorded'), { recursive: true });
-  fs.writeFileSync(path.join(ROOT, 'who-recorded', 'index.html'), renderIndex(recording));
-  console.log(`  ✓ who-recorded/ (${recording.length} song page${recording.length === 1 ? '' : 's'} + index)`);
-  if (writing.length) {
-    writing.sort((a, b) => a.title.localeCompare(b.title));
-    fs.mkdirSync(path.join(ROOT, 'who-wrote'), { recursive: true });
-    fs.writeFileSync(path.join(ROOT, 'who-wrote', 'index.html'), renderWroteIndex(writing));
-    console.log(`  ✓ who-wrote/ (${writing.length} song page${writing.length === 1 ? '' : 's'} + index)`);
-  }
+  fs.writeFileSync(path.join(ROOT, 'who-recorded', 'index.html'), renderSongsBrowse(all, {
+    url: `${ORIGIN}/who-recorded/`, crumb: 'Songs', kicker: 'Who recorded it, who wrote it',
+    h1: 'Songs credited to the wrong artist',
+    lede: 'Famous versions the public takes for the original &mdash; or for the performer&rsquo;s own song. Filter by what&rsquo;s wrong: a <strong>cover</strong> mistaken for the original recording, a song <strong>written</strong> by someone else, or authorship that was <strong>contested</strong>.',
+    title: 'Songs credited to the wrong artist | Quotle.info',
+    description: 'Songs whose famous version is mistaken for the original recording, or whose writer is a different, well-known artist. Cover, writer-credit and contested authorship — traced, no lyrics.',
+    ogTitle: 'Songs credited to the wrong artist', ogDescription: 'Covers mistaken for originals, and songs written by someone else — traced.',
+    defaultFilter: 'all',
+  }));
+  fs.mkdirSync(path.join(ROOT, 'who-wrote'), { recursive: true });
+  fs.writeFileSync(path.join(ROOT, 'who-wrote', 'index.html'), renderSongsBrowse(all, {
+    url: `${ORIGIN}/who-wrote/`, crumb: 'Who wrote it', kicker: 'Who wrote it',
+    h1: 'Who wrote it &mdash; the songwriter behind the hit',
+    lede: 'Songs the public knows by the singer, but written by someone else. Part of the wider songs collection &mdash; use the pills to see covers and contested credits too.',
+    title: 'Who wrote it? — the songwriter behind the hit | Quotle.info',
+    description: 'Songs the public knows by the performer but written by a different, recognisable artist — traced to who actually wrote them.',
+    ogTitle: 'Who wrote it? — the songwriter behind the hit', ogDescription: 'Songs you know by the singer, written by someone else.',
+    defaultFilter: 'writer',
+  }));
+  console.log(`  ✓ who-recorded/ + who-wrote/ (${recording.length} recording + ${writing.length} writing-only pages; unified browse of ${all.length} songs)`);
 }
 
 build();
