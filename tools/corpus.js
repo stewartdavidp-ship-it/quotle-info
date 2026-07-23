@@ -46,7 +46,10 @@ const allSongs = readJsonDir(path.join(ROOT, 'data', 'songs'));
 const axesOf = (s) => (Array.isArray(s.axes) && s.axes.length ? s.axes : ['recording']);
 const songs = allSongs.filter((s) => axesOf(s).includes('recording')); // → /who-recorded/, and the "songs" every other tool means
 const writingSongs = allSongs.filter((s) => axesOf(s).includes('writing')); // → /who-wrote/
-const authors = aggregateAuthors(records, songs); // the authoritative hub set — what /authors/ lists
+// Fold BOTH axes' people into hubs: a writing record's writer/performer get /authors/ pages too (a
+// song entry carries its axes so the render routes to /who-wrote/ vs /who-recorded/). Passing allSongs
+// (deduped per record) — not songs ∪ writingSongs — avoids folding a dual-axis record twice.
+const authors = aggregateAuthors(records, allSongs); // the authoritative hub set — what /authors/ lists
 
 // ---- era partition ----
 // Buckets key on BIRTH year, labelled for what they actually catch: the second takes everyone from

@@ -259,12 +259,22 @@ const quoteCard = (q) => {
 
 // A song entry on an author hub. The relationship line is role-aware: the cover artist's hub frames
 // its songs as "actually a cover" (the misattribution), the original recorder's as "recorded first".
+// A song entry links to the page it belongs to: recording-axis → /who-recorded/, writing-only →
+// /who-wrote/ (recording wins for a dual-axis record, matching its primary page in build-songs).
+const songRoute = (s) => ((s.axes || ['recording']).includes('recording') ? 'who-recorded' : 'who-wrote');
 const songCard = (s) => {
+  const writing = songRoute(s) === 'who-wrote';
+  // rel is role- AND axis-aware. On a writing page the writer's line points at the performer (there is
+  // no "first recorded by" — the performer IS the definitive recording), and the performer's line
+  // points back at the writer.
   const rel = s.role === 'cover' ? `Cover &mdash; originally recorded by ${esc(s.originalArtist)}`
-    : s.role === 'writer' ? `Written by them &mdash; first recorded by ${esc(s.originalArtist)}`
+    : s.role === 'performer' ? `Recorded it &mdash; written by ${esc(s.writer)}`
+    : s.role === 'writer' ? (writing
+      ? `Written by them &mdash; recorded by ${esc(s.creditedTo)}`
+      : `Written by them &mdash; first recorded by ${esc(s.originalArtist)}`)
     : `Recorded it first &mdash; now often credited to ${esc(s.creditedTo)}`;
   const cls = s.role === 'cover' ? 'disputed' : 'verified';
-  return `                <a class="q-card ${cls}" href="/who-recorded/${s.slug}/">
+  return `                <a class="q-card ${cls}" href="/${songRoute(s)}/${s.slug}/">
                     <p class="q-text">${esc(s.title)}</p>
                     <span class="q-conf"><span class="dot" aria-hidden="true">♪</span>${rel}</span>
                 </a>`;
@@ -274,6 +284,7 @@ const songSectionHeading = (a) => {
   if (roles.size === 1 && roles.has('cover')) return `Songs credited to ${esc(a.name)} that are covers`;
   if (roles.size === 1 && roles.has('writer')) return `Songs written by ${esc(a.name)}`;
   if (roles.size === 1 && roles.has('original')) return `Songs ${esc(a.name)} recorded first`;
+  if (roles.size === 1 && roles.has('performer')) return `Songs ${esc(a.name)} recorded`;
   return `Songs involving ${esc(a.name)}`;
 };
 
@@ -308,7 +319,7 @@ ${OG_IMAGE_TAGS}
         description: plain(a.metaLine),
         subjectOf: [
           ...a.quotes.map((q) => ({ '@type': 'Quotation', '@id': `${ORIGIN}/who-said/${q.slug}/#quotation`, text: plain(q.quote), url: `${ORIGIN}/who-said/${q.slug}/` })),
-          ...a.songs.map((s) => ({ '@type': 'MusicRecording', '@id': `${ORIGIN}/who-recorded/${s.slug}/#recording`, name: plain(s.title), url: `${ORIGIN}/who-recorded/${s.slug}/` })),
+          ...a.songs.map((s) => ({ '@type': 'MusicRecording', '@id': `${ORIGIN}/${songRoute(s)}/${s.slug}/#recording`, name: plain(s.title), url: `${ORIGIN}/${songRoute(s)}/${s.slug}/` })),
         ],
       },
     })}

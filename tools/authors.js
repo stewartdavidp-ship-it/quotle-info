@@ -31,13 +31,16 @@ function aggregateAuthors(records, songs = []) {
     if (!hasAuthorPage(a.slug)) continue;
     get(a).quotes.push({ slug: r.quoteSlug, quote: r.displayQuote, confidence: r.confidence });
   }
+  const axesOf = (s) => (Array.isArray(s.axes) && s.axes.length ? s.axes : ['recording']);
   for (const s of songs) {
     for (const a of (s.authors || [])) {
       if (!hasAuthorPage(a.slug)) continue;
       get(a).songs.push({
         slug: s.songSlug, title: s.title, role: a.role || '',
+        axes: axesOf(s),                                   // routes the card to /who-recorded/ or /who-wrote/
         creditedTo: s.creditedTo || '',
         originalArtist: (s.answer && s.answer.originalArtist) || '',
+        writer: (s.writing && s.writing.writer) || (s.original && s.original.writer) || '',
       });
     }
   }
