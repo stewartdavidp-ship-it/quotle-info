@@ -313,6 +313,21 @@ against the release it first appeared on; fall back to a **work** MBID; always i
 QID. Streaming URLs are rejected on purpose — they rot, and a dead identifier in structured data is
 worse than none.
 
+**An identifier of the COMPOSITION is not an identifier of the RECORDING**, and getting that wrong
+asserts, machine-readably, that the song *is* one particular record. `build-songs.js` routes
+`musicbrainz.org/work/` URLs to the `MusicComposition` node and everything else to `MusicRecording` —
+which is right for MBIDs and wrong for Wikidata, where `Q3645800` ("original song written and
+composed by…") and the recording item are indistinguishable as strings. **A record declares the
+difference with `schema.workSameAs`**, an array merged into `recordingOf.sameAs`. Seven wave-s3 fix
+agents filed this independently and two of them deleted good identifiers as the only workaround
+available to them.
+
+`prep-songs.js` now **fetches every Wikidata QID's entity description and classifies it**, so this is
+caught at prep instead of at audit — and prints an explicit ✓ when everything checked out, because
+the block used to be silent and silence read as a pass. Applied corpus-wide it moved **67**
+identifiers across 90 records; the audit had spotted 8. The wave that motivated it had 22 of 26
+records affected.
+
 ### What a normal wave looks like — so a high FAIL count does not read as a broken wave
 Wave s2 (27 songs) came out **10 PASS / 17 FAIL, 122 issues** (3 blocker · 30 high · 37 medium ·
 52 minor), and that is a HEALTHY result, not a bad one. The audit is adversarial by design and most
@@ -364,12 +379,16 @@ be REFUTED** — that is the skeptic working, not a wasted stage.
   song dossier is richer than a quote's, so it is the one most likely to drift over. Fields the batch
   already knows (artist, year, label, writer) and everything fixed or derivable (kickers, headings,
   slugs, initials) are applied in `toRecord`, NOT asked of the agent — that is what buys the room.
-- **Reassigning `original.artist` orphans an author hub, and the build only tells you the COUNT.**
-  When a fix agent corrects the first recorder, the old artist's `authors/{slug}/` directory survives
-  and `verify-corpus.js` aborts with "expected 786, got 788" — no names. The dirs are tracked, so
-  `git status --untracked=all` shows only the NEW hubs, not the stale ones. What works:
-  `find authors -name index.html -mmin +8` — the build rewrites every live hub, so anything with an
-  old mtime is the orphan. Then `git rm -r` those and rebuild. (s3 hit this twice.)
+- **Reassigning `original.artist` orphans an author hub.** When a fix agent corrects the first
+  recorder, the old artist's `authors/{slug}/` directory survives and fails the "rendered author pages
+  match author hubs" invariant. It used to report only "expected 786, got 788" — no names, and
+  `git status --untracked=all` hides the stale ones because they are tracked. **`verify-corpus.js`
+  now names them and prints the `git rm -r` line to run.** Do that, then rebuild. (s3 hit this twice.)
+- **Record prose carries HTML entities; JSON-LD does not decode them.** A record-authored
+  `schema.faqAnswer` shipped `Milli Vanilli&rsquo;s version is a cover` to the one consumer that reads
+  it aloud. `build-songs.js` now runs the whole JSON-LD graph through the quote template's `plain()`
+  (URLs excepted) — the decoder that had existed since day one and that the song builder had simply
+  never applied. If you add a new plain-text sink, route it through `plain()`.
 - **Deleting a record does not delete its rendered pages.** The build writes pages but never removes
   orphan directories, so a removed song leaves `who-recorded/{slug}/` and its author hubs behind and
   the "rendered pages match hubs" invariant fails the build. That is the invariant working — `rm -rf`

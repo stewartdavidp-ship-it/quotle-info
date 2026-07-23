@@ -254,21 +254,85 @@ if (noListen.length) console.log(`   (no link: ${noListen.map((r) => r.songSlug)
 // Sinatra not Claude Francois). Whether an MBID describes the right recording needs a fetch, so this
 // cannot be decided here; what it CAN do is make every identifier visible next to the two artist
 // names, so the reviewer checks the right thing before ingest rather than after publication.
-const withSameAs = good.filter((r) => Array.isArray(r.sameAs) && r.sameAs.length);
-if (withSameAs.length) {
-  console.log(`\nsameAs — confirm each resolves to the ORIGINAL (${withSameAs.length} record(s)):`);
-  withSameAs.forEach((r) => {
-    console.log(`   ${r.songSlug}  original=${r.answer.originalArtist}  vs cover=${r.creditedTo}`);
-    r.sameAs.forEach((u) => console.log(`       ${u}`));
-  });
+// A Wikidata QID is opaque: the SONG item and the RECORDING item are indistinguishable as strings,
+// and build-songs.js emits anything that is not a musicbrainz /work/ URL as an identifier OF the
+// recording. Wave s3 shipped EIGHT composition items asserted as recordings that way, and this block
+// — which only listed the URLs — read as reassurance it could not deliver. One API call per QID
+// decides it, so decide it here instead of leaving it for the audit two stages later.
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+async function wikidataKind(qid) {
+  const url = `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${qid}`
+    + '&props=descriptions&languages=en&format=json';
+  // A burst of ~40 back-to-back requests gets throttled — the first attempt of this check failed 33
+  // of 41 lookups and silently reported "could not reach", which is exactly the kind of quiet
+  // half-coverage this pipeline keeps getting bitten by. Space them and retry once.
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt) await sleep(500 * attempt);
+    const ctl = new AbortController();
+    const t = setTimeout(() => ctl.abort(), 10000);
+    try {
+      const res = await fetch(url, { signal: ctl.signal, headers: { 'User-Agent': 'quotle.info-prep/1.0 (https://quotle.info)' } });
+      if (!res.ok) continue;
+      const ent = (await res.json()).entities || {};
+      const d = ((ent[Object.keys(ent)[0]] || {}).descriptions || {}).en;
+      return d ? d.value : '';
+    } catch (_) {
+      // fall through to retry
+    } finally {
+      clearTimeout(t);
+    }
+  }
+  return null;
 }
-const noSameAs = good.filter((r) => !Array.isArray(r.sameAs) || !r.sameAs.length);
-if (noSameAs.length) console.log(`sameAs missing on: ${noSameAs.map((r) => r.songSlug).join(', ')} — prefer a MusicBrainz recording MBID for the original + the Wikidata QID`);
-console.log('');
+// Composition-shaped descriptions. Wikidata is consistent here: "original song written and composed
+// by X", "1932 song by …", "song composed by Pete Seeger". A RECORDING item reads "recording by X"
+// or "single by X" instead.
+const COMPOSITION_RE = /\b(song|composition|hymn|aria|tune)\b/i;
+const RECORDING_RE = /\b(recording|single|album|track|version)\b/i;
 
-fs.mkdirSync(path.dirname(OUT), { recursive: true });
-fs.writeFileSync(OUT, JSON.stringify(good, null, 2));
-const redo = [...stubs.map((r) => r.title), ...brokenAxis.map((r) => r.title), ...unmatched];
-if (redo.length) fs.writeFileSync(OUT.replace(/songs/, 'songs-redo'), JSON.stringify(redo, null, 2));
-console.log('wrote', OUT, `(${good.length} good)`, redo.length ? `+ songs-redo (${redo.length} to re-generate)` : '');
-if (!good.length) { console.error('nothing usable to ingest'); process.exit(1); }
+(async () => {
+  const withSameAs = good.filter((r) => Array.isArray(r.sameAs) && r.sameAs.length);
+  if (withSameAs.length) {
+    console.log(`\nsameAs — confirm each resolves to the ORIGINAL (${withSameAs.length} record(s)):`);
+    const misrouted = [];
+    const unreachable = [];
+    for (const r of withSameAs) {
+      console.log(`   ${r.songSlug}  original=${r.answer.originalArtist}  vs cover=${r.creditedTo}`);
+      for (const u of r.sameAs) {
+        const qid = (String(u).match(/wikidata\.org\/wiki\/(Q\d+)/) || [])[1];
+        if (!qid) { console.log(`       ${u}`); continue; }
+        const desc = await wikidataKind(qid);
+        await sleep(120);
+        if (desc === null) { unreachable.push(`${r.songSlug} ${u}`); console.log(`       ${u}   [could not reach Wikidata — CHECK BY HAND]`); continue; }
+        if (desc === '') { console.log(`       ${u}   [no English description — check by hand]`); continue; }
+        const isWork = COMPOSITION_RE.test(desc) && !RECORDING_RE.test(desc);
+        console.log(`       ${u}   “${desc}”${isWork ? '   ⚠ COMPOSITION, not a recording' : ''}`);
+        if (isWork) misrouted.push({ slug: r.songSlug, url: u });
+      }
+    }
+    if (misrouted.length) {
+      console.log(`\n   ⚠ ${misrouted.length} Wikidata identifier(s) describe the COMPOSITION, but build-songs.js`);
+      console.log('     puts anything that is not a musicbrainz /work/ URL on the MusicRecording node —');
+      console.log('     which would assert that the song entity IS this specific recording. Move each into');
+      console.log('     the record\'s schema.workSameAs array (it is merged into recordingOf.sameAs):');
+      misrouted.forEach((m) => console.log(`       ${m.slug}  ←  ${m.url}`));
+    }
+    // Silence must not read as a clean bill of health — the point of this block is that it USED to.
+    if (unreachable.length) {
+      console.log(`\n   ⚠ ${unreachable.length} identifier(s) were NOT checked (Wikidata unreachable after retries):`);
+      unreachable.forEach((u) => console.log(`       ${u}`));
+    } else if (!misrouted.length) {
+      console.log('\n   ✓ every Wikidata identifier checked against its entity description; none is a composition item.');
+    }
+  }
+  const noSameAs = good.filter((r) => !Array.isArray(r.sameAs) || !r.sameAs.length);
+  if (noSameAs.length) console.log(`sameAs missing on: ${noSameAs.map((r) => r.songSlug).join(', ')} — prefer a MusicBrainz recording MBID for the original + the Wikidata QID`);
+  console.log('');
+
+  fs.mkdirSync(path.dirname(OUT), { recursive: true });
+  fs.writeFileSync(OUT, JSON.stringify(good, null, 2));
+  const redo = [...stubs.map((r) => r.title), ...brokenAxis.map((r) => r.title), ...unmatched];
+  if (redo.length) fs.writeFileSync(OUT.replace(/songs/, 'songs-redo'), JSON.stringify(redo, null, 2));
+  console.log('wrote', OUT, `(${good.length} good)`, redo.length ? `+ songs-redo (${redo.length} to re-generate)` : '');
+  if (!good.length) { console.error('nothing usable to ingest'); process.exit(1); }
+})();
