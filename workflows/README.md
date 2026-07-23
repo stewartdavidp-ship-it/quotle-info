@@ -8,6 +8,7 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
 - **Corpus: 1118** quotes + **90** songs. **Target: 2000** quotes.
 - **Next wave number: r26.** (Waves r6–r25 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
 - Harvest backlog: `data/harvest-queue.json` (committed) — 391 queued.
+- **Who-wrote axis (`/who-wrote/`, added 2026-07-23):** the second music axis — "who WROTE this song?". Harvest is deterministic (`node workflows/harvest-who-wrote.js` scans the recording corpus → `data/who-wrote-queue.json`). ~14 records shipped (single-axis + dual-axis enrichment); ~78 dual-axis candidates queued. Recipe: the "Songs — the `/who-wrote/` axis" section below.
 - **Songs: next wave number s4 — but the backlog is EMPTY.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **0 queued**, 89 ingested, 1 dropped. **A new wave needs a `harvest-songs.js` run first** (step 0 of the song recipe). Digest: `data/song-queue.md`.
 
 > **Do not trust the three lines above** — they are hand-maintained and have been wrong before (they
@@ -393,6 +394,81 @@ be REFUTED** — that is the skeptic working, not a wasted stage.
   orphan directories, so a removed song leaves `who-recorded/{slug}/` and its author hubs behind and
   the "rendered pages match hubs" invariant fails the build. That is the invariant working — `rm -rf`
   the orphan dirs (`git status --porcelain --untracked=all`) and rebuild.
+
+## Songs — the `/who-wrote/` axis (added 2026-07-23)
+
+The music object has a SECOND axis: **"who WROTE this song?"** — where the performer is correctly
+credited, but a *different, recognisable artist* wrote it. Spec: `workflows/SCOPE-who-wrote-it.md`.
+Three shapes, each with its own verdict vocabulary:
+
+| shape | meaning | ClaimReview? | confidence |
+|---|---|---|---|
+| `credit` | the writer isn't the definitive performer (a revelation) | no | attributed |
+| `misbelief` | the public thinks the PERFORMER wrote it (a fact-check) | yes (rates it false) | disputed |
+| `contested` | authorship is litigated / genuinely disputed | no (a court ruling isn't a provenance trace) | disputed |
+
+A record declares `axes`: `["writing"]` (writing-only → renders `/who-wrote/{slug}/`) or
+`["recording","writing"]` (**dual** → renders ONE page at `/who-recorded/{slug}/` with a "who wrote
+it" section; recording owns the canonical URL — no second page). `validate-songs.js` gates it; the
+shape⇄confidence/misattribution consistency checks apply to **writing-only** records only (on a dual
+record both belong to the recording axis).
+
+### The harvest is deterministic — the candidates are already in `data/songs`
+The best "who wrote it" candidates are cover-eclipse records: a recognisable artist wrote the song and
+a *different* act's recording is the one the public knows. Every recording record already names its
+writer (`original.writer`), so the harvest is a **scan, not an agent hunt**:
+
+```bash
+node workflows/harvest-who-wrote.js            # → data/who-wrote-queue.json (+ .md digest)
+node workflows/harvest-who-wrote.js --report   # counts only
+```
+
+It stages every recording-only record with a nameable writer, preserving human decisions
+(`status` / `suggestedShape` / `dropReason`) across rescans by slug. **Review each candidate**:
+(1) is the writer a recognisable *recording artist* (inclusion test 1 — drop Diane Warren / Leiber &
+Stoller: nobody expects them to have recorded it, so there's no gap); (2) is the shape right
+(`misbelief` when the famous performer is assumed to be the author; `credit` when it's just
+little-known; drop when `writer == performer` — no story).
+
+### Ingest — dual-axis enrichment (the cheap, high-value path)
+The writer is already verified in the record, so ingesting is adding three things to
+`data/songs/{slug}.json` and rebuilding:
+
+```json
+"axes": ["recording", "writing"],
+"shape": "misbelief",
+"writing": {
+  "kicker": "Who wrote it", "recordHeading": "Who wrote it",
+  "label": "Written by <writer> — not <performer>",
+  "writer": "<writer>", "writerSlug": "<kebab>",
+  "trailTitle": "How we traced the writing",
+  "trail": [ "…credited to <writer>, who wrote it…", "…<performer>'s version is so identified…", "…the same page's other story is the recording (above)…" ]
+}
+```
+
+Then `node tools/build.js` (validate-songs gates it; 39 invariants must reconcile) → branch + PR.
+Result: the `/who-recorded/` page gains a "Who wrote it" section, the writer's author hub picks up the
+song (under "written by" if they have a distinct `writer` role; under "recorded first" if they also
+recorded it — both true), and `/verify?q=<title>` answers "who wrote X" at the canonical URL.
+
+### Ingest — a NEW writing-only record (needs research)
+For a song with **no** recording record (the writer never released a competing version — e.g.
+"You've Got a Friend", "Bitter Sweet Symphony"), author a full writing-only record modelled on
+`data/songs/youve-got-a-friend.json` (the `writing` block plus `meta`, `context`, `authors`,
+`schema`). `misbelief` needs a `misattribution` block + emits a ClaimReview; `credit`/`contested`
+must NOT carry one. NO LYRICS — the unit is the title.
+
+> **Not yet built — the agent path.** There is no `generate-who-wrote.js`. Dual-axis enrichment is
+> mechanical enough to do by hand from the queue; new writing-only records are researched by hand.
+> If a future wave wants agent-driven generation, write a SEPARATE `generate-who-wrote.js` with its
+> own dossier schema — do NOT extend `SONG_DOSSIER_SCHEMA`, which has only ~768 bytes of headroom
+> under the 4072-byte `SCHEMA_BUDGET` that `verify-corpus.js` enforces (an oversized schema kills
+> every agent at the platform, 0 tokens, no readable error).
+
+### Worker
+`/verify` answers writing queries via a `t:"w"` branch in `worker/src/index.js` (deployed
+2026-07-23). The Worker fetches `verify-index.json` live (60s TTL), so new writing waves need **no
+redeploy** — only a brand-new discriminator type would.
 
 ## The numbers are not yours to compute (added 2026-07-22)
 **`tools/corpus.js` is the ONE source of truth for every figure the site states about itself.**
