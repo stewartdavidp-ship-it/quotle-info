@@ -73,6 +73,12 @@ function buildJsonLd(s, url) {
   // "Beyond the Sea"). alternateName lets the two resolve as ONE composition rather than looking
   // like unrelated works — the same title/artist mismatch that made the FAQ answer false until the
   // record authored its own.
+  // A musicbrainz /work/ MBID identifies the COMPOSITION, not the recording — 16 of them sat on the
+  // MusicRecording node asserting they identified that specific recording. Route by URL shape; only
+  // the /work/ case is unambiguous, so everything else stays on the recording where it was.
+  const allSameAs = Array.isArray(s.sameAs) ? s.sameAs : [];
+  const workSameAs = allSameAs.filter((u) => /musicbrainz\.org\/work\//.test(String(u)));
+  const recSameAs = allSameAs.filter((u) => !workSameAs.includes(u));
   const compName = sc.recordingName || s.title;
   const altName = compName && s.title && compName !== s.title ? s.title : null;
 
@@ -83,12 +89,13 @@ function buildJsonLd(s, url) {
     // Solo originators are PEOPLE, not bands. Default stays MusicGroup so existing records render
     // unchanged; a record opts in per-artist with schema.byArtist.type = "Person".
     byArtist: { '@type': (sc.byArtist && sc.byArtist.type) || 'MusicGroup', name: (sc.byArtist && sc.byArtist.name) || orig },
-    ...(Array.isArray(s.sameAs) && s.sameAs.length ? { sameAs: s.sameAs } : {}),
+    ...(recSameAs.length ? { sameAs: recSameAs } : {}),
     datePublished: sc.datePublished || undefined,
     recordingOf: {
       '@type': 'MusicComposition',
       name: compName,
       ...(altName ? { alternateName: altName } : {}),
+      ...(workSameAs.length ? { sameAs: workSameAs } : {}),
       ...(composers.length
         ? {
           composer: composers.length === 1
@@ -99,13 +106,18 @@ function buildJsonLd(s, url) {
     },
   };
 
+  const claimText = `${cover} originally recorded "${s.title}".`;
   const claimReview = {
     '@type': 'ClaimReview',
     '@id': `${url}#claimreview`,
     url,
     datePublished: s.dateModified,
-    claimReviewed: `${cover} originally recorded "${s.title}".`,
-    itemReviewed: { '@type': 'Claim', author: { '@type': 'MusicGroup', name: cover } },
+    claimReviewed: claimText,
+    // NO `author` ON THE CLAIM. It used to name the cover act — asserting, in machine-readable
+    // form, that Soft Cell claimed to have originated "Tainted Love". They never did; the public
+    // believes it. That is the song-side twin of the quote ClaimReview bug that put a false claimant
+    // on 59 pages. The claim here has no nameable author, so we assert none.
+    itemReviewed: { '@type': 'Claim', text: claimText },
     author: { '@type': 'Organization', name: 'Quotle.info', url: ORIGIN },
     reviewRating: { '@type': 'Rating', ratingValue: 1, bestRating: 5, worstRating: 1, alternateName: 'False — it is a cover' },
   };
@@ -185,8 +197,8 @@ function renderListen(s) {
   return `            <a class="song-listen" href="${esc(l.url)}" target="_blank" rel="noopener">
                 <span class="song-listen-cue" aria-hidden="true">▶</span>
                 <span class="song-listen-body">
-                    <span class="song-listen-what">Hear ${esc(l.what || 'the original recording')}</span>
-                    <span class="song-listen-src">${esc(l.host || '')}${l.source ? ` &middot; ${esc(l.source)}` : ''}</span>
+                    <span class="song-listen-what">Hear ${l.what || 'the original recording'}</span>
+                    <span class="song-listen-src">${esc(l.host || '')}${l.source ? ` &middot; ${l.source}` : ''}</span>
                 </span>
                 <span aria-hidden="true">↗</span>
             </a>`;

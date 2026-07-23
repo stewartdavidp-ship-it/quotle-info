@@ -249,6 +249,19 @@ withListen.forEach((r) => {
   console.log(`       source: ${r.listen.source || '(missing — validate-songs will warn)'}`);
 });
 if (noListen.length) console.log(`   (no link: ${noListen.map((r) => r.songSlug).join(', ')} — fine if no legitimate official copy of the ORIGINAL exists)`);
+// sameAs pointing at the COVER is the exact conflation these pages exist to undo, asserted in
+// machine-readable form — one wave shipped three (UB40 not Lord Creator, Pickett not Sir Mack Rice,
+// Sinatra not Claude Francois). Whether an MBID describes the right recording needs a fetch, so this
+// cannot be decided here; what it CAN do is make every identifier visible next to the two artist
+// names, so the reviewer checks the right thing before ingest rather than after publication.
+const withSameAs = good.filter((r) => Array.isArray(r.sameAs) && r.sameAs.length);
+if (withSameAs.length) {
+  console.log(`\nsameAs — confirm each resolves to the ORIGINAL (${withSameAs.length} record(s)):`);
+  withSameAs.forEach((r) => {
+    console.log(`   ${r.songSlug}  original=${r.answer.originalArtist}  vs cover=${r.creditedTo}`);
+    r.sameAs.forEach((u) => console.log(`       ${u}`));
+  });
+}
 const noSameAs = good.filter((r) => !Array.isArray(r.sameAs) || !r.sameAs.length);
 if (noSameAs.length) console.log(`sameAs missing on: ${noSameAs.map((r) => r.songSlug).join(', ')} — prefer a MusicBrainz recording MBID for the original + the Wikidata QID`);
 console.log('');

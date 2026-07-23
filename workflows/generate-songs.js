@@ -210,6 +210,13 @@ WHY IT WAS QUEUED: ${it.whyNotable}
 
 YOUR JOB is to CONFIRM and DEEPEN that finding, not to re-derive it from scratch. A human reviewed and approved this lead; the harvest is your starting point. Fetch the source(s) above plus whatever else you need.
 
+>> DO NOT ASSUME THE LEAD IS RIGHT. It came from a cheap harvest pass, and it has been wrong: a
+   queued candidate named the wrong original artist entirely (the harvest said Pablo Beltran Ruiz's
+   orchestra recorded "Sway" first; the original is La Sonora Matancera with Nelson Pinedo, Seeco,
+   October 1953 — the Beltran Ruiz performance is 1959). The generate agent accepted it and the AUDIT
+   caught it, which is the expensive place to catch it. Actively look for a recording EARLIER than
+   the one you were handed before you accept it.
+
 >> IF YOU CANNOT CONFIRM IT, SAY SO AND STOP. If your research CONTRADICTS the lead — a different first recorder, a different year, or an EARLIER recording than the one named — do NOT quietly publish your own answer. Set confidence "disputed" and make the contradiction the subject of answer.sourceLine and the misattribution section. A wrong page is far worse than a late one.
 
 *** THE ABSOLUTE RULE: NO LYRICS. EVER. ***
@@ -269,7 +276,7 @@ listen: OPTIONAL — a link to HEAR THE ORIGINAL. This is the most persuasive ar
  4. Never an embed URL (no /embed/, no player., no autoplay=) — the page renders a LINK, not a player. The "source" field must state WHY that copy is legitimate (which channel, and what you confirmed).
  AN ABSENT LINK BEATS A DUBIOUS ONE. On the last pass 4 of 27 songs correctly got no link because no legitimate copy of the original exists. Omitting is a valid, expected outcome — not a failure.
 
-sameAs: OPTIONAL but preferred. STABLE identifiers ONLY — musicbrainz.org, wikidata.org, secondhandsongs.com. Never a streaming URL: those rot, and a dead identifier inside structured data is worse than none.
+sameAs: OPTIONAL but preferred. *** CHECK THAT EACH IDENTIFIER RESOLVES TO THE ORIGINAL, NOT THE FAMOUS COVER. *** One wave shipped three that pointed at the cover's entity (UB40 rather than Lord Creator, Wilson Pickett rather than Sir Mack Rice, Sinatra rather than Claude Francois) — the exact conflation this page exists to undo, asserted in machine-readable form. Open each one and confirm whose recording it describes. STABLE identifiers ONLY — musicbrainz.org, wikidata.org, secondhandsongs.com. Never a streaming URL: those rot, and a dead identifier inside structured data is worse than none.
  • Prefer a MusicBrainz **recording** MBID for the ORIGINAL, confirmed against the release it first appeared on (the ${it.originalYear} ${it.originalLabel || 'original'} release) — not just any recording of the song.
  • Fall back to a **work** MBID only where no reliable recording entity exists.
  • Include the Wikidata QID as well wherever one exists.`
