@@ -285,7 +285,7 @@
             <div class="deck-result" id="bresult" aria-live="polite"></div>
         </section>
 
-        <p class="how">How this works: your text is matched (in your browser) against the 1208 quotes we&rsquo;ve traced to a primary source. A match returns our verdict, the correct credit, and reuse status; no match means we haven&rsquo;t verified that exact line &mdash; which isn&rsquo;t proof it&rsquo;s fake, only that you shouldn&rsquo;t present it as confirmed. Agents can call the same data at <a href="/verify-index.json">/verify-index.json</a>, the <a href="/verify?q=your+quote">/verify API</a>, or POST a whole deck to <code>/verify-batch</code>.</p>
+        <p class="how">How this works: your text is matched (in your browser) against the 1211 quotes we&rsquo;ve traced to a primary source. A match returns our verdict, the correct credit, and reuse status; no match means we haven&rsquo;t verified that exact line &mdash; which isn&rsquo;t proof it&rsquo;s fake, only that you shouldn&rsquo;t present it as confirmed. Agents can call the same data at <a href="/verify-index.json">/verify-index.json</a>, the <a href="/verify?q=your+quote">/verify API</a>, or POST a whole deck to <code>/verify-batch</code>.</p>
         <p class="how how-legal">Reuse status is our research, not legal advice &mdash; and copyright varies by country and edition. This page is the fastest way to catch a misattribution before you publish; for commercial or published use, confirm rights with the rightsholder. See <a href="/terms">terms</a>.</p>
     </main>
     <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
@@ -308,7 +308,7 @@
             function load(cb){ if(idx){cb();return;} if(loading) return; loading=true;
                 fetch('/search.json').then(function(r){return r.json();}).then(function(d){ idx=d||[]; loading=false; cb(); }).catch(function(){ loading=false; }); }
             function esc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':String(s)); return d.innerHTML; }
-            var LABEL={q:'Verified quotes',s:'Songs',t:'Themes',a:'Authors',b:'Under review'}, ALL={q:'/who-said/',s:'/who-recorded/',t:'/themes/',a:'/authors/',b:'/under-review/'};
+            var LABEL={q:'Verified quotes',s:'Songs',w:'Who wrote it',t:'Themes',a:'Authors',b:'Under review'}, ALL={q:'/who-said/',s:'/who-recorded/',w:'/who-wrote/',t:'/themes/',a:'/authors/',b:'/under-review/'};
             function count(n,w){ return n+' '+w+(n===1?'':'s'); }
             function row(e){
                 var wrap = (e.t==='q'||e.t==='b');
@@ -327,10 +327,10 @@
             function render(term){
                 var t=term.trim().toLowerCase();
                 if(!t){ panel.hidden=true; panel.innerHTML=''; return; }
-                var g={q:[],s:[],t:[],a:[],b:[]};
+                var g={q:[],s:[],w:[],t:[],a:[],b:[]};
                 for(var i=0;i<idx.length;i++){ var e=idx[i]; var hay=(e.x+' '+(e.a||'')).toLowerCase();
                     if(hay.indexOf(t)>-1 && g[e.t] && g[e.t].length<200) g[e.t].push(e); }
-                var html=group('q',g.q,t)+group('s',g.s,t)+group('t',g.t,t)+group('a',g.a,t)+group('b',g.b,t);
+                var html=group('q',g.q,t)+group('s',g.s,t)+group('w',g.w,t)+group('t',g.t,t)+group('a',g.a,t)+group('b',g.b,t);
                 panel.innerHTML = html || ('<p class="gs-none">No matches for &ldquo;'+esc(term)+'&rdquo;.</p>');
                 panel.hidden=false;
             }
