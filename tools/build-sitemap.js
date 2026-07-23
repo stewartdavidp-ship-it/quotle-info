@@ -19,7 +19,7 @@ const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'manifest.js
 // Records, songs and the author aggregation come from corpus.js — the SAME set the pages were
 // rendered from, so the sitemap cannot advertise a URL that was never built (or omit one that was).
 // verify-corpus.js asserts the song URL count here matches the corpus.
-const { records, songs, writingSongs, authors } = require('./corpus');
+const { records, songs, writingOnlySongs, authors } = require('./corpus');
 
 // themes that actually have a page (≥1 tagged record)
 const themePresent = new Set();
@@ -47,8 +47,8 @@ const urls = [
   ...authors.map((a) => ({ loc: `${ORIGIN}/authors/${a.slug}/`, lastmod: latest })),
   ...manifest.map((m) => ({ loc: m.url, lastmod: modOf[m.quoteSlug] || latest })),
   ...songs.map((s) => ({ loc: `${ORIGIN}/who-recorded/${s.songSlug}/`, lastmod: s.dateModified || latest })),
-  ...(writingSongs.length ? [{ loc: `${ORIGIN}/who-wrote/`, lastmod: latest }] : []),
-  ...writingSongs.map((s) => ({ loc: `${ORIGIN}/who-wrote/${s.songSlug}/`, lastmod: s.dateModified || latest })),
+  ...(writingOnlySongs.length ? [{ loc: `${ORIGIN}/who-wrote/`, lastmod: latest }] : []),
+  ...writingOnlySongs.map((s) => ({ loc: `${ORIGIN}/who-wrote/${s.songSlug}/`, lastmod: s.dateModified || latest })),
 ];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

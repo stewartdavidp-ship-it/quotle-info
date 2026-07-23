@@ -111,13 +111,17 @@ for (const f of files) {
   if (hasWriting) {
     if (s.shape && !SHAPES.has(s.shape)) p.push(`shape "${s.shape}" is outside credit/misbelief/contested`);
     if (s.writing && !s.writing.writer) p.push('writing.writer is empty — the writing page has no "who wrote it" answer');
-    // shape ⇄ data consistency — an unchecked enum is a lie surface. misbelief is the ONLY writing
-    // shape that adjudicates a false belief, so it is the only one that carries a misattribution
-    // block and the only one whose confidence is disputed. credit is a revelation → attributed.
-    if (s.shape === 'misbelief' && s.confidence !== 'disputed') p.push('shape "misbelief" adjudicates a false belief — confidence must be "disputed"');
-    if (s.shape === 'credit' && s.confidence === 'disputed') p.push('shape "credit" is a revelation, not a fact-check — confidence must not be "disputed" (use "attributed")');
-    if (s.shape === 'misbelief' && s.misattribution === undefined) p.push('shape "misbelief" states a false belief — it must carry a misattribution block');
-    if ((s.shape === 'credit' || s.shape === 'contested') && s.misattribution !== undefined) p.push(`shape "${s.shape}" has no false belief to state — remove the misattribution block`);
+    // shape ⇄ data consistency — an unchecked enum is a lie surface. These rules apply to a
+    // WRITING-ONLY record, where `confidence` and the `misattribution` block belong to the writing
+    // axis. On a DUAL-axis record both belong to the RECORDING axis (a cover-eclipse is disputed and
+    // carries its own misattribution block), so tying them to the writing shape would be wrong —
+    // skip them. misbelief is the only writing shape that adjudicates a false belief.
+    if (!hasRecording) {
+      if (s.shape === 'misbelief' && s.confidence !== 'disputed') p.push('shape "misbelief" adjudicates a false belief — confidence must be "disputed"');
+      if (s.shape === 'credit' && s.confidence === 'disputed') p.push('shape "credit" is a revelation, not a fact-check — confidence must not be "disputed" (use "attributed")');
+      if (s.shape === 'misbelief' && s.misattribution === undefined) p.push('shape "misbelief" states a false belief — it must carry a misattribution block');
+      if ((s.shape === 'credit' || s.shape === 'contested') && s.misattribution !== undefined) p.push(`shape "${s.shape}" has no false belief to state — remove the misattribution block`);
+    }
     if (Array.isArray(s.authors) && !s.authors.some((a) => a.role === 'writer')) p.push('writing axis: no author card with role "writer" — the writer is the subject of the page');
   }
 

@@ -148,7 +148,9 @@ if (fs.existsSync(SONGS_DIR)) {
       cite: `${title}. Written by ${writer}.${performer ? ` Definitive recording by ${performer}.` : ''}`,
       rights: 'uncertain',                               // a song page quotes no lyrics; composition + recordings stay in copyright
       img: '',
-      u: `${ORIGIN}/who-wrote/${s.songSlug}/`,
+      // canonical page: a dual-axis record lives at /who-recorded/ (recording owns the URL); a
+      // writing-only record at /who-wrote/. The "who wrote X" answer is the same either way.
+      u: axesOf(s).includes('recording') ? `${ORIGIN}/who-recorded/${s.songSlug}/` : `${ORIGIN}/who-wrote/${s.songSlug}/`,
     });
   }
 }
