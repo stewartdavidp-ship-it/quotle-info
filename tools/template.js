@@ -303,7 +303,7 @@ function buildJsonLd(q, url) {
   // the magnet ("Reader's Digest, June 1954", "ESPN", "Anonymous (internet)"), a work ("Not in the
   // Tao Te Ching"), or plain prose ("Not Mahatma Gandhi"). Using it emitted claimReviewed strings
   // like `Reader's Digest, June 1954 said: "..."` rated Disputed 1/5 — rating a TRUE statement false,
-  // typing a magazine as a Person, and asking voice assistants "Did ESPN say ...?". 59 of 431
+  // typing a magazine as a Person, and asking voice assistants "Is ... really by ESPN?". 59 of 431
   // disputed pages were affected. creditedTo first, with the old chain as fallback for records
   // that predate it.
   const magnet = plain(q.creditedTo);
@@ -311,7 +311,7 @@ function buildJsonLd(q, url) {
   // source is right and only the words drifted. Its fact-check row is about the wording, so the
   // record carries {who: "Luke, I am your father", scope: "The wording"} — `who` holds the QUOTE.
   // Falling back to it emitted `"Luke, I am your father" said: "No. I am your father."`, typed a
-  // quote string as a Person, and asked assistants `Did "Luke, I am your father" say ...?`.
+  // quote string as a Person, and asked assistants `Is ... really by "Luke, I am your father"?`.
   const quoteText = plain(quotation.text);
   // The claim under review is "{who} said {X}". X is the wording that actually CIRCULATES — the H1 /
   // slug / displayQuote, which is definitionally what people claim was said. It is NOT quotation.text
@@ -341,7 +341,7 @@ function buildJsonLd(q, url) {
   // vector bug surviving on ~16 records that carry no creditedTo. A trailing parenthetical is a
   // scope qualifier, not part of the name ("Malcolm X (as popularly quoted)" → "Malcolm X"): strip
   // it. When what remains still doesn't read as a person, degrade to the bare-quote form, which is
-  // always honest ("Who really said X?"). Conservative: over-rejecting only loses the "Did X say it"
+  // always honest ("Who is X really by?"). Conservative: over-rejecting only loses the "is it by X"
   // framing on a page or two; naming the wrong entity ships a falsehood.
   const stripQual = (w) => String(w || '').replace(/\s*\([^)]*\)\s*$/, '').trim();
   const looksLikePerson = (w) => {
@@ -360,7 +360,7 @@ function buildJsonLd(q, url) {
   // person who really DID write the real line — claiming "{writer} said {quote}" and rating it
   // Disputed 1/5 rates a TRUE statement false. That is the Reader's-Digest-as-claimant bug wearing
   // a different hat. With no claimant the template already degrades honestly: claimReviewed becomes
-  // the bare quote and the FAQ asks "Who really said X?" — which is the actual question.
+  // the bare quote and the FAQ asks "Who is X really by?" — which is the actual question.
   // A WORDING-DRIFT page (a film misquote: claimQuoteText differs from the documented quotation.text)
   // has NO magnet — nobody is falsely credited, the source is right and only the words drifted. So on
   // a drift page with no explicit creditedTo, do NOT fall back to misWho: items[0].who there is the
@@ -407,12 +407,24 @@ function buildJsonLd(q, url) {
   if (!claimReview.itemReviewed.author) delete claimReview.itemReviewed.author;
   if (!claimReview.itemReviewed.appearance) delete claimReview.itemReviewed.appearance;
 
-  // FAQPage — the literal "Did {who} say {quote}?" Q&A, so AI answer-engines and snippets can
-  // lift the verdict verbatim. The yes/no lead ("No." / "Not confirmed." / "Yes.") only answers the
-  // yes/no QUESTION form. When there is no claimant the question is "Who really said X?", which a
-  // "No." does not answer — and pairing them was actively self-contradictory ("Who really said X?"
-  // → "No. Wiesel really did say this"). So only prepend the lead on the "Did {claimant} say" form;
-  // the who-form answer opens with the verdict sentence itself. (42 pages carried the mismatch.)
+  // FAQPage — the literal attribution Q&A, so AI answer-engines and snippets can lift the verdict
+  // verbatim.
+  //
+  // The question is phrased "Is {quote} really by {who}?", NOT "Did {who} say {quote}?". `say` is a
+  // SPOKEN verb, and most of this corpus is written: essays, letters, poems, novels, pamphlets. On
+  // those pages "Did Emerson say '…'?" asks about an utterance nobody ever made, and an answer engine
+  // lifting it repeats the category error. Nothing in the record distinguishes spoken from written
+  // (no utterance-kind field exists, isPartOf.type is set on 28 of 1118 records, and source.docMeta
+  // is free prose), so the question has to be verb-NEUTRAL rather than verb-correct. "by" covers
+  // wrote / said / recorded / delivered alike, keeps the yes/no shape the verdict lead depends on and
+  // the same polarity ("No." still means "not by them"), and still reads like a query a person types.
+  // Same fix on the no-claimant branch, which asked "Who really said …?".
+  //
+  // The yes/no lead ("No." / "Not confirmed." / "Yes.") only answers the yes/no QUESTION form. When
+  // there is no claimant the question is "Who is X really by?", which a "No." does not answer — and
+  // pairing them was actively self-contradictory ("Who is X really by?" → "No. Wiesel really did say
+  // this"). So only prepend the lead on the "Is … really by {claimant}?" form; the who-form answer
+  // opens with the verdict sentence itself. (42 pages carried the mismatch.)
   const verdictLead = !claimant ? '' : q.confidence === 'disputed' ? 'No. ' : q.confidence === 'attributed' ? 'Not confirmed. ' : 'Yes. ';
   const answerText = (verdictLead + plain((q.answer && q.answer.sourceLine) || (q.answer && q.answer.label) || '')).replace(/\s+/g, ' ').trim();
   const faq = {
@@ -420,7 +432,7 @@ function buildJsonLd(q, url) {
     '@id': `${url}#faq`,
     mainEntity: [{
       '@type': 'Question',
-      name: claimant ? `Did ${claimant} say "${claimQuoteText}"?` : `Who really said "${claimQuoteText}"?`,
+      name: claimant ? `Is "${claimQuoteText}" really by ${claimant}?` : `Who is "${claimQuoteText}" really by?`,
       acceptedAnswer: { '@type': 'Answer', text: answerText, url },
     }],
   };
