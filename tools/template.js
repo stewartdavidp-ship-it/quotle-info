@@ -511,6 +511,16 @@ function buildJsonLd(q, url) {
       }
       const lead = wrong ? `Commonly misattributed to ${wrong}.` : 'This attribution is disputed.';
       if (who) return `${lead} Actually by ${who}.`;
+      // `creator` is deliberately SUPPRESSED on pages where asserting it would name the magnet
+      // (creatorOk), so its absence does NOT mean the record is ignorant. answer.realAuthorName is
+      // the record's own explicit "who really said it" — consult it before claiming ignorance, or
+      // the page tells a machine "the true author is not established" while the prose names them.
+      // Houston is the clearest case: creator is correctly withheld (it would say Lovell), but the
+      // record says Jack Swigert. Six pages read that way after PR #119; this is that fix.
+      const named = plain((q.answer && q.answer.realAuthorName) || '');
+      if (named && !/\b(unknown|anonymous|unattributed|uncertain)\b/i.test(named)) {
+        return `${lead} Actually by ${named} — not asserted as creator here because the popular credit is contested.`;
+      }
       return `${lead} The true author is not established; no creator is asserted here.`;
     }
     if (q.confidence === 'attributed') {
