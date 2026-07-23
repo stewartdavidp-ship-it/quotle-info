@@ -80,8 +80,8 @@ check('rendered author pages match author hubs', CORPUS.authors.total, countDirs
     if (missing.length) return `build-authors did not emit a page for: ${missing.join(', ')}`;
     return 'build-authors did not emit one page per hub';
   })());
-check('rendered song pages match song records', CORPUS.songs.total, countDirs('who-recorded'),
-  'build-songs did not emit one /who-recorded/ page per recording-axis record in data/songs/');
+check('rendered song pages match recording-axis records', CORPUS.songs.recordings, countDirs('who-recorded'),
+  'build-songs did not emit one /who-recorded/ page per recording-axis record (songs.total is all 95; .recordings is the /who-recorded/ subset)');
 check('rendered who-wrote pages match writing-ONLY records', CORPUS.whoWrote.pages, countDirs('who-wrote'),
   'a /who-wrote/ page exists only for a writing-ONLY record; a dual-axis record lives at /who-recorded/ with a who-wrote section');
 check('rendered quote pages match quote records', CORPUS.quotes.total, countDirs('who-said'),
@@ -92,7 +92,8 @@ const search = readJson('search.json');
 if (search) {
   const n = search.reduce((m, e) => (m[e.t] = (m[e.t] || 0) + 1, m), {});
   check('search index quote entries match the corpus', CORPUS.quotes.total, n.q || 0);
-  check('search index song entries match the corpus', CORPUS.songs.total, n.s || 0);
+  check('search index song entries match the corpus', CORPUS.songs.recordings, n.s || 0);
+  check('search index who-wrote entries match the corpus', CORPUS.whoWrote.total, n.w || 0);
   check('search index author entries match the corpus', CORPUS.authors.total, n.a || 0,
     'build-search must build authors from aggregateAuthors, not from the manifest — that is the bug that produced 526 vs 593');
   check('search index under-review entries match the queue', CORPUS.review.queued, n.b || 0);
@@ -111,8 +112,8 @@ if (Array.isArray(vIdx)) {
   const writing = vIdx.filter((e) => e && e.t === 'w');
   check('verify-index covers every quote', CORPUS.quotes.total, quotes.length,
     'the /verify API answers from this file — a missing entry is a quote the API cannot confirm');
-  check('verify-index covers every song', CORPUS.songs.total, songs.length,
-    'songs must carry t:"s"; without them /verify cannot answer "who originally recorded X?"');
+  check('verify-index covers every song', CORPUS.songs.recordings, songs.length,
+    'recording-axis songs must carry t:"s"; without them /verify cannot answer "who originally recorded X?"');
   check('verify-index covers every writing record', CORPUS.whoWrote.total, writing.length,
     'writing-axis records must carry t:"w"; without them /verify cannot answer "who wrote X?"');
   // Quotes MUST come first: the Worker's exact match is a .find(), so on a collision between a short
@@ -155,7 +156,7 @@ check('song JSON-LD emits one Person per composer', 0, joinedComposers.length,
 const sitemap = (() => { try { return fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8'); } catch (_) { return ''; } })();
 if (sitemap) {
   const songLocs = (sitemap.match(/<loc>[^<]*\/who-recorded\/[^<]*<\/loc>/g) || []).length;
-  check('sitemap lists every song page plus the index', CORPUS.songs.total + 1, songLocs,
+  check('sitemap lists every song page plus the index', CORPUS.songs.recordings + 1, songLocs,
     'build-sitemap missed song URLs — crawlers would never find them');
 }
 
@@ -226,8 +227,8 @@ if (authorsIdx) {
 
 const songsIdx = html('who-recorded/index.html');
 if (songsIdx) {
-  const m = songsIdx.match(/(\d+) songs? traced/);
-  if (m) check('/who-recorded/ index states the song total', CORPUS.songs.total, num(m[1]));
+  const m = songsIdx.match(/data-song-total="(\d+)"/);
+  if (m) check('Songs browse states the full song total', CORPUS.songs.total, num(m[1]));
 }
 
 // ---- 7. THE URL CONTRACT: no emitted URL may point at a redirect ----
