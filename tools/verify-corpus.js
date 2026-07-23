@@ -196,6 +196,25 @@ if (authorsIdx) {
     .reduce((s, m) => s + num(m[1]), 0);
   check('/authors/ era chips sum to the author total', CORPUS.authors.total, eraChips,
     'the era row is a partition — every author must land in exactly one bucket (that is what "undated" is for)');
+
+  // The "wrongly credited" chip (data-mag on each index card) must reconcile with the "Often
+  // misattributed to X" lists it summarises — both derive from misattrBy in build-authors.js, so
+  // the sum of the chips must equal the total misattribution cards rendered across all author
+  // pages. This guards the exact defect that shipped: mag was computed a SECOND way (bare
+  // creditedTo, by name, no real-author exclusion) and over-stated the browse by 200 records
+  // against the very lists it linked to. If someone reintroduces a divergent count, this fails.
+  const chipSum = [...authorsIdx.matchAll(/data-mag="(\d+)"/g)].reduce((s, m) => s + num(m[1]), 0);
+  let cardSum = 0;
+  const authDir = path.join(ROOT, 'authors');
+  if (fs.existsSync(authDir)) {
+    for (const d of fs.readdirSync(authDir, { withFileTypes: true })) {
+      if (!d.isDirectory()) continue;
+      const page = html(`authors/${d.name}/index.html`);
+      cardSum += (page.match(/class="mis-card"/g) || []).length;
+    }
+  }
+  check('"wrongly credited" chips reconcile with the misattribution lists', chipSum, cardSum,
+    'the data-mag chip and the "Often misattributed to X" cards must both come from misattrBy — a gap means mag is being recomputed independently (it was, and over-counted by 200)');
 }
 
 const songsIdx = html('who-recorded/index.html');

@@ -384,20 +384,23 @@ const corpusQuotes = CORPUS.quotes.total;
 //   n    — quote count; separates the substantial profiles from the single-quote long tail.
 //   era  — parsed from the author's metaLine dates ("1809–1865", "b. 1961", "c. 620–564 BCE").
 // Every author still ships in the static HTML (crawlable); the filters only hide client-side.
-// Only DISPUTED records count as "wrongly credited" — same gate misattrBy uses below. A Track A
-// wave stamps creditedTo on every record it harvested, including the ones that turn out GENUINE
-// (Reagan really did say "trust, but verify"), so counting bare creditedTo would tell a person
-// their own quotes were misattributed to them. Do NOT try to infer this by comparing creditedTo to
-// answer.authorName: that field holds the magnet's name on plenty of disputed pages ("Not Thomas
-// Jefferson" carries authorName "Thomas Jefferson"), and reads "Unknown — falsely credited to
-// Marilyn Monroe" on others, so name-matching both misses and false-positives.
-const magnetCount = {};
-for (const r of records) if (r.creditedTo && r.confidence === 'disputed') magnetCount[plain(r.creditedTo)] = (magnetCount[plain(r.creditedTo)] || 0) + 1;
+// The "mag" facet counts how many quotes are WRONGLY credited to this person — and it reads that
+// count straight off misattrBy, the SAME per-magnet list the author page renders under "Often
+// misattributed to X" (keyed by a.slug, line ~289). Deriving both from one source is the point:
+// the browse chip ("N quotes wrongly credited to them") and the list it links to can never disagree.
+//
+// It must NOT be recomputed from bare creditedTo. A Track A wave stamps creditedTo on every record
+// it harvested, including the ones that turn out GENUINE (Reagan really did say "trust, but verify")
+// and the RIGHT-PERSON-WRONG-WORDS ones (the person did say a version of the line) — neither is a
+// misattribution. misattrBy already excludes both, via credSlug === trueSlug, resolving the real
+// author through answer.realAuthorName (which is why name-comparison against answer.authorName does
+// not work — "Not Thomas Jefferson" carries authorName "Thomas Jefferson"). Counting bare creditedTo
+// by name, as this did before, over-stated the chip by 200 records against a list it contradicted.
 
 // ERAS / UNDATED / eraOf and the bucket counts all live in corpus.js — the era row is a PARTITION
 // of the author set, so its definition belongs with the figures it has to reconcile against.
 // tools/verify-corpus.js fails the build if the buckets ever stop summing to the author total.
-authors.forEach((a) => { a.mag = magnetCount[plain(a.name)] || 0; a.era = a.era || eraOf(a.metaLine); });
+authors.forEach((a) => { a.mag = (misattrBy[a.slug] || []).length; a.era = a.era || eraOf(a.metaLine); });
 const magnets = authors.filter((a) => a.mag > 0).length;
 const deep = authors.filter((a) => a.quotes.length >= 3).length;
 const eraCounts = CORPUS.authors.eraCounts;
