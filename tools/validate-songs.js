@@ -122,7 +122,11 @@ for (const f of files) {
       if (s.shape === 'misbelief' && s.misattribution === undefined) p.push('shape "misbelief" states a false belief — it must carry a misattribution block');
       if ((s.shape === 'credit' || s.shape === 'contested') && s.misattribution !== undefined) p.push(`shape "${s.shape}" has no false belief to state — remove the misattribution block`);
     }
-    if (Array.isArray(s.authors) && !s.authors.some((a) => a.role === 'writer')) p.push('writing axis: no author card with role "writer" — the writer is the subject of the page');
+    // A writing-ONLY page is ABOUT the writer, so it needs a writer card. On a DUAL record the writer
+    // is often the original recorder too (Bowie, Dolly Parton) and appears as an "original" card;
+    // writing.writer names them, and the recording authors enumerate everyone, so no separate writer
+    // card is required.
+    if (!hasRecording && Array.isArray(s.authors) && !s.authors.some((a) => a.role === 'writer')) p.push('writing axis: no author card with role "writer" — the writer is the subject of the page');
   }
 
   // author cards: roles must be known and slugs valid, on every axis
