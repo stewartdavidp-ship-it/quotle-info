@@ -82,8 +82,8 @@ check('rendered author pages match author hubs', CORPUS.authors.total, countDirs
   })());
 check('rendered song pages match song records', CORPUS.songs.total, countDirs('who-recorded'),
   'build-songs did not emit one /who-recorded/ page per recording-axis record in data/songs/');
-check('rendered who-wrote pages match writing-axis records', CORPUS.whoWrote.total, countDirs('who-wrote'),
-  'build-songs did not emit one /who-wrote/ page per writing-axis record (axes includes "writing")');
+check('rendered who-wrote pages match writing-ONLY records', CORPUS.whoWrote.pages, countDirs('who-wrote'),
+  'a /who-wrote/ page exists only for a writing-ONLY record; a dual-axis record lives at /who-recorded/ with a who-wrote section');
 check('rendered quote pages match quote records', CORPUS.quotes.total, countDirs('who-said'),
   'build.js did not emit one page per record in data/quotes/');
 

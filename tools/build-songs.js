@@ -276,6 +276,26 @@ function deEntity(node) {
   return node;
 }
 
+// The "who wrote it" section shown on a DUAL-axis record's /who-recorded/ page (the record carries
+// both axes, and recording owns the URL). Writing-only records use renderWrote instead. Condensed:
+// the recording sections above it already tell most of the story, so this states the writing credit
+// and its trail without repeating the framing.
+function renderWritingSection(s) {
+  if (!axesOf(s).includes('writing') || !s.writing) return '';
+  const w = s.writing;
+  return `
+        <section class="song-card" aria-labelledby="wrote-h">
+            <div class="sec-head"><p class="kicker">${esc(w.kicker || 'Who wrote it')}</p><h2 id="wrote-h">${esc(w.recordHeading || 'Who wrote it')}</h2></div>
+            ${w.label ? `<p class="song-verdict" style="margin-top:0">${esc(w.label)}</p>` : ''}
+            <dl class="doc-meta">
+${docMetaRows(w.docMeta)}
+            </dl>
+            <p class="song-trail-title">${esc(w.trailTitle || 'How we traced it')}</p>
+            ${(w.trail || []).map((t) => `<p class="song-trail">${t}</p>`).join('\n            ')}
+            ${w.sourceLink ? `<a class="song-srclink" href="${esc(w.sourceLink.url)}" target="_blank" rel="noopener">${esc(w.sourceLink.text)} <span aria-hidden="true">↗</span></a>` : ''}
+        </section>`;
+}
+
 function renderSong(s) {
   const url = canonicalUrl(s.songSlug);
   const a = s.answer, o = s.original, m = s.misattribution, c = s.context;
@@ -374,6 +394,7 @@ ${renderSubmit(s)}
             ${(m.items || []).map((it) => `<div class="mis-item"><div class="mis-item-head"><span class="mis-scope">${esc(it.scope)}</span><span class="mis-tag">${escEm(it.tag)}</span></div><p class="mis-who">${it.who}</p><p class="mis-why">${it.why}</p></div>`).join('\n            ')}
             <p class="song-truth">${m.truthLine}</p>
         </section>
+${renderWritingSection(s)}
 
         <section class="song-card" aria-labelledby="ctx-h">
             <div class="sec-head"><p class="kicker">${esc(c.kicker || 'Context')}</p><h2 id="ctx-h">${esc(c.heading || 'Why the cover eclipsed it')}</h2></div>
@@ -802,13 +823,15 @@ function build() {
   for (const f of files) {
     const s = JSON.parse(fs.readFileSync(path.join(SONGS_DIR, f), 'utf8'));
     const axes = axesOf(s);
+    // ONE page per record: recording wins the URL. A dual-axis record renders at /who-recorded/ with
+    // a "who wrote it" section (renderSong → renderWritingSection); only a writing-ONLY record gets a
+    // /who-wrote/ page.
     if (axes.includes('recording')) {
       const dir = path.join(ROOT, 'who-recorded', s.songSlug);
       fs.mkdirSync(dir, { recursive: true });
       fs.writeFileSync(path.join(dir, 'index.html'), renderSong(s));
       recording.push(s);
-    }
-    if (axes.includes('writing')) {
+    } else if (axes.includes('writing')) {
       const dir = path.join(ROOT, 'who-wrote', s.songSlug);
       fs.mkdirSync(dir, { recursive: true });
       fs.writeFileSync(path.join(dir, 'index.html'), renderWrote(s));

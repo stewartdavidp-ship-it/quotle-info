@@ -33,10 +33,13 @@ for (const s of songs) {
   entries.push({ t: 's', x: s.title, a: stripTags(`Credited to ${s.creditedTo} · first recorded by ${orig}`), u: `/who-recorded/${s.songSlug}/` });
 }
 
-// writing-axis songs (a names both the writer and the performer, so the title is findable by either)
+// writing-axis songs (a names both the writer and the performer, so the title is findable by either).
+// Link to the canonical page: a dual-axis record lives at /who-recorded/, a writing-only at /who-wrote/.
+const wAxes = (s) => (Array.isArray(s.axes) && s.axes.length ? s.axes : ['recording']);
 for (const s of writingSongs) {
   const writer = (s.writing && s.writing.writer) || '';
-  entries.push({ t: 'w', x: s.title, a: stripTags(`Written by ${writer} · recorded by ${s.creditedTo}`), u: `/who-wrote/${s.songSlug}/` });
+  const u = wAxes(s).includes('recording') ? `/who-recorded/${s.songSlug}/` : `/who-wrote/${s.songSlug}/`;
+  entries.push({ t: 'w', x: s.title, a: stripTags(`Written by ${writer} · recorded by ${s.creditedTo}`), u });
 }
 
 // authors (quotes + songs) — from the authoritative hub aggregation; carries a quote count (n) and a song count (ns)

@@ -45,7 +45,11 @@ const records = readJsonDir(path.join(ROOT, 'data', 'quotes'));
 const allSongs = readJsonDir(path.join(ROOT, 'data', 'songs'));
 const axesOf = (s) => (Array.isArray(s.axes) && s.axes.length ? s.axes : ['recording']);
 const songs = allSongs.filter((s) => axesOf(s).includes('recording')); // → /who-recorded/, and the "songs" every other tool means
-const writingSongs = allSongs.filter((s) => axesOf(s).includes('writing')); // → /who-wrote/
+const writingSongs = allSongs.filter((s) => axesOf(s).includes('writing')); // ALL writing-axis (verify-index answers "who wrote X" for these)
+// A record renders exactly ONE page: recording wins the URL (the canonical, established axis), so a
+// DUAL-axis record lives at /who-recorded/ with a "who wrote it" section — it gets NO separate
+// /who-wrote/ page. Only writing-ONLY records render a /who-wrote/ page.
+const writingOnlySongs = writingSongs.filter((s) => !axesOf(s).includes('recording')); // → /who-wrote/ pages
 // Fold BOTH axes' people into hubs: a writing record's writer/performer get /authors/ pages too (a
 // song entry carries its axes so the render routes to /who-wrote/ vs /who-recorded/). Passing allSongs
 // (deduped per record) — not songs ∪ writingSongs — avoids folding a dual-axis record twice.
@@ -101,7 +105,7 @@ const CORPUS = Object.freeze({
     linkedToAuthor: authors.reduce((s, a) => s + a.quotes.length, 0),
   }),
   songs: Object.freeze({ total: songs.length }),
-  whoWrote: Object.freeze({ total: writingSongs.length }),
+  whoWrote: Object.freeze({ total: writingSongs.length, pages: writingOnlySongs.length }),
   authors: Object.freeze({
     // What /authors/ lists, and therefore what any tile linking there must say.
     total: authors.length,
@@ -114,4 +118,4 @@ const CORPUS = Object.freeze({
   review: Object.freeze({ queued: reviewQueued }),
 });
 
-module.exports = { CORPUS, records, songs, writingSongs, authors, ERAS, UNDATED, eraOf };
+module.exports = { CORPUS, records, songs, writingSongs, writingOnlySongs, authors, ERAS, UNDATED, eraOf };
