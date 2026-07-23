@@ -66,6 +66,9 @@ the bar is bright-line so it needs no judgement. `harvest.js unskip <slug>` reve
 | `parse-audit.js` | node CLI | Audit journal → `current-fixes.json` + FAIL slug list. |
 | `apply-tags.js` | node CLI | Tag-workflow journal → write `record.themes`. |
 | `harvest-dedup.js` | node CLI | Standalone dedup (reference; superseded by `tools/harvest.js sync`). |
+| `harvest-songs.js` | Workflow | **Songs:** candidate sweep, one agent per vein. args `{veins:[...], perVein:12, exclude:[slugs]}` |
+| `generate-songs.js` | Workflow | **Songs:** research each queued song → dossier. args `{items:[...], verifiedDate, dateModified}` |
+| `prep-songs.js` | node CLI | **Songs:** journal → ingest-ready records (toRecord + escaping + stub + LYRIC + axis checks). |
 
 Workflow scripts run via the `Workflow` tool (`{scriptPath, args}`); they can't `require()` repo modules
 (sandbox), so `generate.js` has an INLINE `toRecord` that must stay in sync with `prep-wave.js`'s copy.
@@ -162,6 +165,95 @@ gh pr merge <#> --squash
 #    THEN VERIFY THE LIVE PAGE, not the merge — curl a page and check the thing you changed is
 #    actually there. The og revert was invisible in a green merge + green deploy.
 ```
+
+## Songs — the `/who-recorded/` pipeline (added 2026-07-23)
+
+The song vertical answers **"who originally recorded this?"** — a song a later act covered, where that
+covering act is mistaken for the ORIGINAL RECORDING artist. It has its own backlog, its own generator
+and its own gate, mirroring the quote pipeline stage for stage.
+
+> **How the first 27 got built, and why this exists.** They didn't use a pipeline. Commits
+> `c8dd10df2` (Tainted Love, the hand-built prototype), `4b2516a2e` (wave 1, 18) and `bc8ec8265`
+> (wave 2, 8 + 1 dropped) each spawned one Opus agent per song, and each agent wrote its record
+> **straight into `data/songs/`**. Queue statuses were then updated by hand. There was no `select`,
+> no `batch`, no ingest step, and — until `validate-songs.js` landed retroactively — no gate of any
+> kind. That worked for 27 records and does not work for 63. Do not go back to it.
+
+| Quotes | Songs |
+|---|---|
+| `data/harvest-queue.json` | `data/song-queue.json` (+ generated `data/song-queue.md`) |
+| `tools/harvest.js` | `tools/songs.js` |
+| `workflows/harvest-candidates.js` | `workflows/harvest-songs.js` |
+| `workflows/generate.js` | `workflows/generate-songs.js` |
+| `workflows/prep-wave.js` | `workflows/prep-songs.js` |
+| `tools/_ingest.js` | `tools/_ingest-songs.js` |
+| `tools/validate-records.js` | `tools/validate-songs.js` |
+
+Lifecycle: `queued → selected → ingested` (or `dropped`). **Note the vocabulary difference from quotes: songs
+use `dropped` + a MANDATORY `dropReason`, not `skipped`.** A song is dropped for failing the
+*confusion bar*, which is a research finding worth keeping — without the reason on the record the
+next harvest re-proposes the same song. (Higher Ground is the standing example.)
+
+### The confusion bar — the thing that makes this vertical worth publishing
+Only harvest where there is **genuine, documentable public belief** that the cover act originated it.
+If the honest answer is "everyone knows it's a cover", it is not a candidate. **Higher Ground**
+(RHCP ← Stevie Wonder) was dropped on exactly this: Wonder's original was a #4 pop / #1 R&B hit
+universally credited to him. `low` confusion is rejected at the queue gate, mechanically.
+
+The axis is **who RECORDED it first**. "The performer didn't write it" is *not* a candidate —
+performers routinely don't write. The songwriter is context.
+
+### NO LYRICS — the site's core legal position
+The unit of a song page is the **TITLE**. Titles are not copyrightable; lyrics are. No page quotes,
+excerpts or paraphrases a lyric line — not to illustrate a point, not a two-word hook. This is
+enforced in three places: the generator prompt, a LYRIC REVIEW scan in `prep-songs.js` (cheap to fix —
+re-generate), and `validate-songs.js` at build time (which **always** prints, even under `--quiet`,
+because "is this a lyric" is not mechanically decidable — these records legitimately quote speech).
+
+### One song wave, end to end
+```bash
+# 0. HARVEST (only when the queue is running dry — `songs.js report` tells you)
+node -e "const q=require('./data/song-queue.json');const fs=require('fs');console.log(JSON.stringify([...new Set([...q.songs.map(s=>s.songSlug),...fs.readdirSync('data/songs').map(f=>f.replace(/\.json$/,''))])]))" > /tmp/exclude.json
+Workflow {scriptPath:"workflows/harvest-songs.js", args:{perVein:12, exclude:<contents of /tmp/exclude.json>}}
+#    write the workflow's return to /tmp/song-harvest.json, then:
+node tools/songs.js sync /tmp/song-harvest.json     # dedups vs BUILT records + queue; rejects confusion:low
+
+# 1. SELECT + BATCH
+node tools/songs.js select 10 --wave sN --confusion high   # [--vein blues] to draw one lane
+node tools/songs.js batch  --wave sN                       # → data/.song-batch-sN.json
+
+# 2. GENERATE (Opus, one agent per song). Pass TODAY'S date.
+Workflow {scriptPath:"workflows/generate-songs.js", args:{items:<contents of data/.song-batch-sN.json>, verifiedDate:"D Mon YYYY", dateModified:"YYYY-MM-DD"}}
+
+# 3. PREP — from the JOURNAL, never the truncated <result>. Use the Transcript dir from step 2.
+node workflows/prep-songs.js --journal <genTranscriptDir>/journal.jsonl --batch data/.song-batch-sN.json \
+     --out workflows/.scratch/songs-sN.json --verified-date "D Mon YYYY" --date-modified "YYYY-MM-DD"
+#    Read the LYRIC REVIEW warnings. Anything in songs-redo-sN.json needs re-generating.
+
+# 4. INGEST + BUILD
+node tools/_ingest-songs.js workflows/.scratch/songs-sN.json   # refuses to overwrite; --force is explicit
+node tools/build.js                                            # validate-songs.js gates it
+
+# 5. SWEEP + SHIP
+node tools/songs.js sync /tmp/empty.json    # echo '[]' > /tmp/empty.json — sweeps selected → ingested
+git checkout -b songs-sN && git add -A && git commit && git push && gh pr create ...
+```
+
+### Song-specific gotchas
+- **The batch carries the WHOLE lead**, not a bare title — the harvest already established who
+  recorded it first and a human reviewed the queue on that. The generator's job is to CONFIRM and
+  deepen, and to **report a contradiction rather than quietly publishing a different answer**.
+- **`generate-songs.js` and `prep-songs.js` each hold a copy of `toRecord`** (sandbox, no `require`),
+  exactly as `generate.js`/`prep-wave.js` do. Change one, change the other.
+- **The schema ceiling applies here too.** `SONG_DOSSIER_SCHEMA` is 3,304 bytes against the 4,072
+  budget. `verify-corpus.js` now checks **every** agent-facing schema, not just the quote one — a
+  song dossier is richer than a quote's, so it is the one most likely to drift over. Fields the batch
+  already knows (artist, year, label, writer) and everything fixed or derivable (kickers, headings,
+  slugs, initials) are applied in `toRecord`, NOT asked of the agent — that is what buys the room.
+- **Deleting a record does not delete its rendered pages.** The build writes pages but never removes
+  orphan directories, so a removed song leaves `who-recorded/{slug}/` and its author hubs behind and
+  the "rendered pages match hubs" invariant fails the build. That is the invariant working — `rm -rf`
+  the orphan dirs (`git status --porcelain --untracked=all`) and rebuild.
 
 ## The numbers are not yours to compute (added 2026-07-22)
 **`tools/corpus.js` is the ONE source of truth for every figure the site states about itself.**
