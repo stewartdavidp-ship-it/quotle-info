@@ -134,7 +134,7 @@ const aiPlugin = {
   api: { type: 'openapi', url: `${ORIGIN}/openapi.json` },
   logo_url: `${ORIGIN}/logo.svg`,
   contact_email: 'hello@quotle.info',
-  legal_info_url: `${ORIGIN}/how-we-verify`,
+  legal_info_url: `${ORIGIN}/how-we-verify/`,
 };
 
 fs.writeFileSync(path.join(ROOT, 'openapi.json'), JSON.stringify(openapi, null, 2) + '\n');

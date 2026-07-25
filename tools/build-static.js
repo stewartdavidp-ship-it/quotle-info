@@ -178,12 +178,12 @@ const aboutBody = `        <section aria-labelledby="story-h">
                 <li><strong>Can you reuse it?</strong> Public domain, still under copyright, or licensed &mdash; stated plainly.</li>
                 <li><strong>How sure are we?</strong> Every quote is marked <em>verified</em>, <em>attributed</em>, or <em>disputed</em>, with the receipts. When we can&rsquo;t confirm something, we say so.</li>
             </ul>
-            <p>Our standard is on the <a href="/how-we-verify">How we verify</a> page.</p>
+            <p>Our standard is on the <a href="/how-we-verify/">How we verify</a> page.</p>
         </section>
 
         <section aria-labelledby="maintained-h">
             <h2 id="maintained-h">Is it maintained?</h2>
-            <p>Yes. The corpus is actively growing in adversarially-audited batches, and every quote page carries a &ldquo;last verified&rdquo; date so you can see how current it is. Provenance research is never truly finished &mdash; if you can point to a primary source that changes an attribution, <a href="/contact">tell us</a>; that&rsquo;s exactly the evidence we want.</p>
+            <p>Yes. The corpus is actively growing in adversarially-audited batches, and every quote page carries a &ldquo;last verified&rdquo; date so you can see how current it is. Provenance research is never truly finished &mdash; if you can point to a primary source that changes an attribution, <a href="/contact/">tell us</a>; that&rsquo;s exactly the evidence we want.</p>
         </section>
 
         <section aria-labelledby="indep-h">
@@ -194,7 +194,7 @@ const aboutBody = `        <section aria-labelledby="story-h">
         <section aria-labelledby="who-h">
             <h2 id="who-h">Who runs it</h2>
             <p>Quotle.info is a <a href="https://gameshelf.co">Game Shelf</a> project, built and maintained by <strong>David Stewart</strong> and operated by <strong>runMast&nbsp;LLC</strong>. There are no ads and no accounts. Questions, corrections, and rights inquiries: <a href="mailto:${EMAIL}">${EMAIL}</a>.</p>
-            <p class="big"><a class="cta" href="/contact">Contact &amp; corrections &rarr;</a></p>
+            <p class="big"><a class="cta" href="/contact/">Contact &amp; corrections &rarr;</a></p>
         </section>`;
 
 // ---- /privacy -------------------------------------------------------------
@@ -287,7 +287,7 @@ const contactBody = `        <section aria-labelledby="c-how">
 
         <section aria-labelledby="c-who">
             <h2 id="c-who">Who you&rsquo;re reaching</h2>
-            <p>Quotle.info is a <a href="https://gameshelf.co">Game Shelf</a> project, built and maintained by David Stewart and operated by runMast&nbsp;LLC. More on the <a href="/about">About</a> page.</p>
+            <p>Quotle.info is a <a href="https://gameshelf.co">Game Shelf</a> project, built and maintained by David Stewart and operated by runMast&nbsp;LLC. More on the <a href="/about/">About</a> page.</p>
         </section>`;
 
 // ---- emit -----------------------------------------------------------------

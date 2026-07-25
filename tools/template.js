@@ -295,7 +295,7 @@ function buildJsonLd(q, url) {
     quotation.copyrightNotice = s.copyrightNotice
       || 'In copyright' + (q.source.rightsHolder ? ' — ' + plain(q.source.rightsHolder) : '');
   }
-  if (rights) quotation.usageInfo = `${ORIGIN}/how-we-verify`;
+  if (rights) quotation.usageInfo = `${ORIGIN}/how-we-verify/`;
 
   const webpage = {
     '@type': 'WebPage',
@@ -647,7 +647,7 @@ function renderAnswer(q) {
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
             </div>
             <p class="answer-foot">
-                <span aria-hidden="true">🕓</span> Last verified ${esc(ans.lastVerified)} · <a href="/how-we-verify">how we verify</a> · <a href="/under-review/">spot an error?</a>
+                <span aria-hidden="true">🕓</span> Last verified ${esc(ans.lastVerified)} · <a href="/how-we-verify/">how we verify</a> · <a href="/under-review/">spot an error?</a>
             </p>
         </article>`;
 }
@@ -725,7 +725,7 @@ function renderRights(src) {
   if (!r) {
     return src.rightsNote
       ? `\n                <p class="rights-note">${src.rightsNote}</p>`
-        + `\n                <p class="rights-note rights-disclaimer">Rights status is our research, not legal advice &mdash; and copyright varies by country and edition. For commercial or published use, confirm with the rightsholder. See <a href="/terms">terms</a>.</p>`
+        + `\n                <p class="rights-note rights-disclaimer">Rights status is our research, not legal advice &mdash; and copyright varies by country and edition. For commercial or published use, confirm with the rightsholder. See <a href="/terms/">terms</a>.</p>`
       : '';
   }
   const holder = src.rightsHolder ? ` of ${escEm(src.rightsHolder)}` : '';
@@ -746,7 +746,7 @@ function renderRights(src) {
                 <div class="rights rights-${state}">
                     <span class="rights-badge"><span class="rights-mark" aria-hidden="true">${r.mark}</span>${esc(label)}</span>
                     <p class="rights-body">${body}</p>${xlation}
-                    <p class="rights-body rights-disclaimer">Rights status is our research, not legal advice &mdash; and copyright varies by country and edition. For commercial or published use, confirm with the rightsholder. See <a href="/terms">terms</a>.</p>
+                    <p class="rights-body rights-disclaimer">Rights status is our research, not legal advice &mdash; and copyright varies by country and edition. For commercial or published use, confirm with the rightsholder. See <a href="/terms/">terms</a>.</p>
                 </div>`;
 }
 

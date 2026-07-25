@@ -240,8 +240,16 @@ if (songsIdx) {
 // URL contract is just as load-bearing and just as silent when broken. It was violated in 18 places
 // across 5 generators — canonicals on 600 author + 28 theme pages, 628 sitemap entries, ~2,900
 // internal links and 1,031 BreadcrumbList items — for weeks, with no error anywhere.
-const { SECTIONS } = require('./urls');
-const noSlash = new RegExp(`(?:href="|content="|"@id":\\s*"|"url":\\s*"|<loc>)(?:https://quotle\\.info)?/(${SECTIONS.join('|')})/[a-z0-9-]+(?=["'<#?])`, 'g');
+const { SECTIONS, STANDING } = require('./urls');
+// TWO shapes, because covering only the first is how this bug survived its own fix:
+//   /section/slug/   — content routes
+//   /about/          — STANDING pages, no {slug} segment, so the section pattern never matched them
+// All five standing pages sit in the FOOTER of every page and were listed in sitemap.xml as
+// redirecting URLs for weeks after the "URL contract" was declared fixed.
+const noSlash = new RegExp(
+  '(?:href="|content="|"@id":\\s*"|"url":\\s*"|<loc>)(?:https://quotle\\.info)?'
+  + `(?:/(?:${SECTIONS.join('|')})/[a-z0-9-]+|/(?:${STANDING.join('|')}))(?=["'<#?])`,
+  'g');
 
 function scanForNoSlash(files, label) {
   const offenders = new Map();

@@ -46,9 +46,20 @@ const frag = (url, id) => `${url}#${id}`;
 // invariant and the builders can never disagree about what is covered.
 const SECTIONS = ['who-said', 'authors', 'themes', 'who-recorded', 'who-wrote'];
 
+// STANDING pages — same directory contract, different shape (no {slug} segment), which is exactly
+// why they were missed. They are served from directories (/about/index.html) so the no-slash form
+// 301s like everything else, but SECTIONS above only matches `/section/slug`, so neither the
+// builders nor verify-corpus ever looked at them. The cost was real: all five sit in the FOOTER of
+// every ~2,000 pages AND were listed in sitemap.xml as redirecting URLs, at a time when Google's
+// crawl-stats showed 16% of all requests being 301s. Fixing a contract and then writing a guard
+// that encodes the same blind spot is how a "fixed" bug stays live.
+const STANDING = ['about', 'contact', 'privacy', 'terms', 'how-we-verify'];
+const standingPath = (name) => `/${name}/`;
+const standingUrl = (name) => `${ORIGIN}${standingPath(name)}`;
+
 module.exports = {
-  ORIGIN, SECTIONS,
-  quotePath, authorPath, themePath, songPath, wrotePath,
-  quoteUrl, authorUrl, themeUrl, songUrl, wroteUrl,
+  ORIGIN, SECTIONS, STANDING,
+  quotePath, authorPath, themePath, songPath, wrotePath, standingPath,
+  quoteUrl, authorUrl, themeUrl, songUrl, wroteUrl, standingUrl,
   frag,
 };
