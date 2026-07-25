@@ -34,11 +34,11 @@ records.forEach((r) => { modOf[r.quoteSlug] = (r.schema && r.schema.dateModified
 const latest = records.map((r) => r.schema && r.schema.dateModified).filter(Boolean).sort().pop() || null;
 const urls = [
   { loc: `${ORIGIN}/`, lastmod: latest },
-  { loc: `${ORIGIN}/how-we-verify`, lastmod: latest },
-  { loc: `${ORIGIN}/about`, lastmod: latest },
-  { loc: `${ORIGIN}/contact`, lastmod: latest },
-  { loc: `${ORIGIN}/privacy`, lastmod: latest },
-  { loc: `${ORIGIN}/terms`, lastmod: latest },
+  { loc: `${ORIGIN}/how-we-verify/`, lastmod: latest },
+  { loc: `${ORIGIN}/about/`, lastmod: latest },
+  { loc: `${ORIGIN}/contact/`, lastmod: latest },
+  { loc: `${ORIGIN}/privacy/`, lastmod: latest },
+  { loc: `${ORIGIN}/terms/`, lastmod: latest },
   { loc: `${ORIGIN}/authors/`, lastmod: latest },
   { loc: `${ORIGIN}/check/`, lastmod: latest },
   { loc: `${ORIGIN}/who-recorded/`, lastmod: latest },
@@ -69,10 +69,10 @@ const llms = `# Quotle.info
 Quotle.info answers "who really said it?" for commonly quoted — and commonly misquoted — lines. Each quote has a page at \`/who-said/{slug}\` with the source, a verification trail of fetched-and-confirmed links, misattribution analysis, and Schema.org \`Quotation\` structured data (JSON-LD). Each author has a profile at \`/authors/{slug}\`. The canonical URL for a quote is always \`${ORIGIN}/who-said/{quoteSlug}/\` (with trailing slash — that is the URL the page is served at).
 
 ## Who runs it
-Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built and maintained by David Stewart and operated by runMast LLC. Independent and unaffiliated — not endorsed by or partnered with anyone; it cites and defers to Quote Investigator, Wikiquote, and archives as references. Corrections, rights inquiries, and questions: help@quotle.info. More at [/about](${ORIGIN}/about), [/contact](${ORIGIN}/contact), [/privacy](${ORIGIN}/privacy), [/terms](${ORIGIN}/terms).
+Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built and maintained by David Stewart and operated by runMast LLC. Independent and unaffiliated — not endorsed by or partnered with anyone; it cites and defers to Quote Investigator, Wikiquote, and archives as references. Corrections, rights inquiries, and questions: help@quotle.info. More at [/about](${ORIGIN}/about/), [/contact](${ORIGIN}/contact/), [/privacy](${ORIGIN}/privacy/), [/terms](${ORIGIN}/terms/).
 
 ## Methodology
-- [How we verify](${ORIGIN}/how-we-verify): the standard — traced to a primary source, dated, cited, adversarially re-checked; three honest confidence states; rights stated separately from attribution.
+- [How we verify](${ORIGIN}/how-we-verify/): the standard — traced to a primary source, dated, cited, adversarially re-checked; three honest confidence states; rights stated separately from attribution.
 
 ## Check a quote (real? cleared to reproduce?)
 - [Check a quote](${ORIGIN}/check/): paste a line you're about to publish — is it real, who actually said it, the correct credit, and (the part AI usually gets wrong) whether it's **cleared to reproduce** vs still under copyright. Deep-linkable: \`${ORIGIN}/check/?q=<quote>\`.
