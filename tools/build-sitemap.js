@@ -56,6 +56,24 @@ ${urls.map((u) => `  <url><loc>${xmlEsc(u.loc)}</loc>${u.lastmod ? `<lastmod>${u
 </urlset>
 `;
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);
+// SECOND COPY AT A DIFFERENT URL — a diagnostic, and possibly the fix.
+//
+// Google has NEVER read /sitemap.xml: the Search Console entry has said "Couldn't fetch", Type
+// "Unknown", Last read EMPTY, 0 discovered pages, across multiple submissions since 2026-07-18 —
+// while the file provably returns 200 with valid XML from all four GitHub Pages edge IPs, to a
+// Googlebot user-agent, in 60ms. Every test we can run from outside passes.
+//
+// Meanwhile the symptom this causes is now measurable: Google refreshes URLs it already knows
+// (quote pages re-crawled 2026-07-21) but has indexed ZERO of the ~800 pages published since
+// ~2026-07-09 — the entire /who-recorded/ song vertical, /who-wrote/, and the r24/r25 waves. The
+// sitemap is the channel that announces new URLs at scale, so its failure is exactly this shape.
+//
+// A stuck per-entry failure state in Search Console cannot be cleared from our side: the row's
+// menu offers no "remove" (there is nothing successfully fetched to remove). Submitting a
+// DIFFERENT URL creates a brand-new entry with no cached state. Identical bytes, so this isolates
+// one variable: if /sitemap-full.xml is read and /sitemap.xml is not, the entry was stuck; if
+// neither is read, the problem is above us and we stop spending on it.
+fs.writeFileSync(path.join(ROOT, 'sitemap-full.xml'), sitemap);
 
 // ---- llms.txt ----
 const stripTags = (s) => String(s).replace(/<[^>]+>/g, '').replace(/&mdash;/g, '—').replace(/&amp;/g, '&').replace(/&ldquo;|&rdquo;/g, '"').replace(/&lsquo;|&rsquo;/g, "'").replace(/&ndash;/g, '–').replace(/&middot;/g, '·').replace(/&hellip;/g, '…').replace(/\s+/g, ' ').trim();
