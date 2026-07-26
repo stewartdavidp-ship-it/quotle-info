@@ -56,23 +56,26 @@ ${urls.map((u) => `  <url><loc>${xmlEsc(u.loc)}</loc>${u.lastmod ? `<lastmod>${u
 </urlset>
 `;
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);
-// SECOND COPY AT A DIFFERENT URL — a diagnostic, and possibly the fix.
+// SECOND COPY AT A DIFFERENT URL — this WAS the diagnostic, and it turned out to be the fix.
+// RESOLVED 2026-07-25. Do not delete this second write, and do not "simplify" it back to one file.
 //
-// Google has NEVER read /sitemap.xml: the Search Console entry has said "Couldn't fetch", Type
-// "Unknown", Last read EMPTY, 0 discovered pages, across multiple submissions since 2026-07-18 —
-// while the file provably returns 200 with valid XML from all four GitHub Pages edge IPs, to a
-// Googlebot user-agent, in 60ms. Every test we can run from outside passes.
+// Google's Search Console entry for /sitemap.xml sat at "Couldn't fetch" (Type "Unknown", Last
+// read EMPTY, 0 discovered) from 2026-07-18 through 2026-07-25, across many resubmissions, while
+// the file provably returned 200 with valid XML from all four GitHub Pages edge IPs, to a
+// Googlebot user-agent, in 60ms — and while Bing read the SAME URL successfully the whole time.
 //
-// Meanwhile the symptom this causes is now measurable: Google refreshes URLs it already knows
-// (quote pages re-crawled 2026-07-21) but has indexed ZERO of the ~800 pages published since
-// ~2026-07-09 — the entire /who-recorded/ song vertical, /who-wrote/, and the r24/r25 waves. The
-// sitemap is the channel that announces new URLs at scale, so its failure is exactly this shape.
+// The resolution: it was per-ENTRY state on that one URL, not the file, the size, or the site.
+// Submitting the identical bytes at /sitemap-full.xml returned Status Success with all 2,048
+// pages discovered on the FIRST attempt, alongside a 258-byte 3-URL control at /sitemap-test.xml
+// (Success, 3 pages). Resubmitting the same URL never clears the state, and the row's menu offers
+// no "remove" (there is nothing successfully fetched to remove) — so /sitemap.xml is permanently
+// dead in Search Console and /sitemap-full.xml is the URL Google actually reads.
 //
-// A stuck per-entry failure state in Search Console cannot be cleared from our side: the row's
-// menu offers no "remove" (there is nothing successfully fetched to remove). Submitting a
-// DIFFERENT URL creates a brand-new entry with no cached state. Identical bytes, so this isolates
-// one variable: if /sitemap-full.xml is read and /sitemap.xml is not, the entry was stuck; if
-// neither is read, the problem is above us and we stop spending on it.
+// What this cost, and the lesson worth keeping: a week was spent re-validating a file that was
+// never broken, because every test ran from OUTSIDE (curl, edge IPs, UA spoofing, DNSSEC, robots,
+// IPv6) and all of them passed. The failure lived in Google's per-URL state, which is invisible to
+// every one of those. When a provider says it cannot read a file you can prove is readable,
+// change the identifier before re-auditing the artifact.
 fs.writeFileSync(path.join(ROOT, 'sitemap-full.xml'), sitemap);
 
 // ---- llms.txt ----
