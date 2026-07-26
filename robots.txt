@@ -19,4 +19,17 @@ Disallow: /data/harvest-config.example.json
 Disallow: /data/song-queue.json
 Disallow: /data/demand-cache.json
 
+# TWO SITEMAP URLS, IDENTICAL BYTES — this is deliberate, do not "tidy" it to one.
+#
+# Google's Search Console entry for /sitemap.xml entered a stuck "Couldn't fetch" state on
+# 2026-07-18 (Type "Unknown", Last read empty, 0 discovered) and NEVER recovered. It was not the
+# file: on 2026-07-25 the identical bytes at /sitemap-full.xml were read on the first attempt —
+# Status Success, 2,048 pages discovered — as was a 258-byte 3-URL control at /sitemap-test.xml.
+# Bing read /sitemap.xml successfully throughout. The failure was per-ENTRY state on that one URL,
+# and resubmitting the same URL never clears it: the row's menu offers no "remove" (there is
+# nothing successfully fetched to remove), so the dead entry is permanent and un-deletable.
+#
+# /sitemap-full.xml is therefore the URL Google actually reads. /sitemap.xml stays listed because
+# Bing and other crawlers read it fine and it is the conventional location.
+Sitemap: https://quotle.info/sitemap-full.xml
 Sitemap: https://quotle.info/sitemap.xml
