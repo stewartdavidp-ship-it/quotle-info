@@ -1317,6 +1317,52 @@
         "deadEntry": "https://quotle.info/sitemap.xml — permanently 'Couldn't fetch', un-removable, ignore it"
       },
       "notes": "Do NOT read these figures as a verdict on the site. 207 of 2,048 pages have ever earned an impression and the top 10 are all Jul 7-9 records, whose content shape the operator says is not comparable to the current product. The 695 current-cohort records start from ~0 here by construction. Chart also shows impressions falling toward zero after 7/19 — unresolved at baseline; likely GSC reporting lag on recent days, confirm at the next reading before treating as a drop."
+    },
+    {
+      "date": "2026-07-25",
+      "pulledOn": "2026-07-27",
+      "source": "GSC URL-prefix property https://quotle.info/ · 3-month window (data 2026-07-08..07-25)",
+      "totals": {
+        "clicks": 5,
+        "impressions": 3680,
+        "ctrPct": 0.1,
+        "avgPosition": 23.3
+      },
+      "queries": 690,
+      "pagesWithImpressions": 216,
+      "pagesTotal": 2048,
+      "indexing": {
+        "reportAlive": true,
+        "reportThrough": "2026-07-20",
+        "indexed": 319,
+        "notIndexed": 202,
+        "reasons": {
+          "pageWithRedirect": 97,
+          "excludedByNoindex": 94,
+          "notFound404": 2,
+          "crawledNotIndexed": 9
+        },
+        "note": "The Page indexing report has RECOVERED — it was frozen on a 2026-07-09 snapshot for weeks (Google-side reporting outage) and is now current to 07-20. Indexed 289 -> 319. 'Page with redirect' jumped 13 -> 97: expected fallout of the URL-contract fix (old no-slash URLs now 301 to the slash form and Google reclassifies them), not a new defect — but confirm it stops growing."
+      },
+      "sitemap": {
+        "url": "https://quotle.info/sitemap-full.xml",
+        "status": "Success",
+        "discovered": 2048,
+        "lastRead": "2026-07-27",
+        "note": "Google is now re-reading it DAILY (read 7/26 and 7/27). The fix is holding."
+      },
+      "cohort": {
+        "current": {
+          "impressions": null,
+          "clicks": null,
+          "note": "still not exactly measured (GSC pagination). Bounded: all 10 top pages remain legacy — the two new top-10 entrants were created 2026-07-07 and 07-09."
+        },
+        "legacy": {
+          "impressions": null,
+          "clicks": null
+        }
+      },
+      "notes": "TWO DAYS POST-SITEMAP-FIX; too early for indexing effect (~4d publish->index latency, and the sitemap was first read 7/25). Coverage barely moved: 207->216 pages with impressions, of 2,048. THE 7/19 DROP IS REAL, NOT REPORTING LAG — the baseline flagged it as unconfirmed; with data now through 7/25 it persists. Impressions ran ~420/day through 7/18, collapsed to ~30/day by 7/20, stayed flat, and turned up slightly on 7/24-25. Leading candidate is new-site honeymoon decay (classic shape: ramp, plateau, sharp pullback), NOT the sitemap — the collapse predates every sitemap change. Unresolved; do not act on it until a third reading shows whether the 7/24-25 uptick continues."
     }
   ]
 }
