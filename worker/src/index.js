@@ -371,9 +371,13 @@ async function loadVerifyIndex() {
   const now = Date.now();
   if (_idxCache && (now - _idxTs) < 300000) return _idxCache;
   try {
-    // per-minute cache-bust so a transient 404 can't stick in the edge cache; only 200s cache.
-    const bust = Math.floor(now / 60000);
-    const r = await fetch('https://quotle.info/verify-index.json?_=' + bust, { cf: { cacheTtl: 60 } });
+    // STABLE url — a per-minute cache-bust param used to be appended here, which minted a fresh
+    // edge cache key every 60s and meant this 1.5MB index was pulled from the GitHub Pages origin
+    // over and over (measured 2026-07-27). cacheTtlByStatus keeps the reason the bust existed —
+    // a transient 404/5xx still can't stick in the edge cache — without defeating the cache itself.
+    const r = await fetch('https://quotle.info/verify-index.json', {
+      cf: { cacheEverything: true, cacheTtlByStatus: { '200-299': 300, '404': 0, '500-599': 0 } },
+    });
     if (!r.ok) throw new Error('index ' + r.status);
     const data = await r.json();
     if (Array.isArray(data)) { _idxCache = data; _idxTs = now; _idxLastMod = r.headers.get('last-modified') || _idxLastMod; }
