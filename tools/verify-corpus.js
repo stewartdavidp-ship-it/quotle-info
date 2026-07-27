@@ -152,6 +152,42 @@ for (const d of (fs.existsSync(path.join(ROOT, 'who-recorded')) ? fs.readdirSync
 check('song JSON-LD emits one Person per composer', 0, joinedComposers.length,
   `a composer node carries several names joined into one Person — consumers read it as a single songwriter with that literal name: ${joinedComposers.slice(0, 3).join(' · ')}`);
 
+// ---- 4d. the quote verdict never contradicts its own creator node ----
+// Both defects here were found by wave-r26 fix agents, and both live ONLY in the machine-readable
+// layer — the visible prose on every affected page was already correct, which is exactly why they
+// survived a human read. The failure mode is general: prose hedges, structured data states a flat
+// fact, and structured data is the half an assistant quotes.
+//   (a) "Actually by Anonymous." — the anonymous arm of creatorOk legitimately emits
+//       creator:"Anonymous" (it keeps ~85 pages RULE-compliant), but feeding that token into the
+//       verdict string credited a person who does not exist.
+//   (b) "no creator is asserted here" printed beside an asserted creator — self-refuting in one node.
+//   (c) an anonymous creator with no description is indistinguishable from a byline for someone
+//       actually named Anonymous. The name cannot carry that distinction; the node has to say it.
+const ANON = /\b(unknown|anonymous|unattributed|uncertain)\b/i;
+const verdictBugs = { anonByline: [], selfRefuting: [], undescribedAnon: [] };
+for (const d of (fs.existsSync(path.join(ROOT, 'who-said')) ? fs.readdirSync(path.join(ROOT, 'who-said'), { withFileTypes: true }) : [])) {
+  if (!d.isDirectory()) continue;
+  const p = path.join(ROOT, 'who-said', d.name, 'index.html');
+  if (!fs.existsSync(p)) continue;
+  const h = fs.readFileSync(p, 'utf8');
+  for (const m of h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    let j; try { j = JSON.parse(m[1]); } catch (_) { continue; }
+    for (const n of (j['@graph'] || [j])) {
+      if (n['@type'] !== 'Quotation') continue;
+      const dd = n.disambiguatingDescription || '';
+      if (/Actually by\s+(unknown|anonymous|unattributed|uncertain)\b/i.test(dd)) verdictBugs.anonByline.push(d.name);
+      if (n.creator && /no creator is asserted here/i.test(dd)) verdictBugs.selfRefuting.push(d.name);
+      if (n.creator && ANON.test(n.creator.name || '') && !n.creator.disambiguatingDescription) verdictBugs.undescribedAnon.push(d.name);
+    }
+  }
+}
+check('quote JSON-LD never credits "Anonymous" as the author', 0, verdictBugs.anonByline.length,
+  `the verdict names an anonymous token as the true author — reads as a byline for a person who does not exist: ${verdictBugs.anonByline.slice(0, 3).join(' · ')}`);
+check('quote JSON-LD verdict agrees with its own creator node', 0, verdictBugs.selfRefuting.length,
+  `the verdict says no creator is asserted while the same node asserts one: ${verdictBugs.selfRefuting.slice(0, 3).join(' · ')}`);
+check('an anonymous creator says it is anonymous', 0, verdictBugs.undescribedAnon.length,
+  `creator is an anonymous token with no disambiguatingDescription — indistinguishable from a byline: ${verdictBugs.undescribedAnon.slice(0, 3).join(' · ')}`);
+
 // ---- 5. the sitemap covers every page ----
 const sitemap = (() => { try { return fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8'); } catch (_) { return ''; } })();
 if (sitemap) {

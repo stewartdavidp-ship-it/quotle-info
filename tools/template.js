@@ -247,6 +247,15 @@ function buildJsonLd(q, url) {
     || (heroUnknown && creatorIsAnon));
   if (creatorOk) {
     quotation.creator = { '@type': 'Person', name: s.creator.name };
+    // An anonymous creator must SAY it is anonymous. Emitting a bare Person named "Anonymous" keeps
+    // the CLAUDE.md RULE satisfied but reads to a consumer exactly like a byline — indistinguishable
+    // from crediting a person of that name. The name alone cannot carry the distinction, so the node
+    // states it. (The alternative — dropping the creatorIsAnon arm — would silently revert the fix
+    // that put a creator back on ~30 anonymous disputed pages, so it is not the right lever.)
+    if (creatorIsAnon) {
+      quotation.creator.disambiguatingDescription =
+        'Not a named individual. The true author is unknown; this records that the origin is anonymous rather than crediting anyone.';
+    }
     if (s.creator.birthDate) quotation.creator.birthDate = s.creator.birthDate;
     if (s.creator.deathDate) quotation.creator.deathDate = s.creator.deathDate;
     if (s.creator.jobTitle) quotation.creator.jobTitle = s.creator.jobTitle;
@@ -499,9 +508,25 @@ function buildJsonLd(q, url) {
   // reading of its own creator field. It is emitted for all three confidence states so a consumer can
   // always read the verdict rather than inferring it from a field's absence.
   const verdictNote = (() => {
+    // RECORD OVERRIDE, same shape as schema.claimRatingValue/claimRatingName/claimReviewed.
+    // The computed strings below are derived only from confidence + creditedTo + creator, so a page
+    // whose evidence is genuinely UNSETTLED had no way to say so in the machine-readable layer — it
+    // got a flat verdict regardless. `it-is-too-probable-…` is the case that forced this: the page's
+    // own truthLine reads "The sentiment may well be Washington's" and Wikiquote files the passage
+    // under Disputed (not Misattributed) with Bancroft accepting it as genuine, while this field
+    // asserted "Commonly misattributed to George Washington. Actually by Gouverneur Morris." Prose
+    // hedged, structured data did not — and structured data is the half assistants read.
+    // Unflagged pages are byte-identical; only a record that sets schema.verdictNote diverges.
+    if (s.verdictNote) return plain(s.verdictNote);
     if (q.confidence === 'disputed') {
       const wrong = plain(magnet || misWho || '');
-      const who = quotation.creator && quotation.creator.name ? plain(quotation.creator.name) : '';
+      // An anonymous creator is NOT a name to credit. `creatorIsAnon` pages legitimately emit
+      // creator:"Anonymous" (see creatorOk above — it keeps ~30 pages RULE-compliant), but feeding
+      // that token in here produced "Actually by Anonymous." — which reads as a byline for a person
+      // who does not exist. Falling through instead reaches the realAuthorName / "not established"
+      // branches below, which were written for exactly this state.
+      const rawWho = quotation.creator && quotation.creator.name ? plain(quotation.creator.name) : '';
+      const who = /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(rawWho) ? '' : rawWho;
       // RIGHT PERSON, WRONG WORDS. When the magnet IS the true author the dispute is about the
       // WORDING, not the attribution — "Commonly misattributed to X. Actually by X." is gibberish,
       // and it is the very self-contradiction this field exists to prevent. validate-records already
@@ -521,6 +546,10 @@ function buildJsonLd(q, url) {
       if (named && !/\b(unknown|anonymous|unattributed|uncertain)\b/i.test(named)) {
         return `${lead} Actually by ${named} — not asserted as creator here because the popular credit is contested.`;
       }
+      // Two different states, and saying the wrong one contradicts the very same JSON-LD node.
+      // When the anonymous arm of creatorOk fired, a creator IS present (name "Anonymous") — telling
+      // a consumer "no creator is asserted here" in the field right beside it is self-refuting.
+      if (rawWho) return `${lead} The true author is not established; the origin is recorded as anonymous.`;
       return `${lead} The true author is not established; no creator is asserted here.`;
     }
     if (q.confidence === 'attributed') {
