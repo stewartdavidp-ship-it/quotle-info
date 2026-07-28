@@ -65,6 +65,12 @@ const API = process.env.QUOTLE_API || 'https://quotle-community.stewartd.workers
 
 const DEFAULT_CYCLE_DAYS = 365;   // ordinary record
 const RISKY_CYCLE_DAYS = 180;     // record carrying a mechanical contradiction
+// A flag must OUTRANK the strongest combination of the softer signals, or "overdue+risky > overdue"
+// is only true on paper. Those are the capped age term (max DEFAULT_CYCLE_DAYS = 365) plus the
+// demand term (max 300) = 665. At the original 500 a high-demand, never-seeded record scored 915
+// and displaced a flagged one on 750 — observed, not theoretical. Keep this above 665: if either
+// cap moves, move this with it.
+const FLAG_WEIGHT = 1000;
 
 const readRecord = (f) => { try { return JSON.parse(fs.readFileSync(path.join(QDIR, f), 'utf8')); } catch { return null; } };
 const allFiles = () => fs.readdirSync(QDIR).filter((f) => f.endsWith('.json'));
@@ -126,6 +132,49 @@ function scanState() {
   catch (_) { SCAN = { records: {}, missing: true }; }
   return SCAN;
 }
+// DEMAND — a wrong page nobody reads matters less than a wrong page with traffic.
+//
+// Two partial sources, neither quote-level, and the shortfall is stated here rather than implied:
+//   · data/harvest-queue.json  demandScore on the candidate that became this record. Already
+//     category-weighted by rank-backlog.js. Covers 58 records.
+//   · data/demand-cache.json   Wikimedia pageviews for the AUTHOR. Covers 202 records.
+// Together 239 of 1,158 (21%). The other 919 contribute ZERO, which is why this term is additive
+// and never negative: with coverage this thin it must only ever PROMOTE a record, never push an
+// unmeasured one down. A missing signal is not evidence of low demand.
+//
+// Capped at 300 — below the 500 a mechanical contradiction earns, so a popular clean page never
+// outranks a flagged one, and far below reader reports. Log-scaled because pageviews span
+// 1 … 243,445 and a linear term would let one famous author swamp every other input.
+//
+// TO MAKE THIS MATTER: extend the author cache past the 127 magnet authors it currently holds
+// (rank-backlog.js already has the fetch + cache logic; it just never runs over the built corpus).
+// At 21% this is a tiebreak, not a driver.
+let DEMAND = null;
+function demandIndex() {
+  if (DEMAND) return DEMAND;
+  const byAuthor = {}, bySlug = {};
+  try { Object.assign(byAuthor, JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'demand-cache.json'), 'utf8'))); } catch (_) {}
+  try {
+    const q = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'harvest-queue.json'), 'utf8'));
+    for (const c of (q.candidates || [])) {
+      if (c.demandScore == null) continue;
+      if (c.resultSlug) bySlug[c.resultSlug] = c.demandScore;
+      if (c.slug && bySlug[c.slug] == null) bySlug[c.slug] = c.demandScore;
+    }
+  } catch (_) {}
+  DEMAND = { byAuthor, bySlug };
+  return DEMAND;
+}
+function demandTerm(rec) {
+  const { byAuthor, bySlug } = demandIndex();
+  const slugScore = bySlug[rec.quoteSlug];
+  const who = (rec.answer && (rec.answer.realAuthorName || rec.answer.authorName)) || '';
+  const a = byAuthor[who];
+  const authorViews = (a && typeof a === 'object') ? a.views : a;
+  const v = Number(slugScore != null ? slugScore : authorViews) || 0;
+  return v > 0 ? Math.min(Math.round(Math.log10(v + 1) * 50), 300) : 0;
+}
+
 function riskFlags(rec) {
   const row = (scanState().records || {})[rec.quoteSlug];
   return (row && Array.isArray(row.f)) ? row.f.slice() : [];
@@ -139,6 +188,7 @@ function survey() {
     if (!rec) continue;
     const st = reviewState(rec);
     const flags = riskFlags(rec);
+    const demand = demandTerm(rec);
     const cycle = flags.length ? RISKY_CYCLE_DAYS : DEFAULT_CYCLE_DAYS;
     const age = st.lastReviewedOn ? daysBetween(now, new Date(st.lastReviewedOn)) : 9999;
     rows.push({
@@ -146,7 +196,7 @@ function survey() {
       confidence: rec.confidence,
       rights: (rec.meta && rec.meta.rights) || rec.rights || null,
       lastReviewedOn: st.lastReviewedOn, everReviewed: st.everReviewed,
-      ageDays: age, cycle, overdueBy: age - cycle, flags,
+      ageDays: age, cycle, overdueBy: age - cycle, flags, demand,
     });
   }
   return rows;
@@ -193,8 +243,8 @@ async function dueSet(limit) {
     // years overdue". Capping at one extra cycle keeps genuine staleness ranking above fresh work
     // while leaving the flag and reader-report terms able to outrank it, as intended.
     r.priority = (r.refutes ? 4000 : 0) + (r.reports ? 2000 : 0)
-      + (r.flags.length ? 500 : 0) + Math.min(Math.max(0, r.overdueBy), DEFAULT_CYCLE_DAYS)
-      + (r.everReviewed ? 0 : 250);
+      + (r.flags.length ? FLAG_WEIGHT : 0) + Math.min(Math.max(0, r.overdueBy), DEFAULT_CYCLE_DAYS)
+      + (r.everReviewed ? 0 : 250) + r.demand;
   }
   rows.sort((a, b) => b.priority - a.priority || a.slug.localeCompare(b.slug));
   return { rows: rows.slice(0, limit), all: rows, reportError: rep.error || null };
