@@ -47,7 +47,7 @@ For each flagged record:
 
 ## Scope
 
-Edit **only** `data/quotes/*.json`. Never `tools/` or `workflows/`. Check before committing:
+Edit **only** `data/quotes/*.json` (plus the one appended line in `data/routine-log.jsonl`). Never `tools/` or `workflows/`. Check before committing:
 
 ```bash
 git status --porcelain -- tools workflows   # must print nothing
@@ -55,6 +55,19 @@ git status --porcelain -- tools workflows   # must print nothing
 
 A defect in a shared generator is one central edit affecting every page, not a per-record fix — if
 you find one, report it in the PR body and change nothing.
+
+## Record what this run did — even when it did nothing
+
+```bash
+node tools/routine-log.js --routine daily-review --outcome no-op --scanned <N> --flagged 0
+```
+
+Do this on the `flagged: 0` path too, and commit the line on its own small PR. **A no-op day is
+data**: it is what proves the flag-driven route is cheap, and a missing line is indistinguishable
+from a run that never happened.
+
+When there was work: `--outcome pr --scanned <N> --flagged <N> --processed <N> --pr <url>`, plus
+`--note` for anything you refused to change and why.
 
 ## Finish
 

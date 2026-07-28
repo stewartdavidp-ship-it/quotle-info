@@ -83,9 +83,19 @@ If it passes, include the candidate file's contents in the PR body so a human ca
 `propose-detector.js --accept` — do **not** append to `tools/detectors.js` yourself. That file is
 shared and admission is deliberately serial.
 
+## Record what this run did
+
+```bash
+node tools/routine-log.js --routine weekly-discovery --outcome <no-op|pr> \
+  --sampled 20 --findings <N> --proposals <N> [--pr <url>]
+```
+
+Commit it. This is the routine whose cost estimate is explicitly marked unverified above, so its
+log line is the one that matters most.
+
 ## Scope
 
-Edit only `data/quotes/*.json`. Never `tools/` or `workflows/`:
+Edit only `data/quotes/*.json` (plus the one appended line in `data/routine-log.jsonl`). Never `tools/` or `workflows/`:
 
 ```bash
 git status --porcelain -- tools workflows   # must print nothing
