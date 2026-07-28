@@ -30,7 +30,7 @@ const { ROOT_CSS } = require('./tokens');
 const { esc, escEm } = require('./esc'); // one shared entity-aware escape (also used by build-index.js); escEm preserves inline <em>
 
 const { hasAuthorPage } = require('./authors');
-const { SECTIONS } = require('./urls');
+const { SECTIONS, standingPath, frag } = require('./urls');
 
 // Normalise a root-relative section href to the trailing-slash URL contract. 853 records carry the
 // pre-contract form (`/authors/x`), which 301s. The template must never trust a data field to
@@ -676,7 +676,7 @@ function renderAnswer(q) {
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
             </div>
             <p class="answer-foot">
-                <span aria-hidden="true">🕓</span> Last verified ${esc(ans.lastVerified)} · <a href="/how-we-verify/">how we verify</a> · <a href="/under-review/">spot an error?</a>
+                <span aria-hidden="true">🕓</span> Last verified ${esc(ans.lastVerified)} · <a href="${standingPath('how-we-verify')}">how we verify</a> · <a href="${frag(standingPath('contact'), 'c-fix')}">spot an error?</a>
             </p>
         </article>`;
 }
