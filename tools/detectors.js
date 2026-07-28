@@ -57,7 +57,7 @@
  */
 
 
-const { kindForTag } = require('./mis-kind');
+const { kindForTag, kindForRow } = require('./mis-kind');
 
 const plain = (s) => String(s || '').replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ');
 const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -145,6 +145,24 @@ const DETECTORS = [
       const rows = ((r.misattribution || {}).items) || [];
       const bad = rows.filter((i) => !i.kind && kindForTag(i.tag) === 'context');
       return bad.length ? `${bad.length} row(s) tagged as a role render the refutation ✕ (set kind:"context") — e.g. "${String(bad[0].tag).slice(0, 40)}"` : null;
+    },
+  },
+  {
+    id: 'truth-row-marked-refuted',
+    version: 1,
+    severity: 'high',
+    title: 'a row stating the TRUE attribution renders the refutation mark',
+    // FOUND BY tools/vocab-sweep.js, not by a person: MIS_MARK.genuine was used on 6 of 2,913 rows,
+    // which is the signature of a mechanism the generator supports and records never set. 59 rows
+    // stating the correct attribution were rendering the ✕ that means "this credit is refuted" —
+    // marking the right answer as false, worse than the paraphrase class, which only over-claimed
+    // about a role. Skeptics 3/3 real, and they corrected the rule twice: a row with NO affirmative
+    // subject ("True author / Unknown") keeps the ✕ because it claims nothing, and a hedged truth
+    // ("real, but a different claim") is context, not genuine — a ✓ would overclaim. Backfilled
+    // 53 genuine + 6 context, 6 correctly left alone. Tripwire now.
+    test(r) {
+      const bad = (((r.misattribution || {}).items) || []).filter((i) => !i.kind && kindForRow(i));
+      return bad.length ? `${bad.length} row(s) state the true attribution but render the refutation mark` : null;
     },
   },
 ];

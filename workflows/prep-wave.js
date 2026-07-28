@@ -27,7 +27,7 @@
  * Writes records-*.json (ingest with tools/_ingest.js) + audit-args-*.json (feed to workflows/audit.js).
  */
 const fs = require('fs');
-const { kindForTag } = require('./../tools/mis-kind');
+const { kindForRow } = require('./../tools/mis-kind');
 const path = require('path');
 
 function arg(name, def) { const i = process.argv.indexOf('--' + name); return i > -1 ? process.argv[i + 1] : def; }
@@ -81,7 +81,7 @@ function toRecord(d, item) {
     // the gap. Unrecognised tags keep the default ✕ and stay a human call — marking a genuine
     // refutation as context would soften a debunk, which is worse than the marker being wrong.
     const items = (d.misattribution.items || []).map((it) => (
-      it.kind || !kindForTag(it.tag) ? it : { ...it, kind: kindForTag(it.tag) }));
+      it.kind || !kindForRow(it) ? it : { ...it, kind: kindForRow(it) }));
     rec.misattribution = { kicker: 'Fact-check', heading: d.misattribution.heading || 'Often misattributed', intro: d.misattribution.intro, items, truthLine: d.misattribution.truthLine };
   }
   if (d.context) { rec.context = { kicker: 'Context', heading: d.context.heading || 'Why it mattered', lead: d.context.lead, detailsSummary: d.context.detailsSummary || 'Read the full story', detailsBody: d.context.detailsBody || [] }; if (d.context.pull) rec.context.pull = d.context.pull; }

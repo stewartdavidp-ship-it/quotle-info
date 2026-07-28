@@ -14,11 +14,11 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { kindForTag } = require('./mis-kind');
+const { kindForRow } = require('./mis-kind');
 const DIR = path.join(path.resolve(__dirname, '..'), 'data', 'quotes');
 const DRY = process.argv.includes('--dry');
 
-let rows = 0, recs = 0; const tail = {};
+let rows = 0, recs = 0; const tail = {}; const byKind = {};
 for (const f of fs.readdirSync(DIR).filter((x) => x.endsWith('.json'))) {
   const p = path.join(DIR, f);
   const r = JSON.parse(fs.readFileSync(p, 'utf8'));
@@ -27,12 +27,13 @@ for (const f of fs.readdirSync(DIR).filter((x) => x.endsWith('.json'))) {
   for (const it of items) {
     if (it.kind) continue;
     const t = String(it.tag || '').replace(/<[^>]+>/g, '').trim();
-    if (kindForTag(t) === 'context') { it.kind = 'context'; rows++; touched++; }
+    const k = kindForRow(it);
+    if (k) { it.kind = k; rows++; touched++; byKind[k] = (byKind[k] || 0) + 1; }
     else if (t) tail[t] = (tail[t] || 0) + 1;
   }
   if (touched) { recs++; if (!DRY) fs.writeFileSync(p, JSON.stringify(r, null, 2) + '\n'); }
 }
-console.log(`${DRY ? '[dry] ' : ''}kind:"context" set on ${rows} rows across ${recs} records`);
+console.log(`${DRY ? '[dry] ' : ''}kind set on ${rows} rows across ${recs} records — ${Object.entries(byKind).map(([k, v]) => `${k}:${v}`).join(', ') || 'none'}`);
 const e = Object.entries(tail).sort((a, b) => b[1] - a[1]).filter(([k]) =>
   /not (the )?(author|origin|coiner|originator)|quoter|anthology|compilation|translator|reuse|speaker/i.test(k));
 if (e.length) {
