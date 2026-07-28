@@ -33,7 +33,30 @@ try {
 let CFG = {};
 try { CFG = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'harvest-config.json'), 'utf8')); } catch (_) { /* optional */ }
 const INTERACTIVE = !!(CFG.votesApi && CFG.turnstileSitekey);
-const BENCH_LABEL = { misattributed: 'Likely misattributed', disputed: 'Disputed', 'genuine-famous': 'Verifying source' };
+// Every queue category needs BOTH a filter chip and a card tag. This used to hardcode three of
+// them while tools/harvest.js already knew nine, so scripture-misquote, shakespeare-misquote and
+// film-misquote (21 cards) rendered a generic "Queued" tag that no chip could select — reachable
+// only via "All", with the chip counts silently summing to 485 under an "All 506". harvest.js
+// CAT_RANK carries a comment about exactly this drift on its own copy of the list; that one was
+// fixed and this one was not. So the chips are now DERIVED from the categories actually present
+// (see benchCats below) and an unlisted category falls back to a title-cased label rather than
+// vanishing — a new category can be added to the harvesters without stranding its cards here.
+const CAT_ORDER = ['misattributed', 'political-fabrication', 'meme-misattribution', 'science-tech-misattribution',
+  'disputed', 'shakespeare-misquote', 'scripture-misquote', 'film-misquote', 'genuine-famous'];
+// [chip label (terse — the row wraps on mobile), card tag (explicit)]
+const CAT_TEXT = {
+  misattributed: ['Misattributed', 'Likely misattributed'],
+  'political-fabrication': ['Political', 'Political fabrication'],
+  'meme-misattribution': ['Meme', 'Meme misattribution'],
+  'science-tech-misattribution': ['Science', 'Science/tech misattribution'],
+  disputed: ['Disputed', 'Disputed'],
+  'shakespeare-misquote': ['Shakespeare', 'Shakespeare misquote'],
+  'scripture-misquote': ['Scripture', 'Scripture misquote'],
+  'film-misquote': ['Film', 'Film misquote'],
+  'genuine-famous': ['Verifying', 'Verifying source'],
+};
+const titleCase = (k) => String(k || '').replace(/-/g, ' ').replace(/^./, (m) => m.toUpperCase()) || 'Queued';
+const catText = (k, i) => (CAT_TEXT[k] || [titleCase(k), titleCase(k)])[i];
 
 // byConf groups the manifest entries for RENDERING (each bucket is a list of quotes to lay out).
 // The COUNTS this page prints come from CORPUS, never from these arrays — see the stat line below.
@@ -78,7 +101,7 @@ const benchCard = (c) => `                <article class="bench-card ${c.categor
                     <p class="bench-q">&ldquo;${esc(c.quote)}&rdquo;</p>
                     <div class="bench-foot">
                         <span class="bench-cred">Pinned on ${esc(c.magnetAuthor || 'unknown')}</span>
-                        <span class="bench-tag ${c.category}">${BENCH_LABEL[c.category] || 'Queued'}</span>
+                        <span class="bench-tag ${c.category}">${catText(c.category, 1)}</span>
                     </div>
                     <div class="bench-actions">
 ${INTERACTIVE ? `                        ${voteBtn(c)}` : ''}
@@ -209,6 +232,11 @@ const nomForm = `
                 <p class="nom-msg" id="nomMsg" role="status" hidden></p>
             </form>`;
 const bcount = BENCH.reduce((m, c) => (m[c.category] = (m[c.category] || 0) + 1, m), {});
+// Derived, not listed — every present category gets a chip, so the chips always sum to "All".
+const benchCats = Object.keys(bcount).sort((a, b) => {
+  const ra = CAT_ORDER.indexOf(a), rb = CAT_ORDER.indexOf(b);
+  return (ra < 0 ? 99 : ra) - (rb < 0 ? 99 : rb) || bcount[b] - bcount[a] || a.localeCompare(b);
+});
 const reviewBody = `        <header class="page-head">
             <p class="feat-kicker">On the research bench</p>
             <h1>Under review</h1>
@@ -218,9 +246,7 @@ const reviewBody = `        <header class="page-head">
             <input id="pq" class="search" type="search" placeholder="Search a quote or an author…" aria-label="Filter quotes under review" autocomplete="off">
             <div class="chips" role="tablist" aria-label="Filter by type">
                 ${chip('all', 'All', BENCH.length, true)}
-                ${chip('misattributed', 'Misattributed', bcount.misattributed || 0)}
-                ${chip('disputed', 'Disputed', bcount.disputed || 0)}
-                ${chip('genuine-famous', 'Verifying', bcount['genuine-famous'] || 0)}
+                ${benchCats.map((k) => chip(k, catText(k, 0), bcount[k])).join('\n                ')}
             </div>
             <div class="bench-grid" id="results">
 ${BENCH.map(benchCard).join('\n')}
