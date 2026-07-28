@@ -33,6 +33,19 @@ const FIX_SCHEMA = {
     summary: { type: 'string' },
     sourceVerified: { type: 'boolean' },
     remaining: { type: 'string' },
+    // THE TIER-3 → TIER-1 FEEDBACK LOOP. When a fix addresses a CLASS of defect rather than a
+    // one-off fact, that class should become a permanent layer-1 detector (tools/detectors.js) so
+    // it can never go unnoticed again. Without this the catalogue only grows when a human happens
+    // to remember; with it, every wave hands back the signal it just learned.
+    detectorProposal: {
+      type: 'object', additionalProperties: false,
+      required: ['id', 'rationale', 'test'],
+      properties: {
+        id: { type: 'string' },          // kebab-case, e.g. 'coined-verb-mismatch'
+        rationale: { type: 'string' },   // what contradiction it catches, and the defect it came from
+        test: { type: 'string' },        // JS source: (r) => null | 'why this record is flagged'
+      },
+    },
   },
 }
 
@@ -56,7 +69,17 @@ ${KIND === 'song' ? `4. ORIGINAL-ARTIST CONSISTENCY: if a fix reassigns who reco
    LISTEN LINK: if an issue says the listen link is a later re-recording rather than the original, DELETE the whole listen block unless you can fetch-confirm a legitimate copy of the ORIGINAL (official artist/label/topic channel, ℗ line, running time matching the MusicBrainz recording for the original). An absent link is correct and expected — do not substitute a fan upload.` : `4. HERO/AUTHOR CONSISTENCY: if a fix reassigns the true author (a disputed page whose real author is someone other than the credited magnet), make the record internally consistent — answer.authorName, answer.authorDates, answer.authorHref, and the author.* block (name/slug/initials/heading/metaLine/bio) must all be the TRUE author, with the credited magnet only in the misattribution section, and schema.creator = the true author. The rendered hero must NOT show the magnet name under a "Not X" label. (This is the Jobs→Brand / Lincoln→Anonymous pattern.)
 5. CONFIDENCE INVERSION (rare): if an issue shows the confidence itself was wrong — a genuine quote wrongly marked disputed, or a fabrication wrongly marked verified — correct confidence AND make answer/author/misattribution/rights all consistent with the corrected finding. Only do this when an issue directs it.`}
 
-Report fixedCount (how many issues for your slug you resolved), a one-paragraph summary of the edits, sourceVerified (did you fetch-confirm the factual replacements — false is fine for pure structured-data/formatting fixes with no new fact), and remaining (anything you could NOT fix and why).`
+Report fixedCount (how many issues for your slug you resolved), a one-paragraph summary of the edits, sourceVerified (did you fetch-confirm the factual replacements — false is fine for pure structured-data/formatting fixes with no new fact), and remaining (anything you could NOT fix and why).
+
+  FINALLY — \`detectorProposal\`, and only when it genuinely applies. If one of your fixes addressed a CLASS of defect that a machine could spot in ANY record without fetching anything, propose it as a layer-1 detector. Emit \`test\` as JS source for a function (r) => null | 'reason', reading ONLY the record object.
+
+  The bar is narrow and you should usually emit NOTHING:
+   • It must be TWO THINGS WE PUBLISHED CONTRADICTING EACH OTHER — a visible label against a schema field, a rights claim against a source year. Mechanically decidable from the record alone.
+   • It must NOT require judging whether a claim is true about the world. That is what the audit you are downstream of already does, with sources and a skeptic. A detector cannot fetch.
+   • A one-off wrong date, name or URL is NOT a class. Fixing it is the whole job; there is nothing to generalise.
+   • Assume your rule fires far more than you expect. Rules that looked obviously right have measured 130 hits (11.2%) and 703 hits (61%) on this corpus, because they matched the editorial content of a misattribution site rather than errors in it.
+
+  A human runs \`node tools/propose-detector.js\` on your proposal, which measures it across all 1,158 records and rejects anything above the noise floor. Proposing a bad one costs nothing; proposing none when you found a real class costs the loop.\`
 
 phase('Fix')
 const pages = _slugs.map((slug) => ({ slug }))

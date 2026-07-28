@@ -34,6 +34,23 @@
  * A ZERO-HIT DETECTOR IS NOT DEAD CODE. It is a tripwire for a regression that has not happened
  * yet. Three below currently fire on nothing; that is the point.
  *
+ * HOW A DETECTOR GETS HERE — the tier-3 → tier-1 loop.
+ * The catalogue must grow from what the pipeline LEARNS, not from what someone remembers. So when
+ * workflows/fix.js fixes a defect that is a CLASS rather than a one-off fact, it emits a
+ * `detectorProposal` {id, rationale, test} in its report. That proposal is then MEASURED before it
+ * can enter this file:
+ *
+ *     node tools/propose-detector.js <candidate.js>     # runs it over all 1,158 records
+ *
+ * which prints the hit rate and a sample, and exits non-zero above the noise floor (0% = tripwire,
+ * ≤2% = accept after hand-checking the sample, ≤5% = review every hit, >5% = refuse). It also
+ * refuses an id already in use, because reusing one for new logic silently keeps the old verdicts.
+ *
+ * The gate is not ceremony. A proposal comes from an agent that has just seen ONE record and is
+ * pattern-matching from it, and the failure mode is never a detector that misses — it is one that
+ * fires on the job description. Every rejection listed below looked reasonable written down and
+ * none survived being run. Nothing enters this file without a number beside it.
+ *
  * VERSIONING: bump `version` whenever a detector's LOGIC changes. scan.js re-runs a detector on
  * every record whose recorded version differs, so a new or changed signal sweeps the whole corpus
  * without re-running the detectors that are already settled. Never reuse an id for new logic.
