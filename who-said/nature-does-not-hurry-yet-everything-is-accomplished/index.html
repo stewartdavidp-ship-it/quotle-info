@@ -45,6 +45,8 @@
             "name": "Tao Te Ching, chapter 73",
             "sameAs": "https://en.wikipedia.org/wiki/Tao_Te_Ching"
           },
+          "copyrightNotice": "In copyright",
+          "usageInfo": "https://quotle.info/how-we-verify/",
           "disambiguatingDescription": "Commonly misattributed to Lao Tzu — as though the English words were his own. Actually by Lao Tzu."
         },
         {
@@ -99,7 +101,7 @@
               "name": "Is \"Nature does not hurry, yet everything is accomplished\" really by Lao Tzu — as though the English words were his own?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. This is a real rendering of Tao Te Ching chapter 73, not an invented line. The American philosopher Archie J. Bahm (1907–1996) translates the passage: \"Nature itself has the patience to endure insult… It does not explain; nevertheless all understand. It does not command; but all eventually obey. It does not hurry; yet everything is accomplished.\" The popular quotation is that final sentence with the pronoun resolved to its antecedent three sentences earlier — and Bahm’s name removed.",
+                "text": "No. This is a real rendering of Tao Te Ching chapter 73, not an invented line. Archie J. Bahm (1907–1996), an American philosopher at the University of New Mexico, published his English version in 1958. Describing Nature, his chapter 73 runs: \"Nature itself has the patience to endure insult… It does not hurry; yet everything is accomplished.\" The popular quotation is that last sentence with \"Nature\" substituted for Bahm’s \"It\" — and Bahm’s name removed.",
                 "url": "https://quotle.info/who-said/nature-does-not-hurry-yet-everything-is-accomplished/"
               }
             }
@@ -407,15 +409,16 @@
         .game-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,98,122,0.4); }
 
         /* add-a-source (reader evidence) — understated, collapsed by default */
-        .src-add { margin: 22px 0 4px; font-family: 'DM Sans', sans-serif; }
-        .src-add > summary { list-style: none; cursor: pointer; font-size: 0.86rem; color: var(--text-muted); padding: 8px 0; border-top: 1px dashed var(--border); }
-        .src-add > summary::-webkit-details-marker { display: none; }
-        .src-add > summary:hover { color: var(--slate); }
-        .src-add-cue { color: var(--burgundy-link); font-weight: 600; white-space: nowrap; }
+        .src-add { margin: 34px 0 4px; font-family: 'DM Sans', sans-serif; scroll-margin-top: 24px; }
+        .src-add-h { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.25rem; letter-spacing: -0.01em; color: var(--ink); margin: 0 0 10px; }
         .src-add-form { margin-top: 12px; padding: 16px 18px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 10px; }
         .src-add-lede { font-size: 0.82rem; color: var(--slate); line-height: 1.55; margin: 0; }
-        .src-add-stance { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; color: var(--ink); }
-        .src-add-stance label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+        /* One option per line. These are sentences, not chips — wrapping them inline made the
+           reader parse where each choice ended, which is exactly the friction this rework removes. */
+        .src-add-why { display: flex; flex-direction: column; gap: 8px; font-size: 0.86rem; color: var(--ink); margin: 2px 0 4px; }
+        .src-add-why label { display: flex; align-items: flex-start; gap: 9px; cursor: pointer; line-height: 1.45; }
+        .src-add-why input { margin-top: 3px; flex-shrink: 0; }
+        .src-add-why em { font-style: italic; color: var(--sage); }
         .src-add-url, .src-add-note { width: 100%; padding: 10px 12px; background: var(--bg-deep); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; }
         .src-add-url:focus, .src-add-note:focus { outline: none; border-color: var(--burgundy); }
         .src-add-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
@@ -602,15 +605,15 @@
                     <span class="dot" aria-hidden="true">?</span>
                     <span><span class="visually-hidden">Attribution status: </span>Disputed</span>
                 </span>
-                <a class="reuse-chip unc" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">?</span><span><span class="visually-hidden">Reuse status: </span>Rights unconfirmed</span></a>
+                <a class="reuse-chip ic" href="#pkit-h" title="Reuse status — see 'Put it on a slide' below"><span class="dot" aria-hidden="true">©</span><span><span class="visually-hidden">Reuse status: </span>In copyright</span></a>
             </div>
-            <p class="source-line">This is a real rendering of Tao Te Ching chapter 73, not an invented line. The American philosopher Archie J. Bahm (1907–1996) translates the passage: &ldquo;Nature itself has the patience to endure insult&hellip; It does not explain; nevertheless all understand. It does not command; but all eventually obey. <strong>It does not hurry; yet everything is accomplished.</strong>&rdquo; The popular quotation is that final sentence with the pronoun resolved to its antecedent three sentences earlier — and Bahm’s name removed.</p>
+            <p class="source-line">This is a real rendering of Tao Te Ching chapter 73, not an invented line. Archie J. Bahm (1907–1996), an American philosopher at the University of New Mexico, published his English version in 1958. Describing Nature, his chapter 73 runs: &ldquo;Nature itself has the patience to endure insult&hellip; It does not hurry; yet everything is accomplished.&rdquo; The popular quotation is that last sentence with &ldquo;Nature&rdquo; substituted for Bahm’s &ldquo;It&rdquo; — and Bahm’s name removed.</p>
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
             </div>
             <p class="answer-foot">
-                <span aria-hidden="true">🕓</span> Last verified 28 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="/under-review/?flag=nature-does-not-hurry-yet-everything-is-accomplished#nomForm">spot an error?</a>
+                <span aria-hidden="true">🕓</span> Last verified 28 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
         </article>
         <!-- ============ PUT IT ON A SLIDE ============ -->
@@ -624,7 +627,7 @@
                 </div>
                 <div class="pkit-block pkit-use pkit-tone-warn">
                     <p class="pkit-lbl">Can you use it?</p>
-                    <p class="pkit-useline"><span class="pkit-ic" aria-hidden="true">?</span> We couldn&rsquo;t verify where this wording comes from, so there&rsquo;s no rights status to give. Safe to present as an unverified or anonymous line &mdash; just don&rsquo;t assert a specific author or source.</p>
+                    <p class="pkit-useline"><span class="pkit-ic" aria-hidden="true">©</span> Still under copyright. A short, credited quote is generally fine for talks, teaching, and internal decks; for commercial, published, or large-scale reuse, get permission.</p>
                 </div>
                 <div class="pkit-block">
                     <p class="pkit-lbl">Image direction <span class="pkit-sub">&mdash; grounded in this quote&rsquo;s real context; paste into your image tool</span></p>
@@ -654,7 +657,7 @@
                     <dt>Chinese</dt><dd lang="zh">繟然而善謀</dd>
                 </dl>
                 <p class="excerpt">
-                    &ldquo;Nature itself has the patience to endure insult, yet always wins in the end. It does not explain; nevertheless all understand. It does not command; but all eventually obey. It does not hurry; yet everything is accomplished.&rdquo; &mdash; Tao Te Ching ch. 73, trans. Archie J. Bahm.
+                    &ldquo;Nature itself has the patience to endure insult&hellip; It does not hurry; yet everything is accomplished.&rdquo; &mdash; Tao Te Ching ch. 73, trans. Archie J. Bahm (1958). Quoted briefly for identification; the translation is under copyright.
                 </p>
                 <p class="excerpt-note">The popular one-liner is Bahm’s last sentence with &ldquo;It&rdquo; replaced by its antecedent, &ldquo;Nature&rdquo;. Nothing is invented; the translator is simply dropped.</p>
                 <a class="source-link" href="https://terebess.hu/english/tao/bahm.html" target="_blank" rel="noopener">Tao Te Ching ch. 73 — Bahm’s English version <span aria-hidden="true">↗</span></a>
@@ -666,27 +669,13 @@
                         <li>The Chinese of ch. 73, 繟然而善謀, is rendered elsewhere as &ldquo;without haste&rdquo;, confirming &ldquo;does not hurry&rdquo; as an ordinary translation of that phrase rather than an invention.</li>
                     </ul>
                 </div>
-                <p class="rights-note">The ancient Chinese original is public domain, but rights attach to the exact English wording, and that wording is Archie J. Bahm’s translation, first published 1958. A 1958 US publication can still be in copyright depending on renewal, which we have not established — so treat this wording as <strong>not cleared</strong> for reproduction until the renewal status is checked. This is a stricter answer than the record previously gave, and a better-founded one.</p>
-                <p class="rights-note rights-disclaimer">Rights status is our research, not legal advice &mdash; and copyright varies by country and edition. For commercial or published use, confirm with the rightsholder. See <a href="/terms/">terms</a>.</p>
+                <div class="rights rights-in-copyright">
+                    <span class="rights-badge"><span class="rights-mark" aria-hidden="true">©</span>In copyright</span>
+                    <p class="rights-body">The ancient Chinese original is public domain, but rights attach to the exact English wording — and that wording is Archie J. Bahm’s translation, published 12 June 1958 (registration A360749) and <strong>renewed by Bahm on 15 May 1986</strong> (US Copyright Office renewal RE293955). A renewed 1958 US work runs 95 years from publication, so this translation is under copyright until the end of <strong>2053</strong>. The line is quoted here briefly for identification and commentary; reproducing it on a public-facing or commercial document is not cleared.</p>
+                    <p class="rights-body rights-disclaimer">Rights status is our research, not legal advice &mdash; and copyright varies by country and edition. For commercial or published use, confirm with the rightsholder. See <a href="/terms/">terms</a>.</p>
+                </div>
             </div>
         </section>
-        <!-- ============ ADD A SOURCE (reader evidence, not an edit) ============ -->
-        <details class="src-add">
-            <summary>Know a source that supports or challenges this? <span class="src-add-cue">Add a link &rarr;</span></summary>
-            <form class="src-add-form" id="srcForm" data-slug="nature-does-not-hurry-yet-everything-is-accomplished">
-                <p class="src-add-lede">Paste a URL and we&rsquo;ll check it. This doesn&rsquo;t change the page &mdash; it goes to our review queue, and if it holds up we update the record with a citation.</p>
-                <div class="src-add-stance" role="radiogroup" aria-label="Does this source support or challenge the page?">
-                    <label><input type="radio" name="stance" value="supports" checked> It supports this</label>
-                    <label><input type="radio" name="stance" value="refutes"> It challenges this</label>
-                </div>
-                <input class="src-add-url" name="url" type="url" inputmode="url" placeholder="https://&hellip; link to the source" required>
-                <input class="src-add-note" name="note" type="text" maxlength="600" placeholder="Optional: what does it show?">
-                <div class="src-add-actions">
-                    <button class="src-add-btn" type="submit">Submit source</button>
-                    <span class="src-add-msg" id="srcMsg" hidden></span>
-                </div>
-            </form>
-        </details>
         <!-- ============ OFTEN MISATTRIBUTED ============ -->
         <section aria-labelledby="misattr-h">
             <div class="sec-head"><p class="kicker">Fact-check</p><h2 id="misattr-h">A real translation, stripped of its translator</h2></div>
@@ -786,14 +775,41 @@
             <div class="sec-head"><p class="kicker">For writers &amp; researchers</p><h2 id="cite-h">Cite this</h2></div>
             <div class="cite">
                 <div class="cite-block">
-                    <div class="cite-lbl"><span>Tao Te Ching, ch. 73 (trans. Bahm)</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
-                    <p class="cite-text" id="citeSrc">Lao Tzu, <em>Tao Te Ching</em>, ch. 73, trans. Archie J. Bahm: &ldquo;It does not hurry; yet everything is accomplished.&rdquo; The popular sentence substitutes &ldquo;Nature&rdquo; for &ldquo;It&rdquo; and omits the translator.</p>
+                    <div class="cite-lbl"><span>Tao Te Ching, ch. 73 (trans. Bahm, 1958)</span><button class="cite-copy" data-copy="citeSrc" type="button">Copy</button></div>
+                    <p class="cite-text" id="citeSrc">Lao Tzu, <em>Tao Te Ching</em>, ch. 73, trans. Archie J. Bahm, <em>Tao Teh King</em> (New York: F. Ungar, 1958), copyright renewed 1986 (RE293955). The popular sentence substitutes &ldquo;Nature&rdquo; for Bahm’s &ldquo;It&rdquo; and omits the translator.</p>
                 </div>
                 <div class="cite-block">
                     <div class="cite-lbl"><span>This verification page</span><button class="cite-copy" data-copy="citePage" type="button">Copy</button></div>
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;Nature does not hurry, yet everything is accomplished&rsquo;?&rdquo; Last verified 28 Jul 2026. <code>https://quotle.info/who-said/nature-does-not-hurry-yet-everything-is-accomplished/</code></p>
                 </div>
             </div>
+        </section>
+        <!-- ============ SOMETHING WRONG? (reader report, not an edit) ============ -->
+        <!-- Visible, deliberately NOT a <details>. This was a collapsed disclosure headed "Know a
+             source that supports or challenges this?", which made a URL the price of entry. Two
+             consequences: hardly anyone opened it, and the reader who simply KNOWS the attribution
+             is wrong had nowhere to go — the footer link sent them off-site to a form built for
+             quotes we are MISSING, a different intent entirely. One control, on the page, reason
+             first, evidence optional. The id="fix" here is what the footer link now scrolls to. -->
+        <section class="src-add" id="fix" aria-labelledby="fix-h">
+            <h2 class="src-add-h" id="fix-h">Something wrong on this page?</h2>
+            <form class="src-add-form" id="srcForm" data-slug="nature-does-not-hurry-yet-everything-is-accomplished">
+                <p class="src-add-lede">Tell us what&rsquo;s off. A link helps but isn&rsquo;t required &mdash; &ldquo;this is the wrong person&rdquo; is a useful report on its own. Nothing here changes the page directly; it goes to our review queue and a human checks it.</p>
+                <div class="src-add-why" role="radiogroup" aria-label="What is wrong?">
+                    <label><input type="radio" name="reason" value="wrong-person" checked> The attribution is wrong &mdash; someone else said it</label>
+                    <label><input type="radio" name="reason" value="wrong-wording"> The wording is wrong</label>
+                    <label><input type="radio" name="reason" value="rights"> The rights / copyright information is wrong</label>
+                    <label><input type="radio" name="reason" value="dead-link"> A source link is broken</label>
+                    <label><input type="radio" name="reason" value="supports"> Nothing &mdash; I have a source that <em>supports</em> this</label>
+                    <label><input type="radio" name="reason" value="other"> Something else</label>
+                </div>
+                <input class="src-add-url" name="url" type="url" inputmode="url" placeholder="Optional: https://&hellip; a link that shows it">
+                <input class="src-add-note" name="note" type="text" maxlength="600" placeholder="Optional: anything else we should know">
+                <div class="src-add-actions">
+                    <button class="src-add-btn" type="submit">Send report</button>
+                    <span class="src-add-msg" id="srcMsg" hidden></span>
+                </div>
+            </form>
         </section>
         <!-- ============ GAME CTA ============ -->
         <aside class="game-cta" aria-label="Related game">
@@ -967,11 +983,15 @@
             function show(t,err){ msg.textContent=t; msg.hidden=false; msg.className='src-add-msg'+(err?' err':' ok'); }
             f.addEventListener('submit',function(e){ e.preventDefault();
                 var url=f.url.value.trim(), note=f.note.value.trim(), slug=f.getAttribute('data-slug');
-                var stance='supports', r=f.querySelector('input[name="stance"]:checked'); if(r) stance=r.value;
-                if(!url){ show('Add a source URL.',true); return; }
-                var btn=f.querySelector('.src-add-btn'); btn.disabled=true; show('Checking\u2026',false);
+                var reason='other', r=f.querySelector('input[name="reason"]:checked'); if(r) reason=r.value;
+                // stance is DERIVED, never asked. It only means anything about a source, and the
+                // reason already carries the direction — "supports" is the single non-complaint.
+                // Asking both was a second control that could contradict the first.
+                var stance = reason==='supports' ? 'supports' : 'refutes';
+                // No URL gate. A reason IS a report — that was the whole point of the rework.
+                var btn=f.querySelector('.src-add-btn'); btn.disabled=true; show('Sending\u2026',false);
                 token(function(t){ if(!t){ btn.disabled=false; show('Verification failed \u2014 please try again.',true); return; }
-                    fetch(API+'/submit-source',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug,url:url,stance:stance,note:note,token:t})})
+                    fetch(API+'/submit-source',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug,url:url,stance:stance,reason:reason,note:note,token:t})})
                     .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); btn.disabled=false; show('Thank you \u2014 sent to our review queue.',false); } else { btn.disabled=false; show((d&&d.error)||'Something went wrong.',true); } })
                     .catch(function(){ btn.disabled=false; show('Network error \u2014 please try again.',true); }); }); });
         })();
