@@ -30,6 +30,7 @@
 const fs = require('fs');
 const path = require('path');
 const { scanRecord } = require('./html-safety');
+const { creditList } = require('./credits'); // creditedTo: string OR array of false credits
 
 const ROOT = path.resolve(__dirname, '..');
 const argv = process.argv.slice(2);
@@ -153,9 +154,18 @@ for (const { file, r } of recs) {
   const real = r.answer && r.answer.authorName;
   if (!real) p.push('no answer.authorName');
   if (r.confidence === 'disputed') {
-    if (!r.creditedTo) w.push('disputed but no creditedTo');
-    else if (real && norm(real) === norm(r.creditedTo)) {
-      w.push(`real == credited ("${real}") — only correct for right-person-wrong-words; else the fake author is being published as real`);
+    // creditedTo is a string OR an array of false credits (tools/credits.js). Validate EVERY name,
+    // not just the first — a bad second credit would otherwise reach an author hub and a
+    // ClaimReview unchecked, which is exactly where a wrong name does the most damage.
+    const credits = creditList(r);
+    if (!credits.length) w.push('disputed but no creditedTo');
+    if (Array.isArray(r.creditedTo) && r.creditedTo.length !== credits.length) {
+      w.push('creditedTo has blank or duplicate entries — they are dropped, but the record should say what it means');
+    }
+    for (const c of credits) {
+      if (real && norm(real) === norm(c)) {
+        w.push(`real == credited ("${real}") — only correct for right-person-wrong-words; else the fake author is being published as real`);
+      }
     }
   }
 
