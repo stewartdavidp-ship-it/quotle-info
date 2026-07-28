@@ -67,6 +67,7 @@ the bar is bright-line so it needs no judgement. `harvest.js unskip <slug>` reve
 | `prep-wave.js` | node CLI | **Journal → ingest-ready records** (toRecord + escaping-scan + STUB-detect + creditedTo). |
 | `parse-audit.js` | node CLI | Audit journal → `current-fixes.json` + FAIL slug list. |
 | `apply-tags.js` | node CLI | Tag-workflow journal → write `record.themes`. |
+| `review.js` | node CLI | **Corrections + re-review spine.** Picks which PUBLISHED records go back to audit.js (reader reports, staleness); stamps outcomes. Does not audit. |
 | `harvest-dedup.js` | node CLI | Standalone dedup (reference; superseded by `tools/harvest.js sync`). |
 | `audit-songs.js` | Workflow | **Songs:** adversarial audit of built /who-recorded/ pages + skeptic. args `{pages, repo}` |
 | `harvest-songs.js` | Workflow | **Songs:** candidate sweep, one agent per vein. args `{veins:[...], perVein:12, exclude:[slugs]}` |
@@ -76,6 +77,65 @@ the bar is bright-line so it needs no judgement. `harvest.js unskip <slug>` reve
 Workflow scripts run via the `Workflow` tool (`{scriptPath, args}`); they can't `require()` repo modules
 (sandbox), so `generate.js` has an INLINE `toRecord` that must stay in sync with `prep-wave.js`'s copy.
 The Workflow launch result prints a **Transcript dir** — its `journal.jsonl` is the input to the node CLIs.
+
+## Corrections + re-review (the standing process)
+
+Two live factual errors sat on the public site until a human found them by hand (2026-07-27):
+`nature-does-not-hurry…` asserted the line was "not in any standard Tao Te Ching translation" — it
+is **Archie J. Bahm, 1958, ch. 73**, verbatim; and `he-who-opens-a-school-door…` credited
+"Louis-Charles Jourdan" when the authorities say **Louis Jourdan (1810-1881)**.
+
+Neither was hard to find. **Nothing was looking.** A page is audited ONCE, on the wave that builds
+it, and never again — and `/submit-source` has been collecting reader evidence into a D1 table that
+no tool had ever read.
+
+`tools/review.js` is the spine. It does **not** audit: `workflows/audit.js` already re-fetches every
+source link, tests whether it literally supports the claim attached to it, checks confidence + rights
+honesty and runs a skeptic over every blocker — and it takes an arbitrary slug list. review.js
+decides WHICH records go to it and records the outcome. **Do not write a second auditor.**
+
+```bash
+node tools/review.js due --limit 25          # what is due, and why
+node tools/review.js reports                 # pending reader reports (needs ADMIN_TOKEN)
+node tools/review.js risk                    # mechanical contradictions, no audit needed
+node tools/review.js args --limit 25 > /tmp/review-args.json
+#   Workflow audit.js args=<contents of that file>          <- the existing auditor
+#   Workflow fix.js   args={ slugs:[…FAIL slugs], repo:"$(pwd)" }
+node tools/review.js stamp <slug…> --verdict PASS|FIXED --by recheck
+node tools/build.js                          # rebuild, then PR as normal
+```
+
+**Priority order** (highest first): a reader `refutes` report · any reader report · mechanical flag ·
+overdue · never re-reviewed. Cycles: **365d** ordinary, **180d** flagged. All 1,158 records currently
+read "never re-reviewed" because `review.lastReviewedOn` is new — that is correct, not a bug.
+
+**Reactive lane.** `POST /submit-source` already accepts `{slug, url, stance: supports|refutes, note}`
+into a moderation queue that never auto-publishes. `review.js reports` is the consumer that was
+missing. A `refutes` report jumps the queue.
+
+**Proactive lane.** `review.js due` picks the stalest records. Run it on a cadence; the point is that
+a shipped record is re-tested against its sources rather than trusted forever.
+
+### What was tried here and does NOT work
+
+Three heuristics for detecting wrong records by pattern-matching were built and cut. Recorded so they
+are not re-invented:
+
+1. **Absolute-negative claim shapes** ("in no translation", "never said") — fired on **703/1158**
+   records. It matched the whole JSON blob, so the top hit was a record quoting *Bill Gates saying
+   "I never said that"*. And "appears nowhere in Jefferson's writings" IS the editorial content of a
+   disputed-quote corpus; flagging it flags the job description.
+2. **Narrowed to world-claims only** — still **516/1158**. Same conceptual error, better regex.
+3. **Name vs `schema.creator.sameAs` mismatch** — the shape of the Jourdan bug, and it fired on 46
+   records of which the first six were all correct: `Marcus Tullius Cicero → /Cicero`,
+   `Napoleon Bonaparte → /Napoleon`, `Lao Tzu → /Laozi`. Wikipedia titles on COMMON names and our
+   records carry FULL names, so holding more name than the slug is normal and desirable. A correct
+   expansion is not mechanically distinguishable from a fabricated middle name.
+
+**The lesson:** claim correctness is not detectable by matching a record against itself. The signals
+that work need no judgement — *a human said this page is wrong*, or *nobody has looked at it in a
+year*. Everything else is audit.js's job. Measure any new heuristic's false-positive rate on a sample
+before shipping it; a flag that is mostly wrong just teaches everyone to ignore flags.
 
 ## One wave, end to end
 ```bash
