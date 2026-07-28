@@ -13,6 +13,7 @@ const path = require('path');
 // Reuse template.js's plain() — it decodes accented named entities (æ, è, é…) instead of dropping
 // them to a space, so citations/credits like "De Hæresibus" or "Barère" come out right.
 const { creditLine, buildImagePrompts, plain, realAuthorName } = require('./template');
+const { primaryCredit, otherCredits } = require('./credits'); // creditedTo: string OR array
 const ROOT = path.resolve(__dirname, '..');
 const QUOTES_DIR = path.join(ROOT, 'data', 'quotes');
 const SONGS_DIR = path.join(ROOT, 'data', 'songs');
@@ -31,7 +32,12 @@ for (const f of fs.readdirSync(QUOTES_DIR)) {
     n: norm(q),
     c: r.confidence,                                   // verified | attributed | disputed
     real: realAuthorName(r),                           // who really said it (NOT answer.authorName — see template.js)
-    credited: plain(r.creditedTo || (r.confidence === 'disputed' && r.misattribution && r.misattribution.items && r.misattribution.items[0] && r.misattribution.items[0].who) || ''), // who it's falsely credited to
+    // `credited` stays a SINGLE string: the Worker returns it verbatim as `misattributedTo`, so an
+    // array here would be a breaking change for every /verify consumer. The primary false credit is
+    // that string; any additional ones ride alongside in `creditedAlso`, omitted when there are none
+    // so the index does not grow for the 580 single-credit records.
+    credited: plain(primaryCredit(r) || (r.confidence === 'disputed' && r.misattribution && r.misattribution.items && r.misattribution.items[0] && r.misattribution.items[0].who) || ''), // who it's falsely credited to
+    ...(otherCredits(r).length ? { creditedAlso: otherCredits(r).map(plain) } : {}), // further false credits, if any
     credit: plain(creditLine(r)),                       // paste-ready CORRECT credit line (quote already implied)
     cite: plain((r.cite && r.cite.sourceCitation) || ''), // full authored Chicago citation (for a references slide)
     rights: (r.source && r.source.rights) || 'uncertain', // public-domain | in-copyright | licensed | uncertain (never blank, so machine consumers can gate)
