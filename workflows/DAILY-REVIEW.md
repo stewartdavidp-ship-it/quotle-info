@@ -91,6 +91,12 @@ Then branch, commit, push, and open a PR. In the body state: what was flagged, w
 what you changed, **and anything you deliberately did not change and why**. That last part is the
 most useful line in the PR.
 
+**Open the PR READY, never as a draft** (`gh pr create` without `--draft`). A draft cannot be
+merged, so every draft leaves an unmergeable PR sitting until a human clicks "Ready for review" —
+which happened on the first two routine runs before anyone noticed. Draft/ready does not control
+whether the PR gets READ; nothing here auto-merges, so a ready PR still waits for a human. It only
+controls whether they can act when they have read it.
+
 ## Do not
 
 - run `harvest`, `select`, `batch`, `generate` or `_ingest` — this pass never grows the corpus
