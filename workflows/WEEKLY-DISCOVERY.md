@@ -105,3 +105,10 @@ Finish with `node tools/build.js`, then branch, commit, push and open a PR. If y
 which is a good and common outcome — say so in one line, stamp the records you audited, and open a
 PR containing only those stamps. **A PASS is a finding**: it is the record of "we looked and this is
 fine", and without it the same 20 records are re-derived every week at full cost.
+
+**Open the PR READY, never as a draft** (`gh pr create` without `--draft`). A draft cannot be
+merged, so every draft leaves an unmergeable PR sitting until a human clicks "Ready for review" —
+which happened on the first two routine runs before anyone noticed. Draft/ready does not control
+whether the PR gets READ; nothing here auto-merges, so a ready PR still waits for a human. It only
+controls whether they can act when they have read it.
+
