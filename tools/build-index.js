@@ -368,17 +368,42 @@ const REPORT_JS = INTERACTIVE ? `    <script>
                     .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ fx.reset(); btn.disabled=false; show(msg,'Thank you \\u2014 sent to our review queue.',false); } else { btn.disabled=false; show(msg,(d&&d.error)||'Something went wrong.',true); } })
                     .catch(function(){ btn.disabled=false; show(msg,'Network error \\u2014 please try again.',true); }); }); }); }
 
-            // "you're missing one" -> /nominate. Unchanged behaviour, new home.
-            var f=document.getElementById('nomForm');
-            if(f){ f.addEventListener('submit',function(e){ e.preventDefault();
-                var msg=document.getElementById('nomMsg'), btn=f.querySelector('.nom-btn');
-                var author=f.author.value.trim(), quote=f.quote.value.trim(), note=f.note.value.trim();
-                if(!author&&!quote){ show(msg,'Add at least an author or a quote.',true); return; }
-                btn.disabled=true; show(msg,'Sending\\u2026',false);
-                token(function(t){ if(!t){ btn.disabled=false; show(msg,'Verification failed \\u2014 please try again.',true); return; }
-                    fetch(API+'/nominate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({author:author,quote:quote,note:note,token:t})})
-                    .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); btn.disabled=false; show(msg,'Thank you \\u2014 added to the review queue.',false); } else { btn.disabled=false; show(msg,(d&&d.error)||'Something went wrong.',true); } })
-                    .catch(function(){ btn.disabled=false; show(msg,'Network error \\u2014 please try again.',true); }); }); }); }
+              // "you're missing one" -> /lookup FIRST, then /nominate only if it is genuinely new.
+              //
+              // /lookup already walks corpus -> backlog -> pending nomination -> Wikiquote and returns a
+              // stage; /check has consumed it since it was written. Asking it BEFORE nominating does three
+              // things a daily triage job was going to do later and worse: it dedupes, it applies the
+              // acceptance ladder, and — the part no batch job can — it tells the reader the outcome AT
+              // SUBMIT TIME. That last one matters because neither the nominations table nor source_submissions
+              // has a contact column: a synchronous answer is the ONLY answer this system can honestly give.
+              //
+              // It keys on QUOTE TEXT (>=12 chars), not author, so an author-only nomination skips the check
+              // and posts as before rather than pretending to have checked something.
+              var f=document.getElementById('nomForm');
+              function nominate(author,quote,note,msg,btn,f){
+                  token(function(t){ if(!t){ btn.disabled=false; show(msg,'Verification failed \\u2014 please try again.',true); return; }
+                      fetch(API+'/nominate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({author:author,quote:quote,note:note,token:t})})
+                      .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); btn.disabled=false; show(msg,'Thank you \\u2014 added to the review queue.',false); } else { btn.disabled=false; show(msg,(d&&d.error)||'Something went wrong.',true); } })
+                      .catch(function(){ btn.disabled=false; show(msg,'Network error \\u2014 please try again.',true); }); });
+              }
+              if(f){ f.addEventListener('submit',function(e){ e.preventDefault();
+                  var msg=document.getElementById('nomMsg'), btn=f.querySelector('.nom-btn');
+                  var author=f.author.value.trim(), quote=f.quote.value.trim(), note=f.note.value.trim();
+                  if(!author&&!quote){ show(msg,'Add at least an author or a quote.',true); return; }
+                  btn.disabled=true; show(msg,'Checking\\u2026',false);
+                  if(quote.length<12){ nominate(author,quote,note,msg,btn,f); return; }
+                  fetch(API+'/lookup?q='+encodeURIComponent(quote))
+                  .then(function(r){return r.json();}).then(function(d){
+                      var st=(d&&d.stage)||'none';
+                      if(st==='corpus'){ btn.disabled=false; show(msg,'We already have this one \\u2014 open '+(d.url||'/who-said/')+' . If our verdict looks wrong, use the report form at the bottom of that page.',false); return; }
+                      if(st==='backlog'){ btn.disabled=false; f.reset(); show(msg,'Good call \\u2014 it is already on our list, queued for a full source trace.',false); return; }
+                      if(st==='nominated'){ btn.disabled=false; f.reset(); show(msg,'Someone beat you to it \\u2014 already nominated and awaiting review.',false); return; }
+                      // /lookup ALREADY queued a moderation nomination when Wikiquote confirmed it literally
+                      // (added:true). Posting again would duplicate it.
+                      if(st==='wikiquote'&&d.added){ btn.disabled=false; f.reset(); show(msg,'Thank you \\u2014 confirmed against Wikiquote and added to the review queue.',false); return; }
+                      nominate(author,quote,note,msg,btn,f);
+                  })
+                  .catch(function(){ nominate(author,quote,note,msg,btn,f); }); }); }
         })();
     </script>` : '';
 
