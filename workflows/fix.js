@@ -79,7 +79,7 @@ Report fixedCount (how many issues for your slug you resolved), a one-paragraph 
    • A one-off wrong date, name or URL is NOT a class. Fixing it is the whole job; there is nothing to generalise.
    • Assume your rule fires far more than you expect. Rules that looked obviously right have measured 130 hits (11.2%) and 703 hits (61%) on this corpus, because they matched the editorial content of a misattribution site rather than errors in it.
 
-  A human runs \`node tools/propose-detector.js\` on your proposal, which measures it across all 1,158 records and rejects anything above the noise floor. Proposing a bad one costs nothing; proposing none when you found a real class costs the loop.\`
+  A human runs \`node tools/propose-detector.js\` on your proposal, which measures it across all 1,158 records and rejects anything above the noise floor. Proposing a bad one costs nothing; proposing none when you found a real class costs the loop.`
 
 phase('Fix')
 const pages = _slugs.map((slug) => ({ slug }))
