@@ -224,6 +224,36 @@ export default {
         const cnt = await env.DB.prepare('SELECT COUNT(*) AS n FROM nominations WHERE iphash=? AND created>?').bind(iphash, since).first();
         if (cnt && cnt.n >= MAX_NOMS_PER_DAY) return send({ error: 'daily nomination limit reached — thanks!' }, 429);
 
+        // DEDUPE BY QUOTE, AND ENRICH RATHER THAN DUPLICATE.
+        //
+        // /lookup auto-queues a BARE nomination when Wikiquote confirms a line literally — author
+        // empty, note "wikiquote-auto". The reader's own submission then arrived here separately,
+        // and with no dedupe that produced either a duplicate row or (once the client learned to
+        // skip the POST) the silent LOSS of everything the reader wrote. A real submission —
+        // "genuinely Beckett, from Worstward Ho, the estate is strict, truncating it inverts the
+        // meaning" — was reduced to a machine stub indistinguishable from auto-queued fragments
+        // like "leave the gun, take the".
+        //
+        // So: same normalised quote already pending → fill in whatever that row is missing and
+        // return. Never two rows for one quote, and the human's context always wins over the
+        // machine's placeholder.
+        const nq = normQ(quote || '');
+        if (nq) {
+          const { results } = await env.DB.prepare("SELECT id,quote,author,note FROM nominations WHERE status='pending' ORDER BY created DESC LIMIT 500").all();
+          const dupe = (results || []).find((r) => normQ(r.quote || '') === nq);
+          if (dupe) {
+            const better = (existing, incoming) => {
+              const e = String(existing || '').trim();
+              const i = String(incoming || '').trim();
+              if (!i) return e;
+              if (!e || /^wikiquote-auto/.test(e)) return i;      // machine placeholder loses
+              return e.includes(i) ? e : `${e} | ${i}`;           // otherwise keep both
+            };
+            await env.DB.prepare('UPDATE nominations SET author=?, note=? WHERE id=?')
+              .bind(better(dupe.author, author), better(dupe.note, note), dupe.id).run();
+            return send({ ok: true, merged: true });
+          }
+        }
         await env.DB.prepare('INSERT INTO nominations (quote,author,note,status,created,iphash) VALUES (?,?,?,?,?,?)')
           .bind(quote, author, note, 'pending', new Date().toISOString(), iphash).run();
         return send({ ok: true });
