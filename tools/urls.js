@@ -53,25 +53,20 @@ const SECTIONS = ['who-said', 'authors', 'themes', 'who-recorded', 'who-wrote'];
 // every ~2,000 pages AND were listed in sitemap.xml as redirecting URLs, at a time when Google's
 // crawl-stats showed 16% of all requests being 301s. Fixing a contract and then writing a guard
 // that encodes the same blind spot is how a "fixed" bug stays live.
-// `under-review` joins the list for the same directory reason — but note what it carries: the
-// site's ONLY correction INPUT, the `#nomForm` nominate form. That form sits ~98% down a 675KB
-// page, behind 500+ candidate cards, so an unanchored link to /under-review/ lands the reader on a
-// browse list and reads as "there is no way to report anything here". Every correction link must
-// therefore be the ANCHORED deep link. See tools/build-static.js.
-const STANDING = ['about', 'contact', 'privacy', 'terms', 'how-we-verify', 'vs-ai', 'under-review'];
+// `under-review` and `report` join the list for the same directory reason. They were ONE page until
+// 2026-07-28, and that was the bug: the nominate form sat ~98% down /under-review/, behind 500+
+// candidate cards, because that page happened to own the Turnstile plumbing. Readers landed on a
+// browse list and correctly concluded there was no way to report anything. Now `/report/` owns both
+// reporting jobs ("a page here is wrong" / "you're missing one") and `/under-review/` is only a
+// browse list. Never point a correction link at `/under-review/` again.
+const STANDING = ['about', 'contact', 'privacy', 'terms', 'how-we-verify', 'vs-ai', 'under-review', 'report'];
 const standingPath = (name) => `/${name}/`;
 const standingUrl = (name) => `${ORIGIN}${standingPath(name)}`;
 
-// THE CORRECTION DEEP LINK. A reader who spots a mistake is on ONE specific quote page, and the
-// only correction input on the site is a generic form at the bottom of /under-review/. Sending them
-// there unqualified means retyping the quote they were just reading — so carry the slug and let the
-// form prefill itself. Order matters: path, then query, then hash. The slash still belongs before
-// the query, so this is built here rather than restated at the call site.
-const flagPath = (quoteSlug) => `${standingPath('under-review')}?flag=${encodeURIComponent(quoteSlug)}#nomForm`;
 
 module.exports = {
   ORIGIN, SECTIONS, STANDING,
   quotePath, authorPath, themePath, songPath, wrotePath, standingPath,
   quoteUrl, authorUrl, themeUrl, songUrl, wroteUrl, standingUrl,
-  frag, flagPath,
+  frag,
 };
