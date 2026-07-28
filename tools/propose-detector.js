@@ -69,7 +69,17 @@ const rate = hits.length / files.length * 100;
 // Thresholds are the ones detectors.js already documents, made executable. They are about NOISE,
 // not importance: a real defect class in a curated corpus is rare, so a common match is evidence
 // the rule has caught something normal rather than something wrong.
-const verdict = rate === 0
+// KIND changes what a high rate MEANS. For a 'record' proposal every hit needs its own judgement,
+// so a common match is evidence the rule caught something normal. For a 'backfill' every hit takes
+// the same remedy, so a high count is the SIZE OF THE JOB, not noise — and after the sweep the same
+// rule becomes a 0-hit tripwire. That distinction was learned the hard way: a proposal at 7.4% was
+// refused here as noise when it was a 301-row backfill across 274 records.
+const KIND = cand.kind || 'record';
+const verdict = KIND === 'backfill'
+  ? { ok: true, word: `BACKFILL — ${hits.length} rows/records to sweep`, why: 'every hit takes the same remedy, so the count is the size of the job. Sweep it, wire the rule into prep-wave.js so it cannot re-accumulate, THEN add this as a tripwire (it should measure ~0).' }
+  : KIND === 'generator'
+    ? { ok: false, word: 'NOT A DETECTOR — central fix', why: 'a defect in a shared generator is one edit, not 1,158 flags. Apply it once in tools/, as its own commit, then propose a 0-hit tripwire so it cannot regress.' }
+    : rate === 0
   ? { ok: true, word: 'ACCEPT (tripwire)', why: 'fires on nothing today — a guard against a regression that has not happened yet' }
   : rate <= 2
     ? { ok: true, word: 'ACCEPT (after hand-check)', why: 'below the 2% noise floor — read the sample below and confirm each is genuinely wrong before adding' }
