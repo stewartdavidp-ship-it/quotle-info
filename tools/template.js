@@ -34,7 +34,7 @@ const { esc, escEm } = require('./esc'); // one shared entity-aware escape (also
 const { primaryCredit, otherCredits } = require('./credits');
 
 const { hasAuthorPage } = require('./authors');
-const { SECTIONS, standingPath, frag, flagPath } = require('./urls');
+const { SECTIONS, standingPath, frag } = require('./urls');
 
 // Normalise a root-relative section href to the trailing-slash URL contract. 853 records carry the
 // pre-contract form (`/authors/x`), which 301s. The template must never trust a data field to

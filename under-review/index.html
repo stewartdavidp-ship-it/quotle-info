@@ -114,6 +114,15 @@
         .vote .vote-n { min-width:0.9em; text-align:center; font-variant-numeric:tabular-nums; }
         .vote.voted { color:var(--gold); border-color:rgba(255,211,105,0.45); background:rgba(255,211,105,0.08); }
         .vote:disabled { cursor:default; }
+        /* /report/ — two jobs, two sections. Without these the radios inherit nothing and render as
+           one run-on paragraph with the dots buried mid-sentence; the labels are sentences, so they
+           need a line each. Found by looking at the page, not the markup. */
+        .report-sec { margin-top:42px; max-width:560px; }
+        .report-sec h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:1.45rem; letter-spacing:-0.015em; margin-bottom:8px; }
+        .report-sub { font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--slate); line-height:1.6; margin-bottom:4px; }
+        .report-why { display:flex; flex-direction:column; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--ink); margin:4px 0 2px; }
+        .report-why label { display:flex; align-items:flex-start; gap:9px; cursor:pointer; line-height:1.45; }
+        .report-why input { margin-top:3px; flex-shrink:0; }
         .nom { margin-top:34px; background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:26px 24px; display:flex; flex-direction:column; gap:10px; max-width:560px; }
         .nom-h { font-family:'Playfair Display',serif; font-weight:900; font-size:1.15rem; }
         .nom-sub { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-bottom:6px; }
@@ -5833,16 +5842,7 @@
             </div>
             <p class="no-results" id="noResults" hidden>Nothing under review matches that.</p>
         </section>
-
-            <form class="nom" id="nomForm" aria-label="Nominate a quote or author">
-                <h3 class="nom-h">Spot a famous fake we&rsquo;re missing?</h3>
-                <p class="nom-sub">Nominate a quote or the name it&rsquo;s pinned on. We trace the source before anything goes live &mdash; nothing you submit is published unverified.</p>
-                <input class="nom-in" name="author" maxlength="120" placeholder="Who it&rsquo;s usually credited to (required)" autocomplete="off" required>
-                <input class="nom-in" name="quote" maxlength="600" placeholder="The quote, if you have it (optional)" autocomplete="off">
-                <input class="nom-in" name="note" maxlength="600" placeholder="Anything you know about the real source (optional)" autocomplete="off">
-                <button class="nom-btn" type="submit">Submit nomination</button>
-                <p class="nom-msg" id="nomMsg" role="status" hidden></p>
-            </form>
+        <p class="bench-note">Know a famous fake we haven&rsquo;t got, or spotted something wrong? <a href="/report/">Report it &rarr;</a></p>
     </main>
     <footer class="site-footer">
         <nav class="foot-links" aria-label="Site">
@@ -5940,45 +5940,6 @@
                     .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ b.querySelector('.vote-n').textContent=d.count; b.classList.add('voted'); voted[s]=1; save(); } else { b.disabled=false; } })
                     .catch(function(){ b.disabled=false; }); }); }
             [].forEach.call(document.querySelectorAll('.vote'),function(b){ b.addEventListener('click',function(){ vote(b); }); });
-            var f=document.getElementById('nomForm');
-            function show(el,t,err){ el.textContent=t; el.hidden=false; el.className='nom-msg'+(err?' err':''); }
-            // PREFILL FROM ?flag=<quoteSlug>. A reader who clicked "spot an error?" was on ONE quote
-            // page; this form is generic and sits ~98% down a 675KB document. Without this they land
-            // in a wall of cards and retype the line they were just reading. urls.js flagPath() builds
-            // the link. Progressive: if the fetch fails the form is simply empty, never broken.
-            (function(){
-                if(!f) return;
-                var m=/[?&]flag=([^&#]+)/.exec(location.search); if(!m) return;
-                var slug; try{ slug=decodeURIComponent(m[1]); }catch(e){ return; }
-                var ctx=document.createElement('p'); ctx.className='nom-sub'; ctx.id='nomCtx';
-                ctx.textContent='Reporting an issue with a quote you were reading\u2026';
-                f.insertBefore(ctx, f.querySelector('.nom-in'));
-                fetch('/data/manifest.json').then(function(r){return r.json();}).then(function(list){
-                    var e=null; for(var i=0;i<list.length;i++){ if(list[i].quoteSlug===slug){ e=list[i]; break; } }
-                    if(!e){ ctx.textContent='Reporting an issue with: '+slug.replace(/-/g,' '); return; }
-                    if(!f.author.value) f.author.value=e.author||'';
-                    if(!f.quote.value)  f.quote.value=e.quote||'';
-                    if(!f.note.value)   f.note.value='Correction for '+(e.url||('/who-said/'+slug+'/'))+' \u2014 ';
-                    ctx.textContent='Reporting an issue with \u201c'+(e.quote||slug)+'\u201d. Tell us what\u2019s wrong and, if you can, the source that shows it.';
-                    // ONE deliberate scroll, and a focus that does not cause a second one.
-                    // The browser performs its own #nomForm jump at load; this prefill lands LATER
-                    // (after a fetch) and inserting the context line moves the form, so a plain
-                    // focus() scrolled again and overshot to the very bottom of a 128,000px page --
-                    // the reader arrived on a blank screen below all content. Verified in a browser,
-                    // not inferred: the pre-fix screenshot was empty.
-                    try{ f.scrollIntoView({block:'center'}); }catch(_){ f.scrollIntoView(); }
-                    try{ f.note.focus({preventScroll:true}); f.note.setSelectionRange(f.note.value.length,f.note.value.length); }catch(_){}
-                }).catch(function(){ ctx.textContent='Reporting an issue with: '+slug.replace(/-/g,' '); });
-            })();
-            if(f){ f.addEventListener('submit',function(e){ e.preventDefault();
-                var msg=document.getElementById('nomMsg'), btn=f.querySelector('.nom-btn');
-                var author=f.author.value.trim(), quote=f.quote.value.trim(), note=f.note.value.trim();
-                if(!author&&!quote){ show(msg,'Add at least an author or a quote.',true); return; }
-                btn.disabled=true; show(msg,'Checking\u2026',false);
-                token(function(t){ if(!t){ btn.disabled=false; show(msg,'Verification failed \u2014 please try again.',true); return; }
-                    fetch(API+'/nominate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({author:author,quote:quote,note:note,token:t})})
-                    .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); btn.disabled=false; show(msg,'Thank you \u2014 added to the review queue.',false); } else { btn.disabled=false; show(msg,(d&&d.error)||'Something went wrong.',true); } })
-                    .catch(function(){ btn.disabled=false; show(msg,'Network error \u2014 please try again.',true); }); }); }); }
         })();
     </script>    <script>
         (function(){

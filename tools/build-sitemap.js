@@ -42,6 +42,7 @@ const urls = [
   { loc: `${ORIGIN}/terms/`, lastmod: latest },
   { loc: `${ORIGIN}/authors/`, lastmod: latest },
   { loc: `${ORIGIN}/check/`, lastmod: latest },
+  { loc: `${ORIGIN}/report/`, lastmod: latest },
   { loc: `${ORIGIN}/who-recorded/`, lastmod: latest },
   { loc: `${ORIGIN}/themes/`, lastmod: latest },
   ...themePages.map((t) => ({ loc: `${ORIGIN}/themes/${t.slug}/`, lastmod: latest })),

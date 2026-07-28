@@ -113,6 +113,15 @@
         .vote .vote-n { min-width:0.9em; text-align:center; font-variant-numeric:tabular-nums; }
         .vote.voted { color:var(--gold); border-color:rgba(255,211,105,0.45); background:rgba(255,211,105,0.08); }
         .vote:disabled { cursor:default; }
+        /* /report/ — two jobs, two sections. Without these the radios inherit nothing and render as
+           one run-on paragraph with the dots buried mid-sentence; the labels are sentences, so they
+           need a line each. Found by looking at the page, not the markup. */
+        .report-sec { margin-top:42px; max-width:560px; }
+        .report-sec h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:1.45rem; letter-spacing:-0.015em; margin-bottom:8px; }
+        .report-sub { font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--slate); line-height:1.6; margin-bottom:4px; }
+        .report-why { display:flex; flex-direction:column; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--ink); margin:4px 0 2px; }
+        .report-why label { display:flex; align-items:flex-start; gap:9px; cursor:pointer; line-height:1.45; }
+        .report-why input { margin-top:3px; flex-shrink:0; }
         .nom { margin-top:34px; background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:26px 24px; display:flex; flex-direction:column; gap:10px; max-width:560px; }
         .nom-h { font-family:'Playfair Display',serif; font-weight:900; font-size:1.15rem; }
         .nom-sub { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-bottom:6px; }

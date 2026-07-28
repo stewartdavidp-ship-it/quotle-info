@@ -249,7 +249,6 @@ ${allSorted.map(card).join('\n')}
 // ---- UNDER REVIEW (/under-review/) ----
 const nomForm = `
             <form class="nom" id="nomForm" aria-label="Nominate a quote or author">
-                <h3 class="nom-h">Spot a famous fake we&rsquo;re missing?</h3>
                 <p class="nom-sub">Nominate a quote or the name it&rsquo;s pinned on. We trace the source before anything goes live &mdash; nothing you submit is published unverified.</p>
                 <input class="nom-in" name="author" maxlength="120" placeholder="Who it&rsquo;s usually credited to (required)" autocomplete="off" required>
                 <input class="nom-in" name="quote" maxlength="600" placeholder="The quote, if you have it (optional)" autocomplete="off">
@@ -280,9 +279,95 @@ ${BENCH.map(benchCard).join('\n')}
             </div>
             <p class="no-results" id="noResults" hidden>Nothing under review matches that.</p>
         </section>
-${INTERACTIVE ? nomForm : `        <p class="bench-note">Voting to prioritise these &mdash; and nominating new authors and quotes &mdash; is coming soon.</p>`}`;
+${INTERACTIVE ? `        <p class="bench-note">Know a famous fake we haven&rsquo;t got, or spotted something wrong? <a href="/report/">Report it &rarr;</a></p>` : `        <p class="bench-note">Voting to prioritise these &mdash; and nominating new authors and quotes &mdash; is coming soon.</p>`}`;
+
+// ---- REPORT (/report/) ----
+// The nominate form used to live at the BOTTOM OF THIS PAGE — ~98% down a document carrying 500+
+// candidate cards, with no anchor. It was there because /under-review/ happened to be the only page
+// with the Turnstile plumbing, never because it belonged there. Two readers in a row concluded the
+// site had no way to report anything, which is the correct conclusion from what they could see.
+//
+// Two jobs live here, and they are genuinely different:
+//   "something here is wrong"  — about a quote that HAS a page (the per-quote form on that page is
+//                                the better route; this is for readers who arrive without one)
+//   "you're missing one"       — about a quote that does NOT exist here, so no page can own it
+// /under-review/ goes back to being purely a browse list.
+const reportBody = INTERACTIVE ? `        <header class="page-head">
+            <p class="feat-kicker">Corrections and nominations</p>
+            <h1>Report something</h1>
+            <p class="lede">Two different things, both useful. Nothing you send is published unverified &mdash; it goes to a review queue and a human traces the source.</p>
+        </header>
+        <section class="report-sec" id="wrong" aria-labelledby="wrong-h">
+            <h2 id="wrong-h">Something on a page is wrong</h2>
+            <p class="report-sub">If you are on the quote&rsquo;s own page, use the report form at the bottom of it &mdash; it already knows which quote you mean. Otherwise tell us here.</p>
+            <form class="nom" id="fixForm">
+                <input class="nom-in" name="ref" maxlength="300" placeholder="Which quote? Paste the link or the line (required)" autocomplete="off" required>
+                <div class="report-why" role="radiogroup" aria-label="What is wrong?">
+                    <label><input type="radio" name="reason" value="wrong-person" checked> The attribution is wrong</label>
+                    <label><input type="radio" name="reason" value="wrong-wording"> The wording is wrong</label>
+                    <label><input type="radio" name="reason" value="rights"> The rights / copyright information is wrong</label>
+                    <label><input type="radio" name="reason" value="dead-link"> A source link is broken</label>
+                    <label><input type="radio" name="reason" value="other"> Something else</label>
+                </div>
+                <input class="nom-in" name="url" type="url" inputmode="url" placeholder="Optional: a link that shows it" autocomplete="off">
+                <input class="nom-in" name="note" maxlength="600" placeholder="Optional: anything else we should know" autocomplete="off">
+                <button class="nom-btn" type="submit">Send report</button>
+                <p class="nom-msg" id="fixMsg" role="status" hidden></p>
+            </form>
+        </section>
+        <section class="report-sec" id="missing" aria-labelledby="missing-h">
+            <h2 id="missing-h">We&rsquo;re missing a famous fake</h2>
+${nomForm}
+        </section>` : `        <header class="page-head">
+            <h1>Report something</h1>
+            <p class="lede">Corrections and nominations are coming soon. In the meantime, email <a href="mailto:help@quotle.info">help@quotle.info</a>.</p>
+        </header>`;
 
 const TURNSTILE_HEAD = INTERACTIVE ? `    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>\n` : '';
+// /report/ needs its own script: the vote wiring above belongs to the browse page, and shipping
+// 500 cards' worth of vote JS to a page with two forms (or the forms to a page with no forms) is
+// how the nominate form ended up living on /under-review/ in the first place.
+const REPORT_JS = INTERACTIVE ? `    <script>
+        (function(){
+            var API=${JSON.stringify(CFG.votesApi)}, SITEKEY=${JSON.stringify(CFG.turnstileSitekey)};
+            var wid=null, pending=null;
+            function ensure(){ if(wid!==null||!window.turnstile) return; var el=document.createElement('div'); el.style.display='none'; document.body.appendChild(el);
+                wid=window.turnstile.render(el,{sitekey:SITEKEY,size:'invisible',callback:function(t){ var c=pending; pending=null; if(c)c(t); },'error-callback':function(){ var c=pending; pending=null; if(c)c(null); }}); }
+            function token(cb){ ensure(); if(wid===null){ cb(null); return; } pending=cb; try{ window.turnstile.reset(wid); window.turnstile.execute(wid); }catch(e){ pending=null; cb(null); } }
+            function show(el,t,err){ el.textContent=t; el.hidden=false; el.className='nom-msg'+(err?' err':''); }
+
+            // "something is wrong" -> /submit-source. The reader arrived WITHOUT a page, so there is
+            // no slug to send; what they typed goes in the note, prefixed, and a human resolves it.
+            // If they pasted a /who-said/<slug>/ link we recover the slug so the report lands on the
+            // right record automatically — the common case, and free.
+            var fx=document.getElementById('fixForm');
+            if(fx){ fx.addEventListener('submit',function(e){ e.preventDefault();
+                var msg=document.getElementById('fixMsg'), btn=fx.querySelector('.nom-btn');
+                var ref=fx.ref.value.trim(), url=fx.url.value.trim(), note=fx.note.value.trim();
+                var reason='other', r=fx.querySelector('input[name="reason"]:checked'); if(r) reason=r.value;
+                if(!ref){ show(msg,'Tell us which quote you mean.',true); return; }
+                var m=/\/who-said\/([a-z0-9-]+)\//.exec(ref), slug=m?m[1]:'';
+                var full='Reported via /report/ for: '+ref+(note?' \\u2014 '+note:'');
+                btn.disabled=true; show(msg,'Sending\\u2026',false);
+                token(function(t){ if(!t){ btn.disabled=false; show(msg,'Verification failed \\u2014 please try again.',true); return; }
+                    fetch(API+'/submit-source',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug,url:url,stance:'refutes',reason:reason,note:full.slice(0,600),token:t})})
+                    .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ fx.reset(); btn.disabled=false; show(msg,'Thank you \\u2014 sent to our review queue.',false); } else { btn.disabled=false; show(msg,(d&&d.error)||'Something went wrong.',true); } })
+                    .catch(function(){ btn.disabled=false; show(msg,'Network error \\u2014 please try again.',true); }); }); }); }
+
+            // "you're missing one" -> /nominate. Unchanged behaviour, new home.
+            var f=document.getElementById('nomForm');
+            if(f){ f.addEventListener('submit',function(e){ e.preventDefault();
+                var msg=document.getElementById('nomMsg'), btn=f.querySelector('.nom-btn');
+                var author=f.author.value.trim(), quote=f.quote.value.trim(), note=f.note.value.trim();
+                if(!author&&!quote){ show(msg,'Add at least an author or a quote.',true); return; }
+                btn.disabled=true; show(msg,'Sending\\u2026',false);
+                token(function(t){ if(!t){ btn.disabled=false; show(msg,'Verification failed \\u2014 please try again.',true); return; }
+                    fetch(API+'/nominate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({author:author,quote:quote,note:note,token:t})})
+                    .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); btn.disabled=false; show(msg,'Thank you \\u2014 added to the review queue.',false); } else { btn.disabled=false; show(msg,(d&&d.error)||'Something went wrong.',true); } })
+                    .catch(function(){ btn.disabled=false; show(msg,'Network error \\u2014 please try again.',true); }); }); }); }
+        })();
+    </script>` : '';
+
 const BENCH_JS = INTERACTIVE ? `    <script>
         (function(){
             var API=${JSON.stringify(CFG.votesApi)}, SITEKEY=${JSON.stringify(CFG.turnstileSitekey)};
@@ -304,45 +389,6 @@ const BENCH_JS = INTERACTIVE ? `    <script>
                     .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ b.querySelector('.vote-n').textContent=d.count; b.classList.add('voted'); voted[s]=1; save(); } else { b.disabled=false; } })
                     .catch(function(){ b.disabled=false; }); }); }
             [].forEach.call(document.querySelectorAll('.vote'),function(b){ b.addEventListener('click',function(){ vote(b); }); });
-            var f=document.getElementById('nomForm');
-            function show(el,t,err){ el.textContent=t; el.hidden=false; el.className='nom-msg'+(err?' err':''); }
-            // PREFILL FROM ?flag=<quoteSlug>. A reader who clicked "spot an error?" was on ONE quote
-            // page; this form is generic and sits ~98% down a 675KB document. Without this they land
-            // in a wall of cards and retype the line they were just reading. urls.js flagPath() builds
-            // the link. Progressive: if the fetch fails the form is simply empty, never broken.
-            (function(){
-                if(!f) return;
-                var m=/[?&]flag=([^&#]+)/.exec(location.search); if(!m) return;
-                var slug; try{ slug=decodeURIComponent(m[1]); }catch(e){ return; }
-                var ctx=document.createElement('p'); ctx.className='nom-sub'; ctx.id='nomCtx';
-                ctx.textContent='Reporting an issue with a quote you were reading\\u2026';
-                f.insertBefore(ctx, f.querySelector('.nom-in'));
-                fetch('/data/manifest.json').then(function(r){return r.json();}).then(function(list){
-                    var e=null; for(var i=0;i<list.length;i++){ if(list[i].quoteSlug===slug){ e=list[i]; break; } }
-                    if(!e){ ctx.textContent='Reporting an issue with: '+slug.replace(/-/g,' '); return; }
-                    if(!f.author.value) f.author.value=e.author||'';
-                    if(!f.quote.value)  f.quote.value=e.quote||'';
-                    if(!f.note.value)   f.note.value='Correction for '+(e.url||('/who-said/'+slug+'/'))+' \\u2014 ';
-                    ctx.textContent='Reporting an issue with \\u201c'+(e.quote||slug)+'\\u201d. Tell us what\\u2019s wrong and, if you can, the source that shows it.';
-                    // ONE deliberate scroll, and a focus that does not cause a second one.
-                    // The browser performs its own #nomForm jump at load; this prefill lands LATER
-                    // (after a fetch) and inserting the context line moves the form, so a plain
-                    // focus() scrolled again and overshot to the very bottom of a 128,000px page --
-                    // the reader arrived on a blank screen below all content. Verified in a browser,
-                    // not inferred: the pre-fix screenshot was empty.
-                    try{ f.scrollIntoView({block:'center'}); }catch(_){ f.scrollIntoView(); }
-                    try{ f.note.focus({preventScroll:true}); f.note.setSelectionRange(f.note.value.length,f.note.value.length); }catch(_){}
-                }).catch(function(){ ctx.textContent='Reporting an issue with: '+slug.replace(/-/g,' '); });
-            })();
-            if(f){ f.addEventListener('submit',function(e){ e.preventDefault();
-                var msg=document.getElementById('nomMsg'), btn=f.querySelector('.nom-btn');
-                var author=f.author.value.trim(), quote=f.quote.value.trim(), note=f.note.value.trim();
-                if(!author&&!quote){ show(msg,'Add at least an author or a quote.',true); return; }
-                btn.disabled=true; show(msg,'Checking\\u2026',false);
-                token(function(t){ if(!t){ btn.disabled=false; show(msg,'Verification failed \\u2014 please try again.',true); return; }
-                    fetch(API+'/nominate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({author:author,quote:quote,note:note,token:t})})
-                    .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); btn.disabled=false; show(msg,'Thank you \\u2014 added to the review queue.',false); } else { btn.disabled=false; show(msg,(d&&d.error)||'Something went wrong.',true); } })
-                    .catch(function(){ btn.disabled=false; show(msg,'Network error \\u2014 please try again.',true); }); }); }); }
         })();
     </script>` : '';
 
@@ -356,6 +402,12 @@ fs.mkdirSync(path.join(ROOT, 'who-said'), { recursive: true });
 fs.writeFileSync(path.join(ROOT, 'who-said', 'index.html'), quotesHtml);
 fs.mkdirSync(path.join(ROOT, 'under-review'), { recursive: true });
 fs.writeFileSync(path.join(ROOT, 'under-review', 'index.html'), reviewHtml);
+// /report/ — the correction + nomination home. Its own page because the two jobs it serves are not
+// browsing: one is "a page here is wrong", the other "you're missing one". Neither belonged at the
+// bottom of a 500-card list, which is where the nominate form sat until now.
+const reportHtml = page({ title: 'Report a correction or a missing quote | Quotle.info', description: 'Tell us if an attribution here is wrong, or nominate a famous misquote we have not covered. Nothing is published unverified — every report goes to a review queue and a human traces the source.', active: '', canonical: 'https://quotle.info/report/', headExtra: TURNSTILE_HEAD, body: reportBody, scripts: REPORT_JS });
+fs.mkdirSync(path.join(ROOT, 'report'), { recursive: true });
+fs.writeFileSync(path.join(ROOT, 'report', 'index.html'), reportHtml);
 console.log(`  ✓ index.html (lean home) + who-said/ (${total} quotes) + under-review/ (${BENCH.length} queued)`);
 
 // ---- base CSS (shared across the three pages; nav/search live in CHROME_CSS) ----
@@ -434,6 +486,15 @@ function _baseCss() { return `
         .vote .vote-n { min-width:0.9em; text-align:center; font-variant-numeric:tabular-nums; }
         .vote.voted { color:var(--gold); border-color:rgba(255,211,105,0.45); background:rgba(255,211,105,0.08); }
         .vote:disabled { cursor:default; }
+        /* /report/ — two jobs, two sections. Without these the radios inherit nothing and render as
+           one run-on paragraph with the dots buried mid-sentence; the labels are sentences, so they
+           need a line each. Found by looking at the page, not the markup. */
+        .report-sec { margin-top:42px; max-width:560px; }
+        .report-sec h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:1.45rem; letter-spacing:-0.015em; margin-bottom:8px; }
+        .report-sub { font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--slate); line-height:1.6; margin-bottom:4px; }
+        .report-why { display:flex; flex-direction:column; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--ink); margin:4px 0 2px; }
+        .report-why label { display:flex; align-items:flex-start; gap:9px; cursor:pointer; line-height:1.45; }
+        .report-why input { margin-top:3px; flex-shrink:0; }
         .nom { margin-top:34px; background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:26px 24px; display:flex; flex-direction:column; gap:10px; max-width:560px; }
         .nom-h { font-family:'Playfair Display',serif; font-weight:900; font-size:1.15rem; }
         .nom-sub { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-bottom:6px; }
