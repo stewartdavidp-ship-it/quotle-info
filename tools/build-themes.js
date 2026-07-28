@@ -130,6 +130,20 @@ const STYLE = `${ROOT_CSS}
         @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } * { transition:none !important; } }`;
 
 
+// RIGHT PERSON, WRONG WORDS. When the real author IS the name it is credited to, "Really Edison
+// &middot; not Edison" is gibberish — and it appeared on /themes/failure/, a page whose entire job is
+// establishing credibility. A researcher said it made them briefly distrust the whole list; the
+// underlying quote pages were fine, so this was purely a listing-template bug.
+//
+// template.js already solved this shape for the JSON-LD verdict: the dispute is about the WORDING,
+// not the attribution. Say that, rather than dropping the tail and leaving the row looking like an
+// ordinary correct attribution sitting in a misattributed list.
+function misTail(q) {
+  if (!q.credited) return '';
+  const same = String(q.author || '').trim().toLowerCase() === String(q.credited).trim().toLowerCase();
+  return same ? ' &middot; but not in these words' : ` &middot; not ${esc(q.credited)}`;
+}
+
 function page(inner, headExtra, active) {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -172,7 +186,7 @@ const realCard = (q) => {
 };
 const fakeCard = (q) => `                <a class="mis-card" href="/who-said/${q.slug}/">
                     <p class="mis-q">&ldquo;${esc(q.quote)}&rdquo;</p>
-                    <p class="mis-real"><span class="mis-lbl">Really</span>${esc(q.author)}${q.credited ? ` &middot; not ${esc(q.credited)}` : ''}</p>
+                    <p class="mis-real"><span class="mis-lbl">Really</span>${esc(q.author)}${misTail(q)}</p>
                 </a>`;
 
 // ---- per-theme pages ----
