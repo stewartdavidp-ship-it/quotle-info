@@ -275,3 +275,36 @@ question from opening a PR against your own repo.
 
 Note: there are ZERO real reports today, so observe mode collects nothing until genuine traffic
 arrives — which depends on the indexing work, not on this pipeline.
+
+## Email sending — decided 2026-07-28
+
+**Send via Mast's existing Resend account, from `runmast.email`.** No new account, no DNS.
+
+Why not a dedicated quotle.info sending domain: the shared Resend account is on the FREE plan, which
+allows exactly ONE domain, and `runmast.email` already occupies it (verified, us-east-1). Adding
+quotle.info returns "Your plan includes 1 domain. Upgrade to add more." Options were: a separate free
+Resend account (isolated, needs signup), upgrade to Pro at $20/mo for 50K emails, or send as
+runmast.email. Chose the last for now.
+
+Make the sender legible despite the domain mismatch:
+
+    From:     "Quotle.info" <quotle@runmast.email>
+    Reply-To: help@quotle.info
+
+The recipient sees "Quotle.info" and replies reach the address the site already advertises on
+/contact/ and in llms.txt. The runmast.email domain only shows on header inspection.
+
+KNOWN RISK, accepted: a message about quotle.info sent from runmast.email, whose body links to a
+third domain, is a mild phishing signal to spam filters. At single-digit volume this is unlikely to
+bite. If replies start disappearing, that is the cause — fix by upgrading Resend and verifying
+quotle.info properly, not by tuning the copy.
+
+Key: RESEND_API_KEY in GCP project `runmast-outreach` (Mast's platform key). Mast resolves it via
+getSecret() and treats that as the single source of truth — do not copy the value into a second
+store. Mast's send path (functions/email-queue-processor.js) also queues sends and writes an audit
+row per send; quotle's worker cannot require those modules (Cloudflare, not GCP Functions), so reuse
+the SHAPE, not the code.
+
+If two Google identities collide at a login page: stewartd@runmast.com is a Google Workspace identity
+(runmast.com MX = smtp.google.com), so it and stewartdavidp@gmail.com both route to the same Google
+chooser. Separate them with distinct Chrome profiles, or sign up with email+password instead of SSO.
