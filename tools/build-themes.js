@@ -259,17 +259,35 @@ ${realSection}${fakeSection}
 }
 
 // ---- /themes/ index ----
-// Order the browse by DEPTH, not by the vocabulary's declaration order. That order is just the
-// sequence someone typed the themes in (themes.js even says "to add a theme: append here", so it
-// decays into authoring chronology), and it actively misled: wisdom — the deepest shelf at 56
-// verified / 35 free — sat at position 9 and character (38) at position 27 of 28, while failure,
-// the THINNEST at 7, held a first-row slot. Depth is derived from the corpus, so it needs no
-// curation and can't drift out of true as waves land. Same reasoning as the PD-first ordering
-// above, one level up: lead with the shelves we can actually serve from. /themes/{slug} URLs are
-// unaffected — only the browse order moves.
+// The HUMAN browse is ALPHABETICAL; the MACHINE index below stays depth-first. That split is
+// deliberate — they have different readers.
+//
+// This page used to be depth-ordered too, and depth was itself a fix: the original order was the
+// vocabulary's declaration order, i.e. the sequence someone typed the themes in (themes.js still
+// says "to add a theme: append here", so it decays into authoring chronology), which put wisdom —
+// the deepest shelf — at position 9 while failure, the thinnest, held a first-row slot. Do NOT go
+// back to that.
+//
+// But depth had a defect of its own: it is INVISIBLE. A reader's default hypothesis for a list of
+// 28 single-word labels is A–Z. They don't get "sorted by number of verified quotes" unless they
+// stop and read the counts on every card and infer it — so what they actually notice is that the
+// list is NOT alphabetical, with no apparent rule in its place. An order you have to
+// reverse-engineer is worse than either option done legibly.
+//
+// The cost of switching is smaller than it looks, because A–Z happens to open strong here: the
+// first row is Change (30) / Character (68) / Courage (56), averaging 51 verified quotes against
+// a 34.9 corpus average. Per-card counts still show depth, so nothing is hidden — only the
+// ordering rule changes, to the one nobody has to be told.
+//
+// Sorting by AUTHORS was considered and rejected: it correlates 0.987 with quote count (mean rank
+// displacement 1.5 places, identical top 6). It is the same list, not a second view.
+//
 // Tie-break on slug: the built HTML is COMMITTED, so an unstable sort would churn the diff (and
 // the wave/generator merge order) on every rebuild.
-indexCards.sort((a, b) => (b.count - a.count) || a.slug.localeCompare(b.slug));
+indexCards.sort((a, b) => a.label.localeCompare(b.label) || a.slug.localeCompare(b.slug));
+// themes.json is the agent-facing discovery index (advertised in llms.txt, linked by the Worker).
+// A machine picking a shelf to build a deck from wants the DEEPEST first and has no alphabetical
+// expectation to violate — so this one keeps depth ordering. The inconsistency is the point.
 jsonIndex.sort((a, b) => (b.verified.length - a.verified.length) || a.theme.localeCompare(b.theme));
 
 const idxHead = `    <title>Browse quotes by theme | Quotle.info</title>
