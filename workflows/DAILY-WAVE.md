@@ -73,9 +73,19 @@ If `build.js` fails, fix the record it names — do not bypass the gate.
 Then branch, commit, push, open a PR. In the body: the 5 quotes, the verdict and rights for each,
 and **anything you could not establish**. That last part is what makes the PR reviewable.
 
+## Record what this run did
+
+```bash
+node tools/routine-log.js --routine daily-wave --outcome pr --built <N> --pr <url> \
+  --note "anything you could not establish"
+```
+
+Commit it with the wave. The token cost of this pass has never been measured — every figure quoted
+for it so far is an inference. This line is the denominator that replaces the guess.
+
 ## Do not
 
-- edit `tools/` or `workflows/` — check with `git status --porcelain -- tools workflows`
+- edit `tools/` or `workflows/` — check with `git status --porcelain -- tools workflows`. Writing `data/routine-log.jsonl` is expected and fine
 - hand-edit `data/harvest-queue.json` or `backlog-index.json` (use `harvest.js`)
 - `harvest.js skip` anything — the bar is hate/harm only
 - push to `main`
