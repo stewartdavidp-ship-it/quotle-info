@@ -215,6 +215,49 @@ async function fetchReports() {
   } catch (e) { return { error: String(e && e.message || e) }; }
 }
 
+// classifyReports — every report must land somewhere NAMED. dueSet joins reports to records by
+// exact slug, so three classes fell straight through and stayed pending forever:
+//   · song:<slug>  — song pages post that prefix (build-songs.js). survey() reads data/quotes only,
+//                    so ~97 live song pages had no destination at all.
+//   · ''           — /report/ sends an empty slug when the reader typed the line instead of pasting
+//                    a link. That is a real report, not a malformed one.
+//   · unknown      — a slug that was renamed or deleted since the report was filed.
+// Naming them is the point: an unrouted report is a second silent queue, which is the bug the
+// whole triage endpoint exists to stop.
+function classifyReports(sources, knownQuoteSlugs) {
+  const out = { quote: [], song: [], noSlug: [], unknown: [] };
+  for (const s of sources) {
+    const slug = String(s.slug || '');
+    if (!slug) out.noSlug.push(s);
+    else if (slug.startsWith('song:')) out.song.push(s);
+    else if (knownQuoteSlugs.has(slug)) out.quote.push(s);
+    else out.unknown.push(s);
+  }
+  return out;
+}
+
+// THE RETURN LEG. Without this the loop never closes: a record can be audited, fixed, stamped,
+// rebuilt and shipped while its report is still status='pending' — so /sources keeps returning it
+// and dueSet keeps scoring it at +2000/+4000, forever, starving the staleness lane behind it.
+// stamp() is the right caller because it is the step that means "this record has been dealt with".
+async function closeReports(ids, verdict, note) {
+  const token = process.env.ADMIN_TOKEN;
+  if (!token) return { error: 'ADMIN_TOKEN not set — cannot close reports.' };
+  let closed = 0, already = 0;
+  for (const id of ids) {
+    try {
+      const r = await fetch(`${API}/triage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ id, verdict, note: note || '' }),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (d && d.ok) { if (d.changed) closed++; else already++; }
+    } catch (_) { /* a failed close is retried next run — the guard makes that safe */ }
+  }
+  return { closed, already };
+}
+
 async function dueSet(limit) {
   const rows = survey();
   const rep = await fetchReports();
@@ -289,13 +332,40 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
   if (cmd === 'reports') {
     const rep = await fetchReports();
     if (rep.error) { console.log(`  ! ${rep.error}`); process.exitCode = 1; return; }
-    if (!rep.sources.length) { console.log('  no pending reader reports'); return; }
-    console.log(`  ${rep.sources.length} pending reader report(s):\n`);
-    for (const s of rep.sources) {
-      console.log(`    [${(s.stance || '').toUpperCase().padEnd(8)}] ${s.slug}`);
-      console.log(`               ${s.url}`);
-      if (s.note) console.log(`               "${String(s.note).slice(0, 110)}"`);
+    const sources = rep.sources || [];
+    if (!sources.length) { console.log('  no pending reader reports'); return; }
+    const known = new Set(survey().map((r) => r.slug));
+    const g = classifyReports(sources, known);
+    // `reason` is the ONLY content on a sourceless report, and the /sources SELECT dropped it
+    // until 2026-07-28 — so those printed as a blank line and read as empty submissions.
+    const line = (s) => {
+      const bits = [s.reason || '(no reason given)'];
+      if (s.url) bits.push(s.url);
+      if (s.note) bits.push(`"${String(s.note).slice(0, 90)}"`);
+      console.log(`      #${s.id} [${(s.stance || '').toUpperCase()}] ${bits.join('  ·  ')}`);
+    };
+    console.log(`  ${sources.length} pending reader report(s):\n`);
+    if (g.quote.length) {
+      console.log(`    ROUTABLE — ${g.quote.length} on quote records (these reach review.js due):`);
+      for (const s of g.quote) { console.log(`    ${s.slug}`); line(s); }
     }
+    if (g.song.length) {
+      console.log(`\n    SONGS — ${g.song.length}. NO destination yet: survey() reads data/quotes only,`);
+      console.log('    so these never reach due. Audit with audit-songs.js by hand, or close them.');
+      for (const s of g.song) { console.log(`    ${s.slug}`); line(s); }
+    }
+    if (g.noSlug.length) {
+      console.log(`\n    NO SLUG — ${g.noSlug.length}. The reader typed the line instead of pasting a link.`);
+      console.log('    A real report: identify the record by hand, or close as unresolvable.');
+      for (const s of g.noSlug) line(s);
+    }
+    if (g.unknown.length) {
+      console.log(`\n    UNKNOWN SLUG — ${g.unknown.length}. Renamed or deleted since the report was filed.`);
+      console.log('    Close as unresolvable — nothing will ever join these to a record.');
+      for (const s of g.unknown) { console.log(`    ${s.slug}`); line(s); }
+    }
+    const stuck = g.song.length + g.noSlug.length + g.unknown.length;
+    if (stuck) console.log(`\n  ${stuck} report(s) cannot reach the due queue. Close them or they stay pending forever.`);
     return;
   }
 
@@ -316,14 +386,34 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
     if (!slugs.length) { console.log('  usage: review.js stamp <slug…> [--verdict PASS|FIXED] [--by <who>]'); process.exitCode = 1; return; }
     const today = new Date().toISOString().slice(0, 10);
     let n = 0;
+      const stamped = [];
     for (const slug of slugs) {
       const file = path.join(QDIR, `${slug}.json`);
       if (!fs.existsSync(file)) { console.log(`  ! no record: ${slug}`); continue; }
       const rec = JSON.parse(fs.readFileSync(file, 'utf8'));
       rec.review = { ...(rec.review || {}), lastReviewedOn: today, lastReviewedBy: by, lastVerdict: verdict };
       fs.writeFileSync(file, JSON.stringify(rec, null, 2) + '\n');
-      n++;
+        n++;
+        stamped.push(slug);
     }
+      // THE RETURN LEG. stamp means "this record has been dealt with" — so the reader report that put
+      // it here is dealt with too. Without this the record ships audited, fixed and stamped while its
+      // report is still status='pending', so /sources keeps returning it and dueSet keeps scoring it
+      // at +2000/+4000 forever, starving the staleness lane behind it. Closing is idempotent
+      // server-side (UPDATE ... WHERE status='pending'), so a re-run is a no-op and a failed close
+      // simply retries next time.
+      if (stamped.length) {
+        const rep = await fetchReports();
+        if (rep.error) { console.log(`  ! reports not closed: ${rep.error}`); }
+        else {
+          const ids = (rep.sources || []).filter((x) => stamped.includes(String(x.slug))).map((x) => x.id);
+          if (ids.length) {
+            const res = await closeReports(ids, 'accepted', `reviewed ${today} by ${by} (${verdict})`);
+            if (res.error) console.log(`  ! reports not closed: ${res.error}`);
+            else console.log(`  closed ${res.closed} report(s)${res.already ? `, ${res.already} already closed` : ''}`);
+          }
+        }
+      }
     console.log(`  stamped ${n} record(s) reviewed ${today} (${verdict})`);
     console.log('  remember: rebuild so schema.dateModified and the pages reflect any fix.');
     return;

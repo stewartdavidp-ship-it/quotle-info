@@ -247,6 +247,12 @@ export default {
       if (url.pathname === '/submit-source' && req.method === 'POST') {
         const body = await req.json().catch(() => ({}));
         const slug = String(body.slug || '').trim().slice(0, 120);
+        // Slug format, deliberately NOT the /vote pattern. Song pages submit `song:<songSlug>`
+        // (build-songs.js), so a bare [a-z0-9-] regex would 400 every report from ~97 live song
+        // pages — caught in review before it shipped. '' is explicitly allowed: /report/ sends it
+        // when the reader typed the line instead of pasting a link. That is a real report, routed
+        // to the unresolvable bucket downstream, not a malformed one to reject here.
+        if (slug && !/^(song:)?[a-z0-9-]{3,80}$/.test(slug)) return send({ error: 'bad slug' }, 400);
         let submittedUrl = String(body.url || '').trim().slice(0, 500);
         const stance = body.stance === 'refutes' ? 'refutes' : 'supports';
         const note = String(body.note || '').trim().slice(0, 600);
@@ -289,12 +295,40 @@ export default {
       }
 
       // Admin review queue for submitted source evidence (mirrors /nominations).
+      // POST /triage — the write that was missing entirely. Without it nothing could ever close a
+      // report: /sources?status=pending never drained, so review.js re-scored the same slugs at
+      // +2000/+4000 on every run forever, and the staleness lane starved behind them.
+      //
+      // It sets `status`, not a side column. An earlier draft wrote triage/triaged_at only — which
+      // leaves status='pending', so the row keeps coming back and the job is non-idempotent by
+      // construction. The UPDATE is guarded on status='pending', so a second run changes 0 rows and
+      // does not re-stamp the timestamp.
+      if (url.pathname === '/triage' && req.method === 'POST') {
+        const auth = (req.headers.get('authorization') || '').replace(/^Bearer\s+/i, '');
+        if (!env.ADMIN_TOKEN || !safeEq(auth, env.ADMIN_TOKEN)) return send({ error: 'unauthorized' }, 401);
+        const body = await req.json().catch(() => ({}));
+        const id = parseInt(body.id, 10);
+        const VERDICTS = ['accepted', 'rejected', 'unresolvable'];
+        const verdict = VERDICTS.includes(body.verdict) ? body.verdict : '';
+        const note = String(body.note || '').trim().slice(0, 600);
+        if (!Number.isFinite(id) || !verdict) return send({ error: 'need {id, verdict: accepted|rejected|unresolvable}' }, 400);
+        // 'unresolvable' is a real outcome, not a failure: a report whose slug was renamed, deleted
+        // or never given joins to no record. Without a drain it becomes a second silent queue —
+        // which is the exact bug this endpoint exists to stop.
+        const status = verdict === 'accepted' ? 'accepted' : 'rejected';
+        const res = await env.DB.prepare(
+          "UPDATE source_submissions SET status=?, triage=?, triaged_at=? WHERE id=? AND status='pending'"
+        ).bind(status, verdict + (note ? ' | ' + note : ''), new Date().toISOString(), id).run();
+        const changed = (res && res.meta && res.meta.changes) || 0;
+        return send({ ok: true, changed, alreadyClosed: changed === 0 });
+      }
+
       if (url.pathname === '/sources' && req.method === 'GET') {
         const token = url.searchParams.get('token') || '';
         if (!env.ADMIN_TOKEN || token !== env.ADMIN_TOKEN) return send({ error: 'unauthorized' }, 401);
         const status = url.searchParams.get('status') || 'pending';
         const { results } = await env.DB.prepare(
-          'SELECT id,slug,url,stance,note,status,created FROM source_submissions WHERE status=? ORDER BY created DESC LIMIT 200'
+          'SELECT id,slug,url,stance,reason,note,status,created FROM source_submissions WHERE status=? ORDER BY created DESC LIMIT 200'
         ).bind(status).all();
         return send({ sources: results });
       }
@@ -371,6 +405,16 @@ export default {
     }
   },
 };
+
+// Constant-time string compare for admin tokens. `a === b` leaks length and position through
+// timing; cheap to avoid, and /triage is a mutating endpoint.
+function safeEq(a, b) {
+  const x = String(a || ''), y = String(b || '');
+  if (x.length !== y.length) return false;
+  let d = 0;
+  for (let i = 0; i < x.length; i++) d |= x.charCodeAt(i) ^ y.charCodeAt(i);
+  return d === 0;
+}
 
 async function verifyTurnstile(env, token, req) {
   if (!env.TURNSTILE_SECRET || !token) return false;
