@@ -423,7 +423,12 @@
                       var st=(d&&d.stage)||'none';
                       if(st==='corpus'){ btn.disabled=false; show(msg,'We already have this one \u2014 open '+(d.url||'/who-said/')+' . If our verdict looks wrong, use the report form at the bottom of that page.',false); return; }
                       if(st==='backlog'){ btn.disabled=false; f.reset(); show(msg,'Good call \u2014 it is already on our list, queued for a full source trace.',false); return; }
-                      if(st==='nominated'){ btn.disabled=false; f.reset(); show(msg,'Someone beat you to it \u2014 already nominated and awaiting review.',false); return; }
+                      // 'nominated' discards the reader's content for the SAME reason 'wikiquote'
+                      // did — an existing pending row, so the client skipped the POST. Fixing only
+                      // the wikiquote branch left this one live: once a quote is queued ONCE, every
+                      // later reader with real context about it was silently ignored. /nominate
+                      // dedupes and enriches, so posting is safe and the note reaches the row.
+                      if(st==='nominated'){ nominate(author,quote,note,msg,btn,f,'Someone beat you to it \u2014 already nominated. We have added your notes to it.'); return; }
                       // /lookup ALREADY queued a moderation nomination when Wikiquote confirmed it literally
                       // (added:true). Posting again would duplicate it.
                       // DO NOT return early here. /lookup auto-queues a BARE nomination when
