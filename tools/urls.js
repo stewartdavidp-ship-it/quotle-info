@@ -53,7 +53,12 @@ const SECTIONS = ['who-said', 'authors', 'themes', 'who-recorded', 'who-wrote'];
 // every ~2,000 pages AND were listed in sitemap.xml as redirecting URLs, at a time when Google's
 // crawl-stats showed 16% of all requests being 301s. Fixing a contract and then writing a guard
 // that encodes the same blind spot is how a "fixed" bug stays live.
-const STANDING = ['about', 'contact', 'privacy', 'terms', 'how-we-verify', 'vs-ai'];
+// `under-review` joins the list for the same directory reason — but note what it carries: the
+// site's ONLY correction INPUT, the `#nomForm` nominate form. That form sits ~98% down a 675KB
+// page, behind 500+ candidate cards, so an unanchored link to /under-review/ lands the reader on a
+// browse list and reads as "there is no way to report anything here". Every correction link must
+// therefore be the ANCHORED deep link. See tools/build-static.js.
+const STANDING = ['about', 'contact', 'privacy', 'terms', 'how-we-verify', 'vs-ai', 'under-review'];
 const standingPath = (name) => `/${name}/`;
 const standingUrl = (name) => `${ORIGIN}${standingPath(name)}`;
 
