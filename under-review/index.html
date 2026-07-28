@@ -5942,6 +5942,34 @@
             [].forEach.call(document.querySelectorAll('.vote'),function(b){ b.addEventListener('click',function(){ vote(b); }); });
             var f=document.getElementById('nomForm');
             function show(el,t,err){ el.textContent=t; el.hidden=false; el.className='nom-msg'+(err?' err':''); }
+            // PREFILL FROM ?flag=<quoteSlug>. A reader who clicked "spot an error?" was on ONE quote
+            // page; this form is generic and sits ~98% down a 675KB document. Without this they land
+            // in a wall of cards and retype the line they were just reading. urls.js flagPath() builds
+            // the link. Progressive: if the fetch fails the form is simply empty, never broken.
+            (function(){
+                if(!f) return;
+                var m=/[?&]flag=([^&#]+)/.exec(location.search); if(!m) return;
+                var slug; try{ slug=decodeURIComponent(m[1]); }catch(e){ return; }
+                var ctx=document.createElement('p'); ctx.className='nom-sub'; ctx.id='nomCtx';
+                ctx.textContent='Reporting an issue with a quote you were reading\u2026';
+                f.insertBefore(ctx, f.querySelector('.nom-in'));
+                fetch('/data/manifest.json').then(function(r){return r.json();}).then(function(list){
+                    var e=null; for(var i=0;i<list.length;i++){ if(list[i].quoteSlug===slug){ e=list[i]; break; } }
+                    if(!e){ ctx.textContent='Reporting an issue with: '+slug.replace(/-/g,' '); return; }
+                    if(!f.author.value) f.author.value=e.author||'';
+                    if(!f.quote.value)  f.quote.value=e.quote||'';
+                    if(!f.note.value)   f.note.value='Correction for '+(e.url||('/who-said/'+slug+'/'))+' \u2014 ';
+                    ctx.textContent='Reporting an issue with \u201c'+(e.quote||slug)+'\u201d. Tell us what\u2019s wrong and, if you can, the source that shows it.';
+                    // ONE deliberate scroll, and a focus that does not cause a second one.
+                    // The browser performs its own #nomForm jump at load; this prefill lands LATER
+                    // (after a fetch) and inserting the context line moves the form, so a plain
+                    // focus() scrolled again and overshot to the very bottom of a 128,000px page --
+                    // the reader arrived on a blank screen below all content. Verified in a browser,
+                    // not inferred: the pre-fix screenshot was empty.
+                    try{ f.scrollIntoView({block:'center'}); }catch(_){ f.scrollIntoView(); }
+                    try{ f.note.focus({preventScroll:true}); f.note.setSelectionRange(f.note.value.length,f.note.value.length); }catch(_){}
+                }).catch(function(){ ctx.textContent='Reporting an issue with: '+slug.replace(/-/g,' '); });
+            })();
             if(f){ f.addEventListener('submit',function(e){ e.preventDefault();
                 var msg=document.getElementById('nomMsg'), btn=f.querySelector('.nom-btn');
                 var author=f.author.value.trim(), quote=f.quote.value.trim(), note=f.note.value.trim();

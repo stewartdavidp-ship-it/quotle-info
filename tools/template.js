@@ -34,7 +34,7 @@ const { esc, escEm } = require('./esc'); // one shared entity-aware escape (also
 const { primaryCredit, otherCredits } = require('./credits');
 
 const { hasAuthorPage } = require('./authors');
-const { SECTIONS, standingPath, frag } = require('./urls');
+const { SECTIONS, standingPath, frag, flagPath } = require('./urls');
 
 // Normalise a root-relative section href to the trailing-slash URL contract. 853 records carry the
 // pre-contract form (`/authors/x`), which 301s. The template must never trust a data field to
@@ -719,7 +719,7 @@ function renderAnswer(q) {
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
             </div>
             <p class="answer-foot">
-                <span aria-hidden="true">🕓</span> Last verified ${esc(ans.lastVerified)} · <a href="${standingPath('how-we-verify')}">how we verify</a> · <a href="${frag(standingPath('contact'), 'c-fix')}">spot an error?</a>
+                <span aria-hidden="true">🕓</span> Last verified ${esc(ans.lastVerified)} · <a href="${standingPath('how-we-verify')}">how we verify</a> · <a href="${flagPath(q.quoteSlug)}">spot an error?</a>
             </p>
         </article>`;
 }

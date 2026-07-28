@@ -62,9 +62,16 @@ const STANDING = ['about', 'contact', 'privacy', 'terms', 'how-we-verify', 'vs-a
 const standingPath = (name) => `/${name}/`;
 const standingUrl = (name) => `${ORIGIN}${standingPath(name)}`;
 
+// THE CORRECTION DEEP LINK. A reader who spots a mistake is on ONE specific quote page, and the
+// only correction input on the site is a generic form at the bottom of /under-review/. Sending them
+// there unqualified means retyping the quote they were just reading — so carry the slug and let the
+// form prefill itself. Order matters: path, then query, then hash. The slash still belongs before
+// the query, so this is built here rather than restated at the call site.
+const flagPath = (quoteSlug) => `${standingPath('under-review')}?flag=${encodeURIComponent(quoteSlug)}#nomForm`;
+
 module.exports = {
   ORIGIN, SECTIONS, STANDING,
   quotePath, authorPath, themePath, songPath, wrotePath, standingPath,
   quoteUrl, authorUrl, themeUrl, songUrl, wroteUrl, standingUrl,
-  frag,
+  frag, flagPath,
 };
