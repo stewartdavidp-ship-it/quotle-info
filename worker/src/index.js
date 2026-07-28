@@ -250,13 +250,32 @@ export default {
         let submittedUrl = String(body.url || '').trim().slice(0, 500);
         const stance = body.stance === 'refutes' ? 'refutes' : 'supports';
         const note = String(body.note || '').trim().slice(0, 600);
-        // Require a real absolute http(s) URL — that is the whole point of the submission.
-        let parsed;
-        try { parsed = new URL(submittedUrl); } catch (_) { parsed = null; }
-        if (!parsed || (parsed.protocol !== 'http:' && parsed.protocol !== 'https:')) {
-          return send({ error: 'Please provide a valid http(s) source URL.' }, 400);
+        // `supports` is the one reason that is NOT a complaint — it keeps the older "I have a source
+        // that backs this up" capability alive inside the single control, instead of a second form.
+        // It is also the only value that makes stance meaningful; everything else is a refutation.
+        const REASONS = ['wrong-person', 'wrong-wording', 'rights', 'dead-link', 'supports', 'other'];
+        const reason = REASONS.includes(body.reason) ? body.reason : '';
+        // A URL is NO LONGER REQUIRED — a reason is an acceptable report on its own.
+        //
+        // This endpoint used to reject anything without a source ("that is the whole point of the
+        // submission"). In practice that rejected the most common thing a reader actually has:
+        // "Napoleon didn't say this" — confident, frequently right, and not about to go hunt a
+        // citation. Those readers hit a wall, and the only other route was a nomination form built
+        // for quotes we are MISSING, which is a different intent entirely.
+        //
+        // So: url OR reason. When a url IS supplied it must still be a real absolute http(s) one —
+        // a malformed link is worse than none, because it looks like evidence. When absent we store
+        // '' (the column is NOT NULL; rebuilding the table is not worth it), so "this report carries
+        // evidence" is `url <> ''`, never `url IS NOT NULL`.
+        if (submittedUrl) {
+          let parsed;
+          try { parsed = new URL(submittedUrl); } catch (_) { parsed = null; }
+          if (!parsed || (parsed.protocol !== 'http:' && parsed.protocol !== 'https:')) {
+            return send({ error: 'That does not look like a valid link. Leave it blank if you do not have one.' }, 400);
+          }
+          submittedUrl = parsed.href;
         }
-        submittedUrl = parsed.href;
+        if (!submittedUrl && !reason) return send({ error: 'Tell us what is wrong, or add a source link.' }, 400);
         if (!(await verifyTurnstile(env, body.token, req))) return send({ error: 'verification failed' }, 403);
 
         const iphash = await ipHash(req, env);
@@ -264,8 +283,8 @@ export default {
         const cnt = await env.DB.prepare('SELECT COUNT(*) AS n FROM source_submissions WHERE iphash=? AND created>?').bind(iphash, since).first();
         if (cnt && cnt.n >= MAX_NOMS_PER_DAY) return send({ error: 'daily submission limit reached — thank you!' }, 429);
 
-        await env.DB.prepare('INSERT INTO source_submissions (slug,url,stance,note,status,created,iphash) VALUES (?,?,?,?,?,?,?)')
-          .bind(slug, submittedUrl, stance, note, 'pending', new Date().toISOString(), iphash).run();
+        await env.DB.prepare('INSERT INTO source_submissions (slug,url,stance,reason,note,status,created,iphash) VALUES (?,?,?,?,?,?,?,?)')
+          .bind(slug, submittedUrl, stance, reason, note, 'pending', new Date().toISOString(), iphash).run();
         return send({ ok: true });
       }
 

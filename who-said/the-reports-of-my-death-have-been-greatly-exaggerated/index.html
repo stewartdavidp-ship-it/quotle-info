@@ -412,15 +412,16 @@
         .game-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(212,98,122,0.4); }
 
         /* add-a-source (reader evidence) — understated, collapsed by default */
-        .src-add { margin: 22px 0 4px; font-family: 'DM Sans', sans-serif; }
-        .src-add > summary { list-style: none; cursor: pointer; font-size: 0.86rem; color: var(--text-muted); padding: 8px 0; border-top: 1px dashed var(--border); }
-        .src-add > summary::-webkit-details-marker { display: none; }
-        .src-add > summary:hover { color: var(--slate); }
-        .src-add-cue { color: var(--burgundy-link); font-weight: 600; white-space: nowrap; }
+        .src-add { margin: 34px 0 4px; font-family: 'DM Sans', sans-serif; scroll-margin-top: 24px; }
+        .src-add-h { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.25rem; letter-spacing: -0.01em; color: var(--ink); margin: 0 0 10px; }
         .src-add-form { margin-top: 12px; padding: 16px 18px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 10px; }
         .src-add-lede { font-size: 0.82rem; color: var(--slate); line-height: 1.55; margin: 0; }
-        .src-add-stance { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; color: var(--ink); }
-        .src-add-stance label { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+        /* One option per line. These are sentences, not chips — wrapping them inline made the
+           reader parse where each choice ended, which is exactly the friction this rework removes. */
+        .src-add-why { display: flex; flex-direction: column; gap: 8px; font-size: 0.86rem; color: var(--ink); margin: 2px 0 4px; }
+        .src-add-why label { display: flex; align-items: flex-start; gap: 9px; cursor: pointer; line-height: 1.45; }
+        .src-add-why input { margin-top: 3px; flex-shrink: 0; }
+        .src-add-why em { font-style: italic; color: var(--sage); }
         .src-add-url, .src-add-note { width: 100%; padding: 10px 12px; background: var(--bg-deep); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; }
         .src-add-url:focus, .src-add-note:focus { outline: none; border-color: var(--burgundy); }
         .src-add-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
@@ -615,7 +616,7 @@
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
             </div>
             <p class="answer-foot">
-                <span aria-hidden="true">🕓</span> Last verified 20 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="/under-review/?flag=the-reports-of-my-death-have-been-greatly-exaggerated#nomForm">spot an error?</a>
+                <span aria-hidden="true">🕓</span> Last verified 20 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
         </article>
         <!-- ============ PUT IT ON A SLIDE ============ -->
@@ -679,23 +680,6 @@
                 </div>
             </div>
         </section>
-        <!-- ============ ADD A SOURCE (reader evidence, not an edit) ============ -->
-        <details class="src-add">
-            <summary>Know a source that supports or challenges this? <span class="src-add-cue">Add a link &rarr;</span></summary>
-            <form class="src-add-form" id="srcForm" data-slug="the-reports-of-my-death-have-been-greatly-exaggerated">
-                <p class="src-add-lede">Paste a URL and we&rsquo;ll check it. This doesn&rsquo;t change the page &mdash; it goes to our review queue, and if it holds up we update the record with a citation.</p>
-                <div class="src-add-stance" role="radiogroup" aria-label="Does this source support or challenge the page?">
-                    <label><input type="radio" name="stance" value="supports" checked> It supports this</label>
-                    <label><input type="radio" name="stance" value="refutes"> It challenges this</label>
-                </div>
-                <input class="src-add-url" name="url" type="url" inputmode="url" placeholder="https://&hellip; link to the source" required>
-                <input class="src-add-note" name="note" type="text" maxlength="600" placeholder="Optional: what does it show?">
-                <div class="src-add-actions">
-                    <button class="src-add-btn" type="submit">Submit source</button>
-                    <span class="src-add-msg" id="srcMsg" hidden></span>
-                </div>
-            </form>
-        </details>
         <!-- ============ OFTEN MISATTRIBUTED ============ -->
         <section aria-labelledby="misattr-h">
             <div class="sec-head"><p class="kicker">Fact-check</p><h2 id="misattr-h">Right man, wrong words</h2></div>
@@ -817,6 +801,33 @@
                     <p class="cite-text" id="citePage">Quotle.info. &ldquo;Who really said &lsquo;The reports of my death have been greatly exaggerated&rsquo;?&rdquo; Last verified 20 Jul 2026. <code>https://quotle.info/who-said/the-reports-of-my-death-have-been-greatly-exaggerated/</code></p>
                 </div>
             </div>
+        </section>
+        <!-- ============ SOMETHING WRONG? (reader report, not an edit) ============ -->
+        <!-- Visible, deliberately NOT a <details>. This was a collapsed disclosure headed "Know a
+             source that supports or challenges this?", which made a URL the price of entry. Two
+             consequences: hardly anyone opened it, and the reader who simply KNOWS the attribution
+             is wrong had nowhere to go — the footer link sent them off-site to a form built for
+             quotes we are MISSING, a different intent entirely. One control, on the page, reason
+             first, evidence optional. The id="fix" here is what the footer link now scrolls to. -->
+        <section class="src-add" id="fix" aria-labelledby="fix-h">
+            <h2 class="src-add-h" id="fix-h">Something wrong on this page?</h2>
+            <form class="src-add-form" id="srcForm" data-slug="the-reports-of-my-death-have-been-greatly-exaggerated">
+                <p class="src-add-lede">Tell us what&rsquo;s off. A link helps but isn&rsquo;t required &mdash; &ldquo;this is the wrong person&rdquo; is a useful report on its own. Nothing here changes the page directly; it goes to our review queue and a human checks it.</p>
+                <div class="src-add-why" role="radiogroup" aria-label="What is wrong?">
+                    <label><input type="radio" name="reason" value="wrong-person" checked> The attribution is wrong &mdash; someone else said it</label>
+                    <label><input type="radio" name="reason" value="wrong-wording"> The wording is wrong</label>
+                    <label><input type="radio" name="reason" value="rights"> The rights / copyright information is wrong</label>
+                    <label><input type="radio" name="reason" value="dead-link"> A source link is broken</label>
+                    <label><input type="radio" name="reason" value="supports"> Nothing &mdash; I have a source that <em>supports</em> this</label>
+                    <label><input type="radio" name="reason" value="other"> Something else</label>
+                </div>
+                <input class="src-add-url" name="url" type="url" inputmode="url" placeholder="Optional: https://&hellip; a link that shows it">
+                <input class="src-add-note" name="note" type="text" maxlength="600" placeholder="Optional: anything else we should know">
+                <div class="src-add-actions">
+                    <button class="src-add-btn" type="submit">Send report</button>
+                    <span class="src-add-msg" id="srcMsg" hidden></span>
+                </div>
+            </form>
         </section>
         <!-- ============ GAME CTA ============ -->
         <aside class="game-cta" aria-label="Related game">
@@ -990,11 +1001,15 @@
             function show(t,err){ msg.textContent=t; msg.hidden=false; msg.className='src-add-msg'+(err?' err':' ok'); }
             f.addEventListener('submit',function(e){ e.preventDefault();
                 var url=f.url.value.trim(), note=f.note.value.trim(), slug=f.getAttribute('data-slug');
-                var stance='supports', r=f.querySelector('input[name="stance"]:checked'); if(r) stance=r.value;
-                if(!url){ show('Add a source URL.',true); return; }
-                var btn=f.querySelector('.src-add-btn'); btn.disabled=true; show('Checking\u2026',false);
+                var reason='other', r=f.querySelector('input[name="reason"]:checked'); if(r) reason=r.value;
+                // stance is DERIVED, never asked. It only means anything about a source, and the
+                // reason already carries the direction — "supports" is the single non-complaint.
+                // Asking both was a second control that could contradict the first.
+                var stance = reason==='supports' ? 'supports' : 'refutes';
+                // No URL gate. A reason IS a report — that was the whole point of the rework.
+                var btn=f.querySelector('.src-add-btn'); btn.disabled=true; show('Sending\u2026',false);
                 token(function(t){ if(!t){ btn.disabled=false; show('Verification failed \u2014 please try again.',true); return; }
-                    fetch(API+'/submit-source',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug,url:url,stance:stance,note:note,token:t})})
+                    fetch(API+'/submit-source',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug,url:url,stance:stance,reason:reason,note:note,token:t})})
                     .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); btn.disabled=false; show('Thank you \u2014 sent to our review queue.',false); } else { btn.disabled=false; show((d&&d.error)||'Something went wrong.',true); } })
                     .catch(function(){ btn.disabled=false; show('Network error \u2014 please try again.',true); }); }); });
         })();
