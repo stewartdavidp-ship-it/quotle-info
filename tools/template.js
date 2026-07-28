@@ -266,6 +266,13 @@ function buildJsonLd(q, url) {
     // The RULE in CLAUDE.md asks for creator.description; jobTitle stays for records that only carry it.
     if (s.creator.description) quotation.creator.description = s.creator.description;
     if (s.creator.sameAs) quotation.creator.sameAs = s.creator.sameAs;
+    // A pen name belongs to the PERSON, not to the quotation. Two fix agents hit this independently
+    // on the Voltaire records: the remedy was "delete the Quotation-level alternateName and put it
+    // on the creator", and the delete half worked while the add half was silently dropped here —
+    // so the false assertion (that the QUOTE is also called "Francois-Marie Arouet") went away and
+    // the birth name went with it. Exactly the shape the README warns about: a record edit that
+    // looks fixed and ships unchanged markup.
+    if (s.creator.alternateName) quotation.creator.alternateName = s.creator.alternateName;
   }
   if (s.dateCreated) quotation.dateCreated = s.dateCreated;
   // isPartOf = the work this sentence is CONTAINED IN (e.g. the Meditations itself). Distinct from
@@ -295,6 +302,16 @@ function buildJsonLd(q, url) {
     if (b.citation) quotation.isBasedOn.citation = b.citation;
     if (b.description) quotation.isBasedOn.disambiguatingDescription = b.description;
   }
+  // A line spoken by a CHARACTER is not the author speaking. "Let us cultivate our garden" is
+  // Candide's, and the visible page is careful about that while the structured data was not — there
+  // was no passthrough at all, so a record adding the field would have been inert. Found by a fix
+  // agent that correctly refused to write a field the generator drops on the floor.
+  //
+  // Placed as a SIBLING of the isPartOf/isBasedOn blocks, not inside one. The first attempt landed
+  // it inside `if (s.isBasedOn)`, where it fired only for records carrying that field — and the
+  // Candide record uses isPartOf, so it silently did nothing. Which is the very failure this
+  // passthrough exists to fix, reproduced while fixing it.
+  if (s.spokenByCharacter) quotation.spokenByCharacter = { '@type': 'Person', name: plain(s.spokenByCharacter) };
   // Rights → structured, so agents get reuse status without scraping prose.
   const rights = q.source && q.source.rights;
   if (rights === 'public-domain') {
