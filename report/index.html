@@ -126,6 +126,7 @@
         .nom { margin-top:34px; background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:26px 24px; display:flex; flex-direction:column; gap:10px; max-width:560px; }
         .nom-h { font-family:'Playfair Display',serif; font-weight:900; font-size:1.15rem; }
         .nom-sub { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-bottom:6px; }
+        .nom-area { resize:vertical; min-height:64px; line-height:1.5; font-family:'DM Sans',sans-serif; }
         .nom-in { font-family:'DM Sans',sans-serif; font-size:0.92rem; color:var(--ink); background:var(--bg-deep); border:1px solid var(--border); border-radius:10px; padding:11px 14px; outline:none; transition:border-color 0.2s; }
         .nom-in:focus { border-color:var(--burgundy); }
         .nom-in::placeholder { color:var(--text-muted); }
@@ -288,7 +289,7 @@
                     <label><input type="radio" name="reason" value="other"> Something else</label>
                 </div>
                 <input class="nom-in" name="url" type="url" inputmode="url" placeholder="Optional: a link that shows it" autocomplete="off">
-                <input class="nom-in" name="note" maxlength="600" placeholder="Optional: anything else we should know" autocomplete="off">
+                <textarea class="nom-in nom-area" name="note" maxlength="600" rows="3" placeholder="Optional: anything else we should know"></textarea>
                 <button class="nom-btn" type="submit">Send report</button>
                 <p class="nom-msg" id="fixMsg" role="status" hidden></p>
             </form>
@@ -299,8 +300,8 @@
             <form class="nom" id="nomForm" aria-label="Nominate a quote or author">
                 <p class="nom-sub">Nominate a quote or the name it&rsquo;s pinned on. We trace the source before anything goes live &mdash; nothing you submit is published unverified.</p>
                 <input class="nom-in" name="author" maxlength="120" placeholder="Who it&rsquo;s usually credited to (required)" autocomplete="off" required>
-                <input class="nom-in" name="quote" maxlength="600" placeholder="The quote, if you have it (optional)" autocomplete="off">
-                <input class="nom-in" name="note" maxlength="600" placeholder="Anything you know about the real source (optional)" autocomplete="off">
+                <textarea class="nom-in nom-area" name="quote" maxlength="600" rows="2" placeholder="The quote, if you have it (optional)"></textarea>
+                <textarea class="nom-in nom-area" name="note" maxlength="600" rows="3" placeholder="Anything you know about the real source (optional)"></textarea>
                 <button class="nom-btn" type="submit">Submit nomination</button>
                 <p class="nom-msg" id="nomMsg" role="status" hidden></p>
             </form>
