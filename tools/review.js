@@ -73,7 +73,16 @@ const RISKY_CYCLE_DAYS = 180;     // record carrying a mechanical contradiction
 const FLAG_WEIGHT = 1000;
 
 const readRecord = (f) => { try { return JSON.parse(fs.readFileSync(path.join(QDIR, f), 'utf8')); } catch { return null; } };
+const SDIR = path.join(ROOT, 'data', 'songs');
 const allFiles = () => fs.readdirSync(QDIR).filter((f) => f.endsWith('.json'));
+const allSongFiles = () => (fs.existsSync(SDIR) ? fs.readdirSync(SDIR).filter((f) => f.endsWith('.json')) : []);
+const readSong = (f) => { try { return JSON.parse(fs.readFileSync(path.join(SDIR, f), 'utf8')); } catch { return null; } };
+
+// Song reports arrive as `song:<songSlug>` (build-songs.js posts that prefix), and until now
+// survey() read data/quotes only — so reports from ~97 live song pages joined to no record, never
+// reached the due queue, and sat pending forever. The prefix is kept as the row's slug so the join
+// in dueSet is exact, with no second keying scheme to get out of step.
+const SONG_PREFIX = 'song:';
 const daysBetween = (a, b) => Math.floor((a - b) / 86400000);
 
 // Records have no dedicated freshness field yet (verified across all 1,158 — none carry one).
@@ -83,7 +92,9 @@ const daysBetween = (a, b) => Math.floor((a - b) / 86400000);
 function reviewState(rec) {
   const r = rec.review || {};
   const stamped = r.lastReviewedOn || null;
-  const seed = (rec.schema && rec.schema.dateModified) || null;
+  // Songs carry dateModified at the TOP level; quotes carry it under schema. Without this a song
+  // record has no seed date, falls to the 9999-day sentinel, and every song outranks every quote.
+  const seed = (rec.schema && rec.schema.dateModified) || rec.dateModified || null;
   return {
     lastReviewedOn: stamped || seed,
     everReviewed: Boolean(stamped),
@@ -176,6 +187,9 @@ function demandTerm(rec) {
 }
 
 function riskFlags(rec) {
+  // Detectors run over quote records only, so a song record legitimately has no flags. Keying on
+  // the quote slug makes that explicit rather than accidental — if song detectors ever land, this
+  // is the line that has to change.
   const row = (scanState().records || {})[rec.quoteSlug];
   return (row && Array.isArray(row.f)) ? row.f.slice() : [];
 }
@@ -192,11 +206,35 @@ function survey() {
     const cycle = flags.length ? RISKY_CYCLE_DAYS : DEFAULT_CYCLE_DAYS;
     const age = st.lastReviewedOn ? daysBetween(now, new Date(st.lastReviewedOn)) : 9999;
     rows.push({
+      kind: 'quote',
       slug: rec.quoteSlug || f.replace(/\.json$/, ''),
       confidence: rec.confidence,
       rights: (rec.meta && rec.meta.rights) || rec.rights || null,
       lastReviewedOn: st.lastReviewedOn, everReviewed: st.everReviewed,
       ageDays: age, cycle, overdueBy: age - cycle, flags, demand,
+    });
+  }
+  // SONG ROWS. Same queue, same scoring, distinct kind — a song report and a quote report compete
+  // on one list because a reader does not care which table we filed it under. Song reports arrive
+  // as `song:<songSlug>` (build-songs.js posts that prefix) and until now survey() read data/quotes
+  // only, so reports from ~97 live song pages joined to no record and sat pending forever.
+  //
+  // Two honest gaps, stated rather than papered over: song records carry no `answer` block so
+  // demandTerm is always 0, and no detector runs over them so flags are always empty. A song
+  // therefore ranks on staleness and reader reports alone — correct today, and visible if it changes.
+  for (const f of allSongFiles()) {
+    const rec = readSong(f);
+    if (!rec) continue;
+    const st = reviewState(rec);
+    const age = st.lastReviewedOn ? daysBetween(now, new Date(st.lastReviewedOn)) : 9999;
+    rows.push({
+      kind: 'song',
+      slug: SONG_PREFIX + (rec.songSlug || f.replace(/\.json$/, '')),
+      confidence: rec.confidence,
+      rights: null,
+      lastReviewedOn: st.lastReviewedOn, everReviewed: st.everReviewed,
+      ageDays: age, cycle: DEFAULT_CYCLE_DAYS, overdueBy: age - DEFAULT_CYCLE_DAYS,
+      flags: [], demand: 0,
     });
   }
   return rows;
@@ -302,11 +340,17 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
   if (cmd === 'due' || cmd === 'args') {
     const { rows, all, reportError } = await dueSet(LIMIT);
     if (cmd === 'args') {
-      // audit.js takes { pages:[{slug,confidence,rights}], repo }. Emit exactly that.
-      process.stdout.write(JSON.stringify({
-        pages: rows.map((r) => ({ slug: r.slug, confidence: r.confidence, rights: r.rights })),
-        repo: ROOT,
-      }, null, 1) + '\n');
+        // TWO auditors, two arg shapes. audit.js takes {pages:[{slug,confidence,rights}], repo};
+        // audit-songs.js takes {pages:[{slug,confidence}], repo} and its slug must be the BARE songSlug —
+        // the `song:` prefix is a queue-keying detail, not part of the record's identity. Emitting one
+        // blended list would have handed song slugs to the quote auditor, which reads data/quotes and
+        // would have found nothing, silently.
+        const quotes = rows.filter((r) => r.kind !== 'song');
+        const songs = rows.filter((r) => r.kind === 'song');
+        process.stdout.write(JSON.stringify({
+          audit: { pages: quotes.map((r) => ({ slug: r.slug, confidence: r.confidence, rights: r.rights })), repo: ROOT },
+          auditSongs: { pages: songs.map((r) => ({ slug: r.slug.slice(SONG_PREFIX.length), confidence: r.confidence })), repo: ROOT },
+        }, null, 1) + '\n');
       return;
     }
     if (reportError) console.log(`  ! reader reports unavailable: ${reportError}\n`);
@@ -388,7 +432,12 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
     let n = 0;
       const stamped = [];
     for (const slug of slugs) {
-      const file = path.join(QDIR, `${slug}.json`);
+      // A song slug arrives prefixed (`song:<songSlug>`) because that is what the page posts and what
+      // dueSet joins on. Strip it here and ONLY here — two keying schemes would drift apart.
+      const isSong = slug.startsWith(SONG_PREFIX);
+      const file = isSong
+        ? path.join(SDIR, `${slug.slice(SONG_PREFIX.length)}.json`)
+        : path.join(QDIR, `${slug}.json`);
       if (!fs.existsSync(file)) { console.log(`  ! no record: ${slug}`); continue; }
       const rec = JSON.parse(fs.readFileSync(file, 'utf8'));
       rec.review = { ...(rec.review || {}), lastReviewedOn: today, lastReviewedBy: by, lastVerdict: verdict };
