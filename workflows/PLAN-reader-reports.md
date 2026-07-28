@@ -198,3 +198,80 @@ change what gets built:
 - (f) run the EXISTING html-safety gate over harvest-queue.json candidates
 - (g) render a poisoned fixture and assert no attribute breakout and no non-http(s) href
 - (h) /triage idempotency: `UPDATE ... WHERE id=? AND status='pending'`, second call changes 0 rows
+
+---
+
+# CONSOLIDATION + EMAIL (decided 2026-07-28, not yet built)
+
+## One form, not three
+
+"Should be both" meant ONE form serving both jobs. What shipped was two forms stacked on /report/
+(#fixForm + #nomForm), which is the same sprawl with a shared URL. Rebuild as a single <form> with
+intent as the first question and fields that adapt:
+
+    What are you reporting?
+      ( ) Something on a page here is wrong
+      ( ) You're missing a quote
+
+      wrong   -> Which quote? paste the link or the line     (required)
+      missing -> Who is it credited to?                      (required)
+      missing -> The quote, if you have it                   (optional)
+
+      What's wrong?          radios, shown only for "wrong"
+      A link that shows it   (optional)
+      Anything else          (optional)
+      Your email             (optional)
+
+One submit handler branches: wrong -> /submit-source, missing -> /lookup then /nominate. The email
+field then becomes ONE edit rather than three.
+
+The per-quote form on quote pages (#srcForm) STAYS. It is contextual, already knows which quote, and
+is strictly the better path when the reader is on a page — removing it reintroduces the retyping
+problem this whole day started from. So: one report form, plus the in-context one.
+
+## Email field — copy matters more than the policy page
+
+The reassurance goes NEXT TO THE FIELD, where someone decides whether to type it. Not only on
+/privacy/, which nobody reads before submitting.
+
+    Your email (optional)
+    Only used to tell you what we found. We never sell or share it.
+
+Rules for this copy:
+  · state the SINGLE purpose — more reassuring than a list of things we will not do
+  · no marketing hedge. Never "we may occasionally contact you about…" — that is the phrasing that
+    stops people typing it. If we only ever send one reply, say exactly that.
+  · say nothing about timing. The reply comes when a human has looked; implying speed we cannot
+    deliver is worse than silence.
+
+/privacy/ must be updated IN THE SAME CHANGE — it currently discloses only the IP hash and
+nomination content, so adding a contact field without amending it makes that page inaccurate.
+
+## Abuse: email amplification
+
+An optional address plus an automated reply lets someone submit reports carrying a victim's address
+so our system mails them. Mitigations that hold:
+  · ONE reply per report, ever. No resends, no follow-ups.
+  · never echo submitter-controlled text into the body — their quote/note goes in escaped and
+    truncated, or not at all
+  · the per-IP daily cap already limits volume
+  · draft-not-send until a promotion bar is met (below)
+
+## Trust ladder — earn the automation, with a number
+
+"If we believe the gate holds" is a feeling unless it has a threshold. Record `mode` in
+data/report-queue.json and promote deliberately:
+
+  observe -> runs the gate, records what it WOULD have done, changes nothing
+  pr      -> opens the PR, stops
+  merge   -> merges on green CI
+
+Bar: 5 consecutive runs where the gate's call matched the operator's — no PR they would have
+rejected, no queued item they would have wanted as a PR. Miss one, the counter resets. Five is
+arbitrary, but a stated threshold beats an unstated one.
+
+Email runs its OWN ladder (draft -> send) on its own counter: mailing strangers is a distinct trust
+question from opening a PR against your own repo.
+
+Note: there are ZERO real reports today, so observe mode collects nothing until genuine traffic
+arrives — which depends on the indexing work, not on this pipeline.
