@@ -165,7 +165,7 @@ ${STATES.map(stateRow).join('\n')}
         <section aria-labelledby="wrong-h">
             <h2 id="wrong-h">When we get it wrong</h2>
             <p class="big">Provenance research is never finished — new archives surface and old ones get corrected. If you can point to a primary source that changes an attribution, that is exactly the evidence we want. Every page is dated so you can see how current it is.</p>
-            <p class="big"><a class="cta" href="${frag(standingPath('contact'), 'c-fix')}">Flag a correction or a missing quote &rarr;</a></p>
+            <p class="big"><a class="cta" href="${frag(standingPath('under-review'), 'nomForm')}">Flag a correction or a missing quote &rarr;</a></p>
             <p class="note">Wondering how this differs from just asking an AI? <a href="/vs-ai/">The short answer is three points</a>.</p>
         </section>`;
 
@@ -180,7 +180,7 @@ ${STATES.map(stateRow).join('\n')}
 const vsAiBody = `        <section aria-labelledby="diff-h">
             <h2 id="diff-h">Three differences</h2>
             <div>
-                <div class="principle"><span class="num">1</span><div><h3>We cite a source you can open</h3><p>An AI answers from what ranks. For quotes, what ranks is quote sites copying each other without citation &mdash; so you get the most-repeated claim, not the best-evidenced one. Every page here names the earliest document that actually carries the words, with the edition, the date, and a link. Go and check it. &ldquo;Trust us&rdquo; is not verification.</p></div></div>
+                <div class="principle"><span class="num">1</span><div><h3>We cite a source you can open</h3><p>An AI answers from what ranks. For quotes, what ranks is quote sites copying each other without citation &mdash; so you get the most-repeated claim, not the best-evidenced one. Where a source document exists, the page names it &mdash; the work, the edition, the date, and a link. Where none does, it says so plainly instead of writing &ldquo;widely attributed to&rdquo;. Go and check it. &ldquo;Trust us&rdquo; is not verification.</p></div></div>
                 <div class="principle"><span class="num">2</span><div><h3>We can tell you we don&rsquo;t know</h3><p>An AI always produces an answer &mdash; that is what it is built to do. But certainty is a spectrum, and on a large share of these quotes the trail goes cold. When it does, we mark the quote <em>Attributed</em> or <em>Disputed</em> and say so, rather than manufacture a confident answer. A tool that can&rsquo;t fail can&rsquo;t tell you when to worry.</p></div></div>
                 <div class="principle"><span class="num">3</span><div><h3>We answer the copyright question</h3><p>&ldquo;Who said it&rdquo; and &ldquo;may I publish it&rdquo; are different questions. An AI answers the first with unearned confidence and doesn&rsquo;t attempt the second at all. Every page states a rights status separately from the attribution &mdash; because a quote can be correctly attributed and still not yours to reproduce.</p></div></div>
             </div>
@@ -305,7 +305,7 @@ const contactBody = `        <section aria-labelledby="c-how">
         <section aria-labelledby="c-fix">
             <h2 id="c-fix">Spotted an error?</h2>
             <p>Corrections are the most useful thing you can send. If an attribution looks wrong, or a famous quote is missing, the fastest path is the flag flow &mdash; and if you can point to a <strong>primary source</strong> (a first edition, a transcript, an archived scan), even better; that&rsquo;s exactly the evidence that moves a verdict.</p>
-            <p class="big"><a class="cta" href="${frag(standingPath('contact'), 'c-fix')}">Flag a correction or a missing quote &rarr;</a></p>
+            <p class="big"><a class="cta" href="${frag(standingPath('under-review'), 'nomForm')}">Flag a correction or a missing quote &rarr;</a></p>
             <p>Prefer email? Send the quote, the attribution you think is right, and your source to <a href="mailto:${EMAIL}">${EMAIL}</a>.</p>
         </section>
 
