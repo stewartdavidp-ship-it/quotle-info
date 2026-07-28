@@ -39,9 +39,16 @@ const FIX_SCHEMA = {
     // to remember; with it, every wave hands back the signal it just learned.
     detectorProposal: {
       type: 'object', additionalProperties: false,
-      required: ['id', 'rationale', 'test'],
+      required: ['id', 'kind', 'rationale', 'test'],
       properties: {
         id: { type: 'string' },          // kebab-case, e.g. 'coined-verb-mismatch'
+        // WHERE THE DEFECT LIVES, which decides how the proposal is handled. A proposal measured at
+        // 7.4% was refused as noise when it was actually a 301-row backfill; the rate alone could
+        // not tell those apart, and the agent knew which it was and had nowhere to say so.
+        //   record    each hit needs its own judgement  → threshold gate
+        //   backfill  every hit takes the SAME remedy   → sweep, then keep as a tripwire
+        //   generator the fix is one edit in tools/*.js → report in `remaining`, not here
+        kind: { type: 'string', enum: ['record', 'backfill', 'generator'] },
         rationale: { type: 'string' },   // what contradiction it catches, and the defect it came from
         test: { type: 'string' },        // JS source: (r) => null | 'why this record is flagged'
       },
@@ -78,6 +85,8 @@ Report fixedCount (how many issues for your slug you resolved), a one-paragraph 
    • It must NOT require judging whether a claim is true about the world. That is what the audit you are downstream of already does, with sources and a skeptic. A detector cannot fetch.
    • A one-off wrong date, name or URL is NOT a class. Fixing it is the whole job; there is nothing to generalise.
    • Assume your rule fires far more than you expect. Rules that looked obviously right have measured 130 hits (11.2%) and 703 hits (61%) on this corpus, because they matched the editorial content of a misattribution site rather than errors in it.
+
+  Set \`kind\`: 'record' when each hit needs its own judgement; 'backfill' when every hit takes the SAME mechanical remedy (then a high hit count is the ARGUMENT FOR it, not against); 'generator' when the fix is one edit in a shared file — and for 'generator' put the detail in \`remaining\` too, since that is where central fixes are collected. Say where the defect actually LIVES, not where you noticed it: from inside one record a missing record field and a wrong renderer look identical, and a real proposal blamed tools/template.js when the renderer was correct and 301 records were missing a field.
 
   A human runs \`node tools/propose-detector.js\` on your proposal, which measures it across all 1,158 records and rejects anything above the noise floor. Proposing a bad one costs nothing; proposing none when you found a real class costs the loop.`
 

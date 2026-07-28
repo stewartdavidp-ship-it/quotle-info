@@ -27,6 +27,7 @@
  * Writes records-*.json (ingest with tools/_ingest.js) + audit-args-*.json (feed to workflows/audit.js).
  */
 const fs = require('fs');
+const { kindForTag } = require('./../tools/mis-kind');
 const path = require('path');
 
 function arg(name, def) { const i = process.argv.indexOf('--' + name); return i > -1 ? process.argv[i + 1] : def; }
@@ -71,7 +72,18 @@ function toRecord(d, item) {
   if (d.source.rights && d.source.rights !== 'uncertain') { rec.source.rights = d.source.rights; if (d.source.rightsHolder) rec.source.rightsHolder = d.source.rightsHolder; }
   if (d.source.rightsNote) rec.source.rightsNote = d.source.rightsNote;
   if (d.copyAttribution) rec.copyAttribution = d.copyAttribution;
-  if (d.misattribution) rec.misattribution = { kicker: 'Fact-check', heading: d.misattribution.heading || 'Often misattributed', intro: d.misattribution.intro, items: d.misattribution.items, truthLine: d.misattribution.truthLine };
+  if (d.misattribution) {
+    // Stamp `kind` from the row's own tag. template.js defaults a row to the burgundy ✕ ("this
+    // credit is refuted"), so a row tagged "paraphrase" or "Popularizer, not author" shipped a
+    // marker contradicting the text beside it. 301 rows across 274 records had accumulated that way
+    // before anything noticed. Doing it HERE is what stops the backfill decaying: the rule lives in
+    // tools/mis-kind.js and is shared with tools/backfill-mis-kind.js, so a wave cannot reintroduce
+    // the gap. Unrecognised tags keep the default ✕ and stay a human call — marking a genuine
+    // refutation as context would soften a debunk, which is worse than the marker being wrong.
+    const items = (d.misattribution.items || []).map((it) => (
+      it.kind || !kindForTag(it.tag) ? it : { ...it, kind: kindForTag(it.tag) }));
+    rec.misattribution = { kicker: 'Fact-check', heading: d.misattribution.heading || 'Often misattributed', intro: d.misattribution.intro, items, truthLine: d.misattribution.truthLine };
+  }
   if (d.context) { rec.context = { kicker: 'Context', heading: d.context.heading || 'Why it mattered', lead: d.context.lead, detailsSummary: d.context.detailsSummary || 'Read the full story', detailsBody: d.context.detailsBody || [] }; if (d.context.pull) rec.context.pull = d.context.pull; }
   if (d.schema) {
     const sc = d.schema, out = {};
