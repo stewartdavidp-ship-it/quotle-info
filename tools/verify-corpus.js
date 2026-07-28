@@ -188,6 +188,41 @@ check('quote JSON-LD verdict agrees with its own creator node', 0, verdictBugs.s
 check('an anonymous creator says it is anonymous', 0, verdictBugs.undescribedAnon.length,
   `creator is an anonymous token with no disambiguatingDescription — indistinguishable from a byline: ${verdictBugs.undescribedAnon.slice(0, 3).join(' · ')}`);
 
+// ---- 4e. every inline <script> actually PARSES ----
+// Generators emit JS from inside JS template literals, so a backslash in the emitted code is eaten
+// as an escape at build time. `/\/who-said\/([a-z0-9-]+)\//` shipped as `//who-said/([a-z0-9-]+)//`
+// — a syntax error that killed the entire script block on /report/. Neither form bound its submit
+// handler, the browser fell back to a native GET, and the reader's report went nowhere.
+//
+// Nothing caught it: the build was green, CI was green, all 43 invariants passed, the markup was
+// correct and the page rendered perfectly. It was found by submitting the form in a real browser.
+// new Function() PARSES without executing, so browser globals are irrelevant — this only asks
+// "is this valid JavaScript", which is exactly the question that went unasked.
+const badScripts = [];
+const scanDirs = ['who-said', 'authors', 'themes', 'who-recorded', 'who-wrote', 'report', 'under-review', 'check', 'contact', 'how-we-verify', 'about'];
+const pagesToParse = [path.join(ROOT, 'index.html')];
+for (const d of scanDirs) {
+  const dir = path.join(ROOT, d);
+  if (!fs.existsSync(dir)) continue;
+  const idx = path.join(dir, 'index.html');
+  if (fs.existsSync(idx)) pagesToParse.push(idx);
+  // one representative child page per section is enough — they share a generator
+  const kid = fs.readdirSync(dir, { withFileTypes: true }).find((e) => e.isDirectory());
+  if (kid && fs.existsSync(path.join(dir, kid.name, 'index.html'))) pagesToParse.push(path.join(dir, kid.name, 'index.html'));
+}
+for (const p of pagesToParse) {
+  const h = fs.readFileSync(p, 'utf8');
+  for (const m of h.matchAll(/<script(?![^>]*\btype\s*=\s*"application\/ld\+json")(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)) {
+    const code = m[1];
+    if (!code.trim()) continue;
+    try { new Function(code); } catch (e) {
+      badScripts.push(`${path.relative(ROOT, p)}: ${e.message}`);
+    }
+  }
+}
+check('every inline <script> is valid JavaScript', 0, badScripts.length,
+  `a script block does not parse — the whole block is dead, so nothing on that page binds: ${badScripts.slice(0, 3).join(' · ')}`);
+
 // ---- 5. the sitemap covers every page ----
 const sitemap = (() => { try { return fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8'); } catch (_) { return ''; } })();
 if (sitemap) {

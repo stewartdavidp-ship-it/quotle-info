@@ -380,7 +380,13 @@
                 var ref=fx.ref.value.trim(), url=fx.url.value.trim(), note=fx.note.value.trim();
                 var reason='other', r=fx.querySelector('input[name="reason"]:checked'); if(r) reason=r.value;
                 if(!ref){ show(msg,'Tell us which quote you mean.',true); return; }
-                var m=//who-said/([a-z0-9-]+)//.exec(ref), slug=m?m[1]:'';
+                // Deliberately NO regex here. This lives inside a JS template literal, so a literal
+                // backslash is eaten as an escape at build time: /\/who-said\/.../ shipped as
+                // //who-said/...// — a syntax error that killed the WHOLE script, so neither form
+                // submitted and the browser fell back to a native GET. Build was green, CI passed,
+                // 43 invariants passed. Only submitting the form found it. indexOf cannot break that way.
+                var slug='', ix=ref.indexOf('/who-said/');
+                if(ix>-1){ var rest=ref.slice(ix+10), sl=rest.indexOf('/'); slug=(sl>-1?rest.slice(0,sl):rest); }
                 var full='Reported via /report/ for: '+ref+(note?' \u2014 '+note:'');
                 btn.disabled=true; show(msg,'Sending\u2026',false);
                 token(function(t){ if(!t){ btn.disabled=false; show(msg,'Verification failed \u2014 please try again.',true); return; }
