@@ -16,8 +16,15 @@ node tools/scan.js          # tier 1 — deterministic, no agents, no tokens
 node tools/vocab-sweep.js   # discovery — unused generator vocabulary
 ```
 
-**If `scan` reports `flagged: 0`, STOP.** Report one line — records scanned, 0 flagged, any
-vocab-sweep warnings — and exit. No commit, no PR, no further steps.
+**If `scan` reports `flagged: 0`, STOP INVESTIGATING.** Report one line — records scanned,
+0 flagged, any vocab-sweep warnings. Open no records, run no `scan-fixes.js`, change no records,
+run no build. Then skip straight to "Record what this run did" below, which still applies: the
+no-op line is the whole point of a clean day and needs its own small PR to survive.
+
+(An earlier draft of this file said "no commit, no PR" here, which contradicted that section three
+paragraphs down. A routine hit the contradiction on its second run, followed the log instruction,
+and reported the conflict rather than silently picking one — which is the right behaviour and the
+reason this now says what it means.)
 
 **If records are flagged:**
 
@@ -83,6 +90,12 @@ that is the generator's wave-time claim and means something different.
 Then branch, commit, push, and open a PR. In the body state: what was flagged, what you verified,
 what you changed, **and anything you deliberately did not change and why**. That last part is the
 most useful line in the PR.
+
+**Open the PR READY, never as a draft** (`gh pr create` without `--draft`). A draft cannot be
+merged, so every draft leaves an unmergeable PR sitting until a human clicks "Ready for review" —
+which happened on the first two routine runs before anyone noticed. Draft/ready does not control
+whether the PR gets READ; nothing here auto-merges, so a ready PR still waits for a human. It only
+controls whether they can act when they have read it.
 
 ## Do not
 
