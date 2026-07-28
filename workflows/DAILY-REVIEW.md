@@ -16,8 +16,15 @@ node tools/scan.js          # tier 1 — deterministic, no agents, no tokens
 node tools/vocab-sweep.js   # discovery — unused generator vocabulary
 ```
 
-**If `scan` reports `flagged: 0`, STOP.** Report one line — records scanned, 0 flagged, any
-vocab-sweep warnings — and exit. No commit, no PR, no further steps.
+**If `scan` reports `flagged: 0`, STOP INVESTIGATING.** Report one line — records scanned,
+0 flagged, any vocab-sweep warnings. Open no records, run no `scan-fixes.js`, change no records,
+run no build. Then skip straight to "Record what this run did" below, which still applies: the
+no-op line is the whole point of a clean day and needs its own small PR to survive.
+
+(An earlier draft of this file said "no commit, no PR" here, which contradicted that section three
+paragraphs down. A routine hit the contradiction on its second run, followed the log instruction,
+and reported the conflict rather than silently picking one — which is the right behaviour and the
+reason this now says what it means.)
 
 **If records are flagged:**
 
