@@ -862,6 +862,32 @@ function kitQuote(q) {
   return plain((q.presentation && q.presentation.verifiedQuote) || q.displayQuote);
 }
 
+// THE SLIDE BOX MUST NOT LAUNDER A MISQUOTE.
+//
+// The credit block is this site's highest-stakes output: it is what a hurried presenter pastes
+// without reading anything else. On the Shaw page it emitted the POPULAR wording — "a life spent
+// making mistakes" — attached to a clean citation to Brentano's 1911, a source that does not contain
+// those words. The page's own fact-check says so a few hundred pixels above. A reader following the
+// site's advice would have published the exact error the site exists to prevent.
+//
+// It was not a code bug. The correction lives in the hand-authored `copyAttribution` — JFK's carries
+// 'He actually said "those who look only to the past or the present"', Shaw's just omits it. So it
+// held wherever an author remembered and failed silently wherever they did not. 370 records have a
+// verbatim `schema.quotationText` whose WORDS differ from the displayed quote.
+//
+// So the generator appends it. Punctuation-only differences (730 records) are ignored — those are
+// typographic, not factual, and flagging them would bury the real signal.
+function verbatimNote(q, shown) {
+  const verbatim = plain((q.schema && q.schema.quotationText) || '');
+  if (!verbatim) return '';
+  const words = (t) => String(t).toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+  if (words(verbatim) === words(shown)) return '';
+  // Already corrected by hand — do not say it twice.
+  const credit = words((q.copyAttribution != null) ? plain(q.copyAttribution) : '');
+  if (credit.includes(words(verbatim).slice(0, 40))) return '';
+  return ` Verbatim: \u201c${verbatim.replace(/\s*$/, '')}\u201d`;
+}
+
 function buildImagePrompts(q) {
   // Records may carry authored prompts (presentation.imagePrompts[]); use them if present.
   if (q.presentation && Array.isArray(q.presentation.imagePrompts) && q.presentation.imagePrompts.length) {
@@ -990,7 +1016,7 @@ function renderPresentationKit(q) {
             <div class="${cardCls}">
                 <div class="pkit-block">
                     <p class="pkit-lbl">${kitLbl}</p>
-                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;${esc(quote)}&rdquo; <span class="pkit-cite">${esc(credit)}</span></blockquote>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;${esc(quote)}&rdquo; <span class="pkit-cite">${esc(credit)}${esc(verbatimNote(q, quote))}</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>${warn}
                 </div>
                 <div class="pkit-block pkit-use pkit-tone-${useTone}">

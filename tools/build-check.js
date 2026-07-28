@@ -441,7 +441,13 @@ const PAGE_SCRIPT = `    <script>
     </script>`;
 
 function build() {
-  const count = (() => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, 'verify-index.json'), 'utf8')).length; } catch (_) { return ''; } })();
+  // verify-index.json holds one entry per VERDICT — quotes + songs + who-wrote — so its length
+  // (1,276) is not the quote count (1,158). The page said "matched against the 1276 quotes we've
+  // traced", contradicting the homepage's 1158 on a site whose product is precision. A presentation
+  // researcher spotted the mismatch and said it cost them trust; they were right to.
+  // corpus.js is the single source for every figure the site states about itself — use it.
+  const { CORPUS } = require('./corpus');
+  const count = CORPUS.quotes.total;
   const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
