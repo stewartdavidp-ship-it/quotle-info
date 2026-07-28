@@ -71,4 +71,35 @@ function kindForTag(tag) {
   return CONTEXT_TAG.some((re) => re.test(t)) ? 'context' : '';
 }
 
-module.exports = { kindForTag };
+
+// ---- the TRUTH ROW: a row that states the correct attribution ----
+// Found by tools/vocab-sweep.js (MIS_MARK.genuine used on 6 of 2,913 rows) and confirmed 3/3 by the
+// skeptic panel, which also corrected the rule in two ways I had wrong:
+//
+//   1. NO AFFIRMATIVE SUBJECT → leave the ✕. "True author / Unknown / Undocumented" makes no claim
+//      for the mark to contradict, so the refutation glyph is CORRECT there. My first rule keyed on
+//      the scope label alone and would have mis-marked 6 rows.
+//   2. HEDGED TRUTH IS CONTEXT, NOT GENUINE. "The genuine ancestor / Layman Pang — real, but
+//      different" is not a passage the page holds up as the real thing; a sage ✓ would OVERCLAIM.
+//      Those get the neutral tilde. 6 more rows.
+//
+// So 53 rows are genuine, 6 are context, 6 keep the ✕ — where a scope-label match alone said 65.
+const AFFIRMS_TRUTH = /^(the\s+)?(actual|real|true|genuine|verified)\b/i;
+const NO_SUBJECT = /^(unknown|anonymous|unattributed|undocumented|origin unknown|no\s|none)/i;
+const DENIES = /^(not|no)\b/i;
+// "real, but a different X" — true of something, but not the thing this page is about.
+const HEDGED = /\b(precursor|ancestor|echo|seed|earlier|idea,\s*not|not\s+wording|but\s+(a\s+)?different|not\s+the\s+(origin|source))\b/i;
+
+/** '' | 'genuine' | 'context' — for a whole misattribution row, not just its tag. */
+function kindForRow(item) {
+  const it = item || {};
+  const clean = (x) => String(x || '').replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, "'").trim();
+  const scope = clean(it.scope), who = clean(it.who), tag = clean(it.tag);
+  if (AFFIRMS_TRUTH.test(scope) && !DENIES.test(who)) {
+    if (NO_SUBJECT.test(who)) return '';                       // nothing affirmed — ✕ is right
+    return HEDGED.test(`${who} ${tag}`) ? 'context' : 'genuine';
+  }
+  return kindForTag(it.tag);                                    // fall back to the tag-only rule
+}
+
+module.exports = { kindForTag, kindForRow };

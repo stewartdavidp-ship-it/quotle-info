@@ -57,7 +57,7 @@
  */
 
 
-const { kindForTag } = require('./mis-kind');
+const { kindForTag, kindForRow } = require('./mis-kind');
 
 const plain = (s) => String(s || '').replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ');
 const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
@@ -68,6 +68,7 @@ const DETECTORS = [
     version: 1,
     severity: 'high',
     title: 'label says the credited person did not COIN it, but the ClaimReview will deny they SAID it',
+    remedy: 'Set schema.claimVerb to \'coined\' IF the credited person demonstrably said the line but did not originate it (the record\'s own prose will say so — \'adopted\', \'reprinted\', \'collected\', \'was quoting\', or a source showing they used it). If there is NO evidence they ever said it, the default verb is correct: leave claimVerb unset and instead reword answer.label so it stops implying they said it. Verify against the record\'s cited source before choosing.',
     // MEASURED 2026-07-28: 8/1158 (0.7%). Hand-checked: 6 genuine, 2 are records whose label wording
     // overstates ("Not coined by Selfridge" where he never said it at all) — those are a copy
     // question, and a true positive of the pattern either way.
@@ -89,6 +90,7 @@ const DETECTORS = [
     version: 1,
     severity: 'medium',
     title: 'contested verdict published with no citation attached',
+    remedy: 'Add a cite block sourcing the contested verdict, or downgrade the confidence to match what is actually established. Do not invent a citation.',
     // TRIPWIRE — 0 hits at 2026-07-28. Mechanically decidable and no judgement: we published a
     // contested verdict and attached nothing to it. Carried over from review.js riskFlags().
     test(r) {
@@ -101,6 +103,7 @@ const DETECTORS = [
     version: 1,
     severity: 'high',
     title: 'rights say public-domain but the source is 1931 or later',
+    remedy: 'Re-check the source year against source.rights. If the work is 1931 or later it is not public-domain — correct rights to in-copyright (or licensed, with the terms), or correct the year if the year is what is wrong.',
     // TRIPWIRE — 0 hits at 2026-07-28. A rights claim is the one thing on this site a reader may
     // ACT on commercially, so a contradiction between the rights field and the source year is worth
     // catching before a reader relies on it.
@@ -116,6 +119,7 @@ const DETECTORS = [
     version: 1,
     severity: 'high',
     title: 'FAQ answer opens "Yes" on a disputed record',
+    remedy: 'Rewrite schema.faqAnswer so it does not open by affirming the claim the page refutes. It is the string an answer engine reads aloud; it must lead with the verdict.',
     // TRIPWIRE — 0 hits at 2026-07-28. The FAQ answer is the string an answer engine reads aloud.
     // On a disputed record it must not open by affirming the claim the page exists to refute. The
     // songs vertical shipped exactly this shape (beyond-the-sea's FAQ asserted a first-recording
@@ -131,6 +135,7 @@ const DETECTORS = [
     version: 1,
     severity: 'medium',
     title: 'a fact-check row tagged with a non-authorship ROLE renders the refutation ✕',
+    remedy: 'Set kind:\'context\' on rows whose tag states a non-authorship role (paraphrase, popularizer, translator, drift). Leave rows that deny a person as refutations.',
     // THE FULL LOOP, END TO END, AND THE REASON THE >5% BRANCH IS NOT A DEAD END.
     // A tier-3 fix agent proposed this after fixing one record. Measured: 86 records, 7.4% —
     // REFUSED by tools/propose-detector.js as above the noise floor. It was not noise. It was a
@@ -145,6 +150,25 @@ const DETECTORS = [
       const rows = ((r.misattribution || {}).items) || [];
       const bad = rows.filter((i) => !i.kind && kindForTag(i.tag) === 'context');
       return bad.length ? `${bad.length} row(s) tagged as a role render the refutation ✕ (set kind:"context") — e.g. "${String(bad[0].tag).slice(0, 40)}"` : null;
+    },
+  },
+  {
+    id: 'truth-row-marked-refuted',
+    version: 1,
+    severity: 'high',
+    title: 'a row stating the TRUE attribution renders the refutation mark',
+    remedy: 'Set kind on the flagged misattribution row: \'genuine\' when it names an affirmative true attribution the page holds up, \'context\' when the truth is hedged (\'real, but a different claim\'), and leave it UNSET when the row affirms nothing (\'True author / Unknown\') because the refutation mark is correct there.',
+    // FOUND BY tools/vocab-sweep.js, not by a person: MIS_MARK.genuine was used on 6 of 2,913 rows,
+    // which is the signature of a mechanism the generator supports and records never set. 59 rows
+    // stating the correct attribution were rendering the ✕ that means "this credit is refuted" —
+    // marking the right answer as false, worse than the paraphrase class, which only over-claimed
+    // about a role. Skeptics 3/3 real, and they corrected the rule twice: a row with NO affirmative
+    // subject ("True author / Unknown") keeps the ✕ because it claims nothing, and a hedged truth
+    // ("real, but a different claim") is context, not genuine — a ✓ would overclaim. Backfilled
+    // 53 genuine + 6 context, 6 correctly left alone. Tripwire now.
+    test(r) {
+      const bad = (((r.misattribution || {}).items) || []).filter((i) => !i.kind && kindForRow(i));
+      return bad.length ? `${bad.length} row(s) state the true attribution but render the refutation mark` : null;
     },
   },
 ];
