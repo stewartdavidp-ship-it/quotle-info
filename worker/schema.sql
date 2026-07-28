@@ -49,12 +49,19 @@ CREATE TABLE IF NOT EXISTS source_submissions (
   reason  TEXT,                              -- wrong-person | wrong-wording | rights | dead-link | other
   note    TEXT,                              -- optional: what it shows / what is wrong
   status  TEXT NOT NULL DEFAULT 'pending',   -- pending | accepted | rejected
+  triage  TEXT,                              -- the verdict + optional note, set by POST /triage
+  triaged_at TEXT,                           -- ISO timestamp; set once, guarded on status='pending'
   created TEXT,
   iphash  TEXT
 );
 
--- Migration for an EXISTING database (D1 supports ADD COLUMN; run once, it errors if already there):
---   npx wrangler d1 execute <DB> --remote --command "ALTER TABLE source_submissions ADD COLUMN reason TEXT;"
+-- Migrations for an EXISTING database (D1 supports ADD COLUMN; each runs once, errors if present):
+--   npx wrangler d1 execute quotle-community --remote --command "ALTER TABLE source_submissions ADD COLUMN reason TEXT;"
+--   npx wrangler d1 execute quotle-community --remote --command "ALTER TABLE source_submissions ADD COLUMN triage TEXT;"
+--   npx wrangler d1 execute quotle-community --remote --command "ALTER TABLE source_submissions ADD COLUMN triaged_at TEXT;"
+-- NOTE: `status` already existed with pending|accepted|rejected and is indexed — POST /triage writes
+-- THAT, not a side column. Writing only triage/triaged_at would leave status='pending', so
+-- /sources?status=pending never drains and the job re-triages the same rows forever.
 
 CREATE INDEX IF NOT EXISTS idx_src_status ON source_submissions(status, created);
 CREATE INDEX IF NOT EXISTS idx_src_slug   ON source_submissions(slug, created);
