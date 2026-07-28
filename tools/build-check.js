@@ -56,6 +56,10 @@ const STYLE = `${ROOT_CSS}
         .r-line { font-family:'DM Sans',sans-serif; font-size:0.98rem; color:var(--ink); margin-top:14px; line-height:1.6; }
         .r-line strong { color:var(--ink); }
         .r-sub { font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--slate); margin-top:8px; line-height:1.6; }
+        .dr-r { font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:600; padding:2px 9px; border-radius:999px; border:1px solid; white-space:nowrap; margin-left:auto; }
+        .dr-r-ok { color:var(--sage); background:var(--sage-dim); border-color:rgba(126,179,139,0.35); }
+        .dr-r-warn { color:var(--amber); background:rgba(224,162,78,0.12); border-color:rgba(224,162,78,0.35); }
+        .dr-r-none { color:var(--text-muted); background:transparent; border-color:var(--border); }
         .r-reuse { display:flex; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.9rem; line-height:1.6; margin-top:16px; padding:12px 15px; border-radius:10px; background:var(--cream); }
         .r-reuse .ric { flex:none; font-weight:700; }
         .r-reuse.ok .ric { color:var(--sage); } .r-reuse.warn .ric { color:var(--amber); }
@@ -417,7 +421,19 @@ const PAGE_SCRIPT = `    <script>
                     :r.verdict==='attributed'?('Attributed to '+esc(r.reallySaidBy||'\\u2014'))
                     :('Verified \\u2014 '+esc(r.reallySaidBy||'\\u2014'));
                 var link=(r.found&&r.url)?' <a href="'+esc(r.url)+'">details</a>':'';
-                return '<li class="dr dr-'+cls+'"><span class="dr-q">\\u201c'+esc((r.query||lines[i]||'').trim())+'\\u201d</span><span class="dr-v">'+v+link+'</span></li>';
+                  // RIGHTS — this page's own explainer promises "our verdict, the correct credit, and reuse
+                  // status", and the batch renderer silently dropped the last one. /verify-batch has always
+                  // returned rights and reuse; only this row template omitted them. A deck-builder said it
+                  // was the column they most needed: it decides whether a slide is publishable, and it is the
+                  // question this site answers better than anything else.
+                  var rl='';
+                  if(r.found&&r.rights){
+                      var rt=String(r.rights);
+                      var rc=rt==='public-domain'?'ok':(rt==='in-copyright'?'warn':'none');
+                      var rlab=rt==='public-domain'?'Free to use':rt==='in-copyright'?'In copyright':rt==='licensed'?'Licensed':'Rights unconfirmed';
+                      rl='<span class="dr-r dr-r-'+rc+'" title="'+esc(r.reuse||'')+'">'+rlab+'</span>';
+                  }
+                return '<li class="dr dr-'+cls+'"><span class="dr-q">\\u201c'+esc((r.query||lines[i]||'').trim())+'\\u201d</span><span class="dr-v">'+v+link+'</span>'+rl+'</li>';
             }).join('');
             var foot=(s.misattributed||s.notFound)
                 ? '<p class="r-note">The flagged lines are the ones to fix before you present.</p>'

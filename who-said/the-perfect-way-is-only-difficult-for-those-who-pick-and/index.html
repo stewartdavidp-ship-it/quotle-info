@@ -413,6 +413,7 @@
         .src-add-why label { display: flex; align-items: flex-start; gap: 9px; cursor: pointer; line-height: 1.45; }
         .src-add-why input { margin-top: 3px; flex-shrink: 0; }
         .src-add-why em { font-style: italic; color: var(--sage); }
+        .src-add-area { resize:vertical; min-height:66px; line-height:1.5; }
         .src-add-url, .src-add-note { width: 100%; padding: 10px 12px; background: var(--bg-deep); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; }
         .src-add-url:focus, .src-add-note:focus { outline: none; border-color: var(--burgundy); }
         .src-add-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
@@ -794,7 +795,7 @@
                     <label><input type="radio" name="reason" value="other"> Something else</label>
                 </div>
                 <input class="src-add-url" name="url" type="url" inputmode="url" placeholder="Optional: https://&hellip; a link that shows it">
-                <input class="src-add-note" name="note" type="text" maxlength="600" placeholder="Optional: anything else we should know">
+                <textarea class="src-add-note src-add-area" name="note" maxlength="600" rows="3" placeholder="Optional: anything else we should know"></textarea>
                 <div class="src-add-actions">
                     <button class="src-add-btn" type="submit">Send report</button>
                     <span class="src-add-msg" id="srcMsg" hidden></span>
