@@ -110,12 +110,25 @@ function reviewState(rec) {
 // judgement — a human said this page is wrong, or nobody has looked at it in a year. Claim
 // correctness is not detectable by pattern-matching a record against itself. Do not add a
 // fourth heuristic without measuring its false-positive rate on a sample first.
+// LAYER 1 FEEDS THIS. The one inline check that used to live here (contested verdict with no
+// citation) has moved into tools/detectors.js as `disputed-no-citation`, alongside the rest of the
+// catalogue, so there is ONE place a signal is defined and one place it is measured. This function
+// now just reads what tools/scan.js already worked out.
+//
+// Deliberately silent when data/scan-state.json is missing or stale: review.js must keep working
+// on a fresh clone before anyone has run a scan. `flags` simply stays empty, and the queue falls
+// back to age + reader reports, which is what it did before layer 1 existed. Run
+// `node tools/scan.js` to populate it — `due` says so when the file is absent.
+let SCAN = null;
+function scanState() {
+  if (SCAN) return SCAN;
+  try { SCAN = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'scan-state.json'), 'utf8')); }
+  catch (_) { SCAN = { records: {}, missing: true }; }
+  return SCAN;
+}
 function riskFlags(rec) {
-  const flags = [];
-  // Mechanically decidable, no judgement required: we published a contested verdict and
-  // attached no citation to it. That is a gap in the record, not a guess about the world.
-  if ((rec.confidence === 'disputed' || rec.confidence === 'attributed') && !rec.cite) flags.push('no-citation');
-  return flags;
+  const row = (scanState().records || {})[rec.quoteSlug];
+  return (row && Array.isArray(row.f)) ? row.f.slice() : [];
 }
 
 function survey() {
@@ -166,8 +179,21 @@ async function dueSet(limit) {
     r.reports = rp ? rp.n : 0;
     r.refutes = rp ? rp.refutes : 0;
     // Priority: reader-refuted > reader-reported > overdue+risky > overdue > never reviewed.
+    // The age term is CAPPED, and that cap is what makes a flag mean anything.
+    //
+    // A never-stamped record falls back to schema.dateModified, and a record MISSING that field
+    // gets the 9999-day sentinel. Uncapped, that contributed 9,634 to priority — so the queue was
+    // effectively sorted by "does this record have a dateModified field", and the 500 awarded for a
+    // mechanical contradiction was noise against it. Measured before the cap: a record carrying a
+    // high-severity contradiction scored 750 while an ordinary one scored 9,884. Flagging a record
+    // DEMOTED it, which is the exact inverse of this function's own stated order
+    // ("reader-refuted > reader-reported > overdue+risky > overdue > never reviewed").
+    //
+    // 9999 is a sentinel, not a measurement: a record unreviewed since it was built is not "27
+    // years overdue". Capping at one extra cycle keeps genuine staleness ranking above fresh work
+    // while leaving the flag and reader-report terms able to outrank it, as intended.
     r.priority = (r.refutes ? 4000 : 0) + (r.reports ? 2000 : 0)
-      + (r.flags.length ? 500 : 0) + Math.max(0, r.overdueBy)
+      + (r.flags.length ? 500 : 0) + Math.min(Math.max(0, r.overdueBy), DEFAULT_CYCLE_DAYS)
       + (r.everReviewed ? 0 : 250);
   }
   rows.sort((a, b) => b.priority - a.priority || a.slug.localeCompare(b.slug));
