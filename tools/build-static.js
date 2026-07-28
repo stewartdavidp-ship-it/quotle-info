@@ -20,7 +20,7 @@ const { OG_IMAGE_TAGS } = require('./og');
 // so all five standing pages shipped a canonical and og:url pointing at the 301. Silent, and close
 // to un-indexable, on /about/ and /how-we-verify/ of all pages. Import the builder; never restate
 // the contract in a template literal.
-const { standingUrl } = require('./urls');
+const { standingUrl, standingPath, frag } = require('./urls');
 const ROOT = path.resolve(__dirname, '..');
 const ORIGIN = 'https://quotle.info';
 const EMAIL = 'help@quotle.info';
@@ -165,7 +165,7 @@ ${STATES.map(stateRow).join('\n')}
         <section aria-labelledby="wrong-h">
             <h2 id="wrong-h">When we get it wrong</h2>
             <p class="big">Provenance research is never finished — new archives surface and old ones get corrected. If you can point to a primary source that changes an attribution, that is exactly the evidence we want. Every page is dated so you can see how current it is.</p>
-            <p class="big"><a class="cta" href="/under-review/">Flag a correction or a missing quote &rarr;</a></p>
+            <p class="big"><a class="cta" href="${frag(standingPath('contact'), 'c-fix')}">Flag a correction or a missing quote &rarr;</a></p>
             <p class="note">Wondering how this differs from just asking an AI? <a href="/vs-ai/">The short answer is three points</a>.</p>
         </section>`;
 
@@ -305,7 +305,7 @@ const contactBody = `        <section aria-labelledby="c-how">
         <section aria-labelledby="c-fix">
             <h2 id="c-fix">Spotted an error?</h2>
             <p>Corrections are the most useful thing you can send. If an attribution looks wrong, or a famous quote is missing, the fastest path is the flag flow &mdash; and if you can point to a <strong>primary source</strong> (a first edition, a transcript, an archived scan), even better; that&rsquo;s exactly the evidence that moves a verdict.</p>
-            <p class="big"><a class="cta" href="/under-review/">Flag a correction or a missing quote &rarr;</a></p>
+            <p class="big"><a class="cta" href="${frag(standingPath('contact'), 'c-fix')}">Flag a correction or a missing quote &rarr;</a></p>
             <p>Prefer email? Send the quote, the attribution you think is right, and your source to <a href="mailto:${EMAIL}">${EMAIL}</a>.</p>
         </section>
 
