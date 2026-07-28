@@ -83,6 +83,14 @@ const CLIENT = `    <script>
         (function(){
             var DATA = ${DATA_JSON};
             function esc(s){ var d=document.createElement('div'); d.textContent = (s==null?'':String(s)); return d.innerHTML; }
+            // esc() is textContent->innerHTML: it escapes & < > but NOT the double quote — safe
+            // between tags, unsafe inside an attribute. It was being used for an href.
+            function escAttr(s){ return esc(s).replace(/"/g,'&quot;'); }
+            // documentedAt comes from data/harvest-queue.json, which passes through NO safety gate
+            // (html-safety.js is wired into validate-records.js and validate-songs.js only). With no
+            // scheme check, javascript: lands in an href the reader is invited to click. Allowlist,
+            // not denylist: anything not plainly http(s) becomes inert.
+            function safeHref(s){ var u=String(s==null?'':s).trim(); return /^https?:\/\//i.test(u) ? escAttr(u) : ''; }
             var slug=''; try { slug=new URLSearchParams(location.search).get('q')||''; } catch(e){}
             var d = slug && DATA[slug];
             var el=document.getElementById('card');
@@ -110,7 +118,7 @@ const CLIENT = `    <script>
                 '<h2>Why we flagged it</h2>'+
                 '<p class="body">'+why+'</p>'+
                 '<p class="handoff">Want to read their write-up? We&rsquo;ll take you there &mdash; it opens in a new tab:</p>'+
-                '<a class="src-btn" href="'+esc(d.u)+'" target="_blank" rel="noopener nofollow">Read it at '+esc(d.sn)+' <span aria-hidden="true">&#8599;</span></a>'+
+                (safeHref(d.u) ? '<a class="src-btn" href="'+safeHref(d.u)+'" target="_blank" rel="noopener nofollow">Read it at '+esc(d.sn)+' <span aria-hidden="true">&#8599;</span></a>' : '<p class="handoff">No usable link on file for this source.</p>')+
                 '<p class="back"><a href="/#bench">&larr; Back to the research bench</a> &middot; <a href="/">Browse verified quotes</a></p>';
             document.title='Why we flagged this quote | Quotle.info';
         })();
