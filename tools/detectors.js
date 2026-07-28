@@ -57,6 +57,8 @@
  */
 
 
+const { kindForTag } = require('./mis-kind');
+
 const plain = (s) => String(s || '').replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ');
 const norm = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
@@ -122,6 +124,27 @@ const DETECTORS = [
       if (r.confidence !== 'disputed') return null;
       const a = plain((r.schema || {}).faqAnswer).trim();
       return /^yes\b/i.test(a) ? `faqAnswer opens "${a.slice(0, 48)}"` : null;
+    },
+  },
+  {
+    id: 'misattr-marker-contradicts-tag',
+    version: 1,
+    severity: 'medium',
+    title: 'a fact-check row tagged with a non-authorship ROLE renders the refutation ✕',
+    // THE FULL LOOP, END TO END, AND THE REASON THE >5% BRANCH IS NOT A DEAD END.
+    // A tier-3 fix agent proposed this after fixing one record. Measured: 86 records, 7.4% —
+    // REFUSED by tools/propose-detector.js as above the noise floor. It was not noise. It was a
+    // 301-row BACKLOG: template.js defaults a row to the ✕ meaning "this credit is refuted", and
+    // only 32 of 2,913 rows had ever set kind:'context', so rows tagged "paraphrase" or
+    // "Popularizer, not author" carried a marker contradicting their own text.
+    // Backfilled (tools/backfill-mis-kind.js) and stamped at ingest (workflows/prep-wave.js), the
+    // same rule now measures 0.1%. So the sequence is: measure → backfill → the detector becomes a
+    // tripwire. A high hit rate means "reject as a detector" only until you ask whether every hit
+    // shares one remedy.
+    test(r) {
+      const rows = ((r.misattribution || {}).items) || [];
+      const bad = rows.filter((i) => !i.kind && kindForTag(i.tag) === 'context');
+      return bad.length ? `${bad.length} row(s) tagged as a role render the refutation ✕ (set kind:"context") — e.g. "${String(bad[0].tag).slice(0, 40)}"` : null;
     },
   },
 ];

@@ -66,7 +66,11 @@ function validateCorpus(records) {
 // live in the single `node tools/build.js` entry point instead.)
 function runSourceGates() {
   const { execFileSync } = require('child_process');
+<<<<<<< HEAD
   for (const gate of ['validate-records.js', 'validate-songs.js', 'validate-queue.js']) {
+=======
+  for (const gate of ['validate-records.js', 'validate-songs.js', 'validate-workflows.js']) {
+>>>>>>> 573748a49aeea359d53b394c9432171108f4becd
     try {
       execFileSync(process.execPath, [path.join(__dirname, gate), '--quiet'], { stdio: 'inherit' });
     } catch (_) {

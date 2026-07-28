@@ -151,17 +151,10 @@ for (const { file, r } of recs) {
     }
   }
 
-  // POPULARIZER MISMATCH. A page whose own prose says the credited person did not COIN the line is
-  // checking a coinage claim, not an utterance claim — they really did say it. Left as the default
-  // verb, the ClaimReview reads "{name} said: {quote}" rated 1/5, denying an utterance that
-  // happened, while the visible label says the opposite. Prose hedged, structured data flat and
-  // wrong, and only the structured data is what an answer engine reads. Set schema.claimVerb.
-  const labelText = String((r.answer && r.answer.label) || '').replace(/<[^>]+>/g, '');
-  const saysNotCoined = /not coined|didn.t coin|did not coin|did not originate|an older saying/i.test(labelText);
-  if (saysNotCoined && !(r.schema && r.schema.claimVerb) && !(r.schema && r.schema.claimReviewed)) {
-    w.push('label says the credited person did not COIN it, but claimVerb is unset — the ClaimReview will deny they SAID it (set schema.claimVerb: "coined")');
-  }
-
+  // The POPULARIZER MISMATCH check that briefly lived here now lives in tools/detectors.js as
+  // `coined-verb-mismatch`, with its measurement recorded beside it (8 hits, 0.7%). Two commits
+  // landed it in both places within the hour — this file gates the BUILD, detectors.js feeds the
+  // REVIEW QUEUE, and a signal defined twice drifts. One definition, two callers.
   const real = r.answer && r.answer.authorName;
   if (!real) p.push('no answer.authorName');
   if (r.confidence === 'disputed') {

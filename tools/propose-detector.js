@@ -32,6 +32,7 @@ const ROOT = path.resolve(__dirname, '..');
 const QDIR = path.join(ROOT, 'data', 'quotes');
 const argv = process.argv.slice(2);
 const SHOW_ALL = argv.includes('--show');
+const ACCEPT = argv.includes('--accept');
 const file = argv.find((a) => !a.startsWith('--'));
 
 if (!file) {
@@ -69,7 +70,42 @@ const rate = hits.length / files.length * 100;
 // Thresholds are the ones detectors.js already documents, made executable. They are about NOISE,
 // not importance: a real defect class in a curated corpus is rare, so a common match is evidence
 // the rule has caught something normal rather than something wrong.
-const verdict = rate === 0
+// KIND changes what a high rate MEANS. For a 'record' proposal every hit needs its own judgement,
+// so a common match is evidence the rule caught something normal. For a 'backfill' every hit takes
+// the same remedy, so a high count is the SIZE OF THE JOB, not noise — and after the sweep the same
+// rule becomes a 0-hit tripwire. That distinction was learned the hard way: a proposal at 7.4% was
+// refused here as noise when it was a 301-row backfill across 274 records.
+// KIND IS DERIVED, NOT DECLARED. An agent that has just fixed one record knows what it set but
+// routinely misreads WHERE the defect lives — a real proposal blamed tools/template.js when the
+// renderer was correct and 301 records were missing a field. From inside one record those look
+// identical. So if the proposal names the `field` its fix sets, count how many records already set
+// it and decide mechanically:
+//     some already set it → the generator HAS the hook, the records lag  → BACKFILL
+//     none set it         → there is no hook to set                      → GENERATOR
+// (`misattribution.items[].kind` measured 32/2913 before its backfill — non-zero, so the answer was
+// derivable the whole time.) cand.kind is used only when no field is given.
+function coverage(fieldPath) {
+  if (!fieldPath) return null;
+  const m = /^([a-zA-Z.]+?)(\[\])?\.([a-zA-Z]+)$/.exec(String(fieldPath).trim());
+  if (!m) return null;
+  const [, base, isArray, leaf] = m;
+  let set = 0, total = 0;
+  for (const f of files) {
+    const rec = JSON.parse(fs.readFileSync(path.join(QDIR, f), 'utf8'));
+    let node = rec;
+    for (const seg of base.split('.')) node = node && node[seg];
+    const list = isArray ? (Array.isArray(node) ? node : []) : (node ? [node] : []);
+    for (const it of list) { total++; if (it && it[leaf]) set++; }
+  }
+  return { set, total };
+}
+const cov = coverage(cand.field);
+const KIND = cov ? (cov.set > 0 ? 'backfill' : 'generator') : (cand.kind || 'record');
+const verdict = KIND === 'backfill'
+  ? { ok: true, word: `BACKFILL — ${hits.length} rows/records to sweep`, why: 'every hit takes the same remedy, so the count is the size of the job. Sweep it, wire the rule into prep-wave.js so it cannot re-accumulate, THEN add this as a tripwire (it should measure ~0).' }
+  : KIND === 'generator'
+    ? { ok: false, word: 'NOT A DETECTOR — central fix', why: 'a defect in a shared generator is one edit, not 1,158 flags. Apply it once in tools/, as its own commit, then propose a 0-hit tripwire so it cannot regress.' }
+    : rate === 0
   ? { ok: true, word: 'ACCEPT (tripwire)', why: 'fires on nothing today — a guard against a regression that has not happened yet' }
   : rate <= 2
     ? { ok: true, word: 'ACCEPT (after hand-check)', why: 'below the 2% noise floor — read the sample below and confirm each is genuinely wrong before adding' }
@@ -79,6 +115,7 @@ const verdict = rate === 0
 
 console.log(`candidate: ${cand.id}  (${cand.severity || 'severity unset'})`);
 console.log(`  ${cand.title}\n`);
+if (cov) console.log(`  field ${cand.field}: set on ${cov.set}/${cov.total} → kind DERIVED as ${KIND}${cand.kind && cand.kind !== KIND ? ` (proposal said "${cand.kind}")` : ''}`);
 console.log(`  corpus ${files.length} records · ${hits.length} hits · ${rate.toFixed(1)}%${threw ? ` · ${threw} THREW` : ''}`);
 console.log(`  verdict: ${verdict.word}\n    ${verdict.why}\n`);
 
@@ -97,5 +134,28 @@ if (verdict.ok) {
 } else {
   console.log('  Do NOT add this as-is. A detector that cries wolf turns the flag queue into a second');
   console.log('  inbox nobody reads, and the real findings drown with it.');
+}
+// --accept appends the detector to the catalogue with TODAY'S measurement baked into its comment,
+// so the next reader sees what it looked like when it was admitted. Refuses unless the verdict is
+// ok, so it cannot be used to smuggle a rejected rule in. This exists because "paste it in
+// yourself" was the last manual step in an otherwise closed loop.
+if (ACCEPT) {
+  if (!verdict.ok) { console.error('\n  --accept refused: verdict is not ok.'); process.exit(1); }
+  const DET = path.join(__dirname, 'detectors.js');
+  let src = fs.readFileSync(DET, 'utf8');
+  const entry = `  {
+    id: ${JSON.stringify(cand.id)},
+    version: 1,
+    severity: ${JSON.stringify(cand.severity || 'medium')},
+    title: ${JSON.stringify(cand.title)},
+    // ADMITTED ${new Date().toISOString().slice(0, 10)} by tools/propose-detector.js --accept.
+    // Measured at admission: ${hits.length} hits / ${rate.toFixed(1)}% of ${files.length} records${cov ? `; field ${cand.field} covered ${cov.set}/${cov.total} → ${KIND}` : ''}.
+    // ${String(cand.rationale || '').replace(/\s+/g, ' ').slice(0, 300)}
+    test: ${String(cand.test)},
+  },
+];`;
+  src = src.replace(/\n\];\n/, `\n${entry}\n`);
+  fs.writeFileSync(DET, src);
+  console.log(`\n  ✓ appended ${cand.id} to tools/detectors.js — run: node tools/scan.js`);
 }
 process.exit(verdict.ok ? 0 : 1);
