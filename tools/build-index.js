@@ -33,30 +33,56 @@ try {
 let CFG = {};
 try { CFG = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'harvest-config.json'), 'utf8')); } catch (_) { /* optional */ }
 const INTERACTIVE = !!(CFG.votesApi && CFG.turnstileSitekey);
-// Every queue category needs BOTH a filter chip and a card tag. This used to hardcode three of
-// them while tools/harvest.js already knew nine, so scripture-misquote, shakespeare-misquote and
-// film-misquote (21 cards) rendered a generic "Queued" tag that no chip could select — reachable
-// only via "All", with the chip counts silently summing to 485 under an "All 506". harvest.js
-// CAT_RANK carries a comment about exactly this drift on its own copy of the list; that one was
-// fixed and this one was not. So the chips are now DERIVED from the categories actually present
-// (see benchCats below) and an unlisted category falls back to a title-cased label rather than
-// vanishing — a new category can be added to the harvesters without stranding its cards here.
-const CAT_ORDER = ['misattributed', 'political-fabrication', 'meme-misattribution', 'science-tech-misattribution',
-  'disputed', 'shakespeare-misquote', 'scripture-misquote', 'film-misquote', 'genuine-famous'];
-// [chip label (terse — the row wraps on mobile), card tag (explicit)]
-const CAT_TEXT = {
-  misattributed: ['Misattributed', 'Likely misattributed'],
-  'political-fabrication': ['Political', 'Political fabrication'],
-  'meme-misattribution': ['Meme', 'Meme misattribution'],
-  'science-tech-misattribution': ['Science', 'Science/tech misattribution'],
-  disputed: ['Disputed', 'Disputed'],
-  'shakespeare-misquote': ['Shakespeare', 'Shakespeare misquote'],
-  'scripture-misquote': ['Scripture', 'Scripture misquote'],
-  'film-misquote': ['Film', 'Film misquote'],
-  'genuine-famous': ['Verifying', 'Verifying source'],
+// The tag printed on a card — the SPECIFIC category, so a Shakespeare misquote still says so.
+// This used to know only three categories while tools/harvest.js already knew nine, so the 21
+// scripture/shakespeare/film cards fell through to a generic "Queued". (They were also
+// unreachable: the chips hardcoded the same three and silently summed to 485 under an "All 506".
+// harvest.js CAT_RANK carries a comment about exactly this drift on its own copy of the list;
+// that one was fixed and this one was not.) An unlisted category now title-cases rather than
+// vanishing, so adding one to a harvester cannot strand its cards here.
+const CAT_TAG = {
+  misattributed: 'Likely misattributed',
+  'political-fabrication': 'Political fabrication',
+  'meme-misattribution': 'Meme misattribution',
+  'science-tech-misattribution': 'Science/tech misattribution',
+  disputed: 'Disputed',
+  'shakespeare-misquote': 'Shakespeare misquote',
+  'scripture-misquote': 'Scripture misquote',
+  'film-misquote': 'Film misquote',
+  'genuine-famous': 'Verifying source',
 };
 const titleCase = (k) => String(k || '').replace(/-/g, ' ').replace(/^./, (m) => m.toUpperCase()) || 'Queued';
-const catText = (k, i) => (CAT_TEXT[k] || [titleCase(k), titleCase(k)])[i];
+const catTag = (k) => CAT_TAG[k] || titleCase(k);
+
+// The chips filter on ONE axis: our current stance on the quote. `category` is not that axis —
+// it conflates two questions. "Shakespeare / Scripture / Film" answer WHERE A LINE COMES FROM,
+// while "Misattributed / Disputed" answer IS IT REAL, and the six rendered side by side read as
+// six alternatives to a visitor when they are not. The data says the same thing: every one of
+// misattributed, shakespeare-misquote, scripture-misquote and film-misquote is 100%
+// likelyConfidence='disputed'. They are misattributions WITH A SOURCE DOMAIN ATTACHED, not peers
+// of "misattributed" — which harvest.js CAT_RANK already states outright ("A political
+// fabrication or a fake Einstein science line IS a misattribution; that is the product") by
+// ranking them identically.
+//
+// So the whole misattribution family collapses to one chip. Nothing is lost: the card keeps its
+// specific tag ("Shakespeare misquote"), its CSS class, and its searchable text. An unmapped
+// category groups to ITSELF, which preserves the property that a new category can never be
+// stranded without a chip.
+const CAT_GROUP = {
+  misattributed: 'misattributed',
+  'political-fabrication': 'misattributed',
+  'meme-misattribution': 'misattributed',
+  'science-tech-misattribution': 'misattributed',
+  'shakespeare-misquote': 'misattributed',
+  'scripture-misquote': 'misattributed',
+  'film-misquote': 'misattributed',
+  disputed: 'disputed',
+  'genuine-famous': 'genuine-famous',
+};
+const GROUP_ORDER = ['misattributed', 'disputed', 'genuine-famous'];
+const GROUP_LABEL = { misattributed: 'Misattributed', disputed: 'Disputed', 'genuine-famous': 'Verifying' };
+const catGroup = (k) => CAT_GROUP[k] || k || 'queued';
+const groupLabel = (g) => GROUP_LABEL[g] || titleCase(g);
 
 // byConf groups the manifest entries for RENDERING (each bucket is a list of quotes to lay out).
 // The COUNTS this page prints come from CORPUS, never from these arrays — see the stat line below.
@@ -97,11 +123,11 @@ const allSorted = [...manifest].sort((a, b) => (CONF_RANK[a.confidence] - CONF_R
 const chip = (key, label, n, active) => `<button class="chip${active ? ' active' : ''}" data-f="${key}" role="tab" aria-selected="${!!active}">${label} <span>${n}</span></button>`;
 
 const voteBtn = (c) => `<button class="vote" type="button" data-slug="${esc(c.slug)}" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;${esc(c.quote)}&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>`;
-const benchCard = (c) => `                <article class="bench-card ${c.category} filterable" data-c="${c.category}" data-s="${esc(searchText((c.quote || '') + ' ' + (c.magnetAuthor || '')))}">
+const benchCard = (c) => `                <article class="bench-card ${c.category} filterable" data-c="${catGroup(c.category)}" data-s="${esc(searchText((c.quote || '') + ' ' + (c.magnetAuthor || '')))}">
                     <p class="bench-q">&ldquo;${esc(c.quote)}&rdquo;</p>
                     <div class="bench-foot">
                         <span class="bench-cred">Pinned on ${esc(c.magnetAuthor || 'unknown')}</span>
-                        <span class="bench-tag ${c.category}">${catText(c.category, 1)}</span>
+                        <span class="bench-tag ${c.category}">${catTag(c.category)}</span>
                     </div>
                     <div class="bench-actions">
 ${INTERACTIVE ? `                        ${voteBtn(c)}` : ''}
@@ -231,10 +257,11 @@ const nomForm = `
                 <button class="nom-btn" type="submit">Submit nomination</button>
                 <p class="nom-msg" id="nomMsg" role="status" hidden></p>
             </form>`;
-const bcount = BENCH.reduce((m, c) => (m[c.category] = (m[c.category] || 0) + 1, m), {});
-// Derived, not listed — every present category gets a chip, so the chips always sum to "All".
+// Counted by GROUP, not category — derived, not listed, so the chips always sum to "All" and a
+// new category can never be stranded without one. See CAT_GROUP above for why they collapse.
+const bcount = BENCH.reduce((m, c) => (m[catGroup(c.category)] = (m[catGroup(c.category)] || 0) + 1, m), {});
 const benchCats = Object.keys(bcount).sort((a, b) => {
-  const ra = CAT_ORDER.indexOf(a), rb = CAT_ORDER.indexOf(b);
+  const ra = GROUP_ORDER.indexOf(a), rb = GROUP_ORDER.indexOf(b);
   return (ra < 0 ? 99 : ra) - (rb < 0 ? 99 : rb) || bcount[b] - bcount[a] || a.localeCompare(b);
 });
 const reviewBody = `        <header class="page-head">
@@ -246,7 +273,7 @@ const reviewBody = `        <header class="page-head">
             <input id="pq" class="search" type="search" placeholder="Search a quote or an author…" aria-label="Filter quotes under review" autocomplete="off">
             <div class="chips" role="tablist" aria-label="Filter by type">
                 ${chip('all', 'All', BENCH.length, true)}
-                ${benchCats.map((k) => chip(k, catText(k, 0), bcount[k])).join('\n                ')}
+                ${benchCats.map((k) => chip(k, groupLabel(k), bcount[k])).join('\n                ')}
             </div>
             <div class="bench-grid" id="results">
 ${BENCH.map(benchCard).join('\n')}
