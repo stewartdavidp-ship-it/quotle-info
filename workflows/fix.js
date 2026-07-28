@@ -49,6 +49,11 @@ const FIX_SCHEMA = {
         //   backfill  every hit takes the SAME remedy   → sweep, then keep as a tripwire
         //   generator the fix is one edit in tools/*.js → report in `remaining`, not here
         kind: { type: 'string', enum: ['record', 'backfill', 'generator'] },
+        // The RECORD FIELD your fix set, e.g. 'misattribution.items[].kind'. This is what lets the
+        // gate DERIVE kind instead of trusting the line above: it counts how many records already
+        // set that field — some do means the generator has the hook and the records lag (backfill),
+        // none do means there is no hook (generator). Give it whenever your fix set a field.
+        field: { type: 'string' },
         rationale: { type: 'string' },   // what contradiction it catches, and the defect it came from
         test: { type: 'string' },        // JS source: (r) => null | 'why this record is flagged'
       },
@@ -86,7 +91,7 @@ Report fixedCount (how many issues for your slug you resolved), a one-paragraph 
    • A one-off wrong date, name or URL is NOT a class. Fixing it is the whole job; there is nothing to generalise.
    • Assume your rule fires far more than you expect. Rules that looked obviously right have measured 130 hits (11.2%) and 703 hits (61%) on this corpus, because they matched the editorial content of a misattribution site rather than errors in it.
 
-  Set \`kind\`: 'record' when each hit needs its own judgement; 'backfill' when every hit takes the SAME mechanical remedy (then a high hit count is the ARGUMENT FOR it, not against); 'generator' when the fix is one edit in a shared file — and for 'generator' put the detail in \`remaining\` too, since that is where central fixes are collected. Say where the defect actually LIVES, not where you noticed it: from inside one record a missing record field and a wrong renderer look identical, and a real proposal blamed tools/template.js when the renderer was correct and 301 records were missing a field.
+  Give \`field\` — the record field your fix set, like 'misattribution.items[].kind' — whenever there is one; the gate uses it to work out the answer for itself rather than taking your word for it. Then set \`kind\`: 'record' when each hit needs its own judgement; 'backfill' when every hit takes the SAME mechanical remedy (then a high hit count is the ARGUMENT FOR it, not against); 'generator' when the fix is one edit in a shared file — and for 'generator' put the detail in \`remaining\` too, since that is where central fixes are collected. Say where the defect actually LIVES, not where you noticed it: from inside one record a missing record field and a wrong renderer look identical, and a real proposal blamed tools/template.js when the renderer was correct and 301 records were missing a field.
 
   A human runs \`node tools/propose-detector.js\` on your proposal, which measures it across all 1,158 records and rejects anything above the noise floor. Proposing a bad one costs nothing; proposing none when you found a real class costs the loop.`
 
