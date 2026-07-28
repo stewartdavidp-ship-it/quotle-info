@@ -71,6 +71,38 @@ const RISKY_CYCLE_DAYS = 180;     // record carrying a mechanical contradiction
 // and displaced a flagged one on 750 — observed, not theoretical. Keep this above 665: if either
 // cap moves, move this with it.
 const FLAG_WEIGHT = 1000;
+// STRUCTURAL ODDITY — a prioritisation signal, never a flag.
+//
+// Some fields are near-universal by CONVENTION and enforced nowhere: schema (1148/1158), context
+// (1147), copyAttribution (1144), misattribution (1106). A record missing one is unusual without
+// anybody having written a rule about it, which is exactly the shape tier 1 cannot see — you cannot
+// flag what you have no detector for. Ranking by it turns the discovery sample from 20 RANDOM
+// records into the 20 most likely to be carrying something nobody has met.
+//
+// IT IS NOT A DEFECT. 52 records legitimately have no misattribution block — a verified quote with
+// no false credit does not need one. This decides who gets LOOKED at; it asserts nothing.
+//
+// CAPPED BELOW THE AGE TERM ON PURPOSE, and this is the load-bearing bit. Auditing a record does
+// not change its oddity: conclude that its missing fields are fine and it is still an outlier next
+// week, and the week after, forever. A pure ranking would re-surface the same 20 records
+// indefinitely and the sweep would never advance. Rotation therefore comes from having LOOKED —
+// review.js stamp — and for that to work a stamped record must never outrank an unstamped one:
+//
+// THE CAP IS 200, BELOW THE 250 NEVER-REVIEWED BONUS, and the first draft got this wrong. It used
+// 300 on the reasoning that an unstamped record scores 365 (age) + 250 — but that age term only
+// applies to the ~10 records missing schema.dateModified, which trip the 9999-day sentinel. An
+// ORDINARY never-reviewed record scores just 250. At 300 a stamped outlier therefore outranked an
+// unstamped ordinary record and the sweep would have stalled on the weird ones exactly as feared.
+// Caught by stamping a record and watching it come back at #28.
+//     stamped, max oddity  =   0 +   0 + 200 = 200
+//     unstamped, ordinary  =   0 + 250 +   0 = 250   ← always higher
+// If either weight moves, re-check this inequality; it is the thing that makes the sweep advance.
+const ODDITY_WEIGHT = 200;
+const NEAR_UNIVERSAL = ['schema', 'context', 'copyAttribution', 'misattribution'];
+function oddity(rec) {
+  const missing = NEAR_UNIVERSAL.filter((k) => !(k in rec)).length;
+  return missing ? Math.round((missing / NEAR_UNIVERSAL.length) * ODDITY_WEIGHT) : 0;
+}
 
 const readRecord = (f) => { try { return JSON.parse(fs.readFileSync(path.join(QDIR, f), 'utf8')); } catch { return null; } };
 const allFiles = () => fs.readdirSync(QDIR).filter((f) => f.endsWith('.json'));
@@ -189,6 +221,7 @@ function survey() {
     const st = reviewState(rec);
     const flags = riskFlags(rec);
     const demand = demandTerm(rec);
+    const odd = oddity(rec);
     const cycle = flags.length ? RISKY_CYCLE_DAYS : DEFAULT_CYCLE_DAYS;
     const age = st.lastReviewedOn ? daysBetween(now, new Date(st.lastReviewedOn)) : 9999;
     rows.push({
@@ -196,7 +229,7 @@ function survey() {
       confidence: rec.confidence,
       rights: (rec.meta && rec.meta.rights) || rec.rights || null,
       lastReviewedOn: st.lastReviewedOn, everReviewed: st.everReviewed,
-      ageDays: age, cycle, overdueBy: age - cycle, flags, demand,
+      ageDays: age, cycle, overdueBy: age - cycle, flags, demand, odd,
     });
   }
   return rows;
@@ -287,7 +320,7 @@ async function dueSet(limit) {
     // while leaving the flag and reader-report terms able to outrank it, as intended.
     r.priority = (r.refutes ? 4000 : 0) + (r.reports ? 2000 : 0)
       + (r.flags.length ? FLAG_WEIGHT : 0) + Math.min(Math.max(0, r.overdueBy), DEFAULT_CYCLE_DAYS)
-      + (r.everReviewed ? 0 : 250) + r.demand;
+      + (r.everReviewed ? 0 : 250) + r.demand + r.odd;
   }
   rows.sort((a, b) => b.priority - a.priority || a.slug.localeCompare(b.slug));
   return { rows: rows.slice(0, limit), all: rows, reportError: rep.error || null };
