@@ -417,8 +417,21 @@ function buildJsonLd(q, url) {
   // that lifts only the ClaimReview emits "{ancient author} said {modern translator's words} —
   // Verified", reproducing the exact error the page exists to correct. schema.claimReviewed lets
   // such a record state the reviewed claim in full.
+  // THE VERB IS PART OF THE CLAIM. Default "said" is right for the ordinary case — the page exists
+  // because someone did NOT say a thing. But a POPULARIZER page checks a different claim: the
+  // credited person really did say the line, they just did not COIN it. Rating "Gary Player said:
+  // '...'" 1/5 there asserts, machine-readably, that he never said it — while the visible label on
+  // the same page reads "Not coined by Gary Player — an older saying he made famous". Prose hedged,
+  // structured data flat and wrong, and only the structured data is what an answer engine reads.
+  // Same failure as the Reader's-Digest-as-claimant bug, one field over.
+  //
+  // schema.claimVerb lets the record state which claim is being rated. 'coined' keeps the fact-check
+  // (the coinage claim IS false, so the 1/5 stands) while no longer denying an utterance that
+  // happened. schema.claimReviewed still overrides the whole sentence when a record needs to say
+  // something this template cannot compose.
+  const claimVerb = plain(s.claimVerb) || 'said';
   const claimReviewedText = plain(s.claimReviewed)
-    || (claimant ? `${claimant} said: "${claimQuoteText}"` : `"${claimQuoteText}"`);
+    || (claimant ? `${claimant} ${claimVerb}: "${claimQuoteText}"` : `"${claimQuoteText}"`);
   // itemReviewed.appearance defaults to #quotation — fine when #quotation carries the DISPUTED
   // string. But on right-person-wrong-words and paraphrase pages #quotation carries the GENUINE,
   // documented passage, so linking the reviewed (false) claim's appearance there asserts the claim
@@ -473,7 +486,7 @@ function buildJsonLd(q, url) {
         url,
         author: { '@type': 'Organization', name: 'Quotle.info', url: ORIGIN },
         datePublished: s.dateModified,
-        claimReviewed: `${plain(name)} said: "${claimQuoteText}"`,
+        claimReviewed: `${plain(name)} ${claimVerb}: "${claimQuoteText}"`,
         itemReviewed: {
           '@type': 'Claim',
           author: { '@type': 'Person', name: plain(name) },
