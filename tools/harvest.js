@@ -91,10 +91,32 @@ function loadBacklog() {
 }
 
 function priority(c) { return CAT_RANK[c.category] || 9; }
+
+// MEASURED DEMAND, and it outranks category. tools/rank-backlog.js exists to "order the harvest
+// queue by DEMAND, so waves get built most-checked-first", and its own header warns about the
+// failure it was written to stop: "A 1,000-entry queue worked in arbitrary order builds 9 Coco
+// Chanel pages (2.3K annual lookups) before 6 Einstein ones (88K)." It fetches Wikimedia
+// pageviews, computes demandViews/demandScore/demandRank, writes them onto every queued
+// candidate — and NOTHING READ THEM. Those three fields appeared in rank-backlog.js and nowhere
+// else, so the real order here was status → votes (almost all 0) → CAT_RANK → rights → MAGNET
+// AUTHOR ALPHABETICALLY. The next wave of 10 would have drawn Andrew Carnegie, Dale Carnegie ×4,
+// J. P. Morgan ×2, Jeff Bezos, Jim Collins, Napoleon Hill — the exact arbitrary-order build the
+// tool was supposed to prevent, while Shakespeare, Lincoln, Orwell, Twain and Confucius waited.
+//
+// demandScore is the right thing to sort on because it ALREADY folds CATEGORY_WEIGHT in
+// (misattributed ×1.5 … genuine-famous ×1.0). So the site's misattribution thesis still tilts the
+// order — as a WEIGHT rather than a hard gate. An equally-looked-up misattribution still beats a
+// genuine-famous one; a hugely-looked-up genuine-famous line no longer loses to an obscure
+// misattribution purely on category, which is what buried 339 real quotes behind 159 others.
+//
+// CAT_RANK survives only as a TIEBREAK, and for candidates that carry no score yet (a fresh sync
+// adds them unscored — cmdSelect warns when that happens; the fix is to run rank-backlog.js).
+function demand(c) { return typeof c.demandScore === 'number' ? c.demandScore : -1; }
 function sortCandidates(cands) {
   cands.sort((a, b) =>
     (STATUS_RANK[a.status] ?? 9) - (STATUS_RANK[b.status] ?? 9) ||
     ((b.votes || 0) - (a.votes || 0)) ||   // community demand (+1) bubbles up within a status
+    (demand(b) - demand(a)) ||             // measured lookup demand, category-weighted
     priority(a) - priority(b) ||
     (RIGHTS_RANK[a.rightsEra] ?? 9) - (RIGHTS_RANK[b.rightsEra] ?? 9) ||
     String(a.magnetAuthor).localeCompare(String(b.magnetAuthor)) ||
@@ -249,6 +271,14 @@ function cmdSelect(args) {
   // buries pools we sometimes need FIRST. The Quotle game's hidden quotes are the live example:
   // they're all genuine-famous, and each stays unplayable until it has a verified page.
   if (f.source) pool = pool.filter((c) => String(c.harvestedFrom || '').includes(f.source));
+  // An unscored candidate sorts BELOW every scored one, so a wave drawn while the queue is stale
+  // silently reverts to the old category+alphabetical order for anything new. Say so — this is
+  // cheap to fix and expensive to not notice.
+  const unscored = pool.filter((c) => typeof c.demandScore !== 'number').length;
+  if (unscored) {
+    console.warn(`⚠ ${unscored} of ${pool.length} candidates have no demandScore and will sort LAST.`);
+    console.warn('  Run `node tools/rank-backlog.js` first so the wave is drawn most-looked-up-first.');
+  }
   sortCandidates(pool);
   const pick = pool.slice(0, n);
   pick.forEach((c) => { c.status = 'selected'; c.wave = f.wave || c.wave || 'next'; });
