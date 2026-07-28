@@ -65,6 +65,12 @@ const API = process.env.QUOTLE_API || 'https://quotle-community.stewartd.workers
 
 const DEFAULT_CYCLE_DAYS = 365;   // ordinary record
 const RISKY_CYCLE_DAYS = 180;     // record carrying a mechanical contradiction
+// A flag must OUTRANK the strongest combination of the softer signals, or "overdue+risky > overdue"
+// is only true on paper. Those are the capped age term (max DEFAULT_CYCLE_DAYS = 365) plus the
+// demand term (max 300) = 665. At the original 500 a high-demand, never-seeded record scored 915
+// and displaced a flagged one on 750 — observed, not theoretical. Keep this above 665: if either
+// cap moves, move this with it.
+const FLAG_WEIGHT = 1000;
 
 const readRecord = (f) => { try { return JSON.parse(fs.readFileSync(path.join(QDIR, f), 'utf8')); } catch { return null; } };
 const allFiles = () => fs.readdirSync(QDIR).filter((f) => f.endsWith('.json'));
@@ -110,12 +116,68 @@ function reviewState(rec) {
 // judgement — a human said this page is wrong, or nobody has looked at it in a year. Claim
 // correctness is not detectable by pattern-matching a record against itself. Do not add a
 // fourth heuristic without measuring its false-positive rate on a sample first.
+// LAYER 1 FEEDS THIS. The one inline check that used to live here (contested verdict with no
+// citation) has moved into tools/detectors.js as `disputed-no-citation`, alongside the rest of the
+// catalogue, so there is ONE place a signal is defined and one place it is measured. This function
+// now just reads what tools/scan.js already worked out.
+//
+// Deliberately silent when data/scan-state.json is missing or stale: review.js must keep working
+// on a fresh clone before anyone has run a scan. `flags` simply stays empty, and the queue falls
+// back to age + reader reports, which is what it did before layer 1 existed. Run
+// `node tools/scan.js` to populate it — `due` says so when the file is absent.
+let SCAN = null;
+function scanState() {
+  if (SCAN) return SCAN;
+  try { SCAN = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'scan-state.json'), 'utf8')); }
+  catch (_) { SCAN = { records: {}, missing: true }; }
+  return SCAN;
+}
+// DEMAND — a wrong page nobody reads matters less than a wrong page with traffic.
+//
+// Two partial sources, neither quote-level, and the shortfall is stated here rather than implied:
+//   · data/harvest-queue.json  demandScore on the candidate that became this record. Already
+//     category-weighted by rank-backlog.js. Covers 58 records.
+//   · data/demand-cache.json   Wikimedia pageviews for the AUTHOR. Covers 202 records.
+// Together 239 of 1,158 (21%). The other 919 contribute ZERO, which is why this term is additive
+// and never negative: with coverage this thin it must only ever PROMOTE a record, never push an
+// unmeasured one down. A missing signal is not evidence of low demand.
+//
+// Capped at 300 — below the 500 a mechanical contradiction earns, so a popular clean page never
+// outranks a flagged one, and far below reader reports. Log-scaled because pageviews span
+// 1 … 243,445 and a linear term would let one famous author swamp every other input.
+//
+// TO MAKE THIS MATTER: extend the author cache past the 127 magnet authors it currently holds
+// (rank-backlog.js already has the fetch + cache logic; it just never runs over the built corpus).
+// At 21% this is a tiebreak, not a driver.
+let DEMAND = null;
+function demandIndex() {
+  if (DEMAND) return DEMAND;
+  const byAuthor = {}, bySlug = {};
+  try { Object.assign(byAuthor, JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'demand-cache.json'), 'utf8'))); } catch (_) {}
+  try {
+    const q = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'harvest-queue.json'), 'utf8'));
+    for (const c of (q.candidates || [])) {
+      if (c.demandScore == null) continue;
+      if (c.resultSlug) bySlug[c.resultSlug] = c.demandScore;
+      if (c.slug && bySlug[c.slug] == null) bySlug[c.slug] = c.demandScore;
+    }
+  } catch (_) {}
+  DEMAND = { byAuthor, bySlug };
+  return DEMAND;
+}
+function demandTerm(rec) {
+  const { byAuthor, bySlug } = demandIndex();
+  const slugScore = bySlug[rec.quoteSlug];
+  const who = (rec.answer && (rec.answer.realAuthorName || rec.answer.authorName)) || '';
+  const a = byAuthor[who];
+  const authorViews = (a && typeof a === 'object') ? a.views : a;
+  const v = Number(slugScore != null ? slugScore : authorViews) || 0;
+  return v > 0 ? Math.min(Math.round(Math.log10(v + 1) * 50), 300) : 0;
+}
+
 function riskFlags(rec) {
-  const flags = [];
-  // Mechanically decidable, no judgement required: we published a contested verdict and
-  // attached no citation to it. That is a gap in the record, not a guess about the world.
-  if ((rec.confidence === 'disputed' || rec.confidence === 'attributed') && !rec.cite) flags.push('no-citation');
-  return flags;
+  const row = (scanState().records || {})[rec.quoteSlug];
+  return (row && Array.isArray(row.f)) ? row.f.slice() : [];
 }
 
 function survey() {
@@ -126,6 +188,7 @@ function survey() {
     if (!rec) continue;
     const st = reviewState(rec);
     const flags = riskFlags(rec);
+    const demand = demandTerm(rec);
     const cycle = flags.length ? RISKY_CYCLE_DAYS : DEFAULT_CYCLE_DAYS;
     const age = st.lastReviewedOn ? daysBetween(now, new Date(st.lastReviewedOn)) : 9999;
     rows.push({
@@ -133,7 +196,7 @@ function survey() {
       confidence: rec.confidence,
       rights: (rec.meta && rec.meta.rights) || rec.rights || null,
       lastReviewedOn: st.lastReviewedOn, everReviewed: st.everReviewed,
-      ageDays: age, cycle, overdueBy: age - cycle, flags,
+      ageDays: age, cycle, overdueBy: age - cycle, flags, demand,
     });
   }
   return rows;
@@ -166,9 +229,22 @@ async function dueSet(limit) {
     r.reports = rp ? rp.n : 0;
     r.refutes = rp ? rp.refutes : 0;
     // Priority: reader-refuted > reader-reported > overdue+risky > overdue > never reviewed.
+    // The age term is CAPPED, and that cap is what makes a flag mean anything.
+    //
+    // A never-stamped record falls back to schema.dateModified, and a record MISSING that field
+    // gets the 9999-day sentinel. Uncapped, that contributed 9,634 to priority — so the queue was
+    // effectively sorted by "does this record have a dateModified field", and the 500 awarded for a
+    // mechanical contradiction was noise against it. Measured before the cap: a record carrying a
+    // high-severity contradiction scored 750 while an ordinary one scored 9,884. Flagging a record
+    // DEMOTED it, which is the exact inverse of this function's own stated order
+    // ("reader-refuted > reader-reported > overdue+risky > overdue > never reviewed").
+    //
+    // 9999 is a sentinel, not a measurement: a record unreviewed since it was built is not "27
+    // years overdue". Capping at one extra cycle keeps genuine staleness ranking above fresh work
+    // while leaving the flag and reader-report terms able to outrank it, as intended.
     r.priority = (r.refutes ? 4000 : 0) + (r.reports ? 2000 : 0)
-      + (r.flags.length ? 500 : 0) + Math.max(0, r.overdueBy)
-      + (r.everReviewed ? 0 : 250);
+      + (r.flags.length ? FLAG_WEIGHT : 0) + Math.min(Math.max(0, r.overdueBy), DEFAULT_CYCLE_DAYS)
+      + (r.everReviewed ? 0 : 250) + r.demand;
   }
   rows.sort((a, b) => b.priority - a.priority || a.slug.localeCompare(b.slug));
   return { rows: rows.slice(0, limit), all: rows, reportError: rep.error || null };
