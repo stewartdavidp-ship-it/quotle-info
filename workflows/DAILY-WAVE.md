@@ -2,97 +2,131 @@
 
 A claude.ai routine runs this daily at 07:00 UTC (03:00 ET) against `main`.
 
-## READ THIS FIRST — this pass DEVIATES from the committed pipeline
+## Run the committed pipeline. All of it.
 
-`workflows/README.md` documents the wave as `select → batch → generate.js → prep-wave.js →
-_ingest.js → build`, and warns in capitals about waves built outside it (the 2026-07-20/21 waves,
-+102 quotes, hand-rolled).
+`workflows/README.md` documents the wave as **select → batch → generate → prep-wave → ingest →
+build → audit → fix → theme-tag → ship**, and warns in capitals about waves built outside it.
 
-**A cloud routine cannot run that pipeline.** `generate.js` and `prep-wave.js` are a `Workflow`
-script and its journal parser, and a scheduled cloud session has no `Workflow` tool. So this pass
-writes records directly, and that means it skips `prep-wave.js`'s escaping scan, its STUB detection
-and its `creditedTo` stamping.
+An earlier version of this file told you to skip four of those stages — including both quality
+gates — on the grounds that a cloud session has no `Workflow` tool. **That was wrong, and it shipped
+fabricated facts.** The five records built that way passed `validate-records`, passed 44 invariants,
+and carried a fabricated statistic (a foundation's grants stated as "more than a billion dollars"
+against a real $458 million), a fabricated stage prop the primary transcript contradicts in the
+speaker's own words, a dead link the page called its "strongest corroboration", and a citation
+locator that was wrong inside the copy-to-clipboard string. The audit that caught them returned
+**0 PASS / 5 FAIL, 46 issues, 4 blockers**, with 16 of 17 skeptic verdicts confirmed. No mechanical
+gate can read prose. Stage 5 is the only thing that can.
 
-What replaces them:
-- `tools/validate-records.js` runs inside `build.js` and gates 21 conventions, including the
-  HTML-safety scan and the double-escaping check that motivated prep-wave's scan.
-- `tools/verify-corpus.js` runs last and asserts 43 invariants.
-- The daily review pass (`DAILY-REVIEW.md`) scans every new record the next morning.
+**`Workflow` is a PARALLELISATION mechanism, not a capability.** Every stage here is an agent doing
+work you can do yourself, one item at a time. The only coupling is a file format: `prep-wave.js` and
+`parse-audit.js` read a `journal.jsonl`. Write that file yourself and both CLIs run unchanged, with
+every check they carry.
 
-That is real coverage, but it is NOT the same as the documented path. **Build 5 records, not 40.**
-The small batch is the mitigation: a deviation is survivable at 5 a day and was not at 102.
+Serial is slower. It is not weaker. Budget roughly **1.5–2M tokens** for 5 records end to end
+(measured: audit ~293K/page, fix ~91K/record). If that does not fit, build **fewer records** — never
+fewer stages.
 
-If a wave ever needs to run at full pipeline fidelity, do it from a local session with the
-`Workflow` tool, not here.
-
-## The steps
+## 1. Select
 
 ```bash
-node tools/harvest.js report                    # confirm the backlog is not empty
-node tools/harvest.js select 5 --wave dYYYYMMDD # demand-ordered; see the note below
+node tools/harvest.js report
+node tools/harvest.js select 5 --wave dYYYYMMDD
 node tools/harvest.js batch  --wave dYYYYMMDD   # → data/.harvest-batch-dYYYYMMDD.json
 ```
 
-`select` draws most-looked-up-first (`demandScore`, which folds the category weighting in). If it
-warns that candidates carry no `demandScore`, run `node tools/rank-backlog.js` first — otherwise the
-unscored ones sort last and the wave silently reverts to alphabetical-by-author.
+If `select` warns that candidates carry no `demandScore`, run `node tools/rank-backlog.js` first, or
+the wave silently reverts to alphabetical-by-author.
 
-## Research each of the 5
+## 2. Generate — one dossier per quote, written as a journal
 
-For each `{text, author}` in the batch, research the quote properly before writing anything:
+This is `generate.js`'s job. Read `workflows/generate.js` for the prompt it uses and its
+`DOSSIER_SCHEMA` for the exact field list — **follow that schema**, because it is what forces every
+claim into a field that has to be filled from a source. Freehand prose is what drifts into
+confident filler.
 
-- **Defer to Quote Investigator and Wikiquote.** They are the authorities this site is built on.
-- Find the **earliest documented appearance** and say what it is. If the popular wording differs
-  from the sourced one, that difference is the story, not a detail.
-- Decide `confidence` honestly: `verified` (real and sourced), `attributed` (credibly credited,
-  unpinned), `disputed` (misattributed, fabricated, or reassigned).
-- Decide `source.rights`: `public-domain` (source work pre-1931), `in-copyright` (1931+),
-  or omit the key entirely to mean uncertain. **Never guess public-domain.**
-- On a disputed record, `answer.authorName` must be the REAL author and `creditedTo` the name it is
-  falsely pinned on. Publishing the fake author as the real one is the worst failure this site has.
+For each of the 5 batch items, research the quote (defer to Quote Investigator and Wikiquote, find
+the earliest documented appearance) and append **two lines** to `/tmp/gen-dYYYYMMDD.jsonl`:
 
-## Write the records
-
-Model the shape on an existing record of the same confidence — read two or three from
-`data/quotes/` first. Match the conventions exactly: 2-space indent, HTML entities in prose, a
-trailing newline, `quoteSlug` equal to the filename.
-
-Never invent a citation, a date, or a source excerpt. If you cannot establish something, leave the
-field out and say so in the PR body — a thin record is fine, a fabricated one is not.
-
-## Finish
-
-```bash
-node tools/build.js                                   # validate-records + 43 invariants gate this
-echo '[]' > /tmp/empty.json && node tools/harvest.js sync /tmp/empty.json   # sweeps selected → ingested
-node tools/scan.js                                    # the new records get flagged now, not in a month
+```
+{"type":"started","key":"<slug>"}
+{"type":"result","result":{ …the dossier… }}
 ```
 
-If `build.js` fails, fix the record it names — do not bypass the gate.
+`_journal.js` counts `started` and `result` lines and refuses to proceed if starts exceed results,
+so write them in pairs. `prep-wave.js` requires `result.meta` and `result.author` on every entry.
 
-Then branch, commit, push, open a PR. In the body: the 5 quotes, the verdict and rights for each,
-and **anything you could not establish**. That last part is what makes the PR reviewable.
+Never invent a citation, a date, or an excerpt. A thin record is fine; a fabricated one is not.
 
-**Open the PR READY, never as a draft** (`gh pr create` without `--draft`). A draft cannot be
-merged, so every draft leaves an unmergeable PR sitting until a human clicks "Ready for review" —
-which happened on the first two routine runs before anyone noticed. Draft/ready does not control
-whether the PR gets READ; nothing here auto-merges, so a ready PR still waits for a human. It only
-controls whether they can act when they have read it.
-
-
-## Record what this run did
+## 3. Prep — the gate that was skipped
 
 ```bash
+node workflows/prep-wave.js --journal /tmp/gen-dYYYYMMDD.jsonl \
+  --batch data/.harvest-batch-dYYYYMMDD.json \
+  --out workflows/.scratch/records-dYYYYMMDD.json \
+  --verified-date "D Mon YYYY" --date-modified "YYYY-MM-DD" --credited
+```
+
+Escaping scan, STUB detection, `creditedTo` stamping. If it reports stubs, re-generate those quotes
+rather than shipping them.
+
+## 4. Ingest + build
+
+```bash
+node tools/_ingest.js workflows/.scratch/records-dYYYYMMDD.json
+node tools/build.js
+```
+
+If `build.js` fails, fix the record it names. Never bypass the gate.
+
+## 5. Audit — NOT OPTIONAL
+
+For **each** of the 5 built pages: read `who-said/<slug>/index.html`, re-fetch **every** source link,
+and test whether it literally supports the specific claim attached to it. Check that the visible
+prose and the JSON-LD agree — that pairing is where this corpus fails most. Check `confidence` and
+`source.rights` are honest. Read `workflows/audit.js` for the criteria.
+
+Append results to `/tmp/audit-dYYYYMMDD.jsonl` in the same `{"type":"result","result":{…}}` shape,
+carrying `{page, verdict, issues:[{severity, location, claim, sourceLink, problem, fix}]}`.
+
+Then re-check every `high` and `blocker` yourself as a skeptic, defaulting to "this finding is
+wrong", and drop the ones that do not survive. Roughly 15–20% should not.
+
+```bash
+node workflows/parse-audit.js --journal /tmp/audit-dYYYYMMDD.jsonl \
+  --out "$(pwd)/workflows/.scratch/current-fixes.json"
+```
+
+## 6. Fix
+
+Work through `current-fixes.json` per record, re-verifying every factual replacement against the
+cited source before writing it. **Every remedy is refusable** — if the evidence does not support the
+prescribed edit, do the alternative and say so.
+
+A defect in a shared generator is **one central edit**, not a per-record fix: report it in the PR
+body and change nothing under `tools/`. Then rebuild.
+
+## 7. Theme-tag, then ship
+
+Tag the new records (see the `tag-themes` step in `README.md`) so they appear on `/themes`, rebuild,
+then:
+
+```bash
+echo '[]' > /tmp/empty.json && node tools/harvest.js sync /tmp/empty.json   # selected → ingested
+node tools/scan.js
 node tools/routine-log.js --routine daily-wave --outcome pr --built <N> --pr <url> \
-  --note "anything you could not establish"
+  --note "audit: N PASS / N FAIL, N issues; anything you could not establish"
 ```
 
-Commit it with the wave. The token cost of this pass has never been measured — every figure quoted
-for it so far is an inference. This line is the denominator that replaces the guess.
+Branch, commit, push, **open the PR ready — never a draft** (`gh pr create` without `--draft`; a
+draft cannot be merged and just waits for a human to click). In the body: the 5 quotes with verdict
+and rights, the audit's PASS/FAIL and issue counts, what you fixed, what you refused to fix and
+why, and anything you could not establish.
 
 ## Do not
 
-- edit `tools/` or `workflows/` — check with `git status --porcelain -- tools workflows`. Writing `data/routine-log.jsonl` is expected and fine
-- hand-edit `data/harvest-queue.json` or `backlog-index.json` (use `harvest.js`)
+- skip stages 5 or 6 — that is what produced the fabrications above
+- edit `tools/` or `workflows/` — check `git status --porcelain -- tools workflows`
+  (writing `data/routine-log.jsonl` is expected and fine)
+- hand-edit `data/harvest-queue.json` or `backlog-index.json` — use `harvest.js`
 - `harvest.js skip` anything — the bar is hate/harm only
 - push to `main`
