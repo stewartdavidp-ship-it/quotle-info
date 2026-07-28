@@ -123,11 +123,19 @@ const allSorted = [...manifest].sort((a, b) => (CONF_RANK[a.confidence] - CONF_R
 const chip = (key, label, n, active) => `<button class="chip${active ? ' active' : ''}" data-f="${key}" role="tab" aria-selected="${!!active}">${label} <span>${n}</span></button>`;
 
 const voteBtn = (c) => `<button class="vote" type="button" data-slug="${esc(c.slug)}" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;${esc(c.quote)}&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>`;
-const benchCard = (c) => `                <article class="bench-card ${c.category} filterable" data-c="${catGroup(c.category)}" data-s="${esc(searchText((c.quote || '') + ' ' + (c.magnetAuthor || '')))}">
+// EVERY interpolation here is escaped, including the ones that look like enums. `category` came
+// from data/harvest-queue.json, which — unlike data/quotes and data/songs — passes through NO
+// safety gate at any stage (html-safety.js is wired into validate-records.js and validate-songs.js
+// only). It was interpolated RAW into two class attributes while every sibling field beside it was
+// escaped, so `x" onmouseover=...` broke out of the attribute. The values are agent-authored from
+// fetched web pages, which is precisely the "attacker's page -> agent -> record -> every rendered
+// page" route html-safety.js was written to close. Do not un-escape these because they "should be"
+// a fixed vocabulary — nothing enforces that vocabulary.
+const benchCard = (c) => `                <article class="bench-card ${esc(c.category)} filterable" data-c="${esc(catGroup(c.category))}" data-s="${esc(searchText((c.quote || '') + ' ' + (c.magnetAuthor || '')))}">
                     <p class="bench-q">&ldquo;${esc(c.quote)}&rdquo;</p>
                     <div class="bench-foot">
                         <span class="bench-cred">Pinned on ${esc(c.magnetAuthor || 'unknown')}</span>
-                        <span class="bench-tag ${c.category}">${catTag(c.category)}</span>
+                        <span class="bench-tag ${esc(c.category)}">${catTag(c.category)}</span>
                     </div>
                     <div class="bench-actions">
 ${INTERACTIVE ? `                        ${voteBtn(c)}` : ''}
