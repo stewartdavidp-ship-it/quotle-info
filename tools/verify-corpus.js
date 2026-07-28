@@ -318,6 +318,15 @@ for (const section of SECTIONS) {
   }
 }
 allPages.push('index.html');
+// STANDING pages must be scanned as FILES, not just matched as a URL shape. The regex above
+// already knew about them — but this list was built from SECTIONS only, so the guard caught a
+// no-slash link *to* /about/ from a quote page and never once opened /about/index.html, which is
+// exactly where the defect was: all five standing pages shipped a canonical + og:url pointing at
+// their own 301, and this invariant reported all-clear the whole time. Knowing the shape and not
+// reading the files is not a guard. Iterate STANDING, never a hardcoded copy.
+for (const name of STANDING) {
+  if (fs.existsSync(path.join(ROOT, name, 'index.html'))) allPages.push(`${name}/index.html`);
+}
 scanForNoSlash(allPages, `all ${allPages.length} built pages`);
 
 scanForNoSlash(['sitemap.xml'], 'sitemap.xml');

@@ -16,6 +16,11 @@ const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { NAV, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const { OG_IMAGE_TAGS } = require('./og');
+// THE URL contract. This generator used to build `${ORIGIN}/${slug}` inline — no trailing slash —
+// so all five standing pages shipped a canonical and og:url pointing at the 301. Silent, and close
+// to un-indexable, on /about/ and /how-we-verify/ of all pages. Import the builder; never restate
+// the contract in a template literal.
+const { standingUrl } = require('./urls');
 const ROOT = path.resolve(__dirname, '..');
 const ORIGIN = 'https://quotle.info';
 const EMAIL = 'help@quotle.info';
@@ -86,11 +91,11 @@ ${HEAD_SCRIPT}
     <title>${title}</title>
     <meta name="gs-app-id" content="quotle-info">
     <meta name="description" content="${description}">
-    <link rel="canonical" href="${ORIGIN}/${slug}">
+    <link rel="canonical" href="${standingUrl(slug)}">
     <meta property="og:type" content="article">
     <meta property="og:title" content="${ogTitle || title}">
     <meta property="og:description" content="${ogDesc || description}">
-    <meta property="og:url" content="${ORIGIN}/${slug}">
+    <meta property="og:url" content="${standingUrl(slug)}">
     <meta property="og:site_name" content="Quotle.info">
 ${OG_IMAGE_TAGS}
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -161,6 +166,25 @@ ${STATES.map(stateRow).join('\n')}
             <h2 id="wrong-h">When we get it wrong</h2>
             <p class="big">Provenance research is never finished — new archives surface and old ones get corrected. If you can point to a primary source that changes an attribution, that is exactly the evidence we want. Every page is dated so you can see how current it is.</p>
             <p class="big"><a class="cta" href="/under-review/">Flag a correction or a missing quote &rarr;</a></p>
+            <p class="note">Wondering how this differs from just asking an AI? <a href="/vs-ai/">The short answer is three points</a>.</p>
+        </section>`;
+
+// ---- /vs-ai ---------------------------------------------------------------
+// The objection every reader arrives with. Deliberately THREE points and nothing more — this is the
+// short answer you can say out loud; /how-we-verify is the long one it links back to.
+// NOT an anti-AI argument: /how-we-verify states that what matters is the source behind a claim,
+// not whether a person or a model did the tracing, and this site is itself AI-built. The claim is
+// about METHOD. A humans-beat-machines pitch here would contradict our own methodology page.
+// Point 2 says "a large share" and not a number ON PURPOSE — generators must never count
+// (tools/corpus.js is the single source for every figure). Do not hardcode one here.
+const vsAiBody = `        <section aria-labelledby="diff-h">
+            <h2 id="diff-h">Three differences</h2>
+            <div>
+                <div class="principle"><span class="num">1</span><div><h3>We cite a source you can open</h3><p>An AI answers from what ranks. For quotes, what ranks is quote sites copying each other without citation &mdash; so you get the most-repeated claim, not the best-evidenced one. Every page here names the earliest document that actually carries the words, with the edition, the date, and a link. Go and check it. &ldquo;Trust us&rdquo; is not verification.</p></div></div>
+                <div class="principle"><span class="num">2</span><div><h3>We can tell you we don&rsquo;t know</h3><p>An AI always produces an answer &mdash; that is what it is built to do. But certainty is a spectrum, and on a large share of these quotes the trail goes cold. When it does, we mark the quote <em>Attributed</em> or <em>Disputed</em> and say so, rather than manufacture a confident answer. A tool that can&rsquo;t fail can&rsquo;t tell you when to worry.</p></div></div>
+                <div class="principle"><span class="num">3</span><div><h3>We answer the copyright question</h3><p>&ldquo;Who said it&rdquo; and &ldquo;may I publish it&rdquo; are different questions. An AI answers the first with unearned confidence and doesn&rsquo;t attempt the second at all. Every page states a rights status separately from the attribution &mdash; because a quote can be correctly attributed and still not yours to reproduce.</p></div></div>
+            </div>
+            <p class="note">The full standard &mdash; what &ldquo;verified&rdquo; means, the three confidence states, and how rights are assessed &mdash; is on <a href="/how-we-verify/">How we verify</a>.</p>
         </section>`;
 
 // ---- /about ---------------------------------------------------------------
@@ -297,6 +321,11 @@ const PAGES = [
     ogTitle: 'How Quotle.info verifies every quote', ogDesc: 'Traced to a primary source, dated, cited, and marked with honest confidence.',
     kicker: 'The standard', h1: 'How we verify',
     lede: 'Every attribution here is traced back to a primary source, dated, and cited — and when the trail runs cold, we say so instead of guessing.', body: howBody },
+  { slug: 'vs-ai', active: '', title: 'How is this different from asking an AI? · Quotle.info',
+    description: 'Three differences between Quotle.info and an AI answer: we cite a primary source you can open, we can tell you when we don’t know, and we state whether the quote is cleared to reuse.',
+    ogTitle: 'How is this different from asking an AI?', ogDesc: 'Three differences: a source you can open, an honest “we don’t know”, and the copyright answer.',
+    kicker: 'The short answer', h1: 'How is this different from asking an AI?',
+    lede: 'Same question, different method &mdash; and a different failure mode. Three differences, and that&rsquo;s the whole list.', body: vsAiBody },
   { slug: 'about', active: '', title: 'About · Quotle.info',
     description: 'Who runs Quotle.info and why: an independent Game Shelf project that traces quotes to their real source and reuse rights. Built by David Stewart, operated by runMast LLC.',
     ogTitle: 'About Quotle.info', ogDesc: 'An independent project that traces quotes to their real source and reuse rights.',

@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){try{var d=document.documentElement,ls=localStorage;var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
-    <title>Privacy · Quotle.info</title>
+    <title>How is this different from asking an AI? · Quotle.info</title>
     <meta name="gs-app-id" content="quotle-info">
-    <meta name="description" content="Quotle.info privacy policy: cookieless analytics, no ads, no accounts, no data sold. A salted IP hash (never the raw IP) rate-limits the community features.">
-    <link rel="canonical" href="https://quotle.info/privacy/">
+    <meta name="description" content="Three differences between Quotle.info and an AI answer: we cite a primary source you can open, we can tell you when we don’t know, and we state whether the quote is cleared to reuse.">
+    <link rel="canonical" href="https://quotle.info/vs-ai/">
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Privacy · Quotle.info">
-    <meta property="og:description" content="No ads, no accounts, no tracking. Exactly what we collect and why.">
-    <meta property="og:url" content="https://quotle.info/privacy/">
+    <meta property="og:title" content="How is this different from asking an AI?">
+    <meta property="og:description" content="Three differences: a source you can open, an honest “we don’t know”, and the copyright answer.">
+    <meta property="og:url" content="https://quotle.info/vs-ai/">
     <meta property="og:site_name" content="Quotle.info">
     <meta property="og:image" content="https://quotle.info/og/default.png">
     <meta property="og:image:width" content="1200">
@@ -211,44 +211,18 @@
     </nav>
     <main id="main">
         <header class="hero">
-            <p class="kicker">Privacy</p>
-            <h1>Privacy policy</h1>
-            <p class="lede">Plain English, and accurate: here is exactly what Quotle.info collects, what it doesn&rsquo;t, and why.</p>
+            <p class="kicker">The short answer</p>
+            <h1>How is this different from asking an AI?</h1>
+            <p class="lede">Same question, different method &mdash; and a different failure mode. Three differences, and that&rsquo;s the whole list.</p>
         </header>
-        <section aria-labelledby="p-sum">
-            <h2 id="p-sum">The short version</h2>
-            <p class="big">No ads. No accounts. No cross-site tracking. No selling or sharing your data. We collect the bare minimum needed to run the site and keep its community features free of spam &mdash; and we&rsquo;re specific about it below.</p>
-        </section>
-
-        <section aria-labelledby="p-collect">
-            <h2 id="p-collect">What we collect, and why</h2>
-            <h3 class="sub">Privacy-friendly analytics</h3>
-            <p>We use <a href="https://www.goatcounter.com" rel="nofollow">GoatCounter</a>, a cookieless analytics tool, to see aggregate traffic (which pages are visited, roughly from where). It sets <strong>no cookies</strong>, builds <strong>no cross-site profile</strong>, and does not identify you. It is easily blocked by any ad/tracker blocker or a Do-Not-Track signal.</p>
-            <h3 class="sub">Your display preferences</h3>
-            <p>Your theme (light/dark) and text-size choices are saved in your browser&rsquo;s <strong>localStorage</strong>. They live on your device and are never sent to us. Clearing your browser storage resets them.</p>
-            <h3 class="sub">Community features (voting &amp; nominating)</h3>
-            <p>If you vote a quote up or nominate one for review, those are optional actions. To keep them free of bots and spam we use <a href="https://www.cloudflare.com/products/turnstile/" rel="nofollow">Cloudflare Turnstile</a> and we store a <strong>salted, one-way hash of your IP address</strong> to enforce rate limits &mdash; we never store your raw IP, and the hash can&rsquo;t be reversed back to it. Anything you type into a nomination (the quote, a name, a note) is stored so a human can review it before anything is published.</p>
-        </section>
-
-        <section aria-labelledby="p-not">
-            <h2 id="p-not">What we don&rsquo;t do</h2>
-            <ul>
-                <li>No advertising or ad-tech trackers.</li>
-                <li>No user accounts, logins, or profiles.</li>
-                <li>No selling, renting, or sharing of personal data.</li>
-                <li>No marketing emails (we have no mailing list).</li>
-            </ul>
-        </section>
-
-        <section aria-labelledby="p-third">
-            <h2 id="p-third">Service providers</h2>
-            <p>The site is static and runs on infrastructure from <strong>GitHub Pages</strong> (hosting) and <strong>Cloudflare</strong> (the community API, Turnstile, and network), with <strong>GoatCounter</strong> for analytics. These providers process requests on our behalf; standard server logs may briefly hold IP addresses for security, per their own policies.</p>
-        </section>
-
-        <section aria-labelledby="p-contact">
-            <h2 id="p-contact">Contact &amp; changes</h2>
-            <p>Quotle.info is operated by <strong>runMast&nbsp;LLC</strong>. Privacy questions or requests: <a href="mailto:help@quotle.info">help@quotle.info</a>. If this policy changes, we&rsquo;ll update it here with a new date.</p>
-            <p class="updated">Last updated 17 July 2026.</p>
+        <section aria-labelledby="diff-h">
+            <h2 id="diff-h">Three differences</h2>
+            <div>
+                <div class="principle"><span class="num">1</span><div><h3>We cite a source you can open</h3><p>An AI answers from what ranks. For quotes, what ranks is quote sites copying each other without citation &mdash; so you get the most-repeated claim, not the best-evidenced one. Every page here names the earliest document that actually carries the words, with the edition, the date, and a link. Go and check it. &ldquo;Trust us&rdquo; is not verification.</p></div></div>
+                <div class="principle"><span class="num">2</span><div><h3>We can tell you we don&rsquo;t know</h3><p>An AI always produces an answer &mdash; that is what it is built to do. But certainty is a spectrum, and on a large share of these quotes the trail goes cold. When it does, we mark the quote <em>Attributed</em> or <em>Disputed</em> and say so, rather than manufacture a confident answer. A tool that can&rsquo;t fail can&rsquo;t tell you when to worry.</p></div></div>
+                <div class="principle"><span class="num">3</span><div><h3>We answer the copyright question</h3><p>&ldquo;Who said it&rdquo; and &ldquo;may I publish it&rdquo; are different questions. An AI answers the first with unearned confidence and doesn&rsquo;t attempt the second at all. Every page states a rights status separately from the attribution &mdash; because a quote can be correctly attributed and still not yours to reproduce.</p></div></div>
+            </div>
+            <p class="note">The full standard &mdash; what &ldquo;verified&rdquo; means, the three confidence states, and how rights are assessed &mdash; is on <a href="/how-we-verify/">How we verify</a>.</p>
         </section>
         <a class="back" href="/"><span aria-hidden="true">←</span> Browse the verified quotes</a>
     </main>

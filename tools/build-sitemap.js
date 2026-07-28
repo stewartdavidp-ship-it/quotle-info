@@ -35,6 +35,7 @@ const latest = records.map((r) => r.schema && r.schema.dateModified).filter(Bool
 const urls = [
   { loc: `${ORIGIN}/`, lastmod: latest },
   { loc: `${ORIGIN}/how-we-verify/`, lastmod: latest },
+  { loc: `${ORIGIN}/vs-ai/`, lastmod: latest },
   { loc: `${ORIGIN}/about/`, lastmod: latest },
   { loc: `${ORIGIN}/contact/`, lastmod: latest },
   { loc: `${ORIGIN}/privacy/`, lastmod: latest },
@@ -94,6 +95,7 @@ Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built 
 
 ## Methodology
 - [How we verify](${ORIGIN}/how-we-verify/): the standard — traced to a primary source, dated, cited, adversarially re-checked; three honest confidence states; rights stated separately from attribution.
+- [How is this different from asking an AI?](${ORIGIN}/vs-ai/): the short answer, in three points — a primary source you can open rather than the most-repeated claim; an honest "we don't know" when the trail goes cold; and a reuse-rights verdict, which AI answers do not attempt at all.
 
 ## Check a quote (real? cleared to reproduce?)
 - [Check a quote](${ORIGIN}/check/): paste a line you're about to publish — is it real, who actually said it, the correct credit, and (the part AI usually gets wrong) whether it's **cleared to reproduce** vs still under copyright. Deep-linkable: \`${ORIGIN}/check/?q=<quote>\`.
