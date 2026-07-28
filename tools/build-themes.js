@@ -17,6 +17,7 @@ const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc');
 const { CONFIDENCE } = require('./template');
+const { primaryCredit } = require('./credits'); // creditedTo: string OR array — cards show the primary
 const { NAV: siteNav, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const { THEMES, THEME_BY_SLUG, isTheme } = require('./themes');
 const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
@@ -50,7 +51,7 @@ for (const r of records) {
   const entry = {
     slug: r.quoteSlug, quote: plain(r.displayQuote), author: who,
     confidence: r.confidence, rights: (r.source && r.source.rights) || null,
-    credited: r.creditedTo ? plain(r.creditedTo) : null,
+    credited: primaryCredit(r) ? plain(primaryCredit(r)) : null, // the PRIMARY false credit — theme cards show one name
   };
   const bucket = r.confidence === 'disputed' ? 'fake' : 'real';
   for (const th of themes) byTheme[th][bucket].push(entry);

@@ -28,6 +28,10 @@
 const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { esc, escEm } = require('./esc'); // one shared entity-aware escape (also used by build-index.js); escEm preserves inline <em>
+// creditedTo is a string OR an array — a quote often carries more than one false credit. Every
+// single-name read below takes the PRIMARY (first), which is byte-identical for a string record;
+// the extras drive additional ClaimReview nodes. See tools/credits.js.
+const { primaryCredit, otherCredits } = require('./credits');
 
 const { hasAuthorPage } = require('./authors');
 const { SECTIONS, standingPath, frag } = require('./urls');
@@ -191,7 +195,7 @@ function buildJsonLd(q, url) {
   // disputed claimant is still carried by the ClaimReview below, so nothing is lost.
   const heroName = plain((q.answer && q.answer.authorName) || '');
   const heroUnknown = !heroName || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroName);
-  const magnetName = plain(q.creditedTo || '').toLowerCase();
+  const magnetName = plain(primaryCredit(q) || '').toLowerCase();
   // A page with TWO quote strings: the paraphrase in circulation (schema.claimQuoteText) differs
   // from the documented sentence carried by Quotation.text. Used below to pick the ClaimReview
   // claimant — a page like that may have no magnet at all (a film misquote credits the right film),
@@ -346,7 +350,7 @@ function buildJsonLd(q, url) {
   // typing a magazine as a Person, and asking voice assistants "Is ... really by ESPN?". 59 of 431
   // disputed pages were affected. creditedTo first, with the old chain as fallback for records
   // that predate it.
-  const magnet = plain(q.creditedTo);
+  const magnet = plain(primaryCredit(q));
   // A WORDING-DRIFT page (track C film) has NO claimant by design: nobody is falsely credited, the
   // source is right and only the words drifted. Its fact-check row is about the wording, so the
   // record carries {who: "Luke, I am your father", scope: "The wording"} — `who` holds the QUOTE.
@@ -446,6 +450,45 @@ function buildJsonLd(q, url) {
   };
   if (!claimReview.itemReviewed.author) delete claimReview.itemReviewed.author;
   if (!claimReview.itemReviewed.appearance) delete claimReview.itemReviewed.appearance;
+
+  // ADDITIONAL false credits get their OWN ClaimReview. A quote collects more than one wrong name —
+  // the pessimist/optimist line is pinned on Churchill AND Rockefeller — and the visible prose has
+  // always said so (misattribution.items[] is multi-entry on 1,005 pages). Only the structured data
+  // stopped at the first name, so an answer engine could read "Churchill didn't say this" off the
+  // page and still confidently repeat the Rockefeller version. One node per claimant fixes that;
+  // schema.org allows many ClaimReviews in a graph, each rating a distinct claim.
+  //
+  // Deliberately NARROW. These fire only on a `disputed` record that has a real primary claimant,
+  // so nothing changes for verified/attributed pages or for the wording-drift pages that carry no
+  // magnet by design (see the long note above — naming a film or a propagation vector as a Person
+  // and rating it 1/5 is the exact bug that took 59 pages to find). They reuse the primary's rating
+  // and appearance: every name in the list is wrong in the same way and about the same claim.
+  // schema.claimReviewed, when a record sets it, governs the PRIMARY node only — it is a
+  // hand-authored sentence about the primary claimant and cannot be re-pointed at another name.
+  const extraClaimReviews = (q.confidence === 'disputed' && claimant)
+    ? otherCredits(q).map((name, i) => {
+      const node = {
+        '@type': 'ClaimReview',
+        '@id': `${url}#claimreview-${i + 2}`,
+        url,
+        author: { '@type': 'Organization', name: 'Quotle.info', url: ORIGIN },
+        datePublished: s.dateModified,
+        claimReviewed: `${plain(name)} said: "${claimQuoteText}"`,
+        itemReviewed: {
+          '@type': 'Claim',
+          author: { '@type': 'Person', name: plain(name) },
+          appearance,
+        },
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue, bestRating: 5, worstRating: 1,
+          alternateName: ratingName,
+        },
+      };
+      if (!node.itemReviewed.appearance) delete node.itemReviewed.appearance;
+      return node;
+    })
+    : [];
 
   // FAQPage — the literal attribution Q&A, so AI answer-engines and snippets can lift the verdict
   // verbatim.
@@ -562,7 +605,7 @@ function buildJsonLd(q, url) {
   })();
   if (verdictNote) quotation.disambiguatingDescription = verdictNote;
 
-  return { '@context': 'https://schema.org', '@graph': [quotation, claimReview, webpage, faq, breadcrumb] };
+  return { '@context': 'https://schema.org', '@graph': [quotation, claimReview, ...extraClaimReviews, webpage, faq, breadcrumb] };
 }
 
 // ---- top nav + breadcrumb ------------------------------------------------
@@ -829,7 +872,7 @@ function buildImagePrompts(q) {
   const cardName = plain((q.author && q.author.name) || '');
   const heroForDetect = heroLead || cardName;
   const heroUnknown = !heroForDetect || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroForDetect);
-  const magnetName = plain(q.creditedTo || '').toLowerCase();
+  const magnetName = plain(primaryCredit(q) || '').toLowerCase();
   const disputed = q.confidence === 'disputed';
   // Evoke a real person's world only when the page stands behind the attribution: verified/attributed
   // pages name the (plausible) real author, so their world is legitimate context. On a DISPUTED page the
@@ -898,9 +941,9 @@ function renderPresentationKit(q) {
   // is usually verbatim correct and only the attribution is false.
   const wordingDrift = !!(sch.claimQuoteText && plain(sch.claimQuoteText) !== plain(sch.quotationText || q.displayQuote));
   const drift = wordingDrift
-    && plain(q.creditedTo).toLowerCase() === plain((q.answer || {}).authorName || '').toLowerCase();
-  const warn = (q.confidence === 'disputed' && q.creditedTo && !drift) ? `
-                    <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>${esc(q.creditedTo)}</strong>. Use the credit shown above instead.</p>` : '';
+    && plain(primaryCredit(q)).toLowerCase() === plain((q.answer || {}).authorName || '').toLowerCase();
+  const warn = (q.confidence === 'disputed' && primaryCredit(q) && !drift) ? `
+                    <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>${esc(primaryCredit(q))}</strong>. Use the credit shown above instead.</p>` : '';
 
   const [imgA, imgB] = buildImagePrompts(q);
 
@@ -917,8 +960,8 @@ function renderPresentationKit(q) {
   //   neither — nothing is securely documented at all.
   // Only ~9 records carry claimQuoteText, so wordingDrift alone can't classify the rest; fall back
   // to the unqualified "Disputed", which is true of every disputed page, rather than guessing.
-  const creditDisputed = !!q.creditedTo
-    && plain(q.creditedTo).toLowerCase() !== plain((q.answer || {}).authorName || '').toLowerCase();
+  const creditDisputed = !!primaryCredit(q)
+    && plain(primaryCredit(q)).toLowerCase() !== plain((q.answer || {}).authorName || '').toLowerCase();
   const kitLbl = q.confidence === 'disputed'
     ? (creditDisputed ? 'Disputed credit &mdash; copy with the correction'
       : wordingDrift ? 'Disputed wording &mdash; copy with the correction'

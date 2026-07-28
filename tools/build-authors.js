@@ -40,22 +40,29 @@ const { CORPUS, records, songs: songRecords, authors, ERAS, UNDATED, eraOf } = r
 // ---- misattribution intelligence for author pages ----
 // Same slug function the records were built with — these keys are matched against author.slug.
 const { slugify: kebab } = require('./slugify');
+const { creditList } = require('./credits'); // creditedTo is a string OR an array — read it once, here
 // "Often misattributed to X": disputed records whose creditedTo (the magnet name) is X, real author ≠ X.
 const misattrBy = {};
 for (const r of records) {
-  if (r.confidence !== 'disputed' || !r.creditedTo) continue;
-  const credSlug = kebab(r.creditedTo);
-  // The real author is answer.realAuthorName when present (see the note on it in template.js), NOT
-  // answer.authorName — that field holds the magnet's own name on a disputed page, which both
-  // suppressed the entry here (credSlug === trueSlug) and, when it did render, printed the magnet
-  // as the "actually" line: "Often misattributed to Jefferson — actually Jefferson."
-  const explicitReal = r.answer && r.answer.realAuthorName;
-  const real = explicitReal || (r.answer && r.answer.authorName) || 'Unknown';
-  // r.author.slug is the CREDITED author's page (that's what the author block links to), so it is
-  // only a valid stand-in for the real author on records that never distinguished the two.
-  const trueSlug = explicitReal ? kebab(explicitReal) : ((r.author && r.author.slug) || kebab(real));
-  if (!credSlug || credSlug === trueSlug) continue;
-  (misattrBy[credSlug] = misattrBy[credSlug] || []).push({ slug: r.quoteSlug, quote: r.displayQuote, real });
+  if (r.confidence !== 'disputed') continue;
+  // creditedTo may name SEVERAL false credits (tools/credits.js). Fan out over all of them: a quote
+  // pinned on both Churchill and Rockefeller belongs on both hubs. Keying off a single value meant
+  // a magnet author's hub silently omitted every line where they were the second-most-common wrong
+  // credit — invisible, because the page still looked complete.
+  for (const credited of creditList(r)) {
+    const credSlug = kebab(credited);
+    // The real author is answer.realAuthorName when present (see the note on it in template.js), NOT
+    // answer.authorName — that field holds the magnet's own name on a disputed page, which both
+    // suppressed the entry here (credSlug === trueSlug) and, when it did render, printed the magnet
+    // as the "actually" line: "Often misattributed to Jefferson — actually Jefferson."
+    const explicitReal = r.answer && r.answer.realAuthorName;
+    const real = explicitReal || (r.answer && r.answer.authorName) || 'Unknown';
+    // r.author.slug is the CREDITED author's page (that's what the author block links to), so it is
+    // only a valid stand-in for the real author on records that never distinguished the two.
+    const trueSlug = explicitReal ? kebab(explicitReal) : ((r.author && r.author.slug) || kebab(real));
+    if (!credSlug || credSlug === trueSlug) continue;
+    (misattrBy[credSlug] = misattrBy[credSlug] || []).push({ slug: r.quoteSlug, quote: r.displayQuote, real });
+  }
 }
 // "Under review — pinned on X": queued backlog candidates grouped by magnet author.
 const reviewBy = {};
