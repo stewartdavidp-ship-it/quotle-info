@@ -53,7 +53,7 @@ const SECTIONS = ['who-said', 'authors', 'themes', 'who-recorded', 'who-wrote'];
 // every ~2,000 pages AND were listed in sitemap.xml as redirecting URLs, at a time when Google's
 // crawl-stats showed 16% of all requests being 301s. Fixing a contract and then writing a guard
 // that encodes the same blind spot is how a "fixed" bug stays live.
-const STANDING = ['about', 'contact', 'privacy', 'terms', 'how-we-verify'];
+const STANDING = ['about', 'contact', 'privacy', 'terms', 'how-we-verify', 'vs-ai'];
 const standingPath = (name) => `/${name}/`;
 const standingUrl = (name) => `${ORIGIN}${standingPath(name)}`;
 
