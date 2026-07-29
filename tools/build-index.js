@@ -351,7 +351,7 @@ const reportBody = INTERACTIVE ? `        <header class="page-head">
                 <div class="rf-group">
                     <label class="rf-lab" for="rf-email">Your email <span class="rf-opt">(optional)</span></label>
                     <input class="nom-in" id="rf-email" name="email" type="email" maxlength="200" autocomplete="email" aria-describedby="rf-email-why">
-                    <p class="rf-help" id="rf-email-why">Only used to tell you what we found. We never sell or share it.</p>
+                    <p class="rf-help" id="rf-email-why">Only used to tell you if we act on your report. We never sell or share it.</p>
                 </div>
 
                 <button class="nom-btn" type="submit">Send report</button>
