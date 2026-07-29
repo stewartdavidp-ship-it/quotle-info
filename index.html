@@ -119,9 +119,23 @@
         .vote .vote-n { min-width:0.9em; text-align:center; font-variant-numeric:tabular-nums; }
         .vote.voted { color:var(--gold); border-color:rgba(255,211,105,0.45); background:rgba(255,211,105,0.08); }
         .vote:disabled { cursor:default; }
-        /* /report/ — two jobs, two sections. Without these the radios inherit nothing and render as
-           one run-on paragraph with the dots buried mid-sentence; the labels are sentences, so they
-           need a line each. Found by looking at the page, not the markup. */
+        /* /report/ — ONE form whose fields adapt to the intent radio. Without these the radios
+           inherit nothing and render as one run-on paragraph with the dots buried mid-sentence;
+           the labels are sentences, so they need a line each. Found by looking at the page, not
+           the markup. The .rf-group[hidden] rule is explicit, not a bare [hidden]: these groups set
+           display:flex, which wins over the UA stylesheet's [hidden]{display:none} on specificity
+           tie-break, so the "hidden" fields would stay visible. (No backticks in this comment: it
+           is inside a JS template literal, where one terminates the string. That has broken this
+           build three times.) */
+        .rf-intent { border:none; padding:0; margin:0 0 6px; display:flex; flex-direction:column; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--ink); }
+        .rf-intent legend { padding:0; font-weight:700; font-size:0.9rem; color:var(--ink); margin-bottom:9px; }
+        .rf-intent label { display:flex; align-items:flex-start; gap:9px; cursor:pointer; line-height:1.45; }
+        .rf-intent input { margin-top:3px; flex-shrink:0; }
+        .rf-group { display:flex; flex-direction:column; gap:6px; }
+        .rf-group[hidden] { display:none; }
+        .rf-lab { font-family:'DM Sans',sans-serif; font-size:0.86rem; font-weight:600; color:var(--ink); }
+        .rf-opt { font-weight:400; color:var(--text-muted); }
+        .rf-help { font-family:'DM Sans',sans-serif; font-size:0.78rem; color:var(--text-muted); line-height:1.5; margin-top:2px; }
         .report-sec { margin-top:42px; max-width:560px; }
         .report-sec h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:1.45rem; letter-spacing:-0.015em; margin-bottom:8px; }
         .report-sub { font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--slate); line-height:1.6; margin-bottom:4px; }

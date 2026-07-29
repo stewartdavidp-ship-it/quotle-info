@@ -13,11 +13,15 @@
  * Routes:
  *   GET  /votes                     → { votes: { slug: count, ... } }
  *   POST /vote        {slug,token}  → { ok, count }            (Turnstile + 1/IP/slug dedupe)
- *   POST /nominate    {author,quote?,note?,token} → { ok }     (Turnstile + daily per-IP cap)
+ *   POST /nominate    {author,quote?,note?,email?,token} → { ok }  (Turnstile + daily per-IP cap)
  *   GET  /nominations?token=&status=pending → { nominations } (ADMIN_TOKEN only)
- *   POST /submit-source {slug,url,stance,note?,token} → { ok } (Turnstile + daily per-IP cap;
+ *   POST /submit-source {slug,url,stance,note?,email?,token} → { ok } (Turnstile + daily per-IP cap;
  *                       reader-submitted source EVIDENCE, never an edit — a URL to validate)
  *   GET  /sources?token=&status=pending → { sources }         (ADMIN_TOKEN only)
+ *
+ * `email` is OPTIONAL on both write paths and exists for exactly one purpose: telling the reader
+ * what we found. Nothing here sends anything — this is storage and surfacing only. The forms
+ * promise a single reply and no sharing, and /privacy/ says the same; do not add a second use.
  */
 
 const ALLOWED_ORIGINS = ['https://quotle.info', 'https://www.quotle.info', 'http://localhost:8099'];
@@ -216,6 +220,7 @@ export default {
         const author = String(body.author || '').trim().slice(0, 120);
         const quote = String(body.quote || '').trim().slice(0, 600);
         const note = String(body.note || '').trim().slice(0, 600);
+        const email = cleanEmail(body.email);
         if (!author && !quote) return send({ error: 'need at least an author or a quote' }, 400);
         if (!(await verifyTurnstile(env, body.token, req))) return send({ error: 'verification failed' }, 403);
 
@@ -239,7 +244,7 @@ export default {
         // machine's placeholder.
         const nq = normQ(quote || '');
         if (nq) {
-          const { results } = await env.DB.prepare("SELECT id,quote,author,note FROM nominations WHERE status='pending' ORDER BY created DESC LIMIT 500").all();
+          const { results } = await env.DB.prepare("SELECT id,quote,author,note,email FROM nominations WHERE status='pending' ORDER BY created DESC LIMIT 500").all();
           const dupe = (results || []).find((r) => normQ(r.quote || '') === nq);
           if (dupe) {
             const better = (existing, incoming) => {
@@ -249,13 +254,17 @@ export default {
               if (!e || /^wikiquote-auto/.test(e)) return i;      // machine placeholder loses
               return e.includes(i) ? e : `${e} | ${i}`;           // otherwise keep both
             };
-            await env.DB.prepare('UPDATE nominations SET author=?, note=? WHERE id=?')
-              .bind(better(dupe.author, author), better(dupe.note, note), dupe.id).run();
+            // email does NOT go through better() — that concatenates with ' | ', which would make
+            // the column hold two addresses and turn one reply into a mailing list. First address
+            // on the row wins; a later submitter's is discarded. One report, one reply, one person.
+            const keepEmail = String(dupe.email || '').trim() || email;
+            await env.DB.prepare('UPDATE nominations SET author=?, note=?, email=? WHERE id=?')
+              .bind(better(dupe.author, author), better(dupe.note, note), keepEmail, dupe.id).run();
             return send({ ok: true, merged: true });
           }
         }
-        await env.DB.prepare('INSERT INTO nominations (quote,author,note,status,created,iphash) VALUES (?,?,?,?,?,?)')
-          .bind(quote, author, note, 'pending', new Date().toISOString(), iphash).run();
+        await env.DB.prepare('INSERT INTO nominations (quote,author,note,email,status,created,iphash) VALUES (?,?,?,?,?,?,?)')
+          .bind(quote, author, note, email, 'pending', new Date().toISOString(), iphash).run();
         return send({ ok: true });
       }
 
@@ -264,7 +273,7 @@ export default {
         if (!env.ADMIN_TOKEN || token !== env.ADMIN_TOKEN) return send({ error: 'unauthorized' }, 401);
         const status = url.searchParams.get('status') || 'pending';
         const { results } = await env.DB.prepare(
-          'SELECT id,quote,author,note,status,created FROM nominations WHERE status=? ORDER BY created DESC LIMIT 200'
+          'SELECT id,quote,author,note,email,status,created FROM nominations WHERE status=? ORDER BY created DESC LIMIT 200'
         ).bind(status).all();
         return send({ nominations: results });
       }
@@ -286,6 +295,7 @@ export default {
         let submittedUrl = String(body.url || '').trim().slice(0, 500);
         const stance = body.stance === 'refutes' ? 'refutes' : 'supports';
         const note = String(body.note || '').trim().slice(0, 600);
+        const email = cleanEmail(body.email);
         // `supports` is the one reason that is NOT a complaint — it keeps the older "I have a source
         // that backs this up" capability alive inside the single control, instead of a second form.
         // It is also the only value that makes stance meaningful; everything else is a refutation.
@@ -319,8 +329,8 @@ export default {
         const cnt = await env.DB.prepare('SELECT COUNT(*) AS n FROM source_submissions WHERE iphash=? AND created>?').bind(iphash, since).first();
         if (cnt && cnt.n >= MAX_NOMS_PER_DAY) return send({ error: 'daily submission limit reached — thank you!' }, 429);
 
-        await env.DB.prepare('INSERT INTO source_submissions (slug,url,stance,reason,note,status,created,iphash) VALUES (?,?,?,?,?,?,?,?)')
-          .bind(slug, submittedUrl, stance, reason, note, 'pending', new Date().toISOString(), iphash).run();
+        await env.DB.prepare('INSERT INTO source_submissions (slug,url,stance,reason,note,email,status,created,iphash) VALUES (?,?,?,?,?,?,?,?,?)')
+          .bind(slug, submittedUrl, stance, reason, note, email, 'pending', new Date().toISOString(), iphash).run();
         return send({ ok: true });
       }
 
@@ -358,7 +368,7 @@ export default {
         if (!env.ADMIN_TOKEN || token !== env.ADMIN_TOKEN) return send({ error: 'unauthorized' }, 401);
         const status = url.searchParams.get('status') || 'pending';
         const { results } = await env.DB.prepare(
-          'SELECT id,slug,url,stance,reason,note,status,created FROM source_submissions WHERE status=? ORDER BY created DESC LIMIT 200'
+          'SELECT id,slug,url,stance,reason,note,email,status,created FROM source_submissions WHERE status=? ORDER BY created DESC LIMIT 200'
         ).bind(status).all();
         return send({ sources: results });
       }
@@ -479,6 +489,16 @@ async function loadVerifyIndex() {
 }
 // Freshness/size metadata for machine consumers to gate/cache on — derived free from the index fetch.
 function corpusMeta(idx) { return { corpusSize: (idx && idx.length) || 0, dataUpdated: _idxLastMod || null }; }
+// Optional contact address. Format-checked and length-capped, never required, and an unusable
+// value is DROPPED rather than 400'd — a typo'd address must not cost the reader their report,
+// which is the actual content we want. The check is deliberately loose (one @, a dot in the host,
+// no whitespace): stricter regexes reject valid addresses, and we are not authenticating anyone.
+function cleanEmail(v) {
+  const e = String(v || '').trim().slice(0, 200);
+  if (!e) return '';
+  return /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(e) ? e : '';
+}
+
 const normQ = (s) => String(s).toLowerCase().replace(/[’'‘`"“”]/g, '').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
 
 // ---- /lookup: compact "already on our list" index (queued/selected harvest candidates) ----

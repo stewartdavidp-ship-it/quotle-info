@@ -114,9 +114,23 @@
         .vote .vote-n { min-width:0.9em; text-align:center; font-variant-numeric:tabular-nums; }
         .vote.voted { color:var(--gold); border-color:rgba(255,211,105,0.45); background:rgba(255,211,105,0.08); }
         .vote:disabled { cursor:default; }
-        /* /report/ — two jobs, two sections. Without these the radios inherit nothing and render as
-           one run-on paragraph with the dots buried mid-sentence; the labels are sentences, so they
-           need a line each. Found by looking at the page, not the markup. */
+        /* /report/ — ONE form whose fields adapt to the intent radio. Without these the radios
+           inherit nothing and render as one run-on paragraph with the dots buried mid-sentence;
+           the labels are sentences, so they need a line each. Found by looking at the page, not
+           the markup. The .rf-group[hidden] rule is explicit, not a bare [hidden]: these groups set
+           display:flex, which wins over the UA stylesheet's [hidden]{display:none} on specificity
+           tie-break, so the "hidden" fields would stay visible. (No backticks in this comment: it
+           is inside a JS template literal, where one terminates the string. That has broken this
+           build three times.) */
+        .rf-intent { border:none; padding:0; margin:0 0 6px; display:flex; flex-direction:column; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--ink); }
+        .rf-intent legend { padding:0; font-weight:700; font-size:0.9rem; color:var(--ink); margin-bottom:9px; }
+        .rf-intent label { display:flex; align-items:flex-start; gap:9px; cursor:pointer; line-height:1.45; }
+        .rf-intent input { margin-top:3px; flex-shrink:0; }
+        .rf-group { display:flex; flex-direction:column; gap:6px; }
+        .rf-group[hidden] { display:none; }
+        .rf-lab { font-family:'DM Sans',sans-serif; font-size:0.86rem; font-weight:600; color:var(--ink); }
+        .rf-opt { font-weight:400; color:var(--text-muted); }
+        .rf-help { font-family:'DM Sans',sans-serif; font-size:0.78rem; color:var(--text-muted); line-height:1.5; margin-top:2px; }
         .report-sec { margin-top:42px; max-width:560px; }
         .report-sec h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:1.45rem; letter-spacing:-0.015em; margin-bottom:8px; }
         .report-sub { font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--slate); line-height:1.6; margin-bottom:4px; }
@@ -274,36 +288,59 @@
         <header class="page-head">
             <p class="feat-kicker">Corrections and nominations</p>
             <h1>Report something</h1>
-            <p class="lede">Two different things, both useful. Nothing you send is published unverified &mdash; it goes to a review queue and a human traces the source.</p>
+            <p class="lede">Tell us what&rsquo;s wrong, or what we&rsquo;re missing. Nothing you send is published unverified &mdash; it goes to a review queue and a human traces the source.</p>
         </header>
-        <section class="report-sec" id="wrong" aria-labelledby="wrong-h">
-            <h2 id="wrong-h">Something on a page is wrong</h2>
-            <p class="report-sub">If you are on the quote&rsquo;s own page, use the report form at the bottom of it &mdash; it already knows which quote you mean. Otherwise tell us here.</p>
-            <form class="nom" id="fixForm">
-                <input class="nom-in" name="ref" maxlength="300" placeholder="Which quote? Paste the link or the line (required)" autocomplete="off" required>
-                <div class="report-why" role="radiogroup" aria-label="What is wrong?">
-                    <label><input type="radio" name="reason" value="wrong-person" checked> The attribution is wrong</label>
-                    <label><input type="radio" name="reason" value="wrong-wording"> The wording is wrong</label>
-                    <label><input type="radio" name="reason" value="rights"> The rights / copyright information is wrong</label>
-                    <label><input type="radio" name="reason" value="dead-link"> A source link is broken</label>
-                    <label><input type="radio" name="reason" value="other"> Something else</label>
-                </div>
-                <input class="nom-in" name="url" type="url" inputmode="url" placeholder="Optional: a link that shows it" autocomplete="off">
-                <textarea class="nom-in nom-area" name="note" maxlength="600" rows="3" placeholder="Optional: anything else we should know"></textarea>
-                <button class="nom-btn" type="submit">Send report</button>
-                <p class="nom-msg" id="fixMsg" role="status" hidden></p>
-            </form>
-        </section>
-        <section class="report-sec" id="missing" aria-labelledby="missing-h">
-            <h2 id="missing-h">We&rsquo;re missing a famous fake</h2>
+        <section class="report-sec" id="report" aria-labelledby="report-h">
+            <h2 id="report-h">One form, both jobs</h2>
+            <p class="report-sub">If you&rsquo;re on the quote&rsquo;s own page, the report form at the bottom of it is quicker &mdash; it already knows which quote you mean.</p>
+            <form class="nom" id="reportForm">
+                <fieldset class="rf-intent">
+                    <legend>What are you reporting?</legend>
+                    <label><input type="radio" name="intent" value="wrong" checked> Something on a page here is wrong</label>
+                    <label><input type="radio" name="intent" value="missing"> You&rsquo;re missing a quote</label>
+                </fieldset>
 
-            <form class="nom" id="nomForm" aria-label="Nominate a quote or author">
-                <p class="nom-sub">Nominate a quote or the name it&rsquo;s pinned on. We trace the source before anything goes live &mdash; nothing you submit is published unverified.</p>
-                <input class="nom-in" name="author" maxlength="120" placeholder="Who it&rsquo;s usually credited to (required)" autocomplete="off" required>
-                <textarea class="nom-in nom-area" name="quote" maxlength="600" rows="2" placeholder="The quote, if you have it (optional)"></textarea>
-                <textarea class="nom-in nom-area" name="note" maxlength="600" rows="3" placeholder="Anything you know about the real source (optional)"></textarea>
-                <button class="nom-btn" type="submit">Submit nomination</button>
-                <p class="nom-msg" id="nomMsg" role="status" hidden></p>
+                <div class="rf-group" data-when="wrong">
+                    <label class="rf-lab" for="rf-ref">Which quote? Paste the link or the line</label>
+                    <input class="nom-in" id="rf-ref" name="ref" maxlength="300" autocomplete="off" placeholder="https://quotle.info/who-said/&hellip; &mdash; or just type the line">
+                </div>
+
+                <div class="rf-group" data-when="missing">
+                    <label class="rf-lab" for="rf-author">Who is it credited to?</label>
+                    <input class="nom-in" id="rf-author" name="author" maxlength="120" autocomplete="off" placeholder="The name it&rsquo;s usually pinned on">
+                </div>
+                <div class="rf-group" data-when="missing">
+                    <label class="rf-lab" for="rf-quote">The quote, if you have it <span class="rf-opt">(optional)</span></label>
+                    <textarea class="nom-in nom-area" id="rf-quote" name="quote" maxlength="600" rows="2"></textarea>
+                </div>
+
+                <div class="rf-group" data-when="wrong">
+                    <span class="rf-lab" id="rf-why-lab">What&rsquo;s wrong?</span>
+                    <div class="report-why" role="radiogroup" aria-labelledby="rf-why-lab">
+                        <label><input type="radio" name="reason" value="wrong-person" checked> The attribution is wrong</label>
+                        <label><input type="radio" name="reason" value="wrong-wording"> The wording is wrong</label>
+                        <label><input type="radio" name="reason" value="rights"> The rights / copyright information is wrong</label>
+                        <label><input type="radio" name="reason" value="dead-link"> A source link is broken</label>
+                        <label><input type="radio" name="reason" value="other"> Something else</label>
+                    </div>
+                </div>
+
+                <div class="rf-group">
+                    <label class="rf-lab" for="rf-url">A link that shows it <span class="rf-opt">(optional)</span></label>
+                    <input class="nom-in" id="rf-url" name="url" type="url" inputmode="url" autocomplete="off" placeholder="https://&hellip;">
+                </div>
+                <div class="rf-group">
+                    <label class="rf-lab" for="rf-note">Anything else <span class="rf-opt">(optional)</span></label>
+                    <textarea class="nom-in nom-area" id="rf-note" name="note" maxlength="600" rows="3"></textarea>
+                </div>
+                <div class="rf-group">
+                    <label class="rf-lab" for="rf-email">Your email <span class="rf-opt">(optional)</span></label>
+                    <input class="nom-in" id="rf-email" name="email" type="email" maxlength="200" autocomplete="email" aria-describedby="rf-email-why">
+                    <p class="rf-help" id="rf-email-why">Only used to tell you what we found. We never sell or share it.</p>
+                </div>
+
+                <button class="nom-btn" type="submit">Send report</button>
+                <p class="nom-msg" id="reportMsg" role="status" hidden></p>
             </form>
         </section>
     </main>
@@ -371,77 +408,96 @@
             function token(cb){ ensure(); if(wid===null){ cb(null); return; } pending=cb; try{ window.turnstile.reset(wid); window.turnstile.execute(wid); }catch(e){ pending=null; cb(null); } }
             function show(el,t,err){ el.textContent=t; el.hidden=false; el.className='nom-msg'+(err?' err':''); }
 
-            // "something is wrong" -> /submit-source. The reader arrived WITHOUT a page, so there is
-            // no slug to send; what they typed goes in the note, prefixed, and a human resolves it.
-            // If they pasted a /who-said/<slug>/ link we recover the slug so the report lands on the
-            // right record automatically — the common case, and free.
-            var fx=document.getElementById('fixForm');
-            if(fx){ fx.addEventListener('submit',function(e){ e.preventDefault();
-                var msg=document.getElementById('fixMsg'), btn=fx.querySelector('.nom-btn');
-                var ref=fx.ref.value.trim(), url=fx.url.value.trim(), note=fx.note.value.trim();
-                var reason='other', r=fx.querySelector('input[name="reason"]:checked'); if(r) reason=r.value;
-                if(!ref){ show(msg,'Tell us which quote you mean.',true); return; }
-                // Deliberately NO regex here. This lives inside a JS template literal, so a literal
-                // backslash is eaten as an escape at build time: /\/who-said\/.../ shipped as
-                // //who-said/...// — a syntax error that killed the WHOLE script, so neither form
-                // submitted and the browser fell back to a native GET. Build was green, CI passed,
-                // 43 invariants passed. Only submitting the form found it. indexOf cannot break that way.
-                var slug='', ix=ref.indexOf('/who-said/');
-                if(ix>-1){ var rest=ref.slice(ix+10), sl=rest.indexOf('/'); slug=(sl>-1?rest.slice(0,sl):rest); }
-                var full='Reported via /report/ for: '+ref+(note?' \u2014 '+note:'');
-                btn.disabled=true; show(msg,'Sending\u2026',false);
-                token(function(t){ if(!t){ btn.disabled=false; show(msg,'Verification failed \u2014 please try again.',true); return; }
-                    fetch(API+'/submit-source',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug,url:url,stance:'refutes',reason:reason,note:full.slice(0,600),token:t})})
-                    .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ fx.reset(); btn.disabled=false; show(msg,'Thank you \u2014 sent to our review queue.',false); } else { btn.disabled=false; show(msg,(d&&d.error)||'Something went wrong.',true); } })
-                    .catch(function(){ btn.disabled=false; show(msg,'Network error \u2014 please try again.',true); }); }); }); }
+            // ONE form, ONE submit handler, branching on the intent radio. The page used to carry
+            // two forms with two handlers; the reader's job is the same either way, so the split
+            // was ours, not theirs.
+            var f=document.getElementById('reportForm');
+            if(f){
+              var msg=document.getElementById('reportMsg'), btn=f.querySelector('.nom-btn');
+              var groups=[].slice.call(f.querySelectorAll('.rf-group[data-when]'));
+              function intent(){ var r=f.querySelector('input[name="intent"]:checked'); return r?r.value:'wrong'; }
+              function sync(){ var v=intent(); groups.forEach(function(g){ g.hidden = g.getAttribute('data-when')!==v; }); }
+              [].forEach.call(f.querySelectorAll('input[name="intent"]'),function(r){ r.addEventListener('change',sync); });
+              sync();
+              function fail(t){ btn.disabled=false; show(msg,t,true); }
 
-              // "you're missing one" -> /lookup FIRST, then /nominate only if it is genuinely new.
+              // MISSING -> /lookup FIRST, then /nominate only if it is genuinely new.
               //
               // /lookup already walks corpus -> backlog -> pending nomination -> Wikiquote and returns a
               // stage; /check has consumed it since it was written. Asking it BEFORE nominating does three
               // things a daily triage job was going to do later and worse: it dedupes, it applies the
               // acceptance ladder, and — the part no batch job can — it tells the reader the outcome AT
-              // SUBMIT TIME. That last one matters because neither the nominations table nor source_submissions
-              // has a contact column: a synchronous answer is the ONLY answer this system can honestly give.
+              // SUBMIT TIME. The email field below is optional and unsent-to for now, so that synchronous
+              // answer is still the only one most readers will get.
               //
               // It keys on QUOTE TEXT (>=12 chars), not author, so an author-only nomination skips the check
               // and posts as before rather than pretending to have checked something.
-              var f=document.getElementById('nomForm');
-              function nominate(author,quote,note,msg,btn,f,okMsg){
-                  token(function(t){ if(!t){ btn.disabled=false; show(msg,'Verification failed \u2014 please try again.',true); return; }
-                      fetch(API+'/nominate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({author:author,quote:quote,note:note,token:t})})
-                      .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); btn.disabled=false; show(msg,okMsg||'Thank you \u2014 added to the review queue.',false); } else { btn.disabled=false; show(msg,(d&&d.error)||'Something went wrong.',true); } })
-                      .catch(function(){ btn.disabled=false; show(msg,'Network error \u2014 please try again.',true); }); });
+              function nominate(author,quote,note,email,okMsg){
+                  token(function(t){ if(!t){ fail('Verification failed \u2014 please try again.'); return; }
+                      fetch(API+'/nominate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({author:author,quote:quote,note:note,email:email,token:t})})
+                      .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); sync(); btn.disabled=false; show(msg,okMsg||'Thank you \u2014 added to the review queue.',false); } else { fail((d&&d.error)||'Something went wrong.'); } })
+                      .catch(function(){ fail('Network error \u2014 please try again.'); }); });
               }
-              if(f){ f.addEventListener('submit',function(e){ e.preventDefault();
-                  var msg=document.getElementById('nomMsg'), btn=f.querySelector('.nom-btn');
-                  var author=f.author.value.trim(), quote=f.quote.value.trim(), note=f.note.value.trim();
-                  if(!author&&!quote){ show(msg,'Add at least an author or a quote.',true); return; }
+
+              function sendMissing(url,note,email){
+                  var author=f.author.value.trim(), quote=f.quote.value.trim();
+                  if(!author){ show(msg,'Tell us who it is credited to.',true); return; }
+                  // /nominate has no url column, so the optional link rides in the note. Losing it
+                  // would be worse than an untidy note — it is often the only evidence attached.
+                  var full=(note+(url?(note?' \u2014 ':'')+'link: '+url:'')).slice(0,600);
                   btn.disabled=true; show(msg,'Checking\u2026',false);
-                  if(quote.length<12){ nominate(author,quote,note,msg,btn,f); return; }
+                  if(quote.length<12){ nominate(author,quote,full,email); return; }
                   fetch(API+'/lookup?q='+encodeURIComponent(quote))
                   .then(function(r){return r.json();}).then(function(d){
                       var st=(d&&d.stage)||'none';
                       if(st==='corpus'){ btn.disabled=false; show(msg,'We already have this one \u2014 open '+(d.url||'/who-said/')+' . If our verdict looks wrong, use the report form at the bottom of that page.',false); return; }
-                      if(st==='backlog'){ btn.disabled=false; f.reset(); show(msg,'Good call \u2014 it is already on our list, queued for a full source trace.',false); return; }
+                      if(st==='backlog'){ btn.disabled=false; f.reset(); sync(); show(msg,'Good call \u2014 it is already on our list, queued for a full source trace.',false); return; }
                       // 'nominated' discards the reader's content for the SAME reason 'wikiquote'
                       // did — an existing pending row, so the client skipped the POST. Fixing only
                       // the wikiquote branch left this one live: once a quote is queued ONCE, every
                       // later reader with real context about it was silently ignored. /nominate
                       // dedupes and enriches, so posting is safe and the note reaches the row.
-                      if(st==='nominated'){ nominate(author,quote,note,msg,btn,f,'Someone beat you to it \u2014 already nominated. We have added your notes to it.'); return; }
-                      // /lookup ALREADY queued a moderation nomination when Wikiquote confirmed it literally
-                      // (added:true). Posting again would duplicate it.
+                      if(st==='nominated'){ nominate(author,quote,full,email,'Someone beat you to it \u2014 already nominated. We have added your notes to it.'); return; }
                       // DO NOT return early here. /lookup auto-queues a BARE nomination when
                       // Wikiquote confirms (author empty, note "wikiquote-auto"), and skipping the
                       // POST threw away everything the reader wrote — a real submission explaining
                       // that a line is genuinely Beckett, from Worstward Ho, with a strict estate,
                       // was stored as a machine stub. /nominate now dedupes by normalised quote and
                       // ENRICHES that row, so posting is safe and the human's context survives.
-                      if(st==='wikiquote'&&d.added){ nominate(author,quote,note,msg,btn,f,'Thank you \u2014 confirmed against Wikiquote and added to the review queue.'); return; }
-                      nominate(author,quote,note,msg,btn,f);
+                      if(st==='wikiquote'&&d.added){ nominate(author,quote,full,email,'Thank you \u2014 confirmed against Wikiquote and added to the review queue.'); return; }
+                      nominate(author,quote,full,email);
                   })
-                  .catch(function(){ nominate(author,quote,note,msg,btn,f); }); }); }
+                  .catch(function(){ nominate(author,quote,full,email); });
+              }
+
+              // WRONG -> /submit-source. The reader arrived WITHOUT a page, so there is no slug to
+              // send; what they typed goes in the note, prefixed, and a human resolves it. If they
+              // pasted a /who-said/<slug>/ link we recover the slug so the report lands on the right
+              // record automatically — the common case, and free.
+              function sendWrong(url,note,email){
+                  var ref=f.ref.value.trim();
+                  if(!ref){ show(msg,'Tell us which quote you mean.',true); return; }
+                  var reason='other', r=f.querySelector('input[name="reason"]:checked'); if(r) reason=r.value;
+                  // Deliberately NO regex here. This lives inside a JS template literal, so a literal
+                  // backslash is eaten as an escape at build time: /\/who-said\/.../ shipped as
+                  // //who-said/...// — a syntax error that killed the WHOLE script, so neither form
+                  // submitted and the browser fell back to a native GET. Build was green, CI passed,
+                  // 43 invariants passed. Only submitting the form found it. indexOf cannot break that way.
+                  var slug='', ix=ref.indexOf('/who-said/');
+                  if(ix>-1){ var rest=ref.slice(ix+10), sl=rest.indexOf('/'); slug=(sl>-1?rest.slice(0,sl):rest); }
+                  var full='Reported via /report/ for: '+ref+(note?' \u2014 '+note:'');
+                  btn.disabled=true; show(msg,'Sending\u2026',false);
+                  token(function(t){ if(!t){ fail('Verification failed \u2014 please try again.'); return; }
+                      fetch(API+'/submit-source',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug,url:url,stance:'refutes',reason:reason,note:full.slice(0,600),email:email,token:t})})
+                      .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); sync(); btn.disabled=false; show(msg,'Thank you \u2014 sent to our review queue.',false); } else { fail((d&&d.error)||'Something went wrong.'); } })
+                      .catch(function(){ fail('Network error \u2014 please try again.'); }); });
+              }
+
+              f.addEventListener('submit',function(e){ e.preventDefault();
+                  var url=f.url.value.trim(), note=f.note.value.trim(), email=f.email.value.trim();
+                  if(intent()==='missing') sendMissing(url,note,email); else sendWrong(url,note,email);
+              });
+            }
         })();
     </script>    <script>
         (function(){

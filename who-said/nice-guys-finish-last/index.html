@@ -419,6 +419,10 @@
         .src-add-area { resize:vertical; min-height:66px; line-height:1.5; }
         .src-add-url, .src-add-note { width: 100%; padding: 10px 12px; background: var(--bg-deep); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; }
         .src-add-url:focus, .src-add-note:focus { outline: none; border-color: var(--burgundy); }
+        .src-add-field { display: flex; flex-direction: column; gap: 6px; }
+        .src-add-lab { font-size: 0.86rem; font-weight: 600; color: var(--ink); }
+        .src-add-opt { font-weight: 400; color: var(--text-muted); }
+        .src-add-help { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; margin: 2px 0 0; }
         .src-add-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
         .src-add-btn { padding: 9px 20px; background: linear-gradient(135deg, var(--burgundy), var(--burgundy-deep)); border: none; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.85rem; color: white; cursor: pointer; }
         .src-add-btn:disabled { opacity: 0.55; cursor: default; }
@@ -804,6 +808,15 @@
                 </div>
                 <input class="src-add-url" name="url" type="url" inputmode="url" placeholder="Optional: https://&hellip; a link that shows it">
                 <textarea class="src-add-note src-add-area" name="note" maxlength="600" rows="3" placeholder="Optional: anything else we should know"></textarea>
+                <!-- Optional contact. The reassurance sits HERE, beside the field, because that is
+                     where someone decides whether to type it — /privacy/ carries the same promise
+                     but nobody reads it before submitting. One purpose, stated plainly, no
+                     marketing hedge and no promise about timing. -->
+                <div class="src-add-field">
+                    <label class="src-add-lab" for="srcEmail">Your email <span class="src-add-opt">(optional)</span></label>
+                    <input class="src-add-url" id="srcEmail" name="email" type="email" maxlength="200" autocomplete="email" aria-describedby="srcEmailWhy">
+                    <p class="src-add-help" id="srcEmailWhy">Only used to tell you what we found. We never sell or share it.</p>
+                </div>
                 <div class="src-add-actions">
                     <button class="src-add-btn" type="submit">Send report</button>
                     <span class="src-add-msg" id="srcMsg" hidden></span>
@@ -981,7 +994,7 @@
             var msg=document.getElementById('srcMsg');
             function show(t,err){ msg.textContent=t; msg.hidden=false; msg.className='src-add-msg'+(err?' err':' ok'); }
             f.addEventListener('submit',function(e){ e.preventDefault();
-                var url=f.url.value.trim(), note=f.note.value.trim(), slug=f.getAttribute('data-slug');
+                var url=f.url.value.trim(), note=f.note.value.trim(), email=f.email.value.trim(), slug=f.getAttribute('data-slug');
                 var reason='other', r=f.querySelector('input[name="reason"]:checked'); if(r) reason=r.value;
                 // stance is DERIVED, never asked. It only means anything about a source, and the
                 // reason already carries the direction — "supports" is the single non-complaint.
@@ -990,7 +1003,7 @@
                 // No URL gate. A reason IS a report — that was the whole point of the rework.
                 var btn=f.querySelector('.src-add-btn'); btn.disabled=true; show('Sending\u2026',false);
                 token(function(t){ if(!t){ btn.disabled=false; show('Verification failed \u2014 please try again.',true); return; }
-                    fetch(API+'/submit-source',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug,url:url,stance:stance,reason:reason,note:note,token:t})})
+                    fetch(API+'/submit-source',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({slug:slug,url:url,stance:stance,reason:reason,note:note,email:email,token:t})})
                     .then(function(r){return r.json();}).then(function(d){ if(d&&d.ok){ f.reset(); btn.disabled=false; show('Thank you \u2014 sent to our review queue.',false); } else { btn.disabled=false; show((d&&d.error)||'Something went wrong.',true); } })
                     .catch(function(){ btn.disabled=false; show('Network error \u2014 please try again.',true); }); }); });
         })();

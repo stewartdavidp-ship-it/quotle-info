@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS nominations (
   quote   TEXT,
   author  TEXT,
   note    TEXT,
+  email   TEXT,                              -- OPTIONAL reply-to. One purpose: telling them what we found.
   status  TEXT NOT NULL DEFAULT 'pending',   -- pending | approved | rejected
   created TEXT,
   iphash  TEXT
@@ -48,6 +49,7 @@ CREATE TABLE IF NOT EXISTS source_submissions (
   stance  TEXT NOT NULL DEFAULT 'supports',  -- supports | refutes (only meaningful when url <> '')
   reason  TEXT,                              -- wrong-person | wrong-wording | rights | dead-link | other
   note    TEXT,                              -- optional: what it shows / what is wrong
+  email   TEXT,                              -- OPTIONAL reply-to. One purpose: telling them what we found.
   status  TEXT NOT NULL DEFAULT 'pending',   -- pending | accepted | rejected
   triage  TEXT,                              -- the verdict + optional note, set by POST /triage
   triaged_at TEXT,                           -- ISO timestamp; set once, guarded on status='pending'
@@ -59,6 +61,11 @@ CREATE TABLE IF NOT EXISTS source_submissions (
 --   npx wrangler d1 execute quotle-community --remote --command "ALTER TABLE source_submissions ADD COLUMN reason TEXT;"
 --   npx wrangler d1 execute quotle-community --remote --command "ALTER TABLE source_submissions ADD COLUMN triage TEXT;"
 --   npx wrangler d1 execute quotle-community --remote --command "ALTER TABLE source_submissions ADD COLUMN triaged_at TEXT;"
+--   npx wrangler d1 execute quotle-community --remote --command "ALTER TABLE source_submissions ADD COLUMN email TEXT;"
+--   npx wrangler d1 execute quotle-community --remote --command "ALTER TABLE nominations ADD COLUMN email TEXT;"
+-- The two `email` migrations MUST run before this worker version is deployed: /submit-source and
+-- /nominate name the column in their INSERTs, so on a database without it every write 500s and
+-- every report is lost. Nothing reads it back except the admin SELECTs and `review.js reports`.
 -- NOTE: `status` already existed with pending|accepted|rejected and is indexed — POST /triage writes
 -- THAT, not a side column. Writing only triage/triaged_at would leave status='pending', so
 -- /sources?status=pending never drains and the job re-triages the same rows forever.
