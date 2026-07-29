@@ -64,8 +64,16 @@ Then get the token. `/sources`, `/triage` and `/mail` are all ADMIN_TOKEN-gated,
 pass can do nothing at all** — it cannot read the queue and it cannot close a report.
 
 ```bash
-export ADMIN_TOKEN=$(gcloud secrets versions access latest --secret=quotle-admin-token --project=word-boxing)
+export ADMIN_TOKEN=$(gcloud secrets versions access latest --secret=quotle-admin-token --project=word-boxing 2>/dev/null)
 ```
+
+**`2>/dev/null`, never `2>&1`.** `gcloud` prints a Python-version deprecation warning to stderr on
+every invocation. Fold that into the variable with `2>&1` and `ADMIN_TOKEN` becomes ~461 characters
+of warning text with the real 43-character token buried in it — every authenticated call then 401s
+for a reason that looks nothing like its cause. Two separate runs (2026-07-29) reached for `2>&1` to
+quieten the warning and both had to notice and re-read. Discard stderr; do not merge it.
+
+Sanity check if anything 401s: `echo ${#ADMIN_TOKEN}` should print **43**.
 
 That line needs an authenticated `gcloud`. **If `ADMIN_TOKEN` is empty, stop and say so — do not
 proceed.** `review.js` degrades politely on a missing token ("reader reports skipped"), which means
@@ -243,7 +251,7 @@ git push -u origin HEAD                # NO gh pr create
 ```
 
 Then return to `main` clean and land only the bookkeeping (`data/report-queue.json`,
-`data/routine-log.jsonl`) as its own small PR.
+this run's shard under `data/routine-log/`) as its own small PR.
 
 Discarding the edits would be the wrong call: an audit that cost real tokens verified them, and
 throwing them away means re-deriving the same fixes at the same cost the next night. Committing them
@@ -294,6 +302,10 @@ different from `review.lastReviewedOn`.
 GitHub author is the same account for routine and human PRs and cannot distinguish them. It fails
 closed: a branch it does not recognise is classed `HUMAN` and left alone forever. Use the wrong
 prefix and this PR simply never merges — silently, and looking exactly like a quiet night.
+
+**If today's branch name is already taken** (a run already happened today), add a suffix —
+``reports/<YYYY-MM-DD>-log``. `merge-gate.js` matches on the PREFIX, so a suffix stays in the same lane;
+switching to a different prefix would fail closed as `HUMAN` and never merge.
 
 Then branch, commit, push, and open the PR **READY, never as a draft** (`gh pr create` without
 `--draft`). A draft cannot be merged, so it sits unmergeable until a human clicks a button. Nothing

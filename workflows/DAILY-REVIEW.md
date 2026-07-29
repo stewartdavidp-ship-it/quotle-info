@@ -54,7 +54,8 @@ For each flagged record:
 
 ## Scope
 
-Edit **only** `data/quotes/*.json` (plus the one appended line in `data/routine-log.jsonl`). Never `tools/` or `workflows/`. Check before committing:
+Edit **only** `data/quotes/*.json` (plus this run's own shard under `data/routine-log/`, which
+`routine-log.js` writes for you). Never `tools/` or `workflows/`. Check before committing:
 
 ```bash
 git status --porcelain -- tools workflows   # must print nothing
@@ -100,6 +101,10 @@ that is the generator's wave-time claim and means something different.
 GitHub author is the same account for routine and human PRs and cannot distinguish them. It fails
 closed: a branch it does not recognise is classed `HUMAN` and left alone forever. Use the wrong
 prefix and this PR simply never merges — silently, and looking exactly like a quiet night.
+
+**If today's branch name is already taken** (a run already happened today), add a suffix —
+``review/<YYYY-MM-DD>-log``. `merge-gate.js` matches on the PREFIX, so a suffix stays in the same lane;
+switching to a different prefix would fail closed as `HUMAN` and never merge.
 
 Then branch, commit, push, and open a PR. In the body state: what was flagged, what you verified,
 what you changed, **and anything you deliberately did not change and why**. That last part is the

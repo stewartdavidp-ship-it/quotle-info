@@ -37,6 +37,13 @@ jobs:
       - name: Validate song records
         run: node tools/validate-songs.js --quiet
 
+      #     Committed .jsonl must still parse. On 2026-07-29 three git conflict markers were
+      #     committed into data/routine-log.jsonl and CI went green, because the build does not read
+      #     that file and no validator covered it. The corruption survived until a routine happened
+      #     to read the log for unrelated reasons.
+      - name: Validate committed JSONL
+        run: node tools/validate-jsonl.js --quiet
+
       # 2 · BUILD + INVARIANTS — build.js ends with verify-corpus.js, which exits non-zero on any
       #     of the 27 checks (figures reconcile, rendered pages match records, search/sitemap match
       #     the corpus, the URL contract holds across all ~1,700 pages, snapshot not stale).
