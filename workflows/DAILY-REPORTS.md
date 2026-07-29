@@ -94,12 +94,29 @@ A report line ending `reply-to: <address>` means the reader left an optional ema
 you know which reports have a person waiting on an answer, and it is the one thing on that line the
 reader is owed.
 
-**Nothing sends.** A reply is now COMPOSED and STORED when a report is triaged, but `EMAIL_MODE`
-ships as `"draft"` in `worker/wrangler.jsonc`, so the worker stores exactly what it would send and
-sends none of it. `GET /mail` (admin) lists the drafts. Email runs its own draft → send ladder on
-its own counter, deliberately separate from the PR ladder in step 5: mailing strangers is a distinct
-trust question from opening a PR against your own repo. **Do not flip `EMAIL_MODE`** — that is an
-operator decision, not a step in this pass.
+**SENDING IS ON. Closing a report emails a real person.** `worker/wrangler.jsonc` ships
+`"EMAIL_MODE": "send"`, and `/triage` calls `replyToReport` on the call that actually closes a
+report. So `review.js stamp` in step 6 — which calls `/triage` with verdict `accepted` — is an
+OUTBOUND ACTION, not just a database write. Treat it as one.
+
+An earlier version of this file said "Nothing sends", which was true when it was written and wrong
+by the time it merged: #201 turned sending on and #202 was written against the state before it. A
+routine following that text would have mailed a stranger while believing it could not. Re-read
+`EMAIL_MODE` in `worker/wrangler.jsonc` rather than trusting this paragraph.
+
+Three guards make it safe, and they are worth knowing because they shape what you may do:
+  · **Only `accepted` sends.** A rejection or an unresolvable report writes back nothing — telling
+    someone "we looked and changed nothing" is noise dressed as courtesy.
+  · **Only the call that actually closed the report sends.** The reply is gated on the UPDATE's
+    `changed` count, so the idempotency guard and the one-reply-per-report guarantee are the same
+    guarantee rather than two that have to agree.
+  · **The body is composed entirely from our own facts** — the verdict and the page URL. None of the
+    reader's note, quote or submitted URL is ever echoed back.
+
+**Do not stamp a report as `accepted` unless the fix actually shipped.** With sending on, that is no
+longer only a bookkeeping error — it mails someone "we fixed it" about a page that did not change.
+`GET /mail` (admin) shows what was sent. **Do not flip `EMAIL_MODE`**; that is an operator decision,
+not a step in this pass.
 
 If you reply, reply once, by hand. One reply per report, ever. The form promises exactly that and
 /privacy/ says the same. Never echo the reader's own text back at them: the address is optional and
@@ -188,6 +205,42 @@ the gate's call matched theirs — no PR they would have rejected, no queued ite
 wanted as a PR. Miss one and the counter resets. The gate never grades itself; `--judge` is an
 operator command. Only runs that actually made a call are recorded, so an empty night cannot inflate
 the streak by testing nothing.
+
+### What to do with the fix-stage edits when the gate exits 3
+
+The fix stage has already edited records on disk by the time the gate speaks. On `observe` the gate
+opens nothing, which leaves those edits sitting in the working tree — and step 0 of the NEXT run
+refuses on a dirty tree. So doing nothing is not an option; the first real run hit exactly this and
+had to improvise.
+
+**Push them to a held branch and open no PR:**
+
+```bash
+git checkout -b reports/<YYYY-MM-DD>-observed-fixes
+node tools/build.js                    # so the branch is mergeable if the operator wants it
+git add -A && git commit -m "..."      # records + rebuilt pages
+git push -u origin HEAD                # NO gh pr create
+```
+
+Then return to `main` clean and land only the bookkeeping (`data/report-queue.json`,
+`data/routine-log.jsonl`) as its own small PR.
+
+Discarding the edits would be the wrong call: an audit that cost real tokens verified them, and
+throwing them away means re-deriving the same fixes at the same cost the next night. Committing them
+to the bookkeeping PR would be the other wrong call — that is opening a content PR, which is exactly
+what `observe` says not to do. A held branch preserves the work without acting on it, and it is what
+the operator reads when judging whether the gate's call was right.
+
+**Do not stamp** in this case. `review.js stamp` closes the reader's report, and closing a report
+whose fix never shipped loses it — the reader is told it was dealt with when the page is unchanged.
+Nothing shipped, so the report stays `pending` and resurfaces tomorrow. That is correct.
+
+**Known cost of this, stated rather than discovered:** because nothing is stamped, the same records
+stay at the top of the queue and are re-audited every night until the ladder is promoted. The first
+run audited 10 records with 26 agents. At a 5-run promotion bar that is roughly five times the same
+work. It is the price of `observe` being an honest rehearsal, and it is bounded by the promotion
+bar — but if it bites, the answer is to judge the runs and promote, not to start stamping records
+whose fixes never shipped.
 
 ## Step 6 — build, PR, and close the loop
 
