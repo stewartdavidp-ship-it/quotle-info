@@ -251,7 +251,7 @@ git push -u origin HEAD                # NO gh pr create
 ```
 
 Then return to `main` clean and land only the bookkeeping (`data/report-queue.json`,
-`data/routine-log.jsonl`) as its own small PR.
+this run's shard under `data/routine-log/`) as its own small PR.
 
 Discarding the edits would be the wrong call: an audit that cost real tokens verified them, and
 throwing them away means re-deriving the same fixes at the same cost the next night. Committing them
@@ -302,6 +302,10 @@ different from `review.lastReviewedOn`.
 GitHub author is the same account for routine and human PRs and cannot distinguish them. It fails
 closed: a branch it does not recognise is classed `HUMAN` and left alone forever. Use the wrong
 prefix and this PR simply never merges — silently, and looking exactly like a quiet night.
+
+**If today's branch name is already taken** (a run already happened today), add a suffix —
+``reports/<YYYY-MM-DD>-log``. `merge-gate.js` matches on the PREFIX, so a suffix stays in the same lane;
+switching to a different prefix would fail closed as `HUMAN` and never merge.
 
 Then branch, commit, push, and open the PR **READY, never as a draft** (`gh pr create` without
 `--draft`). A draft cannot be merged, so it sits unmergeable until a human clicks a button. Nothing

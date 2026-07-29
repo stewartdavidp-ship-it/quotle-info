@@ -123,6 +123,10 @@ GitHub author is the same account for routine and human PRs and cannot distingui
 closed: a branch it does not recognise is classed `HUMAN` and left alone forever. Use the wrong
 prefix and this PR simply never merges — silently, and looking exactly like a quiet night.
 
+**If today's branch name is already taken** (a run already happened today), add a suffix —
+`a distinct wave id, e.g. `wave-d20260729c``. `merge-gate.js` matches on the PREFIX, so a suffix stays in the same lane;
+switching to a different prefix would fail closed as `HUMAN` and never merge.
+
 Branch, commit, push, **open the PR ready — never a draft** (`gh pr create` without `--draft`; a
 draft cannot be merged and just waits for a human to click). In the body: the 5 quotes with verdict
 and rights, the audit's PASS/FAIL and issue counts, what you fixed, what you refused to fix and
@@ -132,7 +136,7 @@ why, and anything you could not establish.
 
 - skip stages 5 or 6 — that is what produced the fabrications above
 - edit `tools/` or `workflows/` — check `git status --porcelain -- tools workflows`
-  (writing `data/routine-log.jsonl` is expected and fine)
+  (writing this run's shard under `data/routine-log/` is expected and fine)
 - hand-edit `data/harvest-queue.json` or `backlog-index.json` — use `harvest.js`
 - `harvest.js skip` anything — the bar is hate/harm only
 - push to `main`
