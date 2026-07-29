@@ -52,4 +52,37 @@ const primaryCredit = (r) => creditList(r)[0] || '';
 // The additional false credits, if any. Empty array for every legacy string record.
 const otherCredits = (r) => creditList(r).slice(1);
 
-module.exports = { creditList, primaryCredit, otherCredits };
+// The credits that are actually FALSE — creditList minus any name that IS the record's real author.
+//
+// WHY: a Track A wave stamps creditedTo = the magnet author on EVERY record it harvested, including
+// the ones that come back genuine ("trust, but verify" really is Reagan's) and the
+// right-person-wrong-words ones (Franklin really did publish it, about wine). Neither is a
+// misattribution, so `creditedTo` on those records names the true author under a field whose whole
+// meaning is "falsely credited to". 41 non-disputed records carry one today.
+//
+// build-authors.js has excluded them since the "N quotes wrongly credited to them" chip over-stated
+// itself by 200 records — but it did so with its own inline copy of this rule, so /verify kept
+// shipping `credited` (which the Worker returns as `misattributedTo`) naming the true author on 38
+// verified/attributed pages. Same rule, two readers, one of them missing: exactly what this module
+// exists to prevent. Defined here once; build-authors and build-verify both read it.
+//
+// Compared by SLUG, not by string: the real author is answer.realAuthorName when the record names
+// one (a disputed record's answer.authorName often holds the magnet's own name), else the author
+// card's own slug — which is what absorbs the name-form variants ("Seneca" vs "Seneca the Younger").
+const { slugify } = require('./slugify');
+function falseCredits(r) {
+  const a = (r && r.answer) || {};
+  // Precedence MUST match template.js realAuthorName(): answer.realAuthorName, then
+  // answer.authorName. It must NOT consult r.author.slug, which on a misattribution record is the
+  // hub of the FALSELY credited person — that is the whole point of the hub. Reading it here made
+  // trueSlug the false credit, so the only credit on the record compared equal to "the true author"
+  // and was filtered out: 256 of the 587 records carrying a creditedTo lost it, and /verify answered
+  // misattributedTo: null on exactly the pages where the false credit IS the story (Maya Angelou for
+  // a line spoken by a character in Touched by an Angel; Kurt Vonnegut for a communal graffito).
+  // template.js cannot be imported here — it already requires this module — so the precedence is
+  // restated, deliberately, with this note. Change both or neither.
+  const trueSlug = slugify(a.realAuthorName || a.authorName || 'Unknown');
+  return creditList(r).filter((c) => { const s = slugify(c); return s && s !== trueSlug; });
+}
+
+module.exports = { creditList, primaryCredit, otherCredits, falseCredits };

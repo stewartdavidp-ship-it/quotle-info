@@ -93,9 +93,17 @@ function toRecord(d, item) {
     if (sc.dateCreated) out.dateCreated = sc.dateCreated;
     if (sc.isBasedOnName) { out.isBasedOn = { type: 'CreativeWork', name: sc.isBasedOnName }; if (sc.isBasedOnDatePublished) out.isBasedOn.datePublished = sc.isBasedOnDatePublished; if (sc.isBasedOnSameAs) out.isBasedOn.sameAs = sc.isBasedOnSameAs; }
     out.webPageName = d.meta.ogTitle; out.dateModified = DATE_MODIFIED;
-    // Film misquote (item.author === ''): signal wordingDrift so template.js rates the CLAIMED wording
-    // and suppresses the bogus film/character/fragment claimant. Keep in sync with generate.js toRecord.
-    if (!item.author && out.quotationText && displayQuote !== out.quotationText) out.claimQuoteText = displayQuote;
+    // The line in circulation differs from the documented sentence: carry BOTH, so Quotation.text can
+    // hold what the source actually says while the ClaimReview rates the paraphrase people repeat.
+    // Keep in sync with generate.js toRecord.
+    //
+    // This was gated on `!item.author` — i.e. track C (film) batches only — so a magnet-author batch
+    // could never produce it, and that is a property of the TRACK, not of the quote. The wording of a
+    // Franklin line drifts exactly the same way whether the wave harvested it by author or by film.
+    // (The banner that made this visible no longer depends on the field at all — see
+    // rightPersonWrongWords in tools/template.js — but the kit label and the two-string ClaimReview
+    // still do, and a generator that structurally cannot emit a valid field is a bug either way.)
+    if (out.quotationText && displayQuote !== out.quotationText) out.claimQuoteText = displayQuote;
     rec.schema = out;
   }
   // themes now come from the RESEARCHING agent (schema-enforced, 2-4 from the fixed vocabulary),
@@ -146,7 +154,21 @@ for (const d of dossiers) {
   // where nobody is falsely credited; stamping creditedTo:'' there would write a junk field claiming
   // a magnet, and one mixed wave can legitimately hold both shapes (a misquote next to a screen line
   // genuinely pinned on Conan Doyle), so this is per-record, not a per-wave flag.
-  if (STAMP_CREDITED && b.author) rec.creditedTo = b.author;
+  //
+  // …and only stamp a magnet the record does not itself name as the AUTHOR. `creditedTo` means
+  // "falsely credited to" (tools/credits.js). A track A wave asks one magnet author for candidates
+  // and gets back three shapes, not one: real misattributions, quotes the magnet genuinely said
+  // (harvest calls these genuine-famous), and right-person-wrong-words lines where the person is
+  // right and only the wording drifted. Stamping unconditionally wrote a false misattribution claim
+  // on the last two — 41 records carry one today, and on the disputed ones it was the input that
+  // made the slide-kit banner contradict the page's own prose. The dossier already states the
+  // verdict in answer.authorName; consult it. (Reported 2026-07-28 and 2026-07-29.)
+  //
+  // Compared on the LEADING name, the same split template.js uses: a card reading
+  // "The Buddha (Siddhārtha Gautama)" or "Seneca the Younger" must not slip a self-credit through on
+  // a punctuation difference.
+  const leadName = (s) => String(s || '').split(/\s*[—–(,]|\s-\s/)[0].trim().toLowerCase();
+  if (STAMP_CREDITED && b.author && leadName(rec.answer.authorName) !== leadName(b.author)) rec.creditedTo = b.author;
   records.push(rec);
 }
 // DEDUPE by slug. A RESUMED generate (Workflow resumeFromRunId — the sanctioned recovery for a

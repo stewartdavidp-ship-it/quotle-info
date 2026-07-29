@@ -188,6 +188,58 @@ check('quote JSON-LD verdict agrees with its own creator node', 0, verdictBugs.s
 check('an anonymous creator says it is anonymous', 0, verdictBugs.undescribedAnon.length,
   `creator is an anonymous token with no disambiguatingDescription — indistinguishable from a byline: ${verdictBugs.undescribedAnon.slice(0, 3).join(' · ')}`);
 
+// ---- 4d-bis. the slide-kit warning agrees with the page's own verdict ----
+// "⚠ The slide-ready mistake: crediting this to X" is an attribution claim, and for months it was
+// decided by whether the record happened to carry schema.claimQuoteText — a property of the WORDING.
+// So it printed on 17 right-person-wrong-words pages (the Franklin beer page ran it three sections
+// below its own sentence "Nobody is falsely credited here — Franklin really did publish it") and was
+// SUPPRESSED on houston-we-have-a-problem, whose credit to Jim Lovell is exactly the thing to warn
+// about. Both directions were invisible: the banner renders and the page still looks finished.
+//
+// Asserted against RENDERED HTML, not against the predicate, so a future edit to renderPresentationKit
+// cannot quietly decouple the two again. The contract is stated in both directions on purpose — a
+// check that only forbade the banner would be satisfied by never printing it.
+const { rightPersonWrongWords, plain: tplPlain } = require('./template');
+const { primaryCredit } = require('./credits');
+const bannerBugs = { contradicts: [], missing: [] };
+for (const r of require('./corpus').records) {
+  const p = path.join(ROOT, 'who-said', r.quoteSlug, 'index.html');
+  if (!fs.existsSync(p)) continue;
+  const shown = fs.readFileSync(p, 'utf8').includes('The slide-ready mistake');
+  const rpww = rightPersonWrongWords(r);
+  if (shown && rpww) bannerBugs.contradicts.push(r.quoteSlug);
+  if (!shown && !rpww && r.confidence === 'disputed' && primaryCredit(r)) bannerBugs.missing.push(r.quoteSlug);
+}
+check('no slide kit warns against a credit its own page calls correct', 0, bannerBugs.contradicts.length,
+  `right-person-wrong-words page prints "crediting this to X is the mistake" while X is its author: ${bannerBugs.contradicts.slice(0, 3).join(' · ')}`);
+check('every disputed credit gets its slide-kit warning', 0, bannerBugs.missing.length,
+  `a disputed page names a false credit but does not warn a slide-maker off it: ${bannerBugs.missing.slice(0, 3).join(' · ')}`);
+
+// ---- 4d-ter. a right-person-wrong-words record must STATE the author it is standing behind ----
+// rightPersonWrongWords() reads "the hero is the magnet AND the record does not name somebody else
+// as real", so it depends on `answer.realAuthorName` being filled in whenever the true author
+// differs. That field is NOT in DOSSIER_SCHEMA (workflows/generate.js) — no wave emits it, it is
+// added by hand, and 71 of 704 disputed records carry one. A record that simply never got it looks
+// identical to one asserting "the credited person really is the author", and the predicate then
+// suppresses a warning the page needs. Two records failed exactly that way and were corrected in
+// #258: `he-who-lives-in-harmony-…` and `i-have-nothing-to-declare-…`, both pages whose own prose
+// says no primary text exists.
+//
+// A convention nothing checks is a convention that drifts, so check it against the record's OTHER
+// statement of the same fact. Claiming right-person-wrong-words means claiming an author; a record
+// making that claim while declining to name a Quotation.creator — or naming a different one — is
+// contradicting itself in the one layer machines read. 22 of 22 records pass today, and both false
+// positives carried no creator at all, so this costs nothing now and bites the next one.
+const rpwwBugs = [];
+for (const r of require('./corpus').records) {
+  if (!rightPersonWrongWords(r)) continue;
+  const cr = r.schema && r.schema.creator;
+  const hero = tplPlain((r.answer && r.answer.authorName) || '').toLowerCase();
+  if (!cr || tplPlain(cr.name || '').toLowerCase() !== hero) rpwwBugs.push(r.quoteSlug);
+}
+check('a right-person-wrong-words record names its own author as creator', 0, rpwwBugs.length,
+  `the record says the credited person IS the author but its schema.creator does not say so — usually a missing answer.realAuthorName, which silently suppresses the slide-kit warning: ${rpwwBugs.slice(0, 3).join(' · ')}`);
+
 // ---- 4e. every inline <script> actually PARSES ----
 // Generators emit JS from inside JS template literals, so a backslash in the emitted code is eaten
 // as an escape at build time. `/\/who-said\/([a-z0-9-]+)\//` shipped as `//who-said/([a-z0-9-]+)//`
@@ -446,7 +498,7 @@ if (state && state.figures) {
 // checks.length here is the count BEFORE this one is added — hence the +1. Written this way round
 // because the number you compare against should be the number the build prints, not that number
 // minus one; the off-by-one version failed on its first run and cost ten minutes.
-const EXPECTED_CHECKS = 45;
+const EXPECTED_CHECKS = 48; // 45 → 47: the slide-kit banner checks (§4d-bis); → 48: rpww creator agreement (§4d-ter)
 check('every invariant still runs (none silently skipped)', EXPECTED_CHECKS, checks.length + 1,
   'a check block is guarded by `if (x)` and its input went missing, so it removed itself. Find which by diffing the printed check list with CORPUS_VERBOSE=1.');
 

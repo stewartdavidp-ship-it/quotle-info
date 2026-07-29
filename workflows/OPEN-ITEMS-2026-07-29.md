@@ -1,8 +1,13 @@
 # Open items — handoff from the 2026-07-29 session
 
-Six things the first daily report surfaced that a person has to decide. Written for a **fresh
-session with no context**: each item states what is wrong, what has already been established (so you
-do not re-derive it), and what is genuinely still open.
+Six things the first daily report surfaced that a person has to decide, plus a seventh added by the
+session that closed the first two. Written for a **fresh session with no context**: each item states
+what is wrong, what has already been established (so you do not re-derive it), and what is genuinely
+still open.
+
+**Items 1, 2 and 3 are RESOLVED** (#258, #260, #261 — see the notes under each). **Items 4, 5 and 6
+are open.** Item 7 records what 1–2 left behind; its schema half is closed for the same reason
+item 3's is — **`DOSSIER_SCHEMA` has zero headroom, not the "~87 bytes" its own comment implies.**
 
 **Read this before researching any of them.** Every claim below was checked against the code on
 2026-07-29; the file/line pointers are real. What is NOT settled is what to *do*, which is the point
@@ -31,6 +36,19 @@ own header block says so. Specifically:
 
 ## 1 · `claimQuoteText` cannot be set on a magnet-author record — SHIPS WRONG PAGES
 
+> **RESOLVED 2026-07-29.** The diagnosis below is right about the guard and wrong about the lever.
+> `claimQuoteText` was never what should have decided the banner: `renderPresentationKit` had its own
+> copy of the right-person-wrong-words test keyed on that field, while the JSON-LD block 760 lines
+> above already used the correct ATTRIBUTION test. One predicate now, `rightPersonWrongWords()` at the
+> foot of `tools/template.js`, shared by both. **17 pages stopped shipping the contradiction; 1
+> started shipping the banner it needed** (`houston-we-have-a-problem` carries `claimQuoteText`, so
+> the old test suppressed the warning on the one page whose credit is flatly wrong). Two records
+> (`he-who-lives-in-harmony-…`, `i-have-nothing-to-declare-…`) were false positives because they
+> omitted `answer.realAuthorName: "Unknown"` — the convention `template.js` documents — and were
+> corrected. The `!item.author` guard was dropped from both copies too, since which track harvested a
+> quote says nothing about whether its wording drifted. Two invariants in `verify-corpus.js` (§4d-bis)
+> now assert the contract in both directions against rendered HTML.
+
 **Verified in code.** Two copies, same condition:
 
 - `workflows/prep-wave.js:98` — `if (!item.author && out.quotationText && displayQuote !== out.quotationText)`
@@ -51,6 +69,17 @@ of the last person who tried.
 
 ## 2 · `prep-wave --credited` stamps `creditedTo` where the credit is correct
 
+> **RESOLVED 2026-07-29.** The guard now compares the leading name of `rec.answer.authorName` with
+> the batch author and declines to stamp a self-credit. **Blast radius measured before the fix: 41
+> records carried a `creditedTo` naming their own author** (14 verified, 24 attributed, 3 name-form
+> variants) plus the 24 disputed right-person-wrong-words ones; 4 non-disputed records carry a
+> genuinely false credit and had to survive, which they do.
+> The reader was fixed as well as the writer: `tools/credits.js` grew `falseCredits(r)` — the rule
+> `build-authors.js` had been applying inline for months — and `build-verify.js` now uses it, so
+> `/verify` stopped shipping `credited` (returned as `misattributedTo`) naming the true author. That
+> count went **68 → 0**, including the legacy `misattribution.items[0].who` fallback, which re-imported
+> the same false claim once `falseCredits` correctly returned nothing.
+
 **Verified:** `workflows/prep-wave.js:149` — `if (STAMP_CREDITED && b.author) rec.creditedTo = b.author;`
 
 Unconditional on the batch author. On a right-person-wrong-words record the credited person is
@@ -67,6 +96,25 @@ vector* — before writing a false credit, check the person is actually claimed 
 exactly the check missing here.
 
 ## 3 · `creator.description` — a CLAUDE.md RULE no wave can satisfy
+
+> **RESOLVED 2026-07-29 — the RULE was amended, not the schema.** The fork below is real but its
+> first branch is closed: **there are no bytes to free.** The wave's "~87 bytes under a hard platform
+> ceiling" measures against **4,159, the size that was REJECTED**. The enforced budget
+> (`SCHEMA_BUDGET`, `tools/verify-corpus.js:451`) is the proven-good **4,072**, and `DOSSIER_SCHEMA`
+> is at **exactly** 4,072 — headroom **zero**. `creatorDescription` costs 39 bytes and would land at
+> 4,111, inside the untested `(4072, 4159]` band, where the failure mode is the platform rejecting
+> every agent before it runs (0 tokens, no content error).
+>
+> Nothing is droppable either: the schema carries **no** `description` prose at all, and what remains
+> is 485 bytes of `required`, 375 of `additionalProperties: false`, 91 of enums — all constraint work.
+> Freeing 35–39 bytes means deleting two `additionalProperties: false`, i.e. weakening a gate so a
+> field fits, which the house rules forbid.
+>
+> So the RULE now asks for **name + birthDate**. `creator.jobTitle` is what actually ships (1,010 of
+> the 1,030 records carrying a creator) and `template.js` still passes a hand-written `description`
+> through for the 48 records that have one — the capability is intact, only the false universal claim
+> is gone. **Do not re-open this as "free the bytes" without new measurement**: see item 7(a), which
+> also wanted that headroom and cannot have it either.
 
 CLAUDE.md carries a standing RULE that every quote page's Schema.org `Quotation` includes `creator`
 as a Person with **name, birthDate, description**.
@@ -117,6 +165,50 @@ doc forbids touching `tools/`.
 **Open:** is there a real class of quote that is neither public-domain nor in-copyright-and-unusable?
 If yes the generator should be able to emit it; if no, retire the vocabulary entry and the renderer
 branch. Low stakes either way — this is dead-code hygiene, not a live defect.
+
+## 7 · What items 1–2 left behind — two exposures, one of them shared with item 3
+
+Added 2026-07-29 after #258 shipped. Neither is a live defect; both are the kind of thing that gets
+re-derived from scratch in six weeks if it only lives in a merged PR body.
+
+**(a) `realAuthorName` is hand-maintained, and item 3 is competing for the bytes that would fix it.**
+`rightPersonWrongWords()` (`tools/template.js`, foot of file) decides whether a page warns readers
+off its own credit. It depends on `answer.realAuthorName` being set whenever the true author differs
+from `answer.authorName`. That field is **not in `DOSSIER_SCHEMA`** — no wave emits it, it is added
+by hand, and only **71 of 704** disputed records carry one. Two records silently violated it and
+suppressed a warning they needed.
+
+Half of this is now gated: `verify-corpus.js` §4d-ter fails the build if a record claims
+right-person-wrong-words while its `schema.creator` does not name that same author (22/22 pass;
+both historical violations fail it). **That closes the exposure** — drift is a build failure now, and
+a human fills the field in.
+
+The other half — letting the generator emit the field — is **closed as unaffordable, not open.**
+Corrected 2026-07-29: `generate.js:179` says the schema is "~87 bytes under" the ceiling, but that
+measures against **4,159, the size that was REJECTED**. The enforced budget is the proven-good
+**4,072** and `DOSSIER_SCHEMA` is at **exactly** 4,072 — **headroom zero**. `answer.realAuthorName`
+costs 35 bytes → 4,107, inside the untested `(4072, 4159]` band. Item 3 wanted the same space for
+`creatorDescription` (39 bytes) and was resolved by amending the RULE instead; **this one is resolved
+by the gate.** Neither field is landing without new measurement.
+
+**If someone does want to spend it, the minimum proof is ONE agent, not a wave** — an oversized
+schema is rejected *before* execution (20/20 agents, 19ms, 0 tokens, "output schema too large to
+classify safely"), so a single agent carrying a 4,107-byte schema settles the band at zero cost.
+Record the datapoint beside the others in `generate.js:173-179` and only then raise `SCHEMA_BUDGET`.
+Raising it on faith turns a number that means *proven* into one that means *probably*.
+
+**(b) 38 non-disputed records still carry a `creditedTo` naming their own author.**
+`prep-wave.js` no longer writes them and every reader now goes through `falseCredits()`
+(`tools/credits.js`), so the data is inert: `/verify` reports 0 rows where `credited == real`, and
+the author hubs and theme cards excluded this shape already. The residual exposure is a **future
+reader** added without `falseCredits`.
+
+`validate-records.js:160` only checks `real == credited` inside `if (confidence === 'disputed')`, so
+these 38 are not warned about, let alone gated. Promoting that to a hard failure is the right end
+state and was **deliberately not done**: it fails CI until the 38 records are cleaned, and cleaning
+them was considered and declined in favour of fixing the readers. Re-open it as a data decision, not
+by tightening the gate underneath it — tightening a gate you then have to weaken to get green is the
+exact move this repo forbids.
 
 ---
 

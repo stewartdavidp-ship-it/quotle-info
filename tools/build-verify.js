@@ -13,7 +13,7 @@ const path = require('path');
 // Reuse template.js's plain() — it decodes accented named entities (æ, è, é…) instead of dropping
 // them to a space, so citations/credits like "De Hæresibus" or "Barère" come out right.
 const { creditLine, buildImagePrompts, plain, realAuthorName } = require('./template');
-const { primaryCredit, otherCredits } = require('./credits'); // creditedTo: string OR array
+const { falseCredits } = require('./credits'); // creditedTo: string OR array, minus any credit that IS the real author
 const ROOT = path.resolve(__dirname, '..');
 const QUOTES_DIR = path.join(ROOT, 'data', 'quotes');
 const SONGS_DIR = path.join(ROOT, 'data', 'songs');
@@ -26,6 +26,14 @@ for (const f of fs.readdirSync(QUOTES_DIR)) {
   if (!f.endsWith('.json')) continue;
   let r; try { r = JSON.parse(fs.readFileSync(path.join(QUOTES_DIR, f), 'utf8')); } catch (_) { continue; }
   const q = r.displayQuote || '';
+  const fc = falseCredits(r);
+  // The legacy fallback (misattribution.items[0].who) has to clear the SAME bar. Once falseCredits
+  // correctly returns nothing for a right-person-wrong-words record, an unfiltered fallback simply
+  // re-imports the false claim from the fact-check row — which on those records is about the wording
+  // and names the true author. 14 records took that path the first time this was measured.
+  const fallbackWho = (r.confidence === 'disputed' && r.misattribution && r.misattribution.items
+    && r.misattribution.items[0] && r.misattribution.items[0].who) || '';
+  const credited = fc[0] || (falseCredits({ ...r, creditedTo: fallbackWho })[0] || '');
   entries.push({
     slug: r.quoteSlug,
     q,
@@ -36,8 +44,12 @@ for (const f of fs.readdirSync(QUOTES_DIR)) {
     // array here would be a breaking change for every /verify consumer. The primary false credit is
     // that string; any additional ones ride alongside in `creditedAlso`, omitted when there are none
     // so the index does not grow for the 580 single-credit records.
-    credited: plain(primaryCredit(r) || (r.confidence === 'disputed' && r.misattribution && r.misattribution.items && r.misattribution.items[0] && r.misattribution.items[0].who) || ''), // who it's falsely credited to
-    ...(otherCredits(r).length ? { creditedAlso: otherCredits(r).map(plain) } : {}), // further false credits, if any
+    // falseCredits, NOT primaryCredit: a Track A wave stamps creditedTo on every record it
+    // harvested, so 38 verified/attributed pages shipped `credited` naming their own true author —
+    // the Worker returns this field as `misattributedTo`, so the API asserted a misattribution the
+    // page denies. See tools/credits.js; build-authors.js has excluded the same shape for months.
+    credited: plain(credited),                          // who it's falsely credited to
+    ...(fc.length > 1 ? { creditedAlso: fc.slice(1).map(plain) } : {}), // further false credits, if any
     credit: plain(creditLine(r)),                       // paste-ready CORRECT credit line (quote already implied)
     cite: plain((r.cite && r.cite.sourceCitation) || ''), // full authored Chicago citation (for a references slide)
     rights: (r.source && r.source.rights) || 'uncertain', // public-domain | in-copyright | licensed | uncertain (never blank, so machine consumers can gate)
