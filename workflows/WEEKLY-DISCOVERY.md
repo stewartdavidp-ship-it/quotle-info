@@ -108,6 +108,12 @@ Edit only `data/quotes/*.json` (plus the one appended line in `data/routine-log.
 git status --porcelain -- tools workflows   # must print nothing
 ```
 
+**Branch name — load-bearing, not cosmetic.** Name the branch `discovery/<YYYY-MM-DD>`. `tools/merge-gate.js` (the
+07:00 merge pass) decides what may auto-merge from an ALLOWLIST OF BRANCH PREFIXES, because the
+GitHub author is the same account for routine and human PRs and cannot distinguish them. It fails
+closed: a branch it does not recognise is classed `HUMAN` and left alone forever. Use the wrong
+prefix and this PR simply never merges — silently, and looking exactly like a quiet night.
+
 Finish with `node tools/build.js`, then branch, commit, push and open a PR. If you found nothing —
 which is a good and common outcome — say so in one line, stamp the records you audited, and open a
 PR containing only those stamps. **A PASS is a finding**: it is the record of "we looked and this is
@@ -115,7 +121,7 @@ fine", and without it the same 20 records are re-derived every week at full cost
 
 **Open the PR READY, never as a draft** (`gh pr create` without `--draft`). A draft cannot be
 merged, so every draft leaves an unmergeable PR sitting until a human clicks "Ready for review" —
-which happened on the first two routine runs before anyone noticed. Draft/ready does not control
-whether the PR gets READ; nothing here auto-merges, so a ready PR still waits for a human. It only
-controls whether they can act when they have read it.
+which happened on the first two routine runs before anyone noticed. Draft/ready is now load-bearing in a second way: the
+07:00 merge pass (`workflows/DAILY-MERGE.md`) SKIPS drafts, so a draft is never merged and never
+chased — it simply sits until someone notices.
 
