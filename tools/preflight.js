@@ -54,6 +54,9 @@ const NEEDS = {
   review:    { token: false, egress: true,  gh: false, prefix: 'review/' },
   // The merge pass touches no sources and needs no token; it needs to be able to see PRs at all.
   merge:     { token: false, egress: false, gh: true,  prefix: 'merge/' },
+  // The 08:00 report reads PR bodies and merge history, so it needs gh; it fetches no sources
+  // and authenticates to nothing.
+  report:    { token: false, egress: false, gh: true,  prefix: 'report/' },
 };
 
 // The hosts this corpus actually cites, apex-first. `*.archive.org` does NOT match the bare apex

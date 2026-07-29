@@ -44,6 +44,7 @@ const ROUTINES = [
   // not carry the prefix, so #223 sat as HUMAN forever. The 2026-07-29 run diagnosed it exactly
   // and correctly refused the workaround of renaming its own branch to get past the gate.
   { prefix: 'merge/',     name: 'daily-merge',      mayTouch: null },
+  { prefix: 'report/',    name: 'daily-report',     mayTouch: null },
 ];
 
 // The r20 rule, mechanised. Fix agents shipped +94/-14 of template.js inside a content wave; the
