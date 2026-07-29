@@ -1,6 +1,6 @@
 # Daily reader-report pass — the procedure a scheduled routine follows
 
-A routine runs this every day at 05:00 ET against `main`. Its prompt is one line — "follow
+A routine runs this every day at 04:00 ET against `main`. Its prompt is one line — "follow
 `workflows/DAILY-REPORTS.md`" — so the procedure lives here, versioned with the code it drives.
 
 This is the DISPUTE lane only: "something on a page here is wrong". The ADD lane (a reader
@@ -44,10 +44,10 @@ git status --porcelain
 ```
 
 **Update before you check clean, in that order.** This pass runs in a long-lived local checkout, and
-three other routines merge to `main` around it — the 03:00 wave, the 06:00 review, the Monday
-discovery audit. Nothing pulls for you. Measured on 2026-07-29: the checkout had drifted **9 commits
+three other routines open PRs against `main` around it — the 03:00 wave, the 05:00 review, the
+Monday 02:00 discovery audit — and the 07:00 merge pass lands them. Nothing pulls for you. Measured on 2026-07-29: the checkout had drifted **9 commits
 behind** and was missing `.claude/settings.json` entirely, which would have made every command prompt
-for permission at 05:10 with nobody awake. A stale checkout also audits records against superseded
+for permission with nobody awake. A stale checkout also audits records against superseded
 sources and rebuilds pages from an old generator, so the PR it opens reverts whatever landed since.
 
 If `merge --ff-only` fails, the checkout has local commits or has diverged. **Stop and report it** —

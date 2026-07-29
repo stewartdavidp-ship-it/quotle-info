@@ -2,10 +2,24 @@
 
 A local routine runs this every day at 07:00 ET, after the other four have finished.
 
+The timetable it depends on, each an hour apart so no two overlap and the last finishes well clear:
+
+| time (ET) | routine | where |
+|---|---|---|
+| 02:00 Mon | weekly discovery | Cloud |
+| 03:00 | daily wave | Cloud |
+| 04:00 | daily reports | Local |
+| 05:00 | daily review | Cloud |
+| **07:00** | **this pass** | Local |
+
+The two-hour gap after the last routine is deliberate: a review night with many flags, or a wave that
+runs long, still finishes before this starts. If one does not, its PR simply gets `WAIT` and merges
+tomorrow — the gap reduces how often that happens, it is not what makes it safe.
+
 ## Why this exists rather than each routine merging its own PR
 
-Four routines write to `main` inside four hours — 03:00 wave, Monday 03:30 discovery, 05:00 reports,
-06:00 review — and **every one of them rebuilds every page**. Two PRs open at the same time therefore
+Four routines write to `main` inside four hours — Monday 02:00 discovery, 03:00 wave, 04:00 reports,
+05:00 review — and **every one of them rebuilds every page**. Two PRs open at the same time therefore
 conflict across ~1,163 generated files. Observed 2026-07-29: #207 went stale the instant #205 merged
 and had to be rebuilt from source records, because resolving a conflict in derived HTML is not worth
 doing and not safe to do by hand.

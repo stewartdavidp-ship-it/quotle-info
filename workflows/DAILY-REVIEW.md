@@ -1,6 +1,6 @@
 # Daily review pass — the procedure a scheduled cloud routine follows
 
-A claude.ai routine runs this every day at 10:00 UTC (06:00 ET) against `main`. Its prompt is one
+A claude.ai routine runs this every day at 09:00 UTC (05:00 ET in summer) against `main`. Its prompt is one
 line — "follow `workflows/DAILY-REVIEW.md`" — so the procedure lives here, versioned with the code
 it drives, and can change without editing the routine.
 
