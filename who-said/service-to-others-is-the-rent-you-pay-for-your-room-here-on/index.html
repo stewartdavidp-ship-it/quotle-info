@@ -274,7 +274,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -655,10 +662,8 @@
                     <dt>Earliest known form</dt><dd>Anonymous hospital-doorway inscription, India, by 1917</dd>
                     <dt>Also credited to</dt><dd>Grenfell &middot; Chisholm &middot; Edelman &middot; Lord Halifax</dd>
                 </dl>
-                <p class="excerpt">
-                    The service we render to others is really the rent we pay for our room on this earth. It is obvious that man is himself a traveler; that the purpose of this world is not &lsquo;to have and to hold&rsquo; but &lsquo;to give and serve.&rsquo; There can be no other meaning.
-                    <span class="cut-tag">A proverb older than Ali</span>
-                </p>
+                <p class="excerpt">The service we render to others is really the rent we pay for our room on this earth. It is obvious that man is himself a traveler; that the purpose of this world is not &lsquo;to have and to hold&rsquo; but &lsquo;to give and serve.&rsquo; There can be no other meaning.
+                    <span class="cut-tag">A proverb older than Ali</span></p>
                 <p class="excerpt-note">This fuller, early-20th-century form is usually credited to the medical missionary Sir Wilfred Grenfell (1865&ndash;1940). Ali&rsquo;s shorter &lsquo;Service to others is the rent you pay for your room here on Earth&rsquo; is a later, streamlined variant of the same ownerless saying, which Barry Popik traces back to an anonymous 1917 inscription.</p>
                 <a class="source-link" href="https://barrypopik.com/blog/service_is_the_rent_we_pay_to_live_on_this_earth" target="_blank" rel="noopener">Barry Popik: &lsquo;Service is the rent we pay to live on this earth&rsquo; <span aria-hidden="true">↗</span></a>
                 <div class="trail">

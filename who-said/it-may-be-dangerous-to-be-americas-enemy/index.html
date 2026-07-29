@@ -282,7 +282,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -663,10 +670,8 @@
                     <dt>Remark dated</dt><dd>November 1968, after Nixon&rsquo;s election</dd>
                     <dt>Record type</dt><dd>Named witness, not a transcript</dd>
                 </dl>
-                <p class="excerpt">
-                    Nixon should be told that it is probably an objective of Clifford to depose Thieu before Nixon is inaugurated. Word should be gotten to Nixon that if Thieu meets the same fate as Diem, the word will go out to the nations of the world that it may be dangerous to be America's enemy, but to be America's friend is fatal.
-                    <span class="cut-tag">November 1968, via Buckley, 1974</span>
-                </p>
+                <p class="excerpt">Nixon should be told that it is probably an objective of Clifford to depose Thieu before Nixon is inaugurated. Word should be gotten to Nixon that if Thieu meets the same fate as Diem, the word will go out to the nations of the world that it may be dangerous to be America's enemy, but to be America's friend is fatal.
+                    <span class="cut-tag">November 1968, via Buckley, 1974</span></p>
                 <p class="excerpt-note">The full passage as Buckley records it. Everything before the last twenty words is what the truncation removes: a named policy (Clifford's), a named person (Thieu), a named precedent (Diem) and an 'if'. What survives sounds like a permanent truth about American friendship. What he actually said was a forecast about one coup that had not happened yet.</p>
                 <a class="source-link" href="https://barrypopik.com/blog/it_may_be_dangerous_to_be_americas_enemy_but_to_be_americas_friend_is_fatal" target="_blank" rel="noopener">Barry Popik — the citation trail to Buckley, 1974 <span aria-hidden="true">↗</span></a>
                 <div class="trail">

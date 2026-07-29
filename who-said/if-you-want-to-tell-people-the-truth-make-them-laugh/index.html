@@ -273,7 +273,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -655,10 +662,8 @@
                     <dt>Earliest known appearance</dt><dd>1951. The earliest precisely dated instance is the film column by critic Cecile Starr, <em>The Saturday Review</em>, 13 October 1951 &mdash; credited to Shaw, who had died on 2 November 1950. Barry Popik also logs an undated 1951 <em>Films in Review</em> printing that may be earlier.</dd>
                     <dt>Nearest genuine Shaw line</dt><dd class="title">John Bull&rsquo;s Other Island (first performed 1904)</dd>
                 </dl>
-                <p class="excerpt">
-                    NORA (blushing with delight). You&rsquo;re joking, Mr Keegan: I&rsquo;m sure yar.<br>KEEGAN. My way of joking is to tell the truth. It&rsquo;s the funniest joke in the world.
-                    <span class="cut-tag">Real Shaw &mdash; but not the source</span>
-                </p>
+                <p class="excerpt">NORA (blushing with delight). You&rsquo;re joking, Mr Keegan: I&rsquo;m sure yar.<br>KEEGAN. My way of joking is to tell the truth. It&rsquo;s the funniest joke in the world.
+                    <span class="cut-tag">Real Shaw &mdash; but not the source</span></p>
                 <p class="excerpt-note">This is the closest thing in Shaw&rsquo;s own writing, spoken by Father Keegan in Act II of <em>John Bull&rsquo;s Other Island</em> and verifiable in <a href="https://www.gutenberg.org/files/3612/3612-h/3612-h.htm" target="_blank" rel="noopener">the Project Gutenberg text ↗</a>. It is a different sentence with a different meaning, offered by <a href="https://en.wikiquote.org/wiki/George_Bernard_Shaw" target="_blank" rel="noopener">Wikiquote ↗</a> only as a possible ancestor of the popular saying &mdash; not as its source. No excerpt of the popular line from Shaw exists, because no Shaw text containing it has ever been found.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2016/03/17/truth-laugh/" target="_blank" rel="noopener">Quote Investigator: the full citation trail, 1882 to 2013 <span aria-hidden="true">↗</span></a>
                 <div class="trail">

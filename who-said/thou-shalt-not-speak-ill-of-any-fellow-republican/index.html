@@ -280,7 +280,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -662,10 +669,8 @@
                     <dt>Famous wording set down in</dt><dd class="title">An American Life</dd>
                     <dt>Reagan on the record</dt><dd>&ldquo;Thou shalt not speak ill of another Republican&rdquo; &mdash; remarks, New York City, 17 June 1982</dd>
                 </dl>
-                <p class="excerpt">
-                    The greatest thing that&rsquo;s happened for the Republican Party is, when the chips are down and the decisions are made as to who the candidates will be, then the 11th commandment prevails and everybody goes to work, and that is: Thou shalt not speak ill of another Republican.
-                    <span class="cut-tag">Remarks in New York City, 17 June 1982</span>
-                </p>
+                <p class="excerpt">The greatest thing that&rsquo;s happened for the Republican Party is, when the chips are down and the decisions are made as to who the candidates will be, then the 11th commandment prevails and everybody goes to work, and that is: Thou shalt not speak ill of another Republican.
+                    <span class="cut-tag">Remarks in New York City, 17 June 1982</span></p>
                 <p class="excerpt-note">This is Reagan&rsquo;s own on-the-record version, from his presidential remarks &mdash; and note that it reads &ldquo;another Republican.&rdquo; The wording the internet quotes, &ldquo;any fellow Republican,&rdquo; is the form Reagan set down in his 1990 memoir <em>An American Life</em>, where he presents it not as his own coinage but as Parkinson&rsquo;s.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">🎙</span>

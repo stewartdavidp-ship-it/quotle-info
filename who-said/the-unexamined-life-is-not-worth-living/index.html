@@ -281,7 +281,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -662,10 +669,8 @@
                     <dt>Location</dt><dd>Section 38a5&ndash;6</dd>
                     <dt>Setting</dt><dd>Socrates&rsquo; trial, Athens, 399 BC</dd>
                 </dl>
-                <p class="excerpt">
-                    &hellip;if I say that it is the greatest good for a man to discuss virtue every day and those other things about which you hear me conversing and testing myself and others, for <strong>the unexamined life is not worth living for men,</strong> you will believe me even less.
-                    <span class="cut-tag">&uarr; the popular one-liner drops the argument it belongs to</span>
-                </p>
+                <p class="excerpt">&hellip;if I say that it is the greatest good for a man to discuss virtue every day and those other things about which you hear me conversing and testing myself and others, for <strong>the unexamined life is not worth living for men,</strong> you will believe me even less.
+                    <span class="cut-tag">&uarr; the popular one-liner drops the argument it belongs to</span></p>
                 <p class="excerpt-note">Grube&rsquo;s translation of <em>Apology</em> 38a. The Greek is <em>&omicron; &delta;&epsilon; &alpha;&nu;&epsilon;&xi;&#941;&tau;&alpha;&sigma;&tau;&omicron;&#962; &beta;&#943;&omicron;&#962; &omicron;&upsilon; &beta;&iota;&omega;&tau;&#8056;&#962; &alpha;&nu;&theta;&rho;&#974;&pi;&#8179;</em> (<em>ho de anexetastos bios ou biotos anthropoi</em>) &mdash; literally &ldquo;the unexamined life is not liveable for a man.&rdquo;</p>
                 <a class="source-link" href="https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.01.0170:text%3DApol.:section%3D38a" target="_blank" rel="noopener">Plato, Apology 38a on Perseus (English translation) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

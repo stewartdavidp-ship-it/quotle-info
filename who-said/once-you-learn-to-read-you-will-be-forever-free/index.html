@@ -276,7 +276,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -657,10 +664,8 @@
                     <dt>Relevant passage</dt><dd>Chapters VI–VII (learning to read; &ldquo;the pathway from slavery to freedom&rdquo;)</dd>
                     <dt>Popular wording</dt><dd>Modern paraphrase — not in Douglass&rsquo;s text</dd>
                 </dl>
-                <p class="excerpt">
-                    &ldquo;Whilst I was saddened by the thought of losing the aid of my kind mistress, I was gladdened by the invaluable instruction which, by the merest accident, I had gained from my master. Though conscious of the difficulty of learning without a teacher, I set out with high hope, and a fixed purpose, at whatever cost of trouble, to learn how to read. &hellip; From that moment, I understood the pathway from slavery to freedom.&rdquo;
-                    <span class="cut-tag">the real passage</span>
-                </p>
+                <p class="excerpt">&ldquo;Whilst I was saddened by the thought of losing the aid of my kind mistress, I was gladdened by the invaluable instruction which, by the merest accident, I had gained from my master. Though conscious of the difficulty of learning without a teacher, I set out with high hope, and a fixed purpose, at whatever cost of trouble, to learn how to read. &hellip; From that moment, I understood the pathway from slavery to freedom.&rdquo;
+                    <span class="cut-tag">the real passage</span></p>
                 <p class="excerpt-note">This is what Douglass actually wrote. The circulating one-liner &mdash; &ldquo;Once you learn to read, you will be forever free&rdquo; &mdash; distills this passage (and his enslaver&rsquo;s remark that literacy would &ldquo;forever unfit him to be a slave&rdquo;) into a single sentence he never authored.</p>
                 <a class="source-link" href="https://teachingamericanhistory.org/document/narrative-of-the-life-of-frederick-douglass-an-american-slave-chapter-vi/" target="_blank" rel="noopener">Narrative, Chapter VI at Teaching American History <span aria-hidden="true">↗</span></a>
                 <div class="trail">

@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,9 +672,7 @@
                     <dt>Earliest printing</dt><dd class="title">Mercure de France, 1743 (variant wording: &lsquo;cesser de plaire&rsquo;)</dd>
                     <dt>Familiar text</dt><dd>&OElig;uvres de Mr. de Voltaire, tome sixi&egrave;me, 1745</dd>
                 </dl>
-                <p class="excerpt">
-                    On meurt deux fois, je le vois bien:<br>Cesser d&rsquo;aimer et d&rsquo;&ecirc;tre aimable,<br>C&rsquo;est une mort insupportable;<br>Cesser de vivre, ce n&rsquo;est rien.
-                </p>
+                <p class="excerpt">On meurt deux fois, je le vois bien:<br>Cesser d&rsquo;aimer et d&rsquo;&ecirc;tre aimable,<br>C&rsquo;est une mort insupportable;<br>Cesser de vivre, ce n&rsquo;est rien.</p>
                 <p class="excerpt-note">The popular English says &lsquo;to cease to love and be loved.&rsquo; Voltaire wrote <em>cesser d&rsquo;aimer et d&rsquo;&ecirc;tre aimable</em> &mdash; to cease to love and to be <em>lovable</em>. The difference is the whole point: he is writing about ageing out of the capacity to attract, not about losing someone&rsquo;s affection. The English wording used here is a common prose rendering with no identified translator; Quote Investigator records a distinct 1870 verse translation (&lsquo;Ceasing to love or love to kindle&rsquo;). If your English comes from a named modern translation, check that edition&rsquo;s rights.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2025/10/10/die-love/" target="_blank" rel="noopener">Quote Investigator — the tracing to 1743 and 1745 <span aria-hidden="true">↗</span></a>
                 <div class="trail">

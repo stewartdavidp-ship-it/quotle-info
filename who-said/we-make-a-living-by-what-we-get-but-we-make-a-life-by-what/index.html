@@ -272,7 +272,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -653,10 +660,8 @@
                     <dt>Also miscredited to</dt><dd>Air Vice-Marshal Sir Norman MacEwen</dd>
                     <dt>True author</dt><dd>Unknown &mdash; an anonymous saying</dd>
                 </dl>
-                <p class="excerpt">
-                    You make a living by what you get, but you make a life by what you give.
-                    <span class="cut-tag">&uarr; the 1944 original says &lsquo;you&rsquo; and credits no one</span>
-                </p>
+                <p class="excerpt">You make a living by what you get, but you make a life by what you give.
+                    <span class="cut-tag">&uarr; the 1944 original says &lsquo;you&rsquo; and credits no one</span></p>
                 <p class="excerpt-note">The earliest traceable printing &mdash; an unsigned one-line filler in a 1944 small-town newspaper. It uses &lsquo;you,&rsquo; not &lsquo;we,&rsquo; and names no author. The polished &lsquo;we&rsquo; wording and the Churchill byline both attach later, once the saying is already in circulation.</p>
                 <a class="source-link" href="https://www.barrypopik.com/blog/we_make_a_living_by_what_we_get_but_we_make_a_life_by_what_we_give/" target="_blank" rel="noopener">Barry Popik&rsquo;s citation history of the phrase <span aria-hidden="true">↗</span></a>
                 <div class="trail">

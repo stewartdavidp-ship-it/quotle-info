@@ -278,7 +278,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -660,9 +667,7 @@
                     <dt>Published</dt><dd>Barnhill&ndash;Tichenor Debate on Socialism, 1914</dd>
                     <dt>Status</dt><dd>Spurious as a Jefferson quotation</dd>
                 </dl>
-                <p class="excerpt">
-                    Where the people fear the government you have tyranny. Where the government fears the people you have liberty.
-                </p>
+                <p class="excerpt">Where the people fear the government you have tyranny. Where the government fears the people you have liberty.</p>
                 <p class="excerpt-note">Barnhill&rsquo;s 1914 wording. The popular &ldquo;When governments fear the people&hellip; there is tyranny&rdquo; version attributed to Jefferson is a later paraphrase of this line.</p>
                 <a class="source-link" href="https://www.monticello.org/encyclopedia/when-government-fears-people-there-liberty-spurious-quotation" target="_blank" rel="noopener">Monticello: &ldquo;When government fears the people&rdquo; (Spurious Quotation) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

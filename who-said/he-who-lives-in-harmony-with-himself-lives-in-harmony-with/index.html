@@ -267,7 +267,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -649,10 +656,8 @@
                     <dt>What X, 6 actually says</dt><dd>That the writer is &ldquo;a part of the whole which is governed by nature&rdquo; &mdash; the word &ldquo;harmony&rdquo; does not occur</dd>
                     <dt>Documented appearances of the wording</dt><dd>A 1964 Container Corporation of America &ldquo;Great Ideas&rdquo; painting; Dan Millman&rsquo;s The Life You Were Born to Live (1995), per Wikiquote</dd>
                 </dl>
-                <p class="excerpt">
-                    Whether the universe is a concourse of atoms, or nature is a system, let this first be established, that I am a part of the whole which is governed by nature; next, I am in a manner intimately related to the parts which are of the same kind with myself. &hellip; By remembering then that I am a part of such a whole, I shall be content with everything that happens.
-                    <span class="cut-tag">Meditations X, 6 &middot; trans. George Long</span>
-                </p>
+                <p class="excerpt">Whether the universe is a concourse of atoms, or nature is a system, let this first be established, that I am a part of the whole which is governed by nature; next, I am in a manner intimately related to the parts which are of the same kind with myself. &hellip; By remembering then that I am a part of such a whole, I shall be content with everything that happens.
+                    <span class="cut-tag">Meditations X, 6 &middot; trans. George Long</span></p>
                 <p class="excerpt-note">This is the passage the quotation is credited to, abridged at the ellipsis. It is an argument about parts and wholes; the omitted lines continue that same argument, and neither they nor the rest of the section contains a sentence about living in harmony with oneself, or any phrase resembling the popular wording.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">&#127912;</span>

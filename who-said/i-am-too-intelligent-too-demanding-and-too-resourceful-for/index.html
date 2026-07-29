@@ -282,7 +282,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -663,10 +670,8 @@
                     <dt>Translation</dt><dd>English: the displayed wording is an uncredited popular translation of the French. A scholarly English edition of the early diary — Diary of a Philosophy Student, Vols. 1–2 (1926–29), trans. Barbara Klaw (Univ. of Illinois Press, 2006, 2019) — covers only 1926–29 and is not verified to contain this entry.</dd>
                     <dt>Author</dt><dd>Simone de Beauvoir</dd>
                 </dl>
-                <p class="excerpt">
-                    I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely. No one knows me or loves me completely. I have only myself.
-                    <span class="cut-tag">diary</span>
-                </p>
+                <p class="excerpt">I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely. No one knows me or loves me completely. I have only myself.
+                    <span class="cut-tag">diary</span></p>
                 <p class="excerpt-note">French original: &ldquo;Je suis trop intelligente, trop exigeante et trop riche pour que personne puisse se charger de moi enti&egrave;rement. Personne ne me conna&icirc;t ni ne m&rsquo;aime tout enti&egrave;re. Je n&rsquo;ai que moi&hellip;&rdquo;</p>
                 <a class="source-link" href="https://www.goodreads.com/work/quotes/3213890-cahiers-de-jeunesse-1926-1930" target="_blank" rel="noopener">Cahiers de jeunesse, 1926–1930 (source diary) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

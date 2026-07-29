@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,10 +672,8 @@
                     <dt>Published in</dt><dd>Public Papers of the Presidents of the United States: Ronald Reagan, 1987 (U.S. Government Printing Office)</dd>
                     <dt>Earliest documented use</dt><dd>23 October 1986 &mdash; Springfield, Missouri, recalling the Reykjav&iacute;k talks</dd>
                 </dl>
-                <p class="excerpt">
-                    We have listened to the wisdom in an old Russian maxim. And I&rsquo;m sure you&rsquo;re familiar with it, Mr. General Secretary, though my pronunciation may give you difficulty. The maxim is: <strong>Dovorey no provorey&mdash;trust, but verify.</strong><br><br><em>General Secretary Gorbachev.</em> You repeat that at every meeting. [<em>Laughter</em>]<br><br><em>The President.</em> I like it. [<em>Laughter</em>]<br><br>This agreement contains the most stringent verification regime in history, including provisions for inspection teams actually residing in each other&rsquo;s territory and several other forms of on-site inspection, as well.
-                    <span class="cut-tag">INF Treaty signing &middot; 8 December 1987</span>
-                </p>
+                <p class="excerpt">We have listened to the wisdom in an old Russian maxim. And I&rsquo;m sure you&rsquo;re familiar with it, Mr. General Secretary, though my pronunciation may give you difficulty. The maxim is: <strong>Dovorey no provorey&mdash;trust, but verify.</strong><br><br><em>General Secretary Gorbachev.</em> You repeat that at every meeting. [<em>Laughter</em>]<br><br><em>The President.</em> I like it. [<em>Laughter</em>]<br><br>This agreement contains the most stringent verification regime in history, including provisions for inspection teams actually residing in each other&rsquo;s territory and several other forms of on-site inspection, as well.
+                    <span class="cut-tag">INF Treaty signing &middot; 8 December 1987</span></p>
                 <p class="excerpt-note">The transliteration &ldquo;Dovorey no provorey&rdquo; is the official transcript&rsquo;s rendering of Reagan&rsquo;s pronunciation. The standard transliteration of the Russian доверяй, но проверяй is <em>doveryai, no proveryai</em> &mdash; it rhymes in Russian, which is why Massie thought an actor could sell it.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">🏛️</span>

@@ -283,7 +283,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,10 +672,8 @@
                     <dt>Published</dt><dd>Droke House, Anderson, S.C., 1968 &mdash; 89 pp., LCCN 68013823</dd>
                     <dt>Reassigned to Shakespeare</dt><dd>By 2010, per Quote Investigator</dd>
                 </dl>
-                <p class="excerpt">
-                    Before you speak, listen. Before you write, think. Before you spend, earn. <strong>Before you invest, investigate. Before you criticize, wait.</strong> Before you pray, forgive. Before you quit, try. <strong>Before you retire, save.</strong> Before you die, give.
-                    <span class="cut-tag">Bold &mdash; the three lines the Shakespeare version drops</span>
-                </p>
+                <p class="excerpt">Before you speak, listen. Before you write, think. Before you spend, earn. <strong>Before you invest, investigate. Before you criticize, wait.</strong> Before you pray, forgive. Before you quit, try. <strong>Before you retire, save.</strong> Before you die, give.
+                    <span class="cut-tag">Bold &mdash; the three lines the Shakespeare version drops</span></p>
                 <p class="excerpt-note">Ward&rsquo;s list runs <strong>nine</strong> lines. The version that circulates under Shakespeare&rsquo;s name is not a shortened Ward but a rewritten one. The Shakespeare-attributed text <a href="https://quoteinvestigator.com/2026/05/26/speak-listen/" target="_blank" rel="noopener">Quote Investigator reproduces ↗</a>, posted to a Google Group in September 2010, reads: &ldquo;Before you speak &raquo;Listen / Before you write &raquo;Think / Before you spend &raquo;Earn / Before you pray &raquo;Forgive / Before you hurt &raquo;Feel / Before you hate &raquo;Love / Before you quit &raquo;Try / Before you die &raquo;Live.&rdquo; Five of Ward&rsquo;s lines survive intact; three &mdash; <em>invest</em>, <em>criticize</em>, <em>retire</em> &mdash; are gone; two are lines Ward never wrote; and his closing <em>give</em> has become <em>live</em>. QI&rsquo;s own summary of the mutation: the passage &ldquo;was later modified, supplemented, and reassigned to William Shakespeare.&rdquo;</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2026/05/26/speak-listen/" target="_blank" rel="noopener">Quote Investigator: the full 1907–2010 citation trail <span aria-hidden="true">↗</span></a>
                 <div class="trail">

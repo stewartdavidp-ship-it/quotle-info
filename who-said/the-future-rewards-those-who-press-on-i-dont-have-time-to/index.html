@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,10 +672,8 @@
                     <dt>Released by</dt><dd>The White House, Office of the Press Secretary</dd>
                     <dt>Status</dt><dd>U.S. Government work &mdash; not copyright protected</dd>
                 </dl>
-                <p class="excerpt">
-                    So I don&rsquo;t know about you, CBC, but the future rewards those who press on. (Applause.) With patient and firm determination, I am going to press on for jobs. (Applause.) I&rsquo;m going to press on for equality. (Applause.) I&rsquo;m going to press on for the sake of our children. (Applause.) I&rsquo;m going to press on for the sake of all those families who are struggling right now. I don&rsquo;t have time to feel sorry for myself. I don&rsquo;t have time to complain. I am going to press on. (Applause.)<br><br>I expect all of you to march with me and press on. (Applause.) Take off your bedroom slippers, put on your marching shoes. Shake it off. (Applause.) Stop complaining, stop grumbling, stop crying. We are going to press on. We&rsquo;ve got work to do, CBC. (Applause.)
-                    <span class="cut-tag">condensed on quote sites</span>
-                </p>
+                <p class="excerpt">So I don&rsquo;t know about you, CBC, but the future rewards those who press on. (Applause.) With patient and firm determination, I am going to press on for jobs. (Applause.) I&rsquo;m going to press on for equality. (Applause.) I&rsquo;m going to press on for the sake of our children. (Applause.) I&rsquo;m going to press on for the sake of all those families who are struggling right now. I don&rsquo;t have time to feel sorry for myself. I don&rsquo;t have time to complain. I am going to press on. (Applause.)<br><br>I expect all of you to march with me and press on. (Applause.) Take off your bedroom slippers, put on your marching shoes. Shake it off. (Applause.) Stop complaining, stop grumbling, stop crying. We are going to press on. We&rsquo;ve got work to do, CBC. (Applause.)
+                    <span class="cut-tag">condensed on quote sites</span></p>
                 <p class="excerpt-note">The famous four sentences are all here &mdash; but not consecutively. Between &ldquo;the future rewards those who press on&rdquo; and &ldquo;I don&rsquo;t have time to feel sorry for myself&rdquo; sit four sentences about jobs, equality, children and struggling families. The quote card removes them without an ellipsis.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">▶</span>

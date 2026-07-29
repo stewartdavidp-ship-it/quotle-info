@@ -283,7 +283,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,10 +671,8 @@
                     <dt>Delivered</dt><dd>4 March 1933, east front of the U.S. Capitol, Washington, D.C.</dd>
                     <dt>Occasion</dt><dd>His first inauguration, at the depth of the Great Depression</dd>
                 </dl>
-                <p class="excerpt">
-                    The measure of the restoration lies in the extent to which we apply social values more noble than mere monetary profit. Happiness lies not in the mere possession of money; it lies in the joy of achievement, in the thrill of creative effort. The joy and moral stimulation of work no longer must be forgotten in the mad chase of evanescent profits.
-                    <span class="cut-tag">↑ the popular version keeps only the middle clause &mdash; dropping &ldquo;not in the mere possession of money&rdquo; and swapping the second &ldquo;in&rdquo; for &ldquo;and&rdquo;</span>
-                </p>
+                <p class="excerpt">The measure of the restoration lies in the extent to which we apply social values more noble than mere monetary profit. Happiness lies not in the mere possession of money; it lies in the joy of achievement, in the thrill of creative effort. The joy and moral stimulation of work no longer must be forgotten in the mad chase of evanescent profits.
+                    <span class="cut-tag">↑ the popular version keeps only the middle clause &mdash; dropping &ldquo;not in the mere possession of money&rdquo; and swapping the second &ldquo;in&rdquo; for &ldquo;and&rdquo;</span></p>
                 <p class="excerpt-note">The famous condensed form &mdash; &ldquo;Happiness lies in the joy of achievement and the thrill of creative effort&rdquo; &mdash; is an accurate attribution to FDR but an inexact quotation. It strips out the anti-materialist contrast that gave the line its meaning in 1933.</p>
                 <a class="source-link" href="https://avalon.law.yale.edu/20th_century/froos1.asp" target="_blank" rel="noopener">First Inaugural Address, full text (Avalon Project, Yale Law School) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

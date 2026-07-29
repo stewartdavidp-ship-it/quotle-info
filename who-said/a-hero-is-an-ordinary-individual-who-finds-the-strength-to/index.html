@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,10 +672,8 @@
                     <dt>First published</dt><dd>25 April 1998 &middot; Random House, New York</dd>
                     <dt>Location</dt><dd>Chapter 11, page 273</dd>
                 </dl>
-                <p class="excerpt">
-                    Now my definition is completely different. I think a hero is an ordinary individual who finds the strength to persevere and endure in spite of overwhelming obstacles. They are the real heroes, and so are the families and friends who have stood by them.
-                    <span class="cut-tag">Preceding: his Superman-era answer</span>
-                </p>
+                <p class="excerpt">Now my definition is completely different. I think a hero is an ordinary individual who finds the strength to persevere and endure in spite of overwhelming obstacles. They are the real heroes, and so are the families and friends who have stood by them.
+                    <span class="cut-tag">Preceding: his Superman-era answer</span></p>
                 <p class="excerpt-note">Immediately before this, Reeve recalls the question he was asked constantly while promoting the first <em>Superman</em> film &mdash; &ldquo;What is a hero?&rdquo; &mdash; and the answer he used to give: that a hero is someone who commits a courageous action without considering the consequences. The famous line is his repudiation of that answer. Note the last sentence: Reeve meant people living with disability and the families beside them, not a generic slogan.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">&#128214;</span>

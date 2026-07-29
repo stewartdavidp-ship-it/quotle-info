@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -666,10 +673,8 @@
                     <dt>Author</dt><dd>Kevin Alfred Strom (b. 1956)</dd>
                     <dt>Popular wording</dt><dd>An anonymous later paraphrase &mdash; first documented credited to Voltaire in 2007</dd>
                 </dl>
-                <p class="excerpt">
-                    To determine the true rulers of any society, all you must do is ask yourself this question: Who is it that I am not permitted to criticize? We all know who it is that we are not permitted to criticize.
-                    <span class="cut-tag">Radio broadcast transcript, 1993</span>
-                </p>
+                <p class="excerpt">To determine the true rulers of any society, all you must do is ask yourself this question: Who is it that I am not permitted to criticize? We all know who it is that we are not permitted to criticize.
+                    <span class="cut-tag">Radio broadcast transcript, 1993</span></p>
                 <p class="excerpt-note">This is the actual passage the meme descends from, and the context is not incidental. <a href="https://www.politifact.com/factchecks/2022/jan/31/thomas-massie/gop-rep-thomas-massie-wrongly-credits-neo-nazis-qu/" target="_blank" rel="noopener">PolitiFact describes the 1993 broadcast as antisemitic ↗</a>, and Strom&rsquo;s next line makes the rhetorical question point at a specific group. Recast as a Voltaire epigram, a piece of conspiracist antisemitism is laundered into Enlightenment wisdom about free speech &mdash; which is precisely why the misattribution has been so durable.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📻</span>

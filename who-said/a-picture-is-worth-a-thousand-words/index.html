@@ -277,7 +277,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -659,10 +666,8 @@
                     <dt>Key printing</dt><dd class="title">Printers&rsquo; Ink (advertising trade journal)</dd>
                     <dt>Dates</dt><dd>8 Dec 1921; &ldquo;Chinese proverb&rdquo; version 10 Mar 1927</dd>
                 </dl>
-                <p class="excerpt">
-                    One look is worth a thousand words. &mdash; Fred R. Barnard, <em>Printers&rsquo; Ink</em>, 1921; revised in 1927 to &ldquo;One picture is worth ten thousand words&rdquo; and labelled a Chinese proverb.
-                    <span class="cut-tag">The invented pedigree</span>
-                </p>
+                <p class="excerpt">One look is worth a thousand words. &mdash; Fred R. Barnard, <em>Printers&rsquo; Ink</em>, 1921; revised in 1927 to &ldquo;One picture is worth ten thousand words&rdquo; and labelled a Chinese proverb.
+                    <span class="cut-tag">The invented pedigree</span></p>
                 <p class="excerpt-note">The now-standard wording &ldquo;a picture is worth a thousand words&rdquo; settled into common use after these ads; earlier, Arthur Brisbane said &ldquo;Use a picture. It&rsquo;s worth a thousand words&rdquo; (1911).</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2022/07/22/picture-words/" target="_blank" rel="noopener">Quote Investigator: the full chronology <span aria-hidden="true">↗</span></a>
                 <div class="trail">

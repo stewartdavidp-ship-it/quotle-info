@@ -279,7 +279,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -661,10 +668,8 @@
                     <dt>Also close</dt><dd>Majjhima Nikaya 19, on what the mind keeps pursuing</dd>
                     <dt>Earliest documented English</dt><dd>Reported in R. W. Trine, <em>In Tune with the Infinite</em> (1897)</dd>
                 </dl>
-                <p class="excerpt">
-                    All that we are is the result of what we have thought: it is founded on our thoughts, it is made up of our thoughts. If a man speaks or acts with an evil thought, pain follows him, as the wheel follows the foot of the ox that draws the carriage.
-                    <span class="cut-tag">Dhammapada 1, trans. F. Max Müller, 1881</span>
-                </p>
+                <p class="excerpt">All that we are is the result of what we have thought: it is founded on our thoughts, it is made up of our thoughts. If a man speaks or acts with an evil thought, pain follows him, as the wheel follows the foot of the ox that draws the carriage.
+                    <span class="cut-tag">Dhammapada 1, trans. F. Max Müller, 1881</span></p>
                 <p class="excerpt-note">The verse the quotation is standing on top of. Müller&rsquo;s 1881 English, and worth reading slowly: it says what we are follows from what we have thought, and then immediately makes that concrete and moral &mdash; act from an evil thought and pain follows you. It is not telling you to think yourself into being someone else.</p>
                 <a class="source-link" href="https://www.gutenberg.org/ebooks/2017" target="_blank" rel="noopener">Dhammapada, trans. F. Max Müller (1881) — full text <span aria-hidden="true">↗</span></a>
                 <div class="trail">

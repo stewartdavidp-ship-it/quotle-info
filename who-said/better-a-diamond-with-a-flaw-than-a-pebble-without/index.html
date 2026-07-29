@@ -277,7 +277,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -659,10 +666,8 @@
                     <dt>Credited source</dt><dd>An anonymous Chinese proverb; traced by Wikiquote to Ming scholar Jiao Hong (1540&ndash;1620)</dd>
                     <dt>Not from</dt><dd>The Analects, or any genuine work of Confucius</dd>
                 </dl>
-                <p class="excerpt">
-                    And in this Chinese proverb which follows, &lsquo;Better a diamond with a flaw, than a pebble without one,&rsquo; there is, to my mind, the assertion of a great Christian truth, and of one which reaches deep down to the very foundations of Christian morality &mdash; the more valuable as coming to us from a people beyond the range and reach of the influences of direct Revelation.
-                    <span class="cut-tag">Chinese Proverbs, &sect; The Morality of Proverbs</span>
-                </p>
+                <p class="excerpt">And in this Chinese proverb which follows, &lsquo;Better a diamond with a flaw, than a pebble without one,&rsquo; there is, to my mind, the assertion of a great Christian truth, and of one which reaches deep down to the very foundations of Christian morality &mdash; the more valuable as coming to us from a people beyond the range and reach of the influences of direct Revelation.
+                    <span class="cut-tag">Chinese Proverbs, &sect; The Morality of Proverbs</span></p>
                 <p class="excerpt-note">Trench&rsquo;s 1853 wording keeps the final &ldquo;one&rdquo;; the modern viral form drops it to &ldquo;&hellip; a pebble without.&rdquo; Note that Trench presents it as a Chinese proverb &mdash; not a saying of Confucius.</p>
                 <a class="source-link" href="https://archive.org/stream/proverbstheirles00trenuoft/proverbstheirles00trenuoft_djvu.txt" target="_blank" rel="noopener">Trench, Proverbs and Their Lessons (1853), full text <span aria-hidden="true">↗</span></a>
                 <div class="trail">

@@ -273,7 +273,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -655,10 +662,8 @@
                     <dt>Published</dt><dd>London: Longmans, Green, and Co., 1867 &mdash; the maxim is on p. 147</dd>
                     <dt>Credited there to</dt><dd>St Edmund of Abingdon (d. 1240), as the maxim he gave his Oxford pupils</dd>
                 </dl>
-                <p class="excerpt">
-                    As soon as he had taken his master&rsquo;s degree, he opened a school of his own, on the spot now occupied by St. Edmund&rsquo;s Hall. The favourite maxim he was accustomed to give to his pupils, was this: &lsquo;Study as if you were to live for ever, live as if you were to die to-morrow.&rsquo;
-                    <span class="cut-tag">…</span>
-                </p>
+                <p class="excerpt">As soon as he had taken his master&rsquo;s degree, he opened a school of his own, on the spot now occupied by St. Edmund&rsquo;s Hall. The favourite maxim he was accustomed to give to his pupils, was this: &lsquo;Study as if you were to live for ever, live as if you were to die to-morrow.&rsquo;
+                    <span class="cut-tag">…</span></p>
                 <p class="excerpt-note">Note the differences from the version that circulates under Gandhi&rsquo;s name: the clauses run in the opposite order, and the verb is &ldquo;Study,&rdquo; not &ldquo;Learn.&rdquo; The page number was confirmed from the running head on the scanned leaf, which reads &ldquo;Old Oxford. 147.&rdquo;</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📖</span>

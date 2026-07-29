@@ -291,7 +291,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -672,10 +679,8 @@
                     <dt>Location</dt><dd>Chapter 30 &mdash; the closing sentence</dd>
                     <dt>Speaker</dt><dd>Candide, replying to Pangloss</dd>
                 </dl>
-                <p class="excerpt">
-                    &mdash; Tous les &eacute;v&eacute;nements sont encha&icirc;n&eacute;s dans le meilleur des mondes possibles&hellip;<br>&mdash; Cela est bien dit, r&eacute;pondit Candide, mais il faut cultiver notre jardin.
-                    <span class="cut-tag">↑ the popular version drops the seven words before it &mdash; and with them the fact that this is Candide changing the subject</span>
-                </p>
+                <p class="excerpt">&mdash; Tous les &eacute;v&eacute;nements sont encha&icirc;n&eacute;s dans le meilleur des mondes possibles&hellip;<br>&mdash; Cela est bien dit, r&eacute;pondit Candide, mais il faut cultiver notre jardin.
+                    <span class="cut-tag">↑ the popular version drops the seven words before it &mdash; and with them the fact that this is Candide changing the subject</span></p>
                 <p class="excerpt-note">The English wording is unusually unsettled for so famous a line. Wikiquote&rsquo;s English gives &lsquo;but let us cultivate our garden&rsquo;; Wikipedia renders the same line &lsquo;we must cultivate our garden&rsquo;; older English quoting of the passage gives &lsquo;let us take care of our garden&rsquo;; Burton Raffel&rsquo;s 2005 translation goes furthest with &lsquo;We need to work our fields.&rsquo; The French is one sentence and does not change.</p>
                 <a class="source-link" href="https://fr.wikisource.org/wiki/Candide,_ou_l%E2%80%99Optimisme/Garnier_1877/Chapitre_30" target="_blank" rel="noopener">Candide, chapitre 30 (Garnier 1877) — French Wikisource <span aria-hidden="true">↗</span></a>
                 <div class="trail">

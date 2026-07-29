@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,10 +672,8 @@
                     <dt>Where in the book</dt><dd>An unnumbered leaf headed &ldquo;PROMISE YOURSELF,&rdquo; between the Foreword and Chapter I &mdash; the first of twelve promises</dd>
                     <dt>Later life</dt><dd>Adopted by Optimist International in 1922 as The Optimist Creed, using ten of Larson&rsquo;s twelve lines</dd>
                 </dl>
-                <p class="excerpt">
-                    <strong>PROMISE YOURSELF</strong><br><br>To be so strong that nothing can disturb your peace of mind.<br>To talk health, happiness and prosperity to every person you meet.<br>To make all your friends feel that there is something in them.<br>To look at the sunny side of everything and make your optimism come true.<br>To think only of the best, to work only for the best, and to expect only the best.<br>To be just as enthusiastic about the success of others as you are about your own.<br>To forget the mistakes of the past and press on to the greater achievements of the future.<br>To wear a cheerful countenance at all times and give every living creature you meet a smile.<br>To give so much time to the improvement of yourself that you have no time to criticise others.<br>To be too large for worry, too noble for anger, too strong for fear; and too happy to permit the presence of trouble.<br>To think well of yourself and to proclaim this fact to the world, not in loud words but in great deeds.<br>To live in the faith that the whole world is on your side so long as you are true to the best that is in you.
-                    <span class="cut-tag">All twelve promises, as printed in 1912</span>
-                </p>
+                <p class="excerpt"><strong>PROMISE YOURSELF</strong><br><br>To be so strong that nothing can disturb your peace of mind.<br>To talk health, happiness and prosperity to every person you meet.<br>To make all your friends feel that there is something in them.<br>To look at the sunny side of everything and make your optimism come true.<br>To think only of the best, to work only for the best, and to expect only the best.<br>To be just as enthusiastic about the success of others as you are about your own.<br>To forget the mistakes of the past and press on to the greater achievements of the future.<br>To wear a cheerful countenance at all times and give every living creature you meet a smile.<br>To give so much time to the improvement of yourself that you have no time to criticise others.<br>To be too large for worry, too noble for anger, too strong for fear; and too happy to permit the presence of trouble.<br>To think well of yourself and to proclaim this fact to the world, not in loud words but in great deeds.<br>To live in the faith that the whole world is on your side so long as you are true to the best that is in you.
+                    <span class="cut-tag">All twelve promises, as printed in 1912</span></p>
                 <p class="excerpt-note">Transcribed from the 1912 Harvard copy; the scan&rsquo;s OCR is rough, so spelling here follows the printed page (including Larson&rsquo;s British-style &ldquo;criticise&rdquo;). The last two promises are the ones Optimist International&rsquo;s creed leaves out.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📖</span>

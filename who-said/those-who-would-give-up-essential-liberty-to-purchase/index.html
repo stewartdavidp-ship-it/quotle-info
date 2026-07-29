@@ -283,7 +283,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,10 +671,8 @@
                     <dt>Addressed to</dt><dd>Governor Robert Hunter Morris</dd>
                     <dt>Printed in</dt><dd>Votes and Proceedings of the House of Representatives, 1755–1756, pp. 19–21</dd>
                 </dl>
-                <p class="excerpt">
-                    In fine, we have the most sensible Concern for the poor distressed Inhabitants of the Frontiers. We have taken every Step in our Power, consistent with the just Rights of the Freemen of Pennsylvania, for their Relief, and we have Reason to believe, that in the Midst of their Distresses they themselves do not wish us to go farther. Those who would give up essential Liberty, to purchase a little temporary Safety, deserve neither Liberty nor Safety.
-                    <span class="cut-tag">Pennsylvania Assembly, 11 November 1755</span>
-                </p>
+                <p class="excerpt">In fine, we have the most sensible Concern for the poor distressed Inhabitants of the Frontiers. We have taken every Step in our Power, consistent with the just Rights of the Freemen of Pennsylvania, for their Relief, and we have Reason to believe, that in the Midst of their Distresses they themselves do not wish us to go farther. Those who would give up essential Liberty, to purchase a little temporary Safety, deserve neither Liberty nor Safety.
+                    <span class="cut-tag">Pennsylvania Assembly, 11 November 1755</span></p>
                 <p class="excerpt-note">The sentence in its own paragraph. Read what comes immediately before it: the Assembly is saying that the frontier settlers themselves would not want the House to surrender the point. It is a legislature refusing to trade away its taxing power for a defence bill — not a citizen refusing a search.</p>
                 <a class="source-link" href="https://founders.archives.gov/documents/Franklin/01-06-02-0107" target="_blank" rel="noopener">Founders Online — the full Reply to the Governor, 11 Nov 1755 <span aria-hidden="true">↗</span></a>
                 <div class="trail">

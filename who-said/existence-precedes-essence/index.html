@@ -282,7 +282,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -663,9 +670,7 @@
                     <dt>Original French</dt><dd lang="fr">&ldquo;l&rsquo;existence pr&eacute;c&egrave;de l&rsquo;essence&rdquo;</dd>
                     <dt>Translation</dt><dd>Standard English rendering; confirmed in Philip Mairet&rsquo;s translation of the 1945 lecture</dd>
                 </dl>
-                <p class="excerpt">
-                    Atheistic existentialism&hellip; declares with greater consistency that if God does not exist there is at least one being whose existence comes before its essence, a being which exists before it can be defined by any conception of it. That being is man&hellip; What do we mean by saying that existence precedes essence? We mean that man first of all exists, encounters himself, surges up in the world &mdash; and defines himself afterwards.
-                </p>
+                <p class="excerpt">Atheistic existentialism&hellip; declares with greater consistency that if God does not exist there is at least one being whose existence comes before its essence, a being which exists before it can be defined by any conception of it. That being is man&hellip; What do we mean by saying that existence precedes essence? We mean that man first of all exists, encounters himself, surges up in the world &mdash; and defines himself afterwards.</p>
                 <p class="excerpt-note">From the 1945 lecture &lsquo;Existentialism Is a Humanism&rsquo;, where Sartre lays out the formula as existentialism&rsquo;s first principle.</p>
                 <a class="source-link" href="https://www.marxists.org/reference/archive/sartre/works/exist/sartre.htm" target="_blank" rel="noopener">Read the lecture text (Existentialism Is a Humanism) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

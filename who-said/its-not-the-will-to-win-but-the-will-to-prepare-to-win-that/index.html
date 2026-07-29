@@ -278,7 +278,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -661,10 +668,8 @@
                     <dt>Also</dt><dd>&ldquo;Lasting Values in Athletics,&rdquo; 13 February 1930 &mdash; a separate address, printed in <em>The Barnwell Addresses: Volume 1, 1922&ndash;30</em>, pp. 361&ndash;369</dd>
                     <dt>Documented by</dt><dd>Quote Investigator (11 August 2017), citing p. 18</dd>
                 </dl>
-                <p class="excerpt">
-                    The will and the wish to win, but there isn&rsquo;t a chance for either one of them to be gratified or to have any value unless there has been a will to prepare to win.
-                    <span class="cut-tag">as quoted by Quote Investigator</span>
-                </p>
+                <p class="excerpt">The will and the wish to win, but there isn&rsquo;t a chance for either one of them to be gratified or to have any value unless there has been a will to prepare to win.
+                    <span class="cut-tag">as quoted by Quote Investigator</span></p>
                 <p class="excerpt-note">Yost&rsquo;s phrasing is an argument, not an aphorism &mdash; which is why later coaches kept recompressing it. In a separate address, &ldquo;Lasting Values in Athletics&rdquo; of 13 February 1930, he put it more plainly: it is &ldquo;all right to talk about this &lsquo;will to win,&rsquo; but I tell you it is not of much worth unless you have the will to prepare.&rdquo;</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2017/08/11/prepare/" target="_blank" rel="noopener">Quote Investigator&rsquo;s full chronology <span aria-hidden="true">↗</span></a>
                 <div class="trail">

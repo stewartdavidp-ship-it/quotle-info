@@ -278,7 +278,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -659,10 +666,8 @@
                     <dt>Written</dt><dd>c. 375 BCE</dd>
                     <dt>Translation quoted</dt><dd>Paul Shorey (Loeb)</dd>
                 </dl>
-                <p class="excerpt">
-                    &hellip; the chief penalty is to be governed by someone worse if a man will not himself hold office and rule. It is from fear of this, as it appears to me, that the better sort hold office when they do.
-                    <span class="cut-tag">↑ the popular &lsquo;refusing to participate in politics &hellip; your inferiors&rsquo; wording is a loose paraphrase of this line</span>
-                </p>
+                <p class="excerpt">&hellip; the chief penalty is to be governed by someone worse if a man will not himself hold office and rule. It is from fear of this, as it appears to me, that the better sort hold office when they do.
+                    <span class="cut-tag">↑ the popular &lsquo;refusing to participate in politics &hellip; your inferiors&rsquo; wording is a loose paraphrase of this line</span></p>
                 <p class="excerpt-note">Greek: <em>&tau;&#8134;&sigmaf; &delta;&#8050; &zeta;&eta;&mu;&#943;&alpha;&sigmaf; &mu;&epsilon;&gamma;&#943;&sigma;&tau;&eta; &tau;&#8056; &#8017;&pi;&#8056; &pi;&omicron;&nu;&eta;&rho;&omicron;&tau;&#941;&rho;&omicron;&upsilon; &#7940;&rho;&chi;&epsilon;&sigma;&theta;&alpha;&iota;, &#7952;&#8048;&nu; &mu;&#8052; &alpha;&#8016;&tau;&#8056;&sigmaf; &#7952;&theta;&#941;&lambda;&#8131; &#7940;&rho;&chi;&epsilon;&iota;&nu;.</em> Shorey&rsquo;s literal &ldquo;governed by someone worse&rdquo; is what the modern paraphrase turns into &ldquo;governed by your inferiors.&rdquo;</p>
                 <a class="source-link" href="http://www.perseus.tufts.edu/hopper/text?doc=Plat.+Rep.+1.347" target="_blank" rel="noopener">Plato, Republic 347c on Perseus (Shorey translation) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

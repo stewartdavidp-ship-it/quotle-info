@@ -276,7 +276,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -657,10 +664,8 @@
                     <dt>Source of record</dt><dd class="title">Herbert Read in The Times, 27 October 1956, p. 7 &mdash; cited variously as his article &lsquo;Picasso at 75&rsquo; and, by Oxford Essential Quotations, as a letter from Read to the paper</dd>
                     <dt>Earliest datable printing located of the popular wording</dt><dd class="title">Modern Drummer 13 (1989), p. 50; same wording in The Drum Perspective (1998), p. 73</dd>
                 </dl>
-                <p class="excerpt">
-                    When I was the age of these children I could draw like Raphael: it took me many years to learn how to draw like these children.
-                    <span class="cut-tag">Reported speech, 1956</span>
-                </p>
+                <p class="excerpt">When I was the age of these children I could draw like Raphael: it took me many years to learn how to draw like these children.
+                    <span class="cut-tag">Reported speech, 1956</span></p>
                 <p class="excerpt-note">Said to Herbert Read while Picasso was visiting an exhibition of children&rsquo;s drawings. Published renderings differ slightly: <a href="https://www.oxfordreference.com/display/10.1093/acref/9780191826719.001.0001/q-oro-ed4-00008311" target="_blank" rel="noopener">Oxford Essential Quotations prints ↗</a> &ldquo;&hellip; it took me many years to learn how to draw like these children,&rdquo; while <a href="https://ray.yorksj.ac.uk/id/eprint/3261/1/RAI2018.pdf" target="_blank" rel="noopener">academic citations of Read&rsquo;s article give ↗</a> &ldquo;&hellip; it took me many years to draw like these children.&rdquo; Neither says &ldquo;four years,&rdquo; and neither says &ldquo;paint.&rdquo;</p>
                 <a class="source-link" href="https://www.oxfordreference.com/display/10.1093/acref/9780191826719.001.0001/q-oro-ed4-00008311" target="_blank" rel="noopener">Oxford Essential Quotations: Picasso to Herbert Read, The Times, 27 October 1956 <span aria-hidden="true">↗</span></a>
                 <div class="trail">

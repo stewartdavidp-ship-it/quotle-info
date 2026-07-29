@@ -272,7 +272,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -654,10 +661,8 @@
                     <dt>Delivered</dt><dd>Messenger Lectures, Cornell University, 1964; filmed by the BBC</dd>
                     <dt>Source for &lsquo;lying or crazy&rsquo;</dt><dd>None located</dd>
                 </dl>
-                <p class="excerpt">
-                    There might have been a time when only one man did, because he was the only guy who caught on, before he wrote his paper. But after people read the paper a lot of people understood the theory of relativity in some way or other, certainly more than twelve. On the other hand, I think I can safely say that nobody understands quantum mechanics.
-                    <span class="cut-tag">The Character of Physical Law, 1965</span>
-                </p>
+                <p class="excerpt">There might have been a time when only one man did, because he was the only guy who caught on, before he wrote his paper. But after people read the paper a lot of people understood the theory of relativity in some way or other, certainly more than twelve. On the other hand, I think I can safely say that nobody understands quantum mechanics.
+                    <span class="cut-tag">The Character of Physical Law, 1965</span></p>
                 <p class="excerpt-note">The genuine passage, with the sentence in the position that gives it its force. He is comparing quantum mechanics to relativity, which he says plenty of people did understand once they read the paper. The joke lands because of the contrast, and because of the mock-cautious &ldquo;I think I can safely say&rdquo; &mdash; the hedging of a man who knows exactly how large a claim he is making.</p>
                 <a class="source-link" href="https://en.wikiquote.org/wiki/Richard_Feynman" target="_blank" rel="noopener">Wikiquote — the sourced Feynman line, with page citation <span aria-hidden="true">↗</span></a>
                 <div class="trail">

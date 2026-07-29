@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,9 +672,7 @@
                     <dt>Translation</dt><dd>R. D. Hicks, Loeb Classical Library (1925)</dd>
                     <dt>Greek</dt><dd lang="grc">&pi;&omicron;&lambda;&upsilon;&mu;&alpha;&theta;&#943;&eta; &nu;&#972;&omicron;&nu; &#7956;&chi;&epsilon;&iota;&nu; &omicron;&#8016; &delta;&iota;&delta;&#940;&sigma;&kappa;&epsilon;&iota;&hellip;</dd>
                 </dl>
-                <p class="excerpt">
-                    Much learning does not teach understanding; else would it have taught Hesiod and Pythagoras, or, again, Xenophanes and Hecataeus.
-                </p>
+                <p class="excerpt">Much learning does not teach understanding; else would it have taught Hesiod and Pythagoras, or, again, Xenophanes and Hecataeus.</p>
                 <p class="excerpt-note">The one-liner that circulates online is only the first clause. Heraclitus&rsquo; point lands in the second half: he names four famously erudite men &mdash; the poet Hesiod and the thinkers Pythagoras, Xenophanes and Hecataeus &mdash; as proof that piling up information is no guarantee of insight.</p>
                 <a class="source-link" href="http://penelope.uchicago.edu/Thayer/E/Roman/Texts/Diogenes_Laertius/Lives_of_the_Eminent_Philosophers/9/Heraclitus*.html" target="_blank" rel="noopener">Diogenes Laertius, Lives 9.1 (Hicks, Loeb 1925) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

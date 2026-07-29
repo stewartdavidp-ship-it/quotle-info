@@ -281,7 +281,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -662,9 +669,7 @@
                     <dt>Latin</dt><dd lang="la">&ldquo;&hellip; parvis momentis magnas rerum commutationes efficit&rdquo;</dd>
                     <dt>Translation</dt><dd>Popular English is a condensed variant; standard scholarly rendering is A. G. Peskett, Loeb, 1914</dd>
                 </dl>
-                <p class="excerpt">
-                    But fortune, which has great influence in affairs generally and especially in war, produces by a slight disturbance of balance important changes in human affairs; as happened then.
-                </p>
+                <p class="excerpt">But fortune, which has great influence in affairs generally and especially in war, produces by a slight disturbance of balance important changes in human affairs; as happened then.</p>
                 <p class="excerpt-note">A. G. Peskett&rsquo;s Loeb translation (1914) of the sentence at <em>Civil War</em> III.68. The circulating eight-word line &mdash; &ldquo;In war, events of importance are the result of trivial causes&rdquo; &mdash; tightens this same passage into an aphorism.</p>
                 <a class="source-link" href="https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Caesar/Civil_Wars/3C*.html" target="_blank" rel="noopener">Caesar, The Civil War III.68 (Loeb, 1914) at Penelope <span aria-hidden="true">↗</span></a>
                 <div class="trail">

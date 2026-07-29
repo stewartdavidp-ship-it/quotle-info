@@ -278,7 +278,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -660,10 +667,8 @@
                     <dt>Socrates source</dt><dd>None &mdash; absent from Plato, Xenophon, Aristophanes and Diogenes La&euml;rtius</dd>
                     <dt>Verdict</dt><dd>Modern; falsely credited</dd>
                 </dl>
-                <p class="excerpt">
-                    But I observed that even the good artisans fell into the same error as the poets;—because they were good workmen they thought that they also knew all sorts of high matters, and this defect in them overshadowed their wisdom.
-                    <span class="cut-tag">Plato, Apology 22d (trans. Benjamin Jowett)</span>
-                </p>
+                <p class="excerpt">But I observed that even the good artisans fell into the same error as the poets;—because they were good workmen they thought that they also knew all sorts of high matters, and this defect in them overshadowed their wisdom.
+                    <span class="cut-tag">Plato, Apology 22d (trans. Benjamin Jowett)</span></p>
                 <p class="excerpt-note">The genuine Socratic version of the same idea, from Jowett&rsquo;s Plato. Notice how much less flattering it is to the reader. Socrates is not sorting people into smart, average and stupid; he is saying that real expertise is precisely what tempts a person to think they know everything else &mdash; a warning aimed at competent people, not at fools.</p>
                 <a class="source-link" href="https://www.gutenberg.org/files/1656/1656-h/1656-h.htm" target="_blank" rel="noopener">Plato, Apology (Jowett translation) — Project Gutenberg <span aria-hidden="true">↗</span></a>
                 <div class="trail">

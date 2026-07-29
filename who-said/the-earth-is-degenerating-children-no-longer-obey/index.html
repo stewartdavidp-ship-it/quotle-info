@@ -283,7 +283,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,10 +672,8 @@
                     <dt>Credited there to</dt><dd>&lsquo;Naram Sin, 5000 B.C.&rsquo; &mdash; not a tablet</dd>
                     <dt>&lsquo;Assyrian tablet, 2800 B.C.&rsquo;</dt><dd>First fixed in 1922, in Connecticut</dd>
                 </dl>
-                <p class="excerpt">
-                    Our earth is degenerate in these latter days; there are signs that the world is speedily coming to an end; bribery and corruption are common; children no longer obey their parents; every man wants to write a book, and the end of the world is evidently approaching.
-                    <span class="cut-tag">Connecticut, 1922</span>
-                </p>
+                <p class="excerpt">Our earth is degenerate in these latter days; there are signs that the world is speedily coming to an end; bribery and corruption are common; children no longer obey their parents; every man wants to write a book, and the end of the world is evidently approaching.
+                    <span class="cut-tag">Connecticut, 1922</span></p>
                 <p class="excerpt-note">The 1922 wording, as printed in a US state librarian&rsquo;s annual report &mdash; the moment the floating complaint acquired its permanent costume of &lsquo;Assyrian tablet, 2800 B.C.&rsquo; Read it as what it is: an American librarian&rsquo;s wry aside about too many books, dressed for antiquity.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2012/10/22/world-end/" target="_blank" rel="noopener">Quote Investigator — tracing it to 1908 and 1922 <span aria-hidden="true">↗</span></a>
                 <div class="trail">

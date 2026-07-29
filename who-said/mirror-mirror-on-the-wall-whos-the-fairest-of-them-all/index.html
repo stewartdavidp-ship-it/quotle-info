@@ -272,7 +272,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -653,10 +660,8 @@
                     <dt>Spoken by</dt><dd>Queen Grimhilde (Lucille La Verne) &mdash; a fictional character &mdash; addressing the Magic Mirror (Moroni Olsen)</dd>
                     <dt>Translation</dt><dd>English renderings differ: &ldquo;Looking-glass, Looking-glass, on the wall&rdquo; (Margaret Hunt, 1884); &ldquo;Mirror, mirror, on the wall&rdquo; (D. L. Ashliman, &copy; 2002&ndash;2005)</dd>
                 </dl>
-                <p class="excerpt">
-                    &bdquo;Spieglein, Spieglein an der Wand: wer ist die sch&ouml;nste Frau in dem ganzen Land?&ldquo;<br><br>&mdash; Grimm, &bdquo;Sneewittchen&ldquo;, 1812; trimmed in the 1857 final edition to &bdquo;Spieglein, Spieglein an der Wand, wer ist die sch&ouml;nste im ganzen Land?&ldquo; In D. L. Ashliman&rsquo;s English: <strong>&ldquo;Mirror, mirror, on the wall, / Who in this land is fairest of all?&rdquo;</strong><br><br>And in Disney&rsquo;s 1937 film, the line people are actually picturing:<br><br><strong>&ldquo;Magic Mirror on the wall, who is the fairest one of all?&rdquo;</strong><br><br>&mdash; to which the Mirror replies: &ldquo;Famed is thy beauty, Majesty. But hold, a lovely maid I see. Rags cannot hide her gentle grace. Alas, she is more fair than thee.&rdquo;
-                    <span class="cut-tag">the rhyme, in three versions</span>
-                </p>
+                <p class="excerpt">&bdquo;Spieglein, Spieglein an der Wand: wer ist die sch&ouml;nste Frau in dem ganzen Land?&ldquo;<br><br>&mdash; Grimm, &bdquo;Sneewittchen&ldquo;, 1812; trimmed in the 1857 final edition to &bdquo;Spieglein, Spieglein an der Wand, wer ist die sch&ouml;nste im ganzen Land?&ldquo; In D. L. Ashliman&rsquo;s English: <strong>&ldquo;Mirror, mirror, on the wall, / Who in this land is fairest of all?&rdquo;</strong><br><br>And in Disney&rsquo;s 1937 film, the line people are actually picturing:<br><br><strong>&ldquo;Magic Mirror on the wall, who is the fairest one of all?&rdquo;</strong><br><br>&mdash; to which the Mirror replies: &ldquo;Famed is thy beauty, Majesty. But hold, a lovely maid I see. Rags cannot hide her gentle grace. Alas, she is more fair than thee.&rdquo;
+                    <span class="cut-tag">the rhyme, in three versions</span></p>
                 <p class="excerpt-note">Two real lines, neither of them the popular one. The public version borrows the Grimms&rsquo; opening, the film&rsquo;s setting, and an ending &mdash; &ldquo;of them all&rdquo; &mdash; that we could not find in any text.</p>
                 <a class="source-link" href="https://sites.pitt.edu/~dash/grimm053.html" target="_blank" rel="noopener">Grimm 053: Little Snow-White — D. L. Ashliman&rsquo;s translation of the 1857 final edition <span aria-hidden="true">↗</span></a>
                 <div class="trail">

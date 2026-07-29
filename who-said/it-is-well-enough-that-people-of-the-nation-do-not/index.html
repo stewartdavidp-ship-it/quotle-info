@@ -281,7 +281,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -663,10 +670,8 @@
                     <dt>Date</dt><dd>19 March 1937</dd>
                     <dt>Framing</dt><dd>Introduced as &ldquo;in substance&rdquo; &mdash; a paraphrase, not a quotation</dd>
                 </dl>
-                <p class="excerpt">
-                    I wish I could shout this from the mountaintop until the people of our great Nation might know and understand. I assure you that there would then be a change before morning if the people only knew.<br><br>It was Henry Ford who said, in substance, this: &ldquo;It is perhaps well enough that the people of the Nation do not know or understand our banking and monetary system, for if they did I believe there would be a revolution before tomorrow morning.&rdquo;
-                    <span class="cut-tag">Congressional Record&mdash;House, 19 March 1937</span>
-                </p>
+                <p class="excerpt">I wish I could shout this from the mountaintop until the people of our great Nation might know and understand. I assure you that there would then be a change before morning if the people only knew.<br><br>It was Henry Ford who said, in substance, this: &ldquo;It is perhaps well enough that the people of the Nation do not know or understand our banking and monetary system, for if they did I believe there would be a revolution before tomorrow morning.&rdquo;
+                    <span class="cut-tag">Congressional Record&mdash;House, 19 March 1937</span></p>
                 <p class="excerpt-note">Two things are worth noticing. First, Binderup&rsquo;s own sentence immediately before &mdash; &ldquo;there would then be a change before morning if the people only knew&rdquo; &mdash; runs so close to the line he then hands to Ford that it is hard to see where his rhetoric ends and Ford&rsquo;s supposed words begin. Second, this 1937 text is <em>not</em> the wording that circulates today: the popular version drops &ldquo;perhaps,&rdquo; drops &ldquo;know or,&rdquo; and changes &ldquo;the people of the Nation&rdquo; to &ldquo;people of the nation.&rdquo;</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📜</span>

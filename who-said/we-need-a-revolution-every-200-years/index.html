@@ -278,7 +278,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -660,10 +667,8 @@
                     <dt>Earliest located</dt><dd>Not established; circulates on quotation sites</dd>
                     <dt>Nearest genuine line</dt><dd>Jefferson to William Stephens Smith, 13 November 1787</dd>
                 </dl>
-                <p class="excerpt">
-                    God forbid we should ever be 20. years without such a rebellion. ... The tree of liberty must be refreshed from time to time with the blood of patriots and tyrants. It is it's natural manure.
-                    <span class="cut-tag">Jefferson, 13 November 1787 — the adjacent line</span>
-                </p>
+                <p class="excerpt">God forbid we should ever be 20. years without such a rebellion. ... The tree of liberty must be refreshed from time to time with the blood of patriots and tyrants. It is it's natural manure.
+                    <span class="cut-tag">Jefferson, 13 November 1787 — the adjacent line</span></p>
                 <p class="excerpt-note">Not the quote on this page. This is Jefferson, writing to William Stephens Smith about Shays&rsquo; Rebellion — a different man, a different decade, and an interval of twenty years rather than two hundred. It is the closest genuine thing in the founders&rsquo; papers, which is probably how Franklin ended up wearing it.</p>
                 <a class="source-link" href="https://founders.archives.gov/search/%22every%20two%20hundred%20years%22" target="_blank" rel="noopener">Founders Online — phrase search returning no results <span aria-hidden="true">↗</span></a>
                 <div class="trail">

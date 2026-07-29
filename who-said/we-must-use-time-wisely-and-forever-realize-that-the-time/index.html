@@ -283,7 +283,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,10 +671,8 @@
                     <dt>Dated</dt><dd>16 April 1963</dd>
                     <dt>Original wording</dt><dd>&ldquo;&hellip;creatively, in the knowledge that&hellip;&rdquo;</dd>
                 </dl>
-                <p class="excerpt">
-                    Human progress never rolls in on wheels of inevitability; it comes through the tireless efforts of men willing to be co-workers with God, and without this hard work, time itself becomes an ally of the forces of social stagnation. We must use time creatively, in the knowledge that the time is always ripe to do right. Now is the time to make real the promise of democracy&hellip;
-                    <span class="cut-tag">↑ King wrote &ldquo;creatively, in the knowledge that&rdquo; &mdash; the Mandela version swaps in &ldquo;wisely and forever realize&rdquo;</span>
-                </p>
+                <p class="excerpt">Human progress never rolls in on wheels of inevitability; it comes through the tireless efforts of men willing to be co-workers with God, and without this hard work, time itself becomes an ally of the forces of social stagnation. We must use time creatively, in the knowledge that the time is always ripe to do right. Now is the time to make real the promise of democracy&hellip;
+                    <span class="cut-tag">↑ King wrote &ldquo;creatively, in the knowledge that&rdquo; &mdash; the Mandela version swaps in &ldquo;wisely and forever realize&rdquo;</span></p>
                 <p class="excerpt-note">King&rsquo;s point is that time is neutral: it can serve justice or stagnation, so people must act rather than wait. The circulated Mandela quotation lifts only the second sentence and softens its wording.</p>
                 <a class="source-link" href="http://law2.umkc.edu/faculty/projects/ftrials/conlaw/mlkjail.html" target="_blank" rel="noopener">Full text of the Letter from Birmingham Jail (UMKC) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

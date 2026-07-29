@@ -283,7 +283,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,9 +671,7 @@
                     <dt>Delivered</dt><dd>3 August 1857 (the 1857 pamphlet misdates it 4 August)</dd>
                     <dt>First published</dt><dd>1857, in a pamphlet printed at Rochester, N.Y.</dd>
                 </dl>
-                <p class="excerpt">
-                    Let me give you a word of the philosophy of reform. The whole history of the progress of human liberty shows that all concessions yet made to her august claims have been born of earnest struggle&hellip; If there is no struggle there is no progress. Those who profess to favor freedom and yet deprecate agitation, are men who want crops without plowing up the ground; they want rain without thunder and lightning. They want the ocean without the awful roar of its many waters&hellip; Power concedes nothing without a demand. It never did and it never will.
-                </p>
+                <p class="excerpt">Let me give you a word of the philosophy of reform. The whole history of the progress of human liberty shows that all concessions yet made to her august claims have been born of earnest struggle&hellip; If there is no struggle there is no progress. Those who profess to favor freedom and yet deprecate agitation, are men who want crops without plowing up the ground; they want rain without thunder and lightning. They want the ocean without the awful roar of its many waters&hellip; Power concedes nothing without a demand. It never did and it never will.</p>
                 <p class="excerpt-note">The original text carries no comma&mdash;&ldquo;If there is no struggle there is no progress&rdquo;&mdash;and the sentence is only the opening of a longer passage that reformers still quote in full.</p>
                 <a class="source-link" href="https://frederickdouglasspapersproject.com/s/digitaledition/item/10509" target="_blank" rel="noopener">Read the speech at the Frederick Douglass Papers Project <span aria-hidden="true">↗</span></a>
                 <div class="trail">

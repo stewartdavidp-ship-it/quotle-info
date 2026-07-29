@@ -282,7 +282,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -663,10 +670,8 @@
                     <dt>Archive</dt><dd>Einstein Archives 75-990</dd>
                     <dt>Published</dt><dd>Isaacson, <em>Einstein: His Life and Universe</em> (2007), p. 367</dd>
                 </dl>
-                <p class="excerpt">
-                    Beim Menschen ist es wie beim Velo. Nur wenn er f&auml;hrt, kann er bequem die Balance halten. &mdash; literally: &ldquo;It is the same with people as it is with riding a bike. Only when moving can one comfortably maintain one&rsquo;s balance.&rdquo;
-                    <span class="cut-tag">↑ the popular &lsquo;Life is like riding a bicycle&rsquo; smooths Einstein&rsquo;s literal &lsquo;people&rsquo; wording</span>
-                </p>
+                <p class="excerpt">Beim Menschen ist es wie beim Velo. Nur wenn er f&auml;hrt, kann er bequem die Balance halten. &mdash; literally: &ldquo;It is the same with people as it is with riding a bike. Only when moving can one comfortably maintain one&rsquo;s balance.&rdquo;
+                    <span class="cut-tag">↑ the popular &lsquo;Life is like riding a bicycle&rsquo; smooths Einstein&rsquo;s literal &lsquo;people&rsquo; wording</span></p>
                 <p class="excerpt-note">The widely shared English form &mdash; &ldquo;Life is like riding a bicycle. To keep your balance, you must keep moving&rdquo; &mdash; is a tidied adaptation of this line, which Walter Isaacson used as an epigraph. The sentiment and the source letter are genuine; the exact phrasing is a translator&rsquo;s polish.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2015/06/28/bicycle/" target="_blank" rel="noopener">Quote Investigator: tracing the bicycle line <span aria-hidden="true">↗</span></a>
                 <div class="trail">

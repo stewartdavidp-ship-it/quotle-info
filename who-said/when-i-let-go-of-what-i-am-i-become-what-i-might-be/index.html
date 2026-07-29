@@ -282,7 +282,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,10 +671,8 @@
                     <dt>First published</dt><dd>Humanics New Age, Atlanta, 1985</dd>
                     <dt>Translation</dt><dd>None &mdash; Heider&rsquo;s own free adaptation, not a rendering of the Chinese; his section 22 answers to Tao Te Ching chapter 22</dd>
                 </dl>
-                <p class="excerpt">
-                    When I let go of what I am, I become what I might be. When I let go of what I have, I receive what I need.<br><br>By yielding, I endure.<br><br>When I give of myself, I become more.
-                    <span class="cut-tag">Short excerpt</span>
-                </p>
+                <p class="excerpt">When I let go of what I am, I become what I might be. When I let go of what I have, I receive what I need.<br><br>By yielding, I endure.<br><br>When I give of myself, I become more.
+                    <span class="cut-tag">Short excerpt</span></p>
                 <p class="excerpt-note">These are Heider&rsquo;s own sentences, verified verbatim in <a href="https://villagevolunteers.org/wp-content/uploads/2011/07/Leadership-Principles.pdf" target="_blank" rel="noopener">a circulated PDF of excerpts from the book ↗</a>. A blog transcript of the passage places it under the heading <a href="http://harimohanparuvu.blogspot.com/2015/06/the-tao-of-leadership-john-heider.html" target="_blank" rel="noopener">&ldquo;The paradox of letting go&rdquo; ↗</a>.</p>
                 <a class="source-link" href="https://archive.org/details/taoofleadershipl00heid_0" target="_blank" rel="noopener">The Tao of Leadership (Humanics New Age, 1985) at the Internet Archive <span aria-hidden="true">↗</span></a>
                 <div class="trail">

@@ -283,7 +283,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,9 +671,7 @@
                     <dt>Latin</dt><dd lang="la">&ldquo;Ignoranti quem portum petat, nullus suus ventus est.&rdquo;</dd>
                     <dt>Translation</dt><dd>Richard M. Gummere, Loeb Classical Library, Vol. II (1920)</dd>
                 </dl>
-                <p class="excerpt">
-                    Our plans miscarry because they have no aim. When a man does not know what harbour he is making for, no wind is the right wind.
-                </p>
+                <p class="excerpt">Our plans miscarry because they have no aim. When a man does not know what harbour he is making for, no wind is the right wind.</p>
                 <p class="excerpt-note">Gummere&rsquo;s 1920 Loeb rendering of Letter 71, &sect;3. The two sentences run together in Seneca&rsquo;s text; the harbour line is the punchline of the first.</p>
                 <a class="source-link" href="https://en.wikisource.org/wiki/Moral_letters_to_Lucilius/Letter_71" target="_blank" rel="noopener">Seneca, Moral Letters to Lucilius, Letter 71 (Wikisource) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

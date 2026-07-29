@@ -266,7 +266,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -648,10 +655,8 @@
                     <dt>Closest documented words</dt><dd class="title">The Life of Clara Barton, vol. 1 (1922), p. 159 — letter to Gov. John A. Andrew</dd>
                     <dt>Earliest trace</dt><dd>Quote-aggregator listings, by November 2019</dd>
                 </dl>
-                <p class="excerpt">
-                    With this, my highest duties close, and I would fain be allowed to go and administer comfort to our brave men, who peril life and limb in defense of the priceless boon the fathers so dearly won. If I know my own heart, I have none but right motives. I ask neither pay nor praises, simply a soldier&rsquo;s fare and the sanction of Your Excellency to go and do with my might, whatever my hands find to do.
-                    <span class="cut-tag">Letter to Gov. John A. Andrew, 20 Mar 1862</span>
-                </p>
+                <p class="excerpt">With this, my highest duties close, and I would fain be allowed to go and administer comfort to our brave men, who peril life and limb in defense of the priceless boon the fathers so dearly won. If I know my own heart, I have none but right motives. I ask neither pay nor praises, simply a soldier&rsquo;s fare and the sanction of Your Excellency to go and do with my might, whatever my hands find to do.
+                    <span class="cut-tag">Letter to Gov. John A. Andrew, 20 Mar 1862</span></p>
                 <p class="excerpt-note">This is <em>not</em> the source of the popular quote &mdash; it is what Barton actually, documentably wrote about going to the front. Written from her dying father&rsquo;s bedside in North Oxford, Massachusetts, and printed in <a href="https://archive.org/details/lifeofclarabarto01bart" target="_blank" rel="noopener">William E. Barton&rsquo;s biography, vol. 1, p. 159 ↗</a>. Andrew replied within four days with a warm but conditional promise &mdash; which Dr. Hitchcock&rsquo;s refusal then closed off.</p>
                 <a class="source-link" href="https://archive.org/details/lifeofclarabarto01bart" target="_blank" rel="noopener">Read the letter in The Life of Clara Barton, vol. 1 (1922) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

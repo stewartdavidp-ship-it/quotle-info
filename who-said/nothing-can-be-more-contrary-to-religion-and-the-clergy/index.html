@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -666,9 +673,7 @@
                     <dt>First published</dt><dd>1768 &middot; entry &ldquo;Folie&rdquo;</dd>
                     <dt>Translation</dt><dd>Popular English is an anonymous loose rendering; d&rsquo;Holbach&rsquo;s French reads &ldquo;une t&ecirc;te sens&eacute;e et raisonnable&rdquo; (a sensible and reasonable mind)</dd>
                 </dl>
-                <p class="excerpt">
-                    Folie. Les bons Chr&eacute;tiens se glorifient de la folie de la Croix. Rien n&rsquo;est plus contraire &agrave; la Religion et au Clerg&eacute; qu&rsquo;une t&ecirc;te sens&eacute;e et raisonnable ; elle n&rsquo;est jamais bien propre &agrave; la foi, ni assez susceptible de ferveur ou de z&egrave;le.
-                </p>
+                <p class="excerpt">Folie. Les bons Chr&eacute;tiens se glorifient de la folie de la Croix. Rien n&rsquo;est plus contraire &agrave; la Religion et au Clerg&eacute; qu&rsquo;une t&ecirc;te sens&eacute;e et raisonnable ; elle n&rsquo;est jamais bien propre &agrave; la foi, ni assez susceptible de ferveur ou de z&egrave;le.</p>
                 <p class="excerpt-note">From the entry &ldquo;Folie&rdquo; (Folly). Literally: &ldquo;Nothing is more contrary to Religion and the Clergy than a sensible and reasonable mind; it is never well suited to faith, nor susceptible enough to fervour or zeal.&rdquo; The circulating English swaps &ldquo;a sensible and reasonable mind&rdquo; for &ldquo;reason and common sense.&rdquo;</p>
                 <a class="source-link" href="https://www.classiques.uqam.ca/classiques/holbach_baron_d/theologie_portative/dholbach_theologie_portative.pdf" target="_blank" rel="noopener">Th&eacute;ologie portative (1768), full text — Les Classiques des sciences sociales <span aria-hidden="true">↗</span></a>
                 <div class="trail">

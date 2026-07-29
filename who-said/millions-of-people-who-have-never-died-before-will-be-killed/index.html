@@ -278,7 +278,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -659,10 +666,8 @@
                     <dt>Credited by Hemingway to</dt><dd>Edward &ldquo;Bra&rdquo; Saunders, a Key West boat captain who introduced him to game fishing &mdash; a real person, not a character</dd>
                     <dt>Popular wording</dt><dd>&ldquo;Millions of people who have never died before will be killed&rdquo; &mdash; found in no film, transcript or text</dd>
                 </dl>
-                <p class="excerpt">
-                    He advised us all to be careful as men are dying this year who have never died before.
-                    <span class="cut-tag">Letter, not screenplay</span>
-                </p>
+                <p class="excerpt">He advised us all to be careful as men are dying this year who have never died before.
+                    <span class="cut-tag">Letter, not screenplay</span></p>
                 <p class="excerpt-note">Hemingway is relaying a warning from his friend Bra Saunders, not making the observation himself &mdash; the &ldquo;he&rdquo; that opens the sentence is Saunders. Per Sandra Spanier, Hemingway used the line at least twice more, in 1939 and in late 1940 or early 1941, crediting Saunders each time.</p>
                 <a class="source-link" href="https://www.cambridge.org/core/series/cambridge-edition-of-the-letters-of-ernest-hemingway/E97C0D3F0BF6D42D075D92F6C16A9E63" target="_blank" rel="noopener">The Cambridge Edition of the Letters of Ernest Hemingway (Volume 4 covers 1929&ndash;1931) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

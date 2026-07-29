@@ -274,7 +274,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -656,10 +663,8 @@
                     <dt>First published</dt><dd>1858 &middot; Book II, Chapter VI, &ldquo;The Teutsch Ritters or Teutonic Order&rdquo;</dd>
                     <dt>Wording</dt><dd>&ldquo;an Army, like a serpent, goes upon its belly&rdquo; &mdash; not &ldquo;marches on its stomach&rdquo;</dd>
                 </dl>
-                <p class="excerpt">
-                    Barbarossa&rsquo;s Army of Crusaders did not come home again, any more than Barbarossa. They were stronger than Turk or Saracen, but not than Hunger and Disease; Leaders did not know then, as our little Friend at Berlin came to know, that &ldquo;an Army, like a serpent, goes upon its belly.&rdquo; After fine fighting and considerable victories, the end of this Crusade was, it took to &ldquo;besieging Acre,&rdquo; and in reality lay perishing as of murrain on the beach at Acre, without shelter, without medicine, without food.
-                    <span class="cut-tag">Book II, Chapter VI</span>
-                </p>
+                <p class="excerpt">Barbarossa&rsquo;s Army of Crusaders did not come home again, any more than Barbarossa. They were stronger than Turk or Saracen, but not than Hunger and Disease; Leaders did not know then, as our little Friend at Berlin came to know, that &ldquo;an Army, like a serpent, goes upon its belly.&rdquo; After fine fighting and considerable victories, the end of this Crusade was, it took to &ldquo;besieging Acre,&rdquo; and in reality lay perishing as of murrain on the beach at Acre, without shelter, without medicine, without food.
+                    <span class="cut-tag">Book II, Chapter VI</span></p>
                 <p class="excerpt-note">Carlyle&rsquo;s &ldquo;little Friend at Berlin&rdquo; is Frederick the Great; a later volume of the same history makes the ascription explicit, writing &ldquo;an Army goes on its belly, says Friedrich often.&rdquo; The text above is transcribed from the <a href="https://www.gutenberg.org/ebooks/2102" target="_blank" rel="noopener">Project Gutenberg edition ↗</a>, whose Volume 02 contains Book II; <a href="https://quoteinvestigator.com/2017/10/15/army/" target="_blank" rel="noopener">Quote Investigator ↗</a> cites the passage to page 83 of the 1858 Harper &amp; Brothers printing.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📖</span>

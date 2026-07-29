@@ -282,7 +282,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,9 +671,7 @@
                     <dt>First published</dt><dd><em>In Context</em>, no. 27 (Winter 1991), p. 52</dd>
                     <dt>Origin</dt><dd>Adapted from Orr&rsquo;s 1990 commencement address at Arkansas College</dd>
                 </dl>
-                <p class="excerpt">
-                    The plain fact is that the planet does not need more &lsquo;successful&rsquo; people. But it does desperately need more peacemakers, healers, restorers, storytellers, and lovers of every shape and form. It needs people who live well in their places. It needs people of moral courage willing to join the fight to make the world habitable and humane.
-                </p>
+                <p class="excerpt">The plain fact is that the planet does not need more &lsquo;successful&rsquo; people. But it does desperately need more peacemakers, healers, restorers, storytellers, and lovers of every shape and form. It needs people who live well in their places. It needs people of moral courage willing to join the fight to make the world habitable and humane.</p>
                 <p class="excerpt-note">Orr&rsquo;s original wording &mdash; note &ldquo;of every shape and form,&rdquo; which the viral Dalai&nbsp;Lama version replaces with &ldquo;of all kinds.&rdquo;</p>
                 <a class="source-link" href="https://www.context.org/iclib/ic27/orr/" target="_blank" rel="noopener">Read Orr&rsquo;s essay &ldquo;What Is Education For?&rdquo; (In Context no. 27) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

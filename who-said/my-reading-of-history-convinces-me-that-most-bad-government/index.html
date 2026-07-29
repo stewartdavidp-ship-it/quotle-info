@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -666,10 +673,8 @@
                     <dt>Published</dt><dd>New York: Columbia University Press, 1913 &mdash; Columbia University Lectures, Blumenthal Foundation</dd>
                     <dt>Location</dt><dd>Page 49, chapter &ldquo;The Revolutionist&rdquo;</dd>
                 </dl>
-                <p class="excerpt">
-                    Our forefathers knew the danger of excess of government and were bent upon so simplifying, limiting and checking it, that it must forever remain a servant and could never become a master. My reading of history convinces me that most bad government has grown out of too much government. It is a sort of inherent characteristic of all government, as of all conscious organisms, yearly and almost daily, to take to itself more and more jurisdiction&hellip;
-                    <span class="cut-tag">p. 49</span>
-                </p>
+                <p class="excerpt">Our forefathers knew the danger of excess of government and were bent upon so simplifying, limiting and checking it, that it must forever remain a servant and could never become a master. My reading of history convinces me that most bad government has grown out of too much government. It is a sort of inherent characteristic of all government, as of all conscious organisms, yearly and almost daily, to take to itself more and more jurisdiction&hellip;
+                    <span class="cut-tag">p. 49</span></p>
                 <p class="excerpt-note">Transcribed from the Cornell University copy scanned by the Internet Archive. Note the printed wording: &ldquo;has grown out of,&rdquo; not &ldquo;results from.&rdquo;</p>
                 <a class="source-link" href="https://archive.org/details/cu31924032754487" target="_blank" rel="noopener">Read page 49 in the 1913 scan <span aria-hidden="true">↗</span></a>
                 <div class="trail">

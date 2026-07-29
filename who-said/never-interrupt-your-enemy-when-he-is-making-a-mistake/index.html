@@ -283,7 +283,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,10 +671,8 @@
                     <dt>Earliest English record</dt><dd class="title">Archibald Alison, History of Europe from the Commencement of the French Revolution&hellip; (W. Blackwood and Sons, 1836), p. 476, ch. XL &ldquo;Campaign of Austerlitz&rdquo;</dd>
                     <dt>Popular wording</dt><dd>Matches no located primary source; the earliest &ldquo;making a mistake&rdquo; version in Quote Investigator&rsquo;s timeline is Austin Bierbower&rsquo;s, 1888</dd>
                 </dl>
-                <p class="excerpt">
-                    The marshals who surrounded Napoleon saw the advantage, and eagerly besought him to give the signal for action; but he restrained their ardour, and turning to Soult, said, &ldquo;How long would it take you from hence to reach the heights of Pratzen?&rdquo; &mdash; &ldquo;Less than twenty minutes,&rdquo; replied the Marshal; &ldquo;for my troops are in the bottom of the valley, covered with mist and the smoke of their bivouacs; the enemy cannot see them.&rdquo; &mdash; &ldquo;In that case,&rdquo; said Napoleon, &ldquo;let us wait twenty minutes; when the enemy is making a false movement we must take good care not to interrupt him.&rdquo;
-                    <span class="cut-tag">Alison, 1836 &middot; abridged</span>
-                </p>
+                <p class="excerpt">The marshals who surrounded Napoleon saw the advantage, and eagerly besought him to give the signal for action; but he restrained their ardour, and turning to Soult, said, &ldquo;How long would it take you from hence to reach the heights of Pratzen?&rdquo; &mdash; &ldquo;Less than twenty minutes,&rdquo; replied the Marshal; &ldquo;for my troops are in the bottom of the valley, covered with mist and the smoke of their bivouacs; the enemy cannot see them.&rdquo; &mdash; &ldquo;In that case,&rdquo; said Napoleon, &ldquo;let us wait twenty minutes; when the enemy is making a false movement we must take good care not to interrupt him.&rdquo;
+                    <span class="cut-tag">Alison, 1836 &middot; abridged</span></p>
                 <p class="excerpt-note">This is Archibald Alison&rsquo;s 1836 English rendering &mdash; the earliest record of the saying in English, and the closest thing to a source the quote has. Note what it does <em>not</em> say: not &ldquo;never interrupt your enemy,&rdquo; and not &ldquo;mistake.&rdquo; The French behind it, in Jomini&rsquo;s 1827 book, reads &ldquo;Quand l&rsquo;ennemi fait un faux mouvement, il faut se garder de l&rsquo;interrompre.&rdquo;</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📖</span>

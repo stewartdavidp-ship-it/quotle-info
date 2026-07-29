@@ -276,7 +276,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -657,10 +664,8 @@
                     <dt>Date of idea</dt><dd>c. AD 77 (Pliny); Mandela link from 2001</dd>
                     <dt>Status</dt><dd>Misattributed &mdash; evolving proverb, no single author</dd>
                 </dl>
-                <p class="excerpt">
-                    &ldquo;It always seems impossible until it&rsquo;s done.&rdquo;<br><br>Pliny the Elder, c. AD 77: &ldquo;How many things, too, are looked upon as quite impossible, until they have been actually effected?&rdquo;<br><br>Robert H. Goddard, 1921: &ldquo;everything is impossible until it is done.&rdquo;<br><br>Robert Heinlein, 1951: &ldquo;Everything is theoretically impossible, until it&rsquo;s done.&rdquo;
-                    <span class="cut-tag">↑ the &lsquo;Mandela&rsquo; line is the latest link in a 2,000-year chain</span>
-                </p>
+                <p class="excerpt">&ldquo;It always seems impossible until it&rsquo;s done.&rdquo;<br><br>Pliny the Elder, c. AD 77: &ldquo;How many things, too, are looked upon as quite impossible, until they have been actually effected?&rdquo;<br><br>Robert H. Goddard, 1921: &ldquo;everything is impossible until it is done.&rdquo;<br><br>Robert Heinlein, 1951: &ldquo;Everything is theoretically impossible, until it&rsquo;s done.&rdquo;
+                    <span class="cut-tag">↑ the &lsquo;Mandela&rsquo; line is the latest link in a 2,000-year chain</span></p>
                 <p class="excerpt-note">The polished modern wording has no identifiable first author. What is documented is the sentiment&rsquo;s long descent from antiquity &mdash; and that it was not attached to Mandela&rsquo;s name until 2001.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2016/01/05/done/" target="_blank" rel="noopener">Quote Investigator: full chronology of &ldquo;It always seems impossible until it&rsquo;s done&rdquo; <span aria-hidden="true">↗</span></a>
                 <div class="trail">

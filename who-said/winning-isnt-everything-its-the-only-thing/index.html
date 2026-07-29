@@ -270,7 +270,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -652,10 +659,8 @@
                     <dt>Date</dt><dd>9 November 1948</dd>
                     <dt>Occasion</dt><dd>Quarterback Club luncheon, The Tutwiler Hotel, Birmingham, Alabama</dd>
                 </dl>
-                <p class="excerpt">
-                    I think with the fans winning isn&rsquo;t everything. It&rsquo;s the only thing.
-                    <span class="cut-tag">Newspaper report of spoken remarks</span>
-                </p>
+                <p class="excerpt">I think with the fans winning isn&rsquo;t everything. It&rsquo;s the only thing.
+                    <span class="cut-tag">Newspaper report of spoken remarks</span></p>
                 <p class="excerpt-note">As reported in <em>The Birmingham News</em>, 9 November 1948, per <a href="https://quoteinvestigator.com/2017/03/13/winning/" target="_blank" rel="noopener">Quote Investigator&rsquo;s citation trail ↗</a>. The paper framed it as a joke about how little patience fans have for a losing coach.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2017/03/13/winning/" target="_blank" rel="noopener">Quote Investigator: &ldquo;Winning Isn&rsquo;t Everything; It&rsquo;s the Only Thing&rdquo; <span aria-hidden="true">↗</span></a>
                 <div class="trail">
