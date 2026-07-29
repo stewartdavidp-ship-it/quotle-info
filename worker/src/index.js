@@ -283,7 +283,7 @@ export default {
       }
 
       if (url.pathname === '/nominations' && req.method === 'GET') {
-        if (!isAdmin(req, url, env)) return send({ error: 'unauthorized' }, 401);
+        if (!isAdmin(req, env)) return send({ error: 'unauthorized' }, 401);
         const status = url.searchParams.get('status') || 'pending';
         const { results } = await env.DB.prepare(
           'SELECT id,quote,author,note,email,status,created FROM nominations WHERE status=? ORDER BY created DESC LIMIT 200'
@@ -417,7 +417,7 @@ export default {
       // replies nobody ever looks at is not a trust ladder, it is a spam generator with a delay.
       // Returns the full body deliberately: judging the copy is the entire exercise.
       if (url.pathname === '/mail' && req.method === 'GET') {
-        if (!isAdmin(req, url, env)) return send({ error: 'unauthorized' }, 401);
+        if (!isAdmin(req, env)) return send({ error: 'unauthorized' }, 401);
         // DEFAULT 'sent', not 'drafted'. EMAIL_MODE is "send", and replyToReport never writes 'drafted'
         // in that mode — so the bare GET /mail that DAILY-REPORTS.md calls "shows what was sent"
         // returned an empty array. It showed nothing, which is the opposite of an audit trail.
@@ -429,7 +429,7 @@ export default {
       }
 
       if (url.pathname === '/sources' && req.method === 'GET') {
-        if (!isAdmin(req, url, env)) return send({ error: 'unauthorized' }, 401);
+        if (!isAdmin(req, env)) return send({ error: 'unauthorized' }, 401);
         const status = url.searchParams.get('status') || 'pending';
         const { results } = await env.DB.prepare(
           'SELECT id,slug,url,stance,reason,note,email,status,created FROM source_submissions WHERE status=? ORDER BY created DESC LIMIT 200'
@@ -519,19 +519,19 @@ export default {
 // reporter's email address into Cloudflare's logs in plaintext, durably and queryably. /triage
 // already demonstrated the right pattern with an Authorization header.
 //
-// Accepts EITHER during the transition, deliberately: the worker deploys by hand (`wrangler deploy`),
-// not from CI, so a repo change that switched callers to headers before a deploy would 401 the
-// nightly pass — and review.js degrades politely on a 401, which reads as a quiet night. Header
-// first, query param still honoured, and the param support comes out once callers have moved.
+// HEADER ONLY, as of 2026-07-29. It briefly accepted either, because this worker deploys by hand
+// rather than from CI: switching callers before a deploy would have 401'd the nightly pass, and
+// review.js degrades politely on a 401, which reads as a quiet night with no reader reports. So the
+// order was deploy-both, move the callers, then remove the fallback — which is this. Verified live
+// at each step rather than assumed.
 //
 // Constant-time for both. /nominations and /sources previously used plain !== while their two
 // siblings used safeEq; nothing justified the split, and a reader seeing safeEq elsewhere would
 // reasonably assume it was used everywhere.
-function isAdmin(req, url, env) {
+function isAdmin(req, env) {
   if (!env.ADMIN_TOKEN) return false;
   const header = (req.headers.get('authorization') || '').replace(/^Bearer\s+/i, '');
-  if (header) return safeEq(header, env.ADMIN_TOKEN);
-  return safeEq(url.searchParams.get('token') || '', env.ADMIN_TOKEN);
+  return Boolean(header) && safeEq(header, env.ADMIN_TOKEN);
 }
 
 function safeEq(a, b) {

@@ -105,6 +105,13 @@ address and can trigger outbound mail, so it should not be in a URL.
 headers *before* any caller sends them — otherwise the nightly reports pass 401s, and `review.js`
 degrades politely on a 401, which looks exactly like a quiet night with no reader reports.
 
-1. Deploy this worker (accepts both). ← you are here once this is merged and deployed
-2. Switch `tools/review.js` and `tools/verify-review-spine.js` to send the header.
-3. Then, and only then, drop the `?token=` branch from `isAdmin()`.
+1. ✅ Deploy the worker accepting both (2026-07-29, version `9317698b`).
+2. ✅ Switch `tools/review.js` and `tools/verify-review-spine.js` to send the header.
+3. ✅ Drop the `?token=` branch from `isAdmin()`.
+
+**Complete. `isAdmin()` is header-only — `?token=` is refused.** Each step was verified live against
+the deployed worker before the next began: header 200, query param 200 (during transition), bad token
+401, and `GET /mail` returning the `sent` row it had been hiding behind a `drafted` default.
+
+⚠️ Step 3 needs its own `wrangler deploy`. Until then the deployed worker still accepts `?token=` —
+harmless, since nothing sends it any more.

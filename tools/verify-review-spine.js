@@ -205,7 +205,7 @@ check('/triage UPDATE is guarded on status=\'pending\'',
   } else {
     const token = process.env.ADMIN_TOKEN;
     try {
-      const r = await fetch(`${API}/sources?status=pending&token=${encodeURIComponent(token)}`);
+      const r = await fetch(`${API}/sources?status=pending`, { headers: { Authorization: `Bearer ${token}` } });
       const d = await r.json();
       const sources = d.sources || [];
       const known = new Set(rows.map((x) => x.slug));

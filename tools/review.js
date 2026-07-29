@@ -307,7 +307,11 @@ async function fetchReports() {
   const token = process.env.ADMIN_TOKEN;
   if (!token) return { error: 'ADMIN_TOKEN not set — cannot read /sources. Reader reports skipped.' };
   try {
-    const r = await fetch(`${API}/sources?status=pending&token=${encodeURIComponent(token)}`);
+    // Header, not a query parameter. The token used to travel in the URL, and the worker has
+    // observability enabled, so every nightly call wrote the credential guarding every reporter's
+    // address into Cloudflare's logs in plaintext. The worker accepts both (deployed 2026-07-29);
+    // this is the caller half of that transition.
+    const r = await fetch(`${API}/sources?status=pending`, { headers: { Authorization: `Bearer ${token}` } });
     if (!r.ok) return { error: `/sources returned ${r.status}` };
     const d = await r.json();
     return { sources: d.sources || [] };
