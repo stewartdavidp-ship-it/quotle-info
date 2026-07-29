@@ -188,6 +188,33 @@ check('quote JSON-LD verdict agrees with its own creator node', 0, verdictBugs.s
 check('an anonymous creator says it is anonymous', 0, verdictBugs.undescribedAnon.length,
   `creator is an anonymous token with no disambiguatingDescription — indistinguishable from a byline: ${verdictBugs.undescribedAnon.slice(0, 3).join(' · ')}`);
 
+// ---- 4d-bis. the slide-kit warning agrees with the page's own verdict ----
+// "⚠ The slide-ready mistake: crediting this to X" is an attribution claim, and for months it was
+// decided by whether the record happened to carry schema.claimQuoteText — a property of the WORDING.
+// So it printed on 17 right-person-wrong-words pages (the Franklin beer page ran it three sections
+// below its own sentence "Nobody is falsely credited here — Franklin really did publish it") and was
+// SUPPRESSED on houston-we-have-a-problem, whose credit to Jim Lovell is exactly the thing to warn
+// about. Both directions were invisible: the banner renders and the page still looks finished.
+//
+// Asserted against RENDERED HTML, not against the predicate, so a future edit to renderPresentationKit
+// cannot quietly decouple the two again. The contract is stated in both directions on purpose — a
+// check that only forbade the banner would be satisfied by never printing it.
+const { rightPersonWrongWords } = require('./template');
+const { primaryCredit } = require('./credits');
+const bannerBugs = { contradicts: [], missing: [] };
+for (const r of require('./corpus').records) {
+  const p = path.join(ROOT, 'who-said', r.quoteSlug, 'index.html');
+  if (!fs.existsSync(p)) continue;
+  const shown = fs.readFileSync(p, 'utf8').includes('The slide-ready mistake');
+  const rpww = rightPersonWrongWords(r);
+  if (shown && rpww) bannerBugs.contradicts.push(r.quoteSlug);
+  if (!shown && !rpww && r.confidence === 'disputed' && primaryCredit(r)) bannerBugs.missing.push(r.quoteSlug);
+}
+check('no slide kit warns against a credit its own page calls correct', 0, bannerBugs.contradicts.length,
+  `right-person-wrong-words page prints "crediting this to X is the mistake" while X is its author: ${bannerBugs.contradicts.slice(0, 3).join(' · ')}`);
+check('every disputed credit gets its slide-kit warning', 0, bannerBugs.missing.length,
+  `a disputed page names a false credit but does not warn a slide-maker off it: ${bannerBugs.missing.slice(0, 3).join(' · ')}`);
+
 // ---- 4e. every inline <script> actually PARSES ----
 // Generators emit JS from inside JS template literals, so a backslash in the emitted code is eaten
 // as an escape at build time. `/\/who-said\/([a-z0-9-]+)\//` shipped as `//who-said/([a-z0-9-]+)//`
@@ -446,7 +473,7 @@ if (state && state.figures) {
 // checks.length here is the count BEFORE this one is added — hence the +1. Written this way round
 // because the number you compare against should be the number the build prints, not that number
 // minus one; the off-by-one version failed on its first run and cost ten minutes.
-const EXPECTED_CHECKS = 45;
+const EXPECTED_CHECKS = 47; // 45 → 47: the two slide-kit banner checks (§4d-bis)
 check('every invariant still runs (none silently skipped)', EXPECTED_CHECKS, checks.length + 1,
   'a check block is guarded by `if (x)` and its input went missing, so it removed itself. Find which by diffing the printed check list with CORPUS_VERBOSE=1.');
 

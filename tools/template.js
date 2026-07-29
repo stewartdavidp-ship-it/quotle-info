@@ -209,7 +209,8 @@ function buildJsonLd(q, url) {
   // not the attribution (Franklin really wrote it, but about wine; Durocher really said it, but
   // differently). There the "hero must not be the magnet" test below is a false positive: creator
   // names whoever wrote `text`, which is exactly right, and the ClaimReview separately rates the
-  // paraphrase claim.
+  // paraphrase claim. The predicate itself lives at the foot of this file — renderPresentationKit
+  // needs the same answer and used to compute a different, wrong one.
   //
   // The exemption used to be keyed on `wordingDrift`, i.e. on claimQuoteText being present and
   // different. That proxy was wrong in BOTH directions:
@@ -230,10 +231,7 @@ function buildJsonLd(q, url) {
   // the record does not name somebody else as real. "Unknown"/"Anonymous" in realAuthorName counts as
   // somebody else: it says the true author is NOT established, which is a misattribution page, not a
   // wording one. No new field; no DOSSIER_SCHEMA change.
-  const explicitReal = plain((q.answer && q.answer.realAuthorName) || '');
-  const rightPersonWrongWords = !!(q.confidence === 'disputed' && !heroUnknown && magnetName
-    && heroName.toLowerCase() === magnetName
-    && (!explicitReal || explicitReal.toLowerCase() === magnetName));
+  const isRightPersonWrongWords = rightPersonWrongWords(q);
   // On a disputed page, emit Quotation.creator ONLY when it names the TRUE author: it must match the
   // hero, the hero must be a real named person, AND the hero must NOT be the magnet (unless this is
   // a right-person-wrong-words page, where magnet == true author by definition). This catches records
@@ -247,7 +245,7 @@ function buildJsonLd(q, url) {
   const creatorIsAnon = s.creator && /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(plain(s.creator.name));
   const creatorOk = s.creator && (q.confidence !== 'disputed'
     || (!heroUnknown && plain(s.creator.name).toLowerCase() === heroName.toLowerCase()
-      && (rightPersonWrongWords || heroName.toLowerCase() !== magnetName))
+      && (isRightPersonWrongWords || heroName.toLowerCase() !== magnetName))
     || (heroUnknown && creatorIsAnon));
   if (creatorOk) {
     quotation.creator = { '@type': 'Person', name: s.creator.name };
@@ -983,20 +981,25 @@ function renderPresentationKit(q) {
 
   // Don't name a "correct credit" here — the pkit-credit blockquote directly above already shows it.
   // (Naming answer.authorName could self-contradict when a record left it as the magnet.)
-  // On a WORDING-DRIFT page (schema.claimQuoteText differs from the documented schema.quotationText)
-  // the magnet IS the true author and only the wording drifted, so "crediting this to X is the
-  // mistake" contradicts the page's own verdict — and the credit shown above names that very person.
-  // The block label and the reuse line already carry the real caution, so say nothing here instead of
-  // something false. Keyed on claimQuoteText, so ordinary wrong-name records are unaffected.
+  // On a RIGHT-PERSON-WRONG-WORDS page the magnet IS the true author and only the wording drifted,
+  // so "crediting this to X is the mistake" contradicts the page's own verdict — and the credit
+  // shown above names that very person. The block label and the reuse line already carry the real
+  // caution, so say nothing here instead of something false.
+  //
+  // This used to test `schema.claimQuoteText` (the local `drift` below) rather than the attribution.
+  // Both directions were wrong, exactly as the note above creatorOk predicted: 17 genuine
+  // right-person-wrong-words pages carry no claimQuoteText and shipped the contradictory banner
+  // (the Franklin beer page, three sections under "Nobody is falsely credited here"), while
+  // houston-we-have-a-problem does carry one — and its credit to Jim Lovell is flatly wrong — so the
+  // page that most needs the warning was the one page suppressing it. One predicate now, shared with
+  // the JSON-LD block, at the foot of this file.
   const sch = q.schema || {};
   // Is the DISPUTE about the wording, or about the credit? A record that carries a distinct
   // claimQuoteText is saying "the line in circulation differs from the documented sentence" —
   // that's a wording dispute. Everything else disputed is a wrong-name dispute, where the wording
   // is usually verbatim correct and only the attribution is false.
   const wordingDrift = !!(sch.claimQuoteText && plain(sch.claimQuoteText) !== plain(sch.quotationText || q.displayQuote));
-  const drift = wordingDrift
-    && plain(primaryCredit(q)).toLowerCase() === plain((q.answer || {}).authorName || '').toLowerCase();
-  const warn = (q.confidence === 'disputed' && primaryCredit(q) && !drift) ? `
+  const warn = (q.confidence === 'disputed' && primaryCredit(q) && !rightPersonWrongWords(q)) ? `
                     <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>${esc(primaryCredit(q))}</strong>. Use the credit shown above instead.</p>` : '';
 
   const [imgA, imgB] = buildImagePrompts(q);
@@ -1741,4 +1744,30 @@ function realAuthorName(r) {
   return plain(a.realAuthorName || a.authorName || '');
 }
 
-module.exports = { renderPage, canonicalUrl, CONFIDENCE, creditLine, plain, buildImagePrompts, realAuthorName };
+// RIGHT PERSON, WRONG WORDS — the credited name IS the true author and the dispute is about the
+// WORDING, not the attribution. Franklin really did publish it, about wine; Durocher really said it,
+// later and differently; Edison's remark is real and this sentence is a paraphrase of it.
+//
+// ONE definition, because two consumers need it and the second one had a different, wrong copy. The
+// JSON-LD block uses it to decide whether Quotation.creator may name the hero; renderPresentationKit
+// uses it to decide whether to print "⚠ The slide-ready mistake: crediting this to X". The kit had
+// its own test keyed on `schema.claimQuoteText` instead, so the Franklin page rendered that banner
+// three sections below its own sentence "Nobody is falsely credited here — Franklin really did
+// publish it", and `houston-we-have-a-problem` (which DOES carry claimQuoteText, and whose credit to
+// Jim Lovell really is wrong) had its banner suppressed. 17 pages shipped the contradiction.
+//
+// claimQuoteText is the wrong signal and the file says so at length above creatorOk: it is a
+// property of the WORDING, and only ~9 records split the two strings at all. The question here is
+// about the ATTRIBUTION, and every field it needs already exists — the hero is the magnet, and the
+// record does not name somebody else as real. "Unknown"/"Anonymous" in realAuthorName counts as
+// somebody else: it says the true author is NOT established, which is a misattribution page.
+function rightPersonWrongWords(q) {
+  const heroName = plain((q && q.answer && q.answer.authorName) || '');
+  if (!heroName || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroName)) return false;
+  const magnetName = plain(primaryCredit(q) || '').toLowerCase();
+  if (!magnetName || heroName.toLowerCase() !== magnetName) return false;
+  const explicitReal = plain((q.answer && q.answer.realAuthorName) || '');
+  return q.confidence === 'disputed' && (!explicitReal || explicitReal.toLowerCase() === magnetName);
+}
+
+module.exports = { renderPage, canonicalUrl, CONFIDENCE, creditLine, plain, buildImagePrompts, realAuthorName, rightPersonWrongWords };
