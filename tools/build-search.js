@@ -57,7 +57,13 @@ try {
     if (r.confidence === 'disputed' || !Array.isArray(r.themes)) continue;
     for (const th of r.themes) if (isTheme(th)) themeCount[th] = (themeCount[th] || 0) + 1;
   }
-} catch (_) { /* records optional */ }
+} catch (e) {
+  // Was swallowed: on any read failure themeCount stayed empty, every theme was skipped, and
+  // search.json shipped with ZERO theme entries — silently, permanently, and unwatched, because
+  // verify-corpus asserts the q/s/w/a/b counts but never t.
+  console.error(`  ! build-search: could not read records for theme counts — ${e.message}`);
+  process.exit(1);
+}
 for (const t of THEMES) {
   if (!themeCount[t.slug]) continue;
   entries.push({ t: 't', x: t.label, n: themeCount[t.slug], u: `/themes/${t.slug}/` });
@@ -70,7 +76,11 @@ try {
     if (c.status !== 'queued' || !c.slug) continue;
     entries.push({ t: 'b', x: c.quote, a: c.magnetAuthor || '', c: c.category, u: `/flagged/?q=${c.slug}` });
   }
-} catch (_) { /* backlog optional */ }
+} catch (e) {
+  // The backlog genuinely IS optional (a fresh clone has none), so this one stays tolerant — but it
+  // says so rather than vanishing.
+  if (e.code !== 'ENOENT') { console.error(`  ! build-search: harvest queue unreadable — ${e.message}`); process.exit(1); }
+}
 
 fs.writeFileSync(path.join(ROOT, 'search.json'), JSON.stringify(entries));
 const n = entries.reduce((m, e) => (m[e.t] = (m[e.t] || 0) + 1, m), {});
