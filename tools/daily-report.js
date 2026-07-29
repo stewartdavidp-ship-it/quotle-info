@@ -20,6 +20,9 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
+// Must run before the first fetch: routes GitHub reads through the sandbox proxy (15000/hr) instead
+// of direct-and-anonymous (60/hr on a SHARED cloud IP, measured at 0 remaining). No-op locally.
+require('./proxy-boot')();
 
 const ROOT = path.resolve(__dirname, '..');
 const argv = process.argv.slice(2);
@@ -53,15 +56,35 @@ const EXPECTED = [
 ];
 
 // ---- what ran ----
+// READS BOTH LOG FORMATS. `routine-log.js` switched from one appended file to one file per run on
+// 2026-07-29 (five branches conflicting on the same tail line); its own --report has always read
+// both, but this tool read only the shard directory. On the first morning that mattered it showed
+// `daily-wave: 1 run` when the wave had fired three times and one of those was an `error` — a hard
+// failure rendered as a clean run, by the tool whose stated purpose is that those never look alike.
+const seen = new Set();
 const shards = [];
+const ingest = (text, shard) => {
+  for (const line of text.trim().split('\n')) {
+    const e = j(line, null);
+    if (!e) continue;
+    // Dedupe on EXACT equality only. The transition day wrote some runs to both files; those lines
+    // are byte-identical. A looser key (routine+outcome) would silently merge two real no-op runs,
+    // and the alarm this tool exists to raise — "did not run" — is runs.length === 0, which no
+    // amount of over-counting can suppress. So: collapse only what is provably the same line.
+    const k = JSON.stringify(e);
+    if (seen.has(k)) continue;
+    seen.add(k);
+    shards.push({ ...e, shard });
+  }
+};
 try {
   const dir = path.join(ROOT, 'data', 'routine-log');
   for (const f of fs.readdirSync(dir).filter((n) => n.endsWith('.jsonl'))) {
-    for (const line of fs.readFileSync(path.join(dir, f), 'utf8').trim().split('\n')) {
-      const e = j(line, null); if (e) shards.push({ ...e, shard: f });
-    }
+    ingest(fs.readFileSync(path.join(dir, f), 'utf8'), f);
   }
 } catch (_) {}
+// Legacy single file: read-only, nothing appends to it, but it still carries history.
+try { ingest(fs.readFileSync(path.join(ROOT, 'data', 'routine-log.jsonl'), 'utf8'), 'routine-log.jsonl'); } catch (_) {}
 const todays = shards.filter((s) => s.date === SINCE);
 
 const ran = EXPECTED.map((e) => {
@@ -152,6 +175,10 @@ if (toolFailures.length) {
 const alarms = [];
 if (h.ci !== 'success') alarms.push(`CI on main is ${h.ci}`);
 for (const r of out.ran) if (r.missing) alarms.push(`${r.routine} did not run`);
+// A run that RECORDED ITS OWN FAILURE must not sit behind a ✓ just because the routine fired. Making
+// the error run visible in the roster (above) without alarming on it is half a fix — the 08:00 pass
+// reads this list to decide what to escalate.
+for (const r of out.ran) for (const o of r.outcomes) if (o === 'error') alarms.push(`${r.routine} recorded an 'error' run`);
 for (const p of out.open) if (p.age_days >= 1) alarms.push(`#${p.number} open ${p.age_days}d (${p.state})`);
 if (h.tree_dirty === null) alarms.push('could not read git status');
 else if (h.tree_dirty) alarms.push('working tree dirty');
