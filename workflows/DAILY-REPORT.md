@@ -1,7 +1,8 @@
 # Daily report — what the night did, and what needs a decision
 
-A local routine runs this every day at 08:00 ET, after the 07:00 merge pass. It writes
-`data/daily-report/<YYYY-MM-DD>.md` and opens a PR.
+A cloud routine runs this every day at 08:00 ET, after the 07:00 merge pass. It writes
+`data/daily-report/<YYYY-MM-DD>.md`, opens a PR, and merges it (see step 4 — it is the only
+routine that merges its own work, and the reason is narrow).
 
 The point is that the operator starts a fresh session, says *"review quotle.info daily report"*, and
 gets a rundown plus a short list of things they can approve or decline — without having to read five
@@ -9,8 +10,9 @@ PR bodies and a merge log.
 
 ## What this pass is NOT
 
-It does not fix anything. It does not merge anything. It does not open records, edit `data/quotes`,
-run `scan.js`, or touch `tools/`. It reads, judges, and writes one report file. Every fix it
+It does not fix anything. It does not merge ANYONE ELSE'S work — the 07:00 pass is still the merge
+authority for every content PR. It does not open records, edit `data/quotes`, run `scan.js`, or touch
+`tools/`. It reads, judges, and writes one report file. Every fix it
 identifies is written as a **proposal for the operator**, because the whole value is that a person
 decides what gets done and the routines then carry those decisions.
 
