@@ -1,8 +1,12 @@
 # Open items — handoff from the 2026-07-29 session
 
-Six things the first daily report surfaced that a person has to decide. Written for a **fresh
-session with no context**: each item states what is wrong, what has already been established (so you
-do not re-derive it), and what is genuinely still open.
+Six things the first daily report surfaced that a person has to decide, plus a seventh added by the
+session that closed the first two. Written for a **fresh session with no context**: each item states
+what is wrong, what has already been established (so you do not re-derive it), and what is genuinely
+still open.
+
+**Items 1 and 2 are RESOLVED** (#258 — see the notes under each). **Items 3–6 are open**, and item 7
+records what 1–2 left behind, including a byte-budget decision it shares with item 3.
 
 **Read this before researching any of them.** Every claim below was checked against the code on
 2026-07-29; the file/line pointers are real. What is NOT settled is what to *do*, which is the point
@@ -141,6 +145,39 @@ doc forbids touching `tools/`.
 **Open:** is there a real class of quote that is neither public-domain nor in-copyright-and-unusable?
 If yes the generator should be able to emit it; if no, retire the vocabulary entry and the renderer
 branch. Low stakes either way — this is dead-code hygiene, not a live defect.
+
+## 7 · What items 1–2 left behind — two exposures, one of them shared with item 3
+
+Added 2026-07-29 after #258 shipped. Neither is a live defect; both are the kind of thing that gets
+re-derived from scratch in six weeks if it only lives in a merged PR body.
+
+**(a) `realAuthorName` is hand-maintained, and item 3 is competing for the bytes that would fix it.**
+`rightPersonWrongWords()` (`tools/template.js`, foot of file) decides whether a page warns readers
+off its own credit. It depends on `answer.realAuthorName` being set whenever the true author differs
+from `answer.authorName`. That field is **not in `DOSSIER_SCHEMA`** — no wave emits it, it is added
+by hand, and only **71 of 704** disputed records carry one. Two records silently violated it and
+suppressed a warning they needed.
+
+Half of this is now gated: `verify-corpus.js` §4d-ter fails the build if a record claims
+right-person-wrong-words while its `schema.creator` does not name that same author (22/22 pass;
+both historical violations fail it). The other half — letting the generator emit the field at all —
+needs room in `DOSSIER_SCHEMA`, and **`generate.js:173-179` measures the ceiling between 4,072 and
+4,159 serialized bytes, with the schema ~87 under it.** That is the *same* budget item 3 needs for
+`creatorDescription`. **Whoever frees those bytes should know two fields are waiting for them** —
+decide once, not twice.
+
+**(b) 38 non-disputed records still carry a `creditedTo` naming their own author.**
+`prep-wave.js` no longer writes them and every reader now goes through `falseCredits()`
+(`tools/credits.js`), so the data is inert: `/verify` reports 0 rows where `credited == real`, and
+the author hubs and theme cards excluded this shape already. The residual exposure is a **future
+reader** added without `falseCredits`.
+
+`validate-records.js:160` only checks `real == credited` inside `if (confidence === 'disputed')`, so
+these 38 are not warned about, let alone gated. Promoting that to a hard failure is the right end
+state and was **deliberately not done**: it fails CI until the 38 records are cleaned, and cleaning
+them was considered and declined in favour of fixing the readers. Re-open it as a data decision, not
+by tightening the gate underneath it — tightening a gate you then have to weaken to get green is the
+exact move this repo forbids.
 
 ---
 
