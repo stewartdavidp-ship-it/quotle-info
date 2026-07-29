@@ -21,7 +21,7 @@ tomorrow — the gap reduces how often that happens, it is not what makes it saf
 Four routines write to `main` inside four hours — Monday 02:00 discovery, 03:00 wave, 04:00 reports,
 05:00 review — and every one of them rebuilds every page. They still need serializing, but for a
 narrower reason than this file first claimed: with branch protection on `strict: true`, merging any
-one PR puts every other one BEHIND, so they must go in one at a time with a rebase between. Merge two
+one PR puts every other one BEHIND, so they must go in one at a time, bringing each current between. Merge two
 in parallel and the second is refused, not corrupted.
 
 While a human merged them one at a time, **that human was the serialization**. Auto-merging each
@@ -55,7 +55,7 @@ It prints one verdict per open PR and never merges anything itself:
 | verdict | meaning | what you do |
 |---|---|---|
 | `MERGE` | green, in scope, up to date | merge it — see step 2 |
-| `REBUILD` | behind `main` | rebase, rebuild, push, wait for green, re-run the gate |
+| `REBUILD` | behind `main` | merge main in, rebuild, push, wait for green, re-run the gate |
 | `WAIT` | CI still running, or mergeability not computed | leave it; next run picks it up |
 | `SKIP` | draft, red CI, conflict, or scope escape | leave it and say why in your summary |
 | `HUMAN` | branch is not a known routine prefix | **never touch it** |
@@ -83,7 +83,7 @@ for CI to stop being *pending* rather than to *pass*.
 has that override: routines authenticate as a normal user.
 
 **Expect more `REBUILD` verdicts because of this.** With `strict: true`, merging the first PR
-immediately puts every other one behind, so the second needs a rebase-and-rebuild before it can go.
+immediately puts every other one behind, so the second must be brought current and rebuilt before it can go.
 That is the designed path (step 3), not a fault — but some nights the second PR will land the
 following morning, and that is fine.
 
@@ -100,9 +100,22 @@ or 4.
 
 ## Step 3 — rebuild anything the gate marks REBUILD
 
+**Do NOT rebase.** A rebase rewrites history and can only be pushed with `--force`, which is DENIED
+repo-wide in `.claude/settings.json` — so the rebase would succeed locally and the push would be
+refused, leaving you stuck mid-operation. This file prescribed a rebase in four places until
+2026-07-29, when a run hit exactly that wall and correctly used the non-rewriting route instead.
+
+Bring the branch current by MERGING main into it, which is a fast-forwardable push:
+
 ```bash
-git fetch origin && git checkout <branch> && git rebase origin/main
+git fetch origin && git checkout <branch>
+git merge origin/main -m "Merge main"      # NOT rebase — force-push is denied
+node tools/build.js                        # regenerate against the new base
+git add -A && git commit -m "Rebuild after merging main"   # only if the build changed anything
+git push origin HEAD:<branch>              # ordinary push, no force
 ```
+
+GitHub's "Update branch" button does the same thing and is equally fine.
 
 **Generated output does NOT conflict — that assumption was wrong and cost a day.** This file used to
 claim two routine PRs collide across ~1,163 rebuilt pages. Measured on 2026-07-29 with `git merge-tree`
@@ -110,7 +123,7 @@ against three real PRs: the generated HTML and JSON merged cleanly every time, i
 built files. The ONLY file that ever conflicted was `data/routine-log.jsonl`, because five routines
 appended to one shared tail — since fixed by giving each run its own file in `data/routine-log/`.
 
-So a `REBUILD` is normally just a rebase. If a rebase DOES conflict, do not hand-resolve built output —
+So a `REBUILD` is normally just merging main in and rebuilding. If that DOES conflict, do not hand-resolve built output —
 take the source files and rebuild them, which is deterministic where a hand-merge is not:
 
 ```bash
