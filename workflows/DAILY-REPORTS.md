@@ -36,11 +36,22 @@ That is success. There are currently ~1 pending report, and real report traffic 
 indexing work rather than on this pipeline. **An empty queue is not a failure and never justifies
 manufacturing work.** The empty path is one authenticated GET and no agents.
 
-## Step 0 — the checkout must be CLEAN
+## Step 0 — the checkout must be CURRENT and CLEAN
 
 ```bash
+git checkout main && git fetch origin && git merge --ff-only origin/main
 git status --porcelain
 ```
+
+**Update before you check clean, in that order.** This pass runs in a long-lived local checkout, and
+three other routines merge to `main` around it — the 03:00 wave, the 06:00 review, the Monday
+discovery audit. Nothing pulls for you. Measured on 2026-07-29: the checkout had drifted **9 commits
+behind** and was missing `.claude/settings.json` entirely, which would have made every command prompt
+for permission at 05:10 with nobody awake. A stale checkout also audits records against superseded
+sources and rebuilds pages from an old generator, so the PR it opens reverts whatever landed since.
+
+If `merge --ff-only` fails, the checkout has local commits or has diverged. **Stop and report it** —
+do not merge, rebase, or reset. Something else is using this tree.
 
 **If that prints anything, stop and report it.** `report-gate.js`'s scope gate is
 `git status --porcelain -- tools workflows`, which includes UNTRACKED files. A stray scratch file
@@ -246,11 +257,19 @@ whose fixes never shipped.
 
 Only when the gate exited 0.
 
+**Order matters, and an earlier version of this file had it wrong.**
+
 ```bash
-node tools/build.js                              # validators + 27 corpus invariants
-node tools/scan.js && node tools/verify-review-spine.js
-node tools/review.js stamp <slug> [<slug> …]     # calls /triage — this is the RETURN LEG
+node tools/review.js stamp <slug> [<slug> …]     # FIRST — mutates records. Calls /triage: the RETURN LEG
+node tools/build.js                              # validators + corpus invariants
+node tools/scan.js                               # AFTER the stamp — see below
+node tools/verify-review-spine.js
 ```
+
+`stamp` writes a `review` block into each record, which changes that record's **content hash**. If
+`scan.js` ran before it, `data/scan-state.json` still holds the pre-stamp hash, the tree is stale the
+moment you commit, and CI fails on "Committed output is stale" — the same one-line drift that turned
+`main` red on 2026-07-29 when this file listed `scan.js` first. Stamp, then rebuild, then rescan.
 
 `stamp` is what closes the reports. Without it a record ships audited, fixed and rebuilt while its
 report is still `pending`, so `/sources` keeps returning it and the queue keeps scoring it at the
