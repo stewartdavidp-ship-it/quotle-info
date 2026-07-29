@@ -25,10 +25,13 @@
  *
  *   GET  /mail?token=&status=drafted → { mail, mode }        (ADMIN_TOKEN only — read the drafts)
  *
- * SENDING is gated behind the `EMAIL_MODE` var in wrangler.jsonc, which ships as "draft": replies
- * are composed and stored in email_sends, and nothing leaves the Worker. See replyToReport() for
- * the abuse model that shapes the message body — it is the reason none of the reader's own text
- * ever appears in it.
+ * SENDING is controlled by the `EMAIL_MODE` var in wrangler.jsonc ("send" | "draft"). Mail goes out
+ * on exactly TWO events, both operator-initiated through the ADMIN-gated /triage:
+ *   · a dispute marked `accepted`      — we verified it and the record is changing
+ *   · a nomination marked `queued`     — it is in the backlog for a full source trace
+ * Rejections, unresolvable reports and duplicates send NOTHING; there is no template for them.
+ * See replyToReport() for the abuse model that shapes the body — it is the reason none of the
+ * reader's own text ever appears in it.
  *
  * RESEND_API_KEY is Mast's PLATFORM key (GCP project mast-platform-prod), which is restricted to
  * sending only — it cannot list or manage the account. That restriction is why it is acceptable
@@ -359,9 +362,32 @@ export default {
         if (!env.ADMIN_TOKEN || !safeEq(auth, env.ADMIN_TOKEN)) return send({ error: 'unauthorized' }, 401);
         const body = await req.json().catch(() => ({}));
         const id = parseInt(body.id, 10);
+        const note = String(body.note || '').trim().slice(0, 600);
+
+        // NOMINATIONS — the other half of the loop, and the reason a nomination could carry an
+        // address but never hear anything: nothing recorded a nomination's outcome, so no event
+        // existed to reply to. 'queued' means it reached the harvest backlog for a full source
+        // trace, which is the update worth telling someone about. Guarded on status='pending' so
+        // a second call is a no-op, exactly like the dispute path.
+        if (body.kind === 'nomination') {
+          const NOM = ['queued', 'rejected'];
+          const v = NOM.includes(body.verdict) ? body.verdict : '';
+          if (!Number.isFinite(id) || !v) return send({ error: "need {kind:'nomination', id, verdict: queued|rejected}" }, 400);
+          const row = await env.DB.prepare('SELECT id,email FROM nominations WHERE id=?').bind(id).first();
+          const res = await env.DB.prepare(
+            "UPDATE nominations SET status=?, note=COALESCE(NULLIF(note,''),'') || ? WHERE id=? AND status='pending'"
+          ).bind(v === 'queued' ? 'approved' : 'rejected', note ? ` | triage: ${note}` : '', id).run();
+          const changed = (res && res.meta && res.meta.changes) || 0;
+          let reply = 'skipped';
+          if (changed && row && v === 'queued') {
+            try { reply = await replyToReport(env, 'nomination', row); }
+            catch (e) { reply = 'error'; console.log('nomination reply failed for ' + id + ': ' + ((e && e.message) || e)); }
+          }
+          return send({ ok: true, changed, alreadyClosed: changed === 0, reply });
+        }
+
         const VERDICTS = ['accepted', 'rejected', 'unresolvable'];
         const verdict = VERDICTS.includes(body.verdict) ? body.verdict : '';
-        const note = String(body.note || '').trim().slice(0, 600);
         if (!Number.isFinite(id) || !verdict) return send({ error: 'need {id, verdict: accepted|rejected|unresolvable}' }, 400);
         // 'unresolvable' is a real outcome, not a failure: a report whose slug was renamed, deleted
         // or never given joins to no record. Without a drain it becomes a second silent queue —
@@ -378,9 +404,11 @@ export default {
         // second /triage is a no-op for the mail too, not just for the row — the idempotency
         // guard and the one-reply guarantee are then the same guarantee rather than two that
         // have to agree with each other.
+        // ONLY 'accepted' writes back. A rejection or an unresolvable report is not an update,
+        // and telling someone "we looked and changed nothing" is noise dressed as courtesy.
         let reply = 'skipped';
-        if (changed && row) {
-          try { reply = await replyToReport(env, row, verdict); }
+        if (changed && row && verdict === 'accepted') {
+          try { reply = await replyToReport(env, 'source', row); }
           catch (e) { reply = 'error'; console.log('reply failed for ' + id + ': ' + ((e && e.message) || e)); }
         }
         return send({ ok: true, changed, alreadyClosed: changed === 0, reply });
@@ -551,7 +579,21 @@ function cleanEmail(v) {
 //
 // Text-only, no HTML. Nothing to escape, nothing to break out of, and a plain message from a small
 // site reads as more honest than a templated one.
-const REPLY_SUBJECT = 'About the quote correction you sent us';
+// WE ONLY WRITE WHEN WE HAVE SOMETHING TO TELL THEM.
+//
+// The first cut replied on every outcome, including "we looked and we are leaving the page as it
+// is". That is not a courtesy, it is a notification that nothing happened — and it triples the
+// volume while making the one message that matters harder to notice. So exactly two events send:
+//
+//   dispute  accepted → we verified what they sent and it is going into the record
+//   nomination queued → their quote is in the backlog for a full source trace
+//
+// Rejected, unresolvable, and "already had it" send NOTHING. There is no template for them, so a
+// future edit cannot quietly re-enable one by passing a different verdict string.
+const REPLY_SUBJECT = {
+  source: 'About the quote correction you sent us',
+  nomination: 'About the quote you sent us',
+};
 
 // The slug is SUBMITTER-CONTROLLED (both forms POST it; /report/ derives it from a pasted link),
 // and the worker's format check permits 80 characters of kebab-case — which is enough room to
@@ -564,20 +606,20 @@ async function slugIsReal(slug) {
   return (idx || []).some((r) => r && r.slug === bare);
 }
 
-function composeReply(verdict, pageUrl) {
-  // 'unresolvable' NEVER names a page, even when the slug happens to resolve — an operator can
-  // mark a report unresolvable for reasons other than a missing slug, and "we could not work out
-  // which page this was about" immediately followed by "The page: …" is a message that argues
-  // with itself. Caught by printing all three verdicts and reading them, not by review.
-  const where = (pageUrl && verdict !== 'unresolvable') ? `\n\nThe page: ${pageUrl}\n` : '\n';
+function composeReply(kind, pageUrl) {
+  const where = pageUrl ? `\n\nThe page: ${pageUrl}\n` : '\n';
   const body = {
-    accepted: `Thank you for the correction you sent us about a quote on quotle.info.\n\nYou were right, and we have updated the page.${where}\nCorrections from readers are the main way errors here get found, so we are grateful for it.`,
-    rejected: `Thank you for the correction you sent us about a quote on quotle.info.\n\nWe traced it back through the sources and decided to leave the page as it stands.${where}\nThat is not a judgement on your report — it just means the evidence we could find still supports what the page says. If you have a primary source that shows otherwise, we would genuinely like to see it.`,
-    unresolvable: `Thank you for the correction you sent us about quotle.info.\n\nWe could not work out which page it referred to, so we have not been able to act on it.\n\nIf you still have it to hand, sending the link to the page would let us pick it up.`,
-  }[verdict] || null;
+    // A dispute we ACCEPTED: we checked what they sent, it held up, and the record is changing.
+    source: `Thank you for the correction you sent us about a quote on quotle.info.\n\nWe traced it back through the sources, and you were right. We are updating the record to reflect it.${where}\nCorrections from readers are the main way errors here get found, so we are grateful for it.`,
+    // A nomination we QUEUED: it is in the backlog for a full source trace. Deliberately promises
+    // research, NOT a page — most candidates are researched and some do not survive it. Saying
+    // "it will be added" would be a promise we cannot keep, on a site whose product is not
+    // overstating what it knows.
+    nomination: `Thank you for the quote you sent us.\n\nWe did not have it, and it is now on our list for a full source trace — we will try to work out who really said it, and what the earliest evidence actually is.\n\nIf it holds up, it gets a page. If the trail runs cold, we will say so rather than guess; either way the research is the point.`,
+  }[kind] || null;
   if (!body) return null;
   // The single-reply promise, stated in the message itself — the same promise the form makes.
-  return `${body}\n\nThis is the only email we will send about this report. You can reply to this message if you want to add anything.\n\n— Quotle.info\nhttps://quotle.info/`;
+  return `${body}\n\nThis is the only email we will send about this. You can reply to this message if you want to add anything.\n\n— Quotle.info\nhttps://quotle.info/`;
 }
 
 async function sendViaResend(env, to, subject, text) {
@@ -600,25 +642,29 @@ async function sendViaResend(env, to, subject, text) {
   return d.id;
 }
 
-// Called after a report is triaged. Returns a short status for the /triage response so the
-// operator sees what happened without a second query.
-async function replyToReport(env, row, verdict) {
+// Called when an outcome is recorded. `kind` is 'source' (an accepted dispute) or 'nomination'
+// (a quote queued for research) — the ONLY two events that produce mail. Returns a short status
+// for the /triage response so the operator sees what happened without a second query.
+async function replyToReport(env, kind, row) {
   const to = cleanEmail(row && row.email);
   if (!to) return 'no-address';
-  const text = composeReply(verdict, (await slugIsReal(row.slug)) ? `https://quotle.info/who-said/${String(row.slug).replace(/^song:/, '')}/` : '');
-  if (!text) return 'no-template';
-  const key = `source:${row.id}`;
+  const pageUrl = (kind === 'source' && await slugIsReal(row.slug))
+    ? `https://quotle.info/who-said/${String(row.slug).replace(/^song:/, '')}/` : '';
+  const text = composeReply(kind, pageUrl);
+  const subject = REPLY_SUBJECT[kind];
+  if (!text || !subject) return 'no-template';
+  const key = `${kind}:${row.id}`;
   const now = new Date().toISOString();
   const mode = env.EMAIL_MODE === 'send' ? 'send' : 'draft';
   // THE ONE-REPLY GUARANTEE. INSERT OR IGNORE against a PRIMARY KEY is atomic — two concurrent
   // triages of the same report cannot both win it. A `SELECT then INSERT` could.
   const ins = await env.DB.prepare(
     'INSERT OR IGNORE INTO email_sends (idempotency_key,kind,ref_id,to_email,subject,body,mode,status,created) VALUES (?,?,?,?,?,?,?,?,?)'
-  ).bind(key, 'source', row.id, to, REPLY_SUBJECT, text, mode, mode === 'send' ? 'sending' : 'drafted', now).run();
+  ).bind(key, kind, row.id, to, subject, text, mode, mode === 'send' ? 'sending' : 'drafted', now).run();
   if (!((ins && ins.meta && ins.meta.changes) || 0)) return 'already-replied';
   if (mode !== 'send') return 'drafted';
   try {
-    const id = await sendViaResend(env, to, REPLY_SUBJECT, text);
+    const id = await sendViaResend(env, to, subject, text);
     await env.DB.prepare("UPDATE email_sends SET status='sent', resend_id=?, sent_at=? WHERE idempotency_key=?").bind(id, new Date().toISOString(), key).run();
     return 'sent';
   } catch (e) {

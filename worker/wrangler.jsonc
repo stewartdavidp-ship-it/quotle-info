@@ -9,11 +9,14 @@
   // EMAIL_MODE — the reply ladder's position, deliberately in the repo rather than in a database
   // row or a dashboard toggle. Promoting from draft to send is then a reviewable diff and a deploy,
   // not a click somebody makes at 1am and cannot later explain.
-  //   "draft" — compose the reply and store it in email_sends; send NOTHING. The default.
+  //   "draft" — compose the reply and store it in email_sends; send NOTHING.
   //   "send"  — actually POST to Resend.
-  // The bar for flipping this is in workflows/PLAN-reader-reports.md: mailing strangers runs its
-  // OWN counter, separate from the PR gate's, because it is a different trust question.
-  "vars": { "EMAIL_MODE": "draft" },
+  // Turned on 2026-07-29 by operator decision, once the trigger was narrowed to the two events
+  // that are genuinely an update (a verified correction, a quote queued for research). The draft
+  // ladder's purpose was to avoid mailing strangers before we knew what we would say; the
+  // narrowing answered that more directly than a counter would have.
+  // Revert to "draft" to stop all sending — it is one word and a deploy.
+  "vars": { "EMAIL_MODE": "send" },
 
   // D1: create with `wrangler d1 create quotle-community`, then paste the printed
   // database_id below (it is NOT a secret — it's just an identifier).
