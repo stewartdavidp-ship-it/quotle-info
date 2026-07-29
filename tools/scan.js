@@ -28,7 +28,9 @@
  * never a full re-scan; editing a record costs a full re-scan of that record alone.
  *
  * State lives in data/scan-state.json — committed and diffable, like data/corpus-state.json, so a
- * new finding shows up in a PR as a reviewable line rather than as invisible local state. It is
+ * new finding shows up in a PR as a reviewable line rather than as invisible local state. The file
+ * is rewritten ONLY when its substance changes (see the write block below), so running this on an
+ * unchanged corpus leaves the tree clean and it is safe to run in CI. It is
  * NOT written into the records themselves: that would dirty 1,158 files on every scan and churn
  * the built-HTML diff for what is only a to-do list.
  */
@@ -105,10 +107,42 @@ let removed = 0;
 const live = new Set(files.map((f) => f.replace(/\.json$/, '')));
 for (const slug of Object.keys(state.records)) if (!live.has(slug)) { delete state.records[slug]; removed++; }
 
+// WRITE ONLY WHEN SOMETHING ACTUALLY CHANGED — and `updated` is not "something".
+//
+// This used to stamp state.updated = today() on every non---report run and write unconditionally.
+// data/scan-state.json is committed, so the day after the last commit `node tools/scan.js` made the
+// tree dirty with a one-line date change and nothing else. That is fine by hand and fatal in CI:
+// verify.yml's third step fails on a non-empty `git status --porcelain`, so scanning in CI would
+// have gone red every day with the misleading message "committed output is stale".
+//
+// The alternative — exempting scan-state.json from the dirty check — was rejected. That is
+// weakening a gate to make a build pass, which is how validate-records.js sat unused for months.
+//
+// So the write is content-driven: serialise canonically (key order is an artefact of readdir order,
+// not information) and compare against what is on disk, ignoring `updated` entirely. Identical
+// content → no write, no timestamp, clean tree. A genuine change → the date moves with it, which is
+// the only time the date meant anything anyway.
+const canon = (v) => {
+  if (Array.isArray(v)) return v.map(canon);
+  if (v && typeof v === 'object') {
+    const o = {};
+    for (const k of Object.keys(v).sort()) o[k] = canon(v[k]);
+    return o;
+  }
+  return v;
+};
+const substance = (s) => JSON.stringify(canon({ catalogue: s.catalogue || {}, records: s.records || {} }));
+
+let wrote = false;
 if (!REPORT) {
-  state.updated = today();
   state.catalogue = { ...CATALOGUE };
-  fs.writeFileSync(STATE, JSON.stringify(state, null, 2) + '\n');
+  let prev = null;
+  try { prev = JSON.parse(fs.readFileSync(STATE, 'utf8')); } catch (_) { /* first run */ }
+  if (!prev || substance(prev) !== substance(state)) {
+    state.updated = today();
+    fs.writeFileSync(STATE, JSON.stringify(state, null, 2) + '\n');
+    wrote = true;
+  }
 }
 
 const flagged = Object.values(state.records).filter((r) => r.f && r.f.length).length;
@@ -125,6 +159,7 @@ if (JSON_OUT) {
   const show = (REPORT ? allFindings() : findings).slice(0, 20);
   for (const f of show) console.log(`    [${f.severity || '?'}] ${f.slug.slice(0, 44).padEnd(46)}${f.id}`);
   if (!REPORT && !findings.length && flagged) console.log('    (no NEW findings this pass; use --report to list the standing ones)');
+  if (!REPORT) console.log(`  state: ${wrote ? 'data/scan-state.json updated — commit it' : 'unchanged, nothing written'}`);
   console.log('\n  next: node tools/review.js due   — flagged records are prioritised for audit');
 }
 
