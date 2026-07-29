@@ -79,8 +79,23 @@ unambiguous.
 node tools/routine-log.js --routine daily-report --outcome <no-op|pr> --note "..."
 ```
 
-Branch `report/<YYYY-MM-DD>`, PR ready not draft. Do not merge it — the 07:00 pass is the merge
-authority, and it will pick this up tomorrow morning.
+Branch `report/<YYYY-MM-DD>`, PR ready not draft. **Then merge it yourself** once CI is green.
+
+**This is the one routine that merges its own PR, and the exception is narrow.** Everything else
+stops at a PR because it changes published content, and two content PRs merging in parallel is how a
+page ends up half-rebuilt. This pass writes one markdown file under `data/daily-report/` plus its own
+log shard. Nothing builds it, nothing renders it, nothing reads it but a person — verified: no tool,
+workflow or CI step references the directory. A wrong report is a wrong sentence in a file, not a
+wrong page on the site.
+
+The alternative was leaving it for the 07:00 merge pass, which runs **the next morning** — so
+"review quotle.info daily report" in a fresh session would return yesterday's report, or none. That
+defeats the only thing this pass exists to do. A second scheduled routine to merge one harmless
+document would be more machinery than the document is worth.
+
+Run `node tools/merge-gate.js` first and merge only if it marks your PR `MERGE` — that still checks
+CI is green, the branch is current, and nothing escaped scope. If it says anything else, leave it and
+say so; the 07:00 pass will collect it tomorrow.
 
 ## Honesty rules
 
