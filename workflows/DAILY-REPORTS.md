@@ -189,6 +189,42 @@ wanted as a PR. Miss one and the counter resets. The gate never grades itself; `
 operator command. Only runs that actually made a call are recorded, so an empty night cannot inflate
 the streak by testing nothing.
 
+### What to do with the fix-stage edits when the gate exits 3
+
+The fix stage has already edited records on disk by the time the gate speaks. On `observe` the gate
+opens nothing, which leaves those edits sitting in the working tree — and step 0 of the NEXT run
+refuses on a dirty tree. So doing nothing is not an option; the first real run hit exactly this and
+had to improvise.
+
+**Push them to a held branch and open no PR:**
+
+```bash
+git checkout -b reports/<YYYY-MM-DD>-observed-fixes
+node tools/build.js                    # so the branch is mergeable if the operator wants it
+git add -A && git commit -m "..."      # records + rebuilt pages
+git push -u origin HEAD                # NO gh pr create
+```
+
+Then return to `main` clean and land only the bookkeeping (`data/report-queue.json`,
+`data/routine-log.jsonl`) as its own small PR.
+
+Discarding the edits would be the wrong call: an audit that cost real tokens verified them, and
+throwing them away means re-deriving the same fixes at the same cost the next night. Committing them
+to the bookkeeping PR would be the other wrong call — that is opening a content PR, which is exactly
+what `observe` says not to do. A held branch preserves the work without acting on it, and it is what
+the operator reads when judging whether the gate's call was right.
+
+**Do not stamp** in this case. `review.js stamp` closes the reader's report, and closing a report
+whose fix never shipped loses it — the reader is told it was dealt with when the page is unchanged.
+Nothing shipped, so the report stays `pending` and resurfaces tomorrow. That is correct.
+
+**Known cost of this, stated rather than discovered:** because nothing is stamped, the same records
+stay at the top of the queue and are re-audited every night until the ladder is promoted. The first
+run audited 10 records with 26 agents. At a 5-run promotion bar that is roughly five times the same
+work. It is the price of `observe` being an honest rehearsal, and it is bounded by the promotion
+bar — but if it bites, the answer is to judge the runs and promote, not to start stamping records
+whose fixes never shipped.
+
 ## Step 6 — build, PR, and close the loop
 
 Only when the gate exited 0.
