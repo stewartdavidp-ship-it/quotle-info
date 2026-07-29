@@ -120,7 +120,7 @@ reader is owed.
 
 **SENDING IS ON. Closing a report emails a real person.** `worker/wrangler.jsonc` ships
 `"EMAIL_MODE": "send"`, and `/triage` calls `replyToReport` on the call that actually closes a
-report. So `review.js stamp` in step 6 — which calls `/triage` with verdict `accepted` — is an
+report. So `review.js stamp --close-reports --verdict FIXED` in step 6 — which calls `/triage` with `accepted` — is an
 OUTBOUND ACTION, not just a database write. Treat it as one.
 
 An earlier version of this file said "Nothing sends", which was true when it was written and wrong
@@ -264,7 +264,7 @@ to the bookkeeping PR would be the other wrong call — that is opening a conten
 what `observe` says not to do. A held branch preserves the work without acting on it, and it is what
 the operator reads when judging whether the gate's call was right.
 
-**Do not stamp** in this case. `review.js stamp` closes the reader's report, and closing a report
+**Do not stamp** in this case. `review.js stamp --close-reports` closes the reader's report, and closing a report
 whose fix never shipped loses it — the reader is told it was dealt with when the page is unchanged.
 Nothing shipped, so the report stays `pending` and resurfaces tomorrow. That is correct.
 
@@ -282,7 +282,7 @@ Only when the gate exited 0.
 **Order matters, and an earlier version of this file had it wrong.**
 
 ```bash
-node tools/review.js stamp <slug> [<slug> …]     # FIRST — mutates records. Calls /triage: the RETURN LEG
+node tools/review.js stamp <slug> [<slug> …] --verdict FIXED --close-reports   # FIRST — mutates records
 node tools/build.js                              # validators + corpus invariants
 node tools/scan.js                               # AFTER the stamp — see below
 node tools/verify-review-spine.js
