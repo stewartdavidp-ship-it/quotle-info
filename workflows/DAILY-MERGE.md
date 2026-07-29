@@ -19,10 +19,10 @@ tomorrow — the gap reduces how often that happens, it is not what makes it saf
 ## Why this exists rather than each routine merging its own PR
 
 Four routines write to `main` inside four hours — Monday 02:00 discovery, 03:00 wave, 04:00 reports,
-05:00 review — and **every one of them rebuilds every page**. Two PRs open at the same time therefore
-conflict across ~1,163 generated files. Observed 2026-07-29: #207 went stale the instant #205 merged
-and had to be rebuilt from source records, because resolving a conflict in derived HTML is not worth
-doing and not safe to do by hand.
+05:00 review — and every one of them rebuilds every page. They still need serializing, but for a
+narrower reason than this file first claimed: with branch protection on `strict: true`, merging any
+one PR puts every other one BEHIND, so they must go in one at a time with a rebase between. Merge two
+in parallel and the second is refused, not corrupted.
 
 While a human merged them one at a time, **that human was the serialization**. Auto-merging each
 routine independently does not remove the need for serialization; it removes the serializer. This
@@ -104,8 +104,14 @@ or 4.
 git fetch origin && git checkout <branch> && git rebase origin/main
 ```
 
-**If the rebase conflicts, do not resolve it.** Conflicts here are in generated HTML, and hand-merging
-built output produces a tree no generator would emit. Instead take the source files and rebuild:
+**Generated output does NOT conflict — that assumption was wrong and cost a day.** This file used to
+claim two routine PRs collide across ~1,163 rebuilt pages. Measured on 2026-07-29 with `git merge-tree`
+against three real PRs: the generated HTML and JSON merged cleanly every time, including #224's 31
+built files. The ONLY file that ever conflicted was `data/routine-log.jsonl`, because five routines
+appended to one shared tail — since fixed by giving each run its own file in `data/routine-log/`.
+
+So a `REBUILD` is normally just a rebase. If a rebase DOES conflict, do not hand-resolve built output —
+take the source files and rebuild them, which is deterministic where a hand-merge is not:
 
 ```bash
 git checkout origin/main -- . && git checkout <branch> -- data/quotes data/songs
