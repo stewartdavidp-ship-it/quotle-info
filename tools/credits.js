@@ -72,9 +72,16 @@ const otherCredits = (r) => creditList(r).slice(1);
 const { slugify } = require('./slugify');
 function falseCredits(r) {
   const a = (r && r.answer) || {};
-  const explicitReal = a.realAuthorName;
-  const trueSlug = explicitReal ? slugify(explicitReal)
-    : ((r && r.author && r.author.slug) || slugify(a.authorName || 'Unknown'));
+  // Precedence MUST match template.js realAuthorName(): answer.realAuthorName, then
+  // answer.authorName. It must NOT consult r.author.slug, which on a misattribution record is the
+  // hub of the FALSELY credited person — that is the whole point of the hub. Reading it here made
+  // trueSlug the false credit, so the only credit on the record compared equal to "the true author"
+  // and was filtered out: 256 of the 587 records carrying a creditedTo lost it, and /verify answered
+  // misattributedTo: null on exactly the pages where the false credit IS the story (Maya Angelou for
+  // a line spoken by a character in Touched by an Angel; Kurt Vonnegut for a communal graffito).
+  // template.js cannot be imported here — it already requires this module — so the precedence is
+  // restated, deliberately, with this note. Change both or neither.
+  const trueSlug = slugify(a.realAuthorName || a.authorName || 'Unknown');
   return creditList(r).filter((c) => { const s = slugify(c); return s && s !== trueSlug; });
 }
 
