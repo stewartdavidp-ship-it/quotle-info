@@ -56,6 +56,13 @@ it.
 **A one-off factual error** — fix it in `data/quotes/<slug>.json`, verifying against the source
 first. Then `node tools/review.js stamp <slug>`.
 
+**After stamping ANYTHING — including a clean PASS — re-run `node tools/scan.js` before you commit.**
+This pass stamps every record it audits, that being the whole rotation mechanism, so it always
+mutates records. `stamp` writes a `review` block, which changes the record's **content hash**, so the
+`scan.js` at the top of this file now holds stale hashes. `verify.yml` runs `scan.js` itself (added
+2026-07-29) and fails the build on the difference — so a run that stamps and does not rescan goes red
+every time, no matter how good its findings were.
+
 **A CLASS of defect** — something mechanically detectable in any record, without fetching — is the
 valuable find. Do not just fix it. Write a candidate detector to `/tmp/cand.js`:
 
