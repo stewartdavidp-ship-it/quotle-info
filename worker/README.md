@@ -89,3 +89,22 @@ node ../tools/harvest.js votes /tmp/votes.json    # writes `votes` onto candidat
 
 Comfortably within Cloudflare's free tier (Workers 100k req/day; D1 5GB + 5M rows read/day free).
 No paid plan needed for this traffic.
+
+
+## Admin auth — headers, with a transition
+
+`/sources`, `/nominations` and `/mail` accept the admin token **either** as
+`Authorization: Bearer <token>` (preferred) or as `?token=` (legacy). `/triage` has always used the
+header.
+
+The query-string form put the credential into Cloudflare's logs on every call, because
+`wrangler.jsonc` sets `observability: { enabled: true }`. That token guards every reporter's email
+address and can trigger outbound mail, so it should not be in a URL.
+
+**Deploy order matters, because this worker deploys by hand and not from CI.** The worker must accept
+headers *before* any caller sends them — otherwise the nightly reports pass 401s, and `review.js`
+degrades politely on a 401, which looks exactly like a quiet night with no reader reports.
+
+1. Deploy this worker (accepts both). ← you are here once this is merged and deployed
+2. Switch `tools/review.js` and `tools/verify-review-spine.js` to send the header.
+3. Then, and only then, drop the `?token=` branch from `isAdmin()`.
