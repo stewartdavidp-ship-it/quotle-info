@@ -45,6 +45,32 @@ This exists because an agent skipped the Steve-Jobs-attributed Emo Philips joke 
 the operator reversed it and set the bar here. **Do not make taste calls on the operator's behalf** —
 the bar is bright-line so it needs no judgement. `harvest.js unskip <slug>` reverses a bad skip.
 
+## Applying a rule — intent first, then the letter
+
+Before you invoke one of the rules in these docs, **say what it protects against, then check that
+risk is actually present.** If it is not, the rule does not apply, and saying so is following it —
+not bending it. Machinery built to honour a rule in a case it was never about is overhead the
+operator carries forever.
+
+The case that set this (2026-07-29): *"only the 07:00 pass merges"* exists so two **content** PRs
+can't merge in parallel and leave a page half-rebuilt. The daily report writes one markdown file
+under `data/daily-report/` that nothing builds, renders or reads but a person. None of that risk is
+present. A whole second scheduled routine was nonetheless built to merge that one document, and the
+operator cut it: *"it is a harmless document, can not impact anything even if its wrong."*
+
+- **Relax WHO acts before you relax WHAT is checked.** `DAILY-REPORT.md` merges its own PR, but
+  still only if `merge-gate.js` returns `MERGE` — green CI, current branch, clean scope. Narrow the
+  exception to the actor and keep every check.
+- **Write the reasoning where the exception lives**, so the next session inherits the judgement
+  instead of re-litigating it or quietly widening it.
+- **A rule with no stated reason is a rule you cannot apply well.** If you find one here, that is a
+  defect in the doc — report it in the PR body.
+
+**This is not a licence to loosen the bright-line rules.** Some are deliberately judgement-free
+*because* case-by-case reasoning is the failure mode — the skip bar above ("so it needs no
+judgement"), and **never weaken a gate to make a build pass**. Those say so in their own text. Read
+the rule's stated reason; it tells you which kind you are holding.
+
 ## The two tracks
 - **Track A — misattributions** (the bulk toward 2000; the differentiator + long-tail fakes agents don't know).
   Author-driven: `workflows/harvest-candidates.js` (one agent per magnet author → Wikiquote Misattributed/
