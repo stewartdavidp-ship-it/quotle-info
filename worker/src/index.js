@@ -52,8 +52,19 @@ export default {
       'Access-Control-Allow-Headers': 'Content-Type',
       'Vary': 'Origin',
     };
+    // NO-STORE ON EVERYTHING. Every response from this worker is either personal data, a moderation
+    // queue, or a mutation result — none of it is cacheable and some of it must not be.
+    //
+    // Found the hard way on 2026-07-29: a `/sources?token=…` probe returned 200 AFTER the deploy that
+    // made auth header-only, and stayed 200 until a cache-buster was added. That was an edge-cached
+    // AUTHENTICATED response — and /sources returns every pending reporter's email address, while
+    // /mail returns full message bodies and recipients. A cached copy of either outlives the
+    // credential that fetched it.
+    //
+    // The read endpoints are cheap D1 queries, so there is nothing to gain by caching them and a
+    // clear category of thing to lose.
     const send = (obj, status = 200) =>
-      new Response(JSON.stringify(obj), { status, headers: { ...cors, 'Content-Type': 'application/json' } });
+      new Response(JSON.stringify(obj), { status, headers: { ...cors, 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
 
     // Public verify endpoints allow ANY origin (agents/apps); the community endpoints stay scoped.
     if (req.method === 'OPTIONS') {
