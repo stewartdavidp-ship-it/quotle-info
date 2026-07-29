@@ -125,7 +125,7 @@ const FOOTER = `    <footer class="site-footer">
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
         </nav>
-        <p class="foot-tag">quotle<span>.info</span> &mdash; every attribution traced to a primary source and dated. An independent <a href="https://gameshelf.co">Game Shelf</a> project by runMast&nbsp;LLC.</p>
+        <p class="foot-tag">quotle<span>.info</span> &mdash; every attribution traced to a primary source, or plainly marked when it can&rsquo;t be. An independent <a href="https://gameshelf.co">Game Shelf</a> project by runMast&nbsp;LLC.</p>
     </footer>`;
 
 const FOOTER_CSS = `

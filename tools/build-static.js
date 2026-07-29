@@ -159,6 +159,10 @@ ${STATES.map(stateRow).join('\n')}
                     <span class="state-badge verified"><span class="state-dot">✓</span>Used with permission</span>
                     <p class="state-def">Reproduced under a licence from the rightsholder, who retains all reuse rights.</p>
                 </div>
+                <div class="state">
+                    <span class="state-badge attributed"><span class="state-dot">?</span>Unconfirmed</span>
+                    <p class="state-def">We could not establish the status &mdash; usually because the wording is a translation or edition whose date or renewal we could not pin down. Treat it as <strong>not cleared</strong> until you check. This is the most common rights answer on the site, and stating it is the point: a confident wrong answer is worse than an honest gap.</p>
+                </div>
             </div>
         </section>
 
