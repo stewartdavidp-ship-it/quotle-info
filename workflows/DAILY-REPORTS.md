@@ -16,6 +16,20 @@ fabricated quote, attributed to a named living person, on a provenance site.
 invokable from a shell can run them. Every other step here is a plain command; those two are the
 reason a model has to be in the loop.
 
+**If you do not have the `Workflow` tool — a cloud routine does not — do the audit and the fix
+YOURSELF, serially, one record at a time. Never skip the stage.** `Workflow` is a parallelisation
+mechanism, not a capability: every stage is an agent doing work you can do one item at a time, and
+the only coupling is a file format. Write the `journal.jsonl` yourself and `parse-audit.js` runs
+unchanged with every check it carries.
+
+This is not hypothetical. `DAILY-WAVE.md` records what happened the last time a routine reasoned
+from "no Workflow tool" to "skip the stage": five records passed `validate-records` and 44
+invariants and shipped a fabricated statistic, a fabricated stage prop the primary transcript
+contradicts, a dead link the page called its "strongest corroboration", and a citation locator that
+was wrong inside the copy-to-clipboard string. The audit that caught them returned **0 PASS / 5
+FAIL, 46 issues, 4 blockers**. No mechanical gate can read prose. Serial is slower; it is not
+weaker. If the budget does not fit, do **fewer records** — never fewer stages.
+
 ## Most nights there is nothing to do
 
 That is success. There are currently ~1 pending report, and real report traffic depends on the
@@ -35,11 +49,18 @@ edited tools/" — so the failure reads as a scope escape that never happened. A
 gate 3 (did the record actually change?) meaningless, because it cannot tell this run's edits from
 whatever was already sitting there.
 
-Then get the token:
+Then get the token. `/sources`, `/triage` and `/mail` are all ADMIN_TOKEN-gated, so **without it this
+pass can do nothing at all** — it cannot read the queue and it cannot close a report.
 
 ```bash
 export ADMIN_TOKEN=$(gcloud secrets versions access latest --secret=quotle-admin-token --project=word-boxing)
 ```
+
+That line needs an authenticated `gcloud`. **If `ADMIN_TOKEN` is empty, stop and say so — do not
+proceed.** `review.js` degrades politely on a missing token ("reader reports skipped"), which means
+a tokenless run looks exactly like a quiet night: `due` still prints a full queue, ranked purely on
+staleness, with every reader report silently absent from it. That is the silent-queue failure this
+whole loop exists to prevent, so it has to be loud here.
 
 ## Step 1 — is there anything at all?
 
@@ -69,10 +90,22 @@ cheap, and a missing line is indistinguishable from a run that never happened.
 **Drain the last two in the same run.** A report that joins to no record stays `pending` forever,
 and `/sources?status=pending` never draining is the original bug this whole loop was built to fix.
 
-A report line ending `reply-to: <address>` means the reader left an optional email. **Nothing sends
-anything** — there is no send path, by design. It is printed so you know which reports have a person
-waiting on an answer, and it is the one thing on that line the reader is owed. If you reply, reply
-once, by hand. The form promises exactly that and /privacy/ says the same.
+A report line ending `reply-to: <address>` means the reader left an optional email. It is printed so
+you know which reports have a person waiting on an answer, and it is the one thing on that line the
+reader is owed.
+
+**Nothing sends.** A reply is now COMPOSED and STORED when a report is triaged, but `EMAIL_MODE`
+ships as `"draft"` in `worker/wrangler.jsonc`, so the worker stores exactly what it would send and
+sends none of it. `GET /mail` (admin) lists the drafts. Email runs its own draft → send ladder on
+its own counter, deliberately separate from the PR ladder in step 5: mailing strangers is a distinct
+trust question from opening a PR against your own repo. **Do not flip `EMAIL_MODE`** — that is an
+operator decision, not a step in this pass.
+
+If you reply, reply once, by hand. One reply per report, ever. The form promises exactly that and
+/privacy/ says the same. Never echo the reader's own text back at them: the address is optional and
+unauthenticated, so anyone can file a report carrying someone else's address, and a reply that
+quoted the submission would make us a reputable-looking delivery service for arbitrary text to
+arbitrary strangers.
 
 ## Step 2 — scan, then pick the work
 
@@ -87,15 +120,24 @@ node tools/review.js args --limit 10 > workflows/.scratch/review-args.json
 detail, not part of the record's identity). Reader-reported records sort to the top by construction;
 the tier weights are asserted in `tools/verify-review-spine.js`, not merely intended.
 
-## Step 3 — audit (Workflow tool)
+## Step 3 — audit
 
-Pass the `audit` object as args. If `auditSongs.pages` is non-empty, run `audit-songs.js` for those
-in the same way. Both accept `{pages, repo}` and `repo` must be this checkout's absolute path.
+**With the `Workflow` tool.** Pass the `audit` object as args. If `auditSongs.pages` is non-empty,
+run `audit-songs.js` for those in the same way. Both accept `{pages, repo}`, and `repo` must be this
+checkout's absolute path — the agents Read freshly built HTML off disk, and pointed at the wrong
+checkout every one of them silently finds nothing.
 
 ```
 Workflow audit.js       args=<the .audit object from review-args.json>
 Workflow audit-songs.js args=<the .auditSongs object>     # only if it has pages
 ```
+
+**Without it.** Read `workflows/audit.js` and follow the agent prompt inside it against each page
+yourself, one at a time: read the rendered HTML, re-fetch every source link and confirm it
+*literally* supports the specific claim it is attached to, check confidence + rights honesty and the
+URL/JSON-LD contract, then re-check each high/blocker as a skeptic. Append one
+`{"type":"result","result":{…}}` line per page audit and per skeptic verdict to a `journal.jsonl`
+you write yourself — that file is the entire interface to the next step.
 
 Then turn the journal into a fixes map:
 
@@ -107,15 +149,23 @@ node workflows/parse-audit.js --journal <auditTranscriptDir>/journal.jsonl \
 `parse-audit.js` pairs each finding against the skeptic's verdict and DROPS the refuted ones, so
 everything downstream is skeptic-confirmed by construction. Do not re-derive that judgement.
 
-## Step 4 — fix (Workflow tool)
+## Step 4 — fix
 
 ```
 Workflow fix.js args={"slugs":[...FAIL slugs...],"repo":"<this checkout>","kind":"quote"}
 ```
 
-Songs need a second call with `"kind":"song"`. Fix agents edit **only their own record** and are
-told to REPORT generator defects rather than edit them — a defect in a shared generator is one
-central edit affecting every page, never a per-record fix buried in a content PR.
+Songs need a second call with `"kind":"song"`. Without the `Workflow` tool, apply the fixes yourself
+from `current-fixes.json`, re-verifying every factual replacement against the cited source before
+editing — that re-verification is the point of the stage, not a formality.
+
+Either way the rules are identical: edit **only** the record itself, and **REPORT** generator
+defects rather than fixing them. A defect in a shared generator is one central edit affecting every
+page, never a per-record fix buried in a content PR — r20 shipped +94/-14 of `template.js` change
+inside a content wave, which is why gate 4 exists.
+
+**Never invent a citation.** If you cannot verify a replacement, leave the record alone and say why
+in the PR body. Refusing an instructed edit is a correct outcome.
 
 ## Step 5 — the gate decides, not you
 
