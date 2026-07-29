@@ -283,7 +283,32 @@ question from opening a PR against your own repo.
 Note: there are ZERO real reports today, so observe mode collects nothing until genuine traffic
 arrives — which depends on the indexing work, not on this pipeline.
 
-## Email sending — decided 2026-07-28
+## Email sending — decided 2026-07-28, CORRECTED 2026-07-29 after testing
+
+> **The section below is WRONG on two facts and is kept only for the reasoning.** Corrected by
+> probing the actual accounts rather than trusting this text — which is how the errors survived a
+> day: a session read it, believed it, and reported conclusions drawn from the wrong key.
+>
+> 1. **There are TWO Resend keys, in two GCP projects, and they are different accounts.**
+>    · `mast-platform-prod` → the key `email-queue-processor.js` resolves via `getSecret()`. This
+>      is Mast's PLATFORM key and it is **restricted to sending only** — `/domains` and `/api-keys`
+>      both return `401 restricted_api_key`. This is the one quotle uses.
+>    · `runmast-outreach` → a FULL-ACCESS key belonging to the outreach system (`mast-outreach`:
+>      daily-digest, reply-poller, sending as `Mast Outreach <david@runmast.email>`).
+>    The text below calls the outreach project's key "Mast's platform key". It is not.
+> 2. **The sender is `quotle@runmast.com`, not `runmast.email`.** The platform account rejects
+>    `runmast.email` with a 403 (not verified) and accepts `runmast.com`. Confirmed by a real send
+>    on 2026-07-29 that arrived in the inbox, rendering as "Quotle.info" with the reply-to intact.
+>
+> The whole "free plan allows one domain, `runmast.email` occupies it" argument therefore describes
+> the OUTREACH account and never applied to the account we send from. The accepted "mild phishing
+> signal" risk — a mail about quotle.info sent from a third domain — is correspondingly smaller:
+> `runmast.com` is the company's primary domain, not a cold-outreach domain.
+>
+> What replaces it: `From: "Quotle.info" <quotle@runmast.com>`, `Reply-To: help@quotle.info`.
+> The remaining tradeoff is real and was NOT part of the original decision — quotle's replies now
+> share sending reputation with Mast's platform transactional mail. At one reply per report, only
+> to people who wrote to us first, the complaint risk is about as low as email gets.
 
 **Send via Mast's existing Resend account, from `runmast.email`.** No new account, no DNS.
 
