@@ -36,8 +36,27 @@
  * run makes at most ONE PR — batched, with the reports it closes listed. The cost per night is
  * therefore bounded and predictable, which is what makes running it unattended defensible.
  *
- *   node tools/report-gate.js --fixes <current-fixes.json> --audit <journal.jsonl> [--dry-run]
- *   node tools/report-gate.js --queue            print the deferred queue
+ * THE TRUST LADDER — the gate's authority is EARNED, and the promotion bar is a number.
+ *
+ *   observe   run every gate, record what it WOULD have done, change nothing   ← starts here
+ *   pr        open the PR, stop
+ *   merge     merge on green CI
+ *
+ * "If we believe the gate holds" is a feeling until it has a threshold. The bar, agreed with the
+ * operator: 5 CONSECUTIVE runs where the gate's call matched theirs — no PR they would have
+ * rejected, no queued item they would have wanted as a PR. Miss one and the counter resets to zero.
+ * Five is arbitrary; a stated threshold is not.
+ *
+ * Each run appends its decision to `runs` in data/report-queue.json, so promotion is a judgement on
+ * a RECORD rather than on somebody's memory of how the last few nights went. Only runs that
+ * actually made a call are recorded — a night with no pending reports exits before this file runs
+ * and tests nothing, so it must not count toward the streak.
+ *
+ *   node tools/report-gate.js --fixes <current-fixes.json> [--dry-run]
+ *   node tools/report-gate.js --queue                        print the deferred queue
+ *   node tools/report-gate.js --mode                         current rung, streak, last runs
+ *   node tools/report-gate.js --judge agree|disagree [--note ...]   operator verdict on the last run
+ *   node tools/report-gate.js --promote                      advance a rung once the bar is met
  */
 const fs = require('fs');
 const path = require('path');
@@ -55,14 +74,64 @@ const arg = (name, dflt = null) => {
 const has = (name) => process.argv.includes(name);
 
 const readJson = (p, dflt) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return dflt; } };
-const loadQueue = () => readJson(QUEUE, { deferred: [] });
+const RUNGS = ['observe', 'pr', 'merge'];
+const loadQueue = () => {
+  const q = readJson(QUEUE, {});
+  return { mode: 'observe', promoteAt: 5, streak: 0, deferred: [], runs: [], ...q };
+};
 const saveQueue = (q) => fs.writeFileSync(QUEUE, JSON.stringify(q, null, 2) + '\n');
+const today = () => new Date().toISOString().slice(0, 10);
 
 if (has('--queue')) {
   const q = loadQueue();
   if (!q.deferred.length) { console.log('  report queue empty'); process.exit(0); }
   console.log(`  ${q.deferred.length} deferred item(s):`);
   for (const d of q.deferred) console.log(`    [${d.reason}] ${d.slug} — ${String(d.detail || '').slice(0, 100)}`);
+  process.exit(0);
+}
+
+if (has('--mode')) {
+  const q = loadQueue();
+  const unjudged = q.runs.filter((r) => !r.judged).length;
+  console.log(`  mode: ${q.mode}   streak: ${q.streak}/${q.promoteAt}   runs recorded: ${q.runs.length}${unjudged ? ` (${unjudged} awaiting the operator's verdict)` : ''}`);
+  for (const r of q.runs.slice(-8)) {
+    console.log(`    ${r.date}  ${String(r.mode).padEnd(8)}${String(r.call).padEnd(10)}pr=${r.pr.length} queued=${r.queued.length}  ${r.judged || 'UNJUDGED'}${r.note ? ` — ${r.note}` : ''}`);
+  }
+  const next = RUNGS[RUNGS.indexOf(q.mode) + 1];
+  if (!next) console.log('\n  top rung — nothing above merge.');
+  else if (q.streak >= q.promoteAt) console.log(`\n  bar met. \`node tools/report-gate.js --promote\` moves to ${next}.`);
+  else console.log(`\n  ${q.promoteAt - q.streak} more matching run(s) to reach ${next}.`);
+  process.exit(0);
+}
+
+// The operator's verdict on the most recent run. This is the ONLY thing that moves the streak —
+// the gate never grades its own homework, which is the entire point of the ladder.
+if (has('--judge')) {
+  const verdict = arg('--judge');
+  if (!['agree', 'disagree'].includes(verdict)) { console.error('  usage: --judge agree|disagree [--note "..."]'); process.exit(1); }
+  const q = loadQueue();
+  const run = [...q.runs].reverse().find((r) => !r.judged);
+  if (!run) { console.log('  no unjudged run to grade'); process.exit(0); }
+  run.judged = verdict;
+  if (arg('--note')) run.note = arg('--note');
+  q.streak = verdict === 'agree' ? q.streak + 1 : 0;
+  saveQueue(q);
+  console.log(`  ${run.date} run judged ${verdict} — streak now ${q.streak}/${q.promoteAt}`);
+  process.exit(0);
+}
+
+if (has('--promote')) {
+  const q = loadQueue();
+  const next = RUNGS[RUNGS.indexOf(q.mode) + 1];
+  if (!next) { console.log(`  already at ${q.mode} — the top rung`); process.exit(0); }
+  if (q.streak < q.promoteAt) {
+    console.error(`  ✗ bar not met: ${q.streak}/${q.promoteAt} consecutive matching runs. Not promoting.`);
+    process.exit(1);
+  }
+  q.mode = next;
+  q.streak = 0;   // the next rung earns its own record; a streak is not transferable between rungs
+  saveQueue(q);
+  console.log(`  promoted to ${next}. Streak reset — ${q.promoteAt} runs at this rung before the next.`);
   process.exit(0);
 }
 
@@ -125,13 +194,42 @@ for (const p of decision.pr) console.log(`    PR    ${p.slug}  (${p.findings} co
 for (const q of decision.queue) console.log(`    QUEUE ${q.slug}  [${q.reason}] ${q.detail}`);
 if (capped) console.log(`\n  NOTE: ${capped} record(s) held back by the ${MAX_RECORDS}-record cap — not dropped, queued.`);
 
-const openPr = decision.pr.length > 0 && !scopeEscape;
-console.log(`\n  => ${openPr ? 'OPEN A PR' : 'NO PR — queue only'}\n`);
+// ---- the four gates have spoken; the LADDER decides how much of it we act on ----
+const queue = loadQueue();
+const qualifies = decision.pr.length > 0 && !scopeEscape;
+const call = qualifies ? 'would-pr' : 'queue-only';
+
+// In `observe` the gate is fully exercised and then obeyed by nobody. That is not a dry run for its
+// own sake: the record it leaves is the evidence the operator grades, and grading is the only thing
+// that moves the ladder. A rung that acts before it has a record is exactly the assumption this
+// whole structure exists to avoid making.
+const act = qualifies && queue.mode !== 'observe';
+
+console.log(`  mode: ${queue.mode}  (streak ${queue.streak}/${queue.promoteAt})`);
+if (queue.mode === 'observe' && qualifies) {
+  console.log(`\n  => OBSERVE — would have opened a PR for ${decision.pr.length} record(s). Opening none.`);
+  console.log('     Grade this call: node tools/report-gate.js --judge agree|disagree --note "…"');
+} else if (act) {
+  console.log(`\n  => OPEN A PR${queue.mode === 'merge' ? ' — and merge it on green CI' : ' — and stop there'}\n`);
+} else {
+  console.log('\n  => NO PR — queue only\n');
+}
 
 if (!has('--dry-run')) {
-  const q = loadQueue();
-  const seen = new Set(q.deferred.map((d) => d.slug + '|' + d.reason));
-  for (const d of decision.queue) if (!seen.has(d.slug + '|' + d.reason)) q.deferred.push(d);
-  saveQueue(q);
+  const seen = new Set(queue.deferred.map((d) => d.slug + '|' + d.reason));
+  for (const d of decision.queue) if (!seen.has(d.slug + '|' + d.reason)) queue.deferred.push(d);
+  // One entry per run that actually made a call. Appended, never rewritten, so the streak is a
+  // judgement on a record rather than on a memory of how the last few nights went.
+  queue.runs.push({
+    date: today(), mode: queue.mode, call, acted: act,
+    pr: decision.pr.map((p) => p.slug),
+    queued: decision.queue.map((d) => ({ slug: d.slug, reason: d.reason })),
+    scopeEscape: scopeEscape ? scopeEscape.split('\n').length : 0,
+    capped, judged: null,
+  });
+  saveQueue(queue);
 }
-process.exit(openPr ? 0 : 3);   // 3 = nothing to PR, so the caller can skip the build/commit steps
+
+// 0 = act on it. 3 = nothing to do, so the caller skips build/commit/PR entirely. `observe` always
+// returns 3: it has decided, and decided to do nothing.
+process.exit(act ? 0 : 3);

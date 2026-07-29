@@ -7,7 +7,7 @@
 # unverified — and this repo's worst defects were all SILENT (a canonical pointing at a redirect
 # returns 200 and looks perfect while it quietly caps indexing of the whole site).
 #
-# The three steps below are the same ones a wave runs locally. The third is the one a human cannot
+# The steps below are the same ones a wave runs locally. The last is the one a human cannot
 # do reliably: it rebuilds from the generators and fails if the result differs from what was
 # committed — catching a record edited without a rebuild, or hand-edited HTML that no generator
 # would produce. The build is deterministic (verified: two consecutive builds leave the tree clean),
@@ -43,13 +43,28 @@ jobs:
       - name: Build and verify corpus invariants
         run: node tools/build.js
 
-      # 3 · COMMITTED OUTPUT IS CURRENT — the check a human cannot be trusted to do.
+      # 3 · REVIEW SPINE — scan-state is current, and the queue's contracts hold.
+      #     scan.js could not run here until it stopped stamping state.updated on every run: the
+      #     file is committed, so an unconditional write made step 4 fail every day after the last
+      #     commit with the misleading message "committed output is stale". It now writes only when
+      #     the findings actually change, so a clean corpus leaves a clean tree — and a DIRTY tree
+      #     here is a true signal (records moved without a rescan), caught by step 4 as intended.
+      #     The exemption route was rejected: that is weakening a gate to make a build pass.
+      #
+      #     The live checks (/sources routing, /triage idempotency) need ADMIN_TOKEN and the worker
+      #     to be up, so they run in the nightly routine, not here. CI asserts the offline half.
+      - name: Review spine invariants
+        run: |
+          node tools/scan.js
+          node tools/verify-review-spine.js
+
+      # 4 · COMMITTED OUTPUT IS CURRENT — the check a human cannot be trusted to do.
       - name: Committed output matches the generators
         run: |
           if [ -n "$(git status --porcelain)" ]; then
             echo "::error::Committed output is stale — rebuilding changed files that were not committed."
             echo ""
-            echo "Run 'node tools/build.js' and commit the result. Files that differ:"
+            echo "Run 'node tools/build.js' (and 'node tools/scan.js') and commit the result. Files that differ:"
             git status --porcelain | head -40
             echo ""
             git --no-pager diff --stat | tail -20

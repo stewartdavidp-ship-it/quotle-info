@@ -65,12 +65,32 @@ const API = process.env.QUOTLE_API || 'https://quotle-community.stewartd.workers
 
 const DEFAULT_CYCLE_DAYS = 365;   // ordinary record
 const RISKY_CYCLE_DAYS = 180;     // record carrying a mechanical contradiction
-// A flag must OUTRANK the strongest combination of the softer signals, or "overdue+risky > overdue"
-// is only true on paper. Those are the capped age term (max DEFAULT_CYCLE_DAYS = 365) plus the
-// demand term (max 300) = 665. At the original 500 a high-demand, never-seeded record scored 915
-// and displaced a flagged one on 750 — observed, not theoretical. Keep this above 665: if either
-// cap moves, move this with it.
-const FLAG_WEIGHT = 1000;
+
+// THE TIER WEIGHTS ARE DERIVED, NOT CHOSEN — and they were wrong until a rank test was written.
+//
+// The documented order is: reader-refuted > reader-reported > overdue+risky > overdue. For that to
+// be TRUE rather than aspirational, each tier's weight must exceed the largest score anything below
+// it can reach. The old comment did that arithmetic over two terms — capped age (365) plus demand
+// (300) = 665 — and concluded FLAG_WEIGHT = 1000 was safely clear. It missed two terms that had
+// been added since: the 250 never-reviewed bonus and the 200 oddity cap. The real ceiling on the
+// soft signals is 1115, so a never-reviewed, high-demand, structurally-odd, fully-overdue record
+// scored 1115 and OUTRANKED a flagged record on 1000 — the same inversion the cap was added to fix,
+// one tier up. Reader reports had the identical hole: max flagged+soft = 2115 beat a plain
+// report's 2000.
+//
+// Neither was reachable by inspection, and neither is caught by asserting two numbers against each
+// other. tools/verify-review-spine.js asserts the ORDER over this expression, with every lower tier
+// pushed to its worst case, which is what found both. Derive from the caps here so the next term
+// somebody adds moves the tiers with it instead of silently eating the margin.
+const AGE_CAP = DEFAULT_CYCLE_DAYS;   // the overdue term is capped at one extra cycle
+const NEVER_REVIEWED = 250;           // never re-reviewed since it was built
+const DEMAND_CAP = 300;               // log-scaled pageview/demand term
+const ODDITY_WEIGHT = 200;            // structural oddity — see below; capped BELOW NEVER_REVIEWED
+const SOFT_MAX = AGE_CAP + NEVER_REVIEWED + DEMAND_CAP + ODDITY_WEIGHT;   // 1115
+const FLAG_WEIGHT = SOFT_MAX + 1;                                          // 1116 — clears all soft
+const TIER = FLAG_WEIGHT + SOFT_MAX + 1;                                   // 2232 — clears flag+soft
+const REPORT_WEIGHT = TIER;           // a human said this page is wrong
+const REFUTES_WEIGHT = TIER;          // …and their evidence refutes rather than supports it
 // STRUCTURAL ODDITY — a prioritisation signal, never a flag.
 //
 // Some fields are near-universal by CONVENTION and enforced nowhere: schema (1148/1158), context
@@ -97,7 +117,9 @@ const FLAG_WEIGHT = 1000;
 //     stamped, max oddity  =   0 +   0 + 200 = 200
 //     unstamped, ordinary  =   0 + 250 +   0 = 250   ← always higher
 // If either weight moves, re-check this inequality; it is the thing that makes the sweep advance.
-const ODDITY_WEIGHT = 200;
+// (ODDITY_WEIGHT and NEVER_REVIEWED are declared with the other caps above, so SOFT_MAX can be
+// derived from them; the inequality ODDITY_WEIGHT < NEVER_REVIEWED is asserted in
+// tools/verify-review-spine.js rather than left to this comment.)
 const NEAR_UNIVERSAL = ['schema', 'context', 'copyAttribution', 'misattribution'];
 function oddity(rec) {
   const missing = NEAR_UNIVERSAL.filter((k) => !(k in rec)).length;
@@ -215,7 +237,7 @@ function demandTerm(rec) {
   const a = byAuthor[who];
   const authorViews = (a && typeof a === 'object') ? a.views : a;
   const v = Number(slugScore != null ? slugScore : authorViews) || 0;
-  return v > 0 ? Math.min(Math.round(Math.log10(v + 1) * 50), 300) : 0;
+  return v > 0 ? Math.min(Math.round(Math.log10(v + 1) * 50), DEMAND_CAP) : 0;
 }
 
 function riskFlags(rec) {
@@ -267,7 +289,13 @@ function survey() {
       rights: null,
       lastReviewedOn: st.lastReviewedOn, everReviewed: st.everReviewed,
       ageDays: age, cycle: DEFAULT_CYCLE_DAYS, overdueBy: age - DEFAULT_CYCLE_DAYS,
-      flags: [], demand: 0,
+      // `odd: 0` is load-bearing, not padding. Song rows omitted it, so priority() added `undefined`
+      // and every song scored NaN — and `b.priority - a.priority` on NaN returns NaN, which
+      // Array.sort treats as "equal". Songs were therefore not ranked at all; they fell through to
+      // the slug tiebreak in a list that was supposed to be ordered by urgency, silently. Zero
+      // rather than oddity(rec) because NEAR_UNIVERSAL names quote fields: scoring a song against
+      // them would mark all 97 maximally odd, which is a statement about the schema, not the record.
+      flags: [], demand: 0, odd: 0,
     });
   }
   return rows;
@@ -329,6 +357,31 @@ async function closeReports(ids, verdict, note) {
   return { closed, already };
 }
 
+// THE SCORING EXPRESSION. Order: reader-refuted > reader-reported > overdue+risky > overdue.
+// The age term is CAPPED, and that cap is what makes a flag mean anything.
+//
+// A never-stamped record falls back to schema.dateModified, and a record MISSING that field gets
+// the 9999-day sentinel. Uncapped, that contributed 9,634 to priority — so the queue was
+// effectively sorted by "does this record have a dateModified field", and the 500 awarded for a
+// mechanical contradiction was noise against it. Measured before the cap: a record carrying a
+// high-severity contradiction scored 750 while an ordinary one scored 9,884. Flagging a record
+// DEMOTED it, the exact inverse of the stated order.
+//
+// 9999 is a sentinel, not a measurement: a record unreviewed since it was built is not "27 years
+// overdue". Capping at one extra cycle keeps genuine staleness ranking above fresh work while
+// leaving the flag and reader-report terms able to outrank it.
+//
+// EXPORTED so tools/verify-review-spine.js can rank-test THIS expression rather than a copy of it.
+// A test that re-implements the arithmetic proves the test agrees with itself.
+function priority(r) {
+  return (r.refutes ? REFUTES_WEIGHT : 0)
+    + (r.reports ? REPORT_WEIGHT : 0)
+    + (r.flags.length ? FLAG_WEIGHT : 0)
+    + Math.min(Math.max(0, r.overdueBy), AGE_CAP)
+    + (r.everReviewed ? 0 : NEVER_REVIEWED)
+    + r.demand + r.odd;
+}
+
 async function dueSet(limit) {
   const rows = survey();
   const rep = await fetchReports();
@@ -342,29 +395,24 @@ async function dueSet(limit) {
     const rp = reported.get(r.slug);
     r.reports = rp ? rp.n : 0;
     r.refutes = rp ? rp.refutes : 0;
-    // Priority: reader-refuted > reader-reported > overdue+risky > overdue > never reviewed.
-    // The age term is CAPPED, and that cap is what makes a flag mean anything.
-    //
-    // A never-stamped record falls back to schema.dateModified, and a record MISSING that field
-    // gets the 9999-day sentinel. Uncapped, that contributed 9,634 to priority — so the queue was
-    // effectively sorted by "does this record have a dateModified field", and the 500 awarded for a
-    // mechanical contradiction was noise against it. Measured before the cap: a record carrying a
-    // high-severity contradiction scored 750 while an ordinary one scored 9,884. Flagging a record
-    // DEMOTED it, which is the exact inverse of this function's own stated order
-    // ("reader-refuted > reader-reported > overdue+risky > overdue > never reviewed").
-    //
-    // 9999 is a sentinel, not a measurement: a record unreviewed since it was built is not "27
-    // years overdue". Capping at one extra cycle keeps genuine staleness ranking above fresh work
-    // while leaving the flag and reader-report terms able to outrank it, as intended.
-    r.priority = (r.refutes ? 4000 : 0) + (r.reports ? 2000 : 0)
-      + (r.flags.length ? FLAG_WEIGHT : 0) + Math.min(Math.max(0, r.overdueBy), DEFAULT_CYCLE_DAYS)
-      + (r.everReviewed ? 0 : 250) + r.demand + r.odd;
+    r.priority = priority(r);
   }
   rows.sort((a, b) => b.priority - a.priority || a.slug.localeCompare(b.slug));
   return { rows: rows.slice(0, limit), all: rows, reportError: rep.error || null };
 }
 
+// ---- exports ---------------------------------------------------------------
+// tools/verify-review-spine.js imports the REAL expression and the REAL classifier. Everything
+// below this line is the CLI and must not run on require — hence the require.main guard.
+module.exports = {
+  priority, survey, classifyReports, oddity, demandTerm,
+  AGE_CAP, NEVER_REVIEWED, DEMAND_CAP, ODDITY_WEIGHT, SOFT_MAX,
+  FLAG_WEIGHT, REPORT_WEIGHT, REFUTES_WEIGHT,
+  DEFAULT_CYCLE_DAYS, RISKY_CYCLE_DAYS, SONG_PREFIX,
+};
+
 // ---- commands --------------------------------------------------------------
+if (require.main === module) {
 const [cmd, ...rest] = process.argv.slice(2);
 const flag = (n, d) => { const i = rest.indexOf(n); return i >= 0 ? rest[i + 1] : d; };
 const LIMIT = parseInt(flag('--limit', '25'), 10);
@@ -503,3 +551,4 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
 
   console.log(fs.readFileSync(__filename, 'utf8').split('*/')[0].split('\n').slice(1).map((l) => l.replace(/^ \* ?/, '')).join('\n'));
 })();
+}
