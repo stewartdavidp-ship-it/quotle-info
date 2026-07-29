@@ -1,6 +1,19 @@
 # Daily merge pass — the one authority that merges routine PRs
 
-A local routine runs this every day at 07:00 ET, after the other four have finished.
+A cloud routine runs this every day at **07:00 ET**, after the night's routines have finished — and
+**again at 08:30**, to pick up the daily report.
+
+**Why twice.** The report pass at 08:00 reads what merged and writes `data/daily-report/<date>.md`,
+which is itself a PR. Without a second sweep that report would sit unmerged until 07:00 TOMORROW, so
+an operator opening a fresh session and asking "review quotle.info daily report" would get yesterday's
+or nothing — which is precisely the thing the report was built to provide.
+
+The ordering is genuinely awkward and worth stating rather than rediscovering: the report must run
+AFTER the merge to say what merged, but it is itself a git artifact that then needs merging. Two
+sweeps is the least machinery that keeps both properties — a single merge authority, and today's
+report on `main` by 08:35.
+
+The 08:30 sweep usually merges exactly one small file. That is the expected outcome, not a thin run.
 
 The timetable it depends on, each an hour apart so no two overlap and the last finishes well clear:
 
@@ -10,7 +23,10 @@ The timetable it depends on, each an hour apart so no two overlap and the last f
 | 03:00 | daily wave | Cloud |
 | 04:00 | daily reports | Local |
 | 05:00 | daily review | Cloud |
-| **07:00** | **this pass** | Local |
+| **07:00** | **this pass** | Cloud |
+| 08:00 | daily report | Cloud |
+| **08:30** | **this pass again** | Cloud |
+| 12:00 | reports-close (emails readers) | Local |
 
 The two-hour gap after the last routine is deliberate: a review night with many flags, or a wave that
 runs long, still finishes before this starts. If one does not, its PR simply gets `WAIT` and merges
