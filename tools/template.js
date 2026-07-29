@@ -261,7 +261,9 @@ function buildJsonLd(q, url) {
     if (s.creator.birthDate) quotation.creator.birthDate = s.creator.birthDate;
     if (s.creator.deathDate) quotation.creator.deathDate = s.creator.deathDate;
     if (s.creator.jobTitle) quotation.creator.jobTitle = s.creator.jobTitle;
-    // The RULE in CLAUDE.md asks for creator.description; jobTitle stays for records that only carry it.
+    // The CLAUDE.md RULE asks for name + birthDate; `description` was dropped from it on 2026-07-29
+    // because DOSSIER_SCHEMA cannot emit one (39 bytes, and the schema is AT its 4,072-byte ceiling).
+    // The passthrough stays: 48 records carry a hand-written description and it is valid Schema.org.
     if (s.creator.description) quotation.creator.description = s.creator.description;
     if (s.creator.sameAs) quotation.creator.sameAs = s.creator.sameAs;
     // A pen name belongs to the PERSON, not to the quotation. Two fix agents hit this independently
