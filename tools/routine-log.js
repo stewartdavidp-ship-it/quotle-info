@@ -61,7 +61,11 @@ const read = () => {
     for (const f of fs.readdirSync(LOGDIR).filter((n) => n.endsWith('.jsonl')).sort()) {
       try { rows.push(...parseLines(fs.readFileSync(path.join(LOGDIR, f), 'utf8'))); } catch (_) {}
     }
-  } catch (_) { /* dir may not exist yet */ }
+  } catch (e) {
+    // ENOENT is a fresh install and genuinely means no runs. Anything else means we COULD NOT LOOK,
+    // and reporting that as 'no runs recorded yet' is how a broken log reads as a quiet week.
+    if (e.code !== 'ENOENT') { console.error(`  ! routine-log: ${LOGDIR} unreadable — ${e.message}`); process.exit(1); }
+  }
   return rows.sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
 };
 

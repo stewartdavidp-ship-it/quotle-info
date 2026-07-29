@@ -27,8 +27,18 @@ const arg = (n, d = null) => { const i = argv.indexOf(n); return i > -1 && argv[
 const SINCE = arg('--since', new Date().toISOString().slice(0, 10));
 const JSON_OUT = argv.includes('--json');
 
-const sh = (c, a) => { try { return execFileSync(c, a, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return ''; } };
-const j = (s, d) => { try { return JSON.parse(s); } catch { return d; } };
+// FAILURES ARE RECORDED, NOT SWALLOWED. This helper used to return '' on any error, which flowed
+// into JSON.parse -> [] -> "MERGED (0), OPEN none, tree clean" — a report of a perfect quiet morning,
+// produced by a tool whose stated purpose (see the header) is that a routine which did not run and
+// one that found nothing must not look identical. In cloud, where `gh --json` fails on GraphQL, that
+// is exactly what it rendered while PRs rotted.
+const toolFailures = [];
+const sh = (c, a) => {
+  try { return execFileSync(c, a, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); }
+  catch (e) { toolFailures.push(`${c} ${(a || [])[0] || ''}: ${String((e && e.message) || e).split('\n')[0].slice(0, 90)}`); return null; }
+};
+// null in (the sh() sentinel) means 'could not ask', which must not become an empty result.
+const j = (s, d) => { if (s === null) return null; try { return JSON.parse(s); } catch { return d; } };
 
 // EVERY routine that is supposed to run, so a SILENT ABSENCE is reportable. This is the whole point:
 // a routine that never fired leaves no log line, and without an expected-set to compare against,
@@ -67,17 +77,21 @@ const ran = EXPECTED.map((e) => {
 });
 
 // ---- what merged / what is stuck ----
-const merged = j(sh('gh', ['pr', 'list', '--state', 'merged', '--limit', '60', '--json', 'number,title,mergedAt']), [])
-  .filter((p) => (p.mergedAt || '') >= SINCE);
-const open = j(sh('gh', ['pr', 'list', '--state', 'open', '--json', 'number,title,headRefName,mergeStateStatus,isDraft,createdAt']), []);
+const mergedRaw = j(sh('gh', ['pr', 'list', '--state', 'merged', '--limit', '60', '--json', 'number,title,mergedAt']), [])
+  ;
+const merged = (mergedRaw || []).filter((p) => (p.mergedAt || '') >= SINCE);
+const openRaw = j(sh('gh', ['pr', 'list', '--state', 'open', '--json', 'number,title,headRefName,mergeStateStatus,isDraft,createdAt']), []);
+const open = openRaw || [];
 
 // ---- health ----
-const ci = j(sh('gh', ['run', 'list', '--branch', 'main', '--limit', '1', '--json', 'conclusion,displayTitle']), [])[0] || {};
+const ciRaw = j(sh('gh', ['run', 'list', '--branch', 'main', '--limit', '1', '--json', 'conclusion,displayTitle']), []);
+const ci = (ciRaw || [])[0] || {};
 const corpus = j(fs.existsSync(path.join(ROOT, 'data/corpus-state.json')) ? fs.readFileSync(path.join(ROOT, 'data/corpus-state.json'), 'utf8') : '', {});
 const scan = j(fs.existsSync(path.join(ROOT, 'data/scan-state.json')) ? fs.readFileSync(path.join(ROOT, 'data/scan-state.json'), 'utf8') : '', { records: {} });
 const flagged = Object.values(scan.records || {}).filter((r) => r.f && r.f.length).length;
 const queue = j(fs.existsSync(path.join(ROOT, 'data/report-queue.json')) ? fs.readFileSync(path.join(ROOT, 'data/report-queue.json'), 'utf8') : '', {});
-const dirty = sh('git', ['status', '--porcelain']);
+const dirtyRaw = sh('git', ['status', '--porcelain']);
+const dirty = dirtyRaw === null ? null : dirtyRaw;
 
 const out = {
   date: SINCE,
@@ -91,7 +105,8 @@ const out = {
     ladder: queue.mode || null,
     unjudged_runs: (queue.runs || []).filter((r) => !r.judged).length,
     deferred: (queue.deferred || []).length,
-    tree_dirty: dirty ? dirty.split('\n').length : 0,
+    tree_dirty: dirty === null ? null : (dirty ? dirty.split('\n').length : 0),
+    tool_failures: toolFailures,
   },
 };
 
@@ -116,10 +131,16 @@ console.log(`      records          ${h.records}`);
 console.log(`      flagged          ${h.flagged}`);
 console.log(`      report ladder    ${h.ladder}${h.unjudged_runs ? ` (${h.unjudged_runs} run(s) awaiting the operator's verdict)` : ''}`);
 console.log(`      deferred items   ${h.deferred}`);
-console.log(`      working tree     ${h.tree_dirty ? `${h.tree_dirty} DIRTY` : 'clean'}`);
+console.log(`      working tree     ${h.tree_dirty === null ? 'UNKNOWN — git failed' : (h.tree_dirty ? `${h.tree_dirty} DIRTY` : 'clean')}`);
+if (toolFailures.length) {
+  console.log(`\n  ⚠ ${toolFailures.length} TOOL CALL(S) FAILED — the sections below are INCOMPLETE, not empty:`);
+  toolFailures.forEach((f) => console.log(`      ${f}`));
+}
 const alarms = [];
 if (h.ci !== 'success') alarms.push(`CI on main is ${h.ci}`);
 for (const r of out.ran) if (r.missing) alarms.push(`${r.routine} did not run`);
 for (const p of out.open) if (p.age_days >= 1) alarms.push(`#${p.number} open ${p.age_days}d (${p.state})`);
-if (h.tree_dirty) alarms.push('working tree dirty');
+if (h.tree_dirty === null) alarms.push('could not read git status');
+else if (h.tree_dirty) alarms.push('working tree dirty');
+if (toolFailures.length) alarms.push(`${toolFailures.length} tool call(s) failed — this report is incomplete`);
 console.log(alarms.length ? `\n  NEEDS ATTENTION\n${alarms.map((a) => `      · ${a}`).join('\n')}\n` : '\n  nothing obviously wrong\n');
