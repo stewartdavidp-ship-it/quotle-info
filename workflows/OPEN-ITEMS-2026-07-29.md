@@ -5,8 +5,9 @@ session that closed the first two. Written for a **fresh session with no context
 what is wrong, what has already been established (so you do not re-derive it), and what is genuinely
 still open.
 
-**Items 1 and 2 are RESOLVED** (#258 — see the notes under each). **Items 3–6 are open**, and item 7
-records what 1–2 left behind, including a byte-budget decision it shares with item 3.
+**Items 1, 2 and 3 are RESOLVED** (#258, #260, #261 — see the notes under each). **Items 4, 5 and 6
+are open.** Item 7 records what 1–2 left behind; its schema half is closed for the same reason
+item 3's is — **`DOSSIER_SCHEMA` has zero headroom, not the "~87 bytes" its own comment implies.**
 
 **Read this before researching any of them.** Every claim below was checked against the code on
 2026-07-29; the file/line pointers are real. What is NOT settled is what to *do*, which is the point
@@ -96,6 +97,25 @@ exactly the check missing here.
 
 ## 3 · `creator.description` — a CLAUDE.md RULE no wave can satisfy
 
+> **RESOLVED 2026-07-29 — the RULE was amended, not the schema.** The fork below is real but its
+> first branch is closed: **there are no bytes to free.** The wave's "~87 bytes under a hard platform
+> ceiling" measures against **4,159, the size that was REJECTED**. The enforced budget
+> (`SCHEMA_BUDGET`, `tools/verify-corpus.js:451`) is the proven-good **4,072**, and `DOSSIER_SCHEMA`
+> is at **exactly** 4,072 — headroom **zero**. `creatorDescription` costs 39 bytes and would land at
+> 4,111, inside the untested `(4072, 4159]` band, where the failure mode is the platform rejecting
+> every agent before it runs (0 tokens, no content error).
+>
+> Nothing is droppable either: the schema carries **no** `description` prose at all, and what remains
+> is 485 bytes of `required`, 375 of `additionalProperties: false`, 91 of enums — all constraint work.
+> Freeing 35–39 bytes means deleting two `additionalProperties: false`, i.e. weakening a gate so a
+> field fits, which the house rules forbid.
+>
+> So the RULE now asks for **name + birthDate**. `creator.jobTitle` is what actually ships (1,010 of
+> the 1,030 records carrying a creator) and `template.js` still passes a hand-written `description`
+> through for the 48 records that have one — the capability is intact, only the false universal claim
+> is gone. **Do not re-open this as "free the bytes" without new measurement**: see item 7(a), which
+> also wanted that headroom and cannot have it either.
+
 CLAUDE.md carries a standing RULE that every quote page's Schema.org `Quotation` includes `creator`
 as a Person with **name, birthDate, description**.
 
@@ -160,11 +180,22 @@ suppressed a warning they needed.
 
 Half of this is now gated: `verify-corpus.js` §4d-ter fails the build if a record claims
 right-person-wrong-words while its `schema.creator` does not name that same author (22/22 pass;
-both historical violations fail it). The other half — letting the generator emit the field at all —
-needs room in `DOSSIER_SCHEMA`, and **`generate.js:173-179` measures the ceiling between 4,072 and
-4,159 serialized bytes, with the schema ~87 under it.** That is the *same* budget item 3 needs for
-`creatorDescription`. **Whoever frees those bytes should know two fields are waiting for them** —
-decide once, not twice.
+both historical violations fail it). **That closes the exposure** — drift is a build failure now, and
+a human fills the field in.
+
+The other half — letting the generator emit the field — is **closed as unaffordable, not open.**
+Corrected 2026-07-29: `generate.js:179` says the schema is "~87 bytes under" the ceiling, but that
+measures against **4,159, the size that was REJECTED**. The enforced budget is the proven-good
+**4,072** and `DOSSIER_SCHEMA` is at **exactly** 4,072 — **headroom zero**. `answer.realAuthorName`
+costs 35 bytes → 4,107, inside the untested `(4072, 4159]` band. Item 3 wanted the same space for
+`creatorDescription` (39 bytes) and was resolved by amending the RULE instead; **this one is resolved
+by the gate.** Neither field is landing without new measurement.
+
+**If someone does want to spend it, the minimum proof is ONE agent, not a wave** — an oversized
+schema is rejected *before* execution (20/20 agents, 19ms, 0 tokens, "output schema too large to
+classify safely"), so a single agent carrying a 4,107-byte schema settles the band at zero cost.
+Record the datapoint beside the others in `generate.js:173-179` and only then raise `SCHEMA_BUDGET`.
+Raising it on faith turns a number that means *proven* into one that means *probably*.
 
 **(b) 38 non-disputed records still carry a `creditedTo` naming their own author.**
 `prep-wave.js` no longer writes them and every reader now goes through `falseCredits()`

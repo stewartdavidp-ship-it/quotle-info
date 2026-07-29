@@ -176,10 +176,22 @@ const DOSSIER_SCHEMA = {
     //     4,072 bytes -> shipped fine (wave r23)
     //     4,159 bytes -> rejected (themes present, enum collapsed to a plain string)
     //     4,454 bytes -> rejected
-    // So the ceiling sits between 4,072 and 4,159, and this schema lives ~87 bytes under it.
-    // tools/verify-corpus.js now fails the build if it grows past the budget. Before adding ANY
-    // property here, free space elsewhere first — the tag-themes stage is cheap next to a
-    // generator that cannot run.
+    // So the ceiling sits between 4,072 and 4,159. This schema is at EXACTLY 4,072 — headroom ZERO.
+    // (An earlier note here said "~87 bytes under it". That measured against 4,159, the size that was
+    // REJECTED, and read as spare room; two sessions costed features against it. The enforced budget
+    // — SCHEMA_BUDGET in tools/verify-corpus.js — is the proven-good 4,072, which is where we are.)
+    //
+    // tools/verify-corpus.js fails the build if it grows past the budget. Before adding ANY property
+    // here, free space elsewhere first — the tag-themes stage is cheap next to a generator that
+    // cannot run. Measured 2026-07-29: there is nothing cheap left. This schema carries NO
+    // `description` prose; the remaining bytes are 485 of `required`, 375 of `additionalProperties:
+    // false` and 91 of enums, all doing constraint work. Freeing ~35 bytes means deleting two
+    // `additionalProperties: false`, i.e. weakening a gate so a field fits. Don't.
+    //
+    // If a field is genuinely worth spending the untested (4072, 4159] band on: an oversized schema
+    // is rejected BEFORE execution, so ONE agent proves it at 0 tokens. Probe with one, record the
+    // datapoint above, then raise SCHEMA_BUDGET — in that order. Raising it first turns a number that
+    // means "proven" into one that means "probably".
     meta: {
       type: 'object', additionalProperties: false, required: ['title', 'description', 'ogTitle', 'ogDescription'],
       properties: { title: { type: 'string' }, description: { type: 'string' }, ogTitle: { type: 'string' }, ogDescription: { type: 'string' } },
