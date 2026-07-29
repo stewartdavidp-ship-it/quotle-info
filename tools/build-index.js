@@ -202,8 +202,8 @@ const FILTER_JS = `    <script>
 // ---- HOME ----
 const homeJsonLd = `    <script type="application/ld+json">
     {"@context":"https://schema.org","@graph":[
-      {"@type":"WebSite","@id":"https://quotle.info/#website","url":"https://quotle.info/","name":"Quotle.info","description":"Verified quote provenance and reuse-rights clearance — who really said it, traced to a primary source, and whether it is public-domain or in-copyright before you publish it.","publisher":{"@id":"https://quotle.info/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://quotle.info/who-said/?q={search_term_string}"},"query-input":"required name=search_term_string"}},
-      {"@type":"Organization","@id":"https://quotle.info/#org","name":"Quotle.info","url":"https://quotle.info/","description":"A verified-provenance fact-check companion to the Quotle game (Game Shelf). Every quote traced to a primary source and dated."}
+      {"@type":"WebSite","@id":"https://quotle.info/#website","url":"https://quotle.info/","name":"Quotle.info","description":"Verified quote provenance and reuse-rights clearance — who really said it, traced to a primary source where one exists, and whether it is public-domain or in-copyright before you publish it.","publisher":{"@id":"https://quotle.info/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://quotle.info/who-said/?q={search_term_string}"},"query-input":"required name=search_term_string"}},
+      {"@type":"Organization","@id":"https://quotle.info/#org","name":"Quotle.info","url":"https://quotle.info/","description":"A verified-provenance fact-check companion to the Quotle game (Game Shelf). Every quote traced to a primary source and dated \u2014 or honestly marked where the trail cannot be closed."}
     ]}
     </script>
 `;
@@ -493,8 +493,8 @@ const BENCH_JS = INTERACTIVE ? `    <script>
     </script>` : '';
 
 // ---- write ----
-const homeHtml = page({ title: 'Quotle.info — Real quote? Cleared to use? Verified provenance + reuse rights', description: `Before you publish a quote: check it's real, who actually said it, and whether it's cleared to reproduce (public domain or in copyright) — the part AI gets wrong. ${total} quotes traced to a primary source.`, active: 'home', canonical: 'https://quotle.info/', jsonld: homeJsonLd, body: homeBody });
-const quotesHtml = page({ title: 'Quotes — who really said it | Quotle.info', description: `Search ${total} quotes traced to a primary source. Filter by verified, attributed, or misattributed.`, active: 'quotes', canonical: 'https://quotle.info/who-said/', body: quotesBody, scripts: FILTER_JS });
+const homeHtml = page({ title: 'Quotle.info — Real quote? Cleared to use? Verified provenance + reuse rights', description: `Before you publish a quote: check it's real, who actually said it, and whether it's cleared to reproduce (public domain or in copyright) — the part AI gets wrong. ${total} quotes traced to a primary source \u2014 or marked where none exists.`, active: 'home', canonical: 'https://quotle.info/', jsonld: homeJsonLd, body: homeBody });
+const quotesHtml = page({ title: 'Quotes — who really said it | Quotle.info', description: `Search ${total} quotes traced to a primary source &mdash; or marked where none exists. Filter by verified, attributed, or misattributed.`, active: 'quotes', canonical: 'https://quotle.info/who-said/', body: quotesBody, scripts: FILTER_JS });
 const reviewHtml = page({ title: 'Under review — quotes queued for verification | Quotle.info', description: `${BENCH.length} commonly-misquoted lines we&rsquo;ve flagged and queued for a full source trace. Not yet verified.`, active: 'review', canonical: 'https://quotle.info/under-review/', headExtra: TURNSTILE_HEAD, body: reviewBody, scripts: FILTER_JS + '\n' + BENCH_JS });
 
 fs.writeFileSync(path.join(ROOT, 'index.html'), homeHtml);
