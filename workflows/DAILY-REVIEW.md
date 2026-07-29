@@ -78,11 +78,19 @@ When there was work: `--outcome pr --scanned <N> --flagged <N> --processed <N> -
 
 ## Finish
 
+**Order matters: stamp FIRST, scan LAST.**
+
 ```bash
+node tools/review.js stamp <slug> [<slug> …]   # FIRST — mutates records. Records that these were reviewed today
 node tools/build.js         # gates: validate-records, validate-songs, validate-workflows, 43 invariants
-node tools/scan.js          # the flags you fixed should now be gone
-node tools/review.js stamp <slug> [<slug> …]   # records that these were reviewed today
+node tools/scan.js          # LAST — the flags you fixed should be gone, and record hashes are refreshed
 ```
+
+`stamp` writes a `review` block into each record, which changes that record's **content hash**. Run
+`scan.js` before it and `data/scan-state.json` keeps the pre-stamp hash — so the tree is stale the
+moment you commit, and CI fails on "Committed output is stale". `verify.yml` runs `scan.js` itself
+(added 2026-07-29), which is what makes this ordering load-bearing rather than cosmetic: the same
+inversion turned `main` red the day the check landed.
 
 `review.js stamp` writes `record.review.lastReviewedOn`. Do **not** touch `answer.lastVerified` —
 that is the generator's wave-time claim and means something different.
