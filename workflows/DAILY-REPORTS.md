@@ -39,9 +39,14 @@ manufacturing work.** The empty path is one authenticated GET and no agents.
 ## Step 0 — the checkout must be CURRENT and CLEAN
 
 ```bash
+node tools/preflight.js --routine reports    # STOP if this fails
 git checkout main && git fetch origin && git merge --ff-only origin/main
 git status --porcelain
 ```
+
+Preflight checks the token is present AND the right shape (43 chars — a `2>&1` gives you 461 of
+gcloud warning), that sources are reachable, and that `reports/` is still in the merge gate's
+allowlist. Each of those has failed silently at least once.
 
 **Update before you check clean, in that order.** This pass runs in a long-lived local checkout, and
 three other routines open PRs against `main` around it — the 03:00 wave, the 05:00 review, the
