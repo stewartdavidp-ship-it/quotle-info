@@ -273,7 +273,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -655,10 +662,8 @@
                     <dt>Paige credit first appears</dt><dd>Ruth Gordon, U.S. House testimony, 1977; Garson Kanin, It Takes a Long Time To Become Young, 1978</dd>
                     <dt>Paige primary source</dt><dd>None located</dd>
                 </dl>
-                <p class="excerpt">
-                    How old would you be if you didn&rsquo;t know how old you are?
-                    <span class="cut-tag">as reported</span>
-                </p>
+                <p class="excerpt">How old would you be if you didn&rsquo;t know how old you are?
+                    <span class="cut-tag">as reported</span></p>
                 <p class="excerpt-note">This is the 1927 wording as reported from Wilson&rsquo;s sermon. The familiar dialect form &mdash; &ldquo;how old you <em>was</em>&rdquo; &mdash; is not documented until 1978, in Garson Kanin&rsquo;s <em>It Takes a Long Time To Become Young</em>, where it already carries Paige&rsquo;s name.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2021/08/24/how-old/" target="_blank" rel="noopener">Quote Investigator&rsquo;s full chronology, 1927 to 1980 <span aria-hidden="true">↗</span></a>
                 <div class="trail">

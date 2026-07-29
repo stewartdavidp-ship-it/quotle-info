@@ -273,7 +273,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -655,10 +662,8 @@
                     <dt>Earliest &lsquo;four years&rsquo; print</dt><dd class="title">La Vie des B&ecirc;tes et l&rsquo;Ami des B&ecirc;tes, May 1965</dd>
                     <dt>Older antecedent</dt><dd class="title">Maeterlinck, The Life of the Bee (1901)</dd>
                 </dl>
-                <p class="excerpt">
-                    If the bee disappeared off the surface of the globe, man would have only four years left to live.
-                    <span class="cut-tag">no verified source</span>
-                </p>
+                <p class="excerpt">If the bee disappeared off the surface of the globe, man would have only four years left to live.
+                    <span class="cut-tag">no verified source</span></p>
                 <p class="excerpt-note">The French 1965 text, translated, ran: &ldquo;if all bees in the world were exterminated it would take no more than four years for mankind to disappear from the globe&rdquo; &mdash; already attributed to Einstein.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2013/08/27/einstein-bees/" target="_blank" rel="noopener">Quote Investigator: the full origin trail <span aria-hidden="true">↗</span></a>
                 <div class="trail">

@@ -281,7 +281,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -663,10 +670,8 @@
                     <dt>Released</dt><dd>December 2010 &middot; Fox 2000 Pictures / Walden Media</dd>
                     <dt>Screenplay</dt><dd>Christopher Markus, Stephen McFeely and Michael Petroni</dd>
                 </dl>
-                <p class="excerpt">
-                    You know, extraordinary things only happen to extraordinary people. Maybe it's a sign that you've got an extraordinary destiny, something greater than you could have imagined.
-                    <span class="cut-tag">Reepicheep, to Eustace — 2010 film</span>
-                </p>
+                <p class="excerpt">You know, extraordinary things only happen to extraordinary people. Maybe it's a sign that you've got an extraordinary destiny, something greater than you could have imagined.
+                    <span class="cut-tag">Reepicheep, to Eustace — 2010 film</span></p>
                 <p class="excerpt-note">This is Reepicheep&rsquo;s speech, spoken while comforting Eustace after the boy wakes up transformed into a dragon &mdash; the scene both the <a href="https://www.cslewis.org/aboutus/faq/quotes-misattributed/" target="_blank" rel="noopener">C.S. Lewis Foundation ↗</a> and <a href="https://essentialcslewis.com/2015/08/29/hardships-often-prepare-ordinary-people/" target="_blank" rel="noopener">William O&rsquo;Flaherty ↗</a> identify as the quote&rsquo;s origin. The circulating sentence compresses it, and shifts the one word that carries the meaning: the film credits the destiny to someone already <em>extraordinary</em>, where the quote has hardship preparing an <em>ordinary</em> person. Nothing resembling either wording appears in Lewis&rsquo;s 1952 novel.</p>
                 <a class="source-link" href="https://www.cslewis.org/aboutus/faq/quotes-misattributed/" target="_blank" rel="noopener">C.S. Lewis Foundation — Quotes Misattributed to C.S. Lewis <span aria-hidden="true">↗</span></a>
                 <div class="trail">

@@ -291,7 +291,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -673,10 +680,8 @@
                     <dt>French text</dt><dd lang="fr"><em>Formes: revue internationale des arts plastiques</em>, no. 2, February 1930 &mdash; French Wikiquote cites p. 3; <a href="https://citationsverifiees.fr/repertoire-des-auteurs/p/picasso-pablo/je-ne-cherche-pas/" target="_blank" rel="noopener">Citations v&eacute;rifi&eacute;es ↗</a> gives pp. 2 and 5 of the same issue</dd>
                     <dt>Translation</dt><dd>Russian into French by C. Motchoulsky; the English &ldquo;I do not seek. I find&rdquo; has no named translator</dd>
                 </dl>
-                <p class="excerpt">
-                    On me prend d&rsquo;habitude pour un chercheur. Je ne cherche pas, je trouve.
-                    <span class="cut-tag">Formes &middot; February 1930</span>
-                </p>
+                <p class="excerpt">On me prend d&rsquo;habitude pour un chercheur. Je ne cherche pas, je trouve.
+                    <span class="cut-tag">Formes &middot; February 1930</span></p>
                 <p class="excerpt-note">As printed in <em>Formes</em>, no. 2 (February 1930), under the heading &ldquo;Lettre sur l&rsquo;art par Picasso.&rdquo; Sources disagree on the page: French Wikiquote cites p. 3, Citations v&eacute;rifi&eacute;es pp. 2 and 5, and BnF Gallica blocks automated readers, so we could not settle it ourselves. Literally: &ldquo;I am usually taken for a searcher. I do not seek, I find.&rdquo; That English rendering is ours &mdash; no published English translation of this text is attached to the famous line. The same sentence closes the essay a few pages later, immediately above the credit &ldquo;(Traduit du Russe par C. Motchoulsky.)&rdquo;</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📰</span>

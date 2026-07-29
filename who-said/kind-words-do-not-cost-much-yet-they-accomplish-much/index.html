@@ -276,7 +276,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -658,10 +665,8 @@
                     <dt>Earliest located printing</dt><dd>Green-Mountain Freeman (Montpelier, Vt.), 11 March 1847, p. 1</dd>
                     <dt>Attribution</dt><dd>Unsigned in the fuller printing; abridged reprints from May 1847 signed &ldquo;Pascal.&rdquo;</dd>
                 </dl>
-                <p class="excerpt">
-                    KIND WORDS DO NOT COST MUCH. &mdash; They never blister the tongue or lips. And we have never heard of any mental trouble arising from this quarter. Though they do not cost much, yet they accomplish much.<br><br>1. They help one&rsquo;s own good nature and good will. Soft words soften our own soul. Angry words are fuel to the flame of wrath, and make it blaze the more fiercely.<br><br>2. Kind words make other people good natured. Cold words freeze people, and hot words scorch them, and sarcastic words irritate them, and bitter words make them bitter, and wrathful words make them wrathful.<br><br>There is such a rush of all other kinds of words, in our days, that it seems desirable to give kind words a chance among them. &hellip; Kind words also produce their own image on men&rsquo;s souls. And a beautiful image it is. They soothe and quiet and comfort the hearer. They shame him out of his sour, morose, unkind feelings. We have not yet begun to use kind words in such abundance as they ought to be used.
-                    <span class="cut-tag">Abridged reprint, 1847</span>
-                </p>
+                <p class="excerpt">KIND WORDS DO NOT COST MUCH. &mdash; They never blister the tongue or lips. And we have never heard of any mental trouble arising from this quarter. Though they do not cost much, yet they accomplish much.<br><br>1. They help one&rsquo;s own good nature and good will. Soft words soften our own soul. Angry words are fuel to the flame of wrath, and make it blaze the more fiercely.<br><br>2. Kind words make other people good natured. Cold words freeze people, and hot words scorch them, and sarcastic words irritate them, and bitter words make them bitter, and wrathful words make them wrathful.<br><br>There is such a rush of all other kinds of words, in our days, that it seems desirable to give kind words a chance among them. &hellip; Kind words also produce their own image on men&rsquo;s souls. And a beautiful image it is. They soothe and quiet and comfort the hearer. They shame him out of his sour, morose, unkind feelings. We have not yet begun to use kind words in such abundance as they ought to be used.
+                    <span class="cut-tag">Abridged reprint, 1847</span></p>
                 <p class="excerpt-note">Transcribed from the Library of Congress OCR of the 1847 printings; spelling and obvious scanning errors lightly normalised, wording unchanged. The fuller 11 March 1847 text runs several paragraphs longer and closes with the credit &ldquo;New York Evangelist.&rdquo;</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📰</span>

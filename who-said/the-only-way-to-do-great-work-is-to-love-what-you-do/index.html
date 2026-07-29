@@ -282,7 +282,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -663,10 +670,8 @@
                     <dt>Delivered</dt><dd>12 June 2005, Stanford Stadium</dd>
                     <dt>Segment</dt><dd>Second story (&ldquo;love and loss&rdquo;)</dd>
                 </dl>
-                <p class="excerpt">
-                    You&rsquo;ve got to find what you love. And that is as true for your work as it is for your lovers. Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do. If you haven&rsquo;t found it yet, keep looking. Don&rsquo;t settle.
-                    <span class="cut-tag">&uarr; the popular one-liner is lifted from the middle of this passage</span>
-                </p>
+                <p class="excerpt">You&rsquo;ve got to find what you love. And that is as true for your work as it is for your lovers. Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do. If you haven&rsquo;t found it yet, keep looking. Don&rsquo;t settle.
+                    <span class="cut-tag">&uarr; the popular one-liner is lifted from the middle of this passage</span></p>
                 <p class="excerpt-note">The sentence is almost always quoted on its own, but in the speech it is the hinge of a longer thought: satisfaction comes from great work, and great work comes from love of the work &mdash; hence &ldquo;keep looking, don&rsquo;t settle.&rdquo;</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">&#127909;</span>

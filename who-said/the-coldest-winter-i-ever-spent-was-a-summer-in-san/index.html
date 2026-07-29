@@ -274,7 +274,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -656,9 +663,7 @@
                     <dt>Twain&rsquo;s real line</dt><dd>Letter to Lucius Fairchild, 28 April 1880 &mdash; Quin&rsquo;s jest applied to Paris</dd>
                     <dt>&ldquo;San Francisco&rdquo; wording</dt><dd>Anonymous; city versions (Duluth first) appear by c. 1900&ndash;1901</dd>
                 </dl>
-                <p class="excerpt">
-                    &ldquo;The coldest winter I ever spent was a summer in San Francisco.&rdquo;<br><br>What Twain <em>actually</em> wrote, in an 1880 letter from Paris, was a retelling of an older joke he credited to another man: &ldquo;More than a hundred years ago somebody asked Quin, &lsquo;Did you ever see such a winter in all your life before?&rsquo; &lsquo;Yes,&rsquo; said he, &lsquo;Last summer.&rsquo;&rdquo;
-                </p>
+                <p class="excerpt">&ldquo;The coldest winter I ever spent was a summer in San Francisco.&rdquo;<br><br>What Twain <em>actually</em> wrote, in an 1880 letter from Paris, was a retelling of an older joke he credited to another man: &ldquo;More than a hundred years ago somebody asked Quin, &lsquo;Did you ever see such a winter in all your life before?&rsquo; &lsquo;Yes,&rsquo; said he, &lsquo;Last summer.&rsquo;&rdquo;</p>
                 <p class="excerpt-note">The famous San Francisco sentence appears nowhere in Twain&rsquo;s writings; the 1880 Paris passage is the closest genuine Twain text, and even it points to James Quin.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2011/11/30/coldest-winter/" target="_blank" rel="noopener">Quote Investigator: The Coldest Winter I Ever Spent Was a Summer in San Francisco <span aria-hidden="true">↗</span></a>
                 <div class="trail">

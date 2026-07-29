@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,10 +672,8 @@
                     <dt>Occasion</dt><dd>Unspecified &mdash; the item says only that Shaw &ldquo;once addressed a company&rdquo;; no date and no audience are given</dd>
                     <dt>In Shaw&rsquo;s own writings</dt><dd>Not found &mdash; no play, preface, letter or interview containing the line has been identified</dd>
                 </dl>
-                <p class="excerpt">
-                    George Bernard Shaw once addressed a company as follows: &ldquo;I suppose that you seldom think. Few people think more than two or three times a year. I have made an international reputation for myself by thinking once or twice a week.&rdquo;
-                    <span class="cut-tag">Earliest known text, May 1933</span>
-                </p>
+                <p class="excerpt">George Bernard Shaw once addressed a company as follows: &ldquo;I suppose that you seldom think. Few people think more than two or three times a year. I have made an international reputation for myself by thinking once or twice a week.&rdquo;
+                    <span class="cut-tag">Earliest known text, May 1933</span></p>
                 <p class="excerpt-note">The complete item as it ran in the &ldquo;Quotable Quotes&rdquo; department, transcribed by <a href="https://quoteinvestigator.com/2014/02/20/shaw-think/" target="_blank" rel="noopener">Quote Investigator ↗</a> from microfilm. Note the opening sentence &mdash; already being dropped by reprints in August 1933, and gone from the version shared today &mdash; and the full stop where the internet now puts a semicolon.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2014/02/20/shaw-think/" target="_blank" rel="noopener">Quote Investigator: the full citation trail <span aria-hidden="true">↗</span></a>
                 <div class="trail">

@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,10 +672,8 @@
                     <dt>First staged</dt><dd>7 March 1839, Covent Garden Theatre, London</dd>
                     <dt>Published</dt><dd>1839, Saunders & Otley, London</dd>
                 </dl>
-                <p class="excerpt">
-                    True,&mdash;This! Beneath the rule of men entirely great, The pen is mightier than the sword. Behold The arch-enchanter&rsquo;s wand!&mdash;itself a nothing!&mdash; But taking sorcery from the master-hand To paralyse the C&aelig;sars, and to strike The loud earth breathless!&mdash;Take away the sword&mdash; States can be saved without it!
-                    <span class="cut-tag">the arch-enchanter&rsquo;s wand</span>
-                </p>
+                <p class="excerpt">True,&mdash;This! Beneath the rule of men entirely great, The pen is mightier than the sword. Behold The arch-enchanter&rsquo;s wand!&mdash;itself a nothing!&mdash; But taking sorcery from the master-hand To paralyse the C&aelig;sars, and to strike The loud earth breathless!&mdash;Take away the sword&mdash; States can be saved without it!
+                    <span class="cut-tag">the arch-enchanter&rsquo;s wand</span></p>
                 <p class="excerpt-note">The famous seven words are usually clipped from this longer speech; the qualifying first line &mdash; &ldquo;Beneath the rule of men entirely great&rdquo; &mdash; is almost always dropped.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📖</span>

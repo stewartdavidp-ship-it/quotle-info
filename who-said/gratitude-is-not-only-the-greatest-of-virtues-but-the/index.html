@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,9 +672,7 @@
                     <dt>Passage</dt><dd>Chapter 33, section 80</dd>
                     <dt>Translation</dt><dd>C. D. Yonge (&ldquo;the parent of all the other virtues&rdquo;)</dd>
                 </dl>
-                <p class="excerpt">
-                    Etenim, iudices, cum omnibus virtutibus me adfectum esse cupio, tum nihil est quod malim quam me et esse gratum et videri. Haec enim est una virtus non solum maxima sed etiam mater virtutum omnium reliquarum. &mdash; &ldquo;In truth, O judges, while I wish to be adorned with every virtue, yet there is nothing which I can esteem more highly than being and appearing grateful. For this one virtue is not only the greatest, but is also the parent of all the other virtues.&rdquo;
-                </p>
+                <p class="excerpt">Etenim, iudices, cum omnibus virtutibus me adfectum esse cupio, tum nihil est quod malim quam me et esse gratum et videri. Haec enim est una virtus non solum maxima sed etiam mater virtutum omnium reliquarum. &mdash; &ldquo;In truth, O judges, while I wish to be adorned with every virtue, yet there is nothing which I can esteem more highly than being and appearing grateful. For this one virtue is not only the greatest, but is also the parent of all the other virtues.&rdquo;</p>
                 <p class="excerpt-note">Cicero&rsquo;s &ldquo;this one virtue&rdquo; (<em>haec una virtus</em>) points back to being grateful (<em>gratum</em>) &mdash; which is why the line is universally quoted as being about gratitude, even though the noun &ldquo;gratitude&rdquo; itself is supplied by later paraphrasers.</p>
                 <a class="source-link" href="https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.02.0020:text%3DPlanc.:chapter%3D33:section%3D80" target="_blank" rel="noopener">Cicero, Pro Plancio 33.80 (Perseus, Yonge translation) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

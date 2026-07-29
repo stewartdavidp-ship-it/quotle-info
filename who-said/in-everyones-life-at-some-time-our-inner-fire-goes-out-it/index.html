@@ -281,7 +281,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -663,10 +670,8 @@
                     <dt>Translation</dt><dd>English by C. T. Campion, George Allen &amp; Unwin, London, 1924 (chapter 5, p. 90)</dd>
                     <dt>Popular wording</dt><dd>An anonymous paraphrase; earliest instance documented by Quote Investigator is Valvano&rsquo;s 1991 memoir, p. 239</dd>
                 </dl>
-                <p class="excerpt">
-                    As a rule there are in everyone all sorts of good ideas, ready like tinder. But much of this tinder catches fire, or catches it successfully, only when it meets some flame or spark from outside, i.e. from some other person. Often, too, our own light goes out, and is rekindled by some experience we go through with a fellow-man. Thus we have each of us cause to think with deep gratitude of those who have lighted the flames within us.
-                    <span class="cut-tag">Memoirs of Childhood and Youth, ch. 5</span>
-                </p>
+                <p class="excerpt">As a rule there are in everyone all sorts of good ideas, ready like tinder. But much of this tinder catches fire, or catches it successfully, only when it meets some flame or spark from outside, i.e. from some other person. Often, too, our own light goes out, and is rekindled by some experience we go through with a fellow-man. Thus we have each of us cause to think with deep gratitude of those who have lighted the flames within us.
+                    <span class="cut-tag">Memoirs of Childhood and Youth, ch. 5</span></p>
                 <p class="excerpt-note">This is C. T. Campion&rsquo;s English translation, checked against a scan of the book. The famous three-sentence version compresses these lines and swaps in words Campion never used &mdash; &ldquo;inner fire&rdquo;, &ldquo;encounter with another human being&rdquo;, &ldquo;rekindle the inner spirit&rdquo;.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">book</span>

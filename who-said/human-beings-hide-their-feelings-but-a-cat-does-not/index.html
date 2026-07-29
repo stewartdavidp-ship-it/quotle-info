@@ -282,7 +282,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,10 +671,8 @@
                     <dt>First published</dt><dd>1961 &middot; The World Publishing Company, Cleveland &mdash; chapter 11, page 278</dd>
                     <dt>Familiar wording</dt><dd>Elizabeth Hamilton, In Celebration of Cats (David &amp; Charles, 1979), page 52</dd>
                 </dl>
-                <p class="excerpt">
-                    &ldquo;A cat has absolute emotional honesty, Baron,&rdquo; he told me once. &ldquo;Male or female, a cat will show you how it feels about you. People hide their feelings for various reasons, but cats never do.&rdquo;
-                    <span class="cut-tag">Leicester Hemingway, 1961 &mdash; reported speech, not Ernest&rsquo;s writing</span>
-                </p>
+                <p class="excerpt">&ldquo;A cat has absolute emotional honesty, Baron,&rdquo; he told me once. &ldquo;Male or female, a cat will show you how it feels about you. People hide their feelings for various reasons, but cats never do.&rdquo;
+                    <span class="cut-tag">Leicester Hemingway, 1961 &mdash; reported speech, not Ernest&rsquo;s writing</span></p>
                 <p class="excerpt-note">&lsquo;Baron&rsquo; was Ernest&rsquo;s nickname for his brother Leicester. This is the oldest known form of the saying, and it is not the form that circulates: the familiar version replaces &lsquo;people&rsquo; with &lsquo;human beings&rsquo; and &lsquo;cats never do&rsquo; with &lsquo;a cat does not&rsquo;.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2026/03/24/cats-hide/" target="_blank" rel="noopener">Quote Investigator: the origin of the Hemingway cat quotation <span aria-hidden="true">↗</span></a>
                 <div class="trail">

@@ -282,7 +282,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -663,10 +670,8 @@
                     <dt>Manuscript</dt><dd>British Library, Add MSS 37192, fol. 349</dd>
                     <dt>Transcribed in</dt><dd>Dorothy Stein, <em>Ada: A Life and a Legacy</em> (MIT Press, 1985), 110</dd>
                 </dl>
-                <p class="excerpt">
-                    &ldquo;Why does my friend prefer imaginary roots for our friendship?&rdquo; Just because she happens to have some of that very imagination which you would deny her to possess; &amp; therefore she enjoys a little play &amp; scope for it now &amp; then. Besides this, I deny the Fairyism to be entirely imaginary; (&amp; it is to the fairy similies [sic] that I suppose you allude). That <em>brain</em> of mine is something more than merely <em>mortal</em>; as time will show; (if only my breathing &amp; some other et-ceteras do not make too rapid a progress <em>towards</em> instead of <em>from</em> mortality). Before ten years are over, the Devil&rsquo;s in it if I haven&rsquo;t sucked out some of the life-blood from the mysteries of this universe, in a way that no purely mortal lips or brains could do.
-                    <span class="cut-tag">Letter to Charles Babbage, 5 July 1843</span>
-                </p>
+                <p class="excerpt">&ldquo;Why does my friend prefer imaginary roots for our friendship?&rdquo; Just because she happens to have some of that very imagination which you would deny her to possess; &amp; therefore she enjoys a little play &amp; scope for it now &amp; then. Besides this, I deny the Fairyism to be entirely imaginary; (&amp; it is to the fairy similies [sic] that I suppose you allude). That <em>brain</em> of mine is something more than merely <em>mortal</em>; as time will show; (if only my breathing &amp; some other et-ceteras do not make too rapid a progress <em>towards</em> instead of <em>from</em> mortality). Before ten years are over, the Devil&rsquo;s in it if I haven&rsquo;t sucked out some of the life-blood from the mysteries of this universe, in a way that no purely mortal lips or brains could do.
+                    <span class="cut-tag">Letter to Charles Babbage, 5 July 1843</span></p>
                 <p class="excerpt-note">Stein&rsquo;s account frames the passage as a reply: Babbage had demurred at the mystical, fairy-tinged way Lovelace described her own mind, and this is her answer. Betty Toole&rsquo;s edition of the letters prints the signature as &ldquo;Your Fairy for ever A.A.L.&rdquo; Ampersands and italics follow the manuscript as transcribed. The wording here follows the Stein (1985) rendering as quoted at Today in Science History, which reads &ldquo;haven&rsquo;t&rdquo; where Toole and The Marginalian both read &ldquo;have not.&rdquo;</p>
                 <a class="source-link" href="https://todayinsci.com/K/King_Augusta/KingAugusta-Quotations.htm" target="_blank" rel="noopener">The core sentence with its British Library manuscript citation, at Today in Science History <span aria-hidden="true">↗</span></a>
                 <div class="trail">

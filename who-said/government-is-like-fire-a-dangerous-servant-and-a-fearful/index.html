@@ -274,7 +274,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -656,9 +663,7 @@
                     <dt>Earliest known</dt><dd class="title">The Christian Science Journal, 1902</dd>
                     <dt>Real source</dt><dd>An anonymous reworking of a 1500s&ndash;1600s proverb</dd>
                 </dl>
-                <p class="excerpt">
-                    Government is not reason, it is not eloquence,&mdash;it is force! Like fire, it is a dangerous servant, and a fearful master; never for a moment should it be left to irresponsible action.
-                </p>
+                <p class="excerpt">Government is not reason, it is not eloquence,&mdash;it is force! Like fire, it is a dangerous servant, and a fearful master; never for a moment should it be left to irresponsible action.</p>
                 <p class="excerpt-note">The fuller 1902 wording, credited only to &ldquo;the first President of the United States.&rdquo; The popular short form &mdash; &ldquo;Government is like fire, a dangerous servant and a fearful master&rdquo; &mdash; is a later condensation.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2015/05/26/fire-servant/" target="_blank" rel="noopener">Quote Investigator: Government Is Like Fire <span aria-hidden="true">↗</span></a>
                 <div class="trail">

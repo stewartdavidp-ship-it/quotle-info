@@ -283,7 +283,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,9 +672,7 @@
                     <dt>Earliest English</dt><dd>&ldquo;I dream my picture and afterwards I paint my dream&rdquo; &mdash; in print by 1908&ndash;1918</dd>
                     <dt>&ldquo;van Gogh&rdquo; version</dt><dd>Unsourced; earliest attributions date only to the 1990s</dd>
                 </dl>
-                <p class="excerpt">
-                    Je r&ecirc;ve mon tableau, et plus tard je peindrai mon r&ecirc;ve. &mdash; &ldquo;I dream my picture and afterwards I paint my dream.&rdquo;
-                </p>
+                <p class="excerpt">Je r&ecirc;ve mon tableau, et plus tard je peindrai mon r&ecirc;ve. &mdash; &ldquo;I dream my picture and afterwards I paint my dream.&rdquo;</p>
                 <p class="excerpt-note">Corot&rsquo;s remark, as translated in the <em>Musical Courier</em> (1908) and Thomas Troward&rsquo;s <em>Bible Mystery and Bible Meaning</em> (1918). The popular &ldquo;van Gogh&rdquo; wording simply swaps <em>picture&rarr;painting</em> and <em>afterwards&rarr;then</em>.</p>
                 <a class="source-link" href="https://en.wikiquote.org/wiki/Jean-Baptiste-Camille_Corot" target="_blank" rel="noopener">Wikiquote: Camille Corot (sourced entry) <span aria-hidden="true">↗</span></a>
                 <div class="trail">

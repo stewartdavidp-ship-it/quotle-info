@@ -285,7 +285,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -666,10 +673,8 @@
                     <dt>Passage</dt><dd>Italic epigraph immediately preceding Chapter IV, &ldquo;The Forces of the Subconscious&rdquo; (chapter opens at p. 59)</dd>
                     <dt>Popular wording</dt><dd>Not in the book &mdash; a later condensation</dd>
                 </dl>
-                <p class="excerpt">
-                    When you think of yourself do not think of that part of yourself that appears on the surface. That part is the smaller part and the lesser should not be pictured in mind. Think of your larger self, the immense subconscious self that is limitless both in power and in possibility. Believe in yourself but not simply in a part of yourself. Give constant recognition to all that is in you, and in that all have full faith and confidence. Give the bigger man on the inside full right of way. Believe thoroughly in your greater interior self. Know that you have something within you that is greater than any obstacle, circumstance or difficulty that you can possibly meet. Then in the full faith in this greater something, proceed with your work.
-                    <span class="cut-tag">The real passage, 1912</span>
-                </p>
+                <p class="excerpt">When you think of yourself do not think of that part of yourself that appears on the surface. That part is the smaller part and the lesser should not be pictured in mind. Think of your larger self, the immense subconscious self that is limitless both in power and in possibility. Believe in yourself but not simply in a part of yourself. Give constant recognition to all that is in you, and in that all have full faith and confidence. Give the bigger man on the inside full right of way. Believe thoroughly in your greater interior self. Know that you have something within you that is greater than any obstacle, circumstance or difficulty that you can possibly meet. Then in the full faith in this greater something, proceed with your work.
+                    <span class="cut-tag">The real passage, 1912</span></p>
                 <p class="excerpt-note">This is the whole epigraph, and you can watch the famous line being made out of it. &ldquo;Believe in yourself but not simply in a part of yourself&hellip; Give constant recognition to all that is in you&rdquo; becomes &ldquo;Believe in yourself and all that you are.&rdquo; The closing sentence keeps its shape but swaps &ldquo;within&rdquo; for &ldquo;inside&rdquo; and stops at &ldquo;obstacle.&rdquo; Note also that the 1912 Crowell text reads &ldquo;the bigger man on the inside&rdquo;; some modern reprints render this &ldquo;the bigger being on the inside.&rdquo;</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📖</span>

@@ -276,7 +276,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -659,10 +666,8 @@
                     <dt>Second printing</dt><dd class="title">Arthur Ransome, Oscar Wilde: A Critical Study (London: Martin Secker, 1912), 64 &mdash; reported speech</dd>
                     <dt>Attributed occasion</dt><dd>New York Custom House, January 1882 &mdash; no contemporary record</dd>
                 </dl>
-                <p class="excerpt">
-                    At the New York Custom House: &ldquo;I have nothing to declare except my genius.&rdquo;
-                    <span class="cut-tag">The Oscar Wilde Calendar, 1910 &mdash; entry for 4 January</span>
-                </p>
+                <p class="excerpt">At the New York Custom House: &ldquo;I have nothing to declare except my genius.&rdquo;
+                    <span class="cut-tag">The Oscar Wilde Calendar, 1910 &mdash; entry for 4 January</span></p>
                 <p class="excerpt-note">Note what this is and is not. The famous first-person wording is already here in the earliest known printing, customs house and all &mdash; it is not a later embellishment. What it is not is evidence: this is a posthumous day-book, published ten years after Wilde died, and the line arrives as one of the &ldquo;unrecorded sayings&rdquo; its own title page advertises, with no source given and no earlier text behind it. The next printing, <a href="https://www.gutenberg.org/ebooks/36017" target="_blank" rel="noopener">Arthur Ransome&rsquo;s 1912 study ↗</a>, does not quote Wilde at all: it reports the story in the third person &mdash; &ldquo;<em>he had nothing to declare except his genius</em>&rdquo; &mdash; folded into a list of things Wilde sailed to America to do.</p>
                 <a class="source-link" href="https://babel.hathitrust.org/cgi/pt?id=inu.32000001009895" target="_blank" rel="noopener">The Oscar Wilde Calendar (1910), quote page 7 — Full View at HathiTrust <span aria-hidden="true">↗</span></a>
                 <div class="trail">

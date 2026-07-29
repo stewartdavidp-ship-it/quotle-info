@@ -290,7 +290,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -671,9 +678,7 @@
                     <dt>Translation</dt><dd>Maxwell Staniforth, Penguin Classics (Penguin Books, 1964), p. 72 &mdash; the source of this exact wording</dd>
                     <dt>Public-domain rendering</dt><dd>George Long, 1862: &ldquo;Everything is only for a day, both that which remembers and that which is remembered.&rdquo;</dd>
                 </dl>
-                <p class="excerpt">
-                    All of us are creatures of a day; the rememberer and the remembered alike.
-                </p>
+                <p class="excerpt">All of us are creatures of a day; the rememberer and the remembered alike.</p>
                 <p class="excerpt-note">That is the whole of Book 4, section 35 &mdash; there is no fuller context to quote, because the section is a single sentence. The wording above is Staniforth&rsquo;s 1964 translation. For comparison, <a href="https://www.gutenberg.org/ebooks/15877" target="_blank" rel="noopener">George Long&rsquo;s public-domain 1862 version ↗</a> renders the same sentence as: &ldquo;Everything is only for a day, both that which remembers and that which is remembered.&rdquo;</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2022/11/12/creatures/" target="_blank" rel="noopener">Quote Investigator: the full translation history <span aria-hidden="true">↗</span></a>
                 <div class="trail">

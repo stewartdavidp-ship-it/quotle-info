@@ -284,7 +284,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -665,10 +672,8 @@
                     <dt>Published</dt><dd>1772 · Paris</dd>
                     <dt>Also in</dt><dd>Questions sur l&rsquo;Encyclopédie, article &ldquo;Art dramatique&rdquo; (1770)</dd>
                 </dl>
-                <p class="excerpt">
-                    Dans ses écrits un sage Italien<br>Dit que le mieux est l&rsquo;ennemi du bien.<br><em>(In his writings a wise Italian / says that the best is the enemy of the good.)</em>
-                    <span class="cut-tag">↑ the popular English keeps the maxim but drops Voltaire&rsquo;s own credit to &ldquo;a wise Italian&rdquo;</span>
-                </p>
+                <p class="excerpt">Dans ses écrits un sage Italien<br>Dit que le mieux est l&rsquo;ennemi du bien.<br><em>(In his writings a wise Italian / says that the best is the enemy of the good.)</em>
+                    <span class="cut-tag">↑ the popular English keeps the maxim but drops Voltaire&rsquo;s own credit to &ldquo;a wise Italian&rdquo;</span></p>
                 <p class="excerpt-note">Voltaire opens the poem by quoting the maxim, then spends the tale illustrating it &mdash; a restless woman who cannot leave well enough alone. Note &ldquo;le mieux&rdquo; means &ldquo;the best/the better,&rdquo; which the English rendered as &ldquo;the perfect.&rdquo;</p>
                 <a class="source-link" href="https://fr.wikisource.org/wiki/Contes_en_vers_(Voltaire)/La_B%C3%A9gueule" target="_blank" rel="noopener">La Bégueule, full text on Wikisource <span aria-hidden="true">↗</span></a>
                 <div class="trail">

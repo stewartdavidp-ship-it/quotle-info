@@ -274,7 +274,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -656,10 +663,8 @@
                     <dt>Form</dt><dd>Posed as a question, not an assertion</dd>
                     <dt>In Jefferson's writings</dt><dd>Not found — filed by Monticello under Spurious Quotes</dd>
                 </dl>
-                <p class="excerpt">
-                    If what your country is doing seems to you practically and morally wrong, is dissent the highest form of patriotism?
-                    <span class="cut-tag">1961 — the question, not the slogan</span>
-                </p>
+                <p class="excerpt">If what your country is doing seems to you practically and morally wrong, is dissent the highest form of patriotism?
+                    <span class="cut-tag">1961 — the question, not the slogan</span></p>
                 <p class="excerpt-note">Note what this is and is not. The 1961 pamphlet does not declare that dissent is the highest form of patriotism &mdash; it <em>asks</em> whether it might be. The familiar flat assertion is a later hardening of an open question, and the attribution to Jefferson is later still.</p>
                 <a class="source-link" href="https://www.barrypopik.com/index.php/new_york_city/entry/dissent_is_the_highest_form_of_patriotism" target="_blank" rel="noopener">Barry Popik's full chronology of the phrase <span aria-hidden="true">↗</span></a>
                 <div class="trail">

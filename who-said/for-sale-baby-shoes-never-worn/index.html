@@ -273,7 +273,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -655,9 +662,7 @@
                     <dt>First linked to Hemingway</dt><dd>1989, via a stage play</dd>
                     <dt>Via</dt><dd class="title">Papa: A Play Based on the Legendary Lives of Ernest Hemingway</dd>
                 </dl>
-                <p class="excerpt">
-                    For sale: baby shoes, never worn.
-                </p>
+                <p class="excerpt">For sale: baby shoes, never worn.</p>
                 <p class="excerpt-note">The popular anecdote &mdash; Hemingway betting fellow writers $10 each that he could write a story in six words, then scrawling this on a napkin &mdash; is itself undocumented and first appears in John de Groot&rsquo;s 1989 play.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2013/01/28/baby-shoes/" target="_blank" rel="noopener">Quote Investigator: the full chronology <span aria-hidden="true">↗</span></a>
                 <div class="trail">

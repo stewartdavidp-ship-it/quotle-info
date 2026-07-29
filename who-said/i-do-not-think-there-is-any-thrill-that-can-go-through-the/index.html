@@ -291,7 +291,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -672,10 +679,8 @@
                     <dt>Byline</dt><dd>Unsigned in the Evening Star; the Atlanta Constitution&rsquo;s 22 June 1896 reprint carries a byline printed as &ldquo;Cleveland Moffitt&rdquo;</dd>
                     <dt>Form</dt><dd>Newspaper interview &mdash; Tesla speaking to a reporter at his caf&eacute; table at about eleven at night, not writing</dd>
                 </dl>
-                <p class="excerpt">
-                    When I was a student I have known what it is to sit at the gaming table forty-eight hours at a stretch. I thought that an intense emotion, the fascination of play, and I believe many people regard it as the strongest emotion, but I can tell you that for many years all the allurements of the game would have seemed tame and insipid to me compared with the tremendous, overmastering excitement of my life in the laboratory. I do not think there is any thrill that can go through the human heart like that felt by the inventor as he sees some creation of his brain unfolding to success, as he watches some crucial experiment prove that through months of waiting and hoping he has been in the right. Such emotions make a man forget food, sleep, sickness, friends, love&mdash;everything.
-                    <span class="cut-tag">1896 interview</span>
-                </p>
+                <p class="excerpt">When I was a student I have known what it is to sit at the gaming table forty-eight hours at a stretch. I thought that an intense emotion, the fascination of play, and I believe many people regard it as the strongest emotion, but I can tell you that for many years all the allurements of the game would have seemed tame and insipid to me compared with the tremendous, overmastering excitement of my life in the laboratory. I do not think there is any thrill that can go through the human heart like that felt by the inventor as he sees some creation of his brain unfolding to success, as he watches some crucial experiment prove that through months of waiting and hoping he has been in the right. Such emotions make a man forget food, sleep, sickness, friends, love&mdash;everything.
+                    <span class="cut-tag">1896 interview</span></p>
                 <p class="excerpt-note">Transcribed from the Library of Congress scan of the Evening Star; obvious OCR slips have been corrected against the Atlanta Constitution and Indianapolis Journal printings of the same interview. Note the variant: the Evening Star and the Atlanta Constitution include &ldquo;sickness&rdquo; in the final list; <a href="https://www.loc.gov/resource/sn82015679/1896-06-19/ed-1/?sp=3&amp;q=%22thrill+that+can+go+through+the+human+heart%22" target="_blank" rel="noopener">the Indianapolis Journal&rsquo;s reprint ↗</a> does not, and it is that shorter list which survives in the modern quotation.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📰</span>

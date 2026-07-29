@@ -276,7 +276,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -658,9 +665,7 @@
                     <dt>Collected in</dt><dd class="title">Everybody&rsquo;s Friend, or Josh Billings&rsquo;s Encyclopedia and Proverbial Philosophy of Wit and Humor</dd>
                     <dt>Original spelling</dt><dd>&ldquo;Success don&rsquo;t konsist in never making blunders, but in never making the same one the seckond time.&rdquo;</dd>
                 </dl>
-                <p class="excerpt">
-                    Success don&rsquo;t konsist in never making blunders, but in never making the same one the seckond time.
-                </p>
+                <p class="excerpt">Success don&rsquo;t konsist in never making blunders, but in never making the same one the seckond time.</p>
                 <p class="excerpt-note">Billings deliberately used eccentric phonetic spelling; newspapers often standardized it on reprinting, which is how the smoothed modern wording &mdash; &ldquo;Success does not consist in never making blunders&hellip;&rdquo; &mdash; entered circulation.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2019/03/29/blunder/" target="_blank" rel="noopener">Quote Investigator: tracing the &ldquo;blunders&rdquo; saying to Josh Billings <span aria-hidden="true">↗</span></a>
                 <div class="trail">

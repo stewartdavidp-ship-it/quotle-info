@@ -266,7 +266,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -647,10 +654,8 @@
                     <dt>Spoken by</dt><dd>The Wizard / Professor Marvel (Frank Morgan) &mdash; a fictional character</dd>
                     <dt>Based on</dt><dd>The Wonderful Wizard of Oz (1900) by L. Frank Baum &mdash; which contains no curtain and no such line</dd>
                 </dl>
-                <p class="excerpt">
-                    <em>[Toto pulls back the curtain, revealing the Wizard at the controls of the throne apparatus. Dorothy calls the others' attention to him.]</em><br /><br />DOROTHY: Who are you?<br /><br />OZ&rsquo;S VOICE: Oh &mdash; I &mdash; Pay no attention to that man behind the curtain. Go &mdash; before I lose my temper! The Great and Powerful &mdash; Oz &mdash; has spoken!<br /><br /><em>[Dorothy pulls back the curtain to reveal the Wizard at the controls. He starts to speak into the microphone &mdash; then turns weakly back to Dorothy.]</em><br /><br />DOROTHY: Who are you?<br /><br />OZ&rsquo;S VOICE: Well, I &mdash; I &mdash; I am the Great and Powerful &mdash; Wizard of Oz.
-                    <span class="cut-tag">The curtain scene</span>
-                </p>
+                <p class="excerpt"><em>[Toto pulls back the curtain, revealing the Wizard at the controls of the throne apparatus. Dorothy calls the others' attention to him.]</em><br /><br />DOROTHY: Who are you?<br /><br />OZ&rsquo;S VOICE: Oh &mdash; I &mdash; Pay no attention to that man behind the curtain. Go &mdash; before I lose my temper! The Great and Powerful &mdash; Oz &mdash; has spoken!<br /><br /><em>[Dorothy pulls back the curtain to reveal the Wizard at the controls. He starts to speak into the microphone &mdash; then turns weakly back to Dorothy.]</em><br /><br />DOROTHY: Who are you?<br /><br />OZ&rsquo;S VOICE: Well, I &mdash; I &mdash; I am the Great and Powerful &mdash; Wizard of Oz.
+                    <span class="cut-tag">The curtain scene</span></p>
                 <p class="excerpt-note">Reconstructed from MGM's cutting continuity, which records dialogue split across camera setups &mdash; the line is logged as &ldquo;Oh &mdash; I &mdash; Pay no&hellip;&rdquo; on one shot and &ldquo;&hellip;attention to that man behind the curtain&rdquo; on the next; the joins are ours, the words are not. One further precision: Wikiquote pairs the line with &ldquo;The Great Oz has spoken!&rdquo;, but in the continuity that exclamation lands a beat <em>earlier</em>, and what follows the curtain line is &ldquo;The Great and Powerful &mdash; Oz &mdash; has spoken!&rdquo;</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📄</span>

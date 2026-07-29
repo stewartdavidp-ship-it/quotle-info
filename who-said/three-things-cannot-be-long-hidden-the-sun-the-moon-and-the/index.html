@@ -275,7 +275,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -656,10 +663,8 @@
                     <dt>Exact modern wording</dt><dd>first traced to A Way Forward (Voigt &amp; Drury, 2003)</dd>
                     <dt>Status</dt><dd>&ldquo;Fakeish&rdquo; &mdash; a genuine teaching, reworded</dd>
                 </dl>
-                <p class="excerpt">
-                    Mendicants, these three things shine in the open, not under cover. What three? The moon shines in the open, not under cover. The sun shines in the open, not under cover. The teaching and training proclaimed by a Realized One shine in the open, not under cover.
-                    <span class="cut-tag">↑ the popular version keeps the sun and moon but swaps the Buddha&rsquo;s Dhamma for a generic &lsquo;truth&rsquo;</span>
-                </p>
+                <p class="excerpt">Mendicants, these three things shine in the open, not under cover. What three? The moon shines in the open, not under cover. The sun shines in the open, not under cover. The teaching and training proclaimed by a Realized One shine in the open, not under cover.
+                    <span class="cut-tag">↑ the popular version keeps the sun and moon but swaps the Buddha&rsquo;s Dhamma for a generic &lsquo;truth&rsquo;</span></p>
                 <p class="excerpt-note">The passage above (Aṅguttara Nikāya 3.131) is what the Buddha is actually recorded as saying. Narasu compressed it in 1907 into &ldquo;Three things shine before the world and cannot be hidden. They are the moon, the sun, and the truth proclaimed by the Tathāgata,&rdquo; and later hands trimmed &lsquo;the truth proclaimed by the Tathāgata&rsquo; down to just &lsquo;the truth&rsquo; &mdash; turning a claim about open teaching into a claim about truth surfacing.</p>
                 <a class="source-link" href="https://fakebuddhaquotes.com/three-things-cannot-be-long-hidden-the-sun-the-moon-and-the-truth/" target="_blank" rel="noopener">Fake Buddha Quotes: the full investigation <span aria-hidden="true">↗</span></a>
                 <div class="trail">

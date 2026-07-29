@@ -273,7 +273,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -655,10 +662,8 @@
                     <dt>First published</dt><dd>1829 (Cotta, Stuttgart &amp; T&uuml;bingen) &mdash; the second edition, &ldquo;differing substantially from the first&rdquo; (1821). Carlyle records that Goethe had by then &ldquo;taken to pieces&rdquo; the original &ldquo;and constructed anew,&rdquo; with &ldquo;multifarious intercalations, giving a great expansion, both of size and of scope.&rdquo;</dd>
                     <dt>Translation</dt><dd>No identified translator for the wording in circulation. A public-domain English rendering of the same aphorism does exist &mdash; T. Bailey Saunders, <em>The Maxims and Reflections of Goethe</em> (Macmillan, 1906), no. 324 &mdash; but its wording is not the one people quote. Thomas Carlyle's standard 1827 English version omits this section entirely.</dd>
                 </dl>
-                <p class="excerpt">
-                    Wen jemand lobt, dem stellt er sich gleich. Es ist nicht genug, zu wissen, man mu&szlig; auch anwenden; es ist nicht genug, zu wollen, man mu&szlig; auch tun.
-                    <span class="cut-tag">Goethe, 1829 — not Leonardo, and not 1500</span>
-                </p>
+                <p class="excerpt">Wen jemand lobt, dem stellt er sich gleich. Es ist nicht genug, zu wissen, man mu&szlig; auch anwenden; es ist nicht genug, zu wollen, man mu&szlig; auch tun.
+                    <span class="cut-tag">Goethe, 1829 — not Leonardo, and not 1500</span></p>
                 <p class="excerpt-note">Goethe's German, verbatim, with the aphorism that immediately precedes it &mdash; confirmed in <a href="https://projekt-gutenberg.org/authors/johann-wolfgang-von-goethe/books/johann-wolfgang-goethe-wilhelm-meisters-wanderjahre/chapter/71" target="_blank" rel="noopener">Projekt Gutenberg-DE's text of <em>Wilhelm Meisters Wanderjahre</em>, Kapitel 71 ↗</a>. Rendered literally: <em>it is not enough to know, one must also apply; it is not enough to will, one must also do</em>. Note that Goethe's second clause is &ldquo;zu wollen&rdquo; (to will) &mdash; the circulating English &ldquo;Being willing is not enough&rdquo; is a looser rendering, and the &ldquo;urgency of doing&rdquo; opener has no counterpart in the German at all.</p>
                 <a class="source-link" href="https://projekt-gutenberg.org/authors/johann-wolfgang-von-goethe/books/johann-wolfgang-goethe-wilhelm-meisters-wanderjahre/chapter/71" target="_blank" rel="noopener">Read the passage in Goethe's German at Projekt Gutenberg-DE <span aria-hidden="true">↗</span></a>
                 <div class="trail">

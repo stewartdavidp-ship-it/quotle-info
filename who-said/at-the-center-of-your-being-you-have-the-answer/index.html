@@ -273,7 +273,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -655,10 +662,8 @@
                     <dt>Real fragment</dt><dd>Witter Bynner, 1944, ch. 47</dd>
                     <dt>Nearest chapters</dt><dd>47 (looking outward) and 33 (self-knowledge)</dd>
                 </dl>
-                <p class="excerpt">
-                    不出戶知天下；不闚牖見天道。其出彌遠，其知彌少。
-                    <span class="cut-tag">Tao Te Ching, ch. 47</span>
-                </p>
+                <p class="excerpt">不出戶知天下；不闚牖見天道。其出彌遠，其知彌少。
+                    <span class="cut-tag">Tao Te Ching, ch. 47</span></p>
                 <p class="excerpt-note">The opening of chapter 47 in Chinese &mdash; the nearest thing in the book to the sentiment, and a useful measure of the distance. In plain English, it says: without going out of his door, one knows all under heaven; the farther he goes, the less he knows. It is about not needing to travel for knowledge. It says nothing about having an answer, or about knowing what you want.</p>
                 <a class="source-link" href="https://ctext.org/dao-de-jing" target="_blank" rel="noopener">Tao Te Ching — Chinese with Legge's 1891 translation <span aria-hidden="true">↗</span></a>
                 <div class="trail">

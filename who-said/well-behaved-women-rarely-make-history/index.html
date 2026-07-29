@@ -282,7 +282,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,9 +671,7 @@
                     <dt>Published in</dt><dd><em>American Quarterly</em>, Vol. 28, No. 1 (1976), p. 20</dd>
                     <dt>Original wording</dt><dd>&ldquo;seldom&rdquo; &mdash; not &ldquo;rarely&rdquo; or &ldquo;never&rdquo;</dd>
                 </dl>
-                <p class="excerpt">
-                    Well-behaved women seldom make history; against Antinomians and witches, these pious matrons have had little chance at all.
-                </p>
+                <p class="excerpt">Well-behaved women seldom make history; against Antinomians and witches, these pious matrons have had little chance at all.</p>
                 <p class="excerpt-note">The opening of Ulrich&rsquo;s 1976 article. She was describing ordinary, devout women praised in Puritan funeral sermons &mdash; women overlooked precisely <em>because</em> they were dutiful. It was a call for better history, not a slogan urging women to misbehave.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2012/11/03/well-behaved-women/" target="_blank" rel="noopener">Quote Investigator: full investigation <span aria-hidden="true">↗</span></a>
                 <div class="trail">

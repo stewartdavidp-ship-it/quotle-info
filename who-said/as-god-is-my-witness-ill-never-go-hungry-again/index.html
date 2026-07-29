@@ -279,7 +279,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -660,10 +667,8 @@
                     <dt>Screenplay</dt><dd>Sidney Howard (sole credit; David O. Selznick, Ben Hecht and others rewrote uncredited)</dd>
                     <dt>Originates in</dt><dd>Margaret Mitchell, Gone with the Wind (Macmillan, 30 June 1936), ch. XXV</dd>
                 </dl>
-                <p class="excerpt">
-                    As God is my witness, as God is my witness they&rsquo;re not goin&rsquo; to lick me. I&rsquo;m goin&rsquo; to live through this and when it&rsquo;s all over, I&rsquo;ll never be hungry again. No, nor any of my folk. If I have to lie, steal, cheat or kill. <strong>As God is my witness, I&rsquo;ll never be hungry again!</strong>
-                    <span class="cut-tag">The vow at Tara</span>
-                </p>
+                <p class="excerpt">As God is my witness, as God is my witness they&rsquo;re not goin&rsquo; to lick me. I&rsquo;m goin&rsquo; to live through this and when it&rsquo;s all over, I&rsquo;ll never be hungry again. No, nor any of my folk. If I have to lie, steal, cheat or kill. <strong>As God is my witness, I&rsquo;ll never be hungry again!</strong>
+                    <span class="cut-tag">The vow at Tara</span></p>
                 <p class="excerpt-note">That is the 1939 film, verbatim. Mitchell&rsquo;s 1936 original, which closes Chapter XXV, runs: &ldquo;Hunger gnawed at her empty stomach again and she said aloud: &lsquo;As God is my witness, as God is my witness, the Yankees aren&rsquo;t going to lick me. I&rsquo;m going to live through this, and when it&rsquo;s over, I&rsquo;m never going to be hungry again. No, nor any of my folks. If I have to steal or kill&mdash;as God is my witness, I&rsquo;m never going to be hungry again.&rsquo;&rdquo; Both say <em>be</em> hungry. Neither says <em>go</em> hungry.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📖</span>

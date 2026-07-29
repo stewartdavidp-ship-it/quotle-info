@@ -283,7 +283,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,10 +671,8 @@
                     <dt>First published</dt><dd>1923, Alfred A. Knopf (New York)</dd>
                     <dt>Language</dt><dd>Written originally in English</dd>
                 </dl>
-                <p class="excerpt">
-                    Some of you say, &lsquo;It is the north wind who has woven the clothes we wear.&rsquo; And I say, Ay, it was the north wind, But shame was his loom, and the softening of the sinews was his thread. And when his work was done he laughed in the forest. Forget not that modesty is for a shield against the eye of the unclean. And when the unclean shall be no more, what were modesty but a fetter and a fouling of the mind? And forget not that the earth delights to feel your bare feet and the winds long to play with your hair.
-                    <span class="cut-tag">On Clothes</span>
-                </p>
+                <p class="excerpt">Some of you say, &lsquo;It is the north wind who has woven the clothes we wear.&rsquo; And I say, Ay, it was the north wind, But shame was his loom, and the softening of the sinews was his thread. And when his work was done he laughed in the forest. Forget not that modesty is for a shield against the eye of the unclean. And when the unclean shall be no more, what were modesty but a fetter and a fouling of the mind? And forget not that the earth delights to feel your bare feet and the winds long to play with your hair.
+                    <span class="cut-tag">On Clothes</span></p>
                 <p class="excerpt-note">The popular quote form usually drops the opening &ldquo;And&rdquo; and is presented as a standalone sentence; in the original it closes a longer passage on modesty and clothing.</p>
                 <a class="source-link" href="https://www.gutenberg.org/files/58585/58585-h/58585-h.htm" target="_blank" rel="noopener">Read “On Clothes” at Project Gutenberg <span aria-hidden="true">↗</span></a>
                 <div class="trail">

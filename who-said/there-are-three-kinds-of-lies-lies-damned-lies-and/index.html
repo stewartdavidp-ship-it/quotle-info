@@ -276,7 +276,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -658,10 +665,8 @@
                     <dt>Dictated</dt><dd>Section headed &ldquo;Notes on &lsquo;Innocents Abroad.&rsquo; Dictated in Florence, Italy, April, 1904&rdquo;</dd>
                     <dt>Twain&rsquo;s framing</dt><dd>Quoted, not claimed &mdash; &ldquo;the remark attributed to Disraeli&rdquo;</dd>
                 </dl>
-                <p class="excerpt">
-                    I was deducing from the above that I have been slowing down steadily in these thirty-six years, but I perceive that my statistics have a defect: three thousand words in the spring of 1868 when I was working seven or eight or nine hours at a sitting has little or no advantage over the sitting of to-day, covering half the time and producing half the output. Figures often beguile me, particularly when I have the arranging of them myself; in which case the remark attributed to Disraeli would often apply with justice and force:<br><br>&ldquo;There are three kinds of lies: lies, damned lies, and statistics.&rdquo;
-                    <span class="cut-tag">&ldquo;Chapters from My Autobiography&mdash;XX,&rdquo; 5 July 1907</span>
-                </p>
+                <p class="excerpt">I was deducing from the above that I have been slowing down steadily in these thirty-six years, but I perceive that my statistics have a defect: three thousand words in the spring of 1868 when I was working seven or eight or nine hours at a sitting has little or no advantage over the sitting of to-day, covering half the time and producing half the output. Figures often beguile me, particularly when I have the arranging of them myself; in which case the remark attributed to Disraeli would often apply with justice and force:<br><br>&ldquo;There are three kinds of lies: lies, damned lies, and statistics.&rdquo;
+                    <span class="cut-tag">&ldquo;Chapters from My Autobiography&mdash;XX,&rdquo; 5 July 1907</span></p>
                 <p class="excerpt-note">The load-bearing words are Twain&rsquo;s five before the quotation marks: <em>the remark attributed to Disraeli</em>. He is passing the line along, not minting it &mdash; and he is using it against his own arithmetic about how many words a day he wrote.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📄</span>

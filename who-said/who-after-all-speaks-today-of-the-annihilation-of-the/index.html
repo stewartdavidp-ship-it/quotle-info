@@ -280,7 +280,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -664,10 +671,8 @@
                     <dt>Nuremberg status</dt><dd>798-PS and 1014-PS admitted; L-3 not admitted</dd>
                     <dt>German original</dt><dd lang="de">Wer redet heute noch von der Vernichtung der Armenier?</dd>
                 </dl>
-                <p class="excerpt">
-                    Who, after all, speaks today of the annihilation of the Armenians?
-                    <span class="cut-tag">Document L-3, Obersalzberg, 22 August 1939</span>
-                </p>
+                <p class="excerpt">Who, after all, speaks today of the annihilation of the Armenians?
+                    <span class="cut-tag">Document L-3, Obersalzberg, 22 August 1939</span></p>
                 <p class="excerpt-note">In L-3 the sentence closes a passage in which Hitler orders the killing of Polish men, women and children without pity, and dismisses the question of what the world will say. The German reads: Wer redet heute noch von der Vernichtung der Armenier? Read in place, it is not a comment on Armenian history but an argument about impunity &mdash; that atrocity is forgotten, and can therefore be repeated.</p>
                 <a class="source-link" href="https://en.wikipedia.org/wiki/Hitler%27s_reference_to_the_Armenian_genocide" target="_blank" rel="noopener">The documents, the transmission chain and the scholarly dispute <span aria-hidden="true">↗</span></a>
                 <div class="trail">

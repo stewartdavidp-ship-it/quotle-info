@@ -274,7 +274,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -656,10 +663,8 @@
                     <dt>Published in</dt><dd>Public Papers of the Presidents: Ronald Reagan</dd>
                     <dt>Punchline as delivered</dt><dd>&ldquo;There&rsquo;s got to be a pony in here somewhere.&rdquo;</dd>
                 </dl>
-                <p class="excerpt">
-                    You know, when I think of the welfare system, it reminds me of a story. And I know some here have heard me tell this before, and maybe everybody knows it, but pretend that you haven&rsquo;t heard it because I like to tell this story. &hellip; [The psychiatrist fills one room with toys for the pessimist, and the other with &ldquo;quite a quantity of what they clean out of the stable&rdquo; for the optimist.] &hellip; And he was sitting there crying, and they said, &ldquo;What are you crying about?&rdquo; And he said, &ldquo;Well, I know somebody&rsquo;s going to come and take these away from me.&rdquo; [Laughter] And they went down to the room with the optimist. And he was on top of that pile of stuff, and he was throwing it over his shoulder as fast as he could. And they said, &ldquo;What are you doing?&rdquo; He says, &ldquo;There&rsquo;s got to be a pony in here somewhere.&rdquo; [Laughter]
-                    <span class="cut-tag">Setup condensed</span>
-                </p>
+                <p class="excerpt">You know, when I think of the welfare system, it reminds me of a story. And I know some here have heard me tell this before, and maybe everybody knows it, but pretend that you haven&rsquo;t heard it because I like to tell this story. &hellip; [The psychiatrist fills one room with toys for the pessimist, and the other with &ldquo;quite a quantity of what they clean out of the stable&rdquo; for the optimist.] &hellip; And he was sitting there crying, and they said, &ldquo;What are you crying about?&rdquo; And he said, &ldquo;Well, I know somebody&rsquo;s going to come and take these away from me.&rdquo; [Laughter] And they went down to the room with the optimist. And he was on top of that pile of stuff, and he was throwing it over his shoulder as fast as he could. And they said, &ldquo;What are you doing?&rdquo; He says, &ldquo;There&rsquo;s got to be a pony in here somewhere.&rdquo; [Laughter]
+                    <span class="cut-tag">Setup condensed</span></p>
                 <p class="excerpt-note">Bracketed text is our summary of the setup; everything in quotation marks is verbatim from the transcript. Note what&rsquo;s missing: nowhere in this telling &mdash; or any other on the record &mdash; does Reagan say &ldquo;manure,&rdquo; and he never says &ldquo;there must be a pony somewhere.&rdquo;</p>
                 <a class="source-link" href="https://www.presidency.ucsb.edu/documents/remarks-and-panel-discussion-with-community-leaders-welfare-reform" target="_blank" rel="noopener">Read the full 1987 remarks at the American Presidency Project <span aria-hidden="true">↗</span></a>
                 <div class="trail">

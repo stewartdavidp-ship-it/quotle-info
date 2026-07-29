@@ -266,7 +266,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -648,10 +655,8 @@
                     <dt>Translation shown</dt><dd>J. Sandys Stanyon, revised by R. W. Stewart (Williams &amp; Norgate, 1906)</dd>
                     <dt>Earliest printing located</dt><dd>George Sweeting, <em>Talking It Over</em> (Moody Press, 1979), p. 88 &mdash; the earliest Wikiquote points to</dd>
                 </dl>
-                <p class="excerpt">
-                    Therefore, where there is a Christian, there is also the Holy Ghost, and He does nothing else save pray continually. For even if the mouth be not always moving and uttering words, yet the heart goes on beating unceasingly with sighs like these: Ah! dear Father, may Thy name be hallowed, may Thy kingdom come, and Thy will be done; and whenever there come sorer buffetings and trials and needs, then the sighing and supplication increase, even audibly, so that you cannot find a Christian who does not pray; just as you cannot find a living man without a pulse that never stands still, but beats and beats on continually of itself, although the man may sleep or do anything else, so being all unconscious of this pulse.
-                    <span class="cut-tag">Sermons on John 14 &middot; 1537&ndash;38</span>
-                </p>
+                <p class="excerpt">Therefore, where there is a Christian, there is also the Holy Ghost, and He does nothing else save pray continually. For even if the mouth be not always moving and uttering words, yet the heart goes on beating unceasingly with sighs like these: Ah! dear Father, may Thy name be hallowed, may Thy kingdom come, and Thy will be done; and whenever there come sorer buffetings and trials and needs, then the sighing and supplication increase, even audibly, so that you cannot find a Christian who does not pray; just as you cannot find a living man without a pulse that never stands still, but beats and beats on continually of itself, although the man may sleep or do anything else, so being all unconscious of this pulse.
+                    <span class="cut-tag">Sermons on John 14 &middot; 1537&ndash;38</span></p>
                 <p class="excerpt-note">Luther on John 14, as printed in the 1906 English translation of Wilhelm Herrmann&rsquo;s <em>The Communion of the Christian with God</em> at pp. 331&ndash;332, where it is footnoted to the Erlangen edition (xlix. 115) at p. 332. The modern <em>Luther&rsquo;s Works</em> translation renders the closing comparison &ldquo;just as impossible as a living person without a pulse.&rdquo; Neither version says &ldquo;breathing.&rdquo;</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">📕</span>

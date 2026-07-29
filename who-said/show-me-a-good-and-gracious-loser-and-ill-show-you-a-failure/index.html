@@ -273,7 +273,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -655,10 +662,8 @@
                     <dt>Earliest Rockne credit</dt><dd>George Strickler, letter to <em>The Washington Post</em>, August 1943 &mdash; Rockne died in 1931</dd>
                     <dt>Anchor research</dt><dd class="title">Quote Investigator, &ldquo;Quote Origin: Show Me a Good Loser and I&rsquo;ll Show You a Loser&rdquo; (29 June 2024)</dd>
                 </dl>
-                <p class="excerpt">
-                    &ldquo;Show me a good loser,&rdquo; he used to say, &ldquo;and I will show you a failure.&rdquo;
-                    <span class="cut-tag">The Washington Post, August 1943</span>
-                </p>
+                <p class="excerpt">&ldquo;Show me a good loser,&rdquo; he used to say, &ldquo;and I will show you a failure.&rdquo;
+                    <span class="cut-tag">The Washington Post, August 1943</span></p>
                 <p class="excerpt-note">This is <em>not</em> the popular wording &mdash; it is the closest thing to a documented one. Quote Investigator found it in a 1943 letter to <em>The Washington Post</em> from George Strickler, publicity director of the National Professional Football League, recalling what Rockne &ldquo;used to say.&rdquo; It is a second-hand memory printed twelve years after Rockne&rsquo;s death, and it lacks the &ldquo;good and gracious&rdquo; phrasing that circulates today.</p>
                 <a class="source-link" href="https://quoteinvestigator.com/2024/06/29/show-good/" target="_blank" rel="noopener">Quote Investigator: Show Me a Good Loser and I'll Show You a Loser <span aria-hidden="true">↗</span></a>
                 <div class="trail">

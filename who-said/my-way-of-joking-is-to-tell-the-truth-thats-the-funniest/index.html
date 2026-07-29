@@ -286,7 +286,14 @@
            attack surface). Records use class="muted" / class="dim" instead. */
         .muted { color: var(--text-muted); font-style: normal; }
         .dim { opacity: 0.7; }
-        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); }
+        /* pre-line: collapse runs of spaces as normal, but PRESERVE newlines. Five records quote
+           verse in source.excerpt — Whitman, Frost, Eliot among them — and HTML folds those line
+           breaks into spaces, so "Two roads diverged in a yellow wood" shipped as run-on prose with
+           the line structure silently removed. On a site whose product is provenance, reformatting
+           a poet's lineation is a fidelity defect, not a cosmetic one. The <p> above is emitted on
+           ONE line for the same reason: under pre-line the template's own indentation newlines
+           would render as leading and trailing blank lines. */
+        .excerpt { padding: 4px 0 4px 18px; border-left: 2px solid var(--sage); margin: 6px 0 12px; font-size: 1.05rem; color: var(--ink); white-space: pre-line; }
         .excerpt .cut-tag { display: inline-block; font-family: 'DM Sans', sans-serif; font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--sage); background: var(--sage-dim); padding: 1px 7px; border-radius: 4px; margin-left: 8px; vertical-align: middle; }
         .excerpt-note { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); margin: 12px 0 22px; }
         .artifact { display: flex; gap: 14px; align-items: center; background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 22px; }
@@ -668,10 +675,8 @@
                     <dt>Written / staged</dt><dd>1904 (premiered Royal Court Theatre, London, 1 November 1904)</dd>
                     <dt>First published</dt><dd>1907</dd>
                 </dl>
-                <p class="excerpt">
-                    NORA. But really and truly now, weren&rsquo;t the people rather disappointing? I should think the girls must have seemed rather coarse and dowdy after the foreign princesses and people? But I suppose a priest wouldn&rsquo;t notice that.<br><br>KEEGAN. It&rsquo;s a priest&rsquo;s business to notice everything. I won&rsquo;t tell you all I noticed about women; but I&rsquo;ll tell you this. The more a man knows, and the farther he travels, the more likely he is to marry a country girl afterwards.<br><br>NORA. You&rsquo;re joking, Mr Keegan: I&rsquo;m sure yar.<br><br>KEEGAN. My way of joking is to tell the truth. It&rsquo;s the funniest joke in the world.
-                    <span class="cut-tag">Act II</span>
-                </p>
+                <p class="excerpt">NORA. But really and truly now, weren&rsquo;t the people rather disappointing? I should think the girls must have seemed rather coarse and dowdy after the foreign princesses and people? But I suppose a priest wouldn&rsquo;t notice that.<br><br>KEEGAN. It&rsquo;s a priest&rsquo;s business to notice everything. I won&rsquo;t tell you all I noticed about women; but I&rsquo;ll tell you this. The more a man knows, and the farther he travels, the more likely he is to marry a country girl afterwards.<br><br>NORA. You&rsquo;re joking, Mr Keegan: I&rsquo;m sure yar.<br><br>KEEGAN. My way of joking is to tell the truth. It&rsquo;s the funniest joke in the world.
+                    <span class="cut-tag">Act II</span></p>
                 <p class="excerpt-note">Transcribed from the Project Gutenberg text of the play (eBook #3612), Act II.</p>
                 <a class="source-link" href="https://www.gutenberg.org/files/3612/3612-h/3612-h.htm" target="_blank" rel="noopener">Read Act II at Project Gutenberg <span aria-hidden="true">↗</span></a>
                 <div class="trail">
