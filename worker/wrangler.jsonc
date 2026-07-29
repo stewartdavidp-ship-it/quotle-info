@@ -6,6 +6,15 @@
   "compatibility_date": "2026-05-05",
   "observability": { "enabled": true },
 
+  // EMAIL_MODE — the reply ladder's position, deliberately in the repo rather than in a database
+  // row or a dashboard toggle. Promoting from draft to send is then a reviewable diff and a deploy,
+  // not a click somebody makes at 1am and cannot later explain.
+  //   "draft" — compose the reply and store it in email_sends; send NOTHING. The default.
+  //   "send"  — actually POST to Resend.
+  // The bar for flipping this is in workflows/PLAN-reader-reports.md: mailing strangers runs its
+  // OWN counter, separate from the PR gate's, because it is a different trust question.
+  "vars": { "EMAIL_MODE": "draft" },
+
   // D1: create with `wrangler d1 create quotle-community`, then paste the printed
   // database_id below (it is NOT a secret — it's just an identifier).
   "d1_databases": [

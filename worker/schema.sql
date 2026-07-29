@@ -63,12 +63,39 @@ CREATE TABLE IF NOT EXISTS source_submissions (
 --   npx wrangler d1 execute quotle-community --remote --command "ALTER TABLE source_submissions ADD COLUMN triaged_at TEXT;"
 --   npx wrangler d1 execute quotle-community --remote --command "ALTER TABLE source_submissions ADD COLUMN email TEXT;"
 --   npx wrangler d1 execute quotle-community --remote --command "ALTER TABLE nominations ADD COLUMN email TEXT;"
+-- email_sends is a CREATE TABLE, so re-running this file is enough — no ALTER needed:
+--   npx wrangler d1 execute quotle-community --remote --file schema.sql
 -- The two `email` migrations MUST run before this worker version is deployed: /submit-source and
 -- /nominate name the column in their INSERTs, so on a database without it every write 500s and
 -- every report is lost. Nothing reads it back except the admin SELECTs and `review.js reports`.
 -- NOTE: `status` already existed with pending|accepted|rejected and is indexed — POST /triage writes
 -- THAT, not a side column. Writing only triage/triaged_at would leave status='pending', so
 -- /sources?status=pending never drains and the job re-triages the same rows forever.
+
+-- ONE REPLY PER REPORT, EVER — enforced by this table's PRIMARY KEY, not by a flag we remember
+-- to check. `idempotency_key` is 'source:<id>', so a second attempt is an INSERT OR IGNORE that
+-- changes 0 rows. This is the shape Mast's send path uses (an audit row keyed by idempotency key,
+-- consulted BEFORE the provider call) rather than a `replied_at` column on the report itself: the
+-- audit row survives independently of the report's own lifecycle, and it records what we WOULD
+-- have sent while the ladder is still in draft mode.
+--
+-- `body` stores the exact text. In draft mode that is the whole point — the operator reads what
+-- the gate composed and judges it before anything is promoted to sending.
+CREATE TABLE IF NOT EXISTS email_sends (
+  idempotency_key TEXT PRIMARY KEY,        -- 'source:<id>' — the one-reply guarantee
+  kind      TEXT NOT NULL,                 -- 'source' (nominations have no outcome event yet)
+  ref_id    INTEGER NOT NULL,              -- source_submissions.id
+  to_email  TEXT NOT NULL,
+  subject   TEXT NOT NULL,
+  body      TEXT NOT NULL,                 -- exactly what was sent, or would have been
+  mode      TEXT NOT NULL,                 -- 'draft' | 'send' — ladder position AT THE TIME
+  status    TEXT NOT NULL,                 -- 'drafted' | 'sent' | 'failed'
+  resend_id TEXT,
+  error     TEXT,
+  created   TEXT NOT NULL,
+  sent_at   TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_mail_status ON email_sends(status, created);
 
 CREATE INDEX IF NOT EXISTS idx_src_status ON source_submissions(status, created);
 CREATE INDEX IF NOT EXISTS idx_src_slug   ON source_submissions(slug, created);

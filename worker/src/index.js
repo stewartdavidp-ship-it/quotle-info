@@ -20,8 +20,19 @@
  *   GET  /sources?token=&status=pending → { sources }         (ADMIN_TOKEN only)
  *
  * `email` is OPTIONAL on both write paths and exists for exactly one purpose: telling the reader
- * what we found. Nothing here sends anything — this is storage and surfacing only. The forms
- * promise a single reply and no sharing, and /privacy/ says the same; do not add a second use.
+ * what we found. The forms promise a single reply and no sharing, and /privacy/ says the same;
+ * do not add a second use.
+ *
+ *   GET  /mail?token=&status=drafted → { mail, mode }        (ADMIN_TOKEN only — read the drafts)
+ *
+ * SENDING is gated behind the `EMAIL_MODE` var in wrangler.jsonc, which ships as "draft": replies
+ * are composed and stored in email_sends, and nothing leaves the Worker. See replyToReport() for
+ * the abuse model that shapes the message body — it is the reason none of the reader's own text
+ * ever appears in it.
+ *
+ * RESEND_API_KEY is Mast's PLATFORM key (GCP project mast-platform-prod), which is restricted to
+ * sending only — it cannot list or manage the account. That restriction is why it is acceptable
+ * for it to live on a Worker whose other endpoints accept anonymous writes.
  */
 
 const ALLOWED_ORIGINS = ['https://quotle.info', 'https://www.quotle.info', 'http://localhost:8099'];
@@ -356,11 +367,36 @@ export default {
         // or never given joins to no record. Without a drain it becomes a second silent queue —
         // which is the exact bug this endpoint exists to stop.
         const status = verdict === 'accepted' ? 'accepted' : 'rejected';
+        // Read the row BEFORE closing it — the reply needs its address and slug, and after the
+        // UPDATE we can no longer tell whether this call was the one that closed it.
+        const row = await env.DB.prepare('SELECT id,slug,email FROM source_submissions WHERE id=?').bind(id).first();
         const res = await env.DB.prepare(
           "UPDATE source_submissions SET status=?, triage=?, triaged_at=? WHERE id=? AND status='pending'"
         ).bind(status, verdict + (note ? ' | ' + note : ''), new Date().toISOString(), id).run();
         const changed = (res && res.meta && res.meta.changes) || 0;
-        return send({ ok: true, changed, alreadyClosed: changed === 0 });
+        // Reply ONLY on the call that actually closed the report. Gating on `changed` means a
+        // second /triage is a no-op for the mail too, not just for the row — the idempotency
+        // guard and the one-reply guarantee are then the same guarantee rather than two that
+        // have to agree with each other.
+        let reply = 'skipped';
+        if (changed && row) {
+          try { reply = await replyToReport(env, row, verdict); }
+          catch (e) { reply = 'error'; console.log('reply failed for ' + id + ': ' + ((e && e.message) || e)); }
+        }
+        return send({ ok: true, changed, alreadyClosed: changed === 0, reply });
+      }
+
+      // The drafts an operator has to READ for draft mode to mean anything. A gate that composes
+      // replies nobody ever looks at is not a trust ladder, it is a spam generator with a delay.
+      // Returns the full body deliberately: judging the copy is the entire exercise.
+      if (url.pathname === '/mail' && req.method === 'GET') {
+        const token = url.searchParams.get('token') || '';
+        if (!env.ADMIN_TOKEN || !safeEq(token, env.ADMIN_TOKEN)) return send({ error: 'unauthorized' }, 401);
+        const status = url.searchParams.get('status') || 'drafted';
+        const { results } = await env.DB.prepare(
+          'SELECT idempotency_key,kind,ref_id,to_email,subject,body,mode,status,resend_id,error,created,sent_at FROM email_sends WHERE status=? ORDER BY created DESC LIMIT 100'
+        ).bind(status).all();
+        return send({ mail: results, mode: env.EMAIL_MODE === 'send' ? 'send' : 'draft' });
       }
 
       if (url.pathname === '/sources' && req.method === 'GET') {
@@ -497,6 +533,102 @@ function cleanEmail(v) {
   const e = String(v || '').trim().slice(0, 200);
   if (!e) return '';
   return /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/.test(e) ? e : '';
+}
+
+// ---- THE REPLY PATH ----------------------------------------------------------------
+// Storage-and-surfacing shipped first; this is the send half, and it is deliberately timid.
+//
+// THE ABUSE MODEL, because it drives every rule below: the email field is optional and
+// unauthenticated, so anyone can submit a report carrying SOMEONE ELSE'S address. If our reply
+// echoed what they typed, we would be a free, reputable-looking delivery service for arbitrary
+// text to arbitrary strangers. That is the whole attack, and it is closed by composing the body
+// ENTIRELY from our own facts:
+//   · the verdict — ours, chosen by an operator through the ADMIN-gated /triage
+//   · the page URL — included ONLY when the slug resolves in our own published verify index
+//   · nothing else. No note, no quote, no URL they submitted, not even their address in the body.
+// Plus ONE reply per report ever (the email_sends primary key), and the per-IP daily cap already
+// limits how many reports one person can file.
+//
+// Text-only, no HTML. Nothing to escape, nothing to break out of, and a plain message from a small
+// site reads as more honest than a templated one.
+const REPLY_SUBJECT = 'About the quote correction you sent us';
+
+// The slug is SUBMITTER-CONTROLLED (both forms POST it; /report/ derives it from a pasted link),
+// and the worker's format check permits 80 characters of kebab-case — which is enough room to
+// smuggle a short message into an otherwise trustworthy email. So a slug is only ever named after
+// it is found in the PUBLISHED index: if the page exists, the URL is our fact, not their text.
+async function slugIsReal(slug) {
+  if (!slug) return false;
+  const bare = String(slug).replace(/^song:/, '');
+  const idx = await loadVerifyIndex();
+  return (idx || []).some((r) => r && r.slug === bare);
+}
+
+function composeReply(verdict, pageUrl) {
+  // 'unresolvable' NEVER names a page, even when the slug happens to resolve — an operator can
+  // mark a report unresolvable for reasons other than a missing slug, and "we could not work out
+  // which page this was about" immediately followed by "The page: …" is a message that argues
+  // with itself. Caught by printing all three verdicts and reading them, not by review.
+  const where = (pageUrl && verdict !== 'unresolvable') ? `\n\nThe page: ${pageUrl}\n` : '\n';
+  const body = {
+    accepted: `Thank you for the correction you sent us about a quote on quotle.info.\n\nYou were right, and we have updated the page.${where}\nCorrections from readers are the main way errors here get found, so we are grateful for it.`,
+    rejected: `Thank you for the correction you sent us about a quote on quotle.info.\n\nWe traced it back through the sources and decided to leave the page as it stands.${where}\nThat is not a judgement on your report — it just means the evidence we could find still supports what the page says. If you have a primary source that shows otherwise, we would genuinely like to see it.`,
+    unresolvable: `Thank you for the correction you sent us about quotle.info.\n\nWe could not work out which page it referred to, so we have not been able to act on it.\n\nIf you still have it to hand, sending the link to the page would let us pick it up.`,
+  }[verdict] || null;
+  if (!body) return null;
+  // The single-reply promise, stated in the message itself — the same promise the form makes.
+  return `${body}\n\nThis is the only email we will send about this report. You can reply to this message if you want to add anything.\n\n— Quotle.info\nhttps://quotle.info/`;
+}
+
+async function sendViaResend(env, to, subject, text) {
+  const r = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      // runmast.com, NOT runmast.email. The plan specified the latter, derived from the OUTREACH
+      // Resend account; the account this key belongs to has runmast.com verified and rejects
+      // runmast.email with a 403. Verified by an actual send on 2026-07-29.
+      from: 'Quotle.info <quotle@runmast.com>',
+      reply_to: 'help@quotle.info',
+      to: [to],
+      subject,
+      text,
+    }),
+  });
+  const d = await r.json().catch(() => ({}));
+  if (!r.ok || !d || !d.id) throw new Error((d && d.message) || `resend ${r.status}`);
+  return d.id;
+}
+
+// Called after a report is triaged. Returns a short status for the /triage response so the
+// operator sees what happened without a second query.
+async function replyToReport(env, row, verdict) {
+  const to = cleanEmail(row && row.email);
+  if (!to) return 'no-address';
+  const text = composeReply(verdict, (await slugIsReal(row.slug)) ? `https://quotle.info/who-said/${String(row.slug).replace(/^song:/, '')}/` : '');
+  if (!text) return 'no-template';
+  const key = `source:${row.id}`;
+  const now = new Date().toISOString();
+  const mode = env.EMAIL_MODE === 'send' ? 'send' : 'draft';
+  // THE ONE-REPLY GUARANTEE. INSERT OR IGNORE against a PRIMARY KEY is atomic — two concurrent
+  // triages of the same report cannot both win it. A `SELECT then INSERT` could.
+  const ins = await env.DB.prepare(
+    'INSERT OR IGNORE INTO email_sends (idempotency_key,kind,ref_id,to_email,subject,body,mode,status,created) VALUES (?,?,?,?,?,?,?,?,?)'
+  ).bind(key, 'source', row.id, to, REPLY_SUBJECT, text, mode, mode === 'send' ? 'sending' : 'drafted', now).run();
+  if (!((ins && ins.meta && ins.meta.changes) || 0)) return 'already-replied';
+  if (mode !== 'send') return 'drafted';
+  try {
+    const id = await sendViaResend(env, to, REPLY_SUBJECT, text);
+    await env.DB.prepare("UPDATE email_sends SET status='sent', resend_id=?, sent_at=? WHERE idempotency_key=?").bind(id, new Date().toISOString(), key).run();
+    return 'sent';
+  } catch (e) {
+    // The row STAYS, marked failed. It is not deleted and not retried: a retry loop against a
+    // stranger's inbox is exactly the amplification this design is avoiding, and a failure here
+    // is something an operator should look at rather than something the system should keep
+    // attempting. The report itself is already triaged either way.
+    await env.DB.prepare("UPDATE email_sends SET status='failed', error=? WHERE idempotency_key=?").bind(String((e && e.message) || e).slice(0, 300), key).run();
+    return 'failed';
+  }
 }
 
 const normQ = (s) => String(s).toLowerCase().replace(/[’'‘`"“”]/g, '').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
