@@ -64,8 +64,16 @@ Then get the token. `/sources`, `/triage` and `/mail` are all ADMIN_TOKEN-gated,
 pass can do nothing at all** — it cannot read the queue and it cannot close a report.
 
 ```bash
-export ADMIN_TOKEN=$(gcloud secrets versions access latest --secret=quotle-admin-token --project=word-boxing)
+export ADMIN_TOKEN=$(gcloud secrets versions access latest --secret=quotle-admin-token --project=word-boxing 2>/dev/null)
 ```
+
+**`2>/dev/null`, never `2>&1`.** `gcloud` prints a Python-version deprecation warning to stderr on
+every invocation. Fold that into the variable with `2>&1` and `ADMIN_TOKEN` becomes ~461 characters
+of warning text with the real 43-character token buried in it — every authenticated call then 401s
+for a reason that looks nothing like its cause. Two separate runs (2026-07-29) reached for `2>&1` to
+quieten the warning and both had to notice and re-read. Discard stderr; do not merge it.
+
+Sanity check if anything 401s: `echo ${#ADMIN_TOKEN}` should print **43**.
 
 That line needs an authenticated `gcloud`. **If `ADMIN_TOKEN` is empty, stop and say so — do not
 proceed.** `review.js` degrades politely on a missing token ("reader reports skipped"), which means
