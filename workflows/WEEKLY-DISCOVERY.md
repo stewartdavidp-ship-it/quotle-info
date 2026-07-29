@@ -87,6 +87,12 @@ it.
 **A one-off factual error** — fix it in `data/quotes/<slug>.json`, verifying against the source
 first. Then `node tools/review.js stamp <slug>`.
 
+**Never pass `--close-reports` here.** This pass picks its 20 records by staleness and structural
+oddity — it has not read anyone's reader report. Closing one would drain it from `/sources`
+permanently without a human ever seeing it, which is worse than the false-email bug that preceded it:
+a wrong reply is at least visible to the reader, a shredded report is visible to nobody. Reader
+reports are the 04:00 pass's job. Stamping without the flag leaves them exactly where they were.
+
 **After stamping ANYTHING — including a clean PASS — re-run `node tools/scan.js` before you commit.**
 This pass stamps every record it audits, that being the whole rotation mechanism, so it always
 mutates records. `stamp` writes a `review` block, which changes the record's **content hash**, so the

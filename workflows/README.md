@@ -102,6 +102,7 @@ node tools/review.js args --limit 25 > /tmp/review-args.json
 #   Workflow audit.js args=<contents of that file>          <- the existing auditor
 #   Workflow fix.js   args={ slugs:[…FAIL slugs], repo:"$(pwd)" }
 node tools/review.js stamp <slug…> --verdict PASS|FIXED --by recheck
+#   add --close-reports ONLY if you read the reader's report. Without it no report is touched.
 node tools/build.js                          # rebuild, then PR as normal
 ```
 

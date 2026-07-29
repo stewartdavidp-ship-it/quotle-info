@@ -107,6 +107,10 @@ moment you commit, and CI fails on "Committed output is stale". `verify.yml` run
 (added 2026-07-29), which is what makes this ordering load-bearing rather than cosmetic: the same
 inversion turned `main` red the day the check landed.
 
+**Never pass `--close-reports` here.** This pass stamps what a DETECTOR flagged; it has not read
+any reader report. Closing one would drain it from `/sources` without a human seeing it. That is the
+04:00 pass's job.
+
 `review.js stamp` writes `record.review.lastReviewedOn`. Do **not** touch `answer.lastVerified` —
 that is the generator's wave-time claim and means something different.
 

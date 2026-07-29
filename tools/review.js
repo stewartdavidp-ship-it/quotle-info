@@ -512,10 +512,38 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
     const slugs = rest.filter((a, i) => !a.startsWith('--') && !(i > 0 && rest[i - 1].startsWith('--')));
     const verdict = flag('--verdict', 'PASS');
     const by = flag('--by', 'recheck');
+    // CLOSING A READER'S REPORT IS OPT-IN, and this is the whole point of the flag.
+    //
+    // `stamp` is called by three routines for three different reasons. Only ONE of them has read the
+    // reader's report:
+    //   · daily-reports  — the report IS the reason the record was audited. Closing is the return leg.
+    //   · weekly-discovery — stamps 20 records a week as its ROTATION mechanism, chosen by staleness
+    //                        and structural oddity. It has never seen the report.
+    //   · daily-review   — stamps what a detector flagged. Also has never seen the report.
+    //
+    // Until 2026-07-29 closing was unconditional and hardcoded to 'accepted', so a discovery sweep
+    // touching a reported slug mailed that reader "you were right, we are updating the record" about
+    // a page nobody had changed. The first fix mapped PASS -> 'rejected', which stopped the false
+    // email and replaced it with something worse: the same sweep now DRAINED the report — closed,
+    // gone from /sources, never resurfacing — without a human ever reading it. A wrong email is at
+    // least visible to the reader; a shredded report is visible to nobody.
+    //
+    // So the verdict is no longer what decides. Whether this caller is ENTITLED to close is.
+    const closeToo = rest.includes('--close-reports');
+    if (!['PASS', 'FIXED'].includes(verdict)) {
+      console.log(`  ! --verdict must be PASS or FIXED (got "${verdict}")`);
+      console.log('    Anything else used to fall through to a silent close. Case matters: "fixed" is not "FIXED".');
+      process.exitCode = 1; return;
+    }
     if (!slugs.length) {
-      console.log('  usage: review.js stamp <slug…> [--verdict PASS|FIXED] [--by <who>]');
-      console.log('    PASS  (default) — we looked, the page stands. Closes reports as rejected. Sends NO email.');
-      console.log('    FIXED           — a fix shipped. Closes reports as accepted, which EMAILS the reporter.');
+      console.log('  usage: review.js stamp <slug…> [--verdict PASS|FIXED] [--by <who>] [--close-reports]');
+      console.log('    Records that a slug was reviewed. By default it touches NO reader report.');
+      console.log('');
+      console.log('    --close-reports   also close any pending reader report on these slugs.');
+      console.log('                      ONLY pass this if you actually read the report. The reports');
+      console.log('                      pass does; the discovery and review sweeps do not.');
+      console.log('      with --verdict FIXED  -> closed accepted, and the reporter IS EMAILED');
+      console.log('      with --verdict PASS   -> closed rejected, no email sent');
       process.exitCode = 1; return;
     }
     const today = new Date().toISOString().slice(0, 10);
@@ -541,7 +569,16 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
       // at +2000/+4000 forever, starving the staleness lane behind it. Closing is idempotent
       // server-side (UPDATE ... WHERE status='pending'), so a re-run is a no-op and a failed close
       // simply retries next time.
-      if (stamped.length) {
+      if (stamped.length && !closeToo) {
+        // Say what was left alone. Silence here is how a report gets forgotten rather than drained.
+        const rep = await fetchReports();
+        const open = (rep.sources || []).filter((x) => stamped.includes(String(x.slug)));
+        if (open.length) {
+          console.log(`  ${open.length} pending reader report(s) on these slugs were NOT closed (no --close-reports).`);
+          console.log('    That is correct unless you actually read them — they stay in /sources for the reports pass.');
+        }
+      }
+      if (stamped.length && closeToo) {
         const rep = await fetchReports();
         if (rep.error) { console.log(`  ! reports not closed: ${rep.error}`); }
         else {
