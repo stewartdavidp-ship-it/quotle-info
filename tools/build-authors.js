@@ -304,7 +304,7 @@ for (const a of authors) {
   const mis = misattrBy[a.slug] || [];
   const rev = reviewBy[a.slug] || [];
   const head = `    <title>${esc(a.name)} — provenance traced to source · Quotle.info</title>
-    <meta name="description" content="${esc(a.name)}: ${summary} traced to a primary source, with attribution verified and misattributions untangled.">
+    <meta name="description" content="${esc(a.name)}: ${summary} traced to a primary source where one exists, with attribution verified and misattributions untangled.">
     <link rel="canonical" href="${ORIGIN}/authors/${a.slug}/">
     <meta property="og:type" content="profile">
     <meta property="og:title" content="${esc(a.name)} — provenance traced to source">
@@ -432,7 +432,7 @@ const authorCard = (a) => `                <a class="ac" href="/authors/${a.slug
                     </div>
                 </a>`;
 const idxHead = `    <title>The authors — every voice traced to source · Quotle.info</title>
-    <meta name="description" content="${authors.length} authors and artists, ${corpusQuotes} quotes and ${totalSongs} songs traced to a primary source on Quotle.info. Who really said it — and who really recorded it — with receipts.">
+    <meta name="description" content="${authors.length} authors and artists, ${corpusQuotes} quotes and ${totalSongs} songs traced to a primary source on Quotle.info &mdash; or marked where none was found. Who really said it — and who really recorded it — with receipts.">
     <link rel="canonical" href="${ORIGIN}/authors/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="The authors — Quotle.info">
@@ -447,7 +447,7 @@ const idxInner = `    <nav class="breadcrumb" aria-label="Breadcrumb">
         <header class="idx-hero">
             <p class="kicker">Every voice, traced</p>
             <h1>The authors</h1>
-            <p class="lede"><b>${authors.length}</b> authors &amp; artists &middot; <b>${corpusQuotes}</b> quotes and <b>${totalSongs}</b> songs traced to a primary source, with the misattributions untangled.</p>
+            <p class="lede"><b>${authors.length}</b> authors &amp; artists &middot; <b>${corpusQuotes}</b> quotes and <b>${totalSongs}</b> songs traced to a primary source &mdash; or honestly marked where none exists &mdash; with the misattributions untangled.</p>
         </header>
         <div class="fbar">
             <div class="fbar-row">

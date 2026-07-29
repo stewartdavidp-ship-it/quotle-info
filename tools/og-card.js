@@ -111,7 +111,7 @@ ${ROOT_CSS}
         </div>
         <div>
             <h1>Real quote?<br><em>Cleared</em> to use?</h1>
-            <p class="sub">Verified provenance and reuse rights &mdash; traced to a primary source.</p>
+            <p class="sub">Verified provenance and reuse rights &mdash; sourced, or honestly marked.</p>
         </div>
         <div class="states">
             <span class="chip c-verified"><span class="dot"></span>Verified</span>
