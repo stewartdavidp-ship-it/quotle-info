@@ -45,10 +45,18 @@ const JSON_OUT = argv.includes('--json');
 const NEEDS = {
   wave:      { token: false, egress: true,  gh: false, prefix: 'wave-' },
   discovery: { token: false, egress: true,  gh: false, prefix: 'discovery/' },
-  // The reports pass is the only one that authenticates: /sources, /triage and /mail are all
-  // ADMIN_TOKEN-gated, and closing a report SENDS REAL EMAIL, so a bad token here is not a
-  // read-only inconvenience.
-  reports:   { token: true,  egress: true,  gh: false, prefix: 'reports/' },
+  // The reports pass SPLIT on 2026-07-29 and the two halves have opposite needs.
+  //
+  // `reports` is the audit half: it reads which pages are disputed from the PUBLIC /reports/pending,
+  // then audits, fixes and opens a PR. It needs egress and NO credential — that is what let it move
+  // off the operator's laptop into cloud. If you find yourself adding token:true back here, the
+  // split has been undone.
+  reports:   { token: false, egress: true,  gh: false, prefix: 'reports/' },
+  // `reports-close` is the noon half, and the ONLY routine that can email a reader. It authenticates
+  // to /sources and /triage, needs no sources (it reads records off disk), and runs where the token
+  // is. A bad token here is not a read-only inconvenience: it decides whether a real person hears
+  // back about a page they reported.
+  'reports-close': { token: true, egress: false, gh: false, prefix: 'reports/' },
   // Review is flag-driven and usually costs nothing, but a night WITH flags fetches sources to test
   // each remedy — so it needs egress even though most nights never use it.
   review:    { token: false, egress: true,  gh: false, prefix: 'review/' },

@@ -48,6 +48,7 @@ const EXPECTED = [
   { routine: 'daily-reports', when: '04:00', daily: true },
   { routine: 'daily-review', when: '05:00', daily: true },
   { routine: 'daily-merge', when: '07:00', daily: true },
+  { routine: 'reports-close', when: '12:00', daily: true },
   { routine: 'weekly-discovery', when: 'Mon 02:00', daily: false },
 ];
 
