@@ -69,6 +69,11 @@ cheap, and a missing line is indistinguishable from a run that never happened.
 **Drain the last two in the same run.** A report that joins to no record stays `pending` forever,
 and `/sources?status=pending` never draining is the original bug this whole loop was built to fix.
 
+A report line ending `reply-to: <address>` means the reader left an optional email. **Nothing sends
+anything** — there is no send path, by design. It is printed so you know which reports have a person
+waiting on an answer, and it is the one thing on that line the reader is owed. If you reply, reply
+once, by hand. The form promises exactly that and /privacy/ says the same.
+
 ## Step 2 — scan, then pick the work
 
 ```bash

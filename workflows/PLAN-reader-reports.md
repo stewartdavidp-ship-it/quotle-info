@@ -201,7 +201,14 @@ change what gets built:
 
 ---
 
-# CONSOLIDATION + EMAIL (decided 2026-07-28, not yet built)
+# CONSOLIDATION + EMAIL (decided 2026-07-28 — BUILT 2026-07-28)
+
+STATUS: the consolidation and the email FIELD are built. `/report/` is now one `#reportForm`
+whose fields adapt to an intent radio (`#fixForm`/`#nomForm` are gone); the per-quote `#srcForm`
+stayed, as decided. `email` is stored by `/nominate` + `/submit-source`, returned by
+`/nominations` + `/sources`, printed by `review.js reports`, and disclosed on `/privacy/`.
+NOT built, deliberately: any sending. Everything below about Resend, the trust ladder and the
+draft-not-send bar is still a proposal.
 
 ## One form, not three
 

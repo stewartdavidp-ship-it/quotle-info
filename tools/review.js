@@ -467,6 +467,10 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
       const bits = [s.reason || '(no reason given)'];
       if (s.url) bits.push(s.url);
       if (s.note) bits.push(`"${String(s.note).slice(0, 90)}"`);
+      // The reader left an address, so this report has someone waiting on an answer. Printed for
+      // the same reason `reason` is: it is the difference between a report you can close silently
+      // and one where a human owes a reply. Nothing sends anything yet — this is surfacing only.
+      if (s.email) bits.push(`reply-to: ${s.email}`);
       console.log(`      #${s.id} [${(s.stance || '').toUpperCase()}] ${bits.join('  ·  ')}`);
     };
     console.log(`  ${sources.length} pending reader report(s):\n`);
