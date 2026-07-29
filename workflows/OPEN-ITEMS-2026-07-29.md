@@ -31,6 +31,19 @@ own header block says so. Specifically:
 
 ## 1 · `claimQuoteText` cannot be set on a magnet-author record — SHIPS WRONG PAGES
 
+> **RESOLVED 2026-07-29.** The diagnosis below is right about the guard and wrong about the lever.
+> `claimQuoteText` was never what should have decided the banner: `renderPresentationKit` had its own
+> copy of the right-person-wrong-words test keyed on that field, while the JSON-LD block 760 lines
+> above already used the correct ATTRIBUTION test. One predicate now, `rightPersonWrongWords()` at the
+> foot of `tools/template.js`, shared by both. **17 pages stopped shipping the contradiction; 1
+> started shipping the banner it needed** (`houston-we-have-a-problem` carries `claimQuoteText`, so
+> the old test suppressed the warning on the one page whose credit is flatly wrong). Two records
+> (`he-who-lives-in-harmony-…`, `i-have-nothing-to-declare-…`) were false positives because they
+> omitted `answer.realAuthorName: "Unknown"` — the convention `template.js` documents — and were
+> corrected. The `!item.author` guard was dropped from both copies too, since which track harvested a
+> quote says nothing about whether its wording drifted. Two invariants in `verify-corpus.js` (§4d-bis)
+> now assert the contract in both directions against rendered HTML.
+
 **Verified in code.** Two copies, same condition:
 
 - `workflows/prep-wave.js:98` — `if (!item.author && out.quotationText && displayQuote !== out.quotationText)`
@@ -50,6 +63,17 @@ genuine pages carried no `claimQuoteText`) and too broad — read that comment f
 of the last person who tried.
 
 ## 2 · `prep-wave --credited` stamps `creditedTo` where the credit is correct
+
+> **RESOLVED 2026-07-29.** The guard now compares the leading name of `rec.answer.authorName` with
+> the batch author and declines to stamp a self-credit. **Blast radius measured before the fix: 41
+> records carried a `creditedTo` naming their own author** (14 verified, 24 attributed, 3 name-form
+> variants) plus the 24 disputed right-person-wrong-words ones; 4 non-disputed records carry a
+> genuinely false credit and had to survive, which they do.
+> The reader was fixed as well as the writer: `tools/credits.js` grew `falseCredits(r)` — the rule
+> `build-authors.js` had been applying inline for months — and `build-verify.js` now uses it, so
+> `/verify` stopped shipping `credited` (returned as `misattributedTo`) naming the true author. That
+> count went **68 → 0**, including the legacy `misattribution.items[0].who` fallback, which re-imported
+> the same false claim once `falseCredits` correctly returned nothing.
 
 **Verified:** `workflows/prep-wave.js:149` — `if (STAMP_CREDITED && b.author) rec.creditedTo = b.author;`
 

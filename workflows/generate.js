@@ -143,11 +143,14 @@ function toRecord(d, item) {
     }
     out.webPageName = d.meta.ogTitle;
     out.dateModified = DATE_MODIFIED;
-    // Film misquote (item.author === '', so no magnet): the CLAIMED wording is displayQuote and the
-    // DOCUMENTED line is out.quotationText. Setting claimQuoteText = displayQuote signals wordingDrift,
-    // which template.js uses to (a) rate the claimed wording not the documented one and (b) suppress
-    // the bogus claimant (film/character/fragment) an author-less record's misattribution row carries.
-    if (!item.author && out.quotationText && displayQuote !== out.quotationText) out.claimQuoteText = displayQuote;
+    // The CLAIMED wording is displayQuote and the DOCUMENTED line is out.quotationText. Carrying both
+    // lets template.js rate the claimed wording rather than the documented one, and (on an
+    // author-less film record) suppress the bogus film/character/fragment claimant.
+    //
+    // This was gated on `!item.author` — track C (film) batches only — so a magnet-author batch could
+    // never emit it, and that is a property of the TRACK, not of the quote: a Franklin line drifts the
+    // same way whether the wave harvested it by author or by film. Keep in sync with prep-wave.js.
+    if (out.quotationText && displayQuote !== out.quotationText) out.claimQuoteText = displayQuote;
     rec.schema = out;
   }
   // themes now come from the RESEARCHING agent (schema-enforced, 2-4 from the fixed vocabulary),
