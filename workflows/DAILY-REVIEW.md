@@ -9,6 +9,20 @@ it drives, and can change without editing the routine.
 That is success, not failure. The queue is flag-driven: if no detector fired, there is no work, and
 the run should cost almost nothing. **Never manufacture work.** A day with no PR is the normal day.
 
+## Step 0 — preflight
+
+```bash
+node tools/preflight.js --routine review
+```
+
+**If it fails, STOP.** It checks the things that have each, at least once, failed *silently* — a
+missing or `2>&1`-corrupted token, blocked egress, a stale or dirty checkout, a branch prefix the
+merge gate would classify `HUMAN` forever. Every one of those previously presented as "nothing
+happened", which is indistinguishable from a quiet night. Preflight makes them loud, once, before
+any work is done.
+
+It only reads. It fetches no secret, writes nothing, and does not touch git state.
+
 ## The steps
 
 ```bash

@@ -37,6 +37,20 @@ estimate this file previously carried as explicitly unverified. Keep recording w
 one datapoint is a measurement, not yet a trend, and a pass that DOES need source fetches will cost
 much more.
 
+## Step 0 — preflight
+
+```bash
+node tools/preflight.js --routine discovery
+```
+
+**If it fails, STOP.** It checks the things that have each, at least once, failed *silently* — a
+missing or `2>&1`-corrupted token, blocked egress, a stale or dirty checkout, a branch prefix the
+merge gate would classify `HUMAN` forever. Every one of those previously presented as "nothing
+happened", which is indistinguishable from a quiet night. Preflight makes them loud, once, before
+any work is done.
+
+It only reads. It fetches no secret, writes nothing, and does not touch git state.
+
 ## Pick the sample — the queue already ranks it
 
 ```bash

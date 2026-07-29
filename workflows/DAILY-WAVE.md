@@ -26,6 +26,20 @@ Serial is slower. It is not weaker. Budget roughly **1.5–2M tokens** for 5 rec
 (measured: audit ~293K/page, fix ~91K/record). If that does not fit, build **fewer records** — never
 fewer stages.
 
+## Step 0 — preflight
+
+```bash
+node tools/preflight.js --routine wave
+```
+
+**If it fails, STOP.** It checks the things that have each, at least once, failed *silently* — a
+missing or `2>&1`-corrupted token, blocked egress, a stale or dirty checkout, a branch prefix the
+merge gate would classify `HUMAN` forever. Every one of those previously presented as "nothing
+happened", which is indistinguishable from a quiet night. Preflight makes them loud, once, before
+any work is done.
+
+It only reads. It fetches no secret, writes nothing, and does not touch git state.
+
 ## 1. Select
 
 ```bash

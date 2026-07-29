@@ -33,6 +33,20 @@ a *change is correct*. None of them can tell whether a *branch is current*. A pe
 built against a superseded `main` silently reverts whatever landed in between — that is not a content
 defect, and no content gate will ever catch it. This pass only ever asks mechanical questions.
 
+## Step 0 — preflight
+
+```bash
+node tools/preflight.js --routine merge
+```
+
+**If it fails, STOP.** It checks the things that have each, at least once, failed *silently* — a
+missing or `2>&1`-corrupted token, blocked egress, a stale or dirty checkout, a branch prefix the
+merge gate would classify `HUMAN` forever. Every one of those previously presented as "nothing
+happened", which is indistinguishable from a quiet night. Preflight makes them loud, once, before
+any work is done.
+
+It only reads. It fetches no secret, writes nothing, and does not touch git state.
+
 ## Step 0 — current and clean
 
 ```bash
