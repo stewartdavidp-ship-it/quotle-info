@@ -1,6 +1,19 @@
 # Weekly discovery audit — find defect classes nobody has a detector for
 
-A claude.ai routine runs this every Monday at 07:30 UTC (03:30 ET) against `main`.
+A claude.ai routine runs this every Monday at 06:00 UTC (02:00 ET in summer) against `main`.
+
+**It runs at 02:00 to clear the 03:00 daily wave, not for any reason of its own.** It was at 03:30,
+half an hour behind a wave that budgets 1.5–2M tokens for 5 records and can easily still be running —
+so once a week the two overlapped. Moving it an hour ahead of the wave gives it a clear window
+instead of a trailing one.
+
+Overlap is no longer corrupting — since 2026-07-29 no routine merges its own PR, and the 07:00 pass
+(`DAILY-MERGE.md`) serializes every merge, so the worst case became "one branch is BEHIND and merges
+a day later" rather than two branches fighting over ~1,163 rebuilt files. This spacing is what keeps
+that worst case from happening weekly.
+
+Note the cron is fixed UTC, so this drifts to 01:00 ET when the US leaves daylight saving. That still
+clears the wave, which drifts by the same hour.
 
 ## This one is NOT free, and that is the point
 
