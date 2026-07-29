@@ -1,6 +1,16 @@
 # Daily reader-report pass — the procedure a scheduled routine follows
 
-A routine runs this every day at 04:00 ET against `main`. Its prompt is one line — "follow
+A cloud routine runs this every day at 04:00 ET against `main`.
+
+**This pass never closes a reader's report and never sends email.** It reads which pages are
+disputed, audits them, fixes what it can, and opens a PR. Closing — the only step that emails a
+reporter — belongs to `workflows/DAILY-REPORTS-CLOSE.md`, which runs at noon on the operator's
+machine where the credential lives.
+
+That split is why this pass can run unattended in cloud at all. Everything expensive here needs no
+secret; only "which pages are disputed" and "close this report" ever did. The first is now a public
+endpoint, and the second is batched — a reply to a reporter is a courtesy, and a courtesy that
+arrives at noon is still a courtesy. Its prompt is one line — "follow
 `workflows/DAILY-REPORTS.md`" — so the procedure lives here, versioned with the code it drives.
 
 This is the DISPUTE lane only: "something on a page here is wrong". The ADD lane (a reader
@@ -65,26 +75,11 @@ edited tools/" — so the failure reads as a scope escape that never happened. A
 gate 3 (did the record actually change?) meaningless, because it cannot tell this run's edits from
 whatever was already sitting there.
 
-Then get the token. `/sources`, `/triage` and `/mail` are all ADMIN_TOKEN-gated, so **without it this
-pass can do nothing at all** — it cannot read the queue and it cannot close a report.
-
-```bash
-export ADMIN_TOKEN=$(gcloud secrets versions access latest --secret=quotle-admin-token --project=word-boxing 2>/dev/null)
-```
-
-**`2>/dev/null`, never `2>&1`.** `gcloud` prints a Python-version deprecation warning to stderr on
-every invocation. Fold that into the variable with `2>&1` and `ADMIN_TOKEN` becomes ~461 characters
-of warning text with the real 43-character token buried in it — every authenticated call then 401s
-for a reason that looks nothing like its cause. Two separate runs (2026-07-29) reached for `2>&1` to
-quieten the warning and both had to notice and re-read. Discard stderr; do not merge it.
-
-Sanity check if anything 401s: `echo ${#ADMIN_TOKEN}` should print **43**.
-
-That line needs an authenticated `gcloud`. **If `ADMIN_TOKEN` is empty, stop and say so — do not
-proceed.** `review.js` degrades politely on a missing token ("reader reports skipped"), which means
-a tokenless run looks exactly like a quiet night: `due` still prints a full queue, ranked purely on
-staleness, with every reader report silently absent from it. That is the silent-queue failure this
-whole loop exists to prevent, so it has to be loud here.
+**No token, and that is deliberate.** This pass authenticates to nothing. `review.js` reads the
+public `GET /reports/pending` when `ADMIN_TOKEN` is absent, which returns the slug, stance and reason
+of every open dispute — enough to rank the queue, and nothing personal. If you find yourself
+exporting a token here, something has gone wrong: this pass cannot close a report even with one,
+because the public shape carries no report ids.
 
 ## Step 1 — is there anything at all?
 
@@ -120,7 +115,7 @@ reader is owed.
 
 **SENDING IS ON. Closing a report emails a real person.** `worker/wrangler.jsonc` ships
 `"EMAIL_MODE": "send"`, and `/triage` calls `replyToReport` on the call that actually closes a
-report. So `review.js stamp --close-reports --verdict FIXED` in step 6 — which calls `/triage` with `accepted` — is an
+report. So closing is NOT done here — see DAILY-REPORTS-CLOSE.md. The stamp you write in step 6 is an
 OUTBOUND ACTION, not just a database write. Treat it as one.
 
 An earlier version of this file said "Nothing sends", which was true when it was written and wrong
@@ -264,7 +259,7 @@ to the bookkeeping PR would be the other wrong call — that is opening a conten
 what `observe` says not to do. A held branch preserves the work without acting on it, and it is what
 the operator reads when judging whether the gate's call was right.
 
-**Do not stamp** in this case. `review.js stamp --close-reports` closes the reader's report, and closing a report
+**Do not stamp** in this case. A stamp is what the noon pass reads as "the fix shipped", and stamping a record
 whose fix never shipped loses it — the reader is told it was dealt with when the page is unchanged.
 Nothing shipped, so the report stays `pending` and resurfaces tomorrow. That is correct.
 
@@ -282,7 +277,7 @@ Only when the gate exited 0.
 **Order matters, and an earlier version of this file had it wrong.**
 
 ```bash
-node tools/review.js stamp <slug> [<slug> …] --verdict FIXED --close-reports   # FIRST — mutates records
+node tools/review.js stamp <slug> [<slug> …] --verdict FIXED    # FIRST — mutates records. NO --close-reports
 node tools/build.js                              # validators + corpus invariants
 node tools/scan.js                               # AFTER the stamp — see below
 node tools/verify-review-spine.js
