@@ -68,6 +68,25 @@ the gate cannot tell them apart by authorship and instead uses an **allowlist of
 forever. **Never merge a `HUMAN` PR, and never "fix" a routine's branch name to make it mergeable** —
 if a routine used the wrong prefix, that is a bug in the routine, and the PR waits for a person.
 
+## Branch protection enforces this — the gate only advises
+
+Since 2026-07-29 `main` requires the `verify` check to pass AND requires branches to be up to date
+before merging (`strict: true`). Force-pushes and branch deletion are off.
+
+That is the difference between a gate and a rule. `merge-gate.js` CHECKS staleness and CI; GitHub
+now REFUSES the merge regardless of what any session decides. It is the backstop for the failure this
+whole pass exists to prevent — a correct PR built against a superseded `main` silently reverting what
+landed in between — and it would have blocked #210, which went in red because a merge command waited
+for CI to stop being *pending* rather than to *pass*.
+
+`enforce_admins` is deliberately **false**, so a human keeps an emergency override. Nothing automated
+has that override: routines authenticate as a normal user.
+
+**Expect more `REBUILD` verdicts because of this.** With `strict: true`, merging the first PR
+immediately puts every other one behind, so the second needs a rebase-and-rebuild before it can go.
+That is the designed path (step 3), not a fault — but some nights the second PR will land the
+following morning, and that is fine.
+
 ## Step 2 — merge ONE, then re-run the gate
 
 ```bash
