@@ -94,12 +94,29 @@ A report line ending `reply-to: <address>` means the reader left an optional ema
 you know which reports have a person waiting on an answer, and it is the one thing on that line the
 reader is owed.
 
-**Nothing sends.** A reply is now COMPOSED and STORED when a report is triaged, but `EMAIL_MODE`
-ships as `"draft"` in `worker/wrangler.jsonc`, so the worker stores exactly what it would send and
-sends none of it. `GET /mail` (admin) lists the drafts. Email runs its own draft → send ladder on
-its own counter, deliberately separate from the PR ladder in step 5: mailing strangers is a distinct
-trust question from opening a PR against your own repo. **Do not flip `EMAIL_MODE`** — that is an
-operator decision, not a step in this pass.
+**SENDING IS ON. Closing a report emails a real person.** `worker/wrangler.jsonc` ships
+`"EMAIL_MODE": "send"`, and `/triage` calls `replyToReport` on the call that actually closes a
+report. So `review.js stamp` in step 6 — which calls `/triage` with verdict `accepted` — is an
+OUTBOUND ACTION, not just a database write. Treat it as one.
+
+An earlier version of this file said "Nothing sends", which was true when it was written and wrong
+by the time it merged: #201 turned sending on and #202 was written against the state before it. A
+routine following that text would have mailed a stranger while believing it could not. Re-read
+`EMAIL_MODE` in `worker/wrangler.jsonc` rather than trusting this paragraph.
+
+Three guards make it safe, and they are worth knowing because they shape what you may do:
+  · **Only `accepted` sends.** A rejection or an unresolvable report writes back nothing — telling
+    someone "we looked and changed nothing" is noise dressed as courtesy.
+  · **Only the call that actually closed the report sends.** The reply is gated on the UPDATE's
+    `changed` count, so the idempotency guard and the one-reply-per-report guarantee are the same
+    guarantee rather than two that have to agree.
+  · **The body is composed entirely from our own facts** — the verdict and the page URL. None of the
+    reader's note, quote or submitted URL is ever echoed back.
+
+**Do not stamp a report as `accepted` unless the fix actually shipped.** With sending on, that is no
+longer only a bookkeeping error — it mails someone "we fixed it" about a page that did not change.
+`GET /mail` (admin) shows what was sent. **Do not flip `EMAIL_MODE`**; that is an operator decision,
+not a step in this pass.
 
 If you reply, reply once, by hand. One reply per report, ever. The form promises exactly that and
 /privacy/ says the same. Never echo the reader's own text back at them: the address is optional and
