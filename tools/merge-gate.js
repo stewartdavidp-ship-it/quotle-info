@@ -121,32 +121,44 @@ if (process.argv.includes('--self-test')) {
   process.exit(0);
 }
 
-const FIELDS = 'number,title,headRefName,isDraft,mergeStateStatus,statusCheckRollup,files,url';
-let prs = [];
-try {
-  prs = JSON.parse(execFileSync('gh', ['pr', 'list', '--state', 'open', '--limit', '50', '--json', FIELDS], { encoding: 'utf8' }));
-} catch (e) {
-  console.error(`  ! cannot list PRs: ${(e && e.message) || e}`);
-  process.exit(1);
-}
+// REST, not `gh pr list --json`. That used GraphQL, which the cloud egress proxy refuses, and `gh`
+// is not installed there either — so this tool hard-failed in the one environment the merge pass
+// actually runs in, and the 2026-07-29 run only worked by hand-building a shim it then threw away.
+//
+// tools/gh-rest.js needs no credential: this repo is public and anonymous REST answers every read
+// here. Measured, not assumed — 200 on pulls, checks and files at a 60/hr limit against ~57 requests
+// worst case. decide() is untouched and still takes the same plain object.
+const ghRest = require('./gh-rest');
 
-// Oldest first. A routine's PR should not jump the queue because it happened to run later, and
-// merging in creation order keeps the rebuild cascade predictable.
-prs.sort((a, b) => a.number - b.number);
-const decisions = prs.map((pr) => ({ number: pr.number, title: pr.title, branch: pr.headRefName, url: pr.url, ...decide(pr) }));
+(async () => {
+  let prs = [];
+  try {
+    prs = await ghRest.listOpenPRs();
+  } catch (e) {
+    // LOUD. This is the one failure mode that must never read as "no open PRs" — that is the
+    // difference between a quiet morning and a merge pass that cannot see anything.
+    console.error(`  ! cannot list PRs: ${(e && e.message) || e}`);
+    process.exit(1);
+  }
 
-if (process.argv.includes('--json')) {
-  console.log(JSON.stringify({ decisions }, null, 2));
-  process.exit(0);
-}
+  // Oldest first. A routine's PR should not jump the queue because it happened to run later, and
+  // merging in creation order keeps the rebuild cascade predictable.
+  prs.sort((a, b) => a.number - b.number);
+  const decisions = prs.map((pr) => ({ number: pr.number, title: pr.title, branch: pr.headRefName, url: pr.url, ...decide(pr) }));
 
-if (!decisions.length) { console.log('  no open PRs'); process.exit(3); }
-console.log(`\n  ${decisions.length} open PR(s):\n`);
-for (const d of decisions) console.log(`    ${String(d.verdict).padEnd(8)} #${String(d.number).padEnd(5)} ${String(d.branch).slice(0, 34).padEnd(36)} ${d.reason}`);
+  if (process.argv.includes('--json')) {
+    console.log(JSON.stringify({ decisions }, null, 2));
+    process.exit(0);
+  }
 
-const mergeable = decisions.filter((d) => d.verdict === 'MERGE');
-const rebuild = decisions.filter((d) => d.verdict === 'REBUILD');
-console.log(`\n  => ${mergeable.length} to merge, ${rebuild.length} needing a rebase+rebuild, ${decisions.length - mergeable.length - rebuild.length} left alone\n`);
-if (mergeable.length) console.log(`  MERGE ONE, then re-run this. Each merge puts every other branch BEHIND and invalidates its build.\n`);
-// 0 = something to merge now; 4 = only rebuilds pending; 3 = nothing to do.
-process.exit(mergeable.length ? 0 : (rebuild.length ? 4 : 3));
+  if (!decisions.length) { console.log('  no open PRs'); process.exit(3); }
+  console.log(`\n  ${decisions.length} open PR(s):\n`);
+  for (const d of decisions) console.log(`    ${String(d.verdict).padEnd(8)} #${String(d.number).padEnd(5)} ${String(d.branch).slice(0, 34).padEnd(36)} ${d.reason}`);
+
+  const mergeable = decisions.filter((d) => d.verdict === 'MERGE');
+  const rebuild = decisions.filter((d) => d.verdict === 'REBUILD');
+  console.log(`\n  => ${mergeable.length} to merge, ${rebuild.length} needing a rebase+rebuild, ${decisions.length - mergeable.length - rebuild.length} left alone\n`);
+  if (mergeable.length) console.log(`  MERGE ONE, then re-run this. Each merge puts every other branch BEHIND and invalidates its build.\n`);
+  // 0 = something to merge now; 4 = only rebuilds pending; 3 = nothing to do.
+  process.exit(mergeable.length ? 0 : (rebuild.length ? 4 : 3));
+})();

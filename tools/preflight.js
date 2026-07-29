@@ -60,11 +60,15 @@ const NEEDS = {
   // Review is flag-driven and usually costs nothing, but a night WITH flags fetches sources to test
   // each remedy — so it needs egress even though most nights never use it.
   review:    { token: false, egress: true,  gh: false, prefix: 'review/' },
-  // The merge pass touches no sources and needs no token; it needs to be able to see PRs at all.
+  // The merge pass reads PRs over REST now (tools/gh-rest.js), but it still shells out to
+  // `gh pr merge` for the merge itself — that is a WRITE, and REST-without-a-credential cannot do it.
   merge:     { token: false, egress: false, gh: true,  prefix: 'merge/' },
-  // The 08:00 report reads PR bodies and merge history, so it needs gh; it fetches no sources
-  // and authenticates to nothing.
-  report:    { token: false, egress: false, gh: true,  prefix: 'report/' },
+  // The 08:00 report only READS — merged PRs, open PRs, the last CI run — and since 2026-07-29 it
+  // does that over anonymous REST rather than `gh`. So it needs neither a token nor the gh binary,
+  // which is what lets it run in cloud. Leaving gh:true here would have failed the cloud run for a
+  // dependency it no longer has: preflight refusing a pass that would have worked is the same
+  // silent-morning outcome it exists to prevent, just with an extra step.
+  report:    { token: false, egress: false, gh: false, prefix: 'report/' },
 };
 
 // The hosts this corpus actually cites, apex-first. `*.archive.org` does NOT match the bare apex

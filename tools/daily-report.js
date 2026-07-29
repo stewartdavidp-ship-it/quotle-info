@@ -77,16 +77,28 @@ const ran = EXPECTED.map((e) => {
   };
 });
 
+(async () => {
+
 // ---- what merged / what is stuck ----
-const mergedRaw = j(sh('gh', ['pr', 'list', '--state', 'merged', '--limit', '60', '--json', 'number,title,mergedAt']), [])
-  ;
-const merged = (mergedRaw || []).filter((p) => (p.mergedAt || '') >= SINCE);
-const openRaw = j(sh('gh', ['pr', 'list', '--state', 'open', '--json', 'number,title,headRefName,mergeStateStatus,isDraft,createdAt']), []);
-const open = openRaw || [];
+// GitHub reads go through tools/gh-rest.js rather than `gh`. `gh` is not installed in a cloud
+// sandbox and the egress proxy refuses GraphQL, which `gh pr list --json` uses — that pairing is why
+// this pass was pinned to the operator's laptop. REST needs no credential here: the repo is public
+// and anonymous reads answer all three calls. Measured, not assumed: 200 on each, 60/hr limit
+// against the 3 requests this makes.
+const ghRest = require('./gh-rest');
+let merged = [], open = [], ci = {};
+try { merged = await ghRest.listMerged(SINCE); }
+catch (e) { toolFailures.push(`merged PRs: ${(e && e.message) || e}`); }
+try {
+  open = (await ghRest.listOpenPRs()).map((p) => ({
+    number: p.number, title: p.title, headRefName: p.headRefName,
+    mergeStateStatus: p.mergeStateStatus, isDraft: p.isDraft, createdAt: p.createdAt,
+  }));
+} catch (e) { toolFailures.push(`open PRs: ${(e && e.message) || e}`); }
 
 // ---- health ----
-const ciRaw = j(sh('gh', ['run', 'list', '--branch', 'main', '--limit', '1', '--json', 'conclusion,displayTitle']), []);
-const ci = (ciRaw || [])[0] || {};
+try { ci = await ghRest.latestRun('main'); }
+catch (e) { toolFailures.push(`CI runs: ${(e && e.message) || e}`); }
 const corpus = j(fs.existsSync(path.join(ROOT, 'data/corpus-state.json')) ? fs.readFileSync(path.join(ROOT, 'data/corpus-state.json'), 'utf8') : '', {});
 const scan = j(fs.existsSync(path.join(ROOT, 'data/scan-state.json')) ? fs.readFileSync(path.join(ROOT, 'data/scan-state.json'), 'utf8') : '', { records: {} });
 const flagged = Object.values(scan.records || {}).filter((r) => r.f && r.f.length).length;
@@ -145,3 +157,5 @@ if (h.tree_dirty === null) alarms.push('could not read git status');
 else if (h.tree_dirty) alarms.push('working tree dirty');
 if (toolFailures.length) alarms.push(`${toolFailures.length} tool call(s) failed — this report is incomplete`);
 console.log(alarms.length ? `\n  NEEDS ATTENTION\n${alarms.map((a) => `      · ${a}`).join('\n')}\n` : '\n  nothing obviously wrong\n');
+
+})();
