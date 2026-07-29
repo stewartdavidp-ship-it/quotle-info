@@ -434,6 +434,22 @@ if (state && state.figures) {
   if (!same) failures.push('committed corpus-state.json matches the live derivation\n      → data/corpus-state.json is stale; tools/build-state.js rewrites it on every build, so commit the change');
 }
 
+// ---- THE CHECKS MUST ALL STILL BE HERE ----
+// Nearly every block above is guarded by `if (thing)` — if a scrape stops matching, or a file goes
+// missing, or a JSON.parse fails, that block's checks SILENTLY VANISH and the build stays green with
+// a smaller number nobody is comparing. Measured 2026-07-29: ~15 such guards, and `checks.length` is
+// a stable 44 regardless of corpus size (the per-record loops accumulate into single checks). So the
+// count is a safe invariant, and asserting it converts every one of those silent deletions into one
+// loud failure. If you legitimately add or remove a check, update this number in the same commit —
+// that is the point, not an inconvenience.
+// EXPECTED_CHECKS is the FINAL total, including this assertion. check() pushes as it runs, so
+// checks.length here is the count BEFORE this one is added — hence the +1. Written this way round
+// because the number you compare against should be the number the build prints, not that number
+// minus one; the off-by-one version failed on its first run and cost ten minutes.
+const EXPECTED_CHECKS = 45;
+check('every invariant still runs (none silently skipped)', EXPECTED_CHECKS, checks.length + 1,
+  'a check block is guarded by `if (x)` and its input went missing, so it removed itself. Find which by diffing the printed check list with CORPUS_VERBOSE=1.');
+
 // ---- report ----
 const pad = (s, n) => String(s).padEnd(n);
 if (failures.length) {

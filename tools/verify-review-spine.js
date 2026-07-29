@@ -162,6 +162,30 @@ const placed = Object.values(grouped).reduce((n, v) => n + v.length, 0);
 check('classification drops nothing and duplicates nothing', placed === FIXTURE.length,
   `${FIXTURE.length} report(s) in, ${placed} placed`);
 
+// ------------------------------------------- the reply URL comes from the index
+// The worker mails a reader the page their report concerned. It used to match the slug in
+// verify-index.json and then HARDCODE `/who-said/<slug>/` — but the index is three namespaces
+// (measured: 1169 /who-said/, 113 /who-recorded/, 5 /who-wrote/), so every accepted report from one
+// of the 113 song pages mailed a real person a 404. Asserted here, against the worker source, for
+// the same reason the /triage guard is: CI cannot reach the worker, and this is the one output that
+// lands in a stranger's inbox and cannot be recalled.
+const workerSrc = fs.readFileSync(path.join(ROOT, 'worker', 'src', 'index.js'), 'utf8');
+check('the reply URL is taken from the index, not guessed',
+  !/https:\/\/quotle\.info\/who-said\/\$\{/.test(workerSrc),
+  'worker/src/index.js hardcodes a /who-said/ path for the reply link. Songs live at /who-recorded/ and writing records at /who-wrote/, so this mails a 404 to whoever reported a song page. Use the index entry\'s own `u`.');
+
+// Every namespace the index publishes must be reachable by the lookup the worker uses, or a whole
+// class of reader silently gets no link at all.
+try {
+  const vi = JSON.parse(fs.readFileSync(path.join(ROOT, 'verify-index.json'), 'utf8'));
+  const entries = Array.isArray(vi) ? vi : (vi.entries || []);
+  const withUrl = entries.filter((e) => e && e.slug && e.u).length;
+  check('every verify-index entry carries a slug and a URL', withUrl, entries.length,
+    'an entry without `u` would yield an empty reply link');
+} catch (_) {
+  check('verify-index.json is readable', false, true, 'the worker resolves reply URLs against it');
+}
+
 // -------------------------------------------------------- /triage idempotency
 // (h) The guard is one SQL clause in the worker, and losing it makes the whole nightly job
 //     non-idempotent: a second run re-stamps triaged_at and the report never settles. Asserted
