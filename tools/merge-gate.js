@@ -39,6 +39,11 @@ const ROUTINES = [
   // Discovery's whole job is proposing detectors, so it is the one routine allowed into tools/ —
   // and ONLY into detectors.js. Everything else under tools/ is still a scope escape for it.
   { prefix: 'discovery/', name: 'weekly-discovery', mayTouch: [/^tools\/detectors\.js$/] },
+  // The merge pass logs its own run, so it opens PRs too. Omitting this made its log PR
+  // permanently unmergeable: DAILY-MERGE.md told it to use `merge/<date>` while this list did
+  // not carry the prefix, so #223 sat as HUMAN forever. The 2026-07-29 run diagnosed it exactly
+  // and correctly refused the workaround of renaming its own branch to get past the gate.
+  { prefix: 'merge/',     name: 'daily-merge',      mayTouch: null },
 ];
 
 // The r20 rule, mechanised. Fix agents shipped +94/-14 of template.js inside a content wave; the
@@ -103,6 +108,7 @@ if (process.argv.includes('--self-test')) {
     ['wave touching worker/ escapes',  { ...base, files: [{ path: 'worker/src/index.js' }] }, 'SKIP'],
     ['discovery may edit detectors',   { ...base, headRefName: 'discovery/2026-08-03', files: [{ path: 'tools/detectors.js' }] }, 'MERGE'],
     ['discovery may NOT edit template',{ ...base, headRefName: 'discovery/2026-08-03', files: [{ path: 'tools/template.js' }] }, 'SKIP'],
+    ['merge pass may merge its own log PR', { ...base, headRefName: 'merge/2026-07-30', files: [{ path: 'data/routine-log/x.jsonl' }] }, 'MERGE'],
   ];
   let bad = 0;
   for (const [name, pr, want] of cases) {

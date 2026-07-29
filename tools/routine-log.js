@@ -18,26 +18,51 @@
  * flagged, built, audited — and the weekly usage figure supplies the other half. Divide and the
  * per-record cost falls out. That is the whole idea: stop estimating the numerator.
  *
- * The log is committed JSONL. Append-only, one line per run, diffable in a PR. It is not derived
- * from anything and nothing regenerates it, so a routine that fails to write its line leaves a
- * visible gap rather than a silent zero.
+ * The log is committed JSONL, diffable in a PR. It is not derived from anything and nothing
+ * regenerates it, so a routine that fails to record leaves a visible gap rather than a silent zero.
+ *
+ * ONE FILE PER RUN, in data/routine-log/. It was a single append-only file until 2026-07-29, when
+ * that turned out to be the only thing blocking two PRs from merging — see the LEGACY comment below.
+ * --report reads the old file and the new directory together, so the history is continuous.
  */
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const LOG = path.join(ROOT, 'data', 'routine-log.jsonl');
+// LEGACY, read-only from 2026-07-29. Every run used to append a line here, and five routines share
+// one file across five branches all cut from the same `main` — so any two runs on the same day
+// conflicted on the tail line. Measured that day with `git merge-tree`: #221 and #224 conflicted
+// with main on this file and NOTHING else, not one of #224's 31 generated HTML/JSON files. It was
+// the only thing blocking either PR, and it is invisible to every content gate because a log line
+// is not content.
+//
+// Kept and still read by --report so the existing history survives; nothing appends to it now.
+const LEGACY = path.join(ROOT, 'data', 'routine-log.jsonl');
+// ONE FILE PER RUN. Two runs never write the same path, so there is no merge to get wrong — this
+// needs no union driver, no .gitattributes, and no cooperation from GitHub's server-side merge.
+// The timestamp makes it unique even when one routine runs twice in a day (daily-review did, on
+// 2026-07-28), and a missing run is now a missing FILE rather than a missing line, which is more
+// visible, not less.
+const LOGDIR = path.join(ROOT, 'data', 'routine-log');
 
 const argv = process.argv.slice(2);
 const flag = (f, d = null) => { const i = argv.indexOf(f); return i > -1 && argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : d; };
 const num = (f) => { const v = flag(f); return v == null ? undefined : Number(v); };
 
+// Reads the legacy single file AND every per-run file, so --report spans the format change and no
+// history is orphaned. Sorted by date so the report reads chronologically regardless of filename.
+const parseLines = (text) => text.trim().split('\n').filter(Boolean)
+  .map((l) => { try { return JSON.parse(l); } catch (_) { return null; } }).filter(Boolean);
+
 const read = () => {
+  const rows = [];
+  try { rows.push(...parseLines(fs.readFileSync(LEGACY, 'utf8'))); } catch (_) { /* may not exist */ }
   try {
-    return fs.readFileSync(LOG, 'utf8').trim().split('\n').filter(Boolean).map((l) => {
-      try { return JSON.parse(l); } catch (_) { return null; }
-    }).filter(Boolean);
-  } catch (_) { return []; }
+    for (const f of fs.readdirSync(LOGDIR).filter((n) => n.endsWith('.jsonl')).sort()) {
+      try { rows.push(...parseLines(fs.readFileSync(path.join(LOGDIR, f), 'utf8'))); } catch (_) {}
+    }
+  } catch (_) { /* dir may not exist yet */ }
+  return rows.sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
 };
 
 // "15.2M" / "820k" / "1234567" → number. The weekly usage figure is read off a dashboard, so accept
@@ -105,6 +130,11 @@ const entry = {
 };
 for (const k of Object.keys(entry)) if (entry[k] === undefined) delete entry[k];
 
-fs.mkdirSync(path.dirname(LOG), { recursive: true });
-fs.appendFileSync(LOG, JSON.stringify(entry) + '\n');
-console.log(`routine-log: recorded ${routine} / ${outcome}`);
+// Filename carries the run's identity: timestamp + routine. Unique per run by construction, so two
+// branches can never write the same path and there is nothing to conflict on.
+const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+const safe = String(routine).replace(/[^a-z0-9-]/gi, '-');
+const out = path.join(LOGDIR, `${stamp}-${safe}.jsonl`);
+fs.mkdirSync(LOGDIR, { recursive: true });
+fs.writeFileSync(out, JSON.stringify(entry) + '\n');
+console.log(`routine-log: recorded ${routine} / ${outcome} → data/routine-log/${path.basename(out)}`);
