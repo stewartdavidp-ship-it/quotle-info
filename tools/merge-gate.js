@@ -27,6 +27,9 @@
  * re-running this between merges because each merge invalidates every other branch's build.
  */
 const { execFileSync } = require('child_process');
+// Must run before the first fetch: routes GitHub reads through the sandbox proxy (15000/hr) instead
+// of direct-and-anonymous (60/hr on a SHARED cloud IP, measured at 0 remaining). No-op locally.
+require('./proxy-boot')();
 
 // FAIL CLOSED. `author` is the same GitHub account for routine and human PRs, so authorship cannot
 // distinguish them — a PR is auto-mergeable only if its branch matches a KNOWN routine prefix.
