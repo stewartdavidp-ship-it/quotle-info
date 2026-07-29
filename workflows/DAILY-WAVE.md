@@ -117,6 +117,12 @@ node tools/routine-log.js --routine daily-wave --outcome pr --built <N> --pr <ur
   --note "audit: N PASS / N FAIL, N issues; anything you could not establish"
 ```
 
+**Branch name — load-bearing, not cosmetic.** Name the branch `wave-<waveId>`. `tools/merge-gate.js` (the
+07:00 merge pass) decides what may auto-merge from an ALLOWLIST OF BRANCH PREFIXES, because the
+GitHub author is the same account for routine and human PRs and cannot distinguish them. It fails
+closed: a branch it does not recognise is classed `HUMAN` and left alone forever. Use the wrong
+prefix and this PR simply never merges — silently, and looking exactly like a quiet night.
+
 Branch, commit, push, **open the PR ready — never a draft** (`gh pr create` without `--draft`; a
 draft cannot be merged and just waits for a human to click). In the body: the 5 quotes with verdict
 and rights, the audit's PASS/FAIL and issue counts, what you fixed, what you refused to fix and

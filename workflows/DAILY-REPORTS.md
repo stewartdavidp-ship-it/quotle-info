@@ -209,7 +209,16 @@ It also prints the current rung of the trust ladder:
 
 - **observe** — runs every gate, records what it WOULD have done, opens nothing. Always exits 3.
 - **pr** — opens the PR and stops.
-- **merge** — merges on green CI.
+- **merge** — SUPERSEDED as of 2026-07-29. Do not use it, and do not merge your own PR.
+
+**Merging is no longer this pass's job.** `workflows/DAILY-MERGE.md` runs at 07:00 as the single
+merge authority for all four routines. That exists because every routine rebuilds every page, so two
+PRs open at once conflict across ~1,163 generated files — while a human merged them one at a time,
+that human WAS the serialization, and auto-merging each routine independently removes the serializer
+rather than the need for one. Merging your own PR here would race the 07:00 pass for the same reason.
+
+So the live rungs are `observe` (decide, record, open nothing) and `pr` (open it and STOP). Open the
+PR with the right branch prefix and finish.
 
 **It starts in `observe` and only the operator moves it.** Promotion bar: 5 consecutive runs where
 the gate's call matched theirs — no PR they would have rejected, no queued item they would have
@@ -279,6 +288,12 @@ retries tomorrow.
 
 Do **not** touch `answer.lastVerified` — that is the generator's wave-time claim and means something
 different from `review.lastReviewedOn`.
+
+**Branch name — load-bearing, not cosmetic.** Name the branch `reports/<YYYY-MM-DD>`. `tools/merge-gate.js` (the
+07:00 merge pass) decides what may auto-merge from an ALLOWLIST OF BRANCH PREFIXES, because the
+GitHub author is the same account for routine and human PRs and cannot distinguish them. It fails
+closed: a branch it does not recognise is classed `HUMAN` and left alone forever. Use the wrong
+prefix and this PR simply never merges — silently, and looking exactly like a quiet night.
 
 Then branch, commit, push, and open the PR **READY, never as a draft** (`gh pr create` without
 `--draft`). A draft cannot be merged, so it sits unmergeable until a human clicks a button. Nothing
