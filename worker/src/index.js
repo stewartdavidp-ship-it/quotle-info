@@ -599,11 +599,21 @@ const REPLY_SUBJECT = {
 // and the worker's format check permits 80 characters of kebab-case — which is enough room to
 // smuggle a short message into an otherwise trustworthy email. So a slug is only ever named after
 // it is found in the PUBLISHED index: if the page exists, the URL is our fact, not their text.
-async function slugIsReal(slug) {
-  if (!slug) return false;
+// Returns the entry's OWN canonical URL, not a boolean — because the index is not one namespace and
+// guessing the path got it wrong. Measured 2026-07-29: verify-index.json holds 1169 /who-said/,
+// 113 /who-recorded/ and 5 /who-wrote/ URLs. The caller used to match a slug here and then hardcode
+// `/who-said/<slug>/`, so an accepted report from any of the 113 song pages — which post a
+// `song:`-prefixed slug (build-songs.js) — emailed a real person a 404.
+//
+// The index already carries the right answer in `u`. Returning it makes the comment above this
+// function true: the URL is OUR fact, taken from what we published, rather than a path we assumed.
+// (Checked before relying on it: 23 slugs appear twice across namespaces, 0 with conflicting URLs.)
+async function pageUrlForSlug(slug) {
+  if (!slug) return '';
   const bare = String(slug).replace(/^song:/, '');
   const idx = await loadVerifyIndex();
-  return (idx || []).some((r) => r && r.slug === bare);
+  const hit = (idx || []).find((r) => r && r.slug === bare);
+  return (hit && hit.u) ? String(hit.u).replace(/\/?$/, '/') : '';
 }
 
 function composeReply(kind, pageUrl) {
@@ -648,8 +658,7 @@ async function sendViaResend(env, to, subject, text) {
 async function replyToReport(env, kind, row) {
   const to = cleanEmail(row && row.email);
   if (!to) return 'no-address';
-  const pageUrl = (kind === 'source' && await slugIsReal(row.slug))
-    ? `https://quotle.info/who-said/${String(row.slug).replace(/^song:/, '')}/` : '';
+  const pageUrl = kind === 'source' ? await pageUrlForSlug(row.slug) : '';
   const text = composeReply(kind, pageUrl);
   const subject = REPLY_SUBJECT[kind];
   if (!text || !subject) return 'no-template';

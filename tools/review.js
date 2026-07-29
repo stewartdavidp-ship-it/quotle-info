@@ -512,7 +512,12 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
     const slugs = rest.filter((a, i) => !a.startsWith('--') && !(i > 0 && rest[i - 1].startsWith('--')));
     const verdict = flag('--verdict', 'PASS');
     const by = flag('--by', 'recheck');
-    if (!slugs.length) { console.log('  usage: review.js stamp <slug…> [--verdict PASS|FIXED] [--by <who>]'); process.exitCode = 1; return; }
+    if (!slugs.length) {
+      console.log('  usage: review.js stamp <slug…> [--verdict PASS|FIXED] [--by <who>]');
+      console.log('    PASS  (default) — we looked, the page stands. Closes reports as rejected. Sends NO email.');
+      console.log('    FIXED           — a fix shipped. Closes reports as accepted, which EMAILS the reporter.');
+      process.exitCode = 1; return;
+    }
     const today = new Date().toISOString().slice(0, 10);
     let n = 0;
       const stamped = [];
@@ -542,9 +547,29 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
         else {
           const ids = (rep.sources || []).filter((x) => stamped.includes(String(x.slug))).map((x) => x.id);
           if (ids.length) {
-            const res = await closeReports(ids, 'accepted', `reviewed ${today} by ${by} (${verdict})`);
+            // THE VERDICT DECIDES WHAT THE READER IS TOLD. This was hardcoded to 'accepted' until
+            // 2026-07-29, which meant `stamp --verdict PASS` — the DEFAULT, and what a clean review
+            // produces — closed the reader's report as accepted. The worker replies only on
+            // 'accepted', and that reply says "you were right. We are updating the record."
+            //
+            // So a routine that reviewed a page, found it CORRECT, and stamped it PASS told the
+            // reader we were fixing something we had not touched. DAILY-REPORTS.md stated the rule
+            // in prose — "do not stamp a report as accepted unless the fix actually shipped" — and
+            // the code gave the caller no way to comply: there was no verdict that mapped to
+            // anything but 'accepted'.
+            //
+            // Not hypothetical at scale: WEEKLY-DISCOVERY stamps 20 records a week INCLUDING clean
+            // PASSes, because stamping is its rotation mechanism. It was suppressed only because
+            // that routine has no ADMIN_TOKEN — an accident of environment, not a guard.
+            //
+            //   FIXED  -> accepted  : something shipped, the reader was right, they hear from us
+            //   PASS   -> rejected  : we looked and the page stands. Sends NOTHING (see the worker:
+            //                         only 'accepted' replies), which is correct — "we looked and
+            //                         changed nothing" is noise dressed as courtesy.
+            const triage = verdict === 'FIXED' ? 'accepted' : 'rejected';
+            const res = await closeReports(ids, triage, `reviewed ${today} by ${by} (${verdict})`);
             if (res.error) console.log(`  ! reports not closed: ${res.error}`);
-            else console.log(`  closed ${res.closed} report(s)${res.already ? `, ${res.already} already closed` : ''}`);
+            else console.log(`  closed ${res.closed} report(s) as ${triage}${res.already ? `, ${res.already} already closed` : ''}` + (triage === 'accepted' ? ' — a reply was sent to any reporter who left an address' : ' — no reply sent (nothing shipped)'));
           }
         }
       }
