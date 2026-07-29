@@ -27,11 +27,15 @@ true. **Audit 20 records per run**, which is the number that makes weekly runs c
 present in 3% of the corpus has a 46% chance of being touched in any one week and 91% within a
 month, because `P = 1 - (1-f)^n`.
 
-⚠ **THE COST ESTIMATE IS UNVERIFIED.** A full tier-2 audit measured ~205K tokens a record, but that
-included re-fetching every source link and a skeptic pass. This is a lighter read — record plus
-built page, looking for self-contradiction — and every class found so far has been an INTERNAL
-contradiction needing no source fetch. It should be far cheaper. Nobody has measured it. Record
-what the run actually did so the estimate can be replaced with a number.
+**MEASURED 2026-07-29: ~21K tokens a record** (20 records, ~415K new tokens, 6.43M cache reads).
+That is ~10x cheaper than the ~205K/record a full tier-2 audit costs, and for the predicted reason:
+this is a consistency read — record plus built page, looking for self-contradiction — not a
+source-fetching audit. That first run needed no source re-fetch to settle any of the 20.
+
+A weekly 20-record pass is therefore comfortably affordable, and the number above replaces an
+estimate this file previously carried as explicitly unverified. Keep recording what each run costs:
+one datapoint is a measurement, not yet a trend, and a pass that DOES need source fetches will cost
+much more.
 
 ## Pick the sample — the queue already ranks it
 
@@ -115,7 +119,8 @@ log line is the one that matters most.
 
 ## Scope
 
-Edit only `data/quotes/*.json` (plus the one appended line in `data/routine-log.jsonl`). Never `tools/` or `workflows/`:
+Edit only `data/quotes/*.json` (plus this run's own shard under `data/routine-log/`, which
+`routine-log.js` writes for you). Never `tools/` or `workflows/`:
 
 ```bash
 git status --porcelain -- tools workflows   # must print nothing
@@ -126,6 +131,10 @@ git status --porcelain -- tools workflows   # must print nothing
 GitHub author is the same account for routine and human PRs and cannot distinguish them. It fails
 closed: a branch it does not recognise is classed `HUMAN` and left alone forever. Use the wrong
 prefix and this PR simply never merges — silently, and looking exactly like a quiet night.
+
+**If today's branch name is already taken** (a run already happened today), add a suffix —
+``discovery/<YYYY-MM-DD>-log``. `merge-gate.js` matches on the PREFIX, so a suffix stays in the same lane;
+switching to a different prefix would fail closed as `HUMAN` and never merge.
 
 Finish with `node tools/build.js`, then branch, commit, push and open a PR. If you found nothing —
 which is a good and common outcome — say so in one line, stamp the records you audited, and open a
