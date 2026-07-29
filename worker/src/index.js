@@ -428,6 +428,33 @@ export default {
         return send({ mail: results, mode: env.EMAIL_MODE === 'send' ? 'send' : 'draft' });
       }
 
+      // PUBLIC, DELIBERATELY: which published pages have an open dispute. No credential.
+      //
+      // The 04:00 reader-report pass runs in a cloud sandbox with no authenticated gcloud, so it
+      // could not read the admin /sources at all — which is why it was pinned to the operator's
+      // laptop and stopped whenever the lid was shut. Everything expensive that pass does (audit,
+      // fix, PR) needs no secret; only "which pages are disputed" and "close this report" did.
+      // This endpoint removes the first, and closing is batched to a local pass that runs when the
+      // laptop is up.
+      //
+      // WHAT IS OMITTED IS THE POINT. `note` is reader-written free text; `url` is a
+      // submitter-controlled string; `email` is a third party's address. None of them appear here.
+      // What remains is the slug of a page anybody can already read, plus `stance` and `reason`,
+      // both whitelisted enums (see /submit-source). So this discloses that a public page is
+      // disputed — which is arguably something the site should be willing to say out loud anyway.
+      //
+      // It reveals what is under dispute before it is resolved. That is the real cost, accepted:
+      // the alternative was a high-value credential in a cloud environment whose own UI says not to
+      // store secrets, to read data less sensitive than this.
+      if (url.pathname === '/reports/pending' && req.method === 'GET') {
+        const { results } = await env.DB.prepare(
+          "SELECT slug, stance, reason, created FROM source_submissions WHERE status='pending' AND slug <> '' ORDER BY created DESC LIMIT 200"
+        ).all();
+        return new Response(JSON.stringify({ pending: results, count: results.length }), {
+          headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
+        });
+      }
+
       if (url.pathname === '/sources' && req.method === 'GET') {
         if (!isAdmin(req, env)) return send({ error: 'unauthorized' }, 401);
         const status = url.searchParams.get('status') || 'pending';

@@ -303,9 +303,27 @@ function survey() {
 
 // Reader reports are the highest-priority input: a human looked at a live page and said it is
 // wrong. They jump the staleness queue entirely. `refutes` outranks `supports`.
+// The PUBLIC view: which published pages are disputed, no credential. Returns the same shape the
+// rest of this file expects, minus the fields only an operator should see (note, url, email) and
+// minus `id` — you cannot close a report you fetched this way, which is deliberate. Closing is the
+// noon pass's job and it authenticates properly.
+async function fetchPendingPublic() {
+  try {
+    const r = await fetch(`${API}/reports/pending`);
+    if (!r.ok) return { error: `/reports/pending returned ${r.status}` };
+    const d = await r.json();
+    return { sources: (d.pending || []).map((p) => ({ ...p, id: null, public: true })) };
+  } catch (e) { return { error: String((e && e.message) || e) }; }
+}
+
 async function fetchReports() {
   const token = process.env.ADMIN_TOKEN;
-  if (!token) return { error: 'ADMIN_TOKEN not set — cannot read /sources. Reader reports skipped.' };
+  // No token is no longer a dead end. It used to return an error that callers printed and moved past,
+  // so a tokenless run looked exactly like a quiet night with every reader report silently absent.
+  // The public endpoint answers the only question the audit path actually needs — WHICH PAGES are
+  // disputed — so a cloud run gets a correctly-ranked queue without a credential. What it cannot do
+  // is close anything, and that is the intended limit, not a shortfall.
+  if (!token) return fetchPendingPublic();
   try {
     // Header, not a query parameter. The token used to travel in the URL, and the worker has
     // observability enabled, so every nightly call wrote the credential guarding every reporter's
@@ -507,6 +525,61 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
     console.log(`  ${rows.length} records with a mechanical contradiction:\n`);
     for (const r of rows.slice(0, 60)) console.log(`    ${r.slug.slice(0, 56).padEnd(58)} ${r.flags.join(', ')}`);
     if (rows.length > 60) console.log(`    … and ${rows.length - 60} more`);
+    return;
+  }
+
+  // close-merged — the noon pass. THE ONLY PLACE A READER IS EMAILED.
+  //
+  // Splitting this out fixes something that was wrong regardless of where it runs. `stamp
+  // --close-reports` fires in step 6 of the reports pass, BEFORE the PR is merged — so a reader was
+  // told "we fixed it" while the fix sat in a PR that might still fail CI, be rebuilt, or be
+  // rejected. This closes reports only for fixes that are ON MAIN, which is the only definition of
+  // shipped that means anything.
+  //
+  // It also lets the expensive half of the reports pass run anywhere. Auditing and fixing need no
+  // credential; only reading the queue and closing do. The read is public now, and closing is here,
+  // batched to whenever the laptop is up — which is fine because the reply is a courtesy, not a
+  // critical event, and a courtesy that arrives at noon is a courtesy.
+  if (cmd === 'close-merged') {
+    const dry = rest.includes('--dry-run');
+    const rep = await fetchReports();
+    if (rep.error) { console.log(`  ! ${rep.error}`); process.exitCode = 1; return; }
+    const pending = (rep.sources || []).filter((s) => s.id != null);
+    if (!pending.length) { console.log('  no pending reader reports'); return; }
+    if (pending.some((s) => s.public)) {
+      console.log('  ! this ran without ADMIN_TOKEN and got the public view, which carries no ids.');
+      console.log('    close-merged cannot close anything without the token. Nothing done.');
+      process.exitCode = 1; return;
+    }
+
+    const decisions = [];
+    for (const s of pending) {
+      const slug = String(s.slug || '');
+      const isSong = slug.startsWith(SONG_PREFIX);
+      const file = isSong ? path.join(SDIR, `${slug.slice(SONG_PREFIX.length)}.json`) : path.join(QDIR, `${slug}.json`);
+      if (!fs.existsSync(file)) { decisions.push({ s, act: null, why: 'no such record on main — leave for a human' }); continue; }
+      const rec = JSON.parse(fs.readFileSync(file, 'utf8'));
+      const rv = rec.review || {};
+      // The stamp must POST-DATE the report, or we would close a report using a review that happened
+      // before anyone raised it.
+      const reviewedAfter = rv.lastReviewedOn && s.created && rv.lastReviewedOn >= String(s.created).slice(0, 10);
+      if (!rv.lastReviewedOn) decisions.push({ s, act: null, why: 'record carries no review stamp — the fix has not shipped' });
+      else if (!reviewedAfter) decisions.push({ s, act: null, why: `reviewed ${rv.lastReviewedOn}, before the report (${String(s.created).slice(0, 10)})` });
+      else if (rv.lastVerdict === 'FIXED') decisions.push({ s, act: 'accepted', why: `FIXED on ${rv.lastReviewedOn} — the reader is emailed` });
+      else decisions.push({ s, act: 'rejected', why: `${rv.lastVerdict || 'PASS'} on ${rv.lastReviewedOn} — page stands, no email` });
+    }
+
+    for (const d of decisions) {
+      console.log(`    ${(d.act || 'LEAVE').padEnd(9)} #${String(d.s.id).padEnd(4)} ${String(d.s.slug).slice(0, 46).padEnd(48)} ${d.why}`);
+    }
+    const toClose = decisions.filter((d) => d.act);
+    console.log(`\n  ${toClose.length} to close (${toClose.filter((d) => d.act === 'accepted').length} will email), ${decisions.length - toClose.length} left pending`);
+    if (dry) { console.log('  --dry-run: nothing closed'); return; }
+    for (const d of toClose) {
+      const res = await closeReports([d.s.id], d.act, `fix merged to main; verified ${new Date().toISOString().slice(0, 10)}`);
+      if (res.error) console.log(`  ! #${d.s.id} not closed: ${res.error}`);
+    }
+    console.log(`  closed ${toClose.length}`);
     return;
   }
 
