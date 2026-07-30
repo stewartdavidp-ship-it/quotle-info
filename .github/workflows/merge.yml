@@ -1,0 +1,78 @@
+# merge.yml — the single merge authority for routine PRs.
+#
+# WHY THIS REPLACED AN AGENT
+# This pass used to be an unattended LLM session following workflows/DAILY-MERGE.md. It made no
+# judgement calls — merge-gate.js already decides scope, CI, staleness, drafts and prefix — so the
+# agent added no decisions and three failure modes:
+#   1. It could not run where it was scheduled. Measured 2026-07-30 in the cloud environment
+#      (branch probe/cloud-auth-2026-07-30): `gh` is not installed, GITHUB_TOKEN reads as the literal
+#      'proxy-injected', and while the API is authenticated through the egress proxy at 15000/hr, the
+#      identity has permissions {admin:false, push:false, …}. Merging a PR is an API WRITE, so there
+#      is no route to it from there. The local Mac task that preceded it depended on the Mac.
+#   2. A stop left no artifact. persist_session=false, no run history, and the routine only wrote its
+#      log line when it had something to merge — so a failed night was indistinguishable from a quiet
+#      one. GitHub Actions keeps a permanent, timestamped log of every run, pass or fail.
+#   3. The procedure lived in prose and drifted from the code (DAILY-MERGE.md described itself as
+#      running "Local" for weeks after it moved to cloud).
+#
+# The decision still lives in tools/merge-gate.js and is still never made here.
+name: merge
+
+on:
+  schedule:
+    # 11:00 UTC = 07:00 ET, after the 03:00/04:00/05:00 routines have opened their PRs.
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+    inputs:
+      execute:
+        description: 'Actually merge (unchecked = dry run)'
+        type: boolean
+        default: true
+
+# Two runs merging at once would race exactly the way four routines did before the gate existed.
+concurrency:
+  group: merge-authority
+  cancel-in-progress: false
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # The gate's own fixtures, before it is trusted to decide anything live.
+      - name: Self-test the decision and execution paths
+        run: |
+          node tools/merge-gate.js --self-test
+          node tools/merge-run.js --self-test
+
+      - name: Merge what the gate approves
+        env:
+          # MERGE_TOKEN is a PAT/App token; GITHUB_TOKEN is the fallback and is enough to MERGE.
+          # It is NOT enough to REBUILD — see the step below for why.
+          MERGE_TOKEN: ${{ secrets.MERGE_TOKEN || github.token }}
+        run: node tools/merge-run.js ${{ (github.event_name == 'schedule' || inputs.execute) && '--execute' || '' }}
+
+      # WHY REBUILDS ARE NOT DONE HERE WITH THE DEFAULT TOKEN.
+      # main is protected with strict:true and `verify` as a REQUIRED context, so a branch that is
+      # BEHIND must be brought current, rebuilt, and pass `verify` on the NEW head before it can
+      # merge. GitHub does not run workflows for pushes made with the default GITHUB_TOKEN — so a
+      # rebuild pushed from here would never get its required check, the gate would report WAIT
+      # forever, and that stall would look exactly like a quiet morning. That is the failure this
+      # whole file exists to remove, so it is refused loudly instead of half-done.
+      #
+      # Publishing our own `verify` check run from this workflow would satisfy protection without a
+      # PAT, and was rejected: it would put a second definition of "verify" beside .github/workflows/
+      # verify.yml, and one rule with two readers is this repo's most-repeated defect.
+      - name: Report what still needs a rebuild
+        if: always()
+        run: |
+          node tools/merge-gate.js || true
+          echo "MERGE_TOKEN configured: ${{ secrets.MERGE_TOKEN != '' }}"
+          echo "Any branch marked REBUILD needs a push that triggers verify.yml, which the default GITHUB_TOKEN cannot do. Until MERGE_TOKEN is set, those PRs wait for a human."

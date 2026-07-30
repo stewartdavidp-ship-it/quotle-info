@@ -1,20 +1,27 @@
 # Daily merge pass — the one authority that merges routine PRs
 
-A local routine runs this every day at 07:00 ET, after the other four have finished.
+**This pass is `.github/workflows/merge.yml`. It is not an agent and this document is not its
+procedure — it is the explanation of what that workflow does and why.** Run it by hand from a
+checkout with `node tools/merge-run.js` (dry run) or `--execute`; the sections below are the same
+steps, for a human doing it manually or debugging a run.
 
-The timetable it depends on, each an hour apart so no two overlap and the last finishes well clear:
+> **Where it runs, and where the schedule lives.** The schedule is the `cron:` in `merge.yml` —
+> 11:00 UTC / 07:00 ET, after the other routines have opened their PRs. **This file used to restate
+> the whole timetable in a table, and the table went stale** the day the routines moved to cloud: it
+> still said this pass ran "Local" weeks later, which is what sent a diagnosis looking at the wrong
+> machine. A doc that keeps a second copy of the scheduler will always drift from it, so it no longer
+> keeps one. For what runs when, read the triggers.
+>
+> The routines are spaced an hour apart so no two overlap, and this pass runs after the last of them.
+> If one runs long its PR simply gets `WAIT` and merges on the next pass — the gap reduces how often
+> that happens, it is not what makes it safe.
 
-| time (ET) | routine | where |
-|---|---|---|
-| 02:00 Mon | weekly discovery | Cloud |
-| 03:00 | daily wave | Cloud |
-| 04:00 | daily reports | Local |
-| 05:00 | daily review | Cloud |
-| **07:00** | **this pass** | Local |
-
-The two-hour gap after the last routine is deliberate: a review night with many flags, or a wave that
-runs long, still finishes before this starts. If one does not, its PR simply gets `WAIT` and merges
-tomorrow — the gap reduces how often that happens, it is not what makes it safe.
+**Why it is a workflow and not an unattended session.** Every decision here is already in
+`tools/merge-gate.js`, which has fixtures and a self-test; the agent that used to wrap it contributed
+no judgement and three failure modes — it could not run where it was scheduled (cloud has no `gh`,
+and its API identity has `push:false`, measured in `probe/cloud-auth-2026-07-30`), a stop left no
+artifact anywhere so a broken night looked like a quiet one, and the procedure lived in prose and
+drifted from the code. Actions keeps a permanent run log for every execution, pass or fail.
 
 ## Why this exists rather than each routine merging its own PR
 
@@ -33,7 +40,24 @@ a *change is correct*. None of them can tell whether a *branch is current*. A pe
 built against a superseded `main` silently reverts whatever landed in between — that is not a content
 defect, and no content gate will ever catch it. This pass only ever asks mechanical questions.
 
-## Step 0 — preflight
+## Step 0 — current and clean
+
+```bash
+git checkout main && git fetch origin && git merge --ff-only origin/main
+git status --porcelain          # must print nothing
+```
+
+If `merge --ff-only` fails, or the tree is dirty: **stop and report it.** Do not reconcile. Something
+else is using this checkout.
+
+**This comes FIRST, before preflight.** It used to come second — and both sections were numbered
+"Step 0", which is the tell. Preflight checks that you are on `main` and current, so running it
+before the step that puts you there fails on any fresh clone: a cloud container starts on a detached
+HEAD, so the pass stopped on a condition its own next section would have fixed. `merge.yml` gets
+this right for free (`actions/checkout` lands on the branch), so this ordering matters for a human
+running it by hand.
+
+## Step 1 — preflight
 
 ```bash
 node tools/preflight.js --routine merge
@@ -47,16 +71,10 @@ any work is done.
 
 It only reads. It fetches no secret, writes nothing, and does not touch git state.
 
-## Step 0 — current and clean
-
-```bash
-cd /Users/davidstewart/Developer/quotle-info
-git checkout main && git fetch origin && git merge --ff-only origin/main
-git status --porcelain          # must print nothing
-```
-
-If `merge --ff-only` fails, or the tree is dirty: **stop and report it.** Do not reconcile. Something
-else is using this checkout.
+It no longer requires the `gh` binary. `gh` was a stand-in for "can perform the merge write", and a
+stand-in is not the capability — it failed the pass in cloud for a missing binary while the real
+blocker there was a different thing entirely (`permissions.push:false`). The write now goes over
+REST from `merge.yml`.
 
 ## Step 1 — ask the gate
 

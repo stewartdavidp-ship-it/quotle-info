@@ -60,9 +60,15 @@ const NEEDS = {
   // Review is flag-driven and usually costs nothing, but a night WITH flags fetches sources to test
   // each remedy — so it needs egress even though most nights never use it.
   review:    { token: false, egress: true,  gh: false, prefix: 'review/' },
-  // The merge pass reads PRs over REST now (tools/gh-rest.js), but it still shells out to
-  // `gh pr merge` for the merge itself — that is a WRITE, and REST-without-a-credential cannot do it.
-  merge:     { token: false, egress: false, gh: true,  prefix: 'merge/' },
+  // The merge pass runs in .github/workflows/merge.yml now, not as an agent, and merges over REST
+  // with MERGE_TOKEN/GITHUB_TOKEN — so it needs neither the `gh` binary nor this preflight. `gh` was
+  // only ever a STAND-IN for "can perform the merge write", and standing in for a capability is how
+  // this gate refused a pass in the one environment it was scheduled in: cloud has no `gh`, which
+  // said nothing about whether the merge could be done there. (It could not, but for a different
+  // reason — permissions.push=false, measured in probe/cloud-auth-2026-07-30.) Kept for a human
+  // running the pass by hand from a checkout, where the real question is the same one preflight
+  // should always ask: is the tree current and clean.
+  merge:     { token: false, egress: false, gh: false, prefix: 'merge/' },
   // The 08:00 report only READS — merged PRs, open PRs, the last CI run — and since 2026-07-29 it
   // does that over anonymous REST rather than `gh`. So it needs neither a token nor the gh binary,
   // which is what lets it run in cloud. Leaving gh:true here would have failed the cloud run for a
