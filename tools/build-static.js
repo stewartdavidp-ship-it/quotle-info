@@ -124,6 +124,31 @@ ${SCRIPT}
 }
 
 // ---- /how-we-verify -------------------------------------------------------
+// TWO LISTS, TWO COUNTS — do not conflate them. This page prints two badge lists of DIFFERENT
+// lengths, and every quantifier defect it has shipped came from editing the count word on one while
+// looking at the other:
+//   1. ATTRIBUTION — the STATES array above, 3 entries, mirroring CONFIDENCE in tools/template.js
+//      (verified | attributed | disputed). Introduced by "one of three badges".
+//   2. RIGHTS — hand-written below, 3 entries (Public domain | In copyright | Unconfirmed).
+//      Introduced by "one of three".
+// #256 added Unconfirmed to list 2, making it four, and left its count word at three. #259 then
+// "fixed" the count word on list 1 instead — so the page shipped a three-item list labelled four
+// AND a four-item list labelled three. Both are corrected as of 2026-07-29, and list 2 is back to
+// three because the phantom "Used with permission" entry was removed — see the next paragraph.
+// If you touch either count word: re-derive it from the RENDERED page, and confirm which list.
+//
+// THE RIGHTS LIST OMITS "Used with permission" DELIBERATELY (2026-07-29). A `licensed` rights state
+// is defined in five places — RIGHTS and REUSE_CHIP in tools/template.js, build-check.js,
+// validate-records.js, and the generate.js enum — but ZERO of 1,169 rendered pages carry it. Measured,
+// not assumed: 438 "Public domain" badges, 303 "In copyright", 425 "Rights unconfirmed" chips, 0
+// licensed. Advertising a badge no visitor has ever seen is the same overclaim class as #256/#259, so
+// the public pages state only what ships — the same call CLAUDE.md records for the creatorDescription
+// RULE. The renderer branches STAY: they cost nothing and are ready the day a record needs one.
+// /about and /terms were corrected in the same pass for the same reason, as was the llms.txt rights
+// vocabulary in tools/build-sitemap.js. When the first `licensed` record lands, re-add the entry here
+// and bump the rights count word from three to four in the same commit. Whether the vocabulary should
+// be emitted at all or retired is open item 6 in workflows/OPEN-ITEMS-2026-07-29.md — untouched here,
+// because narrowing a public claim and settling a schema question are different decisions.
 const howBody = `        <section aria-labelledby="how-h">
             <h2 id="how-h">What &ldquo;verified&rdquo; means here</h2>
             <div>
@@ -136,7 +161,7 @@ const howBody = `        <section aria-labelledby="how-h">
 
         <section aria-labelledby="states-h">
             <h2 id="states-h">Three honest states</h2>
-            <p class="big">Certainty is a spectrum, so we don&rsquo;t pretend everything is settled. Every quote wears one of four badges:</p>
+            <p class="big">Certainty is a spectrum, so we don&rsquo;t pretend everything is settled. Every quote wears one of three badges:</p>
             <div class="states">
 ${STATES.map(stateRow).join('\n')}
             </div>
@@ -154,10 +179,6 @@ ${STATES.map(stateRow).join('\n')}
                 <div class="state">
                     <span class="state-badge attributed"><span class="state-dot">&copy;</span>In copyright</span>
                     <p class="state-def">Still protected. We quote the single line for identification and commentary; the full work belongs to its author or estate, and verifying who said it is not a grant of reuse rights. Note that a modern <em>translation</em> of an old work can itself still be in copyright.</p>
-                </div>
-                <div class="state">
-                    <span class="state-badge verified"><span class="state-dot">✓</span>Used with permission</span>
-                    <p class="state-def">Reproduced under a licence from the rightsholder, who retains all reuse rights.</p>
                 </div>
                 <div class="state">
                     <span class="state-badge attributed"><span class="state-dot">?</span>Unconfirmed</span>
@@ -203,7 +224,7 @@ const aboutBody = `        <section aria-labelledby="story-h">
             <p class="big">If you&rsquo;re about to put a quote in a slide deck, a paper, an article, or a post, quotle.info is a fast way to check three things before you do:</p>
             <ul>
                 <li><strong>Is it real, and who actually said it?</strong> Not the popular misattribution &mdash; the documented source.</li>
-                <li><strong>Can you reuse it?</strong> Public domain, still under copyright, or licensed &mdash; stated plainly.</li>
+                <li><strong>Can you reuse it?</strong> Public domain, still under copyright, or honestly marked unconfirmed &mdash; stated plainly.</li>
                 <li><strong>How sure are we?</strong> Every quote is marked <em>verified</em>, <em>attributed</em>, or <em>disputed</em>, with the receipts. When we can&rsquo;t confirm something, we say so.</li>
             </ul>
             <p>Our standard is on the <a href="/how-we-verify/">How we verify</a> page.</p>
@@ -277,7 +298,7 @@ const termsBody = `        <section aria-labelledby="t-use">
 
         <section aria-labelledby="t-rights">
             <h2 id="t-rights">Quotes &amp; reuse rights</h2>
-            <p>The reuse/rights status we show (public domain, in copyright, licensed, or uncertain) is our good-faith assessment to help you, <strong>not legal advice</strong>. Copyright is jurisdiction-specific, and a modern translation of an old work can itself be protected. <strong>You are responsible for clearing the rights for your particular use.</strong> Individual quotations belong to their authors or rightsholders; we reproduce single lines for identification and commentary.</p>
+            <p>The reuse/rights status we show (public domain, in copyright, or uncertain) is our good-faith assessment to help you, <strong>not legal advice</strong>. Copyright is jurisdiction-specific, and a modern translation of an old work can itself be protected. <strong>You are responsible for clearing the rights for your particular use.</strong> Individual quotations belong to their authors or rightsholders; we reproduce single lines for identification and commentary.</p>
         </section>
 
         <section aria-labelledby="t-api">
