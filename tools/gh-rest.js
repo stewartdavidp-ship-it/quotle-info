@@ -8,10 +8,19 @@
  * pass worked around it by installing gh and hand-building a REST shim in its scratch directory —
  * correct as a one-off, useless as a nightly arrangement, since the next run starts from nothing.
  *
- * NO CREDENTIAL NEEDED, measured rather than assumed: this repo is public, and anonymous REST
- * answers every read below. The anonymous limit is 60/hr; a merge-gate run with 4 open PRs costs
- * ~57 requests in the worst case and a daily-report run costs 3. If a token is present in the
- * environment it is used, which raises the limit to 5000 — but nothing here requires one.
+ * NO CREDENTIAL NEEDED for the reads below — but READ THE NEXT PARAGRAPH before trusting the budget.
+ *
+ * This header used to say the anonymous 60/hr limit was enough, because a merge-gate run with 4 open
+ * PRs costs ~57 requests worst case. The arithmetic was right and the premise was wrong: the cloud
+ * egress IP is SHARED, so that 60 was never ours alone and was measured at 0 remaining. Callers must
+ * go through tools/proxy-boot.js, which routes Node's fetch via the sandbox proxy — measured in cloud
+ * on 2026-07-30 (branch probe/cloud-auth-2026-07-30): direct = 403 at limit 60, through the proxy =
+ * 200 at limit 15000, authenticated as stewartdavidp-ship-it. merge-gate.js and daily-report.js both
+ * require proxy-boot at the top for exactly this reason.
+ *
+ * READS ONLY, and that is not an oversight. The same probe found the proxy-injected identity carries
+ * permissions {admin:false, push:false, …} — it can read anything and write nothing. Anything that
+ * needs a WRITE (merging a PR) needs a real token and lives in tools/merge-run.js, not here.
  *
  *   node tools/gh-rest.js --self-test    exercise the mapping against fixtures, no network
  *   node tools/gh-rest.js --probe        one live call, prints whether it is authenticated
