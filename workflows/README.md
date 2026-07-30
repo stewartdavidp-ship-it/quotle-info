@@ -5,9 +5,11 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1209** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r28.** (Waves r6–r27 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
-- Harvest backlog: `data/harvest-queue.json` (committed) — 454 queued.
+- **Corpus: 1249** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r29.** (Waves r6–r28 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- Harvest backlog: `data/harvest-queue.json` (committed) — 414 queued. **Track A is nearly exhausted: only
+  5 `misattributed` remain** (r28 drew 40 of 45). The rest is 299 `genuine-famous` + 96 `disputed`, so the
+  next Track A wave needs a `harvest-candidates.js` run first, or should draw from `disputed`.
 - **Who-wrote axis (`/who-wrote/`, added 2026-07-23):** the second music axis — "who WROTE this song?". Harvest is deterministic (`node workflows/harvest-who-wrote.js` scans the recording corpus → `data/who-wrote-queue.json`). ~14 records shipped (single-axis + dual-axis enrichment); ~78 dual-axis candidates queued. Recipe: the "Songs — the `/who-wrote/` axis" section below.
 - **Songs: next wave number s4 — but the backlog is EMPTY.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **0 queued**, 89 ingested, 1 dropped. **A new wave needs a `harvest-songs.js` run first** (step 0 of the song recipe). Digest: `data/song-queue.md`.
 
