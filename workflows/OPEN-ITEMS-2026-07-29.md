@@ -5,8 +5,8 @@ session that closed the first two. Written for a **fresh session with no context
 what is wrong, what has already been established (so you do not re-derive it), and what is genuinely
 still open.
 
-**Items 1, 2, 3 and 5 are RESOLVED** (#258, #260, #261; item 5 on 2026-07-30 — see the notes under
-each). **Items 4 and 6 are open.** Item 7 records what 1–2 left behind; its schema half is closed for
+**Items 1-6 are all RESOLVED** (#258, #260, #261; items 4, 5 and 6 on 2026-07-30 — see the notes
+under each). Item 7 records what 1–2 left behind; its schema half is closed for
 the same reason item 3's is — **`DOSSIER_SCHEMA` has zero headroom, not the "~87 bytes" its own
 comment implies.**
 
@@ -138,7 +138,30 @@ platform ceiling, so this needs space freed first."*
 RULE in CLAUDE.md to match what the pipeline can actually do. Right now the repo asserts a rule it
 structurally cannot keep, which is worse than either branch.
 
-## 4 · `hardcoded-pd-cutoff-year` detector — accept or decline
+## 4 · `hardcoded-pd-cutoff-year` detector — RESOLVED 2026-07-30 (declined as a detector, gated as an invariant)
+
+> **Declined as a detector, and the reason is the one this repo already learned twice.** A detector
+> firing on ~185 records that are all CORRECT today is the "flag that is mostly wrong" the workflow
+> README says trains everyone to ignore flags. Nothing is wrong yet — only the date is coming.
+>
+> **Gated instead as `verify-corpus.js` invariant 50**, which asks the question at the only moment
+> the answer changes: silent for every build in 2026, an unmissable build failure on the first build
+> of 2027.
+>
+> **Scoped to the claim that goes FALSE, not merely stale** — that scope is the whole design:
+>
+> | shape | on 2027-01-01 |
+> |---|---|
+> | "published before 1931, so it is public domain" | stays **true**, merely understated |
+> | "published in or after 1931, so it **remains in copyright**" | becomes **false** |
+>
+> 34 passages assert the second. Gating the first as well was tried and reverted within the hour: it
+> fired on 11 correct records stating a *safety margin* rather than a boundary ("the 1870 text is in
+> the public domain, published well before 1929"). A **tripwire, not a sweep** — deliberately strict
+> enough for zero false positives today, which costs recall (it catches 3 of the ~34 when the date
+> turns); the remedy text then sends you to sweep the rest.
+
+### Original statement
 
 Proposed by the discovery pass, gate verdict **BACKFILL**, 69 hits (5.9%). 62 records say *"the 1931
 cutoff"*, 9 say *"the 1930 cutoff"*. **Neither is wrong today.** Both silently become wrong on
@@ -197,7 +220,28 @@ whether the origin was reached, which `head()` decides by `x-deny-reason`, never
 **Lesson worth keeping:** "blocked" from one environment is not "unreachable". Probe from a second
 environment before writing a host off — the two answers here differed for 7 of 8 hosts.
 
-## 6 · `licensed` rights value is 0/1166 — emit it or retire it
+## 6 · `licensed` rights value — RESOLVED 2026-07-30 (retired)
+
+> **Retired.** Still 0 of 1,254 after another 85 records landed. Removed from `template.js`
+> (RIGHTS, REUSE_CHIP, USE, the validator throw, dead CSS), `validate-records.js`,
+> `build-discovery.js` and `build-check.js` — **eight sites across four files, not the three
+> recorded below.**
+>
+> **It was not free to keep**, which is what settled it. `vocab-sweep` reported `'licensed' still
+> 0/N` in the daily review *every single day*, in a routine whose entire value is that its signals
+> mean something. It also kept a vocabulary entry an agent could select that no consumer could
+> justify.
+>
+> This completes a call already made: #263 dropped "Used with permission" from `/how-we-verify` on
+> 2026-07-29 as a badge no visitor had ever seen, while keeping the renderer branches "ready the day
+> a record needs one". Another 85 records arrived and none did.
+>
+> Removal changed 1,254 pages — **not** the byte-for-byte no-op expected, because the rights CSS is
+> inlined per page. The diff is identical on every quote page and CSS-only; no semantic change
+> anywhere, which is the proof the state really was unused. Re-add path is written down in
+> `build-static.js` beside the rights list.
+
+### Original statement
 
 `licensed` is a valid value in three places: `tools/build-discovery.js:30` (schema enum),
 `tools/validate-records.js:44` (validator), `tools/build-check.js:209` (renders *"Cleared for reuse
