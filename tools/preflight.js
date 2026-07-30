@@ -51,12 +51,21 @@ const NEEDS = {
   // then audits, fixes and opens a PR. It needs egress and NO credential — that is what let it move
   // off the operator's laptop into cloud. If you find yourself adding token:true back here, the
   // split has been undone.
-  reports:   { token: false, egress: true,  gh: false, prefix: 'reports/' },
+  // `api: true` probes QUOTLE_API, which is a DIFFERENT question from `egress`. Egress probes the
+  // hosts the corpus CITES; the API is the host a routine cannot START without. On 2026-07-30 this
+  // pass returned "safe to proceed" on all 13 checks and then died at step 1, because the cloud
+  // proxy was refusing quotle-community.stewartd.workers.dev and nothing here ever asked. Four
+  // citation hosts being reachable says nothing about the one host that matters to this routine.
+  reports:   { token: false, egress: true,  gh: false, api: true,  prefix: 'reports/' },
   // `reports-close` is the noon half, and the ONLY routine that can email a reader. It authenticates
   // to /sources and /triage, needs no sources (it reads records off disk), and runs where the token
   // is. A bad token here is not a read-only inconvenience: it decides whether a real person hears
   // back about a page they reported.
-  'reports-close': { token: true, egress: false, gh: false, prefix: 'reports/' },
+  // egress:false is right — it reads records off disk and cites nothing. But it POSTs to /sources
+  // and /triage, so it needs the API host, and until 2026-07-30 preflight checked NO network for it
+  // at all. That is the worst place to have the gap: this is the only routine that can email a real
+  // person about a page they reported, so a silent failure here is a reader who never hears back.
+  'reports-close': { token: true, egress: false, gh: false, api: true,  prefix: 'reports/' },
   // Review is flag-driven and usually costs nothing, but a night WITH flags fetches sources to test
   // each remedy — so it needs egress even though most nights never use it.
   review:    { token: false, egress: true,  gh: false, prefix: 'review/' },
@@ -81,6 +90,15 @@ const NEEDS = {
 // `archive.org`, which is the third most-cited host here (577 citations) — that mismatch cost the
 // 2026-07-29 wave its best primary route for two records.
 const HOSTS = ['en.wikiquote.org', 'quoteinvestigator.com', 'archive.org', 'www.gutenberg.org'];
+
+// The Worker the reader-report passes talk to. Read from the environment the SAME way the tools do
+// (tools/review.js:40, tools/verify-review-spine.js:34) so an overridden QUOTLE_API is what gets
+// probed — checking the default while the routine calls an override is a green light for a host
+// nobody is using.
+const API_HOST = (() => {
+  try { return new URL(process.env.QUOTLE_API || 'https://quotle-community.stewartd.workers.dev').host; }
+  catch (_) { return 'quotle-community.stewartd.workers.dev'; }
+})();
 
 const results = [];
 const ok = (name, detail) => results.push({ name, ok: true, detail });
@@ -169,6 +187,19 @@ const head = (url) => new Promise((resolve) => {
             'this host is not in the environment allowlist. Do NOT fall back to WebSearch summaries and write records anyway — that is what shipped 5 unverified records on 2026-07-28.')
         : ok(`reach ${h}`, r.detail);
     }
+  }
+
+  // ---- the API host this routine cannot start without ----------------------
+  // Deliberately NOT folded into the egress loop. A 404 here is a PASS: the root path has no route,
+  // and the question is "did we reach the origin", exactly as for the citation hosts. What must fail
+  // is the proxy refusing the CONNECT — which head() identifies by `x-deny-reason`, not by status.
+  if (need.api) {
+    const r = await head(`https://${API_HOST}/`);
+    r.blocked
+      ? bad(`reach ${API_HOST}`, r.detail,
+          'the reader-report API is not in this environment\'s allowlist. STOP — do not route around it. '
+          + 'A denied CONNECT is NOT evidence the Worker is down; check it from an unblocked network before concluding anything.')
+      : ok(`reach ${API_HOST}`, r.detail);
   }
 
   // ---- gh: can the merge pass see PRs at all? ------------------------------
