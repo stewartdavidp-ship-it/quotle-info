@@ -541,11 +541,72 @@ if (state && state.figures) {
 // count is a safe invariant, and asserting it converts every one of those silent deletions into one
 // loud failure. If you legitimately add or remove a check, update this number in the same commit —
 // that is the point, not an inconvenience.
+// ---- the US public-domain cutoff moves every 1 January, and 185 records hardcode it ----
+// US copyright runs 95 years from publication, so in year Y everything published before Y-95 is
+// public domain. That boundary ADVANCES ANNUALLY, and the corpus states it as a literal: "published
+// before 1931 — so the text is in the public domain" appears across ~185 records.
+//
+// Today all of them are correct. On 2027-01-01 they are not, and the failure is not merely stale:
+// 34 passages assert the INVERSE — "a work first published in or after 1931 remains in copyright" —
+// which becomes flatly FALSE the moment 1931 enters the public domain. That is rights guidance a
+// reader may act on, sitting on pages whose whole promise is that the rights line can be trusted.
+//
+// WHY THIS IS AN INVARIANT AND NOT A DETECTOR. It was proposed as one (open item 4, 69 hits, 5.9%)
+// and declined: a detector firing on 185 CORRECT records is exactly the "flag that is mostly wrong"
+// the workflow README warns trains everyone to ignore flags. This asks the same question at the only
+// moment the answer changes — silent for every build in 2026, and an unmissable build failure on the
+// first build of 2027. Zero noise now, impossible to miss then.
+//
+// SCOPED TO THE INVERSE CLAIM ONLY, and that scope is the whole design. Two shapes exist:
+//
+//   "published before 1931, so it is public domain"   — stays TRUE forever, merely understated
+//   "published in or after 1931, so it REMAINS IN COPYRIGHT"  — becomes FALSE on 2027-01-01
+//
+// Only the second is a defect. Gating the first as well was tried and reverted the same hour: it
+// fired on 11 correct records that state a SAFETY MARGIN rather than a boundary — "the 1870 text is
+// in the public domain (published well before 1929)", "pre-1923 print editions". Those are true, and
+// failing a build on them is the "flag that is mostly wrong" this file's own detector guidance warns
+// against. A record may also name a year as a plain publication fact, which never goes stale.
+//
+// So: 34 passages assert the inverse today, all correct, all false the moment the boundary moves.
+// That is the set worth an unmissable failure, and nothing else here is.
+//
+// A TRIPWIRE, NOT A SWEEP. The pattern is deliberately strict enough to hold zero false positives
+// today, which costs recall: it catches 3 of the ~34 when the boundary moves, not all of them. That
+// is the right trade — its job is to make the date impossible to miss, and the remedy text then
+// sends you to sweep the rest. A version loose enough to catch all 34 fired on 8-10 CORRECT records
+// today (measured), which would have failed every build until someone deleted the check.
+const PD_BOUNDARY = new Date().getUTCFullYear() - 95;   // 2026 -> 1931: "published before 1931" is PD
+let pdStale = [];
+check('no record says works after the old PD cutoff are still in copyright', 0, (() => {
+  const CLAIM = /(?:in or after|or later|post-dates?|postdates?)[\s-]*(19[0-9]{2})/gi;
+  const CONTEXT = /remains? in copyright|still (?:in|under) copyright|not .{0,16}public domain/i;
+  const stale = [];
+  for (const f of fs.readdirSync(path.join(ROOT, 'data', 'quotes'))) {
+    if (!f.endsWith('.json')) continue;
+    let raw; try { raw = fs.readFileSync(path.join(ROOT, 'data', 'quotes', f), 'utf8'); } catch (_) { continue; }
+    for (const m of raw.matchAll(CLAIM)) {
+      const year = Number(m[1]);
+      if (year >= PD_BOUNDARY) continue;                       // still current
+      const around = raw.slice(Math.max(0, m.index - 200), m.index + 200);
+      if (!CONTEXT.test(around)) continue;                     // an incidental year, not a boundary claim
+      stale.push(`${f.replace(/\.json$/, '')} says ${year}`);
+      break;
+    }
+  }
+  pdStale = stale;
+  return stale.length;
+})(), (() => `the US public-domain boundary is now "published before ${PD_BOUNDARY}", so ${pdStale.length} record(s) now assert something FALSE: they say a work published after an OLDER cutoff remains in copyright, when it has since entered the public domain`
+  + `\n        ${pdStale.slice(0, 6).join('\n        ')}${pdStale.length > 6 ? `\n        …and ${pdStale.length - 6} more` : ''}`
+  + `\n        -> sweep them to the current boundary, or to a self-dating form ("as of ${new Date().getUTCFullYear()}, works published`
+  + `\n           before ${PD_BOUNDARY}"), which never goes silently wrong. Records asserting the INVERSE — that something`
+  + `\n           published in or after the old year "remains in copyright" — are now FALSE, not merely stale.`)());
+
 // EXPECTED_CHECKS is the FINAL total, including this assertion. check() pushes as it runs, so
 // checks.length here is the count BEFORE this one is added — hence the +1. Written this way round
 // because the number you compare against should be the number the build prints, not that number
 // minus one; the off-by-one version failed on its first run and cost ten minutes.
-const EXPECTED_CHECKS = 49; // 45 → 47: the slide-kit banner checks (§4d-bis); → 48: rpww creator agreement (§4d-ter); → 49: one author hub per person
+const EXPECTED_CHECKS = 50; // 45 → 47: slide-kit banner checks (§4d-bis); → 48: rpww creator agreement (§4d-ter); → 49: one author hub per person; → 50: PD cutoff has not moved
 check('every invariant still runs (none silently skipped)', EXPECTED_CHECKS, checks.length + 1,
   'a check block is guarded by `if (x)` and its input went missing, so it removed itself. Find which by diffing the printed check list with CORPUS_VERBOSE=1.');
 
