@@ -283,6 +283,20 @@ function buildJsonLd(q, url) {
     quotation.isPartOf = { '@type': p.type || 'CreativeWork', name: p.name };
     if (p.datePublished) quotation.isPartOf.datePublished = p.datePublished;
     if (p.sameAs) quotation.isPartOf.sameAs = p.sameAs;
+    // MIRRORS the isBasedOn branch below, for the same reasons stated there, because the same
+    // record can legitimately need them on either relation. A containing work has page numbers as
+    // often as a derived one does; `sameAs` still asserts the linked URL IS this work, so a source
+    // known only through a third-party reference still needs `citation` instead; and `description`
+    // still lets a record say what the relationship actually is.
+    //
+    // These were absent until 2026-07-30, which mattered more than it looks: the planned migration
+    // of ~1,000 records from isBasedOn to isPartOf (the containing work has been filed under the
+    // derivation field corpus-wide) would have SILENTLY DROPPED citation and pagination from the 28
+    // records carrying them — precisely the best-sourced ones, the only records with a fact-check
+    // citation to lose. Land this before that backfill, not after.
+    if (p.pagination) quotation.isPartOf.pagination = p.pagination;
+    if (p.citation) quotation.isPartOf.citation = p.citation;
+    if (p.description) quotation.isPartOf.disambiguatingDescription = p.description;
     // Original composition language of the source work (e.g. "grc", "fr") when the English quote is a
     // translation — lives on the WORK, not on the English `text`. Prefer isPartOf's own, else the record's.
     const orig = p.inLanguage || s.inLanguage;
