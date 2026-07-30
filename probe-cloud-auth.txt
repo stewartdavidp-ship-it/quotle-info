@@ -58,4 +58,51 @@ origin	http://local_proxy@127.0.0.1:41729/git/stewartdavidp-ship-it/quotle-info 
 ================================================================================
 PUSH RESULT
 --------------------------------------------------------------------------------
-See PUSH-RESULT section appended below.
+git push -u origin HEAD   ->   SUCCEEDED (exit 0)
+
+remote:
+remote: Create a pull request for 'probe/cloud-auth-2026-07-30' on GitHub by visiting:
+remote:      https://github.com/stewartdavidp-ship-it/quotle-info/pull/new/probe/cloud-auth-2026-07-30
+remote:
+To http://127.0.0.1:41729/git/stewartdavidp-ship-it/quotle-info
+ * [new branch]        HEAD -> probe/cloud-auth-2026-07-30
+branch 'probe/cloud-auth-2026-07-30' set up to track 'origin/probe/cloud-auth-2026-07-30'.
+EXIT=0
+
+================================================================================
+CONCLUSION
+--------------------------------------------------------------------------------
+The two layers disagree, and both halves matter:
+
+* GIT LAYER CAN WRITE. The push went through with no stored secret and no
+  credential.helper. origin is rewritten to a local proxy
+  (http://local_proxy@127.0.0.1:41729/git/...) which injects credentials
+  out-of-band. So the cloud environment CAN push branches to this repo.
+
+* REST API LAYER IS AUTHENTICATED BUT READ-SCOPED. Through the egress proxy the
+  API is unambiguously authenticated, not anonymous:
+    - /rate_limit reports limit 15000 (anonymous is 60)
+    - /user returns 200 with login stewartdavidp-ship-it (the repo owner);
+      anonymous /user returns 401
+  BUT the repo object's `permissions` came back
+      {"admin":false,"maintain":false,"push":false,"triage":false,"pull":false}
+  i.e. all-false, including "pull":false, despite the same call returning 200 on
+  a repo the identity owns. An owner's own repo would normally report
+  admin/push/pull all true. All-false alongside a valid owner identity indicates
+  the proxy presents a deliberately read-scoped credential for REST, distinct
+  from whatever the git proxy uses.
+
+* The earlier "cloud has no GitHub write access" conclusion was based on the
+  DIRECT call (item 4: 403, ratelimit 60 = anonymous). That reading is refuted
+  for BOTH layers' identity question: the direct 403 only proves Node's fetch
+  bypassed the proxy, nothing about this environment's access.
+
+* GITHUB_TOKEN / GH_TOKEN are literally the string "proxy-injected" — they are
+  sentinel placeholders, not usable tokens. Do not pass them to anything.
+
+* gh CLI is NOT installed.
+
+PRACTICAL UPSHOT: to write to the repo from cloud, use the git layer (push a
+branch), not raw REST-with-env-token. Whether REST writes succeed via the
+session's GitHub MCP tools (a separate credential path from raw fetch) was NOT
+measured by this probe.
