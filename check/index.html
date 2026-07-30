@@ -400,7 +400,6 @@
         function reuse(r){
             if(r==='public-domain') return {t:'ok',ic:'\u2713',x:'Free to reuse &mdash; including in commercial and paid decks. No permission needed.'};
             if(r==='in-copyright') return {t:'warn',ic:'\u00a9',x:'Still under copyright. A short, credited quote is usually fine for talks and internal decks; get permission for commercial or published use.'};
-            if(r==='licensed') return {t:'ok',ic:'\u2713',x:'Cleared for reuse under licence &mdash; keep the credit.'};
             return {t:'warn',ic:'?',x:'Copyright status unconfirmed &mdash; we couldn\u2019t establish whether it&rsquo;s public domain or still under copyright. A short, credited quote is usually fine for talks; clear the rights before commercial or published use.'};
         }
         function creditBlock(hit){
@@ -624,7 +623,7 @@
                   if(r.found&&r.rights){
                       var rt=String(r.rights);
                       var rc=rt==='public-domain'?'ok':(rt==='in-copyright'?'warn':'none');
-                      var rlab=rt==='public-domain'?'Free to use':rt==='in-copyright'?'In copyright':rt==='licensed'?'Licensed':'Rights unconfirmed';
+                      var rlab=rt==='public-domain'?'Free to use':rt==='in-copyright'?'In copyright':'Rights unconfirmed';
                       rl='<span class="dr-r dr-r-'+rc+'" title="'+esc(r.reuse||'')+'">'+rlab+'</span>';
                   }
                 return '<li class="dr dr-'+cls+'"><span class="dr-q">\u201c'+esc((r.query||lines[i]||'').trim())+'\u201d</span><span class="dr-v">'+v+link+'</span>'+rl+'</li>';

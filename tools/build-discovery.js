@@ -27,7 +27,7 @@ try {
 } catch (_) { /* optional */ }
 
 const VERDICT = { type: 'string', enum: ['verified', 'attributed', 'disputed'], description: 'verified = real & primary-sourced; attributed = credibly credited but unpinned; disputed = misattributed/fabricated.' };
-const RIGHTS = { type: ['string', 'null'], enum: ['public-domain', 'in-copyright', 'licensed', null], description: 'Reuse rights, stated SEPARATELY from attribution. public-domain = cleared for commercial reuse.' };
+const RIGHTS = { type: ['string', 'null'], enum: ['public-domain', 'in-copyright', null], description: 'Reuse rights, stated SEPARATELY from attribution. public-domain = cleared for commercial reuse.' };
 
 const HIT = {
   type: 'object',

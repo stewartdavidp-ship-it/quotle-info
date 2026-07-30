@@ -108,12 +108,11 @@ const CONFIDENCE = {
 const REUSE_CHIP = {
   'public-domain': { cls: 'pd',  glyph: '✓', label: 'Free to reuse' },
   'in-copyright':  { cls: 'ic',  glyph: '©', label: 'In copyright' },
-  'licensed':      { cls: 'lic', glyph: '✓', label: 'Licensed reuse' },
   'uncertain':     { cls: 'unc', glyph: '?', label: 'Rights unconfirmed' },
 };
 
 // Rights status is a SEPARATE claim from attribution (who said it) — a quote can be firmly
-// attributed and still under copyright. Three states, each with an honest default note; a record's
+// attributed and still under copyright. Two states, each with an honest default note; a record's
 // own `source.rightsNote` prose, if present, replaces the default body but keeps the badge.
 // `{holder}` in a default note is filled from `source.rightsHolder`. Marking a quote "in-copyright"
 // is disclosure, not a licence: inclusion still rests on short-excerpt + commentary fair use.
@@ -122,8 +121,6 @@ const RIGHTS = {
     note: 'This quotation is in the <strong>public domain</strong> and free to reuse. On Quotle.info, &ldquo;attribution verified&rdquo; and &ldquo;free to reuse&rdquo; are separate claims &mdash; here, both hold.' },
   'in-copyright':  { label: 'In copyright', mark: '©', accent: 'var(--amber)',
     note: 'This line is still <strong>under copyright</strong>{holder}. It is quoted here for identification and commentary; the complete work remains protected &mdash; verifying who said it is not a grant of reuse rights.' },
-  'licensed':      { label: 'Used with permission', mark: '✓', accent: 'var(--sage)',
-    note: 'Quoted <strong>with permission</strong>{holder}. Reuse rights belong to the rightsholder, not to Quotle.info.' },
 };
 
 // Presentation-kit reuse guidance, keyed off the same rights state. This is the practical
@@ -131,7 +128,6 @@ const RIGHTS = {
 const USE = {
   'public-domain': { tone: 'ok',   icon: '✓', line: 'Free to use, including in commercial and paid presentations &mdash; no permission or licence needed.' },
   'in-copyright':  { tone: 'warn', icon: '©', line: 'Still under copyright{holder}. A short, credited quote is generally fine for talks, teaching, and internal decks; for commercial, published, or large-scale reuse, get permission.' },
-  'licensed':      { tone: 'ok',   icon: '✓', line: 'Cleared for reuse{holder}, but the terms belong to the rightsholder &mdash; keep the credit and check the licence before commercial reuse.' },
 };
 
 // ---- <head> --------------------------------------------------------------
@@ -1451,7 +1447,7 @@ function validate(q) {
   // uncertain semantics everywhere (renderRights falls back to the prose note, the Layer-1 chip keys
   // REUSE_CHIP['uncertain'], and buildJsonLd emits no license), so an explicit "uncertain" would be a
   // redundant second spelling of "absent". Records express uncertain rights by leaving the key off.
-  if (q.source.rights && !RIGHTS[q.source.rights]) throw new Error(`record ${q.quoteSlug}: bad rights "${q.source.rights}" (use public-domain|in-copyright|licensed, or omit for uncertain)`);
+  if (q.source.rights && !RIGHTS[q.source.rights]) throw new Error(`record ${q.quoteSlug}: bad rights "${q.source.rights}" (use public-domain|in-copyright, or omit for uncertain)`);
   if (!/^[a-z0-9-]+$/.test(q.quoteSlug)) throw new Error(`record ${q.quoteSlug}: slug must be kebab-case`);
 }
 
@@ -1611,9 +1607,8 @@ const STYLE = `${ROOT_CSS}
         .rights { margin-top: 20px; background: var(--cream); border-left: 2px solid var(--border); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 16px 13px; }
         .rights-public-domain { border-left-color: var(--sage); }
         .rights-in-copyright { border-left-color: var(--amber); }
-        .rights-licensed { border-left-color: var(--sage); }
         .rights-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; font-size: 0.63rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.11em; margin-bottom: 6px; }
-        .rights-public-domain .rights-badge, .rights-licensed .rights-badge { color: var(--sage); }
+        .rights-public-domain .rights-badge { color: var(--sage); }
         .rights-in-copyright .rights-badge { color: var(--amber); }
         .rights-mark { font-size: 0.9rem; line-height: 1; }
         .rights-body { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--slate); line-height: 1.6; margin: 0; }
