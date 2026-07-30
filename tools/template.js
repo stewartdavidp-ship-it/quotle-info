@@ -130,10 +130,40 @@ const USE = {
   'in-copyright':  { tone: 'warn', icon: '©', line: 'Still under copyright{holder}. A short, credited quote is generally fine for talks, teaching, and internal decks; for commercial, published, or large-scale reuse, get permission.' },
 };
 
+// Decode HTML entities out of every string in a JSON-LD graph, URLs excepted — plain() strips tags
+// and collapses whitespace, which is right for prose and wrong for an identifier.
+//
+// Record prose is authored with entities (`Niccol&ograve;`, `&rsquo;`) because it is written for an
+// HTML sink. buildJsonLd copies several of those strings straight into the graph, and JSON-LD is NOT
+// an HTML sink: an assistant reading `"name": "Niccol&ograve; Machiavelli"` reads exactly that.
+// Measured 2026-07-30: 19 records, 20 fields — creator.name, creator.jobTitle, creator.description
+// and isBasedOn.name — shipping raw entities in the machine-readable layer this site exists to serve.
+//
+// Applied at the ONE choke point where the graph is serialised, rather than at each assignment,
+// because the per-field approach is what left these behind: the individual sinks that DO call
+// plain() (spokenByCharacter, the ClaimReview claim text) were added one at a time as each was
+// noticed, and every field nobody thought about stayed raw. A new node added to buildJsonLd is now
+// covered by construction.
+//
+// This is the same fix, and the same helper, as tools/build-songs.js:268 — where the song JSON-LD
+// shipped `Milli Vanilli&rsquo;s version is a cover` to the one consumer that reads it aloud. That
+// file's comment says "the quote template has solved this since day one via plain()", which was true
+// of the template's HTML escaping and never true of its JSON-LD.
+function deEntity(node) {
+  if (typeof node === 'string') return /^https?:\/\//.test(node) ? node : plain(node);
+  if (Array.isArray(node)) return node.map(deEntity);
+  if (node && typeof node === 'object') {
+    const out = {};
+    for (const [k, v] of Object.entries(node)) out[k] = deEntity(v);
+    return out;
+  }
+  return node;
+}
+
 // ---- <head> --------------------------------------------------------------
 function renderHead(q) {
   const url = canonicalUrl(q.quoteSlug);
-  const graph = buildJsonLd(q, url);
+  const graph = deEntity(buildJsonLd(q, url));
   const jsonLd = JSON.stringify(graph, null, 2)
     .split('\n').map((l, i) => (i === 0 ? l : '    ' + l)).join('\n');
   return `<!DOCTYPE html>
