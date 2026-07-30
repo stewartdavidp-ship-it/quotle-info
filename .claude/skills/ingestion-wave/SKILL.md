@@ -47,17 +47,21 @@ git ls-remote --heads origin 'refs/heads/wave-r*' | sed 's/.*wave-r//' | sort -n
 Next wave is that + 1. Scheduled daily waves use `dYYYYMMDD` instead. Never reuse an id — the batch
 file, records file and branch all key off it.
 
-## 3. The track decides `--credited`, and getting it wrong writes false claims
+## 3. `--credited` is the one flag that can publish something false
 
 `prep-wave.js --credited` stamps `creditedTo`, which means **"this quote is falsely credited to X"**.
+It drives the author-page "misattributed to X" list, the ClaimReview node, and the `/verify` API's
+`misattributedTo`. Stamped on a record whose credited person IS the real author, it asserts the
+opposite of the truth about a named person.
 
-- **Track A** (magnet-author misattributions) → pass `--credited`.
-- **Tracks B / C / D** (genuine-famous, film wording-drift, Quotle-game) → **omit it.**
+Baseline: **Track A → pass it; Tracks B / C / D → omit it.**
 
-This is not cosmetic. `creditedTo` drives the author-page "misattributed to X" list, the ClaimReview
-node, and the `/verify` API's `misattributedTo`. Stamping it on a record whose credited person is the
-real author publishes a false accusation about a named person. Confirm which track you are running
-before step 3.
+**But do not treat that as sufficient, and do not lean on the in-code guard.** `README.md`'s gotchas
+carry a worked example — the guard compares last words, so `"Confucius (Kong Qiu)"` and
+`"Socrates, as written by Plato"` both trip it on the *same* person and would be stamped. The same
+signal can also be a true positive (`John D. Rockefeller` → `…Jr.`, genuinely two people), so it is a
+review trigger, not a rule. **Read that gotcha before step 3**; on a mostly-Track-B wave the README's
+instruction is to omit the flag and hand-check instead.
 
 ## 4. Before you start
 
