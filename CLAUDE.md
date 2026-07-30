@@ -35,6 +35,15 @@
 - **404 handling:** `404.html` is a plain static page (the old GitHub-Pages SPA-redirect trick was removed
   once pages became prerendered at real paths).
 
+## Running a wave — do not reconstruct the process
+`workflows/README.md` § **"One wave, end to end"** is the authoritative procedure for a quote
+ingestion wave; `workflows/DAILY-WAVE.md` for the scheduled 5-quote version. The
+**`ingestion-wave` skill** (`.claude/skills/ingestion-wave/`) routes to them and carries the
+checklist — invoke it, or say "run an ingestion wave" / "run a backlog wave". **Read the procedure
+before running anything and follow it literally.** This repo's documented failure mode is a session
+rebuilding a process that already exists, so if something does not fit, stop and report rather than
+improvising.
+
 ## What This App Is
 Companion site for Quotle that provides author bios, quote historical context, thematic analysis, and daily deep-dives tied to the Quotle puzzle calendar
 
