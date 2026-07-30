@@ -242,6 +242,12 @@ node tools/build.js
 
 # 7. SHIP
 echo '[]' > /tmp/empty.json && node tools/harvest.js sync /tmp/empty.json   # sweep this wave's selected → ingested
+node tools/scan.js                                  # REQUIRED — CI fails the PR without it (see below)
+#    !! This recipe omitted scan.js until r27 and CI failed the wave on it. The "Committed output
+#    matches the generators" job runs build.js AND scan.js and rejects any diff, so a wave that
+#    skips it lands a stale data/scan-state.json and a red PR. DAILY-WAVE.md always had the step;
+#    this recipe did not, so anyone following the r-series runbook hit it. It is incremental and
+#    cheap (r27: 240 checks, 7014 skipped as settled, 0 flagged).
 git checkout -b wave-rN && git add -A && git commit && git push
 gh pr create ...
 #    !! REBASE-REBUILD BEFORE MERGING — built HTML is COMMITTED, so a wave branched before a
