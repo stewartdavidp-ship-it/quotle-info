@@ -41,10 +41,22 @@ jobs:
       contents: write
       pull-requests: write
     steps:
+      # token: MERGE_TOKEN so the credential left behind for `git push` is one whose pushes TRIGGER
+      # verify.yml. A rebuild pushed with the default GITHUB_TOKEN never gets its required check and
+      # the gate waits on it forever. fetch-depth: 0 because a rebuild merges origin/main into a
+      # branch, which a shallow clone cannot do.
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.MERGE_TOKEN || github.token }}
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Identify the committer
+        run: |
+          git config user.name  "quotle merge authority"
+          git config user.email "stewartdavidp@gmail.com"
 
       # The gate's own fixtures, before it is trusted to decide anything live.
       - name: Self-test the decision and execution paths
@@ -52,27 +64,33 @@ jobs:
           node tools/merge-gate.js --self-test
           node tools/merge-run.js --self-test
 
-      - name: Merge what the gate approves
+      - name: Merge what the gate approves, and rebuild what is behind
         env:
-          # MERGE_TOKEN is a PAT/App token; GITHUB_TOKEN is the fallback and is enough to MERGE.
-          # It is NOT enough to REBUILD — see the step below for why.
+          # MERGE_TOKEN performs the merge WRITE (tools/merge-run.js).
           MERGE_TOKEN: ${{ secrets.MERGE_TOKEN || github.token }}
+          # GH_TOKEN authenticates the gate's READS (tools/gh-rest.js). Without it those go out
+          # anonymous at 60/hr against a SHARED runner IP — the exact "403 before the first call"
+          # that proxy-boot.js was written for. A merge pass that cannot see PRs must not be one
+          # rate-limit away from reporting an empty queue.
+          GH_TOKEN: ${{ secrets.MERGE_TOKEN || github.token }}
         run: node tools/merge-run.js ${{ (github.event_name == 'schedule' || inputs.execute) && '--execute' || '' }}
 
-      # WHY REBUILDS ARE NOT DONE HERE WITH THE DEFAULT TOKEN.
+      # WHY MERGE_TOKEN IS NOT OPTIONAL FOR THE REBUILD HALF.
       # main is protected with strict:true and `verify` as a REQUIRED context, so a branch that is
       # BEHIND must be brought current, rebuilt, and pass `verify` on the NEW head before it can
       # merge. GitHub does not run workflows for pushes made with the default GITHUB_TOKEN — so a
-      # rebuild pushed from here would never get its required check, the gate would report WAIT
+      # rebuild pushed with it would never get its required check, the gate would report WAIT
       # forever, and that stall would look exactly like a quiet morning. That is the failure this
-      # whole file exists to remove, so it is refused loudly instead of half-done.
+      # whole file exists to remove.
       #
       # Publishing our own `verify` check run from this workflow would satisfy protection without a
-      # PAT, and was rejected: it would put a second definition of "verify" beside .github/workflows/
-      # verify.yml, and one rule with two readers is this repo's most-repeated defect.
-      - name: Report what still needs a rebuild
+      # PAT, and was rejected: it would put a second definition of "verify" beside verify.yml, and
+      # one rule with two readers is this repo's most-repeated defect.
+      - name: State the pass's own preconditions
         if: always()
         run: |
-          node tools/merge-gate.js || true
           echo "MERGE_TOKEN configured: ${{ secrets.MERGE_TOKEN != '' }}"
-          echo "Any branch marked REBUILD needs a push that triggers verify.yml, which the default GITHUB_TOKEN cannot do. Until MERGE_TOKEN is set, those PRs wait for a human."
+          if [ "${{ secrets.MERGE_TOKEN != '' }}" != "true" ]; then
+            echo "::warning::MERGE_TOKEN is not set. Merging still works, but any REBUILD pushed with the default GITHUB_TOKEN will never trigger verify.yml and will wait forever."
+          fi
+          node tools/merge-gate.js || true
