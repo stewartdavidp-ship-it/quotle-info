@@ -194,7 +194,7 @@ function buildJsonLd(q, url) {
   // true author (answer.authorName) and that author is a real named person; otherwise omit it. The
   // disputed claimant is still carried by the ClaimReview below, so nothing is lost.
   const heroName = plain((q.answer && q.answer.authorName) || '');
-  const heroUnknown = !heroName || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroName);
+  const heroUnknown = heroAuthorUnknown(heroName);
   const magnetName = plain(primaryCredit(q) || '').toLowerCase();
   // A page with TWO quote strings: the paraphrase in circulation (schema.claimQuoteText) differs
   // from the documented sentence carried by Quotation.text. Used below to pick the ClaimReview
@@ -925,7 +925,7 @@ function buildImagePrompts(q) {
   const heroLead = leadName(plain((q.answer && q.answer.authorName) || ''));
   const cardName = plain((q.author && q.author.name) || '');
   const heroForDetect = heroLead || cardName;
-  const heroUnknown = !heroForDetect || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroForDetect);
+  const heroUnknown = heroAuthorUnknown(heroForDetect);
   const magnetName = plain(primaryCredit(q) || '').toLowerCase();
   const disputed = q.confidence === 'disputed';
   // Evoke a real person's world only when the page stands behind the attribution: verified/attributed
@@ -976,8 +976,24 @@ function renderPresentationKit(q) {
   // whose ATTRIBUTION is settled but whose REUSE status is not (first publication date unestablished).
   // Without this, the fallback below tells readers not to assert an author the page has just proven.
   const own = q.source && q.source.useLine;
-  const useLine = own || (u ? u.line.replace('{holder}', holder)
-    : 'We couldn&rsquo;t verify where this wording comes from, so there&rsquo;s no rights status to give. Safe to present as an unverified or anonymous line &mdash; just don&rsquo;t assert a specific author or source.');
+  // TWO fallbacks, not one, because "no rights state" has two causes and only one of them is about
+  // provenance. Omitting `source.rights` means RIGHTS UNCERTAIN (tools/validate-records.js: "omit
+  // the key to mean uncertain") — it does NOT mean the attribution is unverified. The single
+  // fallback conflated them and asserted the second, so 240 pages that name a documented author
+  // told the reader "don't assert a specific author or source" directly beneath a credit block
+  // telling them to copy that exact author and source. Measured 2026-07-30: 431 records reach this
+  // fallback, 191 with no established author (the original line is honest for those) and 240 with
+  // a named one (where it was flatly false).
+  //
+  // This is the same defect `source.useLine` was added to let a record work around by hand — see
+  // the note above it, "the fallback below tells readers not to assert an author the page has just
+  // proven". The escape hatch was right about the bug and wrong about the scale: it is not a
+  // per-record exception, it is the default for a third of the corpus. useLine still wins where set.
+  const heroUnestablished = heroAuthorUnknown(plain((q.answer && q.answer.authorName) || ''));
+  const noRightsLine = heroUnestablished
+    ? 'We couldn&rsquo;t verify where this wording comes from, so there&rsquo;s no rights status to give. Safe to present as an unverified or anonymous line &mdash; just don&rsquo;t assert a specific author or source.'
+    : 'We couldn&rsquo;t establish where this was first published, so there&rsquo;s no rights status to give. Credit it as shown above &mdash; just don&rsquo;t present it as public domain, and get permission for commercial or published reuse.';
+  const useLine = own || (u ? u.line.replace('{holder}', holder) : noRightsLine);
   const useTone = (q.source && q.source.useTone) || (u ? u.tone : 'warn');
   const useIcon = (q.source && q.source.useIcon) || (u ? u.icon : '?');
 
@@ -1746,6 +1762,25 @@ function realAuthorName(r) {
   return plain(a.realAuthorName || a.authorName || '');
 }
 
+// IS THE TRUE AUTHOR UNESTABLISHED? — one definition, for the same reason rightPersonWrongWords
+// below has one: this test had THREE inline copies (the JSON-LD creator guard, the image-prompt
+// grounding, and rightPersonWrongWords), and a fourth was about to be added for the reuse line.
+// The file already paid for a duplicated predicate once — 17 pages shipped a contradictory banner
+// because the kit's copy tested something different.
+//
+// The copies matched only unknown/anonymous/unattributed/uncertain, which misses the corpus's other
+// standing phrasing for the same verdict: "No verified speaker", "No verified author", "No
+// documented author", "No documented speaker" (8 records). Those pages assert no author at all, so
+// every consumer of this test wants them counted as unknown.
+//
+// Matched on the LEADING name, so "Unknown — a traditional English proverb" and "Anonymous (an old
+// law adage)" resolve the same as the bare tokens.
+const UNKNOWN_HERO_RE = /\b(unknown|anonymous|unattributed|uncertain)\b|^no\s+(verified|documented|known|single|confirmed)\b/i;
+function heroAuthorUnknown(name) {
+  const lead = String(name || '').split(/\s*[—–(,]|\s-\s/)[0].trim();
+  return !lead || UNKNOWN_HERO_RE.test(lead);
+}
+
 // RIGHT PERSON, WRONG WORDS — the credited name IS the true author and the dispute is about the
 // WORDING, not the attribution. Franklin really did publish it, about wine; Durocher really said it,
 // later and differently; Edison's remark is real and this sentence is a paraphrase of it.
@@ -1765,7 +1800,7 @@ function realAuthorName(r) {
 // somebody else: it says the true author is NOT established, which is a misattribution page.
 function rightPersonWrongWords(q) {
   const heroName = plain((q && q.answer && q.answer.authorName) || '');
-  if (!heroName || /\b(unknown|anonymous|unattributed|uncertain)\b/i.test(heroName)) return false;
+  if (heroAuthorUnknown(heroName)) return false;
   const magnetName = plain(primaryCredit(q) || '').toLowerCase();
   if (!magnetName || heroName.toLowerCase() !== magnetName) return false;
   const explicitReal = plain((q.answer && q.answer.realAuthorName) || '');
