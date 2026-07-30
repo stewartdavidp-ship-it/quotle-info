@@ -22,6 +22,7 @@ const { CORPUS, authors } = require('./corpus');
 
 const ROOT = path.resolve(__dirname, '..');
 const failures = [];
+let verifyHubDupes = [];   // filled by the hub-identity check below, read by its message
 const checks = [];
 
 function check(name, expected, actual, hint) {
@@ -80,6 +81,52 @@ check('rendered author pages match author hubs', CORPUS.authors.total, countDirs
     if (missing.length) return `build-authors did not emit a page for: ${missing.join(', ')}`;
     return 'build-authors did not emit one page per hub';
   })());
+
+// ONE PERSON, ONE HUB. Two author slugs sharing a Wikipedia/Wikidata identity means the same person
+// has two hub pages and their quotes are split between them — silently, because both hubs have
+// backing records so every count still sums correctly. Nothing else here can see it.
+//
+// This has now happened twice. Confucius shipped as `confucius` + `confucius-kong-qiu` from wave r15
+// and was only found by hand on 2026-07-30 (#265). The same sweep then found SEVEN more, live:
+// Seneca split 3 ways (7/8/1 quotes), Laozi 3 ways (12/2/1), plus Horace, Rumi, George Eliot, Amos
+// and Stanley Weiser. A reader landing on /authors/seneca/ saw 7 of his 16 quotes and no sign of the
+// rest. Every one is a name-form expansion the generator produced — "Horace (Quintus Horatius
+// Flaccus)", "Lao Tzu (Laozi)" — which slugify turns into a second, near-duplicate hub.
+//
+// KEYED ON sameAs, NOT ON THE SLUG. A prefix test (`horace` vs `horace-…`) would false-positive on
+// John D. Rockefeller vs John D. Rockefeller Jr., who are genuinely different people — and r28 has
+// exactly that pair. Distinct Wikipedia entities, so keying on identity passes them cleanly.
+//
+// SCOPED to records where schema.creator IS the hub's own person, by name containment. Without that
+// scope this fires on 9 disputed records whose creator names the MAGNET (Vegetius carrying Sun Tzu's
+// sameAs, Lady Hope carrying Darwin's). Those are inert — tools/template.js suppresses creator on a
+// disputed page whose hero is not the creator, so nothing false ships — and failing the build on
+// them would be the "flag that is mostly wrong" the workflow README warns teaches people to ignore
+// flags. Containment not equality: the broken records hold MORE name than the creator does, which is
+// the whole shape of the bug; strict equality caught only 3 of the 7.
+check('one author hub per person (no two slugs share a creator identity)', 0, (() => {
+  const bySame = new Map();
+  const norm = (s) => String(s || '').replace(/<[^>]+>/g, '').replace(/&[a-z]+;/gi, ' ')
+    .toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  for (const f of fs.readdirSync(path.join(ROOT, 'data', 'quotes'))) {
+    if (!f.endsWith('.json')) continue;
+    let r; try { r = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'quotes', f), 'utf8')); } catch (_) { continue; }
+    const cr = r.schema && r.schema.creator;
+    const slug = r.author && r.author.slug;
+    if (!cr || !cr.sameAs || !slug) continue;
+    const a = norm(cr.name); const b = norm(r.author.name);
+    if (!a || !b || !(a.includes(b) || b.includes(a))) continue;   // creator is not this hub's person
+    if (!bySame.has(cr.sameAs)) bySame.set(cr.sameAs, new Set());
+    bySame.get(cr.sameAs).add(slug);
+  }
+  const dupes = [...bySame.entries()].filter(([, v]) => v.size > 1);
+  verifyHubDupes = dupes;
+  return dupes.length;
+})(), (() => (verifyHubDupes || []).map(([u, v]) => `${[...v].join(' + ')} all claim ${u}`).join('\n        ')
+  + `\n        -> one person, one hub. Pick the canonical slug (most records; bare name on a tie), set`
+  + `\n           author.slug/author.name/answer.authorHref on the others to match, then git rm the`
+  + `\n           orphaned authors/<slug>/ directories and rebuild. Leave answer.authorName alone —`
+  + `\n           on a misattribution page the hub is the magnet and the hero is the true author.`)());
 check('rendered song pages match recording-axis records', CORPUS.songs.recordings, countDirs('who-recorded'),
   'build-songs did not emit one /who-recorded/ page per recording-axis record (songs.total is all 95; .recordings is the /who-recorded/ subset)');
 check('rendered who-wrote pages match writing-ONLY records', CORPUS.whoWrote.pages, countDirs('who-wrote'),
@@ -498,7 +545,7 @@ if (state && state.figures) {
 // checks.length here is the count BEFORE this one is added — hence the +1. Written this way round
 // because the number you compare against should be the number the build prints, not that number
 // minus one; the off-by-one version failed on its first run and cost ten minutes.
-const EXPECTED_CHECKS = 48; // 45 → 47: the slide-kit banner checks (§4d-bis); → 48: rpww creator agreement (§4d-ter)
+const EXPECTED_CHECKS = 49; // 45 → 47: the slide-kit banner checks (§4d-bis); → 48: rpww creator agreement (§4d-ter); → 49: one author hub per person
 check('every invariant still runs (none silently skipped)', EXPECTED_CHECKS, checks.length + 1,
   'a check block is guarded by `if (x)` and its input went missing, so it removed itself. Find which by diffing the printed check list with CORPUS_VERBOSE=1.');
 
