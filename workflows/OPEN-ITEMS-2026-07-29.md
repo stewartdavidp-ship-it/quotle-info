@@ -5,9 +5,20 @@ session that closed the first two. Written for a **fresh session with no context
 what is wrong, what has already been established (so you do not re-derive it), and what is genuinely
 still open.
 
-**Items 1, 2 and 3 are RESOLVED** (#258, #260, #261 — see the notes under each). **Items 4, 5 and 6
-are open.** Item 7 records what 1–2 left behind; its schema half is closed for the same reason
-item 3's is — **`DOSSIER_SCHEMA` has zero headroom, not the "~87 bytes" its own comment implies.**
+**Items 1, 2, 3 and 5 are RESOLVED** (#258, #260, #261; item 5 on 2026-07-30 — see the notes under
+each). **Items 4 and 6 are open.** Item 7 records what 1–2 left behind; its schema half is closed for
+the same reason item 3's is — **`DOSSIER_SCHEMA` has zero headroom, not the "~87 bytes" its own
+comment implies.**
+
+> **Item 2's resolution is narrower than it reads.** It says the `--credited` mis-fire was fixed by
+> comparing the LEADING name of `rec.answer.authorName` with the batch author. That guard still
+> mis-fires on a name-form expansion, because it compares last words: wave r27 produced
+> `"Confucius (Kong Qiu)"` (lead word `Qiu)`) and `"Socrates, as written by Plato"` (lead word
+> `Plato`) — both the same person as the magnet, and both would have been stamped `creditedTo`, which
+> means *falsely* credited. The residual is written up in `workflows/README.md`'s gotchas: on a
+> mostly-Track-B wave omit the flag and hand-check instead. Wave r28 shows the same signal can be a
+> TRUE positive (`John D. Rockefeller` → `John D. Rockefeller Jr.`, genuinely father and son), so it
+> is a review trigger, not a rule.
 
 **Read this before researching any of them.** Every claim below was checked against the code on
 2026-07-29; the file/line pointers are real. What is NOT settled is what to *do*, which is the point
@@ -139,19 +150,52 @@ never by hand-editing the catalogue.
 **Open:** accept it (then a sweep to the house "as of 2026" form), or decline on the grounds that a
 detector firing on 69 correct records is noise until closer to the date.
 
-## 5 · Egress allowlist — widen it, or write the gap down
+## 5 · Egress allowlist — RESOLVED 2026-07-30 (allowlist widened)
+
+> **The "permanently unreachable" half of this item was FALSE, and acting on it would have been the
+> expensive mistake.** Re-probed from a local checkout on 2026-07-30: **7 of the 8 hosts below answer
+> normally.** They were never unreachable — they were blocked *in the cloud container only*, which is
+> a per-environment egress policy, not a property of the sites. Writing them into the docs as
+> permanently unreachable would have stopped every future wave from even trying a route that works.
+>
+> | host | from cloud (2026-07-29) | from local (2026-07-30) |
+> |---|---|---|
+> | archive.org | CONNECT 403 | **200** — and it is the 3rd most-cited host here, 577 citations |
+> | books.google.com | CONNECT 403 | **200** |
+> | constitutioncenter.org | CONNECT 403 | **200** |
+> | monticello.org | CONNECT 403 | **301** |
+> | snopes.com | CONNECT 403 | **301** |
+> | founders.archives.gov | 202, empty body | **202** — same everywhere; an origin quirk, not egress |
+> | babel.hathitrust.org | CONNECT 403 | **403** — HathiTrust's own bot policy, same class as the |
+> | | | Wikimedia UA case already handled in `preflight.js` |
+> | rarebookroom.org | CONNECT 403 | **connection failed** — appears genuinely dead; do not chase |
+>
+> **The operator widened the cloud allowlist on 2026-07-30**, covering these plus the two
+> infrastructure hosts below. Verified only from local — the real test is the next scheduled CLOUD
+> run, because that is the environment the policy applies to.
 
 Confirmed reachable: wikiquote · wikipedia · wikisource · quoteinvestigator · gutenberg · loc.gov
-Confirmed blocked (CONNECT 403): monticello.org · archive.org · books.google.com · rarebookroom.org ·
-babel.hathitrust.org · snopes.com · constitutioncenter.org
-`founders.archives.gov` returns **202 with an empty body** to both curl and WebFetch.
 
 Between them these are the primary route for most Franklin and Jefferson claims. **Four claims went
 unestablished on 2026-07-29 as a direct result**, and the pages say so in their own prose.
 
-**Open:** add the hosts to the cloud environment's allowlist (UI-only config, the operator must do
-it), or record in the workflow docs that these are permanently unreachable so waves stop spending
-stages rediscovering it. Doing neither means every future wave pays the same cost.
+### The infrastructure hosts, which cost a whole routine run on 2026-07-30
+
+`quotle-community.stewartd.workers.dev` (`QUOTLE_API`) and `quotle.info` were blocked the same way,
+and that is what killed the reader-report pass (#267) at step 1. **`preflight.js` could not see it**:
+it probed the four citation hosts, passed 13/13, and reported "safe to proceed" immediately before
+the failure. Four citation hosts being reachable says nothing about the one host a routine cannot
+start without.
+
+Fixed: `NEEDS` now carries `api: true` for `reports` and `reports-close`, probed separately from
+`egress`. `reports-close` previously had `egress: false` and therefore **no network check at all** —
+the worst place for the gap, since it is the only routine that emails a real person about a page they
+reported. The probe reads `QUOTLE_API` from the environment exactly as the tools do, so an overridden
+value is what gets checked, and a 404 counts as a pass (root path has no route; the question is
+whether the origin was reached, which `head()` decides by `x-deny-reason`, never by status).
+
+**Lesson worth keeping:** "blocked" from one environment is not "unreachable". Probe from a second
+environment before writing a host off — the two answers here differed for 7 of 8 hosts.
 
 ## 6 · `licensed` rights value is 0/1166 — emit it or retire it
 
