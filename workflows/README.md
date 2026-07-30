@@ -5,9 +5,9 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1118** quotes + **90** songs. **Target: 2000** quotes.
-- **Next wave number: r26.** (Waves r6–r25 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
-- Harvest backlog: `data/harvest-queue.json` (committed) — 391 queued.
+- **Corpus: 1209** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r28.** (Waves r6–r27 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- Harvest backlog: `data/harvest-queue.json` (committed) — 454 queued.
 - **Who-wrote axis (`/who-wrote/`, added 2026-07-23):** the second music axis — "who WROTE this song?". Harvest is deterministic (`node workflows/harvest-who-wrote.js` scans the recording corpus → `data/who-wrote-queue.json`). ~14 records shipped (single-axis + dual-axis enrichment); ~78 dual-axis candidates queued. Recipe: the "Songs — the `/who-wrote/` axis" section below.
 - **Songs: next wave number s4 — but the backlog is EMPTY.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **0 queued**, 89 ingested, 1 dropped. **A new wave needs a `harvest-songs.js` run first** (step 0 of the song recipe). Digest: `data/song-queue.md`.
 
@@ -596,6 +596,14 @@ how songs got in unchecked.
 - **`git add -A` after any `harvest.js sync`** — sync regenerates author pages, `/flagged`, `/under-review`.
 - **Stamp dates per wave** (generate object-form args) so pages don't all claim one stale "last verified".
 - **Track A → `--credited`; Track B → omit it** and theme-tag the new records.
+- **`--credited`'s guard mis-fires on name-form expansions, so do not lean on it.** `prep-wave.js`
+  only stamps when `leadName(record author) !== leadName(batch author)` — comparing LAST WORDS. r27
+  produced two records that trip that on the same person: `"Confucius (Kong Qiu)"` (lead `Qiu)`) and
+  `"Socrates, as written by Plato"` (lead `Plato`). With `--credited` both would have been stamped
+  `creditedTo` = the magnet — a machine-readable "falsely credited to Confucius" on a record whose
+  author IS Confucius. `creditedTo` means *falsely* credited (`tools/credits.js`), so a wrong stamp
+  asserts the opposite of the truth. On a mostly-Track-B wave omit the flag and hand-check instead:
+  list records whose true author differs from the magnet, and stamp only genuine reassignments.
 - **Hero framing on reassigned disputed pages**: answer.authorName + author.* + schema.creator must be the
   TRUE author; the magnet lives only in the misattribution section (Jobs→Brand / Lincoln→Anonymous).
 - **NEVER read a journal before the workflow finishes.** `journal.jsonl` is appended LIVE and holds
