@@ -54,9 +54,23 @@ git checkout main && git fetch origin && git merge --ff-only origin/main
 git status --porcelain
 ```
 
-Preflight checks the token is present AND the right shape (43 chars — a `2>&1` gives you 461 of
-gcloud warning), that sources are reachable, and that `reports/` is still in the merge gate's
-allowlist. Each of those has failed silently at least once.
+Preflight checks that the citation sources are reachable, that **`QUOTLE_API` is reachable**, and
+that `reports/` is still in the merge gate's allowlist. Each of those has failed silently at least
+once. 14 checks; expect all 14.
+
+**It does NOT check `ADMIN_TOKEN`, and must not.** This paragraph claimed a 43-char token check until
+2026-07-30, when the recovery run passed 14/14 with no token at all and correctly reported the
+contradiction. `NEEDS.reports` is `token: false` **by design** — this is the audit half, it reads the
+PUBLIC `GET /reports/pending`, and needing no credential is exactly what let it move off the
+operator's laptop into cloud. The token check belongs to `reports-close`, the noon half, which is the
+only one that authenticates and the only one that can email a reader. **If you find yourself adding
+`token: true` back to `reports`, the 2026-07-29 split has been undone.**
+
+The `QUOTLE_API` check is new (#275, 2026-07-30) and exists because of this pass: the 08:10Z run
+passed all 13 checks, reported "safe to proceed", and then died at step 1 on a proxy `CONNECT` denial
+to `quotle-community.stewartd.workers.dev`. Four citation hosts being reachable said nothing about
+the one host this routine cannot start without. A denied CONNECT is **not** evidence the Worker is
+down — check it from an unblocked network before concluding anything about it.
 
 **Update before you check clean, in that order.** This pass runs in a long-lived local checkout, and
 three other routines open PRs against `main` around it — the 03:00 wave, the 05:00 review, the
