@@ -103,7 +103,7 @@ const DETECTORS = [
     version: 1,
     severity: 'high',
     title: 'rights say public-domain but the source is 1931 or later',
-    remedy: 'Re-check the source year against source.rights. If the work is 1931 or later it is not public-domain — correct rights to in-copyright (or licensed, with the terms), or correct the year if the year is what is wrong.',
+    remedy: 'Re-check the source year against source.rights. If the work is 1931 or later it is not public-domain — correct rights to in-copyright, or correct the year if the year is what is wrong.',
     // TRIPWIRE — 0 hits at 2026-07-28. A rights claim is the one thing on this site a reader may
     // ACT on commercially, so a contradiction between the rights field and the source year is worth
     // catching before a reader relies on it.

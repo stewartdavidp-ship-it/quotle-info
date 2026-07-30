@@ -137,18 +137,20 @@ ${SCRIPT}
 // three because the phantom "Used with permission" entry was removed — see the next paragraph.
 // If you touch either count word: re-derive it from the RENDERED page, and confirm which list.
 //
-// THE RIGHTS LIST OMITS "Used with permission" DELIBERATELY (2026-07-29). A `licensed` rights state
-// is defined in five places — RIGHTS and REUSE_CHIP in tools/template.js, build-check.js,
-// validate-records.js, and the generate.js enum — but ZERO of 1,169 rendered pages carry it. Measured,
-// not assumed: 438 "Public domain" badges, 303 "In copyright", 425 "Rights unconfirmed" chips, 0
-// licensed. Advertising a badge no visitor has ever seen is the same overclaim class as #256/#259, so
-// the public pages state only what ships — the same call CLAUDE.md records for the creatorDescription
-// RULE. The renderer branches STAY: they cost nothing and are ready the day a record needs one.
-// /about and /terms were corrected in the same pass for the same reason, as was the llms.txt rights
-// vocabulary in tools/build-sitemap.js. When the first `licensed` record lands, re-add the entry here
-// and bump the rights count word from three to four in the same commit. Whether the vocabulary should
-// be emitted at all or retired is open item 6 in workflows/OPEN-ITEMS-2026-07-29.md — untouched here,
-// because narrowing a public claim and settling a schema question are different decisions.
+// THE RIGHTS LIST OMITS "Used with permission" because the `licensed` state NO LONGER EXISTS
+// (retired 2026-07-30, open item 6). This page dropped it on 2026-07-29 as a badge no visitor had
+// ever seen — 0 of 1,169 rendered pages carried it — while the renderer branches were kept on the
+// grounds that they cost nothing and were ready the day a record needed one.
+//
+// They were not free. `vocab-sweep` reported the 0/N every single day, in a routine whose whole
+// value is that its signals mean something, and the state stayed unused across another 85 records
+// (0 of 1,254). Retiring it removes a vocabulary entry an agent could select but no consumer could
+// ever have justified. Removal was verified as a byte-for-byte no-op on the rendered site — the
+// proof it really was dead.
+//
+// If a genuinely licensed quote ever arrives, re-add the state to tools/template.js (RIGHTS,
+// REUSE_CHIP, USE), validate-records.js, build-discovery.js and build-check.js, and bump the rights
+// count word here from three to four in the same commit.
 const howBody = `        <section aria-labelledby="how-h">
             <h2 id="how-h">What &ldquo;verified&rdquo; means here</h2>
             <div>

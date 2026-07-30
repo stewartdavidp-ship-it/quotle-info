@@ -10,7 +10,7 @@
  *
  * Every rule below corresponds to a bug that actually shipped or actually broke the build:
  *   1. confidence must be verified|attributed|disputed
- *   2. source.rights must be public-domain|in-copyright|licensed, or ABSENT
+ *   2. source.rights must be public-domain|in-copyright, or ABSENT
  *      ("uncertain" is invalid and throws in template.js)
  *   3. themes: exactly 2, from the fixed vocabulary (theme pages are generated from these)
  *   4. copyAttribution must lead with this record's own quote, or be a bare capitalised tail
@@ -41,7 +41,7 @@ const since = argOf('--since') ? Number(argOf('--since')) : null;
 const QUIET = argv.includes('--quiet');
 
 const CONFIDENCE = new Set(['verified', 'attributed', 'disputed']);
-const RIGHTS = new Set(['public-domain', 'in-copyright', 'licensed']);
+const RIGHTS = new Set(['public-domain', 'in-copyright']);
 const THEMES = new Set(['wisdom', 'character', 'purpose', 'courage', 'truth', 'hope', 'power',
   'resilience', 'knowledge', 'growth', 'creativity', 'success', 'freedom', 'doubt', 'work',
   'justice', 'change', 'simplicity', 'happiness', 'love', 'time', 'kindness', 'leadership',

@@ -52,7 +52,7 @@ for (const f of fs.readdirSync(QUOTES_DIR)) {
     ...(fc.length > 1 ? { creditedAlso: fc.slice(1).map(plain) } : {}), // further false credits, if any
     credit: plain(creditLine(r)),                       // paste-ready CORRECT credit line (quote already implied)
     cite: plain((r.cite && r.cite.sourceCitation) || ''), // full authored Chicago citation (for a references slide)
-    rights: (r.source && r.source.rights) || 'uncertain', // public-domain | in-copyright | licensed | uncertain (never blank, so machine consumers can gate)
+    rights: (r.source && r.source.rights) || 'uncertain', // public-domain | in-copyright | uncertain (never blank, so machine consumers can gate)
     img: (buildImagePrompts(r)[0] || ''),               // context-grounded image direction (the "in context" one)
     u: `${ORIGIN}/who-said/${r.quoteSlug}/`,
   });
