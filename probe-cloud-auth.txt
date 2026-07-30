@@ -1,0 +1,61 @@
+PROBE: cloud GitHub auth measurements
+Date: 2026-07-30
+Environment: Claude Code on the web (remote execution container), repo /home/user/quotle-info
+Purpose: determine whether this cloud environment has authenticated GitHub access
+         WITHOUT any stored secret, when calls go through the egress proxy.
+
+KEY PREMISE: Node's fetch ignores HTTPS_PROXY unless NODE_USE_ENV_PROXY=1.
+An earlier probe called api.github.com DIRECTLY, saw x-ratelimit-limit 60 (anonymous),
+and the repo wrongly concluded cloud has no GitHub write access. Items 1-3 below are
+taken THROUGH the proxy; item 4 is the direct contrast.
+
+================================================================================
+1. NODE_USE_ENV_PROXY=1 node -e "fetch('https://api.github.com/repos/stewartdavidp-ship-it/quotle-info').then(async r=>{const j=await r.json();console.log('status',r.status,'| ratelimit',r.headers.get('x-ratelimit-limit'),'| permissions',JSON.stringify(j.permissions))})"
+--------------------------------------------------------------------------------
+(node:2600) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+status 200 | ratelimit 5650 | permissions {"admin":false,"maintain":false,"push":false,"triage":false,"pull":false}
+
+================================================================================
+2. NODE_USE_ENV_PROXY=1 node -e "fetch('https://api.github.com/rate_limit').then(async r=>console.log('rate_limit',r.status,JSON.stringify((await r.json()).rate)))"
+--------------------------------------------------------------------------------
+(node:2968) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+rate_limit 200 {"limit":15000,"used":9,"remaining":14991,"reset":1785415364}
+
+================================================================================
+3. NODE_USE_ENV_PROXY=1 node -e "fetch('https://api.github.com/user').then(async r=>console.log('user',r.status,(await r.text()).slice(0,300)))"
+--------------------------------------------------------------------------------
+(node:3336) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+user 200 {"login":"stewartdavidp-ship-it","id":253785549,"node_id":"U_kgDODyB1zQ","avatar_url":"https://avatars.githubusercontent.com/u/253785549?v=4","gravatar_id":"","url":"https://api.github.com/users/stewartdavidp-ship-it","html_url":"https://github.com/stewartdavidp-ship-it","followers_url":"https://api
+
+================================================================================
+4. node -e "fetch('https://api.github.com/repos/stewartdavidp-ship-it/quotle-info').then(r=>console.log('DIRECT status',r.status,'ratelimit',r.headers.get('x-ratelimit-limit')))"   [NO PROXY - contrast]
+--------------------------------------------------------------------------------
+DIRECT status 403 ratelimit 60
+
+================================================================================
+5. command -v gh && gh --version || echo 'gh NOT installed'
+--------------------------------------------------------------------------------
+gh NOT installed
+
+================================================================================
+6. echo "GITHUB_TOKEN=[${GITHUB_TOKEN}] GH_TOKEN=[${GH_TOKEN}]"
+--------------------------------------------------------------------------------
+GITHUB_TOKEN=[proxy-injected] GH_TOKEN=[proxy-injected]
+
+================================================================================
+7. git config --get-all credential.helper; echo '---'; git remote -v
+--------------------------------------------------------------------------------
+---
+origin	http://local_proxy@127.0.0.1:41729/git/stewartdavidp-ship-it/quotle-info (fetch)
+origin	http://local_proxy@127.0.0.1:41729/git/stewartdavidp-ship-it/quotle-info (push)
+
+(no credential.helper configured; the '---' line is the echo separator, so the
+ `git config --get-all credential.helper` command produced NO output at all)
+
+================================================================================
+PUSH RESULT
+--------------------------------------------------------------------------------
+See PUSH-RESULT section appended below.
