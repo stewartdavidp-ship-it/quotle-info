@@ -604,6 +604,17 @@ how songs got in unchecked.
 - **`git add -A` after any `harvest.js sync`** — sync regenerates author pages, `/flagged`, `/under-review`.
 - **Stamp dates per wave** (generate object-form args) so pages don't all claim one stale "last verified".
 - **Track A → `--credited`; Track B → omit it** and theme-tag the new records.
+- **New records emit `schema.isPartOf`; ~1,192 old ones still carry `isBasedOn`. Both render — the
+  backfill is still pending.** `isPartOf` is the work a sentence is CONTAINED IN; `isBasedOn` is the
+  specific translation the English wording came from. `tools/template.js:278-279` has documented that
+  distinction all along, but `DOSSIER_SCHEMA` only ever offered `isBasedOn*`, so every wave filed
+  containment under derivation and no agent could do otherwise — which is also why the Schema.org
+  RULE (isPartOf required) was unmeetable by construction. Renamed 2026-07-30 in `generate.js` AND
+  its `prep-wave.js` twin. **Do not "fix" a new record back to `isBasedOn` because the neighbours use
+  it.** The outstanding work is a one-time backfill of the ~1,029 records that hold a containing work
+  with no translation signal; the 16 genuinely-translated ones keep `isBasedOn`. #281 had to land
+  first, because the `isPartOf` branch could not carry `citation`/`pagination` and the rename would
+  have silently stripped them from the 28 best-sourced records.
 - **`--credited`'s guard mis-fires on name-form expansions, so do not lean on it.** `prep-wave.js`
   only stamps when `leadName(record author) !== leadName(batch author)` — comparing LAST WORDS. r27
   produced two records that trip that on the same person: `"Confucius (Kong Qiu)"` (lead `Qiu)`) and

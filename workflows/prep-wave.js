@@ -91,7 +91,9 @@ function toRecord(d, item) {
     if (sc.alternateName) out.alternateName = sc.alternateName;
     if (sc.creatorName) { out.creator = { name: sc.creatorName }; if (sc.creatorBirthDate) out.creator.birthDate = sc.creatorBirthDate; if (sc.creatorJobTitle) out.creator.jobTitle = sc.creatorJobTitle; if (sc.creatorSameAs) out.creator.sameAs = sc.creatorSameAs; }
     if (sc.dateCreated) out.dateCreated = sc.dateCreated;
-    if (sc.isBasedOnName) { out.isBasedOn = { type: 'CreativeWork', name: sc.isBasedOnName }; if (sc.isBasedOnDatePublished) out.isBasedOn.datePublished = sc.isBasedOnDatePublished; if (sc.isBasedOnSameAs) out.isBasedOn.sameAs = sc.isBasedOnSameAs; }
+    // isPartOf = the work the sentence is CONTAINED IN. Renamed from isBasedOn* 2026-07-30 — see the
+    // long note at the same spot in workflows/generate.js. KEEP THESE TWO IN SYNC.
+    if (sc.isPartOfName) { out.isPartOf = { type: 'CreativeWork', name: sc.isPartOfName }; if (sc.isPartOfDatePublished) out.isPartOf.datePublished = sc.isPartOfDatePublished; if (sc.isPartOfSameAs) out.isPartOf.sameAs = sc.isPartOfSameAs; }
     out.webPageName = d.meta.ogTitle; out.dateModified = DATE_MODIFIED;
     // The line in circulation differs from the documented sentence: carry BOTH, so Quotation.text can
     // hold what the source actually says while the ClaimReview rates the paraphrase people repeat.

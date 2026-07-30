@@ -136,10 +136,21 @@ function toRecord(d, item) {
       if (sc.creatorSameAs) out.creator.sameAs = sc.creatorSameAs;
     }
     if (sc.dateCreated) out.dateCreated = sc.dateCreated;
-    if (sc.isBasedOnName) {
-      out.isBasedOn = { type: 'CreativeWork', name: sc.isBasedOnName };
-      if (sc.isBasedOnDatePublished) out.isBasedOn.datePublished = sc.isBasedOnDatePublished;
-      if (sc.isBasedOnSameAs) out.isBasedOn.sameAs = sc.isBasedOnSameAs;
+    // isPartOf = the work this sentence is CONTAINED IN. tools/template.js:278-279 has documented the
+    // distinction from isBasedOn (the specific TRANSLATION the English wording came from) all along,
+    // but the schema only ever offered isBasedOn* — so every wave filed containment under derivation
+    // and no agent could do otherwise. Measured 2026-07-30: 1,192 of 1,254 records carry no isPartOf
+    // at all, and 1,029 of those hold the containing work under isBasedOn with no translation signal.
+    // That is also why the standing Schema.org RULE (isPartOf required) was unmeetable by construction.
+    //
+    // Renaming rather than adding, because containment is the COMMON case and translation the rare one
+    // (16 records) — the schema was offering the exception and agents correctly filled it with the
+    // rule. It also costs NEGATIVE bytes: DOSSIER_SCHEMA sits at exactly SCHEMA_BUDGET (4,072) with
+    // zero headroom, and isPartOf* is one character shorter per property, landing at 4,069.
+    if (sc.isPartOfName) {
+      out.isPartOf = { type: 'CreativeWork', name: sc.isPartOfName };
+      if (sc.isPartOfDatePublished) out.isPartOf.datePublished = sc.isPartOfDatePublished;
+      if (sc.isPartOfSameAs) out.isPartOf.sameAs = sc.isPartOfSameAs;
     }
     out.webPageName = d.meta.ogTitle;
     out.dateModified = DATE_MODIFIED;
@@ -238,7 +249,7 @@ const DOSSIER_SCHEMA = {
     },
     schema: {
       type: 'object', additionalProperties: false,
-      properties: { quotationText: { type: 'string' }, alternateName: { type: 'string' }, creatorName: { type: 'string' }, creatorBirthDate: { type: 'string' }, creatorJobTitle: { type: 'string' }, creatorSameAs: { type: 'string' }, dateCreated: { type: 'string' }, isBasedOnName: { type: 'string' }, isBasedOnDatePublished: { type: 'string' }, isBasedOnSameAs: { type: 'string' } },
+      properties: { quotationText: { type: 'string' }, alternateName: { type: 'string' }, creatorName: { type: 'string' }, creatorBirthDate: { type: 'string' }, creatorJobTitle: { type: 'string' }, creatorSameAs: { type: 'string' }, dateCreated: { type: 'string' }, isPartOfName: { type: 'string' }, isPartOfDatePublished: { type: 'string' }, isPartOfSameAs: { type: 'string' } },
     },
     sourcesVerified: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['claim', 'url', 'containsClaim'], properties: { claim: { type: 'string' }, url: { type: 'string' }, containsClaim: { type: 'boolean' } } } },
   },
@@ -342,7 +353,7 @@ cite.sourceCitation (Chicago for the primary source + translation, or best-avail
 
 meta.title = Who really said "${dq.replace(/"/g,'')}"? | Quotle.info  · meta.ogTitle = Who really said '${dq.replace(/"/g,'')}'?  · description/ogDescription ≤ 160 chars, specific and honest.
 
-schema (optional): quotationText (full form), creatorName + creatorBirthDate + creatorJobTitle + creatorSameAs (Wikipedia URL), dateCreated, isBasedOnName/isBasedOnDatePublished/isBasedOnSameAs.
+schema (optional): quotationText (full form), creatorName + creatorBirthDate + creatorJobTitle + creatorSameAs (Wikipedia URL), dateCreated, isPartOfName/isPartOfDatePublished/isPartOfSameAs — isPartOf is the work the sentence APPEARS IN (the book, essay, speech or article), not a translation it was derived from.
 
 CITATION DISCIPLINE (a page fails audit on any of these):
  • Do NOT add specificity beyond what your linked source literally states — no translator/edition/date, Wikiquote section label ("Misattributed" vs "Disputed"), volume/page, or exact variant-swap UNLESS the source you attach contains that exact detail. Verify translation names/dates by reading the actual edition or a catalog record.
