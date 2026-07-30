@@ -16,6 +16,33 @@ steps, for a human doing it manually or debugging a run.
 > If one runs long its PR simply gets `WAIT` and merges on the next pass — the gap reduces how often
 > that happens, it is not what makes it safe.
 
+### Cron here is UTC. Cron on the Mac is ET. Same string, different moment.
+
+This is the one scheduling fact you cannot read off any single trigger, which is why it is written
+down when the timetable is not:
+
+| scheduler | cron is interpreted as | shifts with DST? |
+|---|---|---|
+| **GitHub Actions** (`merge.yml`) | **UTC** — always; there is no timezone setting | no |
+| **Cloud routine triggers** | **UTC** | no |
+| **Local scheduled tasks on the Mac** | **local, i.e. ET** | yes |
+
+So `0 12 * * *` means 12:00 UTC in a cloud trigger and 12:00 ET in a Mac task — a five-hour
+difference from an identical string. Several trigger *descriptions* compound this by quoting the ET
+time next to a UTC cron ("cloud audit, 04:00" on a trigger reading `0 8 * * *`). Both numbers are
+correct; they are in different units.
+
+**What DST does, and why it is not a problem.** When EDT→EST the UTC-scheduled jobs all slide an hour
+earlier in ET together — this pass goes 07:00 ET → 06:00 ET, the wave 03:00 → 02:00. The design
+depends on the *ordering* (this pass runs after the routines have opened their PRs), and ordering is
+preserved exactly because everything upstream is on the same clock. The local 12:00 ET pass does not
+shift, and sits 5–6 hours downstream either way. Nothing collides in either half of the year.
+
+*Illustrative only, correct on 2026-07-30 — **the triggers are authoritative**, and this table is
+here for the units, not the values:* wave `0 7 * * *` UTC → 03:00 ET · reports-audit `0 8 * * *` →
+04:00 ET · review `0 9 * * *` → 05:00 ET · **this pass `0 11 * * *` → 07:00 ET** · daily-report
+`0 12 * * *` → 08:00 ET · reports-close (Mac) `0 12 * * *` → 12:00 ET.
+
 **Why it is a workflow and not an unattended session.** Every decision here is already in
 `tools/merge-gate.js`, which has fixtures and a self-test; the agent that used to wrap it contributed
 no judgement and three failure modes — it could not run where it was scheduled (cloud has no `gh`,
