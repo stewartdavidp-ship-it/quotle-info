@@ -80,6 +80,61 @@ function gate() {
 // which IS a stop for that PR but not for the pass.
 const RETRYABLE = new Set([409]);
 
+const git = (...args) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' }).trim();
+const gitTry = (...args) => { try { return { ok: true, out: git(...args) }; } catch (e) { return { ok: false, out: `${e.stdout || ''}${e.stderr || ''}`.trim() }; } };
+
+// WHICH CONFLICTS A REBUILD CAN HONESTLY RESOLVE.
+// Generated output is a pure function of the source records, so a conflict in it carries no
+// information — both sides are stale the moment build.js runs. Taking either side and rebuilding is
+// not "resolving a conflict", it is discarding two derived artefacts and recomputing the right one.
+// A conflict in SOURCE is the opposite: it is two humans' (or two agents') intent disagreeing, and
+// nothing here is entitled to pick. So the rule is a whitelist of source paths, and anything that
+// touches one is handed back untouched.
+//
+// This is the mechanised form of DAILY-MERGE.md's "do NOT hand-resolve built output — take the
+// source records and rebuild". The blanket version of that (`git checkout origin/main -- .`) is
+// explicitly wrong and was tried: on a PR whose only change is a log line it discards the entire PR
+// and leaves it empty. Hence per-path, and only for paths that are genuinely derived.
+const SOURCE = /^(data\/quotes\/|data\/songs\/|data\/harvest-queue\.json|data\/report-queue\.json|data\/routine-log\/|tools\/|workflows\/|\.github\/|worker\/|CLAUDE\.md)/;
+const sourceConflicts = (paths) => paths.filter((p) => SOURCE.test(p));
+
+// Bring ONE branch current with main and rebuild it. Never merges it — the doc's rule, and a real
+// constraint: the required `verify` check has to run against the new head before anything may merge,
+// so this pushes and stops. The PR merges on the next pass.
+//
+// MERGE, never rebase: force-pushes are denied by branch protection (allow_force_pushes:false), so a
+// rebase would produce a branch that cannot be pushed at all.
+function rebuild(pr) {
+  const branch = pr.branch;
+  git('fetch', 'origin', 'main', branch);
+  const co = gitTry('checkout', '-B', branch, `origin/${branch}`);
+  if (!co.ok) return `#${pr.number} rebuild: cannot check out ${branch} — ${co.out.slice(0, 160)}`;
+
+  const m = gitTry('merge', '--no-edit', 'origin/main');
+  if (!m.ok) {
+    const conflicted = gitTry('diff', '--name-only', '--diff-filter=U').out.split('\n').filter(Boolean);
+    const blocking = sourceConflicts(conflicted);
+    if (blocking.length) {
+      gitTry('merge', '--abort');
+      return `#${pr.number} rebuild ABANDONED — conflict in SOURCE (${blocking.slice(0, 3).join(', ')}). A person decides this, not a rebuild.`;
+    }
+    // Generated-only: take either side, then recompute. build.js overwrites all of it anyway.
+    for (const p of conflicted) { gitTry('checkout', '--theirs', '--', p); gitTry('add', '--', p); }
+    const cont = gitTry('commit', '--no-edit');
+    if (!cont.ok) return `#${pr.number} rebuild: could not conclude the merge — ${cont.out.slice(0, 160)}`;
+  }
+
+  execFileSync('node', [path.join(ROOT, 'tools', 'build.js')], { cwd: ROOT, stdio: 'ignore' });
+  execFileSync('node', [path.join(ROOT, 'tools', 'scan.js')], { cwd: ROOT, stdio: 'ignore' });
+  gitTry('add', '-A');
+  const staged = gitTry('diff', '--cached', '--name-only').out;
+  if (staged) git('commit', '-m', 'Bring branch current with main and rebuild');
+
+  const push = gitTry('push', 'origin', `HEAD:${branch}`);
+  if (!push.ok) return `#${pr.number} rebuild built but PUSH FAILED — ${push.out.slice(0, 200)}`;
+  return `#${pr.number} rebuilt and pushed — merges next pass, once verify is green on the new head`;
+}
+
 async function main() {
   const merged = [];
   const notes = [];
@@ -90,9 +145,21 @@ async function main() {
     const next = decisions.find((d) => d.verdict === 'MERGE');
     if (!next) {
       const waiting = decisions.filter((d) => d.verdict === 'WAIT').map((d) => `#${d.number}`);
-      const rebuild = decisions.filter((d) => d.verdict === 'REBUILD').map((d) => `#${d.number}`);
+      const stale = decisions.filter((d) => d.verdict === 'REBUILD');
       if (waiting.length) notes.push(`WAIT: ${waiting.join(' ')} — CI still running, they merge next pass`);
-      if (rebuild.length) notes.push(`REBUILD: ${rebuild.join(' ')} — behind main, need rebuild+green before they can merge`);
+      if (stale.length && !EXECUTE) {
+        notes.push(`REBUILD: ${stale.map((d) => `#${d.number}`).join(' ')} — behind main (dry run, not rebuilt)`);
+      } else if (stale.length) {
+        // A rebuild rewrites the working tree, so it must own the checkout. Refusing on a dirty tree
+        // is the same rule preflight applies — "something else is using this checkout".
+        if (gitTry('status', '--porcelain').out) {
+          notes.push(`REBUILD: ${stale.length} branch(es) behind main, SKIPPED — working tree is dirty`);
+        } else {
+          const back = gitTry('rev-parse', '--abbrev-ref', 'HEAD').out;
+          for (const d of stale) { try { notes.push(rebuild(d)); } catch (e) { notes.push(`#${d.number} rebuild threw: ${(e && e.message) || e}`); } }
+          gitTry('checkout', back || 'main');
+        }
+      }
       break;
     }
     if (!EXECUTE) { merged.push(`${next.number} (dry-run)`); break; }
@@ -120,8 +187,22 @@ if (process.argv.includes('--self-test')) {
     if (n !== want) { console.error(`  ✗ ${name}: expected ${want}, got ${n}`); bad++; }
   }
   if (writeToken() === 'proxy-injected') { console.error('  ✗ placeholder token not filtered'); bad++; }
+  // The conflict classifier decides whether a rebuild may proceed without a human. Getting it wrong
+  // in the permissive direction means silently discarding somebody's record edit, so it is fixtured.
+  const conflictCases = [
+    ['generated output is rebuildable', ['who-said/x/index.html', 'search.json', 'sitemap.xml'], 0],
+    ['a quote record is NOT', ['who-said/x/index.html', 'data/quotes/x.json'], 1],
+    ['tools/ is NOT', ['tools/template.js'], 1],
+    ['a routine-log shard is NOT', ['data/routine-log/2026-07-30-wave.jsonl'], 1],
+    ['workflows/ is NOT', ['workflows/DAILY-MERGE.md'], 1],
+    ['derived data under data/ is rebuildable', ['data/manifest.json', 'data/corpus-state.json'], 0],
+  ];
+  for (const [name, paths, want] of conflictCases) {
+    const got = sourceConflicts(paths).length;
+    if ((got > 0) !== (want > 0)) { console.error(`  ✗ ${name}: expected ${want ? 'blocked' : 'rebuildable'}, got ${got} source conflict(s)`); bad++; }
+  }
   if (bad) { console.error(`\n  ${bad} merge-run case(s) failed.\n`); process.exit(1); }
-  console.log(`  ✓ merge-run planner (${cases.length} cases: pick-first-MERGE, clean stop, HUMAN never picked)`);
+  console.log(`  ✓ merge-run planner (${cases.length + conflictCases.length} cases: pick-first-MERGE, clean stop, HUMAN never picked, source-vs-generated conflicts)`);
   process.exit(0);
 }
 
