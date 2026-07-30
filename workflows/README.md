@@ -5,11 +5,12 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1249** quotes + **95** songs. **Target: 2000** quotes.
+- **Corpus: 1254** quotes + **95** songs. **Target: 2000** quotes.
 - **Next wave number: r29.** (Waves r6–r28 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
-- Harvest backlog: `data/harvest-queue.json` (committed) — 414 queued. **Track A is nearly exhausted: only
-  5 `misattributed` remain** (r28 drew 40 of 45). The rest is 299 `genuine-famous` + 96 `disputed`, so the
-  next Track A wave needs a `harvest-candidates.js` run first, or should draw from `disputed`.
+- Harvest backlog: `data/harvest-queue.json` (committed) — 516 queued. **Track A was refilled 2026-07-30**
+  (harvest-only run, no ingest): 8 fresh magnet authors + 4 film titles, +107 candidates, taking
+  `misattributed` from 5 → **54** and `disputed` 96 → **120**. The rest is 328 `genuine-famous`,
+  7 `film-misquote`, 7 `scripture-misquote`. A Track A wave can draw ~40 without harvesting first.
 - **Who-wrote axis (`/who-wrote/`, added 2026-07-23):** the second music axis — "who WROTE this song?". Harvest is deterministic (`node workflows/harvest-who-wrote.js` scans the recording corpus → `data/who-wrote-queue.json`). ~14 records shipped (single-axis + dual-axis enrichment); ~78 dual-axis candidates queued. Recipe: the "Songs — the `/who-wrote/` axis" section below.
 - **Songs: next wave number s4 — but the backlog is EMPTY.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **0 queued**, 89 ingested, 1 dropped. **A new wave needs a `harvest-songs.js` run first** (step 0 of the song recipe). Digest: `data/song-queue.md`.
 
@@ -32,7 +33,8 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
 > below.** The gap they exposed is real though: see `tools/validate-records.js`, added during them,
 > which gates record SOURCE conventions before build (complements `prep-wave.js`, which gates
 > generator OUTPUT after it).
-- Four tracks (see below). Track A ≈ 70 magnet authors harvested; Track B covered 24 themes;
+- Four tracks (see below). Track A ≈ 123 magnet authors harvested (count it, don't guess: distinct
+  `magnetAuthor` on queue entries whose category is `misattributed` or `disputed`); Track B covered 24 themes;
   Track C (film) seeded; Track D (Quotle game) has **161 queued — ~4 waves**, and every one of them
   is a puzzle the game currently refuses to show.
 
@@ -83,6 +85,24 @@ the rule's stated reason; it tells you which kind you are holding.
   attributed, PD-preferred lines). Records come out mostly `verified` + public-domain. **Do NOT stamp
   creditedTo** (omit `--credited`). Also **theme-tag** the new records after ingest.
 - For 2000, run mostly Track A with periodic Track B top-ups. QI is the anchor/target — work their catalog.
+
+### Track C (film) yields ~4-5 per title, not a full cap — budget it differently
+Do not size a film sweep like an author sweep. On 2026-07-30 four titles at `perTitle:8` returned
+**18, not 32**, and three of the four agents independently reported the same cause: **a film's own
+Wikiquote page usually has no "Misattributed"/"Disputed" section at all.** The misattribution material
+for a screen line is indexed under *the person it is wrongly credited to*, not under the film — The
+Godfather's best items live on the **Sun Tzu** page and under QI's **Mario Puzo** tag; Cool Hand Luke
+and A Few Good Men have no QI coverage whatsoever, so Wikiquote's transcription is the only authority
+and it establishes wording only.
+
+Consequences worth knowing before you spend agents here:
+- **Expect ~4-5 candidates per title**, roughly half of them `genuine-famous` anchors rather than misquotes.
+- **Shape (B) — a screen line pinned on a real historical figure — is rare.** Three of the four titles
+  returned zero, and the agents said so explicitly rather than manufacturing one. That is the correct
+  behaviour; a thin honest harvest beats a padded one.
+- **The richest film seam is reachable from Track A instead.** Sweeping the *misattributed-to* person
+  (Sun Tzu, Balzac, Machiavelli) picks up the screen lines pinned on them, with the provenance already
+  documented. Prefer that over adding titles when you want volume.
 
 ## Scripts (all committed)
 | File | Kind | Purpose |
