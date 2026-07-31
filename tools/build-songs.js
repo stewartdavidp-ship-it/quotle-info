@@ -21,7 +21,7 @@ const fs = require('fs');
 const path = require('path');
 const { esc, escEm } = require('./esc');
 const { ROOT_CSS } = require('./tokens');
-const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
+const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT, PREF_SYNC } = require('./a11y-widget');
 const { NAV, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const { plain } = require('./template');
 const { OG_IMAGE_TAGS } = require('./og');
@@ -417,7 +417,7 @@ ${renderAuthors(s)}
     </main>
 ${FOOTER}
 ${SEARCH_JS}
-${SCRIPT}${submitJs}
+${SCRIPT}${PREF_SYNC}${submitJs}
 </body>
 </html>`;
 }
@@ -619,7 +619,7 @@ ${cards}
     </main>
 ${FOOTER}
 ${SEARCH_JS}
-${SCRIPT}
+${SCRIPT}${PREF_SYNC}
 ${FILTER_JS}
 </body>
 </html>`;
@@ -815,7 +815,7 @@ ${renderAuthors(s)}
     </main>
 ${FOOTER}
 ${SEARCH_JS}
-${SCRIPT}
+${SCRIPT}${PREF_SYNC}
 </body>
 </html>`;
 }

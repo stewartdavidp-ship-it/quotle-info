@@ -61,3 +61,38 @@ test('a rewrite that no longer matches throws instead of silently skipping', () 
   if (typeof mustReplace !== 'function') return; // not exported; covered by build()
   assert.throws(() => mustReplace('nothing here', 'MISSING', 'x', 'a thing'), /could not find a thing/);
 });
+
+// ── Cross-origin preference handoff (v2) ───────────────────────────────────
+// quotle.info and quotle.runmast.com are separate origins (separate
+// localStorage) AND separate registrable domains (no shared cookie). The only
+// way a reader's Light/Dark and "Aa" size survive the crossing is to ride on
+// the link. Both halves must ship or the feature is silently half-built.
+const { HEAD_SCRIPT, PREF_SYNC } = require('./a11y-widget');
+
+test('the far side adopts an inbound handoff before first paint', () => {
+  // In HEAD_SCRIPT specifically — adopting after paint would flash the wrong size.
+  assert.ok(HEAD_SCRIPT.includes("q.get('qth')"), 'theme param');
+  assert.ok(HEAD_SCRIPT.includes("q.get('qts')"), 'text-size param');
+  assert.ok(HEAD_SCRIPT.includes('history.replaceState'), 'params must be stripped from the URL');
+});
+
+test('inbound values are validated, not trusted', () => {
+  // A URL param is attacker-supplied. Only the known enums may reach localStorage.
+  assert.ok(HEAD_SCRIPT.includes('THEMES[qth]'));
+  assert.ok(HEAD_SCRIPT.includes('SIZES[qts]'));
+});
+
+test('outbound links to the sibling origin are decorated', () => {
+  assert.ok(PREF_SYNC.includes('https://quotle.runmast.com'));
+  assert.ok(PREF_SYNC.includes('https://quotle.info'));
+  assert.ok(PREF_SYNC.includes("searchParams.set('qth'"));
+  assert.ok(PREF_SYNC.includes("searchParams.set('qts'"));
+});
+
+test('preferences are NOT leaked to third-party links', () => {
+  // Same-origin links need no param, and anything outside the sibling set —
+  // gameshelf.co, an outbound citation — must be left alone.
+  assert.ok(PREF_SYNC.includes('url.origin === location.origin'), 'same-origin short-circuit');
+  assert.ok(PREF_SYNC.includes('!SIBLINGS[url.origin]'), 'non-sibling short-circuit');
+  assert.ok(!PREF_SYNC.includes('gameshelf'), 'gameshelf must not be a sibling');
+});

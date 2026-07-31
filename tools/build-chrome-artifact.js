@@ -28,7 +28,7 @@ const fs = require('fs');
 const path = require('path');
 const { NAV, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const { ROOT_CSS } = require('./tokens');
-const { CONTROL, HEAD_SCRIPT, THEME_CSS, SCRIPT } = require('./a11y-widget');
+const { CONTROL, HEAD_SCRIPT, THEME_CSS, SCRIPT, PREF_SYNC } = require('./a11y-widget');
 
 const BASE = 'https://quotle.info';
 const OUT = path.join(__dirname, '..', 'chrome.json');
@@ -80,7 +80,8 @@ function build() {
 
   const artifact = {
     // Bump when the SHAPE changes so a consumer can fail fast on a stale reader.
-    version: 1,
+    // v2: added prefSyncJs, and HEAD_SCRIPT now adopts an inbound ?qth/?qts handoff.
+    version: 2,
     generatedFrom: 'quotle-info/tools/chrome.js + tokens.js + a11y-widget.js',
     base: BASE,
     navHtmlByActive,
@@ -91,6 +92,11 @@ function build() {
     a11yControlHtml: CONTROL,
     a11yHeadScript: HEAD_SCRIPT,
     a11yScript: SCRIPT,
+    // Carries theme + text size ACROSS the origin boundary. Without it, a reader
+    // who picks Light or a bigger "Aa" on either property loses it on the other:
+    // separate origins mean separate localStorage, and separate registrable
+    // domains rule out a shared cookie.
+    prefSyncJs: PREF_SYNC,
     themeCss: THEME_CSS,
     chromeCss: CHROME_CSS,
     rootCss: ROOT_CSS,
@@ -104,6 +110,10 @@ function build() {
   }
   if (/href="\/(?!\/)/.test(artifact.footerHtml)) throw new Error('chrome.json: footer still has a root-relative href');
   if (artifact.searchJs.includes("'/search.json'")) throw new Error('chrome.json: searchJs still fetches a relative index');
+  // The handoff is only meaningful if BOTH halves ship: the far side must adopt
+  // an inbound param, and this side must decorate outbound sibling links.
+  if (!artifact.a11yHeadScript.includes("q.get('qth')")) throw new Error('chrome.json: head script does not adopt a preference handoff');
+  if (!artifact.prefSyncJs.includes('quotle.runmast.com')) throw new Error('chrome.json: prefSync does not know the sibling origin');
 
   fs.writeFileSync(OUT, JSON.stringify(artifact, null, 2) + '\n');
   const kb = (fs.statSync(OUT).size / 1024).toFixed(1);
