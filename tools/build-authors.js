@@ -11,7 +11,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
+const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT, PREF_SYNC } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc');
 const { CONFIDENCE } = require('./template');
@@ -247,7 +247,7 @@ ${NAV}
 ${inner}
 ${FOOTER}
 ${SEARCH_JS}
-${SCRIPT}
+${SCRIPT}${PREF_SYNC}
 </body>
 </html>
 `;

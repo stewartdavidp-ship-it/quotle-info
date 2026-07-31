@@ -21,7 +21,7 @@
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"MusicRecording","@id":"https://quotle.info/who-recorded/dazed-and-confused/#recording","name":"Dazed and Confused","byArtist":{"@type":"MusicGroup","name":"Jake Holmes"},"sameAs":["https://musicbrainz.org/recording/6aafff6e-5701-41f8-93d5-b470c0995384"],"datePublished":"1967","recordingOf":{"@type":"MusicComposition","name":"Dazed and Confused","sameAs":["https://www.wikidata.org/wiki/Q636563"],"composer":{"@type":"Person","name":"Jake Holmes"}}},{"@type":"ClaimReview","@id":"https://quotle.info/who-recorded/dazed-and-confused/#claimreview","url":"https://quotle.info/who-recorded/dazed-and-confused/","datePublished":"2026-07-22","claimReviewed":"Led Zeppelin originally recorded \"Dazed and Confused\".","itemReviewed":{"@type":"Claim","text":"Led Zeppelin originally recorded \"Dazed and Confused\"."},"author":{"@type":"Organization","name":"Quotle.info","url":"https://quotle.info"},"reviewRating":{"@type":"Rating","ratingValue":1,"bestRating":5,"worstRating":1,"alternateName":"False — it is a cover"}},{"@type":"WebPage","@id":"https://quotle.info/who-recorded/dazed-and-confused/","url":"https://quotle.info/who-recorded/dazed-and-confused/","name":"Who originally recorded 'Dazed and Confused'?","dateModified":"2026-07-22","mainEntity":{"@id":"https://quotle.info/who-recorded/dazed-and-confused/#recording"}},{"@type":"FAQPage","@id":"https://quotle.info/who-recorded/dazed-and-confused/#faq","mainEntity":[{"@type":"Question","name":"Did Led Zeppelin originally record \"Dazed and Confused\"?","acceptedAnswer":{"@type":"Answer","text":"No. \"Dazed and Confused\" was first recorded by Jake Holmes in 1967; Led Zeppelin's version is a cover."}}]},{"@type":"BreadcrumbList","@id":"https://quotle.info/who-recorded/dazed-and-confused/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quotle.info/"},{"@type":"ListItem","position":2,"name":"Who recorded it","item":"https://quotle.info/who-recorded/"},{"@type":"ListItem","position":3,"name":"Dazed and Confused"}]}]}
     </script>
-    <script>(function(){try{var d=document.documentElement,ls=localStorage;var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
+    <script>(function(){try{var d=document.documentElement,ls=localStorage;var THEMES={light:1,dark:1,auto:1},SIZES={normal:1,large:1,xl:1,xxl:1};var u=new URL(location.href),q=u.searchParams,qth=q.get('qth'),qts=q.get('qts');if(qth||qts){if(THEMES[qth])ls.setItem('quotle-theme',qth);if(SIZES[qts])ls.setItem('quotle-text-size',qts);q.delete('qth');q.delete('qts');var qs=q.toString();history.replaceState(null,'',u.pathname+(qs?'?'+qs:'')+u.hash);}var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
     <style>
         :root {
             /* Reading-depth surfaces — quotle.info extension (the game needs only --cream) */
@@ -462,7 +462,25 @@
         })();
     </script>
     <!-- Privacy-friendly, cookieless analytics (GoatCounter) — injected site-wide via SCRIPT -->
-    <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>    <script>
+        (function(){
+            var SIBLINGS = { 'https://quotle.info': 1, 'https://quotle.runmast.com': 1 };
+            document.addEventListener('click', function(e){
+                var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+                if (!a) return;
+                var url;
+                try { url = new URL(a.href, location.href); } catch (err) { return; }
+                if (url.origin === location.origin || !SIBLINGS[url.origin]) return;
+                try {
+                    var t = localStorage.getItem('quotle-theme');
+                    var s = localStorage.getItem('quotle-text-size');
+                    if (t) url.searchParams.set('qth', t);
+                    if (s) url.searchParams.set('qts', s);
+                    a.href = url.toString();
+                } catch (err) {}
+            }, true);
+        })();
+    </script>
     <script>
         (function(){ var f=document.getElementById('srcForm'); if(!f) return;
             var API="https://quotle-community.stewartd.workers.dev", SITEKEY="0x4AAAAAADysaU1PLLBRvId3", wid=null, pending=null;

@@ -21,7 +21,7 @@
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"MusicRecording","@id":"https://quotle.info/who-recorded/try-a-little-tenderness/#recording","name":"Try a Little Tenderness","byArtist":{"@type":"MusicGroup","name":"Jack Payne and His Band"},"datePublished":"1932","recordingOf":{"@type":"MusicComposition","name":"Try a Little Tenderness","sameAs":["https://musicbrainz.org/work/8bb1de84-474b-3092-a779-5c21c77a77be","https://www.wikidata.org/wiki/Q7848433"],"composer":[{"@type":"Person","name":"Harry M. Woods"},{"@type":"Person","name":"Jimmy Campbell"},{"@type":"Person","name":"Reg Connelly"}]}},{"@type":"ClaimReview","@id":"https://quotle.info/who-recorded/try-a-little-tenderness/#claimreview","url":"https://quotle.info/who-recorded/try-a-little-tenderness/","datePublished":"2026-07-23","claimReviewed":"Otis Redding originally recorded \"Try a Little Tenderness\".","itemReviewed":{"@type":"Claim","text":"Otis Redding originally recorded \"Try a Little Tenderness\"."},"author":{"@type":"Organization","name":"Quotle.info","url":"https://quotle.info"},"reviewRating":{"@type":"Rating","ratingValue":1,"bestRating":5,"worstRating":1,"alternateName":"False — it is a cover"}},{"@type":"WebPage","@id":"https://quotle.info/who-recorded/try-a-little-tenderness/","url":"https://quotle.info/who-recorded/try-a-little-tenderness/","name":"Who originally recorded 'Try a Little Tenderness'?","dateModified":"2026-07-23","mainEntity":{"@id":"https://quotle.info/who-recorded/try-a-little-tenderness/#recording"}},{"@type":"FAQPage","@id":"https://quotle.info/who-recorded/try-a-little-tenderness/#faq","mainEntity":[{"@type":"Question","name":"Did Otis Redding originally record \"Try a Little Tenderness\"?","acceptedAnswer":{"@type":"Answer","text":"No. \"Try a Little Tenderness\" was published in London in November 1932, written by Harry M. Woods, Jimmy Campbell and Reg Connelly, and recorded by British dance bands within weeks. The earliest documented session is Jack Payne and His Band, London, November 1932, issued on Imperial 2792; Carroll Gibbons recorded it on 1 December 1932 and Ray Noble on 8 December 1932. Which was first is disputed — Wikipedia names Ray Noble, the specialist discographies name Jack Payne. Otis Redding's 1966 Stax version is a cover."}}]},{"@type":"BreadcrumbList","@id":"https://quotle.info/who-recorded/try-a-little-tenderness/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quotle.info/"},{"@type":"ListItem","position":2,"name":"Who recorded it","item":"https://quotle.info/who-recorded/"},{"@type":"ListItem","position":3,"name":"Try a Little Tenderness"}]}]}
     </script>
-    <script>(function(){try{var d=document.documentElement,ls=localStorage;var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
+    <script>(function(){try{var d=document.documentElement,ls=localStorage;var THEMES={light:1,dark:1,auto:1},SIZES={normal:1,large:1,xl:1,xxl:1};var u=new URL(location.href),q=u.searchParams,qth=q.get('qth'),qts=q.get('qts');if(qth||qts){if(THEMES[qth])ls.setItem('quotle-theme',qth);if(SIZES[qts])ls.setItem('quotle-text-size',qts);q.delete('qth');q.delete('qts');var qs=q.toString();history.replaceState(null,'',u.pathname+(qs?'?'+qs:'')+u.hash);}var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
     <style>
         :root {
             /* Reading-depth surfaces — quotle.info extension (the game needs only --cream) */
@@ -454,7 +454,25 @@
         })();
     </script>
     <!-- Privacy-friendly, cookieless analytics (GoatCounter) — injected site-wide via SCRIPT -->
-    <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>    <script>
+        (function(){
+            var SIBLINGS = { 'https://quotle.info': 1, 'https://quotle.runmast.com': 1 };
+            document.addEventListener('click', function(e){
+                var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+                if (!a) return;
+                var url;
+                try { url = new URL(a.href, location.href); } catch (err) { return; }
+                if (url.origin === location.origin || !SIBLINGS[url.origin]) return;
+                try {
+                    var t = localStorage.getItem('quotle-theme');
+                    var s = localStorage.getItem('quotle-text-size');
+                    if (t) url.searchParams.set('qth', t);
+                    if (s) url.searchParams.set('qts', s);
+                    a.href = url.toString();
+                } catch (err) {}
+            }, true);
+        })();
+    </script>
     <script>
         (function(){ var f=document.getElementById('srcForm'); if(!f) return;
             var API="https://quotle-community.stewartd.workers.dev", SITEKEY="0x4AAAAAADysaU1PLLBRvId3", wid=null, pending=null;
