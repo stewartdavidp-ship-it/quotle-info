@@ -111,9 +111,10 @@ jobs:
                  --body "Log shard(s) for the $DATE merge pass(es). Opened by merge.yml so that daily-merge is visible to the routine census — it previously wrote no shard at all and could only ever read as DID NOT RUN."
 
       # WHY MERGE_TOKEN IS NOT OPTIONAL FOR THE REBUILD HALF.
-      # main is protected with strict:true and `verify` as a REQUIRED context, so a branch that is
-      # BEHIND must be brought current, rebuilt, and pass `verify` on the NEW head before it can
-      # merge. GitHub does not run workflows for pushes made with the default GITHUB_TOKEN — so a
+      # `verify` is a REQUIRED context on main, so a branch that merge-gate rules stale must be
+      # brought current, rebuilt, and pass `verify` on the NEW head before it can merge. (Protection
+      # carried strict:true until 2026-08-03; staleness is now judged per-file by merge-gate, which
+      # is why this still matters for PRs that rebuild pages and no longer does for log-only ones.) GitHub does not run workflows for pushes made with the default GITHUB_TOKEN — so a
       # rebuild pushed with it would never get its required check, the gate would report WAIT
       # forever, and that stall would look exactly like a quiet morning. That is the failure this
       # whole file exists to remove.

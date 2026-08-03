@@ -24,8 +24,8 @@
  *
  * SEPARATION OF POWERS, deliberately kept: merge-gate.js still DECIDES and still never merges — its
  * header promises that and this file does not make it a liar. This file only carries out MERGE
- * verdicts, and it re-asks the gate between every merge because branch protection is strict:true,
- * so one merge puts every other PR BEHIND and invalidates the plan computed a moment ago.
+ * verdicts, and it re-asks the gate between every merge because one merge can invalidate the plan
+ * computed a moment ago — it moves main, which restales every PR that rebuilds derived output.
  */
 const { execFileSync } = require('child_process');
 const path = require('path');
@@ -43,16 +43,18 @@ const EXECUTE = process.argv.includes('--execute');
 // WAIT/mergeability-unknown and says "re-run in a moment"; nothing ever did.
 //
 // The cost was not subtle. This pass merges ONE PR per round and re-asks the gate between merges
-// (strict:true makes that mandatory). But merging is itself a push to main, so round N+1's read was
+// (protection carried strict:true at the time, making that mandatory). But merging is itself a push
+// to main, so round N+1's read was
 // always the poisoned first-read — every run merged exactly one PR and stopped:
 //   08-01 merged #295 then stalled · 08-02 merged #296 then stalled · 07-31 and 08-03 merged nothing.
 //
 // THIS FIX IS NECESSARY AND NOT SUFFICIENT — measured, do not let the next reader assume otherwise.
 // A dispatch on 2026-08-03T18:28Z merged #301 and stalled exactly as above. Reading every open PR
 // immediately afterwards: ONE was DIRTY and all FIFTEEN others were BEHIND — including the PR
-// carrying this very patch. main is protected with strict:true and `verify` required, so each merge
-// puts every other branch out of date, and each must then be rebuilt AND pass a fresh verify run
-// before it may merge. That is a quadratic rebuild cascade, not a re-poll problem, and it is the
+// carrying this very patch. main was then protected with strict:true, so EVERY merge put EVERY other
+// branch out of date, and each had to be rebuilt and re-verified before it could merge. That blanket
+// rule was replaced on the same day by merge-gate's per-file staleness test, so this now applies only
+// to PRs that actually rebuild derived output. That is a quadratic rebuild cascade, not a re-poll problem, and it is the
 // larger half of why a queue that gains ~4 PRs a night cannot drain. Removing the stall lets a pass
 // merge one PR and then rebuild the rest in the same run instead of stopping blind; it does not make
 // a pass drain the queue. The structural options — relaxing strict for log-only PRs, or not
@@ -104,7 +106,7 @@ function gate() {
 }
 
 // A merge that 409s is NOT a failure — it means the head moved between the gate's read and the write
-// (another merge landed, or CI pushed). That is expected under strict:true and the correct response
+// (another merge landed, or CI pushed). That is expected in a multi-merge pass, and the right response
 // is to re-ask the gate, not to stop the night. 405 means GitHub refused (not mergeable / protection),
 // which IS a stop for that PR but not for the pass.
 const RETRYABLE = new Set([409]);
