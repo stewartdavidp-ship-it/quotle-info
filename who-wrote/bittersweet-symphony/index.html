@@ -21,7 +21,7 @@
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"MusicRecording","@id":"https://quotle.info/who-wrote/bittersweet-symphony/#recording","name":"Bitter Sweet Symphony","byArtist":{"@type":"MusicGroup","name":"The Verve"},"datePublished":"1997","recordingOf":{"@type":"MusicComposition","name":"Bitter Sweet Symphony","composer":{"@type":"Person","name":"Richard Ashcroft"}}},{"@type":"WebPage","@id":"https://quotle.info/who-wrote/bittersweet-symphony/","url":"https://quotle.info/who-wrote/bittersweet-symphony/","name":"Who wrote 'Bitter Sweet Symphony'?","dateModified":"2026-07-23","mainEntity":{"@id":"https://quotle.info/who-wrote/bittersweet-symphony/#recording"}},{"@type":"FAQPage","@id":"https://quotle.info/who-wrote/bittersweet-symphony/#faq","mainEntity":[{"@type":"Question","name":"Who wrote \"Bitter Sweet Symphony\"?","acceptedAnswer":{"@type":"Answer","text":"\"Bitter Sweet Symphony\" was written by Richard Ashcroft of The Verve. Because it sampled an orchestral recording of a Rolling Stones song, a 1997 dispute credited Mick Jagger and Keith Richards as co-writers and gave them the royalties; in 2019 they returned the rights and credit to Ashcroft."}}]},{"@type":"BreadcrumbList","@id":"https://quotle.info/who-wrote/bittersweet-symphony/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quotle.info/"},{"@type":"ListItem","position":2,"name":"Who wrote it","item":"https://quotle.info/who-wrote/"},{"@type":"ListItem","position":3,"name":"Bitter Sweet Symphony"}]}]}
     </script>
-    <script>(function(){try{var d=document.documentElement,ls=localStorage;var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
+    <script>(function(){try{var d=document.documentElement,ls=localStorage;var THEMES={light:1,dark:1,auto:1},SIZES={normal:1,large:1,xl:1,xxl:1};var u=new URL(location.href),q=u.searchParams,qth=q.get('qth'),qts=q.get('qts');if(qth||qts){if(THEMES[qth])ls.setItem('quotle-theme',qth);if(SIZES[qts])ls.setItem('quotle-text-size',qts);q.delete('qth');q.delete('qts');var qs=q.toString();history.replaceState(null,'',u.pathname+(qs?'?'+qs:'')+u.hash);}var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
     <style>
         :root {
             /* Reading-depth surfaces — quotle.info extension (the game needs only --cream) */
@@ -228,6 +228,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
                 <button class="disp-btn" id="dispBtn" type="button" aria-label="Display settings: theme and text size" aria-haspopup="dialog" aria-expanded="false" aria-controls="dispPanel"><span class="a1">A</span><span class="a2">a</span></button>
@@ -429,6 +430,24 @@
         })();
     </script>
     <!-- Privacy-friendly, cookieless analytics (GoatCounter) — injected site-wide via SCRIPT -->
-    <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>    <script>
+        (function(){
+            var SIBLINGS = { 'https://quotle.info': 1, 'https://quotle.runmast.com': 1 };
+            document.addEventListener('click', function(e){
+                var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+                if (!a) return;
+                var url;
+                try { url = new URL(a.href, location.href); } catch (err) { return; }
+                if (url.origin === location.origin || !SIBLINGS[url.origin]) return;
+                try {
+                    var t = localStorage.getItem('quotle-theme');
+                    var s = localStorage.getItem('quotle-text-size');
+                    if (t) url.searchParams.set('qth', t);
+                    if (s) url.searchParams.set('qts', s);
+                    a.href = url.toString();
+                } catch (err) {}
+            }, true);
+        })();
+    </script>
 </body>
 </html>

@@ -21,7 +21,7 @@
     <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[{"@type":"MusicRecording","@id":"https://quotle.info/who-recorded/twist-and-shout/#recording","name":"Twist and Shout","byArtist":{"@type":"MusicGroup","name":"The Top Notes"},"sameAs":["https://musicbrainz.org/recording/410b74f2-f9f1-4061-b97e-1d7b1c7eb8ee"],"datePublished":"1961","recordingOf":{"@type":"MusicComposition","name":"Twist and Shout","sameAs":["https://www.wikidata.org/wiki/Q786778"],"composer":{"@type":"Person","name":"Phil Medley"}}},{"@type":"ClaimReview","@id":"https://quotle.info/who-recorded/twist-and-shout/#claimreview","url":"https://quotle.info/who-recorded/twist-and-shout/","datePublished":"2026-07-22","claimReviewed":"The Beatles originally recorded \"Twist and Shout\".","itemReviewed":{"@type":"Claim","text":"The Beatles originally recorded \"Twist and Shout\"."},"author":{"@type":"Organization","name":"Quotle.info","url":"https://quotle.info"},"reviewRating":{"@type":"Rating","ratingValue":1,"bestRating":5,"worstRating":1,"alternateName":"False — it is a cover"}},{"@type":"WebPage","@id":"https://quotle.info/who-recorded/twist-and-shout/","url":"https://quotle.info/who-recorded/twist-and-shout/","name":"Who originally recorded 'Twist and Shout'?","dateModified":"2026-07-22","mainEntity":{"@id":"https://quotle.info/who-recorded/twist-and-shout/#recording"}},{"@type":"FAQPage","@id":"https://quotle.info/who-recorded/twist-and-shout/#faq","mainEntity":[{"@type":"Question","name":"Did The Beatles originally record \"Twist and Shout\"?","acceptedAnswer":{"@type":"Answer","text":"No. \"Twist and Shout\" was first recorded by The Top Notes in 1961; The Beatles' version is a cover."}}]},{"@type":"BreadcrumbList","@id":"https://quotle.info/who-recorded/twist-and-shout/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://quotle.info/"},{"@type":"ListItem","position":2,"name":"Who recorded it","item":"https://quotle.info/who-recorded/"},{"@type":"ListItem","position":3,"name":"Twist and Shout"}]}]}
     </script>
-    <script>(function(){try{var d=document.documentElement,ls=localStorage;var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
+    <script>(function(){try{var d=document.documentElement,ls=localStorage;var THEMES={light:1,dark:1,auto:1},SIZES={normal:1,large:1,xl:1,xxl:1};var u=new URL(location.href),q=u.searchParams,qth=q.get('qth'),qts=q.get('qts');if(qth||qts){if(THEMES[qth])ls.setItem('quotle-theme',qth);if(SIZES[qts])ls.setItem('quotle-text-size',qts);q.delete('qth');q.delete('qts');var qs=q.toString();history.replaceState(null,'',u.pathname+(qs?'?'+qs:'')+u.hash);}var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
     <style>
         :root {
             /* Reading-depth surfaces — quotle.info extension (the game needs only --cream) */
@@ -229,6 +229,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
                 <button class="disp-btn" id="dispBtn" type="button" aria-label="Display settings: theme and text size" aria-haspopup="dialog" aria-expanded="false" aria-controls="dispPanel"><span class="a1">A</span><span class="a2">a</span></button>
@@ -459,7 +460,25 @@
         })();
     </script>
     <!-- Privacy-friendly, cookieless analytics (GoatCounter) — injected site-wide via SCRIPT -->
-    <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>    <script>
+        (function(){
+            var SIBLINGS = { 'https://quotle.info': 1, 'https://quotle.runmast.com': 1 };
+            document.addEventListener('click', function(e){
+                var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+                if (!a) return;
+                var url;
+                try { url = new URL(a.href, location.href); } catch (err) { return; }
+                if (url.origin === location.origin || !SIBLINGS[url.origin]) return;
+                try {
+                    var t = localStorage.getItem('quotle-theme');
+                    var s = localStorage.getItem('quotle-text-size');
+                    if (t) url.searchParams.set('qth', t);
+                    if (s) url.searchParams.set('qts', s);
+                    a.href = url.toString();
+                } catch (err) {}
+            }, true);
+        })();
+    </script>
     <script>
         (function(){ var f=document.getElementById('srcForm'); if(!f) return;
             var API="https://quotle-community.stewartd.workers.dev", SITEKEY="0x4AAAAAADysaU1PLLBRvId3", wid=null, pending=null;
