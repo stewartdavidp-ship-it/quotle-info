@@ -124,8 +124,11 @@ const gitTry = (...args) => { try { return { ok: true, out: git(...args) }; } ca
 // source records and rebuild". The blanket version of that (`git checkout origin/main -- .`) is
 // explicitly wrong and was tried: on a PR whose only change is a log line it discards the entire PR
 // and leaves it empty. Hence per-path, and only for paths that are genuinely derived.
-const SOURCE = /^(data\/quotes\/|data\/songs\/|data\/harvest-queue\.json|data\/report-queue\.json|data\/routine-log\/|tools\/|workflows\/|\.github\/|worker\/|CLAUDE\.md)/;
-const sourceConflicts = (paths) => paths.filter((p) => SOURCE.test(p));
+//
+// The classifier itself moved to tools/derived-paths.js on 2026-08-03, when merge-gate needed the
+// same question answered for staleness. It was defined here first; it is not defined here any more,
+// because two copies of one rule is the defect this repo repeats most.
+const { source: sourceConflicts } = require('./derived-paths');
 
 // Bring ONE branch current with main and rebuild it. Never merges it — the doc's rule, and a real
 // constraint: the required `verify` check has to run against the new head before anything may merge,

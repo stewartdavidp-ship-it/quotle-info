@@ -83,10 +83,19 @@ async function listOpenPRs() {
   return Promise.all(raw.map(async (p) => {
     // mergeable_state is NOT on the list endpoint and is computed lazily — a first read can be
     // `unknown`, which decide() already routes to WAIT rather than guessing.
-    const [detail, checks, files] = await Promise.all([
+    // behind_by is asked for EXPLICITLY rather than inferred from mergeable_state === 'behind',
+    // because that spelling only ever appears while branch protection has strict:true. Once
+    // staleness is judged per-file by merge-gate instead of blanket-enforced by GitHub, `behind`
+    // stops being reported at all — and a gate that reads staleness off a field the setting
+    // silently switches off is a gate that reports every stale branch as current.
+    const [detail, checks, files, cmp] = await Promise.all([
       api(`/repos/${REPO}/pulls/${p.number}`),
       api(`/repos/${REPO}/commits/${p.head.sha}/check-runs`).then((d) => d.check_runs).catch(() => []),
       apiAll(`/repos/${REPO}/pulls/${p.number}/files`),
+      // NOT caught. A swallowed compare would read as behindBy:null, which decide() treats as
+      // "GitHub already called it CLEAN" — fine while strict:true, a silent hole once it is off.
+      // The caller already exits(1) loudly on a read failure; this belongs in that same class.
+      api(`/repos/${REPO}/compare/${encodeURIComponent(p.base.ref)}...${p.head.sha}`),
     ]);
     return {
       number: p.number,
@@ -98,6 +107,8 @@ async function listOpenPRs() {
       mergeStateStatus: upperState(detail.mergeable_state),
       statusCheckRollup: normaliseChecks(checks),
       files: files.map((f) => ({ path: f.filename })),
+      // null (not 0) when the compare failed, so decide() can tell "current" from "unknown".
+      behindBy: cmp && typeof cmp.behind_by === 'number' ? cmp.behind_by : null,
     };
   }));
 }

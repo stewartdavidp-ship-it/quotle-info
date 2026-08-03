@@ -55,6 +55,9 @@ const ROUTINES = [
 // a stale or hand-edited branch could still carry it.
 const GENERATOR = /^(tools|workflows|\.github|worker)\//;
 
+// "Is this file a build product?" — shared with merge-run.js so the two cannot drift apart.
+const { derived } = require('./derived-paths');
+
 function routineFor(branch) {
   return ROUTINES.find((r) => branch.startsWith(r.prefix)) || null;
 }
@@ -100,9 +103,32 @@ function decide(pr) {
     // after main moves returns `unknown` for every open PR, and that read is itself what triggers
     // the recompute. "re-run in a moment" is not advice to a human here: merge-run.js acts on it.
     case 'UNKNOWN':  return { verdict: 'WAIT', code: 'mergeability-unknown', reason: 'mergeability not computed yet — re-run in a moment' };
+    // STALENESS, JUDGED PER FILE — the half GitHub's `strict` cannot express.
+    //
+    // `strict:true` invalidates EVERY open PR on every push to main. Measured 2026-08-03: one merge
+    // put 15 PRs BEHIND at once, and 11 of them were a single appended line under data/routine-log/.
+    // A merge applies a DIFF, so a PR can only revert what it also touches — a one-line log shard
+    // cannot clobber a page it never mentions, however old it is. The PRs that genuinely must be
+    // current are the ones that rebuild derived output, because those carry a change to all ~1,163
+    // generated files and would take the whole corpus back with them.
+    //
+    // So the rule is the PR's file footprint, not its age. This case is reached only when GitHub
+    // reports the branch mergeable, which means either strict is off, or it is on and the branch is
+    // current. It can therefore only ADD a rebuild requirement, never waive one GitHub is enforcing
+    // — the tool stays correct under both settings, and flipping strict cannot open a hole.
     case 'CLEAN':
     case 'HAS_HOOKS':
-    case 'UNSTABLE': return { verdict: 'MERGE', code: 'ready', reason: 'green, in scope, up to date', routine: routine.name };
+    case 'UNSTABLE': {
+      const atRisk = derived((pr.files || []).map((f) => f.path));
+      if (pr.behindBy > 0 && atRisk.length) {
+        return {
+          verdict: 'REBUILD',
+          code: 'behind-main-derived',
+          reason: `${pr.behindBy} commit(s) behind main and rebuilds ${atRisk.length} derived file(s) — rebase, rebuild, push, wait for green`,
+        };
+      }
+      return { verdict: 'MERGE', code: 'ready', reason: 'green, in scope, up to date', routine: routine.name };
+    }
     default:         return { verdict: 'SKIP', code: 'unrecognised-merge-state', reason: `unrecognised merge state ${pr.mergeStateStatus}` };
   }
 }
@@ -129,6 +155,25 @@ if (process.argv.includes('--self-test')) {
     ['discovery may edit detectors',   { ...base, headRefName: 'discovery/2026-08-03', files: [{ path: 'tools/detectors.js' }] }, 'MERGE', 'ready'],
     ['discovery may NOT edit template',{ ...base, headRefName: 'discovery/2026-08-03', files: [{ path: 'tools/template.js' }] }, 'SKIP', 'scope-escape'],
     ['merge pass may merge its own log PR', { ...base, headRefName: 'merge/2026-07-30', files: [{ path: 'data/routine-log/x.jsonl' }] }, 'MERGE', 'ready'],
+    // File-aware staleness. The point of the whole rule: 11 of 14 PRs on 2026-08-03 were a single
+    // appended log line, invalidated by a merge they could not possibly have conflicted with.
+    ['a stale LOG-ONLY PR still merges',
+      { ...base, behindBy: 9, files: [{ path: 'data/routine-log/x.jsonl' }] }, 'MERGE', 'ready'],
+    ['a stale PR that rebuilds pages does NOT',
+      { ...base, behindBy: 1, files: [{ path: 'data/quotes/x.json' }, { path: 'who-said/x/index.html' }] }, 'REBUILD', 'behind-main-derived'],
+    ['a CURRENT PR that rebuilds pages merges',
+      { ...base, behindBy: 0, files: [{ path: 'who-said/x/index.html' }] }, 'MERGE', 'ready'],
+    ['a stale source-only PR merges',
+      { ...base, behindBy: 4, files: [{ path: 'data/quotes/x.json' }] }, 'MERGE', 'ready'],
+    // Guard the setting-flip: GitHub only spells BEHIND while strict:true, and while it does we
+    // defer to it unconditionally. This tool must never waive what GitHub is actively enforcing.
+    ['GitHub-reported BEHIND still rebuilds, footprint irrelevant',
+      { ...base, mergeStateStatus: 'BEHIND', behindBy: 3, files: [{ path: 'data/routine-log/x.jsonl' }] }, 'REBUILD', 'behind-main'],
+    // An absent behindBy falls back to GitHub's own verdict, which is only safe because reaching
+    // this case at all means GitHub called the branch mergeable. gh-rest does not swallow a failed
+    // compare — it throws, and the caller exits loudly — so this is a defensive path, not a route.
+    ['absent behindBy defers to GitHub',
+      { ...base, behindBy: null, files: [{ path: 'who-said/x/index.html' }] }, 'MERGE', 'ready'],
   ];
   let bad = 0;
   for (const [name, pr, want, wantCode] of cases) {
