@@ -36,6 +36,26 @@ const REPO = process.env.QUOTLE_REPO || 'stewartdavidp-ship-it/quotle-info';
 const API = 'https://api.github.com';
 const EXECUTE = process.argv.includes('--execute');
 
+// THE STALL THIS EXISTS TO REMOVE (diagnosed 2026-08-03, four runs deep).
+// GitHub computes a PR's mergeable_state lazily and invalidates it for EVERY open PR on every push
+// to main. So the first read after main moves returns `unknown` across the board — and that read is
+// itself what schedules the recompute, which lands a few seconds later. merge-gate maps `unknown` to
+// WAIT/mergeability-unknown and says "re-run in a moment"; nothing ever did.
+//
+// The cost was not subtle. This pass merges ONE PR per round and re-asks the gate between merges
+// (strict:true makes that mandatory). But merging is itself a push to main, so round N+1's read was
+// always the poisoned first-read — every run merged exactly one PR and stopped:
+//   08-01 merged #295 then stalled · 08-02 merged #296 then stalled · 07-31 and 08-03 merged nothing.
+// Routines open ~4 PRs a night against a drain rate of ≤1/day, which is the whole of the backlog
+// arithmetic the daily reports have flagged since 07-31.
+//
+// Budget: a gate() call costs ~14 REST requests per open PR (detail + check-runs + paginated files),
+// so re-polling is not free. merge.yml supplies GH_TOKEN, so these run at 5000/hr rather than the
+// anonymous 60 — a bounded handful of extra reads per round is affordable there and nowhere else.
+const UNKNOWN_RETRIES = 4;
+const UNKNOWN_DELAY_MS = 6000;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 // The token must be able to WRITE. GITHUB_TOKEN reads as the literal 'proxy-injected' placeholder in
 // the cloud sandbox — sending that as a Bearer is worse than sending nothing, so it is filtered here
 // exactly as tools/gh-rest.js filters it for reads.
@@ -135,18 +155,50 @@ function rebuild(pr) {
   return `#${pr.number} rebuilt and pushed — merges next pass, once verify is green on the new head`;
 }
 
+// PURE, so --self-test can drive it without a network: should this round wait and re-ask rather than
+// conclude? Only when there is nothing to merge AND at least one PR is stuck behind a computation
+// GitHub has not finished. Note what is NOT here: `ci-running` never re-polls, so a genuinely quiet
+// queue still stops immediately and a red morning is never mistaken for a slow one.
+const shouldRepoll = (decisions) =>
+  !decisions.some((d) => d.verdict === 'MERGE') &&
+  decisions.some((d) => d.code === 'mergeability-unknown');
+
 async function main() {
   const merged = [];
   const notes = [];
   // Bounded: each iteration must merge exactly one PR or stop. The cap is a runaway guard, not a
   // policy — a night with more than this many routine PRs is itself worth a human look.
   for (let round = 0; round < 12; round++) {
-    const decisions = gate();
-    const next = decisions.find((d) => d.verdict === 'MERGE');
+    let decisions = gate();
+    let next = decisions.find((d) => d.verdict === 'MERGE');
+
+    // Settle the transient before concluding anything. Only `mergeability-unknown` is worth waiting
+    // out: it resolves with no new CI and no push, purely because GitHub finished a computation our
+    // last read triggered. A `ci-running` WAIT is a real wait and is NOT retried here — CI takes
+    // minutes, this pass is not a place to burn them.
+    for (let retry = 0; retry < UNKNOWN_RETRIES && shouldRepoll(decisions); retry++) {
+      const pending = decisions.filter((d) => d.code === 'mergeability-unknown').length;
+      notes.push(`re-poll ${retry + 1}/${UNKNOWN_RETRIES}: ${pending} PR(s) with mergeability not yet computed — waiting ${UNKNOWN_DELAY_MS / 1000}s`);
+      await sleep(UNKNOWN_DELAY_MS);
+      decisions = gate();
+      next = decisions.find((d) => d.verdict === 'MERGE');
+    }
+
     if (!next) {
-      const waiting = decisions.filter((d) => d.verdict === 'WAIT').map((d) => `#${d.number}`);
       const stale = decisions.filter((d) => d.verdict === 'REBUILD');
-      if (waiting.length) notes.push(`WAIT: ${waiting.join(' ')} — CI still running, they merge next pass`);
+      // Report each WAIT under the gate's OWN reason. This line used to hardcode "CI still running"
+      // over every WAIT, which put #287 — a permanent merge conflict with no CI activity for days —
+      // in a CI-blamed list in four consecutive runs, and sent every reader looking at the wrong
+      // subsystem. The gate knows why it is waiting; say what it said.
+      const byReason = new Map();
+      for (const d of decisions.filter((x) => x.verdict === 'WAIT')) {
+        if (!byReason.has(d.reason)) byReason.set(d.reason, []);
+        byReason.get(d.reason).push(`#${d.number}`);
+      }
+      for (const [reason, prs] of byReason) {
+        const stillUnknown = reason.startsWith('mergeability not computed');
+        notes.push(`WAIT: ${prs.join(' ')} — ${reason}${stillUnknown ? ` (unresolved after ${UNKNOWN_RETRIES} re-polls — that is a real GitHub stall, not a quiet queue)` : ', they merge next pass'}`);
+      }
       if (stale.length && !EXECUTE) {
         notes.push(`REBUILD: ${stale.map((d) => `#${d.number}`).join(' ')} — behind main (dry run, not rebuilt)`);
       } else if (stale.length) {
@@ -186,6 +238,20 @@ if (process.argv.includes('--self-test')) {
     const got = pick(ds); const n = got ? got.number : null;
     if (n !== want) { console.error(`  ✗ ${name}: expected ${want}, got ${n}`); bad++; }
   }
+  // The re-poll predicate. Its permissive failure wastes a few seconds; its restrictive failure is
+  // the 2026-08-03 stall — one PR merged per run while the queue grew four a night — so it is
+  // fixtured in both directions.
+  const repollCases = [
+    ['uncomputed mergeability re-polls',    [{ verdict: 'WAIT', code: 'mergeability-unknown' }], true],
+    ['a CI wait does NOT re-poll',          [{ verdict: 'WAIT', code: 'ci-running' }], false],
+    ['a MERGE outranks any transient',      [{ verdict: 'MERGE', code: 'ready' }, { verdict: 'WAIT', code: 'mergeability-unknown' }], false],
+    ['a genuinely quiet queue stops',       [{ verdict: 'SKIP', code: 'merge-conflict' }], false],
+    ['mixed waits still re-poll',           [{ verdict: 'WAIT', code: 'ci-running' }, { verdict: 'WAIT', code: 'mergeability-unknown' }], true],
+  ];
+  for (const [name, ds, want] of repollCases) {
+    const got = shouldRepoll(ds);
+    if (got !== want) { console.error(`  ✗ ${name}: expected ${want}, got ${got}`); bad++; }
+  }
   if (writeToken() === 'proxy-injected') { console.error('  ✗ placeholder token not filtered'); bad++; }
   // The conflict classifier decides whether a rebuild may proceed without a human. Getting it wrong
   // in the permissive direction means silently discarding somebody's record edit, so it is fixtured.
@@ -202,7 +268,7 @@ if (process.argv.includes('--self-test')) {
     if ((got > 0) !== (want > 0)) { console.error(`  ✗ ${name}: expected ${want ? 'blocked' : 'rebuildable'}, got ${got} source conflict(s)`); bad++; }
   }
   if (bad) { console.error(`\n  ${bad} merge-run case(s) failed.\n`); process.exit(1); }
-  console.log(`  ✓ merge-run planner (${cases.length + conflictCases.length} cases: pick-first-MERGE, clean stop, HUMAN never picked, source-vs-generated conflicts)`);
+  console.log(`  ✓ merge-run planner (${cases.length + repollCases.length + conflictCases.length} cases: pick-first-MERGE, clean stop, HUMAN never picked, transient-vs-real WAIT, source-vs-generated conflicts)`);
   process.exit(0);
 }
 
