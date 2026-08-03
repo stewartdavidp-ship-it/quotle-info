@@ -380,22 +380,42 @@ function buildJsonLd(q, url) {
   // verified → the true author, true (5/5); attributed → plausible/unproven (3); disputed →
   // the popularly-credited (wrong) name, false (1). The Quotation.creator still names the REAL
   // author, so a machine reads both "the claim about {who} is {rating}" and "actually by {creator}".
-  const RATING = { verified: [5, 'Verified'], attributed: [3, 'Attributed'], disputed: [1, 'Disputed'] };
-  const [defaultRatingValue, defaultRatingName] = RATING[q.confidence] || RATING.verified;
-  // The confidence→value map is right for the common case, but disputed's 1/5 is machine-readable
-  // "entirely false" — correct for pure fabrications and plain misattributions, WRONG for the
-  // minority the audit flagged: hedged fact-checks (PolitiFact "Mostly False" / Snopes "Mixture")
-  // and used-but-not-coined lines (a real utterance the speaker didn't originate). Those set
-  // schema.claimRatingValue (2 or 3) so the numeric rating matches the page's verdict instead of
-  // overclaiming — the value twin of the schema.claimRatingName label override just below. Absent
-  // (or non-numeric) → the confidence default, so every unflagged page is unchanged.
+  // THE LABEL IS DERIVED FROM THE NUMBER, never stored beside it. The two used to be a pair per
+  // confidence state — disputed was `[1, 'Disputed']` — and the pair disagreed with itself: 1 is
+  // worstRating, the falsest point on the scale this node declares, while "Disputed" reads as a live
+  // argument between candidates. A machine got "entirely false" and a human got "we're not sure",
+  // off the same node. The corpus had already voted on which half was wrong: nine records
+  // hand-wrote claimRatingName "False" and left the value at its 1 default.
+  //
+  // But a flat relabel of the disputed pair would have been wrong in the other direction. Ten
+  // records carry claimRatingValue 2 with NO name override, so they were emitting 2/"Disputed";
+  // pairing the label to `confidence` would have made them 2/"False" and simply moved the
+  // contradiction. So the label follows the EFFECTIVE value — after any per-record override — and
+  // the two cannot drift apart again by construction. The scale is the fact-check convention the
+  // hedged records were already reaching for (PolitiFact/Snopes), with 3 keeping this site's own
+  // word for "credited but unpinned" because that is exactly what `attributed` means here.
+  const RATING_LABEL = { 5: 'Verified', 4: 'Mostly True', 3: 'Attributed', 2: 'Mostly False', 1: 'False' };
+  const CONFIDENCE_RATING = { verified: 5, attributed: 3, disputed: 1 };
+  // RIGHT PERSON, WRONG WORDS is the one shape inside `disputed` that 1/5 genuinely libels. The
+  // credited name IS the true author there and only the wording is at issue — Franklin really did
+  // publish it (about wine), Edison's remark is real and this sentence paraphrases it — so rating
+  // "Franklin said it" flatly false contradicts the page's own banner ("Nobody is falsely credited
+  // here"). 22 of the 24 such records were emitting 1/5; the two that weren't had been fixed by hand
+  // to exactly 2/"Mostly False", so this default reproduces the corpus's own answer rather than
+  // inventing one. Same predicate the creator guard and the presentation kit use — no new field.
+  //
+  // Everything else disputed keeps 1/"False", which is what those pages already say in prose: 665 of
+  // the 751 open with "Not {name} — ...". The label now matches both the number and the page.
+  const defaultRatingValue = (q.confidence === 'disputed' && isRightPersonWrongWords)
+    ? 2 : (CONFIDENCE_RATING[q.confidence] || CONFIDENCE_RATING.verified);
+  // A record still overrides the value when its fact-checks land between the defaults — hedged
+  // verdicts (Snopes "Mixture") and used-but-not-coined lines. Absent (or non-numeric) → the default.
   const ratingValue = (q.schema && typeof q.schema.claimRatingValue === 'number')
     ? q.schema.claimRatingValue : defaultRatingValue;
-  // `confidence` describes the quote's ORIGIN; this ClaimReview rates the narrower "{who} said it"
-  // claim, which can be flatly false even while the origin stays disputed. Records where the cited
-  // fact-checks are decisive (e.g. Monticello "Spurious" + CheckYourFact "False") can override the
-  // label via schema.claimRatingName so it matches ratingValue 1 rather than implying a live dispute.
-  const ratingName = (q.schema && q.schema.claimRatingName) || defaultRatingName;
+  // claimRatingName remains the escape hatch for a verdict no single word on the scale carries
+  // ("False as attributed", "Right author, reversed wording") — it wins over the derived label. It is
+  // no longer the way to fix a number/label mismatch, because there is no longer a mismatch to fix.
+  const ratingName = (q.schema && q.schema.claimRatingName) || RATING_LABEL[ratingValue] || 'Attributed';
   const trueAuthor = plain((q.answer && q.answer.authorName) || (s.creator && s.creator.name) || '');
   const firstMisWho = q.misattribution && q.misattribution.items && q.misattribution.items[0] && plain(q.misattribution.items[0].who);
   // The claimant is the MAGNET — the name the false claim is actually made under — which the record
@@ -500,6 +520,16 @@ function buildJsonLd(q, url) {
   let appearance;
   if (s.claimAppearanceUrl) appearance = { '@id': s.claimAppearanceUrl };
   else if (!s.suppressClaimAppearance) appearance = { '@id': `${url}#quotation` };
+  // itemReviewed carries NO author. In schema.org — and in Google's fact-check guidance —
+  // `Claim.author` is the entity that MADE the claim under review, not the person the quote is
+  // pinned on. Emitting the magnet there told answer engines that George Carlin authored the claim
+  // "George Carlin said 'Never argue with an idiot…'". He never made that claim; anonymous forwards
+  // did, and he publicly disowned material circulated under his name. Same shape as the
+  // Reader's-Digest-as-claimant bug: the prose says the right thing and the structured data says the
+  // opposite, and only the structured data is what a machine reads. The magnet is still named — in
+  // `claimReviewed`, which is where the reviewed claim belongs. If a Claim author is ever wanted it
+  // has to name the PROPAGATION VECTOR (the forward, the meme page), never the magnet, and no record
+  // field carries one today.
   const claimReview = {
     '@type': 'ClaimReview',
     '@id': `${url}#claimreview`,
@@ -509,7 +539,6 @@ function buildJsonLd(q, url) {
     claimReviewed: claimReviewedText,
     itemReviewed: {
       '@type': 'Claim',
-      author: claimant ? { '@type': 'Person', name: claimant } : undefined,
       appearance,
     },
     reviewRating: {
@@ -518,7 +547,6 @@ function buildJsonLd(q, url) {
       alternateName: ratingName,
     },
   };
-  if (!claimReview.itemReviewed.author) delete claimReview.itemReviewed.author;
   if (!claimReview.itemReviewed.appearance) delete claimReview.itemReviewed.appearance;
 
   // ADDITIONAL false credits get their OWN ClaimReview. A quote collects more than one wrong name —
@@ -544,9 +572,10 @@ function buildJsonLd(q, url) {
         author: { '@type': 'Organization', name: 'Quotle.info', url: ORIGIN },
         datePublished: s.dateModified,
         claimReviewed: `${plain(name)} ${claimVerb}: "${claimQuoteText}"`,
+        // No itemReviewed.author here either, for the same reason as the primary node above: the
+        // secondary magnets did not make the claim about themselves. `claimReviewed` names them.
         itemReviewed: {
           '@type': 'Claim',
-          author: { '@type': 'Person', name: plain(name) },
           appearance,
         },
         reviewRating: {
