@@ -18,7 +18,7 @@
  *   SCRIPT      — the <script> that wires the control; placed at end of <body>.
  */
 
-const HEAD_SCRIPT = `    <script>(function(){try{var d=document.documentElement,ls=localStorage;var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>`;
+const HEAD_SCRIPT = `    <script>(function(){try{var d=document.documentElement,ls=localStorage;var THEMES={light:1,dark:1,auto:1},SIZES={normal:1,large:1,xl:1,xxl:1};var u=new URL(location.href),q=u.searchParams,qth=q.get('qth'),qts=q.get('qts');if(qth||qts){if(THEMES[qth])ls.setItem('quotle-theme',qth);if(SIZES[qts])ls.setItem('quotle-text-size',qts);q.delete('qth');q.delete('qts');var qs=q.toString();history.replaceState(null,'',u.pathname+(qs?'?'+qs:'')+u.hash);}var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>`;
 
 // Light theme: a warm-paper editorial palette. Accent hues are darkened from the dark-theme
 // values so text/badges clear WCAG AA on the light backgrounds. Dark remains the default :root
@@ -145,4 +145,42 @@ const SCRIPT = `    <script>
     <!-- Privacy-friendly, cookieless analytics (GoatCounter) — injected site-wide via SCRIPT -->
     <script data-goatcounter="https://quotle.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>`;
 
-module.exports = { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT };
+
+// PREF_SYNC — carry the reader's theme + text size ACROSS ORIGINS.
+//
+// quotle.info and quotle.runmast.com (the blog) are separate origins, so they
+// have separate localStorage — and separate registrable domains, so a shared
+// cookie is not possible either. Without this, choosing Light or a larger "Aa"
+// on one property silently reverts to the default on the other, mid-journey.
+//
+// So the preference rides on the link: any click through to the sibling origin
+// gains ?qth=<theme>&qts=<size>, and HEAD_SCRIPT on the far side adopts it
+// before first paint, then strips the params via replaceState so they never
+// linger in the address bar or get shared/bookmarked.
+//
+// Scoped deliberately to the two known origins. Preferences are not leaked to
+// gameshelf.co or any outbound link — those are somebody else's pages.
+//
+// Capture-phase click, rewriting href just before navigation: it needs no
+// knowledge of which links exist, so it keeps working when the nav changes.
+const PREF_SYNC = `    <script>
+        (function(){
+            var SIBLINGS = { 'https://quotle.info': 1, 'https://quotle.runmast.com': 1 };
+            document.addEventListener('click', function(e){
+                var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+                if (!a) return;
+                var url;
+                try { url = new URL(a.href, location.href); } catch (err) { return; }
+                if (url.origin === location.origin || !SIBLINGS[url.origin]) return;
+                try {
+                    var t = localStorage.getItem('quotle-theme');
+                    var s = localStorage.getItem('quotle-text-size');
+                    if (t) url.searchParams.set('qth', t);
+                    if (s) url.searchParams.set('qts', s);
+                    a.href = url.toString();
+                } catch (err) {}
+            }, true);
+        })();
+    </script>`;
+
+module.exports = { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT, PREF_SYNC };

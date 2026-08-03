@@ -12,7 +12,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
+const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT, PREF_SYNC } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { NAV, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const { OG_IMAGE_TAGS } = require('./og');
@@ -117,7 +117,7 @@ ${body}
     </main>
 ${FOOTER}
 ${SEARCH_JS}
-${SCRIPT}
+${SCRIPT}${PREF_SYNC}
 </body>
 </html>
 `;
