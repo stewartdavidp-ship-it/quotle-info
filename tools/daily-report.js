@@ -46,14 +46,30 @@ const j = (s, d) => { if (s === null) return null; try { return JSON.parse(s); }
 // EVERY routine that is supposed to run, so a SILENT ABSENCE is reportable. This is the whole point:
 // a routine that never fired leaves no log line, and without an expected-set to compare against,
 // "no line" is indistinguishable from "quiet night".
+// `slotUtc` is the hour by which a run should have logged. Absence BEFORE that hour is not news;
+// reporting it as DID NOT RUN is how this tool spent six days alarming that reports-close (12:00)
+// had failed, in a report generated at 08:00. `dow` restricts a weekly routine to its own day.
 const EXPECTED = [
-  { routine: 'daily-wave', when: '03:00', daily: true },
-  { routine: 'daily-reports', when: '04:00', daily: true },
-  { routine: 'daily-review', when: '05:00', daily: true },
-  { routine: 'daily-merge', when: '07:00', daily: true },
-  { routine: 'reports-close', when: '12:00', daily: true },
-  { routine: 'weekly-discovery', when: 'Mon 02:00', daily: false },
+  { routine: 'daily-wave', when: '03:00', slotUtc: 8, daily: true },
+  { routine: 'daily-reports', when: '04:00', slotUtc: 9, daily: true },
+  { routine: 'daily-review', when: '05:00', slotUtc: 10, daily: true },
+  { routine: 'daily-merge', when: '07:00', slotUtc: 12, daily: true },
+  { routine: 'reports-close', when: '12:00', slotUtc: 17, daily: true },
+  // daily:false meant `missing` could never be true for it, so a weekly routine was never checked
+  // AT ALL — not even on its own day. It is expected on Mondays and unremarkable otherwise.
+  { routine: 'weekly-discovery', when: 'Mon 02:00', slotUtc: 7, daily: false, dow: 1 },
 ];
+
+// Is this routine's slot in the past, on the day being reported? A report for an EARLIER date is
+// always past-due; only a report about today has to respect the clock.
+const NOW = new Date();
+const IS_TODAY = SINCE === NOW.toISOString().slice(0, 10);
+const SINCE_DOW = new Date(`${SINCE}T12:00:00Z`).getUTCDay();
+function due(e) {
+  if (e.dow !== undefined && e.dow !== SINCE_DOW) return false; // not its day at all
+  if (!IS_TODAY) return true;
+  return NOW.getUTCHours() >= e.slotUtc;
+}
 
 // ---- what ran ----
 // READS BOTH LOG FORMATS. `routine-log.js` switched from one appended file to one file per run on
@@ -85,20 +101,57 @@ try {
 } catch (_) {}
 // Legacy single file: read-only, nothing appends to it, but it still carries history.
 try { ingest(fs.readFileSync(path.join(ROOT, 'data', 'routine-log.jsonl'), 'utf8'), 'routine-log.jsonl'); } catch (_) {}
-const todays = shards.filter((s) => s.date === SINCE);
+// A ROUTINE'S SHARD RIDES ON THE BRANCH THAT WROTE IT, so a routine whose PR has not merged is
+// invisible here — this tool reads the working tree, which is main. That is not a corner case: it
+// is the NORMAL state every morning, because each routine opens a PR and stops. For six consecutive
+// days this printed DID NOT RUN against four routines that had all run and were sitting in the
+// queue, and the reports had to carry a hand-written second column correcting their own tool.
+// The shard list comes free — listOpenPRs already returns each PR's files — so this costs one
+// contents read per shard, and only for shards that are actually unmerged.
+async function ingestOpenBranchShards(ghRest, REPO) {
+  let prs;
+  try { prs = await ghRest.listOpenPRs(); }
+  catch (e) { toolFailures.push(`open-branch shards: ${String((e && e.message) || e).slice(0, 90)}`); return; }
+  const wanted = [];
+  for (const pr of prs) {
+    for (const f of pr.files || []) {
+      if (/^data\/routine-log\/.+\.jsonl$/.test(f.path)) wanted.push({ pr: pr.number, ref: pr.headRefName, path: f.path });
+    }
+  }
+  for (const w of wanted) {
+    try {
+      const d = await ghRest.api(`/repos/${REPO}/contents/${w.path.split('/').map(encodeURIComponent).join('/')}?ref=${encodeURIComponent(w.ref)}`);
+      const text = Buffer.from(d.content || '', d.encoding === 'base64' ? 'base64' : 'utf8').toString('utf8');
+      ingest(text, `${w.path.split('/').pop()} (unmerged, PR #${w.pr})`);
+    } catch (e) {
+      // Named, not swallowed: a shard we could not read is a routine we cannot vouch for.
+      toolFailures.push(`shard ${w.path} on #${w.pr}: ${String((e && e.message) || e).slice(0, 70)}`);
+    }
+  }
+}
 
-const ran = EXPECTED.map((e) => {
-  const runs = todays.filter((s) => s.routine === e.routine);
-  return {
-    ...e,
-    runs: runs.length,
-    outcomes: runs.map((r) => r.outcome),
-    notes: runs.map((r) => r.note).filter(Boolean),
-    prs: runs.map((r) => r.pr).filter(Boolean),
-    work: runs.reduce((n, r) => n + (r.built || 0) + (r.processed || 0) + (r.sampled || 0), 0),
-    missing: runs.length === 0 && e.daily,
-  };
-});
+let ran = [];
+const computeRan = () => {
+  const todays = shards.filter((s) => s.date === SINCE);
+  ran = EXPECTED.map((e) => {
+    const runs = todays.filter((s) => s.routine === e.routine);
+    const isDue = due(e);
+    return {
+      ...e,
+      runs: runs.length,
+      outcomes: runs.map((r) => r.outcome),
+      notes: runs.map((r) => r.note).filter(Boolean),
+      prs: runs.map((r) => r.pr).filter(Boolean),
+      work: runs.reduce((n, r) => n + (r.built || 0) + (r.processed || 0) + (r.sampled || 0), 0),
+      // Three states, not two. Absent-and-overdue is an alarm; absent-but-not-yet-due, and
+      // not-scheduled-today, are simply not news.
+      missing: runs.length === 0 && isDue,
+      notYetDue: runs.length === 0 && !isDue && (e.dow === undefined || e.dow === SINCE_DOW),
+      offDay: e.dow !== undefined && e.dow !== SINCE_DOW,
+    };
+  });
+};
+computeRan();
 
 (async () => {
 
@@ -118,6 +171,11 @@ try {
     mergeStateStatus: p.mergeStateStatus, isDraft: p.isDraft, createdAt: p.createdAt,
   }));
 } catch (e) { toolFailures.push(`open PRs: ${(e && e.message) || e}`); }
+
+// Now that the network is available, fold in the shards still sitting on unmerged branches and
+// recompute. Until this ran, every routine that had opened a PR and stopped read as DID NOT RUN.
+await ingestOpenBranchShards(ghRest, process.env.QUOTLE_REPO || 'stewartdavidp-ship-it/quotle-info');
+computeRan();
 
 // ---- health ----
 try { ci = await ghRest.latestRun('main'); }
@@ -151,8 +209,13 @@ if (JSON_OUT) { console.log(JSON.stringify(out, null, 2)); process.exit(0); }
 console.log(`\n  quotle.info — ${SINCE}\n`);
 console.log('  ROUTINES');
 for (const r of out.ran) {
+  // '·' is reserved for "nothing to say". Only a routine that is genuinely overdue gets '✗', and
+  // a pending one says so rather than borrowing the alarm.
   const mark = r.missing ? '✗' : (r.runs ? '✓' : '·');
-  const what = r.missing ? 'DID NOT RUN' : (r.runs ? `${r.runs} run(s): ${r.outcomes.join(', ')}${r.work ? ` · ${r.work} record(s)` : ''}` : 'not scheduled today');
+  const what = r.missing ? 'DID NOT RUN'
+    : r.runs ? `${r.runs} run(s): ${r.outcomes.join(', ')}${r.work ? ` · ${r.work} record(s)` : ''}`
+    : r.offDay ? 'not scheduled today'
+    : `no run yet — due ${String(r.slotUtc).padStart(2, '0')}:00 UTC`;
   console.log(`    ${mark} ${r.when.padEnd(10)} ${r.routine.padEnd(18)} ${what}`);
 }
 console.log(`\n  MERGED (${out.merged.length})`);
