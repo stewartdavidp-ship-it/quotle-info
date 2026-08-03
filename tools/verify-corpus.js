@@ -287,6 +287,65 @@ for (const r of require('./corpus').records) {
 check('a right-person-wrong-words record names its own author as creator', 0, rpwwBugs.length,
   `the record says the credited person IS the author but its schema.creator does not say so — usually a missing answer.realAuthorName, which silently suppresses the slide-kit warning: ${rpwwBugs.slice(0, 3).join(' · ')}`);
 
+// ---- 4d-quater. no record's creditedTo names its OWN author ----
+// `creditedTo` means "falsely credited to". falseCredits() already drops a credit that IS the real
+// author — that is the Track A residue guard in credits.js — but it compares SLUGS, so a credit that
+// names the same person in a DIFFERENT NAME FORM walks straight through: "Seneca" vs
+// "Seneca the Younger", "The Buddha" vs "The Buddha (Siddhārtha Gautama)", "An unknown prisoner at
+// Mauthausen" vs the hub slug that drops its leading "An". Four records leaked that way, and because
+// build-authors.js filters to disputed, NOTHING rendered — the damage was confined to /verify, which
+// answered `misattributedTo: "Seneca"` on a VERIFIED quote whose `real` it reported as "Seneca the
+// Younger". The API contradicted itself and the page, and each record's own fact-check said so
+// ("The attribution to Seneca is sound").
+//
+// This is a CHECK and deliberately NOT a filter. Tightening falseCredits with a name-variant
+// heuristic was the obvious fix and is the wrong one: that function SILENTLY DROPS credits, so a
+// false positive deletes a genuine misattribution from /verify and from the author hubs — the site's
+// core job — and "John D. Rockefeller Jr." credited to "John D. Rockefeller" is a real corpus shape
+// where the near-identical names are two different people. A loose test is safe here and unsafe
+// there: a false positive costs one human glance, not silent data loss. So the heuristic lives where
+// being wrong is cheap.
+// Reads falseCredits(), NOT creditedTo — so the 98 records whose credit EQUALS their author by slug
+// never reach it. Those are the intentional right-person-wrong-words shape, already dropped upstream
+// and rendered as "but not in these words". This check is only interested in what LEAKS PAST that.
+const { falseCredits: fCred } = require('./credits');
+const { realAuthorName: rAuthor } = require('./template');
+const selfCredit = [];
+// EQUALITY after dropping a parenthetical gloss — not a substring run. A substring test reads
+// "Unknown — falsely credited to Marilyn Monroe" as being Marilyn Monroe and flagged 98 correct
+// records; that string is PROSE ABOUT an attribution, not a name. The leaks are all names carrying a
+// gloss ("The Buddha (Siddhārtha Gautama)") or an article the slug drops ("An unknown prisoner…").
+const nameKey = (s) => tplPlain(String(s || '')).normalize('NFD').replace(/[̀-ͯ]/g, '')
+  .replace(/\s*\([^)]*\)/g, ' ').toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+for (const r of require('./corpus').records) {
+  // NON-DISPUTED ONLY, and that is the whole scope of what this can assert. On a record the corpus
+  // does not dispute, "falsely credited to its own author" is a flat contradiction with no reading
+  // that makes it true. On a DISPUTED record it is a modelling choice: 8 records carry
+  // answer.authorName "Lao Tzu (misattributed)" / "A. A. Milne (falsely credited)" against a credit
+  // naming that same person — the field holding a hedge instead of a name. /verify does answer
+  // `real: "Lao Tzu (misattributed)", misattributedTo: "Lao Tzu"` on those, which is the same
+  // self-contradiction; but they are also genuinely the lines people pin on Lao Tzu, so they belong
+  // on that hub, and dropping the credit to satisfy an invariant would delete a true fact from the
+  // site. Left as content debt, deliberately, rather than laundered by a rule.
+  if (r.confidence === 'disputed') continue;
+  // r.author is safe to consult HERE for the same reason. On a misattribution record it is the hub
+  // of the FALSELY credited person — that is the whole point of the hub — and including it
+  // unconditionally matched 365 records on the first run, every one a correctly-flagged fake. Same
+  // trap credits.js documents against falseCredits(); it catches a reader one layer up just as easily.
+  const mine = [nameKey(rAuthor(r)), nameKey(r.author && r.author.name)];
+  for (const c of fCred(r)) {
+    const cn = nameKey(c);
+    if (cn && mine.some((m) => m && m === cn)) selfCredit.push(`${r.quoteSlug} (${c})`);
+  }
+}
+// KNOWN BLIND SPOT, on purpose: this does not catch a bare-name variant like real "Seneca the
+// Younger" credited to "Seneca" — because that is string-identical to "John D. Rockefeller Jr."
+// credited to "John D. Rockefeller", where the two ARE different people and the credit is true.
+// Telling those apart needs world knowledge, not a rule, so the check declines rather than flagging
+// every legitimate Jr./Sr. and Elder/Younger pair in the corpus.
+check('no record is "falsely credited" to its own author', 0, selfCredit.length,
+  `creditedTo names the record's own author under a different name form — /verify will answer misattributedTo with the true author, contradicting the page: ${selfCredit.slice(0, 3).join(' · ')}`);
+
 // ---- 4e. every inline <script> actually PARSES ----
 // Generators emit JS from inside JS template literals, so a backslash in the emitted code is eaten
 // as an escape at build time. `/\/who-said\/([a-z0-9-]+)\//` shipped as `//who-said/([a-z0-9-]+)//`
@@ -606,7 +665,7 @@ check('no record says works after the old PD cutoff are still in copyright', 0, 
 // checks.length here is the count BEFORE this one is added — hence the +1. Written this way round
 // because the number you compare against should be the number the build prints, not that number
 // minus one; the off-by-one version failed on its first run and cost ten minutes.
-const EXPECTED_CHECKS = 50; // 45 → 47: slide-kit banner checks (§4d-bis); → 48: rpww creator agreement (§4d-ter); → 49: one author hub per person; → 50: PD cutoff has not moved
+const EXPECTED_CHECKS = 51; // 45 → 47: slide-kit banner checks (§4d-bis); → 48: rpww creator agreement (§4d-ter); → 49: one author hub per person; → 50: PD cutoff has not moved; → 51: no self-credit (§4d-quater)
 check('every invariant still runs (none silently skipped)', EXPECTED_CHECKS, checks.length + 1,
   'a check block is guarded by `if (x)` and its input went missing, so it removed itself. Find which by diffing the printed check list with CORPUS_VERBOSE=1.');
 
