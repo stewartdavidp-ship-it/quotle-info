@@ -88,6 +88,28 @@ jobs:
           GH_TOKEN: ${{ secrets.MERGE_TOKEN || github.token }}
         run: node tools/merge-run.js ${{ (github.event_name == 'schedule' || inputs.execute) && '--execute' || '' }}
 
+      # File the pass's own log shard, if it wrote one. merge-run only writes on --execute and only
+      # when something happened, so a quiet pass adds no PR. The branch prefix `merge/` is already
+      # whitelisted in merge-gate's ROUTINES, so the next pass merges this like any other log PR.
+      - name: Open a log PR for this pass
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.MERGE_TOKEN || github.token }}
+        run: |
+          if [ -z "$(git status --porcelain data/routine-log)" ]; then
+            echo "no shard written — nothing to log"; exit 0
+          fi
+          DATE=$(date -u +%Y-%m-%d)
+          BRANCH="merge/$DATE"
+          git fetch origin "$BRANCH" 2>/dev/null && git checkout -B "$BRANCH" "origin/$BRANCH" -- 2>/dev/null || git checkout -B "$BRANCH" origin/main
+          git add data/routine-log
+          git commit -m "chore(routine-log): merge pass $DATE" || { echo "nothing staged"; exit 0; }
+          git push origin "HEAD:$BRANCH"
+          gh pr view "$BRANCH" --json number >/dev/null 2>&1 \
+            || gh pr create --base main --head "$BRANCH" \
+                 --title "chore(routine-log): merge pass $DATE" \
+                 --body "Log shard(s) for the $DATE merge pass(es). Opened by merge.yml so that daily-merge is visible to the routine census — it previously wrote no shard at all and could only ever read as DID NOT RUN."
+
       # WHY MERGE_TOKEN IS NOT OPTIONAL FOR THE REBUILD HALF.
       # main is protected with strict:true and `verify` as a REQUIRED context, so a branch that is
       # BEHIND must be brought current, rebuilt, and pass `verify` on the NEW head before it can

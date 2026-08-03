@@ -289,6 +289,33 @@ main().then(({ merged, notes }) => {
   console.log(`\n    merged: ${merged.length ? merged.map((n) => `#${n}`).join(' ') : 'nothing'}`);
   notes.forEach((n) => console.log(`    · ${n}`));
   console.log('');
+
+  // LOG THE RUN. Until 2026-08-03 this pass wrote no shard at all, so `daily-merge` was the one
+  // routine daily-report could not see even in principle — it could only ever print DID NOT RUN
+  // against it, and on 08-03 it did so and was right by luck rather than by evidence. The gate has
+  // whitelisted a `merge/` branch prefix for this since 07-29 (merge-gate.js ROUTINES); nothing
+  // ever wrote to it.
+  //
+  // Only on --execute, and only when something actually happened. Eight passes a day, most of them
+  // finding an empty queue, must not file eight log PRs — "the pass ran and there was nothing to
+  // do" is legible from the Actions run history, which is itself why this moved to a workflow.
+  if (EXECUTE && (merged.length || notes.length)) {
+    const outcome = merged.length ? 'merged' : 'no-op';
+    const note = [
+      merged.length ? `merged ${merged.map((n) => `#${n}`).join(' ')}` : 'nothing merged',
+      ...notes,
+    ].join(' · ').slice(0, 400);
+    try {
+      execFileSync('node', [path.join(ROOT, 'tools', 'routine-log.js'),
+        '--routine', 'daily-merge', '--outcome', outcome,
+        '--processed', String(merged.length), '--note', note],
+        { cwd: ROOT, stdio: 'ignore' });
+      console.log(`    (logged: daily-merge ${outcome}, ${merged.length} merged)\n`);
+    } catch (e) {
+      // Never fatal. Failing to log a successful merge pass must not fail the merge pass.
+      console.error(`    ! could not write routine-log shard: ${(e && e.message) || e}\n`);
+    }
+  }
 }).catch((e) => {
   // LOUD, and non-zero. A merge pass that cannot run must not exit 0 — that is indistinguishable
   // from a quiet night, which is the whole failure this file replaces.
