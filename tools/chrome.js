@@ -21,6 +21,18 @@ const NAV_LINKS = [
   { key: 'themes', label: 'Themes', href: '/themes/' },
   { key: 'authors', label: 'Authors', href: '/authors/' },
   { key: 'check', label: 'Check a quote', href: '/check/' },
+  // The blog lives on the Mast Managed site, not in this repo — posts are
+  // authored in the Mast admin and rendered from the `blog` public projection.
+  // Absolute URL on purpose: different origin.
+  //
+  // ⚠ DO NOT MERGE UNTIL quotle.runmast.com IS CONVERGED. Until then that host
+  // serves the generic shared storefront template — a blank "Storefront" page —
+  // and pointing this production nav at it is worse than having no link at all.
+  // Convergence is mast-deploy Option B (path-split origins) plus the gated
+  // Worker deploy. Check before merging:
+  //   bash scripts/converge-quotle-pilot.sh --verify   (in mast-deploy)
+  // <title> must read "Quotle.info", not "Storefront".
+  { key: 'blog', label: 'Blog', href: 'https://quotle.runmast.com/' },
 ];
 
 const NAV = (active) => `    <a class="skip-link" href="#main">Skip to content</a>
