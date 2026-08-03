@@ -55,6 +55,9 @@ const ROUTINES = [
 // a stale or hand-edited branch could still carry it.
 const GENERATOR = /^(tools|workflows|\.github|worker)\//;
 
+// "Is this file a build product?" — shared with merge-run.js so the two cannot drift apart.
+const { derived } = require('./derived-paths');
+
 function routineFor(branch) {
   return ROUTINES.find((r) => branch.startsWith(r.prefix)) || null;
 }
@@ -62,65 +65,128 @@ function routineFor(branch) {
 // PURE. Everything above the network boundary, so --self-test can drive it with fixtures rather
 // than against live PRs — a decision function that can only be exercised by opening real pull
 // requests is a decision function nobody tests.
+// EVERY return carries a stable `code` as well as prose. The prose is for a person reading the run
+// log; the code is the contract another tool may branch on. They were one field until 2026-08-03,
+// and merge-run.js consequently printed the hardcoded phrase "CI still running" over EVERY WAIT —
+// including #287, a permanent merge conflict with no CI activity for days, in four consecutive runs.
+// Two genuinely different conditions share the WAIT verdict, and only one of them is worth waiting
+// out. Never widen a code's meaning to fit a new case; add a code.
 function decide(pr) {
   const branch = pr.headRefName || '';
   const routine = routineFor(branch);
-  if (!routine) return { verdict: 'HUMAN', reason: 'branch is not a known routine prefix — left alone' };
-  if (pr.isDraft) return { verdict: 'SKIP', reason: 'draft — a draft cannot be merged and nothing here clicks Ready' };
+  if (!routine) return { verdict: 'HUMAN', code: 'not-a-routine-branch', reason: 'branch is not a known routine prefix — left alone' };
+  if (pr.isDraft) return { verdict: 'SKIP', code: 'draft', reason: 'draft — a draft cannot be merged and nothing here clicks Ready' };
 
   const checks = (pr.statusCheckRollup || []).map((c) => c.conclusion || c.state || 'PENDING');
-  if (!checks.length) return { verdict: 'SKIP', reason: 'no checks reported yet' };
+  if (!checks.length) return { verdict: 'SKIP', code: 'no-checks', reason: 'no checks reported yet' };
   // "Finished" is not "passed". Merging on a run that merely stopped being pending is how #210
   // went in red on 2026-07-29.
   if (checks.some((c) => c === 'PENDING' || c === 'IN_PROGRESS' || c === 'QUEUED')) {
-    return { verdict: 'WAIT', reason: 'CI still running' };
+    return { verdict: 'WAIT', code: 'ci-running', reason: 'CI still running' };
   }
   if (checks.some((c) => c !== 'SUCCESS' && c !== 'NEUTRAL' && c !== 'SKIPPED')) {
-    return { verdict: 'SKIP', reason: `CI not green (${[...new Set(checks)].join(', ')})` };
+    return { verdict: 'SKIP', code: 'ci-not-green', reason: `CI not green (${[...new Set(checks)].join(', ')})` };
   }
 
   const escapes = (pr.files || []).map((f) => f.path).filter((p) => GENERATOR.test(p))
     .filter((p) => !(routine.mayTouch || []).some((rx) => rx.test(p)));
   if (escapes.length) {
-    return { verdict: 'SKIP', reason: `scope escape — ${routine.name} touched ${escapes.slice(0, 3).join(', ')}${escapes.length > 3 ? ` +${escapes.length - 3}` : ''}` };
+    return { verdict: 'SKIP', code: 'scope-escape', reason: `scope escape — ${routine.name} touched ${escapes.slice(0, 3).join(', ')}${escapes.length > 3 ? ` +${escapes.length - 3}` : ''}` };
   }
 
   switch (pr.mergeStateStatus) {
-    case 'DIRTY':    return { verdict: 'SKIP', reason: 'merge conflict — needs a human, do not auto-resolve generated files' };
-    case 'BEHIND':   return { verdict: 'REBUILD', reason: 'behind main — rebase, rebuild, push, wait for green, then re-run this' };
-    case 'BLOCKED':  return { verdict: 'SKIP', reason: 'blocked by branch protection or a required review' };
-    case 'UNKNOWN':  return { verdict: 'WAIT', reason: 'mergeability not computed yet — re-run in a moment' };
+    case 'DIRTY':    return { verdict: 'SKIP', code: 'merge-conflict', reason: 'merge conflict — needs a human, do not auto-resolve generated files' };
+    case 'BEHIND':   return { verdict: 'REBUILD', code: 'behind-main', reason: 'behind main — rebase, rebuild, push, wait for green, then re-run this' };
+    case 'BLOCKED':  return { verdict: 'SKIP', code: 'blocked', reason: 'blocked by branch protection or a required review' };
+    // TRANSIENT, and the only WAIT that clears on its own with no new CI and no push. GitHub
+    // computes mergeable_state lazily and invalidates it on every push to main — so the FIRST read
+    // after main moves returns `unknown` for every open PR, and that read is itself what triggers
+    // the recompute. "re-run in a moment" is not advice to a human here: merge-run.js acts on it.
+    case 'UNKNOWN':  return { verdict: 'WAIT', code: 'mergeability-unknown', reason: 'mergeability not computed yet — re-run in a moment' };
+    // STALENESS, JUDGED PER FILE — the half GitHub's `strict` cannot express.
+    //
+    // `strict:true` invalidates EVERY open PR on every push to main. Measured 2026-08-03: one merge
+    // put 15 PRs BEHIND at once, and 11 of them were a single appended line under data/routine-log/.
+    // A merge applies a DIFF, so a PR can only revert what it also touches — a one-line log shard
+    // cannot clobber a page it never mentions, however old it is. The PRs that genuinely must be
+    // current are the ones that rebuild derived output, because those carry a change to all ~1,163
+    // generated files and would take the whole corpus back with them.
+    //
+    // So the rule is the PR's file footprint, not its age. This case is reached only when GitHub
+    // reports the branch mergeable, which means either strict is off, or it is on and the branch is
+    // current. It can therefore only ADD a rebuild requirement, never waive one GitHub is enforcing
+    // — the tool stays correct under both settings, and flipping strict cannot open a hole.
     case 'CLEAN':
     case 'HAS_HOOKS':
-    case 'UNSTABLE': return { verdict: 'MERGE', reason: 'green, in scope, up to date', routine: routine.name };
-    default:         return { verdict: 'SKIP', reason: `unrecognised merge state ${pr.mergeStateStatus}` };
+    case 'UNSTABLE': {
+      const atRisk = derived((pr.files || []).map((f) => f.path));
+      if (pr.behindBy > 0 && atRisk.length) {
+        return {
+          verdict: 'REBUILD',
+          code: 'behind-main-derived',
+          reason: `${pr.behindBy} commit(s) behind main and rebuilds ${atRisk.length} derived file(s) — rebase, rebuild, push, wait for green`,
+        };
+      }
+      return { verdict: 'MERGE', code: 'ready', reason: 'green, in scope, up to date', routine: routine.name };
+    }
+    default:         return { verdict: 'SKIP', code: 'unrecognised-merge-state', reason: `unrecognised merge state ${pr.mergeStateStatus}` };
   }
 }
 
 if (process.argv.includes('--self-test')) {
   const base = { headRefName: 'wave-d20260729', isDraft: false, statusCheckRollup: [{ conclusion: 'SUCCESS' }], files: [{ path: 'data/quotes/x.json' }], mergeStateStatus: 'CLEAN' };
+  // [name, pr, expected verdict, expected code]. The code is asserted alongside the verdict because
+  // merge-run.js now BRANCHES on it — the two WAIT codes must stay distinguishable, and a fixture
+  // that only checked the verdict would let them silently collapse back into one.
   const cases = [
-    ['clean routine PR merges',        base, 'MERGE'],
-    ['human branch left alone',        { ...base, headRefName: 'claude/whatever' }, 'HUMAN'],
-    ['draft is skipped',               { ...base, isDraft: true }, 'SKIP'],
-    ['failing CI is skipped',          { ...base, statusCheckRollup: [{ conclusion: 'FAILURE' }] }, 'SKIP'],
-    ['running CI waits',               { ...base, statusCheckRollup: [{ conclusion: 'PENDING' }] }, 'WAIT'],
-    ['no checks is skipped',           { ...base, statusCheckRollup: [] }, 'SKIP'],
-    ['behind main rebuilds',           { ...base, mergeStateStatus: 'BEHIND' }, 'REBUILD'],
-    ['conflict is skipped',            { ...base, mergeStateStatus: 'DIRTY' }, 'SKIP'],
-    ['wave touching tools/ escapes',   { ...base, files: [{ path: 'tools/template.js' }] }, 'SKIP'],
-    ['wave touching worker/ escapes',  { ...base, files: [{ path: 'worker/src/index.js' }] }, 'SKIP'],
-    ['discovery may edit detectors',   { ...base, headRefName: 'discovery/2026-08-03', files: [{ path: 'tools/detectors.js' }] }, 'MERGE'],
-    ['discovery may NOT edit template',{ ...base, headRefName: 'discovery/2026-08-03', files: [{ path: 'tools/template.js' }] }, 'SKIP'],
-    ['merge pass may merge its own log PR', { ...base, headRefName: 'merge/2026-07-30', files: [{ path: 'data/routine-log/x.jsonl' }] }, 'MERGE'],
+    ['clean routine PR merges',        base, 'MERGE', 'ready'],
+    ['human branch left alone',        { ...base, headRefName: 'claude/whatever' }, 'HUMAN', 'not-a-routine-branch'],
+    ['draft is skipped',               { ...base, isDraft: true }, 'SKIP', 'draft'],
+    ['failing CI is skipped',          { ...base, statusCheckRollup: [{ conclusion: 'FAILURE' }] }, 'SKIP', 'ci-not-green'],
+    ['running CI waits',               { ...base, statusCheckRollup: [{ conclusion: 'PENDING' }] }, 'WAIT', 'ci-running'],
+    ['no checks is skipped',           { ...base, statusCheckRollup: [] }, 'SKIP', 'no-checks'],
+    ['behind main rebuilds',           { ...base, mergeStateStatus: 'BEHIND' }, 'REBUILD', 'behind-main'],
+    ['conflict is skipped',            { ...base, mergeStateStatus: 'DIRTY' }, 'SKIP', 'merge-conflict'],
+    // The case that had no fixture until 2026-08-03, and the one that stalled four merge passes.
+    ['uncomputed mergeability waits SEPARATELY from CI',
+                                       { ...base, mergeStateStatus: 'UNKNOWN' }, 'WAIT', 'mergeability-unknown'],
+    ['wave touching tools/ escapes',   { ...base, files: [{ path: 'tools/template.js' }] }, 'SKIP', 'scope-escape'],
+    ['wave touching worker/ escapes',  { ...base, files: [{ path: 'worker/src/index.js' }] }, 'SKIP', 'scope-escape'],
+    ['discovery may edit detectors',   { ...base, headRefName: 'discovery/2026-08-03', files: [{ path: 'tools/detectors.js' }] }, 'MERGE', 'ready'],
+    ['discovery may NOT edit template',{ ...base, headRefName: 'discovery/2026-08-03', files: [{ path: 'tools/template.js' }] }, 'SKIP', 'scope-escape'],
+    ['merge pass may merge its own log PR', { ...base, headRefName: 'merge/2026-07-30', files: [{ path: 'data/routine-log/x.jsonl' }] }, 'MERGE', 'ready'],
+    // File-aware staleness. The point of the whole rule: 11 of 14 PRs on 2026-08-03 were a single
+    // appended log line, invalidated by a merge they could not possibly have conflicted with.
+    ['a stale LOG-ONLY PR still merges',
+      { ...base, behindBy: 9, files: [{ path: 'data/routine-log/x.jsonl' }] }, 'MERGE', 'ready'],
+    ['a stale PR that rebuilds pages does NOT',
+      { ...base, behindBy: 1, files: [{ path: 'data/quotes/x.json' }, { path: 'who-said/x/index.html' }] }, 'REBUILD', 'behind-main-derived'],
+    ['a CURRENT PR that rebuilds pages merges',
+      { ...base, behindBy: 0, files: [{ path: 'who-said/x/index.html' }] }, 'MERGE', 'ready'],
+    ['a stale source-only PR merges',
+      { ...base, behindBy: 4, files: [{ path: 'data/quotes/x.json' }] }, 'MERGE', 'ready'],
+    // Guard the setting-flip: GitHub only spells BEHIND while strict:true, and while it does we
+    // defer to it unconditionally. This tool must never waive what GitHub is actively enforcing.
+    ['GitHub-reported BEHIND still rebuilds, footprint irrelevant',
+      { ...base, mergeStateStatus: 'BEHIND', behindBy: 3, files: [{ path: 'data/routine-log/x.jsonl' }] }, 'REBUILD', 'behind-main'],
+    // An absent behindBy falls back to GitHub's own verdict, which is only safe because reaching
+    // this case at all means GitHub called the branch mergeable. gh-rest does not swallow a failed
+    // compare — it throws, and the caller exits loudly — so this is a defensive path, not a route.
+    ['absent behindBy defers to GitHub',
+      { ...base, behindBy: null, files: [{ path: 'who-said/x/index.html' }] }, 'MERGE', 'ready'],
   ];
   let bad = 0;
-  for (const [name, pr, want] of cases) {
-    const got = decide(pr).verdict;
-    if (got !== want) { console.error(`  ✗ ${name}: expected ${want}, got ${got}`); bad++; }
+  for (const [name, pr, want, wantCode] of cases) {
+    const { verdict, code } = decide(pr);
+    if (verdict !== want) { console.error(`  ✗ ${name}: expected ${want}, got ${verdict}`); bad++; }
+    else if (code !== wantCode) { console.error(`  ✗ ${name}: verdict ${verdict} ok, but code ${code} — expected ${wantCode}`); bad++; }
   }
-  if (bad) { console.error(`\n  ${bad} of ${cases.length} merge-gate cases failed.\n`); process.exit(1); }
-  console.log(`  ✓ merge-gate decision function (${cases.length} cases: scope, CI, staleness, drafts, per-routine tools/ allowance)`);
+  // The two WAITs are only useful to merge-run if they never collide.
+  const ciWait = decide({ ...base, statusCheckRollup: [{ conclusion: 'PENDING' }] }).code;
+  const mergeWait = decide({ ...base, mergeStateStatus: 'UNKNOWN' }).code;
+  if (ciWait === mergeWait) { console.error(`  ✗ both WAIT paths report code ${ciWait} — merge-run cannot tell a transient from a real wait`); bad++; }
+  if (bad) { console.error(`\n  ${bad} of ${cases.length + 1} merge-gate cases failed.\n`); process.exit(1); }
+  console.log(`  ✓ merge-gate decision function (${cases.length + 1} cases: scope, CI, staleness, drafts, per-routine tools/ allowance, WAIT codes distinct)`);
   process.exit(0);
 }
 

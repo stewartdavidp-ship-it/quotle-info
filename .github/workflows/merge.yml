@@ -20,8 +20,20 @@ name: merge
 
 on:
   schedule:
-    # 11:00 UTC = 07:00 ET, after the 03:00/04:00/05:00 routines have opened their PRs.
-    - cron: '0 11 * * *'
+    # Every 3 hours, not once at 11:00 UTC. A pass can merge any number of log-only PRs but only
+    # ONE that rebuilds pages: merging it puts every other derived PR behind, and those must be
+    # rebuilt and re-verified before they may merge. So capacity is one content PR per pass.
+    #
+    # Inflow is one content PR a night (daily-wave), plus a second on Mondays (weekly-discovery).
+    # Against a single daily pass that is exactly break-even on six days and short by one on the
+    # seventh — a Monday deficit that never clears, because tomorrow's pass spends its one content
+    # slot on tomorrow's wave. Eight passes a day clears the Monday double and absorbs a missed run
+    # without a human noticing.
+    #
+    # Cheap: the pass is idempotent, exits clean with nothing to do, and a gate() read costs ~14
+    # REST calls per open PR against GH_TOKEN's 5000/hr. Concurrency group `merge-authority`
+    # already serialises overlapping runs.
+    - cron: '0 */3 * * *'
   workflow_dispatch:
     inputs:
       execute:
@@ -61,6 +73,7 @@ jobs:
       # The gate's own fixtures, before it is trusted to decide anything live.
       - name: Self-test the decision and execution paths
         run: |
+          node tools/derived-paths.js --self-test
           node tools/merge-gate.js --self-test
           node tools/merge-run.js --self-test
 
@@ -75,10 +88,33 @@ jobs:
           GH_TOKEN: ${{ secrets.MERGE_TOKEN || github.token }}
         run: node tools/merge-run.js ${{ (github.event_name == 'schedule' || inputs.execute) && '--execute' || '' }}
 
+      # File the pass's own log shard, if it wrote one. merge-run only writes on --execute and only
+      # when something happened, so a quiet pass adds no PR. The branch prefix `merge/` is already
+      # whitelisted in merge-gate's ROUTINES, so the next pass merges this like any other log PR.
+      - name: Open a log PR for this pass
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.MERGE_TOKEN || github.token }}
+        run: |
+          if [ -z "$(git status --porcelain data/routine-log)" ]; then
+            echo "no shard written — nothing to log"; exit 0
+          fi
+          DATE=$(date -u +%Y-%m-%d)
+          BRANCH="merge/$DATE"
+          git fetch origin "$BRANCH" 2>/dev/null && git checkout -B "$BRANCH" "origin/$BRANCH" -- 2>/dev/null || git checkout -B "$BRANCH" origin/main
+          git add data/routine-log
+          git commit -m "chore(routine-log): merge pass $DATE" || { echo "nothing staged"; exit 0; }
+          git push origin "HEAD:$BRANCH"
+          gh pr view "$BRANCH" --json number >/dev/null 2>&1 \
+            || gh pr create --base main --head "$BRANCH" \
+                 --title "chore(routine-log): merge pass $DATE" \
+                 --body "Log shard(s) for the $DATE merge pass(es). Opened by merge.yml so that daily-merge is visible to the routine census — it previously wrote no shard at all and could only ever read as DID NOT RUN."
+
       # WHY MERGE_TOKEN IS NOT OPTIONAL FOR THE REBUILD HALF.
-      # main is protected with strict:true and `verify` as a REQUIRED context, so a branch that is
-      # BEHIND must be brought current, rebuilt, and pass `verify` on the NEW head before it can
-      # merge. GitHub does not run workflows for pushes made with the default GITHUB_TOKEN — so a
+      # `verify` is a REQUIRED context on main, so a branch that merge-gate rules stale must be
+      # brought current, rebuilt, and pass `verify` on the NEW head before it can merge. (Protection
+      # carried strict:true until 2026-08-03; staleness is now judged per-file by merge-gate, which
+      # is why this still matters for PRs that rebuild pages and no longer does for log-only ones.) GitHub does not run workflows for pushes made with the default GITHUB_TOKEN — so a
       # rebuild pushed with it would never get its required check, the gate would report WAIT
       # forever, and that stall would look exactly like a quiet morning. That is the failure this
       # whole file exists to remove.

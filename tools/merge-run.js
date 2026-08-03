@@ -24,8 +24,8 @@
  *
  * SEPARATION OF POWERS, deliberately kept: merge-gate.js still DECIDES and still never merges — its
  * header promises that and this file does not make it a liar. This file only carries out MERGE
- * verdicts, and it re-asks the gate between every merge because branch protection is strict:true,
- * so one merge puts every other PR BEHIND and invalidates the plan computed a moment ago.
+ * verdicts, and it re-asks the gate between every merge because one merge can invalidate the plan
+ * computed a moment ago — it moves main, which restales every PR that rebuilds derived output.
  */
 const { execFileSync } = require('child_process');
 const path = require('path');
@@ -35,6 +35,37 @@ const ROOT = path.resolve(__dirname, '..');
 const REPO = process.env.QUOTLE_REPO || 'stewartdavidp-ship-it/quotle-info';
 const API = 'https://api.github.com';
 const EXECUTE = process.argv.includes('--execute');
+
+// THE STALL THIS EXISTS TO REMOVE (diagnosed 2026-08-03, four runs deep).
+// GitHub computes a PR's mergeable_state lazily and invalidates it for EVERY open PR on every push
+// to main. So the first read after main moves returns `unknown` across the board — and that read is
+// itself what schedules the recompute, which lands a few seconds later. merge-gate maps `unknown` to
+// WAIT/mergeability-unknown and says "re-run in a moment"; nothing ever did.
+//
+// The cost was not subtle. This pass merges ONE PR per round and re-asks the gate between merges
+// (protection carried strict:true at the time, making that mandatory). But merging is itself a push
+// to main, so round N+1's read was
+// always the poisoned first-read — every run merged exactly one PR and stopped:
+//   08-01 merged #295 then stalled · 08-02 merged #296 then stalled · 07-31 and 08-03 merged nothing.
+//
+// THIS FIX IS NECESSARY AND NOT SUFFICIENT — measured, do not let the next reader assume otherwise.
+// A dispatch on 2026-08-03T18:28Z merged #301 and stalled exactly as above. Reading every open PR
+// immediately afterwards: ONE was DIRTY and all FIFTEEN others were BEHIND — including the PR
+// carrying this very patch. main was then protected with strict:true, so EVERY merge put EVERY other
+// branch out of date, and each had to be rebuilt and re-verified before it could merge. That blanket
+// rule was replaced on the same day by merge-gate's per-file staleness test, so this now applies only
+// to PRs that actually rebuild derived output. That is a quadratic rebuild cascade, not a re-poll problem, and it is the
+// larger half of why a queue that gains ~4 PRs a night cannot drain. Removing the stall lets a pass
+// merge one PR and then rebuild the rest in the same run instead of stopping blind; it does not make
+// a pass drain the queue. The structural options — relaxing strict for log-only PRs, or not
+// committing generated output at all — are a decision above this file's pay grade.
+//
+// Budget: a gate() call costs ~14 REST requests per open PR (detail + check-runs + paginated files),
+// so re-polling is not free. merge.yml supplies GH_TOKEN, so these run at 5000/hr rather than the
+// anonymous 60 — a bounded handful of extra reads per round is affordable there and nowhere else.
+const UNKNOWN_RETRIES = 4;
+const UNKNOWN_DELAY_MS = 6000;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // The token must be able to WRITE. GITHUB_TOKEN reads as the literal 'proxy-injected' placeholder in
 // the cloud sandbox — sending that as a Bearer is worse than sending nothing, so it is filtered here
@@ -75,7 +106,7 @@ function gate() {
 }
 
 // A merge that 409s is NOT a failure — it means the head moved between the gate's read and the write
-// (another merge landed, or CI pushed). That is expected under strict:true and the correct response
+// (another merge landed, or CI pushed). That is expected in a multi-merge pass, and the right response
 // is to re-ask the gate, not to stop the night. 405 means GitHub refused (not mergeable / protection),
 // which IS a stop for that PR but not for the pass.
 const RETRYABLE = new Set([409]);
@@ -95,8 +126,11 @@ const gitTry = (...args) => { try { return { ok: true, out: git(...args) }; } ca
 // source records and rebuild". The blanket version of that (`git checkout origin/main -- .`) is
 // explicitly wrong and was tried: on a PR whose only change is a log line it discards the entire PR
 // and leaves it empty. Hence per-path, and only for paths that are genuinely derived.
-const SOURCE = /^(data\/quotes\/|data\/songs\/|data\/harvest-queue\.json|data\/report-queue\.json|data\/routine-log\/|tools\/|workflows\/|\.github\/|worker\/|CLAUDE\.md)/;
-const sourceConflicts = (paths) => paths.filter((p) => SOURCE.test(p));
+//
+// The classifier itself moved to tools/derived-paths.js on 2026-08-03, when merge-gate needed the
+// same question answered for staleness. It was defined here first; it is not defined here any more,
+// because two copies of one rule is the defect this repo repeats most.
+const { source: sourceConflicts } = require('./derived-paths');
 
 // Bring ONE branch current with main and rebuild it. Never merges it — the doc's rule, and a real
 // constraint: the required `verify` check has to run against the new head before anything may merge,
@@ -135,18 +169,50 @@ function rebuild(pr) {
   return `#${pr.number} rebuilt and pushed — merges next pass, once verify is green on the new head`;
 }
 
+// PURE, so --self-test can drive it without a network: should this round wait and re-ask rather than
+// conclude? Only when there is nothing to merge AND at least one PR is stuck behind a computation
+// GitHub has not finished. Note what is NOT here: `ci-running` never re-polls, so a genuinely quiet
+// queue still stops immediately and a red morning is never mistaken for a slow one.
+const shouldRepoll = (decisions) =>
+  !decisions.some((d) => d.verdict === 'MERGE') &&
+  decisions.some((d) => d.code === 'mergeability-unknown');
+
 async function main() {
   const merged = [];
   const notes = [];
   // Bounded: each iteration must merge exactly one PR or stop. The cap is a runaway guard, not a
   // policy — a night with more than this many routine PRs is itself worth a human look.
   for (let round = 0; round < 12; round++) {
-    const decisions = gate();
-    const next = decisions.find((d) => d.verdict === 'MERGE');
+    let decisions = gate();
+    let next = decisions.find((d) => d.verdict === 'MERGE');
+
+    // Settle the transient before concluding anything. Only `mergeability-unknown` is worth waiting
+    // out: it resolves with no new CI and no push, purely because GitHub finished a computation our
+    // last read triggered. A `ci-running` WAIT is a real wait and is NOT retried here — CI takes
+    // minutes, this pass is not a place to burn them.
+    for (let retry = 0; retry < UNKNOWN_RETRIES && shouldRepoll(decisions); retry++) {
+      const pending = decisions.filter((d) => d.code === 'mergeability-unknown').length;
+      notes.push(`re-poll ${retry + 1}/${UNKNOWN_RETRIES}: ${pending} PR(s) with mergeability not yet computed — waiting ${UNKNOWN_DELAY_MS / 1000}s`);
+      await sleep(UNKNOWN_DELAY_MS);
+      decisions = gate();
+      next = decisions.find((d) => d.verdict === 'MERGE');
+    }
+
     if (!next) {
-      const waiting = decisions.filter((d) => d.verdict === 'WAIT').map((d) => `#${d.number}`);
       const stale = decisions.filter((d) => d.verdict === 'REBUILD');
-      if (waiting.length) notes.push(`WAIT: ${waiting.join(' ')} — CI still running, they merge next pass`);
+      // Report each WAIT under the gate's OWN reason. This line used to hardcode "CI still running"
+      // over every WAIT, which put #287 — a permanent merge conflict with no CI activity for days —
+      // in a CI-blamed list in four consecutive runs, and sent every reader looking at the wrong
+      // subsystem. The gate knows why it is waiting; say what it said.
+      const byReason = new Map();
+      for (const d of decisions.filter((x) => x.verdict === 'WAIT')) {
+        if (!byReason.has(d.reason)) byReason.set(d.reason, []);
+        byReason.get(d.reason).push(`#${d.number}`);
+      }
+      for (const [reason, prs] of byReason) {
+        const stillUnknown = reason.startsWith('mergeability not computed');
+        notes.push(`WAIT: ${prs.join(' ')} — ${reason}${stillUnknown ? ` (unresolved after ${UNKNOWN_RETRIES} re-polls — that is a real GitHub stall, not a quiet queue)` : ', they merge next pass'}`);
+      }
       if (stale.length && !EXECUTE) {
         notes.push(`REBUILD: ${stale.map((d) => `#${d.number}`).join(' ')} — behind main (dry run, not rebuilt)`);
       } else if (stale.length) {
@@ -186,6 +252,20 @@ if (process.argv.includes('--self-test')) {
     const got = pick(ds); const n = got ? got.number : null;
     if (n !== want) { console.error(`  ✗ ${name}: expected ${want}, got ${n}`); bad++; }
   }
+  // The re-poll predicate. Its permissive failure wastes a few seconds; its restrictive failure is
+  // the 2026-08-03 stall — one PR merged per run while the queue grew four a night — so it is
+  // fixtured in both directions.
+  const repollCases = [
+    ['uncomputed mergeability re-polls',    [{ verdict: 'WAIT', code: 'mergeability-unknown' }], true],
+    ['a CI wait does NOT re-poll',          [{ verdict: 'WAIT', code: 'ci-running' }], false],
+    ['a MERGE outranks any transient',      [{ verdict: 'MERGE', code: 'ready' }, { verdict: 'WAIT', code: 'mergeability-unknown' }], false],
+    ['a genuinely quiet queue stops',       [{ verdict: 'SKIP', code: 'merge-conflict' }], false],
+    ['mixed waits still re-poll',           [{ verdict: 'WAIT', code: 'ci-running' }, { verdict: 'WAIT', code: 'mergeability-unknown' }], true],
+  ];
+  for (const [name, ds, want] of repollCases) {
+    const got = shouldRepoll(ds);
+    if (got !== want) { console.error(`  ✗ ${name}: expected ${want}, got ${got}`); bad++; }
+  }
   if (writeToken() === 'proxy-injected') { console.error('  ✗ placeholder token not filtered'); bad++; }
   // The conflict classifier decides whether a rebuild may proceed without a human. Getting it wrong
   // in the permissive direction means silently discarding somebody's record edit, so it is fixtured.
@@ -202,7 +282,7 @@ if (process.argv.includes('--self-test')) {
     if ((got > 0) !== (want > 0)) { console.error(`  ✗ ${name}: expected ${want ? 'blocked' : 'rebuildable'}, got ${got} source conflict(s)`); bad++; }
   }
   if (bad) { console.error(`\n  ${bad} merge-run case(s) failed.\n`); process.exit(1); }
-  console.log(`  ✓ merge-run planner (${cases.length + conflictCases.length} cases: pick-first-MERGE, clean stop, HUMAN never picked, source-vs-generated conflicts)`);
+  console.log(`  ✓ merge-run planner (${cases.length + repollCases.length + conflictCases.length} cases: pick-first-MERGE, clean stop, HUMAN never picked, transient-vs-real WAIT, source-vs-generated conflicts)`);
   process.exit(0);
 }
 
@@ -211,6 +291,33 @@ main().then(({ merged, notes }) => {
   console.log(`\n    merged: ${merged.length ? merged.map((n) => `#${n}`).join(' ') : 'nothing'}`);
   notes.forEach((n) => console.log(`    · ${n}`));
   console.log('');
+
+  // LOG THE RUN. Until 2026-08-03 this pass wrote no shard at all, so `daily-merge` was the one
+  // routine daily-report could not see even in principle — it could only ever print DID NOT RUN
+  // against it, and on 08-03 it did so and was right by luck rather than by evidence. The gate has
+  // whitelisted a `merge/` branch prefix for this since 07-29 (merge-gate.js ROUTINES); nothing
+  // ever wrote to it.
+  //
+  // Only on --execute, and only when something actually happened. Eight passes a day, most of them
+  // finding an empty queue, must not file eight log PRs — "the pass ran and there was nothing to
+  // do" is legible from the Actions run history, which is itself why this moved to a workflow.
+  if (EXECUTE && (merged.length || notes.length)) {
+    const outcome = merged.length ? 'merged' : 'no-op';
+    const note = [
+      merged.length ? `merged ${merged.map((n) => `#${n}`).join(' ')}` : 'nothing merged',
+      ...notes,
+    ].join(' · ').slice(0, 400);
+    try {
+      execFileSync('node', [path.join(ROOT, 'tools', 'routine-log.js'),
+        '--routine', 'daily-merge', '--outcome', outcome,
+        '--processed', String(merged.length), '--note', note],
+        { cwd: ROOT, stdio: 'ignore' });
+      console.log(`    (logged: daily-merge ${outcome}, ${merged.length} merged)\n`);
+    } catch (e) {
+      // Never fatal. Failing to log a successful merge pass must not fail the merge pass.
+      console.error(`    ! could not write routine-log shard: ${(e && e.message) || e}\n`);
+    }
+  }
 }).catch((e) => {
   // LOUD, and non-zero. A merge pass that cannot run must not exit 0 — that is indistinguishable
   // from a quiet night, which is the whole failure this file replaces.
