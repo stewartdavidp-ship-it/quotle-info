@@ -46,8 +46,17 @@ const EXECUTE = process.argv.includes('--execute');
 // (strict:true makes that mandatory). But merging is itself a push to main, so round N+1's read was
 // always the poisoned first-read — every run merged exactly one PR and stopped:
 //   08-01 merged #295 then stalled · 08-02 merged #296 then stalled · 07-31 and 08-03 merged nothing.
-// Routines open ~4 PRs a night against a drain rate of ≤1/day, which is the whole of the backlog
-// arithmetic the daily reports have flagged since 07-31.
+//
+// THIS FIX IS NECESSARY AND NOT SUFFICIENT — measured, do not let the next reader assume otherwise.
+// A dispatch on 2026-08-03T18:28Z merged #301 and stalled exactly as above. Reading every open PR
+// immediately afterwards: ONE was DIRTY and all FIFTEEN others were BEHIND — including the PR
+// carrying this very patch. main is protected with strict:true and `verify` required, so each merge
+// puts every other branch out of date, and each must then be rebuilt AND pass a fresh verify run
+// before it may merge. That is a quadratic rebuild cascade, not a re-poll problem, and it is the
+// larger half of why a queue that gains ~4 PRs a night cannot drain. Removing the stall lets a pass
+// merge one PR and then rebuild the rest in the same run instead of stopping blind; it does not make
+// a pass drain the queue. The structural options — relaxing strict for log-only PRs, or not
+// committing generated output at all — are a decision above this file's pay grade.
 //
 // Budget: a gate() call costs ~14 REST requests per open PR (detail + check-runs + paginated files),
 // so re-polling is not free. merge.yml supplies GH_TOKEN, so these run at 5000/hr rather than the
