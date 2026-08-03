@@ -17,7 +17,7 @@ const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT, PREF_SYNC } = require('./a11y-w
 const { ROOT_CSS } = require('./tokens');
 const { esc } = require('./esc');
 const { CONFIDENCE } = require('./template');
-const { primaryCredit } = require('./credits'); // creditedTo: string OR array — cards show the primary
+const { primaryCredit, namesCredit } = require('./credits'); // creditedTo: string OR array — cards show the primary
 const { NAV: siteNav, CHROME_CSS, SEARCH_JS, FOOTER } = require('./chrome');
 const { THEMES, THEME_BY_SLUG, isTheme } = require('./themes');
 const { OG_IMAGE_TAGS } = require('./og'); // the one shared social-card image
@@ -138,10 +138,18 @@ const STYLE = `${ROOT_CSS}
 // template.js already solved this shape for the JSON-LD verdict: the dispute is about the WORDING,
 // not the attribution. Say that, rather than dropping the tail and leaving the row looking like an
 // ordinary correct attribution sitting in a misattributed list.
-function misTail(q) {
-  if (!q.credited) return '';
-  const same = String(q.author || '').trim().toLowerCase() === String(q.credited).trim().toLowerCase();
-  return same ? ' &middot; but not in these words' : ` &middot; not ${esc(q.credited)}`;
+//
+// The near-miss of the same shape — an author string that CONTAINS the credit rather than equalling
+// it ("Unknown — not Benjamin Franklin", "Lao Tzu (misattributed)") — is namesCredit's job; see the
+// note on it in credits.js. When the line already draws the contrast in its own words, ALL the
+// chrome stands down, kicker included: "Really Lao Tzu (misattributed)" contradicts itself just as
+// loudly as the duplicated tail does.
+function misReal(q) {
+  const same = String(q.author || '').trim().toLowerCase() === String(q.credited || '').trim().toLowerCase();
+  if (q.credited && same) return `<span class="mis-lbl">Really</span>${esc(q.author)} &middot; but not in these words`;
+  if (namesCredit(q.author, q.credited)) return esc(q.author);
+  const tail = q.credited ? ` &middot; not ${esc(q.credited)}` : '';
+  return `<span class="mis-lbl">Really</span>${esc(q.author)}${tail}`;
 }
 
 function page(inner, headExtra, active) {
@@ -186,7 +194,7 @@ const realCard = (q) => {
 };
 const fakeCard = (q) => `                <a class="mis-card" href="/who-said/${q.slug}/">
                     <p class="mis-q">&ldquo;${esc(q.quote)}&rdquo;</p>
-                    <p class="mis-real"><span class="mis-lbl">Really</span>${esc(q.author)}${misTail(q)}</p>
+                    <p class="mis-real">${misReal(q)}</p>
                 </a>`;
 
 // ---- per-theme pages ----
