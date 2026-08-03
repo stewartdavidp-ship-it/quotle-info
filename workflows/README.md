@@ -205,6 +205,13 @@ node tools/harvest.js sync /tmp/harvest-rN.json     # append + dedup vs corpus+b
 #     r20 was the first: 40 in → 18 verified, 9 attributed, 13 disputed. Expect ~45% to survive.)
 
 # 1. SELECT + BATCH the next ~40
+#    RANK FIRST. `select` sorts by demandScore, and any candidate that has none sorts LAST — so a
+#    fresh harvest is effectively UNDRAWABLE until it is ranked. select warns about this, and the
+#    warning is easy to walk straight past because select still succeeds. r29 hit it: "107 of 513
+#    candidates have no demandScore" was the whole most-recent harvest, and ranking first changed
+#    the wave substantially — the Carlin and Burke misattributions replaced a draw that was
+#    otherwise mostly genuine-famous. Cheap and cached; --refresh re-fetches every author.
+node tools/rank-backlog.js                          # → demandViews/demandScore/demandRank on each queued candidate
 node tools/harvest.js select 40 --wave rN           # review the list; `harvest.js skip <slug>` (see the skip bar below)
 node tools/harvest.js batch  --wave rN              # writes data/.harvest-batch-rN.json = [{text,author,index}]
                                                     # index = gameIndex (track D) or null (tracks A/B/C)
@@ -243,9 +250,15 @@ Workflow fix.js  args=<the FAIL slug list printed above>                      # 
 #    trust. This must print nothing:
 git status --porcelain -- tools workflows | grep . && echo "^^ fix agents escaped their lane — review before building"
 #    Their generator findings arrive in the fix report's `remaining` (they're told to report, not
-#    edit). Read those: apply each ONCE, centrally, as its OWN commit — not smuggled into a wave.
+#    edit). Read those: apply each ONCE, centrally, on its OWN BRANCH — not smuggled into a wave.
 #    They are often right and often important (the ClaimReview claimant bug, 59 pages emitting a
 #    false machine-readable claim, was found exactly this way).
+#    !! OWN BRANCH, not merely its own COMMIT. `merge-gate.js` judges FILES, not commits: a `wave-`
+#    branch may touch nothing under tools/ workflows/ .github/ worker/ (GENERATOR), so one tidy
+#    generator commit sitting on the wave branch makes the WHOLE wave a scope escape and the pass
+#    refuses it — "SKIP … scope escape". r29 read "own commit" literally, put two prep-wave.js
+#    fixes on wave-r29, and had to split them out to a separate PR before the content could land.
+#    Splitting is better anyway: the fix gets reviewed on its merits instead of inside 300 files.
 node tools/build.js
 #    Spot-check any reassigned heroes (disputed pages must show the TRUE author, not the magnet).
 
