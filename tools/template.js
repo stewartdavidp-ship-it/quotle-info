@@ -500,6 +500,16 @@ function buildJsonLd(q, url) {
   let appearance;
   if (s.claimAppearanceUrl) appearance = { '@id': s.claimAppearanceUrl };
   else if (!s.suppressClaimAppearance) appearance = { '@id': `${url}#quotation` };
+  // itemReviewed carries NO author. In schema.org — and in Google's fact-check guidance —
+  // `Claim.author` is the entity that MADE the claim under review, not the person the quote is
+  // pinned on. Emitting the magnet there told answer engines that George Carlin authored the claim
+  // "George Carlin said 'Never argue with an idiot…'". He never made that claim; anonymous forwards
+  // did, and he publicly disowned material circulated under his name. Same shape as the
+  // Reader's-Digest-as-claimant bug: the prose says the right thing and the structured data says the
+  // opposite, and only the structured data is what a machine reads. The magnet is still named — in
+  // `claimReviewed`, which is where the reviewed claim belongs. If a Claim author is ever wanted it
+  // has to name the PROPAGATION VECTOR (the forward, the meme page), never the magnet, and no record
+  // field carries one today.
   const claimReview = {
     '@type': 'ClaimReview',
     '@id': `${url}#claimreview`,
@@ -509,7 +519,6 @@ function buildJsonLd(q, url) {
     claimReviewed: claimReviewedText,
     itemReviewed: {
       '@type': 'Claim',
-      author: claimant ? { '@type': 'Person', name: claimant } : undefined,
       appearance,
     },
     reviewRating: {
@@ -518,7 +527,6 @@ function buildJsonLd(q, url) {
       alternateName: ratingName,
     },
   };
-  if (!claimReview.itemReviewed.author) delete claimReview.itemReviewed.author;
   if (!claimReview.itemReviewed.appearance) delete claimReview.itemReviewed.appearance;
 
   // ADDITIONAL false credits get their OWN ClaimReview. A quote collects more than one wrong name —
@@ -544,9 +552,10 @@ function buildJsonLd(q, url) {
         author: { '@type': 'Organization', name: 'Quotle.info', url: ORIGIN },
         datePublished: s.dateModified,
         claimReviewed: `${plain(name)} ${claimVerb}: "${claimQuoteText}"`,
+        // No itemReviewed.author here either, for the same reason as the primary node above: the
+        // secondary magnets did not make the claim about themselves. `claimReviewed` names them.
         itemReviewed: {
           '@type': 'Claim',
-          author: { '@type': 'Person', name: plain(name) },
           appearance,
         },
         reviewRating: {
