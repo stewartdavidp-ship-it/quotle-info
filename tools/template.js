@@ -25,7 +25,7 @@
  *   rights note    → per record.source.publicDomain (or explicit record.source.rightsNote)
  */
 
-const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT } = require('./a11y-widget');
+const { HEAD_SCRIPT, THEME_CSS, CONTROL, SCRIPT, PREF_SYNC } = require('./a11y-widget');
 const { ROOT_CSS } = require('./tokens');
 const { esc, escEm } = require('./esc'); // one shared entity-aware escape (also used by build-index.js); escEm preserves inline <em>
 // creditedTo is a string OR an array — a quote often carries more than one false credit. Every
@@ -1411,7 +1411,7 @@ ${FOOTER}
         })();
     </script>
 ${SEARCH_JS}
-${SCRIPT}${COMMUNITY ? `
+${SCRIPT}${PREF_SYNC}${COMMUNITY ? `
     <script>
         (function(){
             var f=document.getElementById('srcForm'); if(!f) return;
