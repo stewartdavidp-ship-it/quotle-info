@@ -20,8 +20,20 @@ name: merge
 
 on:
   schedule:
-    # 11:00 UTC = 07:00 ET, after the 03:00/04:00/05:00 routines have opened their PRs.
-    - cron: '0 11 * * *'
+    # Every 3 hours, not once at 11:00 UTC. A pass can merge any number of log-only PRs but only
+    # ONE that rebuilds pages: merging it puts every other derived PR behind, and those must be
+    # rebuilt and re-verified before they may merge. So capacity is one content PR per pass.
+    #
+    # Inflow is one content PR a night (daily-wave), plus a second on Mondays (weekly-discovery).
+    # Against a single daily pass that is exactly break-even on six days and short by one on the
+    # seventh — a Monday deficit that never clears, because tomorrow's pass spends its one content
+    # slot on tomorrow's wave. Eight passes a day clears the Monday double and absorbs a missed run
+    # without a human noticing.
+    #
+    # Cheap: the pass is idempotent, exits clean with nothing to do, and a gate() read costs ~14
+    # REST calls per open PR against GH_TOKEN's 5000/hr. Concurrency group `merge-authority`
+    # already serialises overlapping runs.
+    - cron: '0 */3 * * *'
   workflow_dispatch:
     inputs:
       execute:
