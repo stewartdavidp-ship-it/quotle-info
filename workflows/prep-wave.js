@@ -46,7 +46,14 @@ if (!VERIFIED_DATE || !DATE_MODIFIED) { console.error('ERROR: pass --verified-da
 // has reported. --allow-partial to override on a run where an agent genuinely died.
 require('./_journal').assertComplete(JOURNAL, { allowPartial: has('allow-partial'), label: 'generate journal' });
 
-const norm = (s) => String(s).toLowerCase().replace(/[’‘`"“”']/g, '').replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+// Quote/apostrophe ENTITIES must normalize exactly like their literal characters — DELETED, not
+// spaced. Agents write ogTitle in either form (house style is entities, but most emit ASCII), and
+// the generic `&[a-z]+;` → ' ' rule below is right for &ndash;/&mdash; and wrong for &rsquo;:
+// it turned "don&rsquo;t" into "don t" while a literal "don't" became "dont", so the two forms of
+// the SAME character could never match. r29 lost a complete, correct record that way — the Burke/
+// Santayana "doomed to repeat it" dossier was reported as an unmatched stub and would have shipped
+// the wave 39/40. Delete the quote entities FIRST, then let the generic rule handle the rest.
+const norm = (s) => String(s).toLowerCase().replace(/&(?:rsquo|lsquo|apos|quot|ldquo|rdquo|#8216|#8217|#39|#34);/g, '').replace(/[’‘`"“”']/g, '').replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
 // slugify lives in tools/slugify.js — generate.js inlines a verbatim copy (sandbox, no require).
 const { slugify, authorSlugOf } = require(path.join(__dirname, '..', 'tools', 'slugify.js'));
 
