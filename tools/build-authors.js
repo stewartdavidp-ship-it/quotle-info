@@ -40,7 +40,7 @@ const { CORPUS, records, songs: songRecords, authors, ERAS, UNDATED, eraOf } = r
 // ---- misattribution intelligence for author pages ----
 // Same slug function the records were built with — these keys are matched against author.slug.
 const { slugify: kebab } = require('./slugify');
-const { falseCredits } = require('./credits'); // creditedTo is a string OR an array — read it once, there
+const { falseCredits, namesCredit } = require('./credits'); // creditedTo is a string OR an array — read it once, there
 // "Often misattributed to X": disputed records whose creditedTo (the magnet name) is X, real author ≠ X.
 const misattrBy = {};
 for (const r of records) {
@@ -58,7 +58,7 @@ for (const r of records) {
   const explicitReal = r.answer && r.answer.realAuthorName;
   const real = explicitReal || (r.answer && r.answer.authorName) || 'Unknown';
   for (const credited of falseCredits(r)) {
-    (misattrBy[kebab(credited)] = misattrBy[kebab(credited)] || []).push({ slug: r.quoteSlug, quote: r.displayQuote, real });
+    (misattrBy[kebab(credited)] = misattrBy[kebab(credited)] || []).push({ slug: r.quoteSlug, quote: r.displayQuote, real, credited });
   }
 }
 // "Under review — pinned on X": queued backlog candidates grouped by magnet author.
@@ -74,9 +74,15 @@ try {
   }
 } catch (_) { /* backlog optional */ }
 
+// The "actually" kicker is the same contrast chrome /themes/ adds as "Really … &middot; not X", and it
+// stands down on the same records: when the real-author string already names this hub's author in its
+// own words, "actually Unknown — not Benjamin Franklin" repeats the heading directly above it, and
+// "actually Lao Tzu" under "Often misattributed to Lao Tzu" reads as a flat contradiction. One
+// predicate (namesCredit, in credits.js), two renderings — the chrome differs by surface, the rule
+// that decides whether to print it must not.
 const misattrCard = (m) => `                <a class="mis-card" href="/who-said/${m.slug}/">
                     <p class="mis-q">&ldquo;${esc(m.quote)}&rdquo;</p>
-                    <p class="mis-real"><span class="mis-lbl">actually</span> ${esc(m.real)}</p>
+                    <p class="mis-real">${namesCredit(m.real, m.credited) ? '' : '<span class="mis-lbl">actually</span> '}${esc(m.real)}</p>
                 </a>`;
 const REV_LABEL = { misattributed: 'Likely misattributed', disputed: 'Disputed', 'genuine-famous': 'Verifying' };
 // rel="nofollow" — /flagged/ is a noindex research-bench page and the site links 441 distinct
