@@ -61,6 +61,7 @@ jobs:
       # The gate's own fixtures, before it is trusted to decide anything live.
       - name: Self-test the decision and execution paths
         run: |
+          node tools/derived-paths.js --self-test
           node tools/merge-gate.js --self-test
           node tools/merge-run.js --self-test
 
