@@ -5,14 +5,28 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1254** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r29.** (Waves r6–r28 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
-- Harvest backlog: `data/harvest-queue.json` (committed) — 516 queued. **Track A was refilled 2026-07-30**
-  (harvest-only run, no ingest): 8 fresh magnet authors + 4 film titles, +107 candidates, taking
-  `misattributed` from 5 → **54** and `disputed` 96 → **120**. The rest is 328 `genuine-famous`,
-  7 `film-misquote`, 7 `scripture-misquote`. A Track A wave can draw ~40 without harvesting first.
+- **Corpus: 1297** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r30.** (Waves r6–r29 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- Harvest backlog: `data/harvest-queue.json` (committed) — 549 queued. **Track B was refilled 2026-08-03**
+  (harvest-only run, no ingest): 8 themes chosen for demand rather than gap-filling — gratitude,
+  friendship, money-wealth, discipline-habit, grief-loss, forgiveness, patience, nature. Six of those
+  had **no theme tag on the corpus at all**; gratitude (23) and friendship (33) were the two thinnest.
+  +76 candidates, 73 of them public-domain, taking `public-domain` from 100 → **173** and
+  `genuine-famous` 314 → **390**. The rest is 113 `disputed`, 32 `misattributed`, 7 `film-misquote`,
+  7 `scripture-misquote`. Ranked after syncing, and the new harvest took **25 of the top 30** demand
+  slots — leave it unranked and every one of them sorts LAST (the r29 lesson, step 1).
+  **Track A was refilled 2026-07-30** (+107 candidates: 8 magnet authors + 4 film titles).
+  Either track can draw ~40 without harvesting first.
 - **Who-wrote axis (`/who-wrote/`, added 2026-07-23):** the second music axis — "who WROTE this song?". Harvest is deterministic (`node workflows/harvest-who-wrote.js` scans the recording corpus → `data/who-wrote-queue.json`). ~14 records shipped (single-axis + dual-axis enrichment); ~78 dual-axis candidates queued. Recipe: the "Songs — the `/who-wrote/` axis" section below.
-- **Songs: next wave number s4 — but the backlog is EMPTY.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **0 queued**, 89 ingested, 1 dropped. **A new wave needs a `harvest-songs.js` run first** (step 0 of the song recipe). Digest: `data/song-queue.md`.
+- **Songs: next wave number s4, and the backlog is REFILLED.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **79 queued** (62 `high` / 17 `medium` confusion), 89 ingested, 1 dropped. Harvested 2026-08-03, all six veins, 11–15 each; all 79 were new because the run passed the 96 built-or-queued slugs as `exclude`. ~3 waves' worth. Digest: `data/song-queue.md`.
+  - **The agents' 108 rejections are NOT recorded anywhere, and the next harvest will re-derive them.**
+    `songs.js drop` only works on a song already IN the queue, and `sync` rejects a bare
+    `{title, why}` for missing required fields — so a harvest-time rejection has no home, even
+    though it is exactly the research the `dropReason` convention exists to keep. Wave s4's sweep
+    re-established that Little Red Rooster and Spoonful are famous AS covers, and that Whole Lotta
+    Love / The Lemon Song are out of scope (Zeppelin's IS the first recording under that title —
+    the dispute is over WRITING credit, a different axis). Closing this needs a real change to
+    `songs.js`, so it belongs on its own branch, not inside a harvest.
 
 > **Do not trust the three lines above** — they are hand-maintained and have been wrong before (they
 > read "1058 / r22 / 318 queued" while the real backlog was 451). The numbers that are *derived* and
