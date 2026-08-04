@@ -51,6 +51,18 @@ any work is done.
 
 It only reads. It fetches no secret, writes nothing, and does not touch git state.
 
+**ONE exception, added 2026-08-04 — the `local main sane` recovery.** If the only failures are
+`local main sane` (and, consequently, `git on main`) **and `tree clean` PASSED**, run the single
+command preflight names — `git checkout -B main origin/main` — then re-run preflight and continue
+only if it comes back green. Every other preflight failure is still a hard STOP and is not yours
+to fix.
+
+This **relaxes WHO acts, not WHAT is checked**: every check must still pass on the re-run, the tree
+must ALREADY be clean so nothing uncommitted is at risk, and the only thing discarded is a local
+`main` ref that is not an ancestor of `origin/main`. On 2026-08-04 exactly this state stopped the
+reports, review and report passes for a full day, and preflight's old remedy (`git checkout main`)
+would have made it worse by moving the tree onto the stale root.
+
 ## Pick the sample — the queue already ranks it
 
 ```bash

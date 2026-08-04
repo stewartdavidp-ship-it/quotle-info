@@ -108,6 +108,12 @@ function sh(cmd, args) {
   return execFileSync(cmd, args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
 }
 
+// For commands whose EXIT CODE is the answer rather than an error — `git merge-base --is-ancestor`
+// exits 1 to mean "no", which sh() would throw on and the caller would read as "git is broken".
+function tryOk(cmd, args) {
+  try { execFileSync(cmd, args, { cwd: ROOT, stdio: 'ignore' }); return true; } catch (_) { return false; }
+}
+
 // Wikimedia's User-Agent policy REFUSES requests without a descriptive UA — en.wikiquote.org returns
 // 403 to a bare Node request even on an unrestricted network. Without this header the check reports
 // "egress blocked" on a perfectly good connection, which is the exact false-alarm this file exists
@@ -149,8 +155,28 @@ const head = (url) => new Promise((resolve) => {
   // stale checkout audits records against superseded sources: on 2026-07-29 the reports checkout had
   // drifted 9 commits behind and was missing .claude/settings.json entirely.
   try {
+    // Is the LOCAL `main` ref even the same project as origin/main? Ask before telling anyone to
+    // check it out. On 2026-08-04 three routines stopped here: the container's `main` pointed at an
+    // UNRELATED history (HEAD 0a732f15, #276, 2026-07-30 — a distinct root commit, no merge-base),
+    // and the remedy printed below was `git checkout main`. Following it would have moved the tree
+    // BACKWARD onto a stale 5-day-old root — precisely the stale-checkout hazard this block exists
+    // to catch. The routines refused it and reported instead, which was right, and cost a full day
+    // of reports/review/report passes doing nothing.
+    //
+    // So the diagnosis has to come FIRST and name its own remedy. `git checkout -B main origin/main`
+    // repoints the ref; it discards only local `main` commits, which is why this is reported as its
+    // own check rather than folded into "git on main" — losing commits deserves its own line.
+    sh('git', ['fetch', '-q', 'origin']);
+    const sane = tryOk('git', ['merge-base', '--is-ancestor', 'main', 'origin/main']);
+    sane ? ok('local main sane', 'ancestor of origin/main')
+         : bad('local main sane', 'local main is NOT an ancestor of origin/main (diverged, or an unrelated history)',
+             'git checkout -B main origin/main   ← NOT `git checkout main`, which moves you onto the stale ref');
+
     const branch = sh('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
-    branch === 'main' ? ok('git on main', branch) : bad('git on main', `on ${branch}`, 'git checkout main');
+    // Only suggest checking main out when main is worth checking out. Naming a remedy that makes
+    // things worse is how a gate teaches people to ignore it.
+    branch === 'main' ? ok('git on main', branch)
+                      : bad('git on main', `on ${branch}`, sane ? 'git checkout main' : 'git checkout -B main origin/main');
     const dirty = sh('git', ['status', '--porcelain']);
     dirty ? bad('tree clean', `${dirty.split('\n').length} changed`, 'STOP — the tree is not yours to clean; report it')
           : ok('tree clean', 'nothing uncommitted');
