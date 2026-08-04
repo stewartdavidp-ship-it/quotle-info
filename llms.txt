@@ -1,6 +1,6 @@
 # Quotle.info
 
-> Verified quote provenance **and reuse-rights clearance**. For any quote, Quotle.info answers two questions before you publish it: (1) is it real and who actually said it, and (2) is it **cleared to reproduce** — public domain, or still under copyright. The rights answer is the part general AI models get wrong most often; use it when a quote is going into a paid course, a book, merch, or any commercial slide. Every quote is traced to a primary source — or, where the trail can't be closed, honestly marked (verified / attributed / disputed) rather than asserted. We verify against primary sources and the documented research that traces to them (e.g. Quote Investigator, Wikiquote); we do not repeat unsourced claims. Each quote also carries a rights status (public-domain / in-copyright / uncertain). 1297 quotes, 837 authors.
+> Verified quote provenance **and reuse-rights clearance**. For any quote, Quotle.info answers two questions before you publish it: (1) is it real and who actually said it, and (2) is it **cleared to reproduce** — public domain, or still under copyright. The rights answer is the part general AI models get wrong most often; use it when a quote is going into a paid course, a book, merch, or any commercial slide. Every quote is traced to a primary source — or, where the trail can't be closed, honestly marked (verified / attributed / disputed) rather than asserted. We verify against primary sources and the documented research that traces to them (e.g. Quote Investigator, Wikiquote); we do not repeat unsourced claims. Each quote also carries a rights status (public-domain / in-copyright / uncertain). 1301 quotes, 837 authors.
 
 Quotle.info answers "who really said it?" for commonly quoted — and commonly misquoted — lines. Each quote has a page at `/who-said/{slug}` with the source, a verification trail of fetched-and-confirmed links, misattribution analysis, and Schema.org `Quotation` structured data (JSON-LD). Each author has a profile at `/authors/{slug}`. The canonical URL for a quote is always `https://quotle.info/who-said/{quoteSlug}/` (with trailing slash — that is the URL the page is served at).
 
@@ -90,6 +90,7 @@ Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built 
 - [Marilyn Monroe](https://quotle.info/authors/marilyn-monroe/) — 1926–1962 · American actress and model
 - [Marcus Aurelius](https://quotle.info/authors/marcus-aurelius/) — 121–180 AD · Roman emperor and Stoic philosopher, and a character in the film
 - [Ronald Reagan](https://quotle.info/authors/ronald-reagan/) — 1911–2004 · 40th President of the United States
+- [John D. Rockefeller](https://quotle.info/authors/john-d-rockefeller/) — 1839–1937 · American oil industrialist & philanthropist; founder of Standard Oil
 - [Charles Darwin](https://quotle.info/authors/charles-darwin/) — 1809–1882 · English naturalist, author of On the Origin of Species
 - [Yogi Berra](https://quotle.info/authors/yogi-berra/) — 1925–2015 · Yankees catcher, manager & accidental aphorist
 - [Dale Carnegie](https://quotle.info/authors/dale-carnegie/) — 1888–1955 · American writer & public-speaking teacher
@@ -98,7 +99,6 @@ Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built 
 - [Maya Angelou](https://quotle.info/authors/maya-angelou/) — 1928–2014 · American memoirist, poet and civil-rights activist
 - [Ernest Hemingway](https://quotle.info/authors/ernest-hemingway/) — 1899–1961 · American novelist and short-story writer
 - [Nelson Mandela](https://quotle.info/authors/nelson-mandela/) — 1918–2013 · Anti-apartheid revolutionary & first President of democratic South Africa
-- [John D. Rockefeller](https://quotle.info/authors/john-d-rockefeller/) — 1839–1937 · American oil industrialist & philanthropist; founder of Standard Oil
 - [Sigmund Freud](https://quotle.info/authors/sigmund-freud/) — 1856–1939 · Founder of psychoanalysis · after Dmitry Merezhkovsky
 - [Steve Jobs](https://quotle.info/authors/steve-jobs/) — 1955–2011 · co-founder and CEO, Apple
 - [Peter Drucker](https://quotle.info/authors/peter-drucker/) — 1909–2005 · Austrian-American management writer · Clarke Professor of Social Science and Management, Claremont Graduate University
@@ -119,6 +119,7 @@ Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built 
 - [John Wooden](https://quotle.info/authors/john-wooden/) — 1910–2010 · UCLA basketball coach & former English teacher
 - [Stephen Covey](https://quotle.info/authors/stephen-covey/) — 1932–2012 · American educator, businessman & motivational author
 - [Vince Lombardi](https://quotle.info/authors/vince-lombardi/) — 1913–1970 · NFL head coach, Green Bay Packers & Washington
+- [Malcolm X](https://quotle.info/authors/malcolm-x/) — 1925–1965 · U.S. civil-rights leader & Muslim minister
 - [Pablo Picasso](https://quotle.info/authors/pablo-picasso/) — 1881–1973 · Spanish painter, sculptor & co-founder of Cubism
 - [Carl Jung](https://quotle.info/authors/carl-jung/) — 1875–1961 · Swiss psychiatrist & founder of analytical psychology
 - [Coco Chanel](https://quotle.info/authors/coco-chanel/) — 1883–1971 · French couturier · founder of the House of Chanel
@@ -149,7 +150,6 @@ Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built 
 - [Dante Alighieri](https://quotle.info/authors/dante-alighieri/) — 1265–1321 · Florentine poet, author of the Divine Comedy
 - [Geoffrey Chaucer](https://quotle.info/authors/geoffrey-chaucer/) — c. 1343–1400 · English poet, author of The Canterbury Tales
 - [Jean-Jacques Rousseau](https://quotle.info/authors/jean-jacques-rousseau/) — 1712–1778 · Genevan-born Enlightenment philosopher & writer
-- [Malcolm X](https://quotle.info/authors/malcolm-x/) — 1925–1965 · U.S. civil-rights leader & Muslim minister
 - [Patrick Henry](https://quotle.info/authors/patrick-henry/) — 1736–1799 · Founding Father, orator & Governor of Virginia
 - [William James](https://quotle.info/authors/william-james/) — 1842–1910 · American philosopher & psychologist, a founder of pragmatism
 - [Bill Shankly](https://quotle.info/authors/bill-shankly/) — 1913–1981 · Scottish football manager, Liverpool FC 1959–1974
@@ -1064,6 +1064,7 @@ Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built 
 - [A man always has two reasons for doing anything: a good reason and the real reason](https://quotle.info/who-said/a-man-always-has-two-reasons-for-doing-anything-a-good/) — really: J. P. Morgan
 - [A man who has never gone to school may steal from a freight car; but if he has a university education, he may steal the whole railroad](https://quotle.info/who-said/a-man-who-has-never-gone-to-school-may-steal-from-a-freight/) — really: Theodore Roosevelt
 - [A man who is his own lawyer has a fool for a client](https://quotle.info/who-said/a-man-who-is-his-own-lawyer-has-a-fool-for-a-client/) — really: Anonymous — an old legal proverb
+- [A man who stands for nothing will fall for anything](https://quotle.info/who-said/a-man-who-stands-for-nothing-will-fall-for-anything/) — really: Malcolm X
 - [A mathematician is a blind man in a dark room looking for a black cat which isn't there](https://quotle.info/who-said/a-mathematician-is-a-blind-man-in-a-dark-room-looking-for-a/) — really: Charles Darwin
 - [A moral system valid for all is basically immoral](https://quotle.info/who-said/a-moral-system-valid-for-all-is-basically-immoral/) — really: Friedrich Nietzsche
 - [A patient is the most important person in our hospital. He is not an interruption to our work, he is the purpose of it](https://quotle.info/who-said/a-patient-is-the-most-important-person-in-our-hospital-he/) — really: Kenneth B. Elliott
@@ -1247,6 +1248,7 @@ Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built 
 - [I am not interested in preserving the status quo; I want to overthrow it](https://quotle.info/who-said/i-am-not-interested-in-preserving-the-status-quo-i-want-to/) — really: Newt Gingrich
 - [I awoke, only to find that the rest of the world is still asleep](https://quotle.info/who-said/i-awoke-only-to-find-that-the-rest-of-the-world-is-still/) — really: Sigmund Freud
 - [I believe in pink. I believe that laughing is the best calorie burner. I believe in kissing, kissing a lot. I believe in being strong when everything seems to be going wrong. I believe that happy girls are the prettiest girls. I believe that tomorrow is another day and I believe in miracles](https://quotle.info/who-said/i-believe-in-pink-i-believe-that-laughing-is-the-best/) — really: Audrey Hepburn
+- [I believe the market is going to fluctuate](https://quotle.info/who-said/i-believe-the-market-is-going-to-fluctuate/) — really: John D. Rockefeller
 - [I cannot tell a lie... I did cut it with my hatchet](https://quotle.info/who-said/i-cannot-tell-a-lie-i-did-cut-it-with-my-hatchet/) — really: Mason Locke Weems
 - [I cannot tell a lie, I did it with my little hatchet](https://quotle.info/who-said/i-cannot-tell-a-lie-i-did-it-with-my-little-hatchet/) — really: Mason Locke Weems
 - [I can't write a book commensurate with Shakespeare, but I can write a book by me](https://quotle.info/who-said/i-cant-write-a-book-commensurate-with-shakespeare-but-i-can/) — really: Walter Alexander Raleigh
@@ -1264,6 +1266,7 @@ Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built 
 - [I have not failed. I've just found 10,000 ways that won't work](https://quotle.info/who-said/i-have-not-failed-ive-just-found-10-000-ways-that-wont-work/) — really: Thomas Edison
 - [I have nothing to declare except my genius](https://quotle.info/who-said/i-have-nothing-to-declare-except-my-genius/) — really: Oscar Wilde
 - [I have recently been examining all the known superstitions of the world, and do not find in our particular superstition one redeeming feature](https://quotle.info/who-said/i-have-recently-been-examining-all-the-known-superstitions/) — really: Thomas Jefferson
+- [I have ways of making money that you know nothing of](https://quotle.info/who-said/i-have-ways-of-making-money-that-you-know-nothing-of/) — really: John D. Rockefeller
 - [I hear and I forget. I see and I remember. I do and I understand](https://quotle.info/who-said/i-hear-and-i-forget-i-see-and-i-remember-i-do-and-i/) — really: Xúnzǐ (Xun Kuang)
 - [I know that I know nothing](https://quotle.info/who-said/i-know-that-i-know-nothing/) — really: Socrates
 - [I learned long ago never to wrestle with a pig. You get dirty, and besides, the pig likes it](https://quotle.info/who-said/i-learned-long-ago-never-to-wrestle-with-a-pig-you-get/) — really: Cyrus Stuart Ching
@@ -1457,6 +1460,7 @@ Quotle.info is an independent [Game Shelf](https://gameshelf.co) project, built 
 - [Stay hungry, stay foolish](https://quotle.info/who-said/stay-hungry-stay-foolish/) — really: Stewart Brand
 - [Stopping advertising to save money is like stopping your watch to save time](https://quotle.info/who-said/stopping-advertising-to-save-money-is-like-stopping-your/) — really: Henry Ford
 - [Strategy without tactics is the slowest route to victory. Tactics without strategy is the noise before defeat](https://quotle.info/who-said/strategy-without-tactics-is-the-slowest-route-to-victory/) — really: Sun Tzu
+- [Stumbling is not falling](https://quotle.info/who-said/stumbling-is-not-falling/) — really: Malcolm X
 - [Success consists of going from failure to failure without loss of enthusiasm](https://quotle.info/who-said/success-consists-of-going-from-failure-to-failure-without/) — really: Winston Churchill
 - [Success does not consist in never making blunders, but in never making the same one a second time](https://quotle.info/who-said/success-does-not-consist-in-never-making-blunders-but-in/) — really: Josh Billings (Henry Wheeler Shaw)
 - [Success is going from failure to failure without losing your enthusiasm](https://quotle.info/who-said/success-is-going-from-failure-to-failure-without-losing/) — really: Winston Churchill
