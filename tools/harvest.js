@@ -356,7 +356,22 @@ function printSummary(data) {
   console.log(`  digest → ${path.relative(ROOT, DIGEST)}`);
 }
 
+// ---- shared with other tools -------------------------------------------------------------------
+// `save` is the ONLY correct way to write data/harvest-queue.json: it applies sortCandidates,
+// recomputes the derived `meta` counts, and rewrites the digest and backlog-index alongside. Any
+// other writer produces a file that the next harvest.js command silently reorders.
+//
+// This is exported because rank-backlog.js used to write the queue with a bare fs.writeFileSync and
+// therefore did none of that. A harvest-only run ends right after ranking, so its non-canonical
+// order got COMMITTED, and the next `harvest.js report` rewrote three files — which is how PR #336
+// happened and why CI went red once. One writer, one order.
+module.exports = { loadBacklog, save, sortCandidates };
+
 // ---- dispatch ----
+// Guarded, so requiring this module for `save` does not also run the CLI. Without the guard a
+// `require` with no argv lands on `case undefined` — the report branch — and rewrites the queue as
+// an import side effect.
+if (require.main === module) {
 const [cmd, ...rest] = process.argv.slice(2);
 switch (cmd) {
   case 'sync': if (!rest.length) { console.error('usage: sync <harvest-output.json> [...]'); process.exit(1); } cmdSync(rest); break;
@@ -368,4 +383,5 @@ switch (cmd) {
   case 'votes': cmdVotes(rest); break;
   case 'report': case undefined: { const d = loadBacklog(); save(d); printSummary(d); break; }
   default: console.error(`unknown command: ${cmd}\nsee header of tools/harvest.js for usage`); process.exit(1);
+}
 }

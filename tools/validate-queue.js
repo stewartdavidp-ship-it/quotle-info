@@ -71,8 +71,34 @@ for (const c of candidates) {
   }
 }
 
+// ---- CANONICAL ORDER -----------------------------------------------------------------------
+// Not a safety check, but the same failure shape: a queue written by something other than
+// harvest.js's save() looks fine and then churns. rank-backlog.js wrote the file with a bare
+// fs.writeFileSync for months — no sortCandidates, no refreshed meta, no digest — so a harvest-only
+// run committed a non-canonical order and the next harvest.js command rewrote three files. That was
+// invisible until CI failed on it (PR #336).
+//
+// Checked HERE because this gate already runs inside build.js, so a future bypass fails the build
+// with no new wiring. Compares against the real sort rather than a copy of it — a second
+// implementation would be a second answer to one question.
+try {
+  const { sortCandidates } = require('./harvest');
+  const before = candidates.map((c) => c.slug).join('\n');
+  const copy = candidates.slice();
+  sortCandidates(copy);
+  if (copy.map((c) => c.slug).join('\n') !== before) {
+    const at = copy.findIndex((c, i) => c.slug !== candidates[i].slug);
+    problems.push(
+      `harvest-queue.json is NOT in canonical order (first difference at index ${at}: ` +
+      `expected "${(copy[at] || {}).slug}", found "${(candidates[at] || {}).slug}"). ` +
+      'Something wrote it without harvest.js save(). Fix: node tools/harvest.js report');
+  }
+} catch (e) {
+  problems.push(`could not check canonical order — ${e.message}`);
+}
+
 if (problems.length) {
-  console.error(`\n  ✗ validate-queue: ${problems.length} unsafe value(s) in the harvest queue — these render into public pages:\n`);
+  console.error(`\n  ✗ validate-queue: ${problems.length} problem(s) in the harvest queue — it renders into public pages:\n`);
   problems.slice(0, 25).forEach((p) => console.error(`     - ${p}`));
   if (problems.length > 25) console.error(`     … and ${problems.length - 25} more`);
   process.exit(1);
