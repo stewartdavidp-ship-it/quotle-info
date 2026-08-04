@@ -20,8 +20,9 @@
  *
  * Commands
  *   node tools/songs.js sync  <harvest-output.json> [...]   append new candidates (dedup vs built
- *                                                           records + backlog), sweep built ones to
- *                                                           'ingested', rebuild digest
+ *                                                           records + backlog), record the agents'
+ *                                                           `dropped` + `contested` lists, sweep
+ *                                                           built ones to 'ingested', rebuild digest
  *   node tools/songs.js select <N> [--wave sN] [--confusion high] [--vein blues]
  *                                                           mark the top-N queued as 'selected'
  *   node tools/songs.js unselect [--wave sN]                revert selected → queued
@@ -37,6 +38,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { slugify } = require('./slugify');
 
 const ROOT = path.resolve(__dirname, '..');
 const SONGS_DIR = path.join(ROOT, 'data', 'songs');
@@ -156,6 +158,7 @@ function cmdSync(inputs) {
   }
 
   let added = 0, dupBuilt = 0, dupQueue = 0, rejected = 0;
+  let dropped = 0, dupDrop = 0, caveats = 0, caveatMiss = 0, caveatDup = 0;
   const problems = [];
   for (const src of inputs) {
     const raw = JSON.parse(fs.readFileSync(src, 'utf8'));
@@ -207,11 +210,84 @@ function cmdSync(inputs) {
       };
       data.songs.push(rec); bySlug.set(slug, rec); byPair.set(pair, rec); added++;
     }
+
+    // ---- the agents' REJECTIONS -------------------------------------------------------------
+    // A harvest agent returns three lists, and until 2026-08-04 sync read only the first. The other
+    // two were discarded at the door, so every sweep re-derived the same negative results: the s4
+    // run re-established that Little Red Rooster and Spoonful are famous AS covers, and that Whole
+    // Lotta Love is out of scope (Zeppelin's IS the first recording under that title — the dispute
+    // is over WRITING credit, a different axis). Higher Ground is the counter-example that proves
+    // recording them works: it is the one drop that WAS persisted, and the s4 agent saw the reason
+    // and refused to resurface it.
+    //
+    // A drop is a lead that FAILED, not a half-formed candidate, so REQUIRED does not apply — the
+    // agent has a title and a reason and nothing else. It still earns a queue entry, because the
+    // exclude list the harvest is called with maps EVERY song regardless of status, so a recorded
+    // drop is skipped by the next sweep with no change to harvest-songs.js at all.
+    for (const d of listOf(raw, 'dropped')) {
+      const title = String((d && d.title) || '').trim();
+      const why = String((d && d.why) || '').trim();
+      if (!title || !why) { problems.push(`${src}: dropped entry missing title or why`); rejected++; continue; }
+      const slug = slugify(title);
+      if (!slug) { problems.push(`${src}: dropped "${title}" slugifies to nothing`); rejected++; continue; }
+      // Never let a drop overwrite a real candidate or a built record. An agent dropping a title
+      // that another vein queued is a disagreement to leave alone, not to resolve by deletion.
+      if (built.has(slug) || bySlug.has(slug)) { dupDrop++; continue; }
+      const rec = {
+        songSlug: slug, title, status: 'dropped', dropReason: why,
+        wave: null, harvestedFrom: path.basename(src), harvestedOn: today(),
+      };
+      data.songs.push(rec); bySlug.set(slug, rec); dropped++;
+    }
+
+    // ---- the agents' UNRESOLVED AMBIGUITIES --------------------------------------------------
+    // `contested` is NOT drop research, which is what it looks like sitting next to `dropped`. Most
+    // of these describe songs that are QUEUED — an ambiguity the agent could not settle and is
+    // handing forward (Oh Carolina: "the two Wikipedia pages disagree on the date and do not
+    // reconcile"). Losing them means the researcher either re-derives the ambiguity or, worse,
+    // does not, and the page asserts a clean date the sources contradict. They ride on the
+    // candidate as `caveats` and reach the researcher through cmdBatch.
+    for (const note of listOf(raw, 'contested')) {
+      const m = /^\s*(?:\[([a-z]+)\]\s*)?([^—]+)—\s*(.+)$/s.exec(String(note || ''));
+      if (!m) { caveatMiss++; continue; }
+      const target = matchSong(bySlug, data.songs, m[2].trim());
+      if (!target) { caveatMiss++; continue; }
+      // Idempotent, like every other branch of sync: re-running the same harvest file must not
+      // append the same note twice. (It did — a second sync took 45 caveats to 90.)
+      const text = m[3].trim().replace(/\s+/g, ' ');
+      target.caveats = target.caveats || [];
+      if (target.caveats.includes(text)) { caveatDup++; continue; }
+      target.caveats.push(text);
+      caveats++;
+    }
   }
   save(data);
   console.log(`sync: +${added} new · dropped ${dupBuilt} already-built + ${dupQueue} already-queued · swept ${swept} → ingested${rejected ? ` · REJECTED ${rejected}` : ''}`);
+  console.log(`      +${dropped} rejection(s) recorded${dupDrop ? ` (${dupDrop} already known)` : ''} · +${caveats} caveat(s) attached${caveatDup ? ` (${caveatDup} already present)` : ''}${caveatMiss ? ` (${caveatMiss} matched no song — not discarded silently, look at them)` : ''}`);
   if (problems.length) { console.log('rejected candidates:'); problems.forEach((p) => console.log(`  ✗ ${p}`)); }
   printSummary(data);
+}
+
+// A contested note names its song in prose, so the title will not always slug to the queue's slug —
+// "Where Did You Sleep Last Night / In the Pines" is one entry naming two titles, and a parenthetical
+// year ("Blue Velvet (1951)") is common. Try the exact slug, then the first of a slashed pair, then
+// a normalised prefix match, and give up rather than guess.
+function matchSong(bySlug, songs, title) {
+  const tries = [title, title.split('/')[0], title.replace(/\s*\([^)]*\)\s*$/, '')];
+  for (const t of tries) {
+    const hit = bySlug.get(slugify(t.trim()));
+    if (hit) return hit;
+  }
+  const n = norm(title);
+  return songs.find((s) => n === norm(s.title) || n.startsWith(norm(s.title) + ' ')) || null;
+}
+
+// Read one of the harvest return's three lists, tolerating the Workflow envelope the way the
+// candidate reader above already does.
+function listOf(raw, key) {
+  if (Array.isArray(raw && raw[key])) return raw[key];
+  if (raw && raw.result && Array.isArray(raw.result[key])) return raw.result[key];
+  return [];
 }
 
 function parseFlags(args) {
@@ -262,11 +338,16 @@ function cmdBatch(args) {
   // researcher is not starting from a bare string: the harvest already established who recorded it
   // first, in what year, on what label, and gave a verified source. Re-deriving that per agent
   // would both waste the harvest and invite a different answer than the queue was reviewed on.
+  // `caveats` carries the harvest's UNRESOLVED questions about this song (see cmdSync). Same
+  // argument as the rest of the lead, one step further: re-deriving what the harvest already
+  // established wastes it, and re-deriving what the harvest could NOT establish invites a
+  // confident answer where the sources do not support one.
   const items = sel.map((c) => ({
     songSlug: c.songSlug, title: c.title, creditedTo: c.creditedTo,
     originalArtist: c.originalArtist, originalYear: c.originalYear, originalLabel: c.originalLabel || '',
     writer: c.writer, coverArtist: c.coverArtist, coverYear: c.coverYear,
     confusion: c.confusion, whyNotable: c.whyNotable, sources: c.sources,
+    ...(c.caveats && c.caveats.length ? { caveats: c.caveats } : {}),
   }));
   const out = f.out || path.join(ROOT, 'data', `.song-batch${f.wave ? '-' + f.wave : ''}.json`);
   fs.writeFileSync(out, JSON.stringify(items, null, 2) + '\n');
