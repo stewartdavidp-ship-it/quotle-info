@@ -21,14 +21,23 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   Either track can draw ~40 without harvesting first.
 - **Who-wrote axis (`/who-wrote/`, added 2026-07-23):** the second music axis — "who WROTE this song?". Harvest is deterministic (`node workflows/harvest-who-wrote.js` scans the recording corpus → `data/who-wrote-queue.json`). ~14 records shipped (single-axis + dual-axis enrichment); ~78 dual-axis candidates queued. Recipe: the "Songs — the `/who-wrote/` axis" section below.
 - **Songs: next wave number s4, and the backlog is REFILLED.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **79 queued** (62 `high` / 17 `medium` confusion), 89 ingested, 1 dropped. Harvested 2026-08-03 across all six veins, 11–15 each; **all 79 were new** because the run passed the 96 built-or-queued slugs as `exclude`, so no agent spent budget re-finding Tainted Love. ~3 waves' worth. Digest: `data/song-queue.md`.
-  - **The 108 candidates the agents REFUSED are recorded nowhere, and the next sweep will re-derive
-    them.** `songs.js drop` only acts on a song already IN the queue, and `sync` rejects a bare
-    `{title, why}` for missing required fields — so a harvest-TIME rejection has no home, even though
-    it is exactly the research the `dropReason` convention exists to preserve. This sweep re-established
-    that Little Red Rooster and Spoonful are famous AS covers, and that Whole Lotta Love / The Lemon
-    Song are out of scope (Zeppelin's IS the first recording under that title — the dispute is over
-    WRITING credit, a different axis). Closing this needs a real `songs.js` change, so it belongs on
-    its own branch, not smuggled into a harvest.
+  - **`sync` now records what the agents REJECTED, not just what they queued** (2026-08-04). A
+    harvest returns three lists and sync used to read only `candidates`, so every sweep re-derived
+    the same negative results. Both other lists are now persisted:
+    - **`dropped`** → a queue entry with `status:'dropped'` + `dropReason`, slug from `tools/slugify.js`.
+      `REQUIRED` deliberately does not apply: a drop is a lead that FAILED, and the agent has only a
+      title and a reason. This needs no change to `harvest-songs.js`, because the `exclude` one-liner
+      maps EVERY song regardless of status — so a recorded drop is skipped by the next sweep for free.
+      Higher Ground is the proof this works: it is the one drop that was already persisted, and the
+      s4 agent read the reason and refused to resurface it.
+    - **`contested`** → `caveats[]` on the matching candidate, carried through `batch` into the
+      generator prompt. These are NOT drop research (which is what they look like sitting next to
+      `dropped`) — most describe QUEUED songs, and they are the ambiguity the harvest could not
+      settle. `generate-songs.js` is told to resolve each or set `confidence:"disputed"`, because a
+      caveat that vanishes silently is how a page asserts a date its own sources contradict.
+    A rejection that matches an existing song is never allowed to overwrite it, and re-running the
+    same file is idempotent. Notes matching no song are COUNTED in the output rather than dropped
+    silently — look at them.
 
 > **Do not trust the three lines above** — they are hand-maintained and have been wrong before (they
 > read "1058 / r22 / 318 queued" while the real backlog was 451). The numbers that are *derived* and
