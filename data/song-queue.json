@@ -3,11 +3,11 @@
   "note": "Song-misattribution backlog for /who-recorded/. Candidates: a cover mistaken for the ORIGINAL recording. Harvested 2026-07-22 (Wikipedia-verified), deduped; second harvest 2026-07-22 added 63 candidates across six veins (blues/British-invasion, soul-Motown, country-folk, reggae-ska, film-TV sync, standards & foreign-language). Tainted Love is already BUILT (data/songs/) — not listed. Build high-confusion first. Each becomes a data/songs/{songSlug}.json record modeled on tainted-love.json.",
   "description": "Song-misattribution backlog for /who-recorded/. A cover mistaken for the ORIGINAL recording. Managed by tools/songs.js — do not hand-edit counts. Lifecycle: queued → selected → ingested (or dropped).",
   "updated": "2026-08-04",
-  "total": 169,
+  "total": 271,
   "queued": 79,
   "selected": 0,
   "ingested": 89,
-  "dropped": 1,
+  "dropped": 103,
   "queuedByConfusion": {
    "high": 62,
    "medium": 17
@@ -33,7 +33,10 @@
    "vein": "blues",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "J.J. Cale re-recorded his own song for Naturally (1971) after Clapton's 1970 hit, releasing it as a single in 1972 (No. 42). The Cale version most listeners have heard is therefore not the 1966 Liberty original."
+   ]
   },
   {
    "songSlug": "angel-from-montgomery",
@@ -76,7 +79,10 @@
    "vein": "soul",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the 1941/1942 distinction matters. Glenn Miller's orchestra performed it in Sun Valley Serenade in 1941 (the vocal was cut from the release print; Pat Friday dubbed Lynn Bari), made unreleased recordings in 1941, and the vocal arrangement resurfaced in Orchestra Wives in 1942. The RELEASED studio recording with Ray Eberle is May 20, 1942 on RCA Victor, which is the year given above."
+   ]
   },
   {
    "songSlug": "black-betty",
@@ -97,7 +103,10 @@
    "vein": "country",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Lead Belly is the usual answer and is wrong. The earliest known recording is the December 1933 Lomax field recording of Iron Head and Clear Rock at Sugar Land, Texas; Lead Belly's commercial Musicraft version is 1939."
+   ]
   },
   {
    "songSlug": "blue-velvet",
@@ -118,7 +127,10 @@
    "vein": "standards",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the \"original\" is genuinely disputed. Wikipedia says Tony Bennett recorded it first, on 17 July 1951 (Columbia, released 21 September 1951), but that Arthur Prysock's Decca version, cut about a week after Bennett's session, \"evidently was the first version released, in August 1951.\" First recorded and first released are different artists. I have listed Prysock as originalArtist on the first-released reading; the page should present both and say which test it is applying."
+   ]
   },
   {
    "songSlug": "call-me-the-breeze",
@@ -288,7 +300,10 @@
    "vein": "sync",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the credit was contested in court, not just in public memory. The December 1972 single was credited to Eric Weissberg alone although Steve Mandell arranged and performed it with him, and Arthur Smith received no composer credit from the filmmakers until he sued and won songwriting credit plus royalties."
+   ]
   },
   {
    "songSlug": "evil-ways",
@@ -330,7 +345,10 @@
    "vein": "soul",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Jean DuShon (Cadet, October 1966) is the first RELEASED version, not the first recorded. Wikipedia records a Connie Haines recording made at Motown in July 1965 that stayed unreleased until 2015, and a Barbara McNair recording made in October 1965 and issued on an album in November 1966. Whoever the page names, it is not Stevie Wonder."
+   ]
   },
   {
    "songSlug": "georgia-on-my-mind",
@@ -458,7 +476,10 @@
    "vein": "blues",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "authorship is disputed three ways: Billy Roberts copyrighted it in 1962, Dino Valenti separately copyrighted it in Los Angeles, and Len Partridge claimed he co-wrote it with Roberts in 1956. Roberts performed it in the late 1950s and early 1960s but no commercial recording by him preceded The Leaves. The Leaves also cut three versions; the November/December 1965 release flopped and the third, in 1966, was the hit."
+   ]
   },
   {
    "songSlug": "hush",
@@ -500,7 +521,10 @@
    "vein": "soul",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "three-way, and the three orderings disagree. Wikipedia states the Miracles made the first known recording on August 6, 1966 (unreleased until the Special Occasion album in August 1968); Marvin Gaye recorded second, February 3 to April 10, 1967, but released third, October 30, 1968; Gladys Knight & the Pips recorded third, June 17, 1967, but were the FIRST RELEASED, September 28, 1967. The record proposed above names the Miracles as first-recorded, which is what the source says; an editor may prefer to name Gladys Knight as first-released instead."
+   ]
   },
   {
    "songSlug": "i-just-want-to-make-love-to-you",
@@ -606,7 +630,10 @@
    "vein": "standards",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Edgar Hayes and His Orchestra (Decca, 1938) is, per Wikipedia, \"the first recording under the name 'In the Mood'\", but the melody is older: Wingy Manone \"recorded 'Tar Paper Stomp' on August 28, 1930, in Richmond, Indiana, and released it as a 78 single for Champion Records\", and Manone is credited as composer on \"In the Mood\". So the earliest recording of the tune is 1930 under a different title, nine years before Glenn Miller — that is the strongest fact in the candidate and should carry the caveat that it is a different title, not a different take."
+   ]
   },
   {
    "songSlug": "istanbul-not-constantinople",
@@ -669,7 +696,10 @@
    "vein": "soul",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the usual 'correction' to Betty Everett (Vee-Jay, 1964) is itself wrong: Merry Clayton's Capitol single came out June 10, 1963. A third contender, Ramona King on Warner Bros., was released in February 1964, the week BEFORE Everett's, which is the actual reason Vee-Jay retitled Everett's record 'The Shoop Shoop Song'. Three claimants inside nine months."
+   ]
   },
   {
    "songSlug": "leaving-on-a-jet-plane",
@@ -755,7 +785,10 @@
    "vein": "sync",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "an inverted case worth writing up as such: the Muppet Show exposure drove Piero Umiliani's OWN 1968 original to No. 8 in the UK in 1977, while The Muppet Show soundtrack album went to No. 1. The composer charted on the back of the cover that displaced him."
+   ]
   },
   {
    "songSlug": "man-of-constant-sorrow",
@@ -776,7 +809,10 @@
    "vein": "sync",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Emry Arthur's 18 January 1928 Vocalion side is the earliest COMMERCIALLY RELEASED recording, but Wikipedia notes Dick Burnett recorded the song for Columbia in 1927 and that version was never released. So the usual 'first recording' answer is only first-issued. Authorship is separately uncertain: the song is traditional and Wikipedia does not settle a writer."
+   ]
   },
   {
    "songSlug": "midnight-train-to-georgia",
@@ -798,7 +834,10 @@
    "vein": "soul",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Cissy Houston (Janus, 1973) is the first recording under this title, but Jim Weatherly wrote and recorded it first as 'Midnight Plane to Houston' for Jimmy Bowen's Amos Records. Wikipedia gives NO year for the Weatherly recording, so no year is asserted here and none should be added without a source; a search result mentioned a 1972 RCA Victor self-titled album but that was not confirmed on a page I fetched."
+   ]
   },
   {
    "songSlug": "misirlou",
@@ -819,7 +858,10 @@
    "vein": "sync",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the folk melody's author 'is not known', yet Nicholas Roubanis, a Greek-American music instructor, credited himself as composer on a 1941 jazz instrumental arrangement, and because the claim was never legally challenged he 'is still officially credited as the composer today worldwide, except in Greece where credit is given to either Roubanis or Patrinos'. The earliest known recording is Theodotos Demetriades, 1927, Columbia — but the piece was already being played by Arabic, Greek rebetiko and Jewish klezmer musicians in the Ottoman Eastern Mediterranean by the 1920s, so even 1927 is 'earliest known', not 'first'."
+   ]
   },
   {
    "songSlug": "my-boy-lollipop",
@@ -840,7 +882,10 @@
    "vein": "reggae",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "this is the earlier-recording case rather than a contested one, and it is the best find in the set. The recording almost universally called the original, Millie Small's 1964 ska hit, is a cover of Barbie Gaye's 1956 Darl single. Authorship is genuinely contested: Wikipedia states the song was written by Robert Spencer of the Cadillacs but that Morris Levy and Johnny Roberts listed themselves as authors, with Levy claiming Robert Spencer was a pseudonym of his own."
+   ]
   },
   {
    "songSlug": "now-that-we-found-love",
@@ -861,7 +906,10 @@
    "vein": "soul",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "'the original' has two competing wrong answers depending on the listener's generation. Third World's 1978 Island version is taken as the original by UK and reggae listeners; Heavy D & the Boyz's 1991 version is taken as the original by a later audience that often assumes Third World's is itself the cover. The actual first recording, the O'Jays' 1973 Ship Ahoy track, is named by almost nobody. Whichever cover act the page leads with, the other should be addressed."
+   ]
   },
   {
    "songSlug": "oh-carolina",
@@ -883,7 +931,10 @@
    "vein": "reggae",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the two Wikipedia pages disagree on the date and do not reconcile. The song article says the Folkes Brothers recorded it in 1958 with the single released in 1960; the Prince Buster article says Buster produced it in 1961 on his Wild Bells label before it was licensed to Melodisc and issued on Blue Beat in the UK. I have used 1960 (the release year given on the song page) but this must be resolved against a discography before the record is written — this is exactly the Jamaican dating problem the vein warns about. Authorship is separately contested and resolved: the label credited producer Prince Buster, Buster claimed he wrote it, and John Folkes's claim was upheld in the UK High Court in 1994."
+   ]
   },
   {
    "songSlug": "one-step-beyond",
@@ -927,7 +978,10 @@
    "vein": "blues",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "first-recorded and first-released are different artists. Elmore James recorded it with producer Bobby Robinson at Beltone Studios in late 1960 but it went unissued until 1965, after his death, on Sphere Sound; Sonny Boy Williamson II recorded 8 September 1961 and Checker released January 1962. Wikipedia calls it \"a spontaneous composition by Williamson\" while also noting commentary that the two, who performed together early on, may have been co-writers. The candidate above lists Williamson as originalArtist on first-release grounds; a page should carry the James session."
+   ]
   },
   {
    "songSlug": "oye-como-va",
@@ -991,7 +1045,10 @@
    "vein": "country",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Waylon Jennings recorded it first, in 1966, but the first COMMERCIAL release was Johnny Darrell's 1967 United Artists single (No. 9 country). First-recorded and first-released are different artists here."
+   ]
   },
   {
    "songSlug": "scarborough-fair",
@@ -1012,7 +1069,10 @@
    "vein": "country",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "first commercial recording is Gordon Heath and Lee Payant, 1955 (Elektra), but the version that matters causally is Martin Carthy's 1965 debut-album arrangement, which Paul Simon learned directly from Carthy in London and then copyrighted under his own name."
+   ]
   },
   {
    "songSlug": "self-control",
@@ -1075,7 +1135,10 @@
    "vein": "country",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "traditional Bahamian; the earliest recording listed by Wikipedia is The Weavers, 1950, but the song was in print by 1916 (Le Gallienne, Harper's Monthly) and 1927 (Sandburg, The American Songbag). 'The Weavers recorded it first' is the best available claim, not a confirmed one."
+   ]
   },
   {
    "songSlug": "someday-well-be-together",
@@ -1117,7 +1180,10 @@
    "vein": "blues",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the Allman Brothers did not take it from Blind Willie McTell directly. Taj Mahal's 1967 recording with Jesse Ed Davis on slide, released on his 1968 debut, is the intermediary Duane Allman heard. A three-step chain, not two."
+   ]
   },
   {
    "songSlug": "superstar",
@@ -1138,7 +1204,10 @@
    "vein": "soul",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the Delaney & Bonnie first recording was issued in December 1969 under the title 'Groupie (Superstar)'; the shortened title arrived with later versions, and the Delaney & Bonnie recording itself was not put on an album until D&B Together in 1972."
+   ]
   },
   {
    "songSlug": "suzie-q",
@@ -1201,7 +1270,10 @@
    "vein": "country",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Buffy Sainte-Marie's own recording (It's My Way!, Vanguard, April 1964) was NOT the first release: the folk group The Highwaymen issued it as a single in September 1963. The candidate names Sainte-Marie as originalArtist because she wrote it and her recording is the one Donovan's descends from, but a page on this song should lead with the Highwaymen single."
+   ]
   },
   {
    "songSlug": "where-did-you-sleep-last-night",
@@ -1223,7 +1295,10 @@
    "vein": "country",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Lead Belly is NOT the first recorder. Wikipedia states commercial recordings begin in 1926 and that the song derives from two anonymous Appalachian songs dating to at least the 1870s; McCulloh counted 160 variants. Lead Belly's 1944 Musicraft version is only the proximate source for Nirvana. Do not assert a first recording for this one."
+   ]
   },
   {
    "songSlug": "wild-thing",
@@ -1307,7 +1382,10 @@
    "vein": "reggae",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the writer credit conflicts across sources. The Wikipedia article on The Specials' debut album credits 'Clement Seymour' (i.e. Clement Seymour Dodd, of Studio One); non-Wikipedia sources encountered in search, which I did not treat as verified, credit Rueben Anderson, who was himself the 'Andy' of Andy & Joey. Producer-as-credited-writer was standard Jamaican practice at the time, so this may be the same pattern as Oh Carolina. The 1964 Andy & Joey original recording is not in doubt; only the authorship is. I could not find a standalone Wikipedia article for the song, and no label is asserted here because none appears on a page I fetched."
+   ]
   },
   {
    "songSlug": "youve-made-me-so-very-happy",
@@ -1412,7 +1490,10 @@
    "vein": "blues",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the title differs from the original. Robert Johnson recorded \"Cross Road Blues\" (27 November 1936, Vocalion, released May 1937); Cream's is \"Crossroads\". Clapton had also recorded it in early 1966 with the one-off Eric Clapton and the Powerhouse, before the 10 March 1968 Winterland live take that became the famous record."
+   ]
   },
   {
    "songSlug": "der-kommissar",
@@ -1475,7 +1556,10 @@
    "vein": "soul",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Dionne Warwick recorded it on April 9, 1966 but Scepter held it until it appeared on The Windows of the World in September 1967 and as a single in October 1967. originalYear above is the RECORDING year, per the locked definition; a release-year page would say 1967."
+   ]
   },
   {
    "songSlug": "knock-on-wood",
@@ -1517,7 +1601,10 @@
    "vein": "sync",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Wikipedia states that before Labelle's version a demo was recorded by The Eleventh Hour, a disco group fronted by co-writer Kenny Nolan on vocals, appearing on the 1974 album Eleventh Hour's Greatest Hits, which did not chart. Both that album and Labelle's 5 November 1974 Epic single are dated 1974, so the ordering rests entirely on Wikipedia's wording ('before Labelle's famous version') and not on two dated sources I could compare. If this record is built, the honest framing is a three-step chain — Eleventh Hour demo, Labelle hit, Moulin Rouge! remake — with the first step flagged as unconfirmed in month order."
+   ]
   },
   {
    "songSlug": "police-and-thieves",
@@ -1560,7 +1647,10 @@
    "vein": "country",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "same shape. Lead Belly (22 June 1937) is the standard 'original' answer, but Lomax's 29 September 1934 Tucker prison-farm recording, credited to Kelly Pace and prisoners, predates it."
+   ]
   },
   {
    "songSlug": "sitting-on-top-of-the-world",
@@ -1581,7 +1671,10 @@
    "vein": "blues",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the usual answer is Howlin' Wolf (1957), which is itself a cover. The first recording is the Mississippi Sheiks, 1930 on Okeh, written by Walter Vinson and Lonnie Chatmon. It is simultaneously claimed by blues, country and bluegrass traditions."
+   ]
   },
   {
    "songSlug": "softly-as-i-leave-you",
@@ -1602,7 +1695,10 @@
    "vein": "standards",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "there are two claimants ahead of Sinatra, not one. Mina's Italian \"Piano\" single (1960) is the original recording, but Matt Monro recorded the first English-language version in 1962 on Parlophone, two years before Sinatra's 1964 album. British listeners often credit Monro and Americans credit Sinatra; both are covering Mina."
+   ]
   },
   {
    "songSlug": "way-down-in-the-hole",
@@ -1624,7 +1720,10 @@
    "vein": "sync",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "I could confirm that the Blind Boys of Alabama recorded the season one version and that The Wire premiered on 2 June 2002, but I could NOT verify the date on which their recording was made (the Wikipedia URL I tried for the album resolved to an unrelated role-playing game). The coverYear of 2002 is therefore the year the version reached the public as the theme, not a verified recording date. Confirm before the page asserts a recording year."
+   ]
   },
   {
    "songSlug": "you-shook-me",
@@ -1645,7 +1744,10 @@
    "vein": "blues",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the record credited to Muddy Waters (Chess, 1962) is built on Earl Hooker's instrumental, cut at a 1961 session as \"Blue Guitar\" and released on Age Records in 1962. Leonard Chess acquired the track and had Waters overdub vocals on 27 June 1962. So the first recording of the music is Hooker's, and the Muddy Waters \"original\" is an overdub onto someone else's master."
+   ]
   },
   {
    "songSlug": "young-gifted-and-black",
@@ -1666,7 +1768,10 @@
    "vein": "reggae",
    "wave": null,
    "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the two versions are both dated 1970 and the title differs between them (Nina Simone's is 'To Be Young, Gifted and Black'; Bob and Marcia's is 'Young, Gifted and Black'). Simone's precedence rests on the recording date of 26 October 1969 at Philharmonic Hall rather than on a release-year gap, and the Bob and Marcia single is dated only to 1970 on the page I fetched. Do not state an interval between the two — no month is documented for the cover."
+   ]
   },
   {
    "songSlug": "zou-bisou-bisou",
@@ -3287,6 +3392,954 @@
    ],
    "status": "dropped",
    "dropReason": "No documentable public belief RHCP originated it; Stevie Wonder original is a #4 pop/#1 R&B hit, RHCP version widely known AS a cover."
+  },
+  {
+   "songSlug": "i-cant-help-falling-in-love-with-you",
+   "title": "(I Can't Help) Falling in Love with You",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar comprehensively. UB40's 1993 version was enormous, but the Elvis Presley original is one of the best-known recordings in popular music and nobody mistakes the attribution.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "your-love-keeps-lifting-me-higher-and-higher",
+   "title": "(Your Love Keeps Lifting Me) Higher and Higher",
+   "status": "dropped",
+   "dropReason": "Rita Coolidge's March 1977 A&M version reached number 2, but Jackie Wilson's July 1967 Brunswick original (number 6 pop, number 1 R&B) is the better-remembered record today. There is no meaningful body of belief that Coolidge originated it — the confusion runs the other way if anywhere.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "99-luftballons-falling-in-love-again",
+   "title": "99 Luftballons / Falling in Love Again",
+   "status": "dropped",
+   "dropReason": "Not covers in the scope sense — Nena and Marlene Dietrich each recorded both the German and English versions of their own songs. There is no covering act to be mistaken for the original recorder.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "act-naturally",
+   "title": "Act Naturally",
+   "status": "dropped",
+   "dropReason": "Confusion bar. Buck Owens and the Buckaroos recorded it 12 February 1963 and released it 11 March 1963 on Capitol, taking it to No. 1 country; the Beatles cut it 17 June 1965 for Help!. But the Beatles' early cover repertoire is exhaustively documented and this track is routinely labelled a Buck Owens cover — the honest rating is low, not medium.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "aint-no-mountain-high-enough",
+   "title": "Ain't No Mountain High Enough",
+   "status": "dropped",
+   "dropReason": "Same precedent. Diana Ross's July 1970 Motown version was a three-week number one, but Marvin Gaye & Tammi Terrell's April 1967 Tamla original is universally credited to them and is if anything the more culturally present record now. Verified; no earlier recording exists than theirs.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "aint-no-mountain-high-enough-diana-ross-marvin-gaye-and",
+   "title": "Ain't No Mountain High Enough (Diana Ross / Marvin Gaye and Tammi Terrell)",
+   "status": "dropped",
+   "dropReason": "Explicitly excluded by the vein: Ross's version was already a straight No. 1 chart hit long before Guardians of the Galaxy or Remember the Titans. The sync did not drive the misattribution, it inherited one. May belong to a chart-displacement vein instead.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "always-on-my-mind",
+   "title": "Always on My Mind",
+   "status": "dropped",
+   "dropReason": "Vein mismatch plus a muddy origin. The first recording (Brenda Lee) is country-pop and the first release (Gwen McCrae, March 1972) is soul; the strongest public misbelief credits Willie Nelson, which is country→country. Genuinely interesting provenance — logged in contested for a different vein.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "researched and NOT returned (vein mismatch; see dropped). The provenance is genuinely tangled: first RECORDED by Brenda Lee (released June 1972, Decca), first RELEASED by Gwen McCrae as 'You Were Always on My Mind' on 28 March 1972 (Columbia). Elvis recorded 29 March 1972 and released 31 October 1972; Willie Nelson February 1982; Pet Shop Boys 30 November 1987. Four separate acts are each widely believed to have originated it."
+   ]
+  },
+  {
+   "songSlug": "autumn-leaves",
+   "title": "Autumn Leaves",
+   "status": "dropped",
+   "dropReason": "Confusion bar. It is understood as a standard rather than any one act's song — no single cover act is popularly mistaken for the originator. The French provenance (Kosma/Prévert, \"Les Feuilles mortes\", 1945) is also broadly known. Kept in contested for the Vaucaire/Montand ordering.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "dropped, but the record is contested and worth noting for a future harvest. Wikipedia calls Yves Montand's 1949 Columbia recording of \"Les Feuilles mortes\" the most successful French version, but Cora Vaucaire recorded it around 1947–48, earlier. Jo Stafford made \"the first English-language recording in July, 1950.\""
+   ]
+  },
+  {
+   "songSlug": "bam-bam",
+   "title": "Bam Bam",
+   "status": "dropped",
+   "dropReason": "Could not verify — the Wikipedia article at the expected URL returned 404, so the relationship between Toots and the Maytals' 1966 Festival-winning song and Sister Nancy's 1982 record is unconfirmed. It also sits awkwardly in the vein: both acts are Jamaican, so there is no pop cover act being mistaken for the original recording artist, and Sister Nancy's may be a derivation on a shared riddim rather than a cover.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "bei-mir-bistu-shein",
+   "title": "Bei Mir Bistu Shein",
+   "status": "dropped",
+   "dropReason": "No pre-Andrews Sisters RECORDING is documented. Wikipedia establishes the 1932 Yiddish stage origin (Secunda/Jacobs, Parkway Theatre, Brooklyn) and the Andrews Sisters' 24 November 1937 Decca session, but says only that other artists covered it within thirty days AFTER them. Searching surfaced a 1937 Apollo Theater performance in Yiddish by Johnnie and George that Sammy Cahn heard — a performance, not a record. Scope requires who recorded it first; unmeetable.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "besame-mucho",
+   "title": "Bésame Mucho",
+   "status": "dropped",
+   "dropReason": "Wikipedia does not name a first recording artist. It gives the 1932 composition date (Consuelo Velázquez), a 1940 release year in the infobox with no artist, and the charting English versions (Jimmy Dorsey number one US 1944, Andy Russell number eight 1944, the Coasters number 70 in 1960). Cannot state originalArtist.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "betcha-by-golly-wow",
+   "title": "Betcha by Golly, Wow",
+   "status": "dropped",
+   "dropReason": "Structurally misleading. Connie Stevens did record Thom Bell and Linda Creed's song first, for Bell in 1970 — but under the title 'Keep Growing Strong'. The Stylistics WERE the first to record it as 'Betcha by Golly, Wow' (Avco, February 17, 1972), so a page hung on this title would assert something false. Good contested trivia, bad candidate.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "black-betty-ram-jam-lead-belly",
+   "title": "Black Betty (Ram Jam / Lead Belly)",
+   "status": "dropped",
+   "dropReason": "Fails the sync test and I could not source it. Ram Jam's was a charting single in its own right, and the advert/stadium revival that followed cannot be pinned to a specific documented placement the way Bravia or Wednesday can.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "blue-bayou",
+   "title": "Blue Bayou",
+   "status": "dropped",
+   "dropReason": "Direction of travel is wrong for this vein: Roy Orbison's pop original later made famous by Linda Ronstadt's country-rock reading. The brief explicitly routes pop-original→country-cover elsewhere.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "blue-moon-of-kentucky",
+   "title": "Blue Moon of Kentucky",
+   "status": "dropped",
+   "dropReason": "Confusion bar. Bill Monroe wrote it and recorded it with the Blue Grass Boys on 16 September 1946 (Columbia, released early 1947); Elvis cut it at Sun on 7 July 1954. But Monroe's ownership of the song is one of the best-known facts in bluegrass and it is universally presented as the B-side cover on Elvis's first single. Everyone who cares already knows.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "blue-velvet-bobby-vinton-tony-bennett",
+   "title": "Blue Velvet (Bobby Vinton / Tony Bennett)",
+   "status": "dropped",
+   "dropReason": "Vinton's version was a chart-topping hit years before David Lynch's film, so the film cannot be what drove the misattribution. Belongs to a different vein if anywhere.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "boom-boom",
+   "title": "Boom Boom",
+   "status": "dropped",
+   "dropReason": "John Lee Hooker's original is the definitive and universally credited version. The Animals' reading is understood as a cover. No confusion to document.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "born-under-a-bad-sign",
+   "title": "Born Under a Bad Sign",
+   "status": "dropped",
+   "dropReason": "Albert King's 1967 Stax recording is itself a canonical, widely known record and the Cream version is presented as a cover of it. Also the axis would drift toward the writing credit (Booker T. Jones and William Bell) rather than first recording.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "bring-it-on-home-to-me",
+   "title": "Bring It On Home to Me",
+   "status": "dropped",
+   "dropReason": "Sam Cooke's original is one of the best-known soul records ever made and is never mistaken for anyone else's. The Animals' version is plainly a cover. (Note: distinct from \"Bring It On Home\", already in the corpus.)",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "brown-girl-in-the-ring",
+   "title": "Brown Girl in the Ring",
+   "status": "dropped",
+   "dropReason": "Unverifiable original. Boney M.'s 1978 version draws on a Jamaican children's ring game with no identifiable first recording, so there is no original recording artist to name and the required axis cannot be established.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "cherry-pink-and-apple-blossom-white",
+   "title": "Cherry Pink and Apple Blossom White",
+   "status": "dropped",
+   "dropReason": "Wikipedia says the song \"was first recorded and released in Mexico in 1953\" as \"Cerezo Rosa\" but names no artist for that recording, and names no recording of Louiguy's 1950 French original \"Cerisiers Roses et Pommiers Blancs\". Pérez Prado's RCA Victor instrumental (recorded 23 August 1954, ten weeks at number one in 1955) is the famous version, but I cannot fill originalArtist.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "dancing-in-the-street",
+   "title": "Dancing in the Street",
+   "status": "dropped",
+   "dropReason": "Bowie/Jagger 1985 and Van Halen 1982 are both plainly understood as covers; Martha and the Vandellas' 1964 original is universally credited.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "dont-let-me-be-misunderstood-the-animals-nina-simone",
+   "title": "Don't Let Me Be Misunderstood (The Animals / Nina Simone)",
+   "status": "dropped",
+   "dropReason": "Fails the sync test. The Animals' version was a large chart hit in 1965, long before the Santa Esmeralda reading in Kill Bill. The Simone-first fact is genuinely interesting but belongs to a chart-displacement vein, not this one.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "dust-my-broom",
+   "title": "Dust My Broom",
+   "status": "dropped",
+   "dropReason": "Better as a footnote than a page. The Elmore James / Robert Johnson relationship is a genuine priority question, but the covering-rock-act misattribution the site is built on is not present — no rock act is credibly believed to have originated it.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "enjoy-yourself-its-later-than-you-think",
+   "title": "Enjoy Yourself (It's Later Than You Think)",
+   "status": "dropped",
+   "dropReason": "Confusion too weak. Written by Carl Sigman and Herb Magidson, first recorded by Guy Lombardo and His Royal Canadians on 27–28 November 1949 for Decca, charting from 13 January 1950 and peaking at number 10 — a widely known pre-rock standard that Doris Day, Bing Crosby, Tommy Dorsey, Louis Prima and the Supremes also cut. The Specials' 1980 version opens and closes More Specials but, per Wikipedia, was never released as a single from it. Nobody credible thinks a 2 Tone band wrote a 1949 pop standard.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "gentle-on-my-mind",
+   "title": "Gentle on My Mind",
+   "status": "dropped",
+   "dropReason": "Two failures. The gap is one month (John Hartford, RCA, May 1967 → Glen Campbell, June 1967), and Hartford's authorship is prominent enough that he won a Grammy for the song in 1968 alongside Campbell. Also a country/folk→country-pop move rather than a pop/rock cover.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "get-ready-take-me-in-your-arms-rock-me-a-little-while",
+   "title": "Get Ready / Take Me in Your Arms (Rock Me a Little While)",
+   "status": "dropped",
+   "dropReason": "Both are legitimate Motown same-label re-cuts (Rare Earth 1970; Isley Brothers 1968 and Doobie Brothers 1975), but the covering versions are not salient enough today for anyone to believe they came first. No confusion to document.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "guantanamera",
+   "title": "Guantanamera",
+   "status": "dropped",
+   "dropReason": "Wikipedia: \"it is unclear when the first release as a record occurred.\" No originalArtist obtainable. Confusion would have been medium at best anyway — Pete Seeger's version is described as definitive and the Sandpipers' 1966 hit (number nine US, number seven UK) is broadly understood as a Cuban song.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "unusable as written because Wikipedia states \"it is unclear when the first release as a record occurred.\" Joseíto Fernández is credited as writer and \"first popularized the song on radio as early as 1929\", but radio popularisation is not a recording. Do not let a future harvest turn the 1929 radio date into a recording date."
+   ]
+  },
+  {
+   "songSlug": "guns-of-navarone",
+   "title": "Guns of Navarone",
+   "status": "dropped",
+   "dropReason": "Too tangled and the confusion is weak. The Skatalites' 1965 ska instrumental is itself an adaptation of Dimitri Tiomkin's 1961 film theme, and The Specials' version was a live recording rather than a studio single — a three-way instrumental derivation, not a clean cover mistaken for an original.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "have-you-seen-her-everybody-plays-the-fool",
+   "title": "Have You Seen Her / Everybody Plays the Fool",
+   "status": "dropped",
+   "dropReason": "MC Hammer (1990) and Aaron Neville (1991) are real cover-mistaken-for-original cases, but the originals sit on Brunswick and RCA rather than the vein's labels and the confusion is thinner than the keepers'. Parked rather than padded out the list.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "hazy-shade-of-winter-the-bangles-simon-and-garfunkel-less",
+   "title": "Hazy Shade of Winter (The Bangles / Simon and Garfunkel, Less Than Zero)",
+   "status": "dropped",
+   "dropReason": "Confusion bar. Genuine film-driven cover, but there is no documentable public belief that the Bangles originated it — Simon and Garfunkel's version is too familiar.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "help-me-make-it-through-the-night",
+   "title": "Help Me Make It Through the Night",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar. John Holt's reggae version is well known, but Kris Kristofferson's authorship and Sammi Smith's hit recording are securely and widely attributed.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "hot-hot-hot",
+   "title": "Hot Hot Hot",
+   "status": "dropped",
+   "dropReason": "Out of vein. Arrow's original and Buster Poindexter's cover are soca, not reggae, ska or rocksteady, and the vein is scoped to Jamaican studio traditions. Flagging it here so a future soca or calypso vein can pick it up rather than losing it.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "hush-deep-purple-billy-joe-royal",
+   "title": "Hush (Deep Purple / Billy Joe Royal)",
+   "status": "dropped",
+   "dropReason": "Fails the sync test. Deep Purple's version was a US top-five hit on release; no film or advert drove the confusion.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "i-heard-it-through-the-grapevine-marvin-gaye-gladys-knight",
+   "title": "I Heard It Through the Grapevine (Marvin Gaye / Gladys Knight and the Pips / Smokey Robinson, California Raisins adverts)",
+   "status": "dropped",
+   "dropReason": "Fails the sync test. Gaye's was a No. 1 before the adverts existed; the campaign revived an already-dominant recording rather than creating the misattribution. The Knight/Robinson ordering question is a different vein.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "i-say-a-little-prayer-aretha-franklin-dionne-warwick",
+   "title": "I Say a Little Prayer (Aretha Franklin / Dionne Warwick)",
+   "status": "dropped",
+   "dropReason": "Same failure. Aretha's version was a US top-ten hit in 1968, decades before My Best Friend's Wedding made it a film standard. The sync amplified an existing confusion rather than creating it.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "i-shot-the-sheriff",
+   "title": "I Shot the Sheriff",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar on the Higher Ground precedent. Bob Marley wrote it and recorded it first, on Burnin' in 1973, and the song is universally credited to him; Clapton's 1974 version from 461 Ocean Boulevard is famously known AS a cover, which is most of its cultural meaning. The Wikipedia article documents no public confusion about who originated it. This is the canonical reggae cover and it will be proposed again — it should not be.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "id-like-to-teach-the-world-to-sing-the-new-seekers-the",
+   "title": "I'd Like to Teach the World to Sing (The New Seekers / The Hillside Singers, Coca-Cola advert)",
+   "status": "dropped",
+   "dropReason": "Advert-origin, but the direction of the claim is muddled — the Coca-Cola jingle preceded both full-length records rather than one act covering another's release. Not a clean cover-misattribution and I would have had to assert an ordering I could not cleanly source.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "id-rather-go-blind",
+   "title": "I'd Rather Go Blind",
+   "status": "dropped",
+   "dropReason": "Etta James's 1968 Chess original is universally credited; the Chicken Shack and Rod Stewart versions are known as covers.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "if-i-were-a-carpenter",
+   "title": "If I Were a Carpenter",
+   "status": "dropped",
+   "dropReason": "Not a misattribution at all. Bobby Darin's Atlantic version was released in September 1966, before Tim Hardin's own recording appeared on Tim Hardin 2 (1967, Verve Forecast). Darin genuinely got there first on record, so crediting him is not an error.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "if-you-go-away",
+   "title": "If You Go Away",
+   "status": "dropped",
+   "dropReason": "Wikipedia does not identify who recorded the first English version, so originalArtist is unobtainable. Confusion is also weak — the Brel provenance of \"Ne me quitte pas\" (1959) is widely known and none of Dusty Springfield (1967), Scott Walker (1969) or Terry Jacks (1974) is taken for the originator.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "it-must-be-love-madness-labi-siffre",
+   "title": "It Must Be Love (Madness / Labi Siffre)",
+   "status": "dropped",
+   "dropReason": "Fails the sync test. High confusion, but Madness's version was a straight chart hit and no film, TV or advert placement drove it. Worth harvesting under a different vein.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "its-oh-so-quiet-bjork-betty-hutton",
+   "title": "It's Oh So Quiet (Björk / Betty Hutton)",
+   "status": "dropped",
+   "dropReason": "Excellent confusion and a superb contested chain back through Betty Hutton to a German-language original, but no sync drove it — Björk's version rose on its own single release and music video. Should be harvested under a different vein.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "its-raining-men-geri-halliwell-the-weather-girls-bridget",
+   "title": "It's Raining Men (Geri Halliwell / The Weather Girls, Bridget Jones's Diary)",
+   "status": "dropped",
+   "dropReason": "Confusion bar. The Weather Girls' original is instantly recognisable and still in constant rotation.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "johnny-too-bad",
+   "title": "Johnny Too Bad",
+   "status": "dropped",
+   "dropReason": "Dropped on unconfirmable dates, per the vein's explicit instruction. Wikipedia gives no year for the Slickers' original single — only that it appeared on the 1972 soundtrack to The Harder They Come — and gives no year at all for the UB40 or Taj Mahal versions, noting only that they appeared on compilations. Jim Capaldi's 1975 version and John Martyn's from 1980 are dated, but neither is the cover that would drive the misattribution.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "jolene-big-yellow-taxi-mr-tambourine-man-blowin-in-the-wind",
+   "title": "Jolene / Big Yellow Taxi / Mr. Tambourine Man / Blowin' in the Wind",
+   "status": "dropped",
+   "dropReason": "Famous-cover cases where the original is at least as famous as the cover. Nobody thinks the White Stripes, Counting Crows, the Byrds or Peter, Paul and Mary originated these. Dropped on the confusion bar without further research.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "just-a-gigolo",
+   "title": "Just a Gigolo",
+   "status": "dropped",
+   "dropReason": "Same problem. Wikipedia documents 1929 publication and German orchestral performances of \"Schöner Gigolo, armer Gigolo\" (Casucci/Brammer) but no first recording; the earliest dated recording on the page is Leo Reisman, 5 January 1931, in English. Confusion would be high (Louis Prima 1956, David Lee Roth 1985, number 12 Hot 100) if the original recorder could be pinned down.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the German original's first recording is not established on Wikipedia. The article says the song \"was first published by Wiener Boheme Verlag in 1929 and performed by several orchestras in Germany that year, including Dajos Béla's orchestra with the singer Kurt Mühlhardt\" — performed, not recorded. The earliest DATED recording anywhere on the page is Leo Reisman and His Orchestra, 5 January 1931 (Victor 22606), an English-language version. A search snippet asserted a 1929 Dajos Béla recording but that claim does not appear in the article text. Dropped for now; strong if someone can source the 1929 German disc."
+   ]
+  },
+  {
+   "songSlug": "killing-floor",
+   "title": "Killing Floor",
+   "status": "dropped",
+   "dropReason": "Howlin' Wolf's 1960s Chess original is well credited and the Hendrix / Electric Flag readings are known as covers. No misattribution to the covering act.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "knockin-on-heavens-door-guns-n-roses-bob-dylan",
+   "title": "Knockin' on Heaven's Door (Guns N' Roses / Bob Dylan)",
+   "status": "dropped",
+   "dropReason": "Confusion bar. Universally known as a Dylan song.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "la-bamba",
+   "title": "La Bamba",
+   "status": "dropped",
+   "dropReason": "Confusion bar. Los Lobos' 1987 version is famously a cover, released as the title track of a Ritchie Valens biopic — the film itself tells the audience it is Valens's record. Nothing to correct.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "lets-stay-together",
+   "title": "Let's Stay Together",
+   "status": "dropped",
+   "dropReason": "Tina Turner's 1983 comeback single is known as a cover, and Al Green's 1971 Hi original is iconic and universally credited.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "little-red-rooster",
+   "title": "Little Red Rooster",
+   "status": "dropped",
+   "dropReason": "The textbook case the vein warning describes. The Rolling Stones' November 1964 single is famous precisely AS a blues cover — Wikipedia notes it remains the only blues song ever to top the British pop charts, and that framing travels with it. Howlin' Wolf's June 1961 Chess original is well credited, and Sam Cooke's 1963 version (No. 7 R&B, No. 11 pop) sits in between. No genuine public belief that the Stones originated it.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "dropped as a candidate, but the antecedent chain is strong: Charley Patton's \"Banty Rooster Blues\" (1929) shares verses and Memphis Minnie's \"If You See My Rooster (Please Run Him Home)\" (1936) shares melody lines. Separately, Margie Day recorded an unrelated jump-blues \"Little Red Rooster\" for Dot in 1950 which reached No. 5 on Billboard's R&B retail chart in 1951 — a title collision, not a version."
+   ]
+  },
+  {
+   "songSlug": "long-black-veil",
+   "title": "Long Black Veil",
+   "status": "dropped",
+   "dropReason": "Fails the confusion axis. Written by Danny Dill and Marijohn Wilkin and first recorded by Lefty Frizzell (recorded 3 March 1959, released 20 April 1959, Columbia). It IS widely mistaken for a traditional folk ballad — Dill called it an 'instant folksong' — but no specific cover act (The Band, Cash, Baez, Nick Cave) is credited with originating it. 'Mistaken for traditional' is a different claim than 'this act is mistaken for the original recorder'.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "long-shot-kick-de-bucket-skinhead-moonstomp-too-hot",
+   "title": "Long Shot Kick de Bucket / Skinhead Moonstomp / Too Hot",
+   "status": "dropped",
+   "dropReason": "All dropped for insufficient public profile on the covering side. In each case both the original and the cover are known mainly to ska specialists, so there is no broad public belief to correct — the confusion bar requires a mistaken mass audience, not an obscure pairing.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "love-in-vain",
+   "title": "Love in Vain",
+   "status": "dropped",
+   "dropReason": "The Rolling Stones credited Robert Johnson and the connection is part of the standard Let It Bleed commentary. Johnson's authorship and priority are widely understood — famous AS a cover.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "mack-the-knife",
+   "title": "Mack the Knife",
+   "status": "dropped",
+   "dropReason": "Fails the sourcing rule, not the confusion bar. Confusion is high (Bobby Darin, Atco, 1959) but Wikipedia names no first recording of the 1928 German original — only an undated \"cast recording\" and an undated Sidney Bechet version, plus Louis Armstrong 1955 as the first to reach the US hit parade with a vocal version. I will not assert an originalArtist I could not verify. See contested.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "I could NOT confirm a first recording and have therefore dropped it rather than guess. The Wikipedia article names no first recording of the German original: it says only that \"A number of early artists recorded the song, including the cast recording and a jazz version by Sidney Bechet, but it was Louis Armstrong who first introduced the vocal version of 'Mack the Knife' to the United States hit parade\" (recorded 28 September 1955, released November 1955). No dates are given for the cast recording or the Bechet version, and The Threepenny Opera page names Kurt Gerron as the Street Singer at the Berlin premiere on 31 August 1928 but identifies no 1928 or 1929 recordings. Search results variously claimed Harald Paulsen (1928) and Bertolt Brecht (1929) as the first record, but these came from blogs and wikis, not a source I could verify. A researchable page is here if someone reads a discography — the confusion (everyone says Bobby Darin, 1958 session, 1959 Atco release) is as high as it gets."
+   ]
+  },
+  {
+   "songSlug": "many-rivers-to-cross",
+   "title": "Many Rivers to Cross",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar. Jimmy Cliff wrote and recorded it and is universally credited; the UB40, Joe Cocker and Annie Lennox versions are all plainly understood as covers of a Jimmy Cliff song.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "nature-boy-david-bowie-nat-king-cole-moulin-rouge",
+   "title": "Nature Boy (David Bowie / Nat King Cole, Moulin Rouge!)",
+   "status": "dropped",
+   "dropReason": "Confusion bar. Nat King Cole's 1948 recording is iconic and the Bowie version is understood as an interpretation.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "nel-blu-dipinto-di-blu-volare",
+   "title": "Nel blu, dipinto di blu (Volare)",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar outright. Modugno's own Fonit original was itself the American hit — five non-consecutive weeks at number one on the Hot 100 in 1958 and Billboard's number one single of the year. Dean Martin's version peaked at number 15 US. The original is the famous one; there is nothing to correct.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "non-je-ne-regrette-rien",
+   "title": "Non, je ne regrette rien",
+   "status": "dropped",
+   "dropReason": "Confusion bar. Piaf's 1960 recording is the original and is universally credited to her; no cover act is taken for the originator.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "not-fade-away",
+   "title": "Not Fade Away",
+   "status": "dropped",
+   "dropReason": "Buddy Holly's original is too famous to be displaced; the Rolling Stones' 1964 single is understood as a Holly cover and is routinely discussed that way.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "ol-55",
+   "title": "Ol' 55",
+   "status": "dropped",
+   "dropReason": "Medium at best and the weakest of the singer-songwriter→rock set. Tom Waits wrote and recorded it for Closing Time (March 1973, Asylum); the Eagles covered it on On the Border (1974). Waits's authorship stayed visible — partly because he publicly disliked the Eagles' version — so the provenance was never really lost. Held back rather than padding the list.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "one-day-ill-fly-away-nicole-kidman-randy-crawford-moulin",
+   "title": "One Day I'll Fly Away (Nicole Kidman / Randy Crawford, Moulin Rouge!)",
+   "status": "dropped",
+   "dropReason": "Same film as the Lady Marmalade keeper but much weaker: no documentable belief that the film version is the original, and the placement did not produce a hit single.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "people-are-strange-echo-and-the-bunnymen-the-doors-the-lost",
+   "title": "People Are Strange (Echo and the Bunnymen / The Doors, The Lost Boys)",
+   "status": "dropped",
+   "dropReason": "Confusion bar. The Doors' original is universally known; the cover reads as a cover.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "perhaps-perhaps-perhaps-doris-day-bobby-capo-coupling",
+   "title": "Perhaps, Perhaps, Perhaps (Doris Day / Bobby Capó, Coupling)",
+   "status": "dropped",
+   "dropReason": "Dropped on research grounds. It is an English adaptation of the Spanish 'Quizás, Quizás, Quizás', so the who-recorded-it-first axis is confounded by translation, and I found no documentable public belief that Doris Day originated it.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "please-mr-postman",
+   "title": "Please Mr. Postman",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar on the Higher Ground precedent. The Marvelettes' August 1961 Tamla original was the first Motown number one on the Hot 100 and is universally credited to them, and the Carpenters' 1974 number one is famously known AS an oldies remake. Verified (en.wikipedia.org/wiki/Please_Mr._Postman) but not proposed.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "popcorn-hot-butter-gershon-kingsley",
+   "title": "Popcorn (Hot Butter / Gershon Kingsley)",
+   "status": "dropped",
+   "dropReason": "No film, TV or advert placement drove the cover's dominance, so it fails the vein even though the confusion is high.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "pressure-drop",
+   "title": "Pressure Drop",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar. Toots Hibbert wrote it and the Maytals recorded it in 1969, produced by Leslie Kong, released on Beverley's and Trojan in 1970, and Toots is universally credited — Rolling Stone placed the original at 453 on its 500 Greatest Songs list. The Clash, Robert Palmer, The Specials, Keith Richards and Izzy Stradlin versions are all understood as covers. No documentable belief that any covering act originated it.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "rescue-me",
+   "title": "Rescue Me",
+   "status": "dropped",
+   "dropReason": "Off-axis. The real, documented confusion is that listeners think Aretha Franklin sings Fontella Bass's 1965 Checker record — that is a mistaken identification of the singer on the original, not a covering act being mistaken for the originator. The locked scope does not cover it.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "ring-of-fire",
+   "title": "Ring of Fire",
+   "status": "dropped",
+   "dropReason": "Vein mismatch on the same grounds — the earlier recording and the famous one are both country. No pop/rock cover act is in the frame.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "route-66",
+   "title": "Route 66",
+   "status": "dropped",
+   "dropReason": "Trimmed as the weakest keeper. The facts are clean — Bobby Troup wrote it in 1946 and the King Cole Trio recorded it first, released 22 April 1946 on Capitol, number three Race Records and number 11 pop — but the Rolling Stones' 1964 debut album is famously a record of blues and R&B covers, and Nat King Cole's ownership of the song is well established. Closer to \"everyone knows it's a cover\" than the bar allows.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "sea-of-love-cat-power-phil-phillips-juno",
+   "title": "Sea of Love (Cat Power / Phil Phillips, Juno)",
+   "status": "dropped",
+   "dropReason": "Confusion bar. The Cat Power placement is too marginal to have generated public belief that she originated it, and The Honeydrippers' hit sits in between.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "sixteen-tons",
+   "title": "Sixteen Tons",
+   "status": "dropped",
+   "dropReason": "Out of vein and borderline on scope framing — it is a 1946 country/folk original (Merle Travis) rather than a standards, jazz or foreign-language one. Better suited to a country or folk vein; did not verify it here rather than stretch this one.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "skinny-love-birdy-bon-iver",
+   "title": "Skinny Love (Birdy / Bon Iver)",
+   "status": "dropped",
+   "dropReason": "No single sync drove it, so it fails the vein test. Wikipedia attributes the cover's rise to X Factor auditions in Australia (2012) and New Zealand (2013) plus its own chart run (No. 2 in five territories, No. 17 UK); the TV placements listed are scattered and split between both versions. Bon Iver's original is well known in its own right.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "smokestack-lightning",
+   "title": "Smokestack Lightning",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar in the other direction. Howlin' Wolf's is the version everybody knows; the Yardbirds' is the one heard as a cover. Nobody thinks the Yardbirds originated it.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "somewhere-only-we-know-lily-allen-keane-john-lewis",
+   "title": "Somewhere Only We Know (Lily Allen / Keane, John Lewis Christmas advert)",
+   "status": "dropped",
+   "dropReason": "Failed the confusion bar. The advert did drive the cover to No. 1 in the UK with over 600,000 sales, but Keane's 2004 Island original reached No. 3 and Wikipedia calls it 'Keane's signature composition'. Nobody genuinely believes Lily Allen originated it.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "somewhere-over-the-rainbow-israel-kamakawiwoole-judy-garland",
+   "title": "Somewhere Over the Rainbow (Israel Kamakawiwo'ole / Judy Garland)",
+   "status": "dropped",
+   "dropReason": "Confusion bar. Heavily synced across ER, Scrubs and film, but Garland's is one of the most-recognised recordings ever made.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "soul-man",
+   "title": "Soul Man",
+   "status": "dropped",
+   "dropReason": "The Blues Brothers' 1978 version is explicitly framed as tribute; Sam & Dave's Stax original is universally credited. Same failure mode as the already-ingested Blues Brothers case.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "spanish-harlem",
+   "title": "Spanish Harlem",
+   "status": "dropped",
+   "dropReason": "Aretha Franklin's 1971 version is large, but Ben E. King's 1960 Atco original is well enough credited that this sits below the bar. Borderline, dropped rather than padded.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "spoonful",
+   "title": "Spoonful",
+   "status": "dropped",
+   "dropReason": "Cream's Fresh Cream version failed to chart on the Hot 100 and is discussed almost exclusively as a Howlin' Wolf / Willie Dixon blues being stretched out. Wolf's June 1960 Chess original is well credited. Fails the confusion bar for the same reason as Little Red Rooster.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Willie Dixon's 1960 song has documented antecedents: Papa Charlie Jackson's \"All I Want Is a Spoonful\" (1925), Luke Jordan (1927) and Charley Patton's \"A Spoonful Blues\" (1929). Dropped as a candidate on confusion grounds, but the lineage is the interesting part."
+   ]
+  },
+  {
+   "songSlug": "stand-by-me-bring-it-on-home-to-me-wonderful-world",
+   "title": "Stand By Me / Bring It On Home to Me / Wonderful World",
+   "status": "dropped",
+   "dropReason": "Ben E. King and Sam Cooke originals are among the best-credited records in soul. Every later version — Lennon, Herman's Hermits, the Animals — reads unambiguously as a cover.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "stir-it-up",
+   "title": "Stir It Up",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar. Bob Marley composed it in 1967 and the Wailers recorded it that year; Johnny Nash's March 1972 Epic single reached number 12 US and 13 UK and was the first Marley-written song to succeed outside Jamaica, but the song today is universally a Marley song. The interesting fact — that the famous 1973 Catch a Fire version is itself a re-recording of a 1967 single — is a same-artist point, not the recorded-it-first axis this vertical is about.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "such-great-heights-iron-and-wine-the-postal-service-garden",
+   "title": "Such Great Heights (Iron and Wine / The Postal Service, Garden State)",
+   "status": "dropped",
+   "dropReason": "Confusion bar. A real Garden State sync, but The Postal Service's original is well known to the same audience; the belief is not documentable.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "summertime",
+   "title": "Summertime",
+   "status": "dropped",
+   "dropReason": "Confusion bar. Universally understood as Gershwin, from Porgy and Bess (1935). Janis Joplin's version is not mistaken for an original.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "summertime-blues",
+   "title": "Summertime Blues",
+   "status": "dropped",
+   "dropReason": "Eddie Cochran's original is a rock-and-roll standard in its own right; The Who's and Blue Cheer's versions are known as covers of it.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "sweet-sensation",
+   "title": "Sweet Sensation",
+   "status": "dropped",
+   "dropReason": "Could not establish documentable public belief that UB40 originated it. The Melodians' original is obscure enough to make the mechanism plausible, but plausibility is not evidence, and the Labour of Love series is generally known to be covers. Kingston Town and Red Red Wine from the same series are already in the corpus.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "tears-of-a-clown",
+   "title": "Tears of a Clown",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar. The Beat's 2 Tone version is a well-known cover of a Motown record universally credited to Smokey Robinson and the Miracles.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "the-first-time-ever-i-saw-your-face",
+   "title": "The First Time Ever I Saw Your Face",
+   "status": "dropped",
+   "dropReason": "Potentially strong — Roberta Flack's Atlantic recording versus Ewan MacColl's 1957 composition and the earliest folk recording of it — but NOT verified this pass, and the vein direction is inverted. Left for a folk-vein harvest rather than asserted here.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "the-gambler",
+   "title": "The Gambler",
+   "status": "dropped",
+   "dropReason": "Vein mismatch. Country original (Bobby Bare, 1978) covered by a country act (Kenny Rogers, November 1978). The confusion is enormous, but the direction of travel is country→country, not country→pop/rock. Belongs to a different vein.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "researched and NOT returned (vein mismatch). Don Schlitz wrote it in August 1976; Bobby Bare recorded it first, in 1978 on the album Bare, and Johnny Cash also recorded it in 1978 on Gone Girl — both before Kenny Rogers' 15 November 1978 United Artists single. Public belief that Rogers originated it is near-total."
+   ]
+  },
+  {
+   "songSlug": "the-harder-they-come",
+   "title": "The Harder They Come",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar. Jimmy Cliff's original is inseparable from the 1972 film of the same name that he starred in; no cover is mistaken for it.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "the-lemon-song",
+   "title": "The Lemon Song",
+   "status": "dropped",
+   "dropReason": "Out of scope, same shape as Whole Lotta Love. Zeppelin's recording is the original recording under that title; the Howlin' Wolf connection (\"Killing Floor\") is a derivation and songwriting-credit matter, not a question of who recorded this title first.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "the-sound-of-silence-disturbed-simon-and-garfunkel",
+   "title": "The Sound of Silence (Disturbed / Simon and Garfunkel)",
+   "status": "dropped",
+   "dropReason": "Confusion bar. Simon and Garfunkel's original is one of the best-known records in popular music and the Disturbed version is famously discussed AS a cover. Same reasoning as the Higher Ground precedent.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "the-way-you-do-the-things-you-do-here-i-am-come-and-take-me",
+   "title": "The Way You Do the Things You Do / Here I Am (Come and Take Me) / Homely Girl",
+   "status": "dropped",
+   "dropReason": "All fail the confusion bar for the same reason: the originals — the Temptations, Al Green and the Chi-Lites respectively — are canonical, correctly attributed soul records, and Labour of Love II is widely understood as a covers album.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "tom-dooley",
+   "title": "Tom Dooley",
+   "status": "dropped",
+   "dropReason": "Borderline, held back. G. B. Grayson and Henry Whitter recorded it for Victor in 1929 and Wikipedia notes several earlier recordings still; the Kingston Trio's 19 November 1958 Capitol single hit No. 1 and sold over six million. But the Kingston Trio were understood at the time and since as folk revivalists performing traditional material, which weakens the claim that they are mistaken for its originators.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "walk-this-way",
+   "title": "Walk This Way",
+   "status": "dropped",
+   "dropReason": "Reverse direction and out of scope. Aerosmith recorded it first; the Run-DMC record is a famous collaboration and is universally known as a remake, not mistaken for the original.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "whiskey-in-the-jar",
+   "title": "Whiskey in the Jar",
+   "status": "dropped",
+   "dropReason": "No defensible originalArtist. Metallica (1999) covered Thin Lizzy's 1972 arrangement, and Thin Lizzy were not first either — the trail runs back through The Dubliners (1967), The Highwaymen (1962) and field recordings from 1940 to a 17th-century traditional. The scope requires naming who recorded it first, and no source supports a single name.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "researched and NOT returned. A 17th-century traditional Irish ballad; documented field recordings run from Lena Bourne Fish (1940) through Séamus Ennis (Alan Lomax, 1951), with The Highwaymen releasing a version in 1962. The Dubliners recorded 1967, Thin Lizzy released 3 November 1972 (No. 1 Ireland, No. 6 UK), Metallica 1 February 1999 on Garage Inc. Metallica covered Thin Lizzy's arrangement, not the traditional — so the 'original recording artist' axis has no single defensible answer, which is why it was held back rather than harvested."
+   ]
+  },
+  {
+   "songSlug": "whole-lotta-love",
+   "title": "Whole Lotta Love",
+   "status": "dropped",
+   "dropReason": "Out of scope. Led Zeppelin's 1969 recording IS the first recording of a song by that title. The famous dispute is a songwriting/lyric-derivation claim against Willie Dixon's \"You Need Love\" — a different title, and per the locked scope a writing claim, not a first-recording claim.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "wild-horses",
+   "title": "Wild Horses",
+   "status": "dropped",
+   "dropReason": "Fails the locked scope. The Flying Burrito Brothers RELEASED it first (Burrito Deluxe, April 1970), but the Rolling Stones RECORDED it first (2–4 December 1969, Muscle Shoals) and licensed it to Gram Parsons. The axis here is first release, not first recording. Kept in contested.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "researched and NOT returned as a candidate. The Flying Burrito Brothers released it first, on Burrito Deluxe in April 1970, roughly a year before the Rolling Stones' June 1971 Sticky Fingers single. But the Stones RECORDED it first, on 2–4 December 1969 at Muscle Shoals, and licensed it to Gram Parsons on condition it not be a single. First release ≠ first recording, so it fails the locked scope — but it is a strong page for a 'first release' angle if the site ever opens one."
+   ]
+  },
+  {
+   "songSlug": "wild-thing-the-troggs-the-wild-ones",
+   "title": "Wild Thing (The Troggs / The Wild Ones)",
+   "status": "dropped",
+   "dropReason": "Fails the sync test for this vein. The Troggs' version was a US No. 1 in its own right; the Major League placement came decades later and did not drive the confusion. The Wild Ones-first fact is a good candidate for a chart-displacement vein.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "wild-world",
+   "title": "Wild World",
+   "status": "dropped",
+   "dropReason": "Fails the confusion bar. Cat Stevens wrote and recorded it and is universally credited; the Jimmy Cliff and Maxi Priest reggae versions are known as covers, not as sources.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "with-a-little-help-from-my-friends-joe-cocker-the-beatles",
+   "title": "With a Little Help from My Friends (Joe Cocker / The Beatles, The Wonder Years)",
+   "status": "dropped",
+   "dropReason": "Confusion bar. The Wonder Years theme is a textbook generational sync, but no one doubts the song is a Beatles record.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "you-cant-hurry-love",
+   "title": "You Can't Hurry Love",
+   "status": "dropped",
+   "dropReason": "Phil Collins's 1982 number one is a well-known remake and the Supremes' 1966 Motown original is universally credited. Fails the bar.",
+   "wave": null,
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
   }
  ]
 }
