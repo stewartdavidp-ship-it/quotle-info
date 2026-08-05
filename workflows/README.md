@@ -5,9 +5,19 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1301** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r30.** (Waves r6–r29 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
-- Harvest backlog: `data/harvest-queue.json` (committed) — 545 queued. **Track B was refilled 2026-08-03**
+- **Corpus: 1380** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r32.** (Waves r6–r31 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+  **r30 and r31 ran CONCURRENTLY on 2026-08-04** — two sessions, two waves, one repo. It worked, and
+  what made it work is worth keeping. r31 ran from a separate **git worktree** on its own branch, and
+  copied r30's *uncommitted* `selected` marks into its queue before drawing: `select` draws only from
+  `status === 'queued'`, so their 40 were excluded mechanically rather than by agreement — zero
+  overlap, no coordination between the sessions. `sync`'s sweep is safe under concurrency for the
+  same kind of reason: it promotes `selected → ingested` only when `corpus.has(quote)`, so one
+  branch cannot mark the *other* wave's picks ingested. r30 merged first; r31 then did the
+  rebase-rebuild below and verified **40 additions / 0 modifications** to r30's records before
+  merging. There is no lock on the queue — `4de8f8a9c`'s "one writer" gate is about which code path
+  writes the file, not about concurrent sessions, so do not expect it to protect you.
+- Harvest backlog: `data/harvest-queue.json` (committed) — 465 queued. **Track B was refilled 2026-08-03**
   (harvest-only run, no ingest): 8 themes chosen for DEMAND rather than to fill gaps — gratitude,
   friendship, money-wealth, discipline-habit, grief-loss, forgiveness, patience, nature. Six of those
   had **no theme tag on the corpus at all**; gratitude (23) and friendship (33) were the two thinnest
