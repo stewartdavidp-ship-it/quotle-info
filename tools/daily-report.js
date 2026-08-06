@@ -284,7 +284,12 @@ for (const r of out.ran) {
 if (out.late.length) {
   console.log(`\n  YESTERDAY (${PREV}) — slots this report runs too early to judge on the day`);
   for (const r of out.late) {
-    const mark = r.missing ? '✗' : (r.unknown ? '?' : '✓');
+    // A run that RECORDED ITS OWN FAILURE does not get a ✓ here either — same rule the roster
+    // applies. It matters more on this block than on that one: a stopped pass is exactly what a
+    // late slot is now able to show, and showing it as a tick would replace one invisible failure
+    // with a differently invisible one.
+    const errored = r.outcomes.includes('error');
+    const mark = r.missing ? '✗' : (r.unknown ? '?' : (errored ? '✗' : '✓'));
     const what = r.missing ? 'DID NOT RUN'
       : r.unknown ? 'UNKNOWN — could not read unmerged shards (see tool failures)'
       : `${r.runs} run(s): ${r.outcomes.join(', ')}`;
@@ -320,6 +325,10 @@ for (const r of out.ran) if (r.missing) alarms.push(`${r.routine} did not run`);
 // it will not be caught by anything else — and for reports-close it means a reader is still owed a
 // reply nobody knows about.
 for (const r of out.late) if (r.missing) alarms.push(`${r.routine} did not run on ${r.date}`);
+// The stopped-pass case. reports-close now logs an `error` shard before it refuses
+// (workflows/DAILY-REPORTS-CLOSE.md), which is the whole reason a refusal is visible at all — so it
+// has to reach this list, or the shard it went to the trouble of writing changes nothing.
+for (const r of out.late) for (const o of r.outcomes) if (o === 'error') alarms.push(`${r.routine} recorded an 'error' run on ${r.date}`);
 // A run that RECORDED ITS OWN FAILURE must not sit behind a ✓ just because the routine fired. Making
 // the error run visible in the roster (above) without alarming on it is half a fix — the 08:00 pass
 // reads this list to decide what to escalate.
