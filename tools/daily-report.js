@@ -108,10 +108,13 @@ try { ingest(fs.readFileSync(path.join(ROOT, 'data', 'routine-log.jsonl'), 'utf8
 // queue, and the reports had to carry a hand-written second column correcting their own tool.
 // The shard list comes free — listOpenPRs already returns each PR's files — so this costs one
 // contents read per shard, and only for shards that are actually unmerged.
+// False when the open-PR read failed, so a shard we could not FETCH is never reported as a run that
+// did not HAPPEN. Those are opposite claims and this tool exists to keep them apart.
+let branchShardsRead = true;
 async function ingestOpenBranchShards(ghRest, REPO) {
   let prs;
   try { prs = await ghRest.listOpenPRs(); }
-  catch (e) { toolFailures.push(`open-branch shards: ${String((e && e.message) || e).slice(0, 90)}`); return; }
+  catch (e) { branchShardsRead = false; toolFailures.push(`open-branch shards: ${String((e && e.message) || e).slice(0, 90)}`); return; }
   const wanted = [];
   for (const pr of prs) {
     for (const f of pr.files || []) {
@@ -151,7 +154,55 @@ const computeRan = () => {
     };
   });
 };
+
+// THE BLIND SPOT THIS CLOSES.
+// A routine whose slot falls AFTER the hour this report runs can never be judged on its own day.
+// due() correctly refuses to call it missing before its slot has passed, and no later report ever
+// revisits that date, because every report is about SINCE. `reports-close` (slot 17:00 UTC) against
+// an 08:00 ET / 12:00 UTC report is exactly that shape — today's report says so in its own words:
+// "its slot is 17:00 UTC; nothing to judge at this hour… this report cannot tell you whether it
+// will fire." Nothing ever told you afterwards either.
+//
+// Not theoretical. `reports-close` did not run at all on 2026-08-04 — no PR, no shard, the only gap
+// in eight days — and it went unnoticed for two days. It is the ONLY routine that emails a reader,
+// so a silent miss there is a real person who never hears back about a page they reported. This is
+// the tool whose stated purpose is that "a routine that did not run and a routine that ran and
+// found nothing must not look identical"; for this one routine, they were.
+//
+// So: for any routine whose slot is later than the current hour, check the PREVIOUS day, where the
+// slot is unambiguously past. The set is derived from the clock, not hardcoded — if this report is
+// ever rescheduled later, the rollup shrinks by itself, and it can never double-report a routine
+// the roster above has already judged.
+const PREV = new Date(Date.parse(`${SINCE}T12:00:00Z`) - 86400000).toISOString().slice(0, 10);
+const PREV_DOW = new Date(`${PREV}T12:00:00Z`).getUTCDay();
+let late = [];
+const computeLate = () => {
+  // A past-dated report already has every slot behind it, so the roster judges them all and a
+  // rollup would just say the same thing twice.
+  if (!IS_TODAY) { late = []; return; }
+  late = EXPECTED
+    .filter((e) => e.slotUtc > NOW.getUTCHours())
+    .filter((e) => e.dow === undefined || e.dow === PREV_DOW)
+    .map((e) => {
+      const runs = shards.filter((s) => s.date === PREV && s.routine === e.routine);
+      // A routine's shard normally rides an unmerged branch, so with that read failed we CANNOT
+      // tell "did not run" from "ran, and its PR is still open". Claiming the former would be a
+      // false alarm on a day GitHub was merely rate-limiting us — and an alarm that is sometimes
+      // invented is one everybody learns to skip, which costs more than the silence it replaced.
+      const unknown = runs.length === 0 && !branchShardsRead;
+      return {
+        routine: e.routine,
+        when: e.when,
+        date: PREV,
+        runs: runs.length,
+        outcomes: runs.map((r) => r.outcome),
+        missing: runs.length === 0 && branchShardsRead,
+        unknown,
+      };
+    });
+};
 computeRan();
+computeLate();
 
 (async () => {
 
@@ -176,6 +227,11 @@ try {
 // recompute. Until this ran, every routine that had opened a PR and stopped read as DID NOT RUN.
 await ingestOpenBranchShards(ghRest, process.env.QUOTLE_REPO || 'stewartdavidp-ship-it/quotle-info');
 computeRan();
+// Recomputed too, for the same reason computeRan() is: yesterday's shard routinely sits on a branch
+// whose PR has not merged. Judging the rollup off the working tree alone would report a routine that
+// ran and is queued as DID NOT RUN — the exact false alarm that made this tool print six days of
+// them against four healthy routines.
+computeLate();
 
 // ---- health ----
 try { ci = await ghRest.latestRun('main'); }
@@ -190,6 +246,8 @@ const dirty = dirtyRaw === null ? null : dirtyRaw;
 const out = {
   date: SINCE,
   ran,
+  // Slots this report runs too early to judge on their own day, checked against yesterday instead.
+  late,
   merged: merged.map((p) => ({ number: p.number, title: p.title })),
   open: open.map((p) => ({ number: p.number, branch: p.headRefName, state: p.mergeStateStatus, draft: p.isDraft, title: p.title, age_days: Math.floor((Date.now() - Date.parse(p.createdAt)) / 86400000) })),
   health: {
@@ -223,6 +281,16 @@ for (const r of out.ran) {
     : `no run yet — due ${String(r.slotUtc).padStart(2, '0')}:00 UTC`;
   console.log(`    ${mark} ${r.when.padEnd(10)} ${r.routine.padEnd(18)} ${what}`);
 }
+if (out.late.length) {
+  console.log(`\n  YESTERDAY (${PREV}) — slots this report runs too early to judge on the day`);
+  for (const r of out.late) {
+    const mark = r.missing ? '✗' : (r.unknown ? '?' : '✓');
+    const what = r.missing ? 'DID NOT RUN'
+      : r.unknown ? 'UNKNOWN — could not read unmerged shards (see tool failures)'
+      : `${r.runs} run(s): ${r.outcomes.join(', ')}`;
+    console.log(`    ${mark} ${r.when.padEnd(10)} ${r.routine.padEnd(18)} ${what}`);
+  }
+}
 console.log(`\n  MERGED (${out.merged.length})`);
 for (const p of out.merged.slice(0, 12)) console.log(`      #${p.number} ${p.title.slice(0, 84)}`);
 console.log(`\n  OPEN (${out.open.length})`);
@@ -248,6 +316,10 @@ if (h.ci !== 'success') alarms.push(`CI on main is ${h.ci}`);
 // exactly the way the og:image revert was. Alarm on it separately so it cannot hide behind verify.
 for (const f of h.ci_other_failures) alarms.push(`${f.name} on main is ${f.conclusion}`);
 for (const r of out.ran) if (r.missing) alarms.push(`${r.routine} did not run`);
+// A miss on a late slot is an ALARM, not a footnote. It is a day old by the time it can be seen, so
+// it will not be caught by anything else — and for reports-close it means a reader is still owed a
+// reply nobody knows about.
+for (const r of out.late) if (r.missing) alarms.push(`${r.routine} did not run on ${r.date}`);
 // A run that RECORDED ITS OWN FAILURE must not sit behind a ✓ just because the routine fired. Making
 // the error run visible in the roster (above) without alarming on it is half a fix — the 08:00 pass
 // reads this list to decide what to escalate.
