@@ -105,7 +105,13 @@ jobs:
           git add data/routine-log
           git commit -m "chore(routine-log): merge pass $DATE" || { echo "nothing staged"; exit 0; }
           git push origin "HEAD:$BRANCH"
-          gh pr view "$BRANCH" --json number >/dev/null 2>&1 \
+          # Test for an OPEN pr, not merely an existing one. `gh pr view` matches a MERGED pr as
+          # happily as an open one, so on a day whose first shard pr had already merged, a later
+          # pass pushed its shard, found the merged pr, and skipped creating a new one — leaving the
+          # commit on the branch with nothing to carry it to main. Three days of shards were
+          # stranded that way (merge/2026-08-04, -05, -06), and every routine census that reads them
+          # undercounted daily-merge as a result.
+          [ -n "$(gh pr list --state open --head "$BRANCH" --json number --jq '.[0].number')" ] \
             || gh pr create --base main --head "$BRANCH" \
                  --title "chore(routine-log): merge pass $DATE" \
                  --body "Log shard(s) for the $DATE merge pass(es). Opened by merge.yml so that daily-merge is visible to the routine census — it previously wrote no shard at all and could only ever read as DID NOT RUN."
