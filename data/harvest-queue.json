@@ -3,20 +3,20 @@
     "description": "Candidate backlog for quotle.info ingestion. Documented misattribution/famous-quote targets from Wikiquote + Quote Investigator, harvested by the harvest-candidates Workflow. Managed by tools/harvest.js — do not hand-edit counts. Lifecycle: queued → selected → ingested (or skipped).",
     "updated": "2026-08-06",
     "total": 1504,
-    "queued": 460,
-    "selected": 1,
+    "queued": 461,
+    "selected": 0,
     "ingested": 1035,
     "skipped": 8,
     "queuedByCategory": {
-      "genuine-famous": 344,
+      "genuine-famous": 345,
       "disputed": 80,
       "misattributed": 22,
       "film-misquote": 7,
       "scripture-misquote": 7
     },
     "queuedByRightsEra": {
+      "public-domain": 125,
       "in-copyright": 270,
-      "public-domain": 124,
       "uncertain": 52,
       "": 14
     }
@@ -34,8 +34,8 @@
       "rightsEra": "public-domain",
       "documentedAt": "https://en.wikiquote.org/wiki/Edmund_Burke#Reflections_on_the_Revolution_in_France_(1790)",
       "gameIndex": null,
-      "status": "selected",
-      "wave": "r30",
+      "status": "queued",
+      "wave": null,
       "resultSlug": null,
       "harvestedFrom": "harvest-20260730-authors.json",
       "harvestedOn": "2026-07-30",
