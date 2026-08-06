@@ -194,6 +194,11 @@ const out = {
   open: open.map((p) => ({ number: p.number, branch: p.headRefName, state: p.mergeStateStatus, draft: p.isDraft, title: p.title, age_days: Math.floor((Date.now() - Date.parse(p.createdAt)) / 86400000) })),
   health: {
     ci: ci.conclusion || 'unknown',
+    ci_sha: ci.sha || null,
+    // Workflows OTHER than the required gate that failed on the same commit. Kept separate from
+    // `ci` because they fail differently: a red `verify` blocks the merge and is loud, whereas a
+    // red Pages deploy merges clean and silently serves stale pages. See gh-rest.js:latestRun.
+    ci_other_failures: ci.otherFailures || [],
     records: (corpus.figures && corpus.figures.quotes && corpus.figures.quotes.total) || null,
     flagged,
     ladder: queue.mode || null,
@@ -225,7 +230,8 @@ if (!out.open.length) console.log('      none');
 for (const p of out.open) console.log(`      #${p.number} ${String(p.state).padEnd(9)} ${p.branch.slice(0, 28).padEnd(30)} ${p.age_days}d  ${p.title.slice(0, 40)}`);
 const h = out.health;
 console.log(`\n  HEALTH`);
-console.log(`      CI on main       ${h.ci}`);
+console.log(`      CI on main       ${h.ci}${h.ci === 'unknown' ? '  (verify has not reported for the tip commit)' : ''}${h.ci_sha ? `  [${String(h.ci_sha).slice(0, 9)}]` : ''}`);
+for (const f of h.ci_other_failures) console.log(`      ⚠ also on main    ${f.name}: ${f.conclusion}`);
 console.log(`      records          ${h.records}`);
 console.log(`      flagged          ${h.flagged}`);
 console.log(`      report ladder    ${h.ladder}${h.unjudged_runs ? ` (${h.unjudged_runs} run(s) awaiting the operator's verdict)` : ''}`);
@@ -237,6 +243,10 @@ if (toolFailures.length) {
 }
 const alarms = [];
 if (h.ci !== 'success') alarms.push(`CI on main is ${h.ci}`);
+// A green `verify` is not "CI is green". Pages deploys from main on every push, and a timed-out
+// deploy leaves the site serving the LAST GOOD build while every gate reads green — invisible
+// exactly the way the og:image revert was. Alarm on it separately so it cannot hide behind verify.
+for (const f of h.ci_other_failures) alarms.push(`${f.name} on main is ${f.conclusion}`);
 for (const r of out.ran) if (r.missing) alarms.push(`${r.routine} did not run`);
 // A run that RECORDED ITS OWN FAILURE must not sit behind a ✓ just because the routine fired. Making
 // the error run visible in the roster (above) without alarming on it is half a fix — the 08:00 pass
