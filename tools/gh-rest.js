@@ -119,10 +119,61 @@ async function listMerged(since) {
     .map((p) => ({ number: p.number, title: p.title, mergedAt: p.merged_at }));
 }
 
-async function latestRun(branch = 'main') {
-  const d = await api(`/repos/${REPO}/actions/runs?branch=${encodeURIComponent(branch)}&per_page=1`);
-  const r = (d.workflow_runs || [])[0];
-  return r ? { conclusion: r.conclusion, displayTitle: r.display_title } : {};
+// WHAT "CI IS GREEN" MEANS, AND WHY THIS IS NOT `per_page=1`.
+// This used to read `/actions/runs?branch=main&per_page=1` — the newest run of ANY workflow on the
+// branch. Three workflows land on main (verify, merge every 3h, and GitHub's built-in Pages
+// deploy), so which one answered was a race. On 2026-08-06 it reported `success` for main while
+// `pages build and deployment` had failed TWICE on that exact commit: the newest run happened to be
+// a green merge pass. The daily report printed "CI on main: success" and no one learned the site's
+// deploy was timing out. A health signal that reports the wrong workflow is worse than none, because
+// it is trusted.
+//
+// So: pin to the branch TIP commit, and read the named gate (`verify`, the required context) for it.
+// Any OTHER workflow that failed on the same commit is returned separately in `otherFailures` rather
+// than folded into `conclusion` — verify is the gate that blocks a merge, but a red Pages deploy is
+// the thing that silently serves stale pages, and the caller should be able to say which is which.
+//
+// `cancelled` is deliberately NOT treated as a failure here: this repo's concurrency groups
+// (merge-authority) cancel overlapping runs by design, and counting those would alarm every time two
+// passes overlapped. `failure` and `timed_out` are real. Note the test is on the RUN's conclusion,
+// which is what GitHub's own UI shows — a run can report `failure` while a job inside it reads
+// `cancelled`, and that still surfaces here. That is intended: under-reporting is the defect being
+// fixed, and a human can dismiss a concurrency artefact far more cheaply than they can notice a
+// deploy that never happened.
+async function latestRun(branch = 'main', workflow = 'verify') {
+  let sha = null;
+  try {
+    const head = await api(`/repos/${REPO}/commits/${encodeURIComponent(branch)}`);
+    sha = head && head.sha;
+  } catch { /* fall back to branch-wide below; a missing sha must not blank the whole health block */ }
+
+  const q = `/repos/${REPO}/actions/runs?branch=${encodeURIComponent(branch)}`
+    + (sha ? `&head_sha=${sha}` : '') + '&per_page=50';
+  const d = await api(q);
+  const runs = (d.workflow_runs || []).filter((r) => r.status === 'completed');
+
+  const isGate = (r) => r.name === workflow || String(r.path || '').endsWith(`/${workflow}.yml`);
+
+  // ONE verdict per workflow: the LATEST run. A workflow can run repeatedly against the same commit
+  // (merge.yml fires every 3h and re-runs happen), so a plain filter would keep reporting a failure
+  // that a later green run had already superseded. The API returns newest-first, so first-seen wins.
+  const latestPerWorkflow = [];
+  const seen = new Set();
+  for (const r of runs) if (!seen.has(r.name)) { seen.add(r.name); latestPerWorkflow.push(r); }
+
+  const gate = latestPerWorkflow.find(isGate);
+  const otherFailures = latestPerWorkflow
+    .filter((r) => !isGate(r) && (r.conclusion === 'failure' || r.conclusion === 'timed_out'))
+    .map((r) => ({ name: r.name, conclusion: r.conclusion }));
+
+  return {
+    // 'unknown' (not 'success') when the gate has not reported for this commit — an absent check is
+    // not a passing one. Actions can stall; on 2026-08-06 it scheduled nothing for over two hours.
+    conclusion: gate ? gate.conclusion : 'unknown',
+    displayTitle: gate ? gate.display_title : undefined,
+    sha,
+    otherFailures,
+  };
 }
 
 module.exports = { listOpenPRs, listMerged, latestRun, normaliseChecks, upperState, api, apiAll };
