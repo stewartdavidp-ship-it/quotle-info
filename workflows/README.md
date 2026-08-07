@@ -716,6 +716,18 @@ how songs got in unchecked.
   with no translation signal; the 16 genuinely-translated ones keep `isBasedOn`. #281 had to land
   first, because the `isPartOf` branch could not carry `citation`/`pagination` and the rename would
   have silently stripped them from the 28 best-sourced records.
+- **"DOSSIER_SCHEMA can't emit X, so add X to it" is usually the wrong fix — check whether X is
+  DERIVED first.** The schema sits at 4,069 of a proven-good 4,072 bytes, so every such ask is a
+  budget fight, and the pipeline's answer to a field an agent shouldn't be trusted with is to compute
+  it in `toRecord`/prep rather than ask for it. `misattribution.items[].kind` was filed by both the r32
+  and r33 audits as "unmeetable by construction, 466 records hand-patched"; it is in fact produced by
+  `tools/mis-kind.js` → `prep-wave.js` at ingest, with `backfill-mis-kind.js` for the existing corpus
+  and two `detectors.js` detectors watching the residual — measured at **0 of 482 owed rows missing**,
+  and r33 stamped 17 with no hand-patching. Adding it to the schema would have cost +22…+61 bytes
+  against zero headroom to buy nothing. Full reasoning in the "ASKED FOR AND DECLINED" comment in
+  `generate.js`; `audit.js`'s SETTLED list now tells agents not to re-file it.
+  **The genuinely unmeetable one is different in kind**: `creatorDescription` (CLAUDE.md) has no
+  deriving rule and no source to derive from — that is why the RULE was narrowed instead.
 - **`--credited`'s guard mis-fires on name-form expansions, so do not lean on it.** `prep-wave.js`
   only stamps when `leadName(record author) !== leadName(batch author)` — comparing LAST WORDS. r27
   produced two records that trip that on the same person: `"Confucius (Kong Qiu)"` (lead `Qiu)`) and
