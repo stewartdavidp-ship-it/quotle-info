@@ -657,9 +657,35 @@ function buildJsonLd(q, url) {
   // Keying on ratingValue picks up every refinement the rating scale already made — the
   // right-person-wrong-words 2 and each per-record claimRatingValue — for free, and the two nodes
   // cannot drift apart again by construction, exactly as RATING_LABEL did for the written label.
+  //
+  // LEAD-ONLY OVERRIDE — the cheap valve, and the one the asymmetry below was missing.
+  //
+  // Every other verdict field in this function already takes a record override: claimRatingValue,
+  // claimRatingName, claimReviewed, verdictNote. The lead did not, and that asymmetry IS the bug the
+  // r33 audit named. The Van Gogh page is the case that proves the rating fix alone is not enough:
+  // confidence `attributed` → rating 3 → "Not confirmed.", followed by its own prose reading "Van
+  // Gogh really did write this — in Dutch, to his brother Theo, from Drenthe on 28 October 1883".
+  // The rating is right (the circulating ENGLISH matches no published translation) and the lead is
+  // wrong, because they answer different questions and only the lead is read aloud.
+  //
+  // It is a RIGHT-PERSON-WRONG-WORDS record on an `attributed` confidence, where the predicate that
+  // mints the derived 2 cannot fire: that predicate requires `disputed` AND a magnet, and nobody is
+  // falsely credited here. Rather than widen the predicate — it also drives the rating, the creator
+  // guard and the presentation kit, so widening it moves four things to fix one — the record states
+  // the lead.
+  //
+  // WHY NOT schema.faqAnswer, which already exists one line down: it replaces the WHOLE answer, so
+  // using it here would copy the entire sourceLine into `schema` where it silently stops tracking the
+  // prose it duplicates. The lead is the only part that is wrong. A five-token field cannot drift.
+  //
+  // CLOSED VOCABULARY, enforced in tools/validate-records.js (a hard failure, not a warning). This is
+  // the one string a voice assistant reads aloud and the token a featured snippet keeps when it keeps
+  // nothing else, so free prose here defeats the whole point of the field. '' is legal and means "no
+  // lead — the answer opens with its own sentence", which is what the no-claimant branch already does.
   const verdictLead = !claimant ? ''
-    : (ratingValue === 2 && isRightPersonWrongWords) ? 'Yes and no. '
-      : (VERDICT_LEAD[ratingValue] || '');
+    : (s.verdictLead !== undefined) ? leadToken(s.verdictLead)
+      : (ratingValue === 2 && isRightPersonWrongWords) ? 'Yes and no. '
+        : (VERDICT_LEAD[ratingValue] || '');
   // FULL-STRING OVERRIDE, the residue valve. A derived lead is right for the shapes the scale
   // models; it cannot be right for every record, because the rating is one number and the honest
   // spoken answer is a sentence. The ballpark page is the live example: the wording genuinely IS
@@ -1942,4 +1968,12 @@ function rightPersonWrongWords(q) {
   return q.confidence === 'disputed' && (!explicitReal || explicitReal.toLowerCase() === magnetName);
 }
 
-module.exports = { renderPage, canonicalUrl, CONFIDENCE, creditLine, plain, buildImagePrompts, realAuthorName, rightPersonWrongWords };
+// The FAQ answer's opening token — see the verdictLead note in buildJsonLd. Module-level and EXPORTED
+// so tools/validate-records.js gates `schema.verdictLead` against the same list the renderer emits;
+// a second copy of a five-item vocabulary in the validator is a copy that goes stale the first time
+// the scale gains a rung. Bare (no period): leadToken() supplies the punctuation and the trailing
+// space, so a record may write "Yes and no" or "Yes and no." and get one canonical string either way.
+const VERDICT_LEAD_TOKENS = ['Yes', 'Mostly', 'Yes and no', 'Not confirmed', 'No'];
+const leadToken = (v) => { const t = plain(v).trim().replace(/\.+$/, '').trim(); return t ? `${t}. ` : ''; };
+
+module.exports = { renderPage, canonicalUrl, CONFIDENCE, creditLine, plain, buildImagePrompts, realAuthorName, rightPersonWrongWords, VERDICT_LEAD_TOKENS, leadToken };
