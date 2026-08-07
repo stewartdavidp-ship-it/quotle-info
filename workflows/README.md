@@ -5,8 +5,23 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1427** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r33.** (Waves r6–r32 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1467** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r34.** (Waves r6–r33 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+  **`tag-themes.js` drops a record per wave and reports it only in a counter nothing reads.** r32
+  returned `covered: 39, total: 40` and r33 did the same — Epictetus and
+  `i-never-said-most-of-the-things-i-said` respectively, the latter at manifest position 22 of 40, so
+  not a chunk boundary. An untagged record never appears on `/themes` and NOTHING downstream flags
+  it: `apply-tags.js` writes what it got and prints success. **Read `covered` against `total` every
+  wave**, and re-run the tagger on a one-record manifest for anything missing (both waves did). The
+  real fix is for `apply-tags.js` to fail or alarm on `covered < total` — a silent loss is the one
+  failure this pipeline is built to make impossible everywhere else.
+- **A known-corrupt candidate now leads every draw.** `friendship-is-born-at-that-moment-when-one-man-says-to`
+  is stored truncated mid-sentence (`…myself . . .`, with a `"What!` that never closes) and sits at
+  **demand-rank #1** of the queued pool, so `select` puts it first every time. Four waves — the
+  2026-08-06 daily wave, r32, r33, and one before — have each spent a slot discovering it. Until
+  `harvest.js` gains a way to repair stored text (or the operator decides to lose the quote), draw
+  N+1 and drop it from the BATCH — never hand-edit `harvest-queue.json`, and never `skip` it, which
+  is reserved for hate/harm.
   **`harvest.js unselect` IGNORES a positional slug** — it releases EVERY selected candidate, filtered
   only by `--wave` (`cmdUnselect`, tools/harvest.js:294). It reads as slug-aware because callers keep
   invoking it when exactly one candidate happens to be selected, and it then reports `unselected 1`;
