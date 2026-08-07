@@ -65,6 +65,11 @@ DO THIS:
 5. QI-DEFERENCE: the page must NOT overclaim past Quote Investigator / Wikiquote — no earlier origin, more confident attribution, or extra specificity than the specialist source documents. Flag overclaims.
 6. CONTRACT: canonical, og:url, and the JSON-LD @ids all derive from ${ORIGIN}/who-said/${p.slug}. Report any mismatch. Note (do not fail on) the orchestrator template showing "quote undefined" — that is not the page.
 
+SETTLED — DO NOT FILE THESE. Each was audited, reviewed and deliberately declined; the reasoning is in the cited comment, and re-filing them costs a fix agent every wave:
+- itemReviewed.Claim has no \`author\` or \`datePublished\`. Both are optional and both are omitted ON PURPOSE — Claim.author is the entity that MADE the claim (never the misattributed person; putting the magnet there once shipped a false claim on 59 pages) and the corpus carries no propagation vector; datePublished would date the false claim's first circulation, which the corpus does not know. See the "STANDING ANSWER" comment on itemReviewed in tools/template.js.
+- Quotation.creator has no \`description\`. Narrowed out of the CLAUDE.md RULE on 2026-07-29 — the wave schema cannot emit one and is at its byte ceiling. \`jobTitle\` is what ships.
+A MISSING optional field is not a finding. A field asserting something FALSE always is — flag that.
+
 For every problem return an issue {severity, location (section + approx line), claim, sourceLink, problem, fix}. severity: blocker (false published fact / wrong verdict / false PD badge), high (link does not support its claim / overclaim past specialist), medium (mis-anchored-but-true / over-specific date), minor (cosmetic / structured-data nit). verdict FAIL if any blocker/high, else PASS. Set page to "${p.slug}/index.html".`
 
 const skepticPrompt = (slug, issue) => `You are a SKEPTIC re-checking one audit finding on the quotle.info page ${BASE}/${slug}/index.html. Default to standsUp=false unless you can independently confirm the problem is real.
