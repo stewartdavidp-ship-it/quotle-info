@@ -7,14 +7,19 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
 ## Current state (update this line each wave)
 - **Corpus: 1467** quotes + **95** songs. **Target: 2000** quotes.
 - **Next wave number: r34.** (Waves r6–r33 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
-  **`tag-themes.js` drops a record per wave and reports it only in a counter nothing reads.** r32
-  returned `covered: 39, total: 40` and r33 did the same — Epictetus and
+  **`tag-themes.js` drops a record per wave — FIXED 2026-08-07, and the fix is an argument you must
+  pass.** r32 returned `covered: 39, total: 40` and r33 did the same — Epictetus and
   `i-never-said-most-of-the-things-i-said` respectively, the latter at manifest position 22 of 40, so
-  not a chunk boundary. An untagged record never appears on `/themes` and NOTHING downstream flags
-  it: `apply-tags.js` writes what it got and prints success. **Read `covered` against `total` every
-  wave**, and re-run the tagger on a one-record manifest for anything missing (both waves did). The
-  real fix is for `apply-tags.js` to fail or alarm on `covered < total` — a silent loss is the one
-  failure this pipeline is built to make impossible everywhere else.
+  not a chunk boundary (an agent returned 9 of its own 10). An untagged record never appears on
+  `/themes` and nothing downstream flagged it: `apply-tags.js` wrote what it got and printed success,
+  so the only thing catching it both times was a human reading a counter. Now:
+  **`apply-tags.js --manifest` is REQUIRED** and diffs the manifest against the records on disk — it
+  names every dropped slug, writes `<manifest>-missing.json` for a `chunks:1` re-run, and exits 1.
+  The journal cannot do this itself: what an agent never returned leaves no trace in it, which is why
+  the manifest is mandatory rather than optional. `tag-themes.js` also computes each strided slice's
+  expected size from `total`/`chunks` and **retries a short slice once** before giving up, so the
+  common case repairs itself. Same swallow existed in `cite-styles.js` → `_ingest-cites.js`; that one
+  now takes `--expect`.
 - **A known-corrupt candidate now leads every draw.** `friendship-is-born-at-that-moment-when-one-man-says-to`
   is stored truncated mid-sentence (`…myself . . .`, with a `"What!` that never closes) and sits at
   **demand-rank #1** of the queued pool, so `select` puts it first every time. Four waves — the
@@ -172,7 +177,7 @@ Consequences worth knowing before you spend agents here:
 | `fix.js` | Workflow | Apply confirmed fixes. args `["slug", ...]`; reads `.scratch/current-fixes.json` |
 | `prep-wave.js` | node CLI | **Journal → ingest-ready records** (toRecord + escaping-scan + STUB-detect + creditedTo). |
 | `parse-audit.js` | node CLI | Audit journal → `current-fixes.json` + FAIL slug list. |
-| `apply-tags.js` | node CLI | Tag-workflow journal → write `record.themes`. |
+| `apply-tags.js` | node CLI | Tag-workflow journal → write `record.themes`. **`--manifest` required** — it is the completeness gate. |
 | `review.js` | node CLI | **Corrections + re-review spine.** Picks which PUBLISHED records go back to audit.js (reader reports, staleness); stamps outcomes. Does not audit. |
 | `harvest-dedup.js` | node CLI | Standalone dedup (reference; superseded by `tools/harvest.js sync`). |
 | `audit-songs.js` | Workflow | **Songs:** adversarial audit of built /who-recorded/ pages + skeptic. args `{pages, repo}` |
@@ -330,7 +335,12 @@ node tools/build.js
 #    records and point it there. No hand-editing:
 node -e "const fs=require('fs');const out=fs.readdirSync('data/quotes').filter(f=>f.endsWith('.json')).map(f=>JSON.parse(fs.readFileSync('data/quotes/'+f))).filter(r=>!Array.isArray(r.themes)||!r.themes.length).map(r=>({quoteSlug:r.quoteSlug,quote:r.displayQuote,author:(r.answer&&r.answer.authorName)||'',confidence:r.confidence}));fs.mkdirSync('workflows/.scratch',{recursive:true});fs.writeFileSync('workflows/.scratch/untagged-rN.json',JSON.stringify(out,null,2));console.log(out.length+' untagged → workflows/.scratch/untagged-rN.json')"
 Workflow tag-themes.js  args={ chunks: 4, total: <the count printed above>, manifest: "$(pwd)/workflows/.scratch/untagged-rN.json", repo: "$(pwd)" }
-node workflows/apply-tags.js --journal <tagTranscriptDir>/journal.jsonl
+#    --manifest is MANDATORY and is the completeness gate: apply-tags.js exits non-zero and NAMES any
+#    record the tagger dropped, then writes <manifest>-missing.json for a chunks:1 re-run. The journal
+#    cannot detect this on its own — what an agent never returned leaves no trace in it. r32 and r33
+#    each lost one record here and printed success; that is what this argument exists to stop.
+node workflows/apply-tags.js --journal <tagTranscriptDir>/journal.jsonl \
+     --manifest "$(pwd)/workflows/.scratch/untagged-rN.json"
 node tools/build.js
 
 # 7. SHIP
