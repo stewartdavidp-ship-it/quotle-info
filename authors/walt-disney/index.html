@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){try{var d=document.documentElement,ls=localStorage;var THEMES={light:1,dark:1,auto:1},SIZES={normal:1,large:1,xl:1,xxl:1};var u=new URL(location.href),q=u.searchParams,qth=q.get('qth'),qts=q.get('qts');if(qth||qts){if(THEMES[qth])ls.setItem('quotle-theme',qth);if(SIZES[qts])ls.setItem('quotle-text-size',qts);q.delete('qth');q.delete('qts');var qs=q.toString();history.replaceState(null,'',u.pathname+(qs?'?'+qs:'')+u.hash);}var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
     <title>Walt Disney — provenance traced to source · Quotle.info</title>
-    <meta name="description" content="Walt Disney: 5 quotes traced to a primary source where one exists, with attribution verified and misattributions untangled.">
+    <meta name="description" content="Walt Disney: 6 quotes traced to a primary source where one exists, with attribution verified and misattributions untangled.">
     <link rel="canonical" href="https://quotle.info/authors/walt-disney/">
     <meta property="og:type" content="profile">
     <meta property="og:title" content="Walt Disney — provenance traced to source">
@@ -27,6 +27,12 @@
         "name": "Walt Disney",
         "description": "1901–1966 · American animator, film producer & studio founder",
         "subjectOf": [
+          {
+            "@type": "Quotation",
+            "@id": "https://quotle.info/who-said/you-may-not-realize-it-when-it-happens-but-a-kick-in-the/#quotation",
+            "text": "You may not realize it when it happens, but a kick in the teeth may be the best thing in the world for you",
+            "url": "https://quotle.info/who-said/you-may-not-realize-it-when-it-happens-but-a-kick-in-the/"
+          },
           {
             "@type": "Quotation",
             "@id": "https://quotle.info/who-said/its-kind-of-fun-to-do-the-impossible/#quotation",
@@ -334,8 +340,12 @@
         </header>
         <div class="author-bio">Walt Disney was born in Chicago on 5 December 1901 and died on 15 December 1966. With his brother Roy he founded the Disney Brothers Studio in October 1923, and he became one of the defining figures of American animation as an animator, producer, voice actor and entrepreneur. His enormous fame is exactly why lines he never wrote &mdash; motivational aphorisms, office jokes, greeting-card wisdom &mdash; keep drifting onto his name; this quip is one of them, and the one documented 1933 report is <em>secondhand</em>, describing him repeating a joke, not making one up.</div>
         <section aria-labelledby="q-h">
-            <div class="sec-head"><p class="kicker">Traced to source</p><h2 id="q-h">5 quotes we&rsquo;ve traced to Walt Disney</h2></div>
+            <div class="sec-head"><p class="kicker">Traced to source</p><h2 id="q-h">6 quotes we&rsquo;ve traced to Walt Disney</h2></div>
             <div class="q-grid">
+                <a class="q-card verified" href="/who-said/you-may-not-realize-it-when-it-happens-but-a-kick-in-the/">
+                    <p class="q-text">&ldquo;You may not realize it when it happens, but a kick in the teeth may be the best thing in the world for you&rdquo;</p>
+                    <span class="q-conf"><span class="dot" aria-hidden="true">✓</span>Verified</span>
+                </a>
                 <a class="q-card attributed" href="/who-said/its-kind-of-fun-to-do-the-impossible/">
                     <p class="q-text">&ldquo;It's kind of fun to do the impossible&rdquo;</p>
                     <span class="q-conf"><span class="dot" aria-hidden="true">≈</span>Attributed</span>
@@ -384,16 +394,7 @@
                 </a>
             </div>
         </section>
-        <section aria-labelledby="rev-h">
-            <div class="sec-head"><p class="kicker">On the research bench</p><h2 id="rev-h">Commonly pinned on Walt Disney &mdash; under review</h2><p class="sec-sub">1 line flagged as pinned on Walt Disney and queued for a full source trace &mdash; not yet verified.</p></div>
-            <div class="rev-grid">
-                <a class="rev-card" rel="nofollow" href="/flagged/?q=you-may-not-realize-it-when-it-happens-but-a-kick-in-the">
-                    <p class="rev-q">&ldquo;You may not realize it when it happens, but a kick in the teeth may be the best thing in the world for you.&rdquo;</p>
-                    <p class="rev-tag">Disputed <span aria-hidden="true">→</span></p>
-                </a>
-            </div>
 
-        </section>
         <section class="ask" data-author="Walt Disney" aria-labelledby="ask-h">
             <div class="sec-head"><p class="kicker">Did they really say it?</p><h2 id="ask-h">Thought Walt Disney said something else?</h2><p class="sec-sub">Type a quote you think Walt Disney said &mdash; we&rsquo;ll tell you what we know, or point you to the best sources.</p></div>
             <input id="ask-q" class="ask-in" type="search" placeholder="Type or paste the quote&hellip;" aria-label="Type or paste a quote you think Walt Disney said" autocomplete="off">
