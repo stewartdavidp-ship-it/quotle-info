@@ -358,6 +358,15 @@ gh pr create ...
 #    (git is right to keep the wave's side: the wave did change those files.) r19 reverted #59's
 #    og:image fix on its 40 pages this way. The build is idempotent, so this is cheap and a no-op
 #    when nothing moved:
+#    !! IT CUTS BOTH WAYS, AND THE OTHER DIRECTION HAS NO WAVE TO CATCH IT. A GENERATOR FIX branched
+#    before a wave lands, and merged after it, does not revert anything — it simply never applies to
+#    that wave's pages, because its own build predates those records. Nothing flags this: the fix's
+#    diff is clean, its CI is green, main stays self-consistent, and the new pages just quietly lack
+#    the fix. #371 (the FAQ verdict-lead fix) hit exactly this — it corrected 60 pages, then r33
+#    merged under it, and `it-takes-courage-to-love-but-pain-through-love-is-the` shipped the old
+#    lead until a second PR rebuilt it. So run the same rebase-rebuild on a GENERATOR branch before
+#    merging it, not just on wave branches, and re-measure afterwards rather than trusting the count
+#    you took before the wave landed.
 git pull origin main && node tools/build.js && git add -A && git commit --amend --no-edit && git push -f
 gh pr merge <#> --squash
 #    after Pages deploys: node tools/indexnow.js   (feeds Bing/Yandex — the fastest agent-discovery path)
