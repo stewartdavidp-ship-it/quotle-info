@@ -306,16 +306,14 @@ function buildJsonLd(q, url) {
   // translated quote legitimately needs both: the ancient work it belongs to, and the edition quoted.
   if (s.isPartOf) {
     const p = s.isPartOf;
-    quotation.isPartOf = { '@type': p.type || 'CreativeWork', name: p.name };
+    quotation.isPartOf = creativeWork(p);
     // A WORK'S NICKNAME belongs to the work. Same delete-worked/add-dropped shape the creator
     // alternateName note below records from the Voltaire pen-name records, one relation over: the
     // Eisenhower record's false assertion (that the SENTENCE is nicknamed "The Cross of Iron speech")
     // was correctly removed from the Quotation level and re-homed here — and there was no passthrough
     // here, so the nickname of the speech that actually carries it went silently missing. Half a fix
     // ships as a clean diff and a page with less true structured data than before.
-    if (p.alternateName) quotation.isPartOf.alternateName = p.alternateName;
-    if (p.datePublished) quotation.isPartOf.datePublished = p.datePublished;
-    if (p.sameAs) quotation.isPartOf.sameAs = p.sameAs;
+    // (alternateName / datePublished / sameAs are emitted by creativeWork() above, in this order.)
     // MIRRORS the isBasedOn branch below, for the same reasons stated there, because the same
     // record can legitimately need them on either relation. A containing work has page numbers as
     // often as a derived one does; `sameAs` still asserts the linked URL IS this work, so a source
@@ -327,11 +325,35 @@ function buildJsonLd(q, url) {
     // derivation field corpus-wide) would have SILENTLY DROPPED citation and pagination from the 28
     // records carrying them — precisely the best-sourced ones, the only records with a fact-check
     // citation to lose. Land this before that backfill, not after.
-    if (p.pagination) quotation.isPartOf.pagination = p.pagination;
-    if (p.citation) quotation.isPartOf.citation = p.citation;
-    if (p.description) quotation.isPartOf.disambiguatingDescription = p.description;
+    // (pagination / citation / description are emitted by creativeWork() above, in this order.)
+    //
+    // A CONTAINING WORK CAN ITSELF BE CONTAINED, and until this the node was FLAT — so a record whose
+    // source is a letter, a diary entry, an essay in a collection or a speech in a published anthology
+    // had one object to say two things with, and had to conflate them. The Van Gogh record is the case
+    // r33 filed: the sentence is from a private letter to Theo of 28 October 1883, which first reached
+    // print in the collected letters Johanna van Gogh-Bonger published in 1914. Those are two works
+    // with two dates and two identifiers. Flattened, the record named the LETTER and pointed `sameAs`
+    // at the COLLECTION's Wikipedia page — a machine-readable claim that the URL identifies the
+    // letter — and demoted the whole publication history to `description` prose no consumer parses.
+    // The alternative pressure is worse and is what the finding reported: put the collection's 1914
+    // datePublished on an 1883 letter.
+    //
+    // ONE LEVEL, deliberately. The isBasedOn branch below has had a narrow ancestor of this since the
+    // beginning — `periodicalName`, which wraps the parent as a Periodical because a newspaper
+    // article's container always is one. A letter's container is not always a Periodical, so this
+    // takes `type` from the record; and one level covers letter-in-collection, article-in-journal and
+    // chapter-in-book, which is every shape the corpus has. A record nesting deeper is not silently
+    // truncated — validate-records.js says so.
+    if (p.isPartOf && p.isPartOf.name) {
+      quotation.isPartOf.isPartOf = creativeWork(p.isPartOf);
+      if (p.isPartOf.inLanguage && p.isPartOf.inLanguage !== 'en') {
+        quotation.isPartOf.isPartOf.inLanguage = p.isPartOf.inLanguage;
+      }
+    }
     // Original composition language of the source work (e.g. "grc", "fr") when the English quote is a
     // translation — lives on the WORK, not on the English `text`. Prefer isPartOf's own, else the record's.
+    // Set LAST so the key order of the flat case is byte-identical to what it was before the nesting
+    // support landed; ~1,190 pages carry an isPartOf and none of them should churn for this.
     const orig = p.inLanguage || s.inLanguage;
     if (orig && orig !== 'en') quotation.isPartOf.inLanguage = orig;
   }
@@ -1967,6 +1989,28 @@ function rightPersonWrongWords(q) {
   const explicitReal = plain((q.answer && q.answer.realAuthorName) || '');
   return q.confidence === 'disputed' && (!explicitReal || explicitReal.toLowerCase() === magnetName);
 }
+
+// A CreativeWork node from a record's isPartOf-shaped sub-object. ONE builder for both nesting levels:
+// a containing collection has a name, a date, an identifier, a nickname, pages and a citation exactly
+// as the work inside it does, and a second hand-written copy of that field list is a copy that goes
+// stale — which is the whole history of this node. `citation` and `pagination` were missing here until
+// 2026-07-30 and the planned isBasedOn→isPartOf backfill would have dropped them from the 28
+// best-sourced records; `alternateName` was missing until 2026-08-07 and swallowed the Eisenhower
+// speech's nickname. Both were single omissions from a list written out by hand.
+//
+// KEY ORDER IS LOAD-BEARING: the emitted order below is exactly what the flat branch emitted before
+// this was extracted, so ~1,190 pages carrying an isPartOf do not churn a byte. `inLanguage` is
+// appended by the caller, last, for the same reason.
+const creativeWork = (w) => {
+  const node = { '@type': w.type || 'CreativeWork', name: w.name };
+  if (w.alternateName) node.alternateName = w.alternateName;
+  if (w.datePublished) node.datePublished = w.datePublished;
+  if (w.sameAs) node.sameAs = w.sameAs;
+  if (w.pagination) node.pagination = w.pagination;
+  if (w.citation) node.citation = w.citation;
+  if (w.description) node.disambiguatingDescription = w.description;
+  return node;
+};
 
 // The FAQ answer's opening token — see the verdictLead note in buildJsonLd. Module-level and EXPORTED
 // so tools/validate-records.js gates `schema.verdictLead` against the same list the renderer emits;

@@ -188,6 +188,17 @@ for (const { file, r } of recs) {
     }
   }
 
+  // schema.isPartOf nests exactly ONE level (letter-in-collection, article-in-journal,
+  // chapter-in-book — every shape this corpus has; see the note in template.js). Anything a record
+  // writes below that, or a nested node with no `name`, is DROPPED by the renderer. That is the
+  // silent-edit shape this repo keeps getting burnt by — a record edit that looks applied and ships
+  // unchanged markup (the Voltaire pen name, the Eisenhower nickname) — so it fails here instead.
+  const ipo = r.schema && r.schema.isPartOf;
+  if (ipo && ipo.isPartOf) {
+    if (!ipo.isPartOf.name) p.push('schema.isPartOf.isPartOf has no name — the renderer drops it silently');
+    if (ipo.isPartOf.isPartOf) p.push('schema.isPartOf nests more than one level — the renderer emits only one, so the deepest work would vanish');
+  }
+
   // dayNumber is OPTIONAL and explicitly nullable — 481 records ship with `dayNumber: null`.
   // It maps a quote to a Quotle puzzle day; most corpus entries have no puzzle. Only collisions
   // among records that DO claim a day are a problem.
