@@ -323,6 +323,18 @@ function buildJsonLd(q, url) {
     if (p.pagination) quotation.isPartOf.pagination = p.pagination;
     if (p.citation) quotation.isPartOf.citation = p.citation;
     if (p.description) quotation.isPartOf.disambiguatingDescription = p.description;
+    // The containing work's OWN author, and the publication that contains IT — both missing until
+    // 2026-08-04, and isBasedOn has carried the periodical passthrough since it was written. A
+    // newspaper or magazine piece is the common shape here: the quote sits inside an ARTICLE, the
+    // article has a byline, and the article sits inside the PERIODICAL. With neither field emitted,
+    // a record had exactly one place to put the publication — inside `name` — and one did: the
+    // Buffett "read 500 pages" record still reads "Investors earn handsome paychecks by handling
+    // Buffett's business (Omaha World-Herald)", a parenthetical doing load-bearing work because
+    // nothing else could say it. That is a headline with a magazine glued to the end of it, and no
+    // machine reads it as a containing publication. Author and periodical now have real fields, so
+    // such a record can drop the parenthetical and state both.
+    if (p.author) quotation.isPartOf.author = { '@type': 'Person', name: plain(p.author) };
+    if (p.periodicalName) quotation.isPartOf.isPartOf = { '@type': 'Periodical', name: plain(p.periodicalName) };
     // Original composition language of the source work (e.g. "grc", "fr") when the English quote is a
     // translation — lives on the WORK, not on the English `text`. Prefer isPartOf's own, else the record's.
     const orig = p.inLanguage || s.inLanguage;
@@ -520,6 +532,20 @@ function buildJsonLd(q, url) {
   let appearance;
   if (s.claimAppearanceUrl) appearance = { '@id': s.claimAppearanceUrl };
   else if (!s.suppressClaimAppearance) appearance = { '@id': `${url}#quotation` };
+  // itemReviewed.text = the claim's own content, so the Claim node is legible WITHOUT resolving the
+  // appearance edge. `claimReviewed` on the ClaimReview is a sentence ABOUT the claim ("X said: …");
+  // `Claim.text` is the claim itself. A consumer that walks to itemReviewed and finds only an
+  // `appearance` @id has a node with no content — it has to follow the edge back to #quotation to
+  // learn anything, and on the pages where appearance is deliberately suppressed (right-person-
+  // wrong-words, paraphrase) there is no edge to follow at all, so the node said nothing whatever.
+  // Uses claimQuoteText — the wording that actually CIRCULATES — for the same reason claimReviewed
+  // does: quotation.text is the documented original, which on 218 pages is not the claim under
+  // review. MEASURED before shipping (2026-08-04), because the r24 lesson is that schema growth can
+  // kill things outright: 1,402 Claim nodes across 1,380 pages, ~+150 KB of JSON-LD site-wide, ~110
+  // bytes on a ~96 KB page. Note the r24 ceiling is a DIFFERENT budget — verify-corpus's
+  // SCHEMA_BUDGET measures the agent-facing DOSSIER_SCHEMA in workflows/generate.js, the output
+  // schema the platform validates before an agent runs. Emitted page JSON-LD is not scored by it.
+  //
   // itemReviewed carries NO author. In schema.org — and in Google's fact-check guidance —
   // `Claim.author` is the entity that MADE the claim under review, not the person the quote is
   // pinned on. Emitting the magnet there told answer engines that George Carlin authored the claim
@@ -530,6 +556,12 @@ function buildJsonLd(q, url) {
   // `claimReviewed`, which is where the reviewed claim belongs. If a Claim author is ever wanted it
   // has to name the PROPAGATION VECTOR (the forward, the meme page), never the magnet, and no record
   // field carries one today.
+  //
+  // THIS KEEPS GETTING RE-FILED. The r31 audit asked fix agents to add the magnet here; several
+  // refused independently, citing this note, and were right. Because auditors read the rendered page
+  // and never see this comment, the argument was being re-run from scratch every wave — so the
+  // carve-out now lives where the re-filing starts, in the CONTRACT step of `auditPrompt`
+  // (workflows/audit.js). Amend both together if this ever genuinely changes.
   const claimReview = {
     '@type': 'ClaimReview',
     '@id': `${url}#claimreview`,
@@ -539,6 +571,7 @@ function buildJsonLd(q, url) {
     claimReviewed: claimReviewedText,
     itemReviewed: {
       '@type': 'Claim',
+      text: claimQuoteText,
       appearance,
     },
     reviewRating: {
@@ -574,8 +607,12 @@ function buildJsonLd(q, url) {
         claimReviewed: `${plain(name)} ${claimVerb}: "${claimQuoteText}"`,
         // No itemReviewed.author here either, for the same reason as the primary node above: the
         // secondary magnets did not make the claim about themselves. `claimReviewed` names them.
+        // `text` IS the same on every node in the set — one quote, several wrong names pinned to
+        // it — so each secondary Claim carries the identical circulating wording. That is correct,
+        // not duplication to dedupe: the claims differ by claimant, not by content.
         itemReviewed: {
           '@type': 'Claim',
+          text: claimQuoteText,
           appearance,
         },
         reviewRating: {
