@@ -5,8 +5,16 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1380** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r32.** (Waves r6–r31 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1427** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r33.** (Waves r6–r32 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+  **`harvest.js unselect` IGNORES a positional slug** — it releases EVERY selected candidate, filtered
+  only by `--wave` (`cmdUnselect`, tools/harvest.js:294). It reads as slug-aware because callers keep
+  invoking it when exactly one candidate happens to be selected, and it then reports `unselected 1`;
+  two separate sessions used it that way on 2026-08-06 and both looked correct. Running it mid-wave
+  would release the whole draw. To release ONE candidate from a wave: run `harvest.js sync` FIRST so
+  everything actually built sweeps to `ingested`, leaving only the stragglers `selected`, then
+  `unselect --wave rN`. That is how r32 released the corrupt candidate below without touching its
+  other 40.
   **r30 and r31 ran CONCURRENTLY on 2026-08-04** — two sessions, two waves, one repo. It worked, and
   what made it work is worth keeping. r31 ran from a separate **git worktree** on its own branch, and
   copied r30's *uncommitted* `selected` marks into its queue before drawing: `select` draws only from
