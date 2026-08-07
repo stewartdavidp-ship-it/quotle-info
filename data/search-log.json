@@ -1363,6 +1363,121 @@
         }
       },
       "notes": "TWO DAYS POST-SITEMAP-FIX; too early for indexing effect (~4d publish->index latency, and the sitemap was first read 7/25). Coverage barely moved: 207->216 pages with impressions, of 2,048. THE 7/19 DROP IS REAL, NOT REPORTING LAG — the baseline flagged it as unconfirmed; with data now through 7/25 it persists. Impressions ran ~420/day through 7/18, collapsed to ~30/day by 7/20, stayed flat, and turned up slightly on 7/24-25. Leading candidate is new-site honeymoon decay (classic shape: ramp, plateau, sharp pullback), NOT the sitemap — the collapse predates every sitemap change. Unresolved; do not act on it until a third reading shows whether the 7/24-25 uptick continues."
+    },
+    {
+      "date": "2026-08-04",
+      "pulledOn": "2026-08-06",
+      "source": "GSC URL-prefix property https://quotle.info/ · 28-day window (7/8–8/4; the property still has no data before 7/8, so 28-day == full history and IS comparable to the 3-month totals in the two prior readings)",
+      "totals": {
+        "clicks": 5,
+        "impressions": 4260,
+        "ctrPct": 0.1,
+        "avgPosition": 23.2
+      },
+      "queries": null,
+      "pagesWithImpressions": 237,
+      "pagesTotal": 2367,
+      "recent7d": {
+        "window": "2026-07-29..08-04",
+        "clicks": 0,
+        "impressions": 389,
+        "avgPosition": 22.3,
+        "pagesWithImpressions": 76,
+        "note": "First reading where the clean-window cohort split was actually measured — GSC's rows-per-page finally expanded to show all 76 rows. Prior readings could only bound it."
+      },
+      "cohort": {
+        "measuredOn": "the 7-day window 7/29–8/04, all 76 rows read, split against the frozen legacy slug list",
+        "legacy": {
+          "pagesWithImpressions": 61,
+          "impressions": 341,
+          "clicks": 0,
+          "coveragePct": 11.8
+        },
+        "current": {
+          "pagesWithImpressions": 6,
+          "impressions": 37,
+          "clicks": 0,
+          "coveragePct": 0.7,
+          "slugs": [
+            "history-is-written-by-the-victors",
+            "i-do-not-know-with-what-weapons-world-war-iii-will-be",
+            "hard-times-create-strong-men-strong-men-create-good-times",
+            "everything-in-the-world-is-about-sex-except-sex",
+            "a-government-big-enough-to-give-you-everything-you-want-is",
+            "the-mind-is-its-own-place-and-in-itself-can-make-a-heaven"
+          ],
+          "note": "6 of 867 non-legacy quote pages. Denominator is all quote records not in the frozen legacy list (1,385 total - 518 legacy), not the frozen 695."
+        },
+        "other": {
+          "pagesWithImpressions": 9,
+          "impressions": 30,
+          "note": "homepage, /who-said/, /authors/, /contact/, 4 theme hubs, 1 author page"
+        },
+        "caveat": "Page-level rows sum to 408 vs the 389 totals card — GSC computes the two differently. Treat the split as a ratio (90% legacy / 10% current), not as exact counts."
+      },
+      "indexing": {
+        "reportAlive": false,
+        "reportThrough": "2026-07-23",
+        "indexed": 319,
+        "notIndexed": 202,
+        "note": "THE PAGE INDEXING REPORT IS FROZEN AGAIN — 'Last update: 7/23/26', read on 8/6, 14 days stale, and the indexed/not-indexed figures (319/202) are byte-identical to the 2026-07-25 reading. This is the same Google-side reporting freeze documented in tools/search-log.js. Do NOT re-read 319/202 as a measurement. Note 319+202=521, which is roughly the legacy cohort alone — the report never covered the 2,367-URL corpus. Performance data by contrast is fresh (updated 5h before the pull)."
+      },
+      "urlInspection": {
+        "method": "live URL Inspection, 3 pages, 2026-08-06",
+        "results": [
+          {
+            "url": "/who-said/history-is-written-by-the-victors/",
+            "published": "2026-07-21",
+            "verdict": "URL is on Google — indexed"
+          },
+          {
+            "url": "/who-said/hitch-your-wagon-to-a-star/",
+            "published": "2026-07-30",
+            "verdict": "URL is unknown to Google · no referring sitemaps detected · last crawl N/A"
+          },
+          {
+            "url": "/who-said/we-are-what-we-pretend-to-be-so-we-must-be-careful-about/",
+            "published": "2026-07-30",
+            "verdict": "URL is unknown to Google · no referring sitemaps detected · last crawl N/A"
+          }
+        ],
+        "note": "All three are present in sitemap-full.xml and return HTTP 200 at the canonical trailing-slash URL. So the two uncrawled ones are not a build defect — Google has parsed the sitemap file but has not scheduled these URLs for crawl, and does not even attribute them to a sitemap. 'Discovered pages: 2,361' on the sitemap row means URLs PARSED from the file, not URLs crawled."
+      },
+      "sitemap": {
+        "url": "https://quotle.info/sitemap-full.xml",
+        "status": "Success",
+        "discovered": 2361,
+        "lastRead": "2026-08-05",
+        "deadEntry": "https://quotle.info/sitemap.xml — still 'Couldn't fetch', never read, 0 discovered. Known and worked around; robots.txt documents it."
+      },
+      "notes": "THE 7/19 COLLAPSE NEVER RECOVERED. Third reading, and the answer to the question the 7/25 reading left open is no: impressions ran ~420/day through 7/18 and have sat at ~50/day for 17 straight days (389 over 7 days). The 7/24-25 uptick did not continue. Site totals still LOOK like they rise (3510 -> 3680 -> 4260) purely because the window is cumulative — the daily rate is flat and low. THE REAL FINDING IS THE COHORT SPLIT, measured exactly for the first time: 90% of impressions still come from the 518 legacy pages, and only 6 of 867 current-cohort pages (0.7%) earned a single impression in the last week. Page coverage across the whole corpus is 237 of 2,367 (10%), up just 21 in the ten days since the last reading, while ~180 new pages were published in the same period. Live URL inspection confirms the mechanism: recently published pages are 'unknown to Google' — never crawled, no sitemap attribution — despite being in a sitemap Google re-reads daily. Discovery is not the bottleneck any more (the sitemap fix held); CRAWL SCHEDULING is. Google is reading the sitemap and declining to fetch the URLs in it. Still zero clicks on the current build. Do not read '5 clicks' as progress — all 5 belong to the legacy cohort and the count has not moved since 7/23. || AMENDED 2026-08-06 after pulling GSC Crawl stats: the crawl-scheduling diagnosis is now measured, not inferred. Googlebot made 2,420 requests total; the rate collapsed from ~830/day (7/8-7/9) to ~20-40/day from 7/11 onward and has stayed flat. Host status is clean and response time 84ms, so this is crawl DEMAND, not host throttling. NOTE FOR THE NEXT READING: quotle.info is served by GitHub Pages/Fastly, NOT Cloudflare (server: GitHub.com, no cf-ray) — there are no origin access logs available, so Crawl stats is the only Googlebot-volume instrument. Do not go looking for Cloudflare logs for these pages; the Cloudflare worker is the /verify API on a different host. ALSO FIXED THIS SESSION: tools/build-sitemap.js stamped every author, theme and static page with the corpus-wide newest dateModified, so ~900 URLs claimed to change on every build; now derived per page (896 -> 14 URLs carrying the build date). Whether that churn contributed to the crawl collapse is UNKNOWN — it is a signal-quality fix, not a diagnosed cause, and the next reading is the test.",
+      "crawlStats": {
+        "reportThrough": "2026-08-04",
+        "note": "GSC Settings -> Crawl stats. FRESH (last updated 8/4) while the Page indexing report is frozen at 7/23 — this is the instrument to use.",
+        "window": "90-day report; property has data from 2026-07-07",
+        "totalRequests": 2420,
+        "totalDownloadBytes": 28900000,
+        "avgResponseMs": 84,
+        "hostStatus": "Host had no problems in the last 90 days",
+        "byResponse": {
+          "ok200": 84,
+          "movedPermanently301": 16,
+          "notFound404": "<1"
+        },
+        "byPurpose": {
+          "discovery": 58,
+          "refresh": 42
+        },
+        "byFileType": {
+          "html": 74,
+          "otherFileType": 16,
+          "json": 10,
+          "image": "<1"
+        },
+        "shape": "THE ROOT CAUSE, VISIBLE DIRECTLY. Crawling spiked to ~830 requests/day on 7/8-7/9, collapsed by 7/11, and has run at roughly 20-40/day ever since — a flat line for ~24 days. At that rate one pass over 2,367 URLs takes ~3 months, which is exactly why 6 of 867 current-cohort pages have impressions. The crawl collapse (~7/10) PRECEDES the impressions collapse (~7/19) by about nine days, the expected lag.",
+        "notThrottling": "Host status clean for 90 days and average response 84ms, so Google is not backing off for host health. This is crawl DEMAND (how much Google thinks the site is worth fetching), not crawl CAPACITY.",
+        "waste": "16% of an already-tiny budget returns 301. Internal links were checked and are clean — zero no-slash quote hrefs in the built HTML — so these are Google re-crawling no-slash URLs it learned before the 2026-07-22 contract fix. Self-limiting, should decay. 26% goes to non-HTML (16% other + 10% JSON): llms.txt and openapi.json are deliberate agent surfaces, but the large unlinked build artifacts in the web root (verify-index.json 1.8MB, themes.json 833KB, search.json 456KB, manifest.json 539KB) are NOT disallowed in robots.txt. Untested as a crawl-budget factor; flagged, not diagnosed."
+      }
     }
   ]
 }
