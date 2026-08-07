@@ -7,13 +7,23 @@
  * double-escaping so cite.mla/cite.apa are RAW HTML (<em>…</em>, single &amp; entities) the template
  * can drop straight into the page. Idempotent; re-run after a resume to fold in the rest.
  *
- *   node tools/_ingest-cites.js --journal <transcriptDir>/journal.jsonl
+ *   node tools/_ingest-cites.js --journal <transcriptDir>/journal.jsonl [--expect <slugs.json>]
+ *
+ * --expect takes the SAME slug array that was passed to cite-styles.js. cite-styles.js chunks that
+ * array across agents, so a chunk that returns 11 of its 12 leaves no trace in the journal — the same
+ * silent-loss shape that cost r32 and r33 a record each in the theme tagger (see
+ * workflows/apply-tags.js, where the manifest is mandatory for exactly this reason). cite-styles.js
+ * already returns {requested, got}, so the caller HAS the number; this makes the check mechanical and
+ * names the slugs. Optional here rather than required only because this is an ad-hoc backfill tool
+ * with no runbook step to update — pass it, though: a count you have to notice is a count that gets
+ * missed.
  */
 const fs = require('fs');
 const path = require('path');
 function arg(n) { const i = process.argv.indexOf('--' + n); return i > -1 ? process.argv[i + 1] : null; }
 const JOURNAL = arg('journal');
-if (!JOURNAL) { console.error('usage: _ingest-cites.js --journal <journal.jsonl>'); process.exit(1); }
+const EXPECT = arg('expect');
+if (!JOURNAL) { console.error('usage: _ingest-cites.js --journal <journal.jsonl> [--expect <slugs.json>]'); process.exit(1); }
 const DIR = path.join(__dirname, '..', 'data', 'quotes');
 
 // Undo one level of over-escaping the agents sometimes apply: &lt;em&gt; → <em>, and ANY double-escaped
@@ -50,3 +60,26 @@ for (const x of rows) {
   wrote++;
 }
 console.log(`cites ingested: ${wrote} records (${seen.size} unique slugs; ${missing} missing on disk)`);
+
+if (!EXPECT) {
+  console.log('  (no --expect: completeness NOT checked — a chunk that returned short is invisible here)');
+} else {
+  const want = JSON.parse(fs.readFileSync(EXPECT, 'utf8'));
+  const expected = (Array.isArray(want) ? want : want.slugs || []).filter(Boolean);
+  // Checked against the RECORD, not against this run's rows, so a re-run after a partial pass reports
+  // what is still missing rather than re-failing on records already written.
+  const lost = expected.filter((s) => {
+    const p = path.join(DIR, s + '.json');
+    if (!fs.existsSync(p)) return false;
+    const r = JSON.parse(fs.readFileSync(p, 'utf8'));
+    return !(r.cite && (r.cite.mla || r.cite.apa));
+  });
+  console.log(`expected: ${expected.length} slugs | ${expected.length - lost.length} now carry a cite.mla/apa`);
+  if (lost.length) {
+    const out = EXPECT.replace(/(\.json)?$/, '-missing.json');
+    fs.writeFileSync(out, JSON.stringify(lost, null, 2) + '\n');
+    console.error(`\n*** ${lost.length} of ${expected.length} REQUESTED SLUGS GOT NO CITATION — a chunk returned short.\n${lost.slice(0, 20).map((s) => `      · ${s}`).join('\n')}${lost.length > 20 ? `\n      … +${lost.length - 20} more` : ''}\n\n    Re-run list written: ${out}\n`);
+    process.exit(1);
+  }
+  console.log('  ✓ every requested slug has a citation.');
+}
