@@ -5,8 +5,20 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1467** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r34.** (Waves r6–r33 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1506** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r35.** (Waves r6–r34 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+  **r34 shipped 39, not 40** — a fix agent found one record duplicated a page the corpus already had
+  (the Ali "so fast" joke, under a different wording), so it was dropped along with its rendered
+  directory. `sync` dedups on EXACT normalised text, so a reworded variant of an already-built quote
+  passes selection untouched; the duplicate is not visible until an agent that can see sibling files
+  reads them. Until dedup is variant-aware, **check a draw for near-duplicates of built pages before
+  generating**, not after. Deleting a record does not delete its page — `rm -rf who-said/<slug>/` too,
+  or the rendered-pages invariant fails the build.
+- **THE MISATTRIBUTION SEAM IS NEARLY OUT.** 340 queued, but only **13 misattributed** and **60
+  disputed** against **253 genuine-famous**. Track A is what refills the differentiator — the
+  misattribution pages are what the site is *for*, and a backlog draw now returns mostly
+  correctly-attributed famous lines. Run `harvest-candidates.js` over magnet authors before the next
+  backlog wave, or the corpus keeps growing in the direction that does not distinguish it.
   **`tag-themes.js` drops a record per wave — FIXED 2026-08-07, and the fix is an argument you must
   pass.** r32 returned `covered: 39, total: 40` and r33 did the same — Epictetus and
   `i-never-said-most-of-the-things-i-said` respectively, the latter at manifest position 22 of 40, so
