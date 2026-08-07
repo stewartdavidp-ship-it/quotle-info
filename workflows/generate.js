@@ -203,6 +203,33 @@ const DOSSIER_SCHEMA = {
     // is rejected BEFORE execution, so ONE agent proves it at 0 tokens. Probe with one, record the
     // datapoint above, then raise SCHEMA_BUDGET — in that order. Raising it first turns a number that
     // means "proven" into one that means "probably".
+    //
+    // ASKED FOR AND DECLINED — misattribution.items[].kind (r32/r33 audits, 2026-08-07).
+    // The ask: template.js renderMisattribution reads an optional per-item `kind` ('context' → a
+    // neutral tilde, 'genuine' → the sage ✓, absent/'refuted' → the burgundy ✕), items is
+    // additionalProperties:false without it, therefore no wave can emit it and every wave pays an
+    // audit-and-patch cycle per record. The premise is the part that is wrong, in two ways.
+    //
+    //   1. THE FIELD IS ALREADY PRODUCED — DERIVED, NOT ASKED. tools/mis-kind.js decides it from the
+    //      row itself, workflows/prep-wave.js stamps it at ingest (its line 91), tools/backfill-mis-kind.js
+    //      swept the existing corpus and tools/detectors.js has two detectors watching for rows owed
+    //      one. Measured 2026-08-07 over 3,947 rows: 482 are owed a kind by the rule and 0 of them are
+    //      missing it. r33 — the most recent pipeline wave — shipped 17 kinds across its 141 rows with
+    //      nobody touching a record by hand. This is the same "apply it in toRecord, don't ask the
+    //      agent" move that buys the room the schema has, exactly as the songs note describes.
+    //   2. IT DOES NOT FIT, IN ANY FORM. Measured against this schema at 4,069:
+    //           {type:'string', enum:[refuted,context,genuine]}   4,133   (+61 over budget)
+    //           enum without the default value                    4,123   (+51)
+    //           enum with no `type`                               4,117   (+45)
+    //           bare {type:'string'}                              4,094   (+22)
+    //      Every one lands in the untested reject band, for a field already being filled correctly.
+    //
+    // And asking an agent would be a REGRESSION, not a win. mis-kind.js is deliberately conservative
+    // because marking a genuine refutation as 'context' SOFTENS A DEBUNK, which is worse than a wrong
+    // ✕ on a page whose whole job is to refute; its rule was skeptic-checked 3/3 and corrected twice
+    // in the process. Per-wave agent judgement replaces a measured, reviewed rule with variance.
+    // Re-open only if a row shape appears that mis-kind.js genuinely cannot decide — and then the fix
+    // is a pattern in mis-kind.js, which costs zero schema bytes.
     meta: {
       type: 'object', additionalProperties: false, required: ['title', 'description', 'ogTitle', 'ogDescription'],
       properties: { title: { type: 'string' }, description: { type: 'string' }, ogTitle: { type: 'string' }, ogDescription: { type: 'string' } },
