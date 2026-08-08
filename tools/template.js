@@ -943,7 +943,12 @@ function renderAnswer(q) {
 // so original-language snippets carry lang= for screen readers and search engines instead of being
 // tagged as English. A row can also set r.lang explicitly to override.
 const DOC_LANGS = [['french', 'fr'], ['greek', 'grc'], ['latin', 'la'], ['german', 'de'], ['italian', 'it'], ['spanish', 'es'], ['hebrew', 'he'], ['russian', 'ru'], ['chinese', 'zh'], ['sanskrit', 'sa'], ['arabic', 'ar'], ['japanese', 'ja'], ['portuguese', 'pt']];
-const docLang = (dt) => { const t = String(dt || '').toLowerCase(); for (const [name, code] of DOC_LANGS) if (t.includes(name)) return code; return ''; };
+// Match on WORD boundaries, not substrings: "circulating" contains "latin" (cir-cu-LATIN-g), and the
+// corpus really does use labels like "Circulating claim" — which tagged the row `lang="la"` on English
+// text and, worse, tripped isTranslatedSource() into hanging a translation caveat on a PD badge.
+// Same trap for gelatin/platinum (latin), germane (german), italics (italian). Built once, not per row.
+const DOC_LANG_RE = DOC_LANGS.map(([name, code]) => [new RegExp(`\\b${name}\\b`), code]);
+const docLang = (dt) => { const t = String(dt || '').toLowerCase(); for (const [re, code] of DOC_LANG_RE) if (re.test(t)) return code; return ''; };
 // True when the quote's English wording is a translation of a non-English source — used to caveat a
 // "public domain" rights badge (the ORIGINAL may be PD while a specific modern translation is not).
 function isTranslatedSource(src) {
