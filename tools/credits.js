@@ -85,4 +85,48 @@ function falseCredits(r) {
   return creditList(r).filter((c) => { const s = slugify(c); return s && s !== trueSlug; });
 }
 
-module.exports = { creditList, primaryCredit, otherCredits, falseCredits };
+// ---- does the author LINE already name the credit itself? ----
+//
+// The listing templates wrap a record's real-author string in contrast chrome: /themes/ prints
+// "Really {author} &middot; not {credit}", /authors/ prints "actually {author}" under the heading
+// "Often misattributed to {credit}". Both assume the author string is a bare name. On 25 records it
+// is not — it is prose that ALREADY draws the contrast, and each does it in its own words:
+//
+//   "Unknown — not Benjamin Franklin"          → Really Unknown — not Benjamin Franklin · not Benjamin Franklin
+//   "Anonymous (falsely credited to Confucius)" → …· not Confucius, said twice
+//   "Lao Tzu (misattributed)"                   → "Really Lao Tzu", flatly contradicted by its own parenthetical
+//
+// This is the same failure as the equals case documented over misTail in build-themes.js — a listing
+// page whose job is credibility printing something self-contradicting — one step removed, so the
+// equals comparison misses it. Fixed in the generators, not the records: the strings are correct
+// prose, and each says something the boilerplate tail cannot.
+//
+// ⚠ CONTAINS IS NOT THE TEST. "John D. Rockefeller Jr." contains "John D. Rockefeller", and there
+// the contrast is the WHOLE POINT — the line is pinned on the father and belongs to the son. Same
+// for "Seneca the Younger" vs "Seneca". So a match that is merely a PREFIX of a longer name is not
+// the author line naming the credit; it is a DIFFERENT, more precise person, and the chrome stays.
+// The discriminator is therefore: the credit appears as a complete name of its own.
+const NAME_KEY = (s) => String(s == null ? '' : s)
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/&(?:[a-zA-Z][a-zA-Z0-9]*|#\d+|#x[0-9a-fA-F]+);/g, ' ')
+  .normalize('NFD').replace(/[̀-ͯ]/g, '') // "René" ≡ "Rene" — records vary
+  .toLowerCase().replace(/\s+/g, ' ').trim();
+// The suffixes and epithets that make a LONGER name a DIFFERENT person. Deliberately a closed list
+// rather than "any following capitalised word": "Martin Luther King Jr. (the rest)" must still count
+// as naming Martin Luther King Jr.
+const EXTENDS_NAME = /^[\s,]*(?:jr|sr|junior|senior|iii|iv|ii|fils|pere|the younger|the elder)\b\.?/;
+function namesCredit(author, credit) {
+  const a = NAME_KEY(author);
+  const c = NAME_KEY(credit);
+  if (!a || !c) return false;
+  for (let i = a.indexOf(c); i !== -1; i = a.indexOf(c, i + 1)) {
+    if (i > 0 && /[a-z0-9]/.test(a[i - 1])) continue; // mid-word: "plato" inside "platonism"
+    const after = a.slice(i + c.length);
+    if (/^[a-z0-9]/.test(after)) continue;
+    if (EXTENDS_NAME.test(after)) continue; // a longer name — the son, the younger
+    return true;
+  }
+  return false;
+}
+
+module.exports = { creditList, primaryCredit, otherCredits, falseCredits, namesCredit };

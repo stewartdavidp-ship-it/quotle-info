@@ -23,6 +23,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { save } = require('./harvest');
 
 const ROOT = path.resolve(__dirname, '..');
 const QUEUE = path.join(ROOT, 'data', 'harvest-queue.json');
@@ -84,10 +85,24 @@ async function viewsFor(name, project) {
     c.demandViews = views;
     c.demandScore = Math.round(views * (CATEGORY_WEIGHT[c.category] || 1));
   }
-  const ranked = [...pending].sort((a, b) => b.demandScore - a.demandScore);
+  // Tie-break on slug, or demandRank is not reproducible. Demand is heavily tied — the score is an
+  // author-level pageview count, so every quote by one author scores identically: 127 tied groups
+  // here, the largest holding 60 candidates. Sorting on score ALONE leaves those in array order, so
+  // once save() reorders the file the next run assigns them different ranks and the queue churns
+  // forever. Surfaced the moment this script started writing through save(); it was masked before
+  // only because rank-backlog re-read the order it had itself written.
+  const ranked = [...pending].sort((a, b) =>
+    b.demandScore - a.demandScore ||
+    String(a.slug).localeCompare(String(b.slug)));
   ranked.forEach((c, i) => { c.demandRank = i + 1; });
 
-  fs.writeFileSync(QUEUE, JSON.stringify(queue, null, 2) + '\n');
+  // Write through harvest.js's save(), NOT a bare writeFileSync. demandScore is the FIRST key the
+  // canonical sort orders on, so ranking necessarily changes the queue's order — and this used to
+  // write the file without applying that sort, refreshing the derived meta counts, or rebuilding the
+  // digest and backlog-index. A harvest-only run stops right here, so the non-canonical order got
+  // committed and the next harvest.js command rewrote three files (PR #336, one red CI run).
+  // A normal wave hid it: rank is followed by select/batch, which calls save() and absorbs it.
+  save(queue);
 
   const unresolved = pending.filter((c) => !c.demandViews).length;
   console.log(`\nRanked ${pending.length} pending candidates (${unresolved} with no demand signal — need a manual look).\n`);

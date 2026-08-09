@@ -306,9 +306,14 @@ function buildJsonLd(q, url) {
   // translated quote legitimately needs both: the ancient work it belongs to, and the edition quoted.
   if (s.isPartOf) {
     const p = s.isPartOf;
-    quotation.isPartOf = { '@type': p.type || 'CreativeWork', name: p.name };
-    if (p.datePublished) quotation.isPartOf.datePublished = p.datePublished;
-    if (p.sameAs) quotation.isPartOf.sameAs = p.sameAs;
+    quotation.isPartOf = creativeWork(p);
+    // A WORK'S NICKNAME belongs to the work. Same delete-worked/add-dropped shape the creator
+    // alternateName note below records from the Voltaire pen-name records, one relation over: the
+    // Eisenhower record's false assertion (that the SENTENCE is nicknamed "The Cross of Iron speech")
+    // was correctly removed from the Quotation level and re-homed here — and there was no passthrough
+    // here, so the nickname of the speech that actually carries it went silently missing. Half a fix
+    // ships as a clean diff and a page with less true structured data than before.
+    // (alternateName / datePublished / sameAs are emitted by creativeWork() above, in this order.)
     // MIRRORS the isBasedOn branch below, for the same reasons stated there, because the same
     // record can legitimately need them on either relation. A containing work has page numbers as
     // often as a derived one does; `sameAs` still asserts the linked URL IS this work, so a source
@@ -320,11 +325,35 @@ function buildJsonLd(q, url) {
     // derivation field corpus-wide) would have SILENTLY DROPPED citation and pagination from the 28
     // records carrying them — precisely the best-sourced ones, the only records with a fact-check
     // citation to lose. Land this before that backfill, not after.
-    if (p.pagination) quotation.isPartOf.pagination = p.pagination;
-    if (p.citation) quotation.isPartOf.citation = p.citation;
-    if (p.description) quotation.isPartOf.disambiguatingDescription = p.description;
+    // (pagination / citation / description are emitted by creativeWork() above, in this order.)
+    //
+    // A CONTAINING WORK CAN ITSELF BE CONTAINED, and until this the node was FLAT — so a record whose
+    // source is a letter, a diary entry, an essay in a collection or a speech in a published anthology
+    // had one object to say two things with, and had to conflate them. The Van Gogh record is the case
+    // r33 filed: the sentence is from a private letter to Theo of 28 October 1883, which first reached
+    // print in the collected letters Johanna van Gogh-Bonger published in 1914. Those are two works
+    // with two dates and two identifiers. Flattened, the record named the LETTER and pointed `sameAs`
+    // at the COLLECTION's Wikipedia page — a machine-readable claim that the URL identifies the
+    // letter — and demoted the whole publication history to `description` prose no consumer parses.
+    // The alternative pressure is worse and is what the finding reported: put the collection's 1914
+    // datePublished on an 1883 letter.
+    //
+    // ONE LEVEL, deliberately. The isBasedOn branch below has had a narrow ancestor of this since the
+    // beginning — `periodicalName`, which wraps the parent as a Periodical because a newspaper
+    // article's container always is one. A letter's container is not always a Periodical, so this
+    // takes `type` from the record; and one level covers letter-in-collection, article-in-journal and
+    // chapter-in-book, which is every shape the corpus has. A record nesting deeper is not silently
+    // truncated — validate-records.js says so.
+    if (p.isPartOf && p.isPartOf.name) {
+      quotation.isPartOf.isPartOf = creativeWork(p.isPartOf);
+      if (p.isPartOf.inLanguage && p.isPartOf.inLanguage !== 'en') {
+        quotation.isPartOf.isPartOf.inLanguage = p.isPartOf.inLanguage;
+      }
+    }
     // Original composition language of the source work (e.g. "grc", "fr") when the English quote is a
     // translation — lives on the WORK, not on the English `text`. Prefer isPartOf's own, else the record's.
+    // Set LAST so the key order of the flat case is byte-identical to what it was before the nesting
+    // support landed; ~1,190 pages carry an isPartOf and none of them should churn for this.
     const orig = p.inLanguage || s.inLanguage;
     if (orig && orig !== 'en') quotation.isPartOf.inLanguage = orig;
   }
@@ -380,22 +409,56 @@ function buildJsonLd(q, url) {
   // verified → the true author, true (5/5); attributed → plausible/unproven (3); disputed →
   // the popularly-credited (wrong) name, false (1). The Quotation.creator still names the REAL
   // author, so a machine reads both "the claim about {who} is {rating}" and "actually by {creator}".
-  const RATING = { verified: [5, 'Verified'], attributed: [3, 'Attributed'], disputed: [1, 'Disputed'] };
-  const [defaultRatingValue, defaultRatingName] = RATING[q.confidence] || RATING.verified;
-  // The confidence→value map is right for the common case, but disputed's 1/5 is machine-readable
-  // "entirely false" — correct for pure fabrications and plain misattributions, WRONG for the
-  // minority the audit flagged: hedged fact-checks (PolitiFact "Mostly False" / Snopes "Mixture")
-  // and used-but-not-coined lines (a real utterance the speaker didn't originate). Those set
-  // schema.claimRatingValue (2 or 3) so the numeric rating matches the page's verdict instead of
-  // overclaiming — the value twin of the schema.claimRatingName label override just below. Absent
-  // (or non-numeric) → the confidence default, so every unflagged page is unchanged.
+  // THE LABEL IS DERIVED FROM THE NUMBER, never stored beside it. The two used to be a pair per
+  // confidence state — disputed was `[1, 'Disputed']` — and the pair disagreed with itself: 1 is
+  // worstRating, the falsest point on the scale this node declares, while "Disputed" reads as a live
+  // argument between candidates. A machine got "entirely false" and a human got "we're not sure",
+  // off the same node. The corpus had already voted on which half was wrong: nine records
+  // hand-wrote claimRatingName "False" and left the value at its 1 default.
+  //
+  // But a flat relabel of the disputed pair would have been wrong in the other direction. Ten
+  // records carry claimRatingValue 2 with NO name override, so they were emitting 2/"Disputed";
+  // pairing the label to `confidence` would have made them 2/"False" and simply moved the
+  // contradiction. So the label follows the EFFECTIVE value — after any per-record override — and
+  // the two cannot drift apart again by construction. The scale is the fact-check convention the
+  // hedged records were already reaching for (PolitiFact/Snopes), with 3 keeping this site's own
+  // word for "credited but unpinned" because that is exactly what `attributed` means here.
+  const RATING_LABEL = { 5: 'Verified', 4: 'Mostly True', 3: 'Attributed', 2: 'Mostly False', 1: 'False' };
+  const CONFIDENCE_RATING = { verified: 5, attributed: 3, disputed: 1 };
+  // The SPOKEN half of the same verdict. Keyed on the same effective rating as RATING_LABEL, for the
+  // same reason: the FAQ lead used to derive from `confidence` alone, so every refinement the rating
+  // scale gained (the right-person-wrong-words 2, every per-record claimRatingValue) was invisible to
+  // it and the two nodes on one page disagreed out loud. See the verdictLead note below.
+  //
+  // 2 IS OVERLOADED, AND A FLAT MAP AT 2 SHIPS THE SAME BUG BACKWARDS. Two different findings share
+  // the value. The derived 2 means RIGHT PERSON, WRONG WORDS — Franklin wrote it, about wine — where
+  // "Yes and no." is exactly the answer. But ~20 records hand-set 2 to mean UNPROVEN, and their pages
+  // say so flatly: "Not Oscar Wilde — an anonymous quip", "Not the Dalai Lama — a Body Shop slogan",
+  // "Not Yogi Berra — actually Jim Wohlford". Leading those with "Yes and no." would hedge a page
+  // that refutes, which is the reported contradiction wearing the other hat. The rating scale cannot
+  // tell the two apart — but isRightPersonWrongWords, which is what MINTS the derived 2, can, so the
+  // lead asks it directly rather than reading the number it produced.
+  const VERDICT_LEAD = { 5: 'Yes. ', 4: 'Mostly. ', 3: 'Not confirmed. ', 2: 'Not confirmed. ', 1: 'No. ' };
+  // RIGHT PERSON, WRONG WORDS is the one shape inside `disputed` that 1/5 genuinely libels. The
+  // credited name IS the true author there and only the wording is at issue — Franklin really did
+  // publish it (about wine), Edison's remark is real and this sentence paraphrases it — so rating
+  // "Franklin said it" flatly false contradicts the page's own banner ("Nobody is falsely credited
+  // here"). 22 of the 24 such records were emitting 1/5; the two that weren't had been fixed by hand
+  // to exactly 2/"Mostly False", so this default reproduces the corpus's own answer rather than
+  // inventing one. Same predicate the creator guard and the presentation kit use — no new field.
+  //
+  // Everything else disputed keeps 1/"False", which is what those pages already say in prose: 665 of
+  // the 751 open with "Not {name} — ...". The label now matches both the number and the page.
+  const defaultRatingValue = (q.confidence === 'disputed' && isRightPersonWrongWords)
+    ? 2 : (CONFIDENCE_RATING[q.confidence] || CONFIDENCE_RATING.verified);
+  // A record still overrides the value when its fact-checks land between the defaults — hedged
+  // verdicts (Snopes "Mixture") and used-but-not-coined lines. Absent (or non-numeric) → the default.
   const ratingValue = (q.schema && typeof q.schema.claimRatingValue === 'number')
     ? q.schema.claimRatingValue : defaultRatingValue;
-  // `confidence` describes the quote's ORIGIN; this ClaimReview rates the narrower "{who} said it"
-  // claim, which can be flatly false even while the origin stays disputed. Records where the cited
-  // fact-checks are decisive (e.g. Monticello "Spurious" + CheckYourFact "False") can override the
-  // label via schema.claimRatingName so it matches ratingValue 1 rather than implying a live dispute.
-  const ratingName = (q.schema && q.schema.claimRatingName) || defaultRatingName;
+  // claimRatingName remains the escape hatch for a verdict no single word on the scale carries
+  // ("False as attributed", "Right author, reversed wording") — it wins over the derived label. It is
+  // no longer the way to fix a number/label mismatch, because there is no longer a mismatch to fix.
+  const ratingName = (q.schema && q.schema.claimRatingName) || RATING_LABEL[ratingValue] || 'Attributed';
   const trueAuthor = plain((q.answer && q.answer.authorName) || (s.creator && s.creator.name) || '');
   const firstMisWho = q.misattribution && q.misattribution.items && q.misattribution.items[0] && plain(q.misattribution.items[0].who);
   // The claimant is the MAGNET — the name the false claim is actually made under — which the record
@@ -500,6 +563,31 @@ function buildJsonLd(q, url) {
   let appearance;
   if (s.claimAppearanceUrl) appearance = { '@id': s.claimAppearanceUrl };
   else if (!s.suppressClaimAppearance) appearance = { '@id': `${url}#quotation` };
+  // itemReviewed carries NO author. In schema.org — and in Google's fact-check guidance —
+  // `Claim.author` is the entity that MADE the claim under review, not the person the quote is
+  // pinned on. Emitting the magnet there told answer engines that George Carlin authored the claim
+  // "George Carlin said 'Never argue with an idiot…'". He never made that claim; anonymous forwards
+  // did, and he publicly disowned material circulated under his name. Same shape as the
+  // Reader's-Digest-as-claimant bug: the prose says the right thing and the structured data says the
+  // opposite, and only the structured data is what a machine reads. The magnet is still named — in
+  // `claimReviewed`, which is where the reviewed claim belongs. If a Claim author is ever wanted it
+  // has to name the PROPAGATION VECTOR (the forward, the meme page), never the magnet, and no record
+  // field carries one today.
+  //
+  // STANDING ANSWER — this has now been filed by the audit twice and DECLINED twice, so it is
+  // recorded here rather than re-argued. The ask is "itemReviewed.Claim is missing `author` and
+  // `datePublished`". Both are refused, on the same principle:
+  //   - `author` — the paragraph above. Filling it with the magnet is the bug that put a false
+  //     machine-readable claim on 59 pages, and the corpus carries no propagation vector to put
+  //     there instead. A missing field asserts nothing; a wrong one asserts a falsehood.
+  //   - `datePublished` — would date the CLAIM, i.e. when the false attribution first circulated.
+  //     The corpus does not know that. It documents when the REAL line was published (dateCreated /
+  //     isPartOf.datePublished) and, on the best-sourced pages, the earliest instance found in the
+  //     provenance trail — neither of which is the same fact, and substituting one would assert a
+  //     date the site cannot stand behind. On a 5/5 page there is no false claim to date at all.
+  // Both fields are OPTIONAL in schema.org and in Google's fact-check guidance. Omitting them is the
+  // correct output, not a gap. Re-open only if a record field is added that genuinely carries the
+  // propagation vector or the claim's own first-circulation date.
   const claimReview = {
     '@type': 'ClaimReview',
     '@id': `${url}#claimreview`,
@@ -509,7 +597,6 @@ function buildJsonLd(q, url) {
     claimReviewed: claimReviewedText,
     itemReviewed: {
       '@type': 'Claim',
-      author: claimant ? { '@type': 'Person', name: claimant } : undefined,
       appearance,
     },
     reviewRating: {
@@ -518,7 +605,6 @@ function buildJsonLd(q, url) {
       alternateName: ratingName,
     },
   };
-  if (!claimReview.itemReviewed.author) delete claimReview.itemReviewed.author;
   if (!claimReview.itemReviewed.appearance) delete claimReview.itemReviewed.appearance;
 
   // ADDITIONAL false credits get their OWN ClaimReview. A quote collects more than one wrong name —
@@ -544,9 +630,10 @@ function buildJsonLd(q, url) {
         author: { '@type': 'Organization', name: 'Quotle.info', url: ORIGIN },
         datePublished: s.dateModified,
         claimReviewed: `${plain(name)} ${claimVerb}: "${claimQuoteText}"`,
+        // No itemReviewed.author here either, for the same reason as the primary node above: the
+        // secondary magnets did not make the claim about themselves. `claimReviewed` names them.
         itemReviewed: {
           '@type': 'Claim',
-          author: { '@type': 'Person', name: plain(name) },
           appearance,
         },
         reviewRating: {
@@ -578,8 +665,65 @@ function buildJsonLd(q, url) {
   // pairing them was actively self-contradictory ("Who is X really by?" → "No. Wiesel really did say
   // this"). So only prepend the lead on the "Is … really by {claimant}?" form; the who-form answer
   // opens with the verdict sentence itself. (42 pages carried the mismatch.)
-  const verdictLead = !claimant ? '' : q.confidence === 'disputed' ? 'No. ' : q.confidence === 'attributed' ? 'Not confirmed. ' : 'Yes. ';
-  const answerText = (verdictLead + plain((q.answer && q.answer.sourceLine) || (q.answer && q.answer.label) || '')).replace(/\s+/g, ' ').trim();
+  //
+  // THE LEAD FOLLOWS THE EFFECTIVE RATING, NOT `confidence`. Deriving it from confidence alone made
+  // the two machine-readable verdicts on one page contradict each other out loud: the ballpark page
+  // ships a ClaimReview rated 2/"Mostly False — Berra published this wording, but Sol Hurok said it
+  // first in 1952" while this string opened "No." and then immediately affirmed that the wording IS
+  // Berra's. 60 pages carried that shape — 56 rated 2 (the right-person-wrong-words default plus the
+  // hand-set hedges), 3 rated 4, 1 rated 3. The FAQ answer is the string an answer engine reads
+  // ALOUD and the one most likely lifted as a featured snippet, where only the leading token
+  // survives, so it is the worst possible place for the site to disagree with itself. Same failure
+  // class as the beyond-the-sea bug the README holds up as why the audit stage is not optional.
+  //
+  // Keying on ratingValue picks up every refinement the rating scale already made — the
+  // right-person-wrong-words 2 and each per-record claimRatingValue — for free, and the two nodes
+  // cannot drift apart again by construction, exactly as RATING_LABEL did for the written label.
+  //
+  // LEAD-ONLY OVERRIDE — the cheap valve, and the one the asymmetry below was missing.
+  //
+  // Every other verdict field in this function already takes a record override: claimRatingValue,
+  // claimRatingName, claimReviewed, verdictNote. The lead did not, and that asymmetry IS the bug the
+  // r33 audit named. The Van Gogh page is the case that proves the rating fix alone is not enough:
+  // confidence `attributed` → rating 3 → "Not confirmed.", followed by its own prose reading "Van
+  // Gogh really did write this — in Dutch, to his brother Theo, from Drenthe on 28 October 1883".
+  // The rating is right (the circulating ENGLISH matches no published translation) and the lead is
+  // wrong, because they answer different questions and only the lead is read aloud.
+  //
+  // It is a RIGHT-PERSON-WRONG-WORDS record on an `attributed` confidence, where the predicate that
+  // mints the derived 2 cannot fire: that predicate requires `disputed` AND a magnet, and nobody is
+  // falsely credited here. Rather than widen the predicate — it also drives the rating, the creator
+  // guard and the presentation kit, so widening it moves four things to fix one — the record states
+  // the lead.
+  //
+  // WHY NOT schema.faqAnswer, which already exists one line down: it replaces the WHOLE answer, so
+  // using it here would copy the entire sourceLine into `schema` where it silently stops tracking the
+  // prose it duplicates. The lead is the only part that is wrong. A five-token field cannot drift.
+  //
+  // CLOSED VOCABULARY, enforced in tools/validate-records.js (a hard failure, not a warning). This is
+  // the one string a voice assistant reads aloud and the token a featured snippet keeps when it keeps
+  // nothing else, so free prose here defeats the whole point of the field. '' is legal and means "no
+  // lead — the answer opens with its own sentence", which is what the no-claimant branch already does.
+  const verdictLead = !claimant ? ''
+    : (s.verdictLead !== undefined) ? leadToken(s.verdictLead)
+      : (ratingValue === 2 && isRightPersonWrongWords) ? 'Yes and no. '
+        : (VERDICT_LEAD[ratingValue] || '');
+  // FULL-STRING OVERRIDE, the residue valve. A derived lead is right for the shapes the scale
+  // models; it cannot be right for every record, because the rating is one number and the honest
+  // spoken answer is a sentence. The ballpark page is the live example: the wording genuinely IS
+  // Berra's published phrasing while the joke is Sol Hurok's, so the record models the true author as
+  // Hurok, isRightPersonWrongWords is (correctly) false, and the lead lands on the honest hedge
+  // "Not confirmed." rather than the better "Yes and no.". A hedge is not a contradiction, so nothing
+  // false ships — but schema.faqAnswer is how such a record says it properly. It lets the record
+  // author the whole answer,
+  // the same escape hatch schema.claimReviewed and schema.verdictNote already are — and the same one
+  // build-songs.js added for this exact problem on the song side (beyond-the-sea). Not a
+  // DOSSIER_SCHEMA field: like its two siblings it is hand-authored, so it costs nothing against
+  // SCHEMA_BUDGET. tools/detectors.js has been tripwiring `faq-affirms-disputed` on this field since
+  // 2026-07-28 — it was reading a field no quote page had ever emitted.
+  const answerText = (plain(s.faqAnswer)
+    || (verdictLead + plain((q.answer && q.answer.sourceLine) || (q.answer && q.answer.label) || ''))
+  ).replace(/\s+/g, ' ').trim();
   const faq = {
     '@type': 'FAQPage',
     '@id': `${url}#faq`,
@@ -1851,4 +1995,34 @@ function rightPersonWrongWords(q) {
   return q.confidence === 'disputed' && (!explicitReal || explicitReal.toLowerCase() === magnetName);
 }
 
-module.exports = { renderPage, canonicalUrl, CONFIDENCE, creditLine, plain, buildImagePrompts, realAuthorName, rightPersonWrongWords };
+// A CreativeWork node from a record's isPartOf-shaped sub-object. ONE builder for both nesting levels:
+// a containing collection has a name, a date, an identifier, a nickname, pages and a citation exactly
+// as the work inside it does, and a second hand-written copy of that field list is a copy that goes
+// stale — which is the whole history of this node. `citation` and `pagination` were missing here until
+// 2026-07-30 and the planned isBasedOn→isPartOf backfill would have dropped them from the 28
+// best-sourced records; `alternateName` was missing until 2026-08-07 and swallowed the Eisenhower
+// speech's nickname. Both were single omissions from a list written out by hand.
+//
+// KEY ORDER IS LOAD-BEARING: the emitted order below is exactly what the flat branch emitted before
+// this was extracted, so ~1,190 pages carrying an isPartOf do not churn a byte. `inLanguage` is
+// appended by the caller, last, for the same reason.
+const creativeWork = (w) => {
+  const node = { '@type': w.type || 'CreativeWork', name: w.name };
+  if (w.alternateName) node.alternateName = w.alternateName;
+  if (w.datePublished) node.datePublished = w.datePublished;
+  if (w.sameAs) node.sameAs = w.sameAs;
+  if (w.pagination) node.pagination = w.pagination;
+  if (w.citation) node.citation = w.citation;
+  if (w.description) node.disambiguatingDescription = w.description;
+  return node;
+};
+
+// The FAQ answer's opening token — see the verdictLead note in buildJsonLd. Module-level and EXPORTED
+// so tools/validate-records.js gates `schema.verdictLead` against the same list the renderer emits;
+// a second copy of a five-item vocabulary in the validator is a copy that goes stale the first time
+// the scale gains a rung. Bare (no period): leadToken() supplies the punctuation and the trailing
+// space, so a record may write "Yes and no" or "Yes and no." and get one canonical string either way.
+const VERDICT_LEAD_TOKENS = ['Yes', 'Mostly', 'Yes and no', 'Not confirmed', 'No'];
+const leadToken = (v) => { const t = plain(v).trim().replace(/\.+$/, '').trim(); return t ? `${t}. ` : ''; };
+
+module.exports = { renderPage, canonicalUrl, CONFIDENCE, creditLine, plain, buildImagePrompts, realAuthorName, rightPersonWrongWords, VERDICT_LEAD_TOKENS, leadToken };

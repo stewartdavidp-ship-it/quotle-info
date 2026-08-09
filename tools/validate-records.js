@@ -31,6 +31,7 @@ const fs = require('fs');
 const path = require('path');
 const { scanRecord } = require('./html-safety');
 const { creditList } = require('./credits'); // creditedTo: string OR array of false credits
+const { VERDICT_LEAD_TOKENS } = require('./template'); // the FAQ lead vocabulary, defined once
 
 const ROOT = path.resolve(__dirname, '..');
 const argv = process.argv.slice(2);
@@ -171,6 +172,31 @@ for (const { file, r } of recs) {
         w.push(`real == credited ("${real}") — only correct for right-person-wrong-words; else the fake author is being published as real`);
       }
     }
+  }
+
+  // schema.verdictLead is the FIRST TOKEN of the FAQ acceptedAnswer — the string a voice assistant
+  // reads aloud, and the only part of it a featured snippet reliably keeps. Its whole value is being
+  // one of five fixed yes/no answers, so free prose there ("Sort of", "It depends") would defeat the
+  // field while looking like it worked. Hard failure, and gated against the renderer's own exported
+  // list rather than a copy of it (tools/template.js VERDICT_LEAD_TOKENS) so the two cannot drift.
+  // '' is legal and means "no lead — the answer opens with its own sentence".
+  const vl = r.schema && r.schema.verdictLead;
+  if (vl !== undefined) {
+    const bare = String(vl).trim().replace(/\.+$/, '').trim();
+    if (bare && !VERDICT_LEAD_TOKENS.some((t) => t.toLowerCase() === bare.toLowerCase())) {
+      p.push(`schema.verdictLead "${vl}" is not one of ${VERDICT_LEAD_TOKENS.join(' / ')} (or "" for no lead)`);
+    }
+  }
+
+  // schema.isPartOf nests exactly ONE level (letter-in-collection, article-in-journal,
+  // chapter-in-book — every shape this corpus has; see the note in template.js). Anything a record
+  // writes below that, or a nested node with no `name`, is DROPPED by the renderer. That is the
+  // silent-edit shape this repo keeps getting burnt by — a record edit that looks applied and ships
+  // unchanged markup (the Voltaire pen name, the Eisenhower nickname) — so it fails here instead.
+  const ipo = r.schema && r.schema.isPartOf;
+  if (ipo && ipo.isPartOf) {
+    if (!ipo.isPartOf.name) p.push('schema.isPartOf.isPartOf has no name — the renderer drops it silently');
+    if (ipo.isPartOf.isPartOf) p.push('schema.isPartOf nests more than one level — the renderer emits only one, so the deepest work would vanish');
   }
 
   // dayNumber is OPTIONAL and explicitly nullable — 481 records ship with `dayNumber: null`.

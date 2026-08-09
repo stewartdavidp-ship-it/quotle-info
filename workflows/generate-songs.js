@@ -207,7 +207,14 @@ THE POPULAR BELIEF: that it originated with ${it.creditedTo}.
 WHAT THE HARVEST FOUND: first recorded by ${it.originalArtist} in ${it.originalYear}${it.originalLabel ? ` on ${it.originalLabel}` : ''}; written by ${it.writer}; the version people know is ${it.coverArtist}, ${it.coverYear}.
 ALREADY-VERIFIED SOURCE(S): ${it.sources.join(' · ')}
 WHY IT WAS QUEUED: ${it.whyNotable}
-
+${it.caveats && it.caveats.length ? `
+>> THE HARVEST COULD NOT SETTLE THESE, AND THEY ARE THE POINT OF THIS RECORD:
+${it.caveats.map((c) => `   · ${c}`).join('\n')}
+   These are unresolved questions, not established facts — an earlier agent fetched sources and
+   could not reconcile them. Resolve each one if a source you fetch settles it. If you cannot,
+   SAY SO ON THE PAGE and set confidence "disputed"; do not quietly assert the clean version.
+   A caveat that vanishes silently is how a page ends up stating a date its own sources contradict.
+` : ''}
 YOUR JOB is to CONFIRM and DEEPEN that finding, not to re-derive it from scratch. A human reviewed and approved this lead; the harvest is your starting point. Fetch the source(s) above plus whatever else you need.
 
 >> DO NOT ASSUME THE LEAD IS RIGHT. It came from a cheap harvest pass, and it has been wrong: a

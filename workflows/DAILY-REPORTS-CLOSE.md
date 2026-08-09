@@ -23,6 +23,42 @@ Noon is fine because the reply is a **courtesy, not a critical event**. Nothing 
 it. A reply that arrives six hours after the fix is a reply; one that arrives before the fix exists
 is a lie.
 
+## If you STOP, LOG THE STOP FIRST — a refusal must not look like an absence
+
+Every STOP below is correct behaviour. None of them used to leave a trace, and that is the bug.
+
+A stop wrote no shard and opened no PR, which is **byte-for-byte what a routine that never ran
+leaves behind**. So the one routine that can email a reader had two failure modes — *it never fired*
+and *it fired and refused* — that nobody could tell apart, in a system whose stated purpose is that
+"a routine that did not run and a routine that ran and found nothing must not look identical."
+
+This is not hypothetical. On **2026-08-04** this pass produced no shard and no PR. Both explanations
+fit the evidence exactly and neither can be ruled out today: the app may have been closed past the
+next slot, or the pass may have run and stopped on a dirty tree — a wave was in flight in that
+checkout at the time, and "tree is dirty → STOP" is the rule directly below. It went unnoticed for
+two days. **Note that moving this routine to cloud would not have fixed the second case.**
+
+So: before you stop, for ANY reason, record it.
+
+```bash
+node tools/routine-log.js --routine reports-close --outcome error --note "<one line: what stopped you>"
+```
+
+Then branch, commit **only that shard**, and open the PR exactly as a normal pass does:
+
+```bash
+git checkout -B "reports/$(date -u +%F)-close" origin/main
+git add data/routine-log/<the file routine-log.js just named>   # ONLY this path
+git commit -m "routine-log: reports-close $(date -u +%F) error (<why>)" && git push -u origin HEAD
+```
+
+**`git add` that one path, never `-A`.** You may be stopping *because* the tree is dirty, and `-A`
+would sweep somebody else's work-in-progress into your PR. Branching from `origin/main` rather than
+the local checkout is the same precaution: it is what makes this safe to do from a dirty tree at all.
+
+A stop still ends the pass. Logging it does not mean continuing, and it never means working around
+whatever stopped you — the refusals below stay refusals.
+
 ## Step 0 — preflight
 
 ```bash
@@ -64,9 +100,12 @@ node tools/review.js close-merged
 Then log it:
 
 ```bash
-node tools/routine-log.js --routine reports-close --outcome <no-op|pr> --processed <N> \
+node tools/routine-log.js --routine reports-close --outcome <no-op|pr|error> --processed <N> \
   --note "N accepted (emailed), N rejected, N left pending"
 ```
+
+`error` is for a pass that stopped — see the section at the top of this file. `no-op` means the pass
+completed and there was nothing to close, which is the ordinary outcome and not a failure.
 
 If you committed a log shard, branch `reports/<YYYY-MM-DD>-close`, PR ready not draft, and let the
 07:00 pass merge it. **Do not merge it yourself.**

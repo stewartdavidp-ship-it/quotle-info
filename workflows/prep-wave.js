@@ -46,7 +46,14 @@ if (!VERIFIED_DATE || !DATE_MODIFIED) { console.error('ERROR: pass --verified-da
 // has reported. --allow-partial to override on a run where an agent genuinely died.
 require('./_journal').assertComplete(JOURNAL, { allowPartial: has('allow-partial'), label: 'generate journal' });
 
-const norm = (s) => String(s).toLowerCase().replace(/[’‘`"“”']/g, '').replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
+// Quote/apostrophe ENTITIES must normalize exactly like their literal characters — DELETED, not
+// spaced. Agents write ogTitle in either form (house style is entities, but most emit ASCII), and
+// the generic `&[a-z]+;` → ' ' rule below is right for &ndash;/&mdash; and wrong for &rsquo;:
+// it turned "don&rsquo;t" into "don t" while a literal "don't" became "dont", so the two forms of
+// the SAME character could never match. r29 lost a complete, correct record that way — the Burke/
+// Santayana "doomed to repeat it" dossier was reported as an unmatched stub and would have shipped
+// the wave 39/40. Delete the quote entities FIRST, then let the generic rule handle the rest.
+const norm = (s) => String(s).toLowerCase().replace(/&(?:rsquo|lsquo|apos|quot|ldquo|rdquo|#8216|#8217|#39|#34);/g, '').replace(/[’‘`"“”']/g, '').replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
 // slugify lives in tools/slugify.js — generate.js inlines a verbatim copy (sandbox, no require).
 const { slugify, authorSlugOf } = require(path.join(__dirname, '..', 'tools', 'slugify.js'));
 
@@ -169,7 +176,24 @@ for (const d of dossiers) {
   // Compared on the LEADING name, the same split template.js uses: a card reading
   // "The Buddha (Siddhārtha Gautama)" or "Seneca the Younger" must not slip a self-credit through on
   // a punctuation difference.
-  const leadName = (s) => String(s || '').split(/\s*[—–(,]|\s-\s/)[0].trim().toLowerCase();
+  // …and DECODE ENTITIES BEFORE COMPARING. Records are written in HTML, so the same name reaches
+  // this line as either "Niccolò Machiavelli" or "Niccol&ograve; Machiavelli", and the same dash as
+  // "—" or "&mdash;". Comparing raw strings makes the entity spelling look like a DIFFERENT person
+  // and self-credits it: r29's "Never attempt to win by force…" would have been stamped
+  // creditedTo "Niccolò Machiavelli" on a record whose author IS Machiavelli — the exact false
+  // claim about a named person this guard exists to prevent. Decoding also lets the split below
+  // see "&mdash;" as the separator it is.
+  const decodeEnts = (s) => String(s || '')
+    .replace(/&(?:mdash|ndash);/g, '—')
+    .replace(/&(?:lsquo|rsquo|apos|#8216|#8217|#39);/g, "'")
+    .replace(/&(?:ldquo|rdquo|quot|#8220|#8221|#34);/g, '"')
+    .replace(/&([a-z])(?:grave|acute|circ|uml|tilde|cedil|ring|slash);/g, '$1')
+    .replace(/&amp;/g, '&');
+  // Fold diacritics too, on BOTH sides: decoding "&ograve;" yields a bare "o" while the batch
+  // magnet holds a real "ò", so without this the two spellings of Niccolò still read as different
+  // people and the false self-credit survives the decode.
+  const foldAccents = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '');
+  const leadName = (s) => foldAccents(decodeEnts(s)).split(/\s*[—–(,]|\s-\s/)[0].trim().toLowerCase();
   if (STAMP_CREDITED && b.author && leadName(rec.answer.authorName) !== leadName(b.author)) rec.creditedTo = b.author;
   records.push(rec);
 }

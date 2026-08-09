@@ -29,28 +29,56 @@ const themePages = THEMES.filter((t) => themePresent.has(t.slug));
 const xmlEsc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
 
 // ---- sitemap.xml (with lastmod per URL so crawlers see freshness) ----
+// A PAGE'S lastmod MUST DERIVE FROM ITS OWN CONTENT. Until 2026-08-06 every author page, every
+// theme page and every static page was stamped with `latest` — the newest dateModified anywhere in
+// the corpus — so a wave touching two quote records republished ~900 URLs all claiming to have
+// changed that day. That is not freshness, it is noise, and lastmod is only worth emitting if a
+// crawler can trust it. Derive per-page below; emit nothing where there is nothing honest to say.
 const modOf = {};
 records.forEach((r) => { modOf[r.quoteSlug] = (r.schema && r.schema.dateModified) || null; });
+// BOTH song arrays: writingOnlySongs is DISJOINT from songs (writer-credit-only entries live
+// under /who-wrote/, not /who-recorded/), and an author page can list either kind. Keying off
+// `songs` alone silently gave every song-only author a null lastmod.
+const songModOf = {};
+[...songs, ...writingOnlySongs].forEach((s) => { songModOf[s.songSlug] = s.dateModified || null; });
 const latest = records.map((r) => r.schema && r.schema.dateModified).filter(Boolean).sort().pop() || null;
+
+const maxMod = (...dates) => dates.filter(Boolean).sort().pop() || null;
+
+// An author page changes when any quote or song it lists changes.
+const authorMod = (a) => maxMod(
+  ...(a.quotes || []).map((q) => modOf[q.slug]),
+  ...(a.songs || []).map((s) => songModOf[s.slug]),
+);
+
+// A theme page changes when any record tagged with that theme changes.
+const themeMod = {};
+for (const r of records) {
+  if (!Array.isArray(r.themes)) continue;
+  const m = r.schema && r.schema.dateModified;
+  if (!m) continue;
+  for (const th of r.themes) if (isTheme(th)) themeMod[th] = maxMod(themeMod[th], m);
+}
+
+// Index/hub pages genuinely do re-render whenever the corpus moves, so `latest` is honest for them.
+// /who-said/ is the quote browse hub — indexable, self-canonical, linked twice from the homepage,
+// and it was earning impressions while absent from this list (found 2026-08-06). /flagged/ and
+// /cite/ are correctly NOT here: both are noindex by design.
+const hubs = ['/', '/who-said/', '/authors/', '/themes/', '/who-recorded/'];
+// Editorial and tool pages are hand-written and do NOT change with the corpus. Their true mtime is
+// not derivable here (the corpus knows nothing about them), and lastmod is optional per the sitemap
+// spec — so omit it rather than assert a date we know to be wrong.
+const staticPages = ['/how-we-verify/', '/vs-ai/', '/about/', '/contact/', '/privacy/', '/terms/', '/check/', '/report/'];
+
 const urls = [
-  { loc: `${ORIGIN}/`, lastmod: latest },
-  { loc: `${ORIGIN}/how-we-verify/`, lastmod: latest },
-  { loc: `${ORIGIN}/vs-ai/`, lastmod: latest },
-  { loc: `${ORIGIN}/about/`, lastmod: latest },
-  { loc: `${ORIGIN}/contact/`, lastmod: latest },
-  { loc: `${ORIGIN}/privacy/`, lastmod: latest },
-  { loc: `${ORIGIN}/terms/`, lastmod: latest },
-  { loc: `${ORIGIN}/authors/`, lastmod: latest },
-  { loc: `${ORIGIN}/check/`, lastmod: latest },
-  { loc: `${ORIGIN}/report/`, lastmod: latest },
-  { loc: `${ORIGIN}/who-recorded/`, lastmod: latest },
-  { loc: `${ORIGIN}/themes/`, lastmod: latest },
-  ...themePages.map((t) => ({ loc: `${ORIGIN}/themes/${t.slug}/`, lastmod: latest })),
-  ...authors.map((a) => ({ loc: `${ORIGIN}/authors/${a.slug}/`, lastmod: latest })),
-  ...manifest.map((m) => ({ loc: m.url, lastmod: modOf[m.quoteSlug] || latest })),
-  ...songs.map((s) => ({ loc: `${ORIGIN}/who-recorded/${s.songSlug}/`, lastmod: s.dateModified || latest })),
+  ...hubs.map((p) => ({ loc: `${ORIGIN}${p}`, lastmod: latest })),
+  ...staticPages.map((p) => ({ loc: `${ORIGIN}${p}`, lastmod: null })),
+  ...themePages.map((t) => ({ loc: `${ORIGIN}/themes/${t.slug}/`, lastmod: themeMod[t.slug] || null })),
+  ...authors.map((a) => ({ loc: `${ORIGIN}/authors/${a.slug}/`, lastmod: authorMod(a) })),
+  ...manifest.map((m) => ({ loc: m.url, lastmod: modOf[m.quoteSlug] || null })),
+  ...songs.map((s) => ({ loc: `${ORIGIN}/who-recorded/${s.songSlug}/`, lastmod: songModOf[s.songSlug] })),
   ...(writingOnlySongs.length ? [{ loc: `${ORIGIN}/who-wrote/`, lastmod: latest }] : []),
-  ...writingOnlySongs.map((s) => ({ loc: `${ORIGIN}/who-wrote/${s.songSlug}/`, lastmod: s.dateModified || latest })),
+  ...writingOnlySongs.map((s) => ({ loc: `${ORIGIN}/who-wrote/${s.songSlug}/`, lastmod: s.dateModified || null })),
 ];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

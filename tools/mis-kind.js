@@ -24,6 +24,18 @@
  *
  * Used by tools/backfill-mis-kind.js (the one-off sweep) and by workflows/prep-wave.js (so new
  * waves set it at ingest and the backlog cannot re-accumulate).
+ *
+ * OPEN GAP — THE `variant` / `wording` SEAM, LEFT ALONE ON PURPOSE 2026-08-08. Surveyed while closing
+ * the tags r34 reported: ~250 rows in the ✕ tail carry a tag containing "variant", "wording",
+ * "phrasing" or "form", led by a bare "variant" (54), "Variant" (26) and "wording" (21). Most look
+ * like wording notes, but the same seam contains real refutations — "unsupported variant",
+ * "Unsourced variant", "corrupted variant", "Garbled variant", "fabricated wording", "Wrong wording",
+ * "Right author, wrong wording" — so a /\bvariant\b/ pattern would soften debunks at scale, which is
+ * the one error this file is built to avoid. Only the narrow "(later|modern|popular) variant" form
+ * was landed. The visible cost: `better-to-reign-in-hell-than-serve-in-heaven` now renders ~ on its
+ * "context stripped" row and still ✕ on its "minor variant" row, two wording notes on ONE page with
+ * different glyphs. Closing this wants its own measured pass over those ~250 rows, not another
+ * pattern guessed from a sample.
  */
 
 // Each pattern asserts a ROLE that is not authorship. None of them denies a named person.
@@ -52,6 +64,26 @@ const CONTEXT_TAG = [
   /,\s*not\s+(the\s+)?(authors?|authored|origins?|originators?|coiners?|sources?|poets?)\b/i,
   /\bnot\s+the\s+origin\b/i,
   /\bquoted,?\s+not\s+authored\b/i,
+  // ---- THE SECOND GAP, closed 2026-08-08 ----------------------------------------------------
+  // Five r34 fix agents independently reported the same class from five different pages: a tag that
+  // notes something about the WORDING or the CITATION, rendering the ✕ that means the CREDIT is
+  // false — on pages whose own verdict is that the quote is genuine. The patterns below were each
+  // checked row by row against the corpus (counts are rows in the 4,083-row misattribution set at
+  // the time of landing); in every hit the page's prose affirms the person said it.
+  /\b(later|modern|popular)\s+(variant|version|wording|phrasing|rewording)\b/i, // 7 rows
+  /\bcontext\s+(stripped|removed|lost|missing)\b/i,                             // 29 rows
+  // A mis-sourced row denies the CITATION, never the speaker — "Right author, wrong source" is one
+  // of the tags it catches, and one row's own subject reads "Mis-sourced, not misattributed". The
+  // "no source" case is a real refutation and REFUTATION_TAG below already claims it first.
+  /\bmis[-\s]?(sourced|sourcing|cited|citation)\b|\bmiscit(ed|ation)\b|\bwrong\s+source\b/i, // 33 rows
+  // ZERO ROWS TODAY, AND THAT IS NOT A REASON TO DROP THEM. Both were reported from the r34 record
+  // that the wave then deliberately dropped as a duplicate, so the evidence is only in git:
+  // `git show 3f346b024:data/quotes/im-so-fast-last-night-i-cut-the-light-switch-and-was-in-bed.json`.
+  // Read those two rows before touching these — their subjects are PEOPLE ("Moran and Mack, Abbott
+  // and Costello", "Satchel Paige") who genuinely did tell the joke earlier, which is why this pair
+  // must NOT take the not-a-person guard used by the wording-edit family below.
+  /\b(vaudeville|music[- ]hall|burlesque)\s+(stock|staple|gag|joke|material)\b/i,
+  /\balso\s+borrowed\b/i,
 ];
 
 // A tag that DENIES A PERSON is a refutation and must keep the ✕, even if it also happens to match
@@ -59,9 +91,39 @@ const CONTEXT_TAG = [
 const REFUTATION_TAG = [
   /^\s*not\s+[A-Z]/,                            // "Not Winston Churchill", "Not Lewis's words"
   /\bno\s+(primary\s+)?source\b/i,
-  /\bfabricat/i,
+  // NEGATED, so the veto does not fire on a tag that DENIES fabrication. Three rows read
+  // "Truncated, not fabricated" / "Translation, not fabrication" — each says the words are the
+  // author's and only the form changed, which is the context case, and the bare /fabricat/ test was
+  // vetoing them into the ✕ the tag explicitly rules out. Found 2026-08-08 while measuring the
+  // wording-edit family below, which is where all three surfaced.
+  /(?<!\bnot\s)\bfabricat/i,
   /\bnever\s+said\b/i,
 ];
+
+// ---- the WORDING-EDIT family: needs the ROW, not just the tag ----------------------------------
+// A tag that is just an edit participle — "Truncated", "Trimmed", "Translated, and flattened",
+// "Clipped in search" — says the wording was changed. It does not say who said it, so on its own it
+// cannot decide the glyph, and this is the one family in this file that MUST NOT be a CONTEXT_TAG
+// entry: matching it on the tag alone is measurably wrong.
+//
+// MEASURED before landing, on 1,506 records / 4,083 rows:
+//   * the participle test ALONE fires on 131 rows (3.2%) — and that set contains PERSON subjects:
+//     "Serena Williams | trimmed", "Audre Lorde | Truncated", "Booker T. Washington | Truncated",
+//     "Martin Luther King Jr. | Reworded". On those, ✕ may well be the correct refutation, and the
+//     header of this file is explicit that softening a genuine debunk is the worse error.
+//   * intersected with "the row's SUBJECT is not a person", it narrows to 92 rows (2.3%) across 88
+//     records, EVERY ONE of which was read: each is a quoted fragment of the wording ("&ldquo;carpe
+//     diem&rdquo; on its own") or an article-led description of it ("The half-sentence version"),
+//     and not one is a person. Of the 59 rows the guard excludes, the person subjects above are the
+//     reason it exists.
+// So: keep the anchor, and keep the intersection. Un-anchoring the participle or dropping the guard
+// re-admits the person subjects and turns this fix into the error it was written to avoid.
+const WORDING_EDIT = /^\s*(translat(ed|ion)|trimmed|truncat(ed|ion)|reworded|shortened|elided|clipped|conflated|compressed|flattened|abridged|condensed|cut\s+short)\b/i;
+// Tested against the RAW `who` (entities intact) because that is what was measured: an opening
+// &ldquo;/&lsquo; means the subject IS the wording, and a leading article means it is a description
+// of the wording. Deliberately narrow — it also excludes plainly non-person subjects like "Quote
+// aggregators" and "Goodreads", which keep the ✕ and stay a human's call.
+const NOT_A_PERSON = /^(?:&ldquo;|&lsquo;|&quot;|["'“‘])|^(?:the|a|an)\s/i;
 
 /** '' | 'context' — '' means leave the default (refuted ✕). */
 function kindForTag(tag) {
@@ -99,7 +161,12 @@ function kindForRow(item) {
     if (NO_SUBJECT.test(who)) return '';                       // nothing affirmed — ✕ is right
     return HEDGED.test(`${who} ${tag}`) ? 'context' : 'genuine';
   }
-  return kindForTag(it.tag);                                    // fall back to the tag-only rule
+  const byTag = kindForTag(it.tag);
+  if (byTag) return byTag;
+  // The wording-edit family, last: a tag the tag-only rule declined, on a row whose subject is the
+  // wording rather than a person. REFUTATION_TAG has already had its say inside kindForTag.
+  if (REFUTATION_TAG.some((re) => re.test(tag))) return '';
+  return WORDING_EDIT.test(tag) && NOT_A_PERSON.test(String(it.who || '').trim()) ? 'context' : '';
 }
 
 module.exports = { kindForTag, kindForRow };

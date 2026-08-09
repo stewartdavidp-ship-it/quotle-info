@@ -5,14 +5,89 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1254** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r29.** (Waves r6–r28 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
-- Harvest backlog: `data/harvest-queue.json` (committed) — 516 queued. **Track A was refilled 2026-07-30**
-  (harvest-only run, no ingest): 8 fresh magnet authors + 4 film titles, +107 candidates, taking
-  `misattributed` from 5 → **54** and `disputed` 96 → **120**. The rest is 328 `genuine-famous`,
-  7 `film-misquote`, 7 `scripture-misquote`. A Track A wave can draw ~40 without harvesting first.
+- **Corpus: 1506** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r35.** (Waves r6–r34 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+  **r34 shipped 39, not 40** — a fix agent found one record duplicated a page the corpus already had
+  (the Ali "so fast" joke, under a different wording), so it was dropped along with its rendered
+  directory. `sync` dedups on EXACT normalised text, so a reworded variant of an already-built quote
+  passes selection untouched; the duplicate is not visible until an agent that can see sibling files
+  reads them. Until dedup is variant-aware, **check a draw for near-duplicates of built pages before
+  generating**, not after. Deleting a record does not delete its page — `rm -rf who-said/<slug>/` too,
+  or the rendered-pages invariant fails the build.
+- **THE MISATTRIBUTION SEAM IS NEARLY OUT.** 340 queued, but only **13 misattributed** and **60
+  disputed** against **253 genuine-famous**. Track A is what refills the differentiator — the
+  misattribution pages are what the site is *for*, and a backlog draw now returns mostly
+  correctly-attributed famous lines. Run `harvest-candidates.js` over magnet authors before the next
+  backlog wave, or the corpus keeps growing in the direction that does not distinguish it.
+  **`tag-themes.js` drops a record per wave — FIXED 2026-08-07, and the fix is an argument you must
+  pass.** r32 returned `covered: 39, total: 40` and r33 did the same — Epictetus and
+  `i-never-said-most-of-the-things-i-said` respectively, the latter at manifest position 22 of 40, so
+  not a chunk boundary (an agent returned 9 of its own 10). An untagged record never appears on
+  `/themes` and nothing downstream flagged it: `apply-tags.js` wrote what it got and printed success,
+  so the only thing catching it both times was a human reading a counter. Now:
+  **`apply-tags.js --manifest` is REQUIRED** and diffs the manifest against the records on disk — it
+  names every dropped slug, writes `<manifest>-missing.json` for a `chunks:1` re-run, and exits 1.
+  The journal cannot do this itself: what an agent never returned leaves no trace in it, which is why
+  the manifest is mandatory rather than optional. `tag-themes.js` also computes each strided slice's
+  expected size from `total`/`chunks` and **retries a short slice once** before giving up, so the
+  common case repairs itself. Same swallow existed in `cite-styles.js` → `_ingest-cites.js`; that one
+  now takes `--expect`.
+- **A known-corrupt candidate now leads every draw.** `friendship-is-born-at-that-moment-when-one-man-says-to`
+  is stored truncated mid-sentence (`…myself . . .`, with a `"What!` that never closes) and sits at
+  **demand-rank #1** of the queued pool, so `select` puts it first every time. Four waves — the
+  2026-08-06 daily wave, r32, r33, and one before — have each spent a slot discovering it. Until
+  `harvest.js` gains a way to repair stored text (or the operator decides to lose the quote), draw
+  N+1 and drop it from the BATCH — never hand-edit `harvest-queue.json`, and never `skip` it, which
+  is reserved for hate/harm.
+  **`harvest.js unselect` IGNORES a positional slug** — it releases EVERY selected candidate, filtered
+  only by `--wave` (`cmdUnselect`, tools/harvest.js:294). It reads as slug-aware because callers keep
+  invoking it when exactly one candidate happens to be selected, and it then reports `unselected 1`;
+  two separate sessions used it that way on 2026-08-06 and both looked correct. Running it mid-wave
+  would release the whole draw. To release ONE candidate from a wave: run `harvest.js sync` FIRST so
+  everything actually built sweeps to `ingested`, leaving only the stragglers `selected`, then
+  `unselect --wave rN`. That is how r32 released the corrupt candidate below without touching its
+  other 40.
+  **r30 and r31 ran CONCURRENTLY on 2026-08-04** — two sessions, two waves, one repo. It worked, and
+  what made it work is worth keeping. r31 ran from a separate **git worktree** on its own branch, and
+  copied r30's *uncommitted* `selected` marks into its queue before drawing: `select` draws only from
+  `status === 'queued'`, so their 40 were excluded mechanically rather than by agreement — zero
+  overlap, no coordination between the sessions. `sync`'s sweep is safe under concurrency for the
+  same kind of reason: it promotes `selected → ingested` only when `corpus.has(quote)`, so one
+  branch cannot mark the *other* wave's picks ingested. r30 merged first; r31 then did the
+  rebase-rebuild below and verified **40 additions / 0 modifications** to r30's records before
+  merging. There is no lock on the queue — `4de8f8a9c`'s "one writer" gate is about which code path
+  writes the file, not about concurrent sessions, so do not expect it to protect you.
+- Harvest backlog: `data/harvest-queue.json` (committed) — 465 queued. **Track B was refilled 2026-08-03**
+  (harvest-only run, no ingest): 8 themes chosen for DEMAND rather than to fill gaps — gratitude,
+  friendship, money-wealth, discipline-habit, grief-loss, forgiveness, patience, nature. Six of those
+  had **no theme tag on the corpus at all**; gratitude (23) and friendship (33) were the two thinnest
+  that existed. +76 candidates, 73 of them public-domain, taking queued `public-domain` from 97 →
+  **170** and `genuine-famous` 314 → **390**. The rest is 111 `disputed`, 30 `misattributed`,
+  7 `film-misquote`, 7 `scripture-misquote`.
+  **Ranked after syncing, and the new harvest took 25 of the top 30 demand slots** — skip the rank
+  and every one of them sorts LAST instead (the r29 lesson, step 1). 60 candidates still carry no
+  demand signal and want a manual look.
+  **Track A was refilled 2026-07-30** (+107 candidates: 8 magnet authors + 4 film titles).
+  Either track can draw ~40 without harvesting first.
 - **Who-wrote axis (`/who-wrote/`, added 2026-07-23):** the second music axis — "who WROTE this song?". Harvest is deterministic (`node workflows/harvest-who-wrote.js` scans the recording corpus → `data/who-wrote-queue.json`). ~14 records shipped (single-axis + dual-axis enrichment); ~78 dual-axis candidates queued. Recipe: the "Songs — the `/who-wrote/` axis" section below.
-- **Songs: next wave number s4 — but the backlog is EMPTY.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **0 queued**, 89 ingested, 1 dropped. **A new wave needs a `harvest-songs.js` run first** (step 0 of the song recipe). Digest: `data/song-queue.md`.
+- **Songs: next wave number s4, and the backlog is REFILLED.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **79 queued** (62 `high` / 17 `medium` confusion), 89 ingested, 1 dropped. Harvested 2026-08-03 across all six veins, 11–15 each; **all 79 were new** because the run passed the 96 built-or-queued slugs as `exclude`, so no agent spent budget re-finding Tainted Love. ~3 waves' worth. Digest: `data/song-queue.md`.
+  - **`sync` now records what the agents REJECTED, not just what they queued** (2026-08-04). A
+    harvest returns three lists and sync used to read only `candidates`, so every sweep re-derived
+    the same negative results. Both other lists are now persisted:
+    - **`dropped`** → a queue entry with `status:'dropped'` + `dropReason`, slug from `tools/slugify.js`.
+      `REQUIRED` deliberately does not apply: a drop is a lead that FAILED, and the agent has only a
+      title and a reason. This needs no change to `harvest-songs.js`, because the `exclude` one-liner
+      maps EVERY song regardless of status — so a recorded drop is skipped by the next sweep for free.
+      Higher Ground is the proof this works: it is the one drop that was already persisted, and the
+      s4 agent read the reason and refused to resurface it.
+    - **`contested`** → `caveats[]` on the matching candidate, carried through `batch` into the
+      generator prompt. These are NOT drop research (which is what they look like sitting next to
+      `dropped`) — most describe QUEUED songs, and they are the ambiguity the harvest could not
+      settle. `generate-songs.js` is told to resolve each or set `confidence:"disputed"`, because a
+      caveat that vanishes silently is how a page asserts a date its own sources contradict.
+    A rejection that matches an existing song is never allowed to overwrite it, and re-running the
+    same file is idempotent. Notes matching no song are COUNTED in the output rather than dropped
+    silently — look at them.
 
 > **Do not trust the three lines above** — they are hand-maintained and have been wrong before (they
 > read "1058 / r22 / 318 queued" while the real backlog was 451). The numbers that are *derived* and
@@ -114,7 +189,7 @@ Consequences worth knowing before you spend agents here:
 | `fix.js` | Workflow | Apply confirmed fixes. args `["slug", ...]`; reads `.scratch/current-fixes.json` |
 | `prep-wave.js` | node CLI | **Journal → ingest-ready records** (toRecord + escaping-scan + STUB-detect + creditedTo). |
 | `parse-audit.js` | node CLI | Audit journal → `current-fixes.json` + FAIL slug list. |
-| `apply-tags.js` | node CLI | Tag-workflow journal → write `record.themes`. |
+| `apply-tags.js` | node CLI | Tag-workflow journal → write `record.themes`. **`--manifest` required** — it is the completeness gate. |
 | `review.js` | node CLI | **Corrections + re-review spine.** Picks which PUBLISHED records go back to audit.js (reader reports, staleness); stamps outcomes. Does not audit. |
 | `harvest-dedup.js` | node CLI | Standalone dedup (reference; superseded by `tools/harvest.js sync`). |
 | `audit-songs.js` | Workflow | **Songs:** adversarial audit of built /who-recorded/ pages + skeptic. args `{pages, repo}` |
@@ -205,6 +280,13 @@ node tools/harvest.js sync /tmp/harvest-rN.json     # append + dedup vs corpus+b
 #     r20 was the first: 40 in → 18 verified, 9 attributed, 13 disputed. Expect ~45% to survive.)
 
 # 1. SELECT + BATCH the next ~40
+#    RANK FIRST. `select` sorts by demandScore, and any candidate that has none sorts LAST — so a
+#    fresh harvest is effectively UNDRAWABLE until it is ranked. select warns about this, and the
+#    warning is easy to walk straight past because select still succeeds. r29 hit it: "107 of 513
+#    candidates have no demandScore" was the whole most-recent harvest, and ranking first changed
+#    the wave substantially — the Carlin and Burke misattributions replaced a draw that was
+#    otherwise mostly genuine-famous. Cheap and cached; --refresh re-fetches every author.
+node tools/rank-backlog.js                          # → demandViews/demandScore/demandRank on each queued candidate
 node tools/harvest.js select 40 --wave rN           # review the list; `harvest.js skip <slug>` (see the skip bar below)
 node tools/harvest.js batch  --wave rN              # writes data/.harvest-batch-rN.json = [{text,author,index}]
                                                     # index = gameIndex (track D) or null (tracks A/B/C)
@@ -243,9 +325,15 @@ Workflow fix.js  args=<the FAIL slug list printed above>                      # 
 #    trust. This must print nothing:
 git status --porcelain -- tools workflows | grep . && echo "^^ fix agents escaped their lane — review before building"
 #    Their generator findings arrive in the fix report's `remaining` (they're told to report, not
-#    edit). Read those: apply each ONCE, centrally, as its OWN commit — not smuggled into a wave.
+#    edit). Read those: apply each ONCE, centrally, on its OWN BRANCH — not smuggled into a wave.
 #    They are often right and often important (the ClaimReview claimant bug, 59 pages emitting a
 #    false machine-readable claim, was found exactly this way).
+#    !! OWN BRANCH, not merely its own COMMIT. `merge-gate.js` judges FILES, not commits: a `wave-`
+#    branch may touch nothing under tools/ workflows/ .github/ worker/ (GENERATOR), so one tidy
+#    generator commit sitting on the wave branch makes the WHOLE wave a scope escape and the pass
+#    refuses it — "SKIP … scope escape". r29 read "own commit" literally, put two prep-wave.js
+#    fixes on wave-r29, and had to split them out to a separate PR before the content could land.
+#    Splitting is better anyway: the fix gets reviewed on its merits instead of inside 300 files.
 node tools/build.js
 #    Spot-check any reassigned heroes (disputed pages must show the TRUE author, not the magnet).
 
@@ -259,7 +347,12 @@ node tools/build.js
 #    records and point it there. No hand-editing:
 node -e "const fs=require('fs');const out=fs.readdirSync('data/quotes').filter(f=>f.endsWith('.json')).map(f=>JSON.parse(fs.readFileSync('data/quotes/'+f))).filter(r=>!Array.isArray(r.themes)||!r.themes.length).map(r=>({quoteSlug:r.quoteSlug,quote:r.displayQuote,author:(r.answer&&r.answer.authorName)||'',confidence:r.confidence}));fs.mkdirSync('workflows/.scratch',{recursive:true});fs.writeFileSync('workflows/.scratch/untagged-rN.json',JSON.stringify(out,null,2));console.log(out.length+' untagged → workflows/.scratch/untagged-rN.json')"
 Workflow tag-themes.js  args={ chunks: 4, total: <the count printed above>, manifest: "$(pwd)/workflows/.scratch/untagged-rN.json", repo: "$(pwd)" }
-node workflows/apply-tags.js --journal <tagTranscriptDir>/journal.jsonl
+#    --manifest is MANDATORY and is the completeness gate: apply-tags.js exits non-zero and NAMES any
+#    record the tagger dropped, then writes <manifest>-missing.json for a chunks:1 re-run. The journal
+#    cannot detect this on its own — what an agent never returned leaves no trace in it. r32 and r33
+#    each lost one record here and printed success; that is what this argument exists to stop.
+node workflows/apply-tags.js --journal <tagTranscriptDir>/journal.jsonl \
+     --manifest "$(pwd)/workflows/.scratch/untagged-rN.json"
 node tools/build.js
 
 # 7. SHIP
@@ -277,6 +370,15 @@ gh pr create ...
 #    (git is right to keep the wave's side: the wave did change those files.) r19 reverted #59's
 #    og:image fix on its 40 pages this way. The build is idempotent, so this is cheap and a no-op
 #    when nothing moved:
+#    !! IT CUTS BOTH WAYS, AND THE OTHER DIRECTION HAS NO WAVE TO CATCH IT. A GENERATOR FIX branched
+#    before a wave lands, and merged after it, does not revert anything — it simply never applies to
+#    that wave's pages, because its own build predates those records. Nothing flags this: the fix's
+#    diff is clean, its CI is green, main stays self-consistent, and the new pages just quietly lack
+#    the fix. #371 (the FAQ verdict-lead fix) hit exactly this — it corrected 60 pages, then r33
+#    merged under it, and `it-takes-courage-to-love-but-pain-through-love-is-the` shipped the old
+#    lead until a second PR rebuilt it. So run the same rebase-rebuild on a GENERATOR branch before
+#    merging it, not just on wave branches, and re-measure afterwards rather than trusting the count
+#    you took before the wave landed.
 git pull origin main && node tools/build.js && git add -A && git commit --amend --no-edit && git push -f
 gh pr merge <#> --squash
 #    after Pages deploys: node tools/indexnow.js   (feeds Bing/Yandex — the fastest agent-discovery path)
@@ -635,6 +737,18 @@ how songs got in unchecked.
   with no translation signal; the 16 genuinely-translated ones keep `isBasedOn`. #281 had to land
   first, because the `isPartOf` branch could not carry `citation`/`pagination` and the rename would
   have silently stripped them from the 28 best-sourced records.
+- **"DOSSIER_SCHEMA can't emit X, so add X to it" is usually the wrong fix — check whether X is
+  DERIVED first.** The schema sits at 4,069 of a proven-good 4,072 bytes, so every such ask is a
+  budget fight, and the pipeline's answer to a field an agent shouldn't be trusted with is to compute
+  it in `toRecord`/prep rather than ask for it. `misattribution.items[].kind` was filed by both the r32
+  and r33 audits as "unmeetable by construction, 466 records hand-patched"; it is in fact produced by
+  `tools/mis-kind.js` → `prep-wave.js` at ingest, with `backfill-mis-kind.js` for the existing corpus
+  and two `detectors.js` detectors watching the residual — measured at **0 of 482 owed rows missing**,
+  and r33 stamped 17 with no hand-patching. Adding it to the schema would have cost +22…+61 bytes
+  against zero headroom to buy nothing. Full reasoning in the "ASKED FOR AND DECLINED" comment in
+  `generate.js`; `audit.js`'s SETTLED list now tells agents not to re-file it.
+  **The genuinely unmeetable one is different in kind**: `creatorDescription` (CLAUDE.md) has no
+  deriving rule and no source to derive from — that is why the RULE was narrowed instead.
 - **`--credited`'s guard mis-fires on name-form expansions, so do not lean on it.** `prep-wave.js`
   only stamps when `leadName(record author) !== leadName(batch author)` — comparing LAST WORDS. r27
   produced two records that trip that on the same person: `"Confucius (Kong Qiu)"` (lead `Qiu)`) and
