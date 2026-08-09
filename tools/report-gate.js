@@ -39,13 +39,19 @@
  * THE TRUST LADDER — the gate's authority is EARNED, and the promotion bar is a number.
  *
  *   observe   run every gate, record what it WOULD have done, change nothing   ← starts here
- *   pr        open the PR, stop
- *   merge     merge on green CI
+ *   pr        open the PR, stop                                                ← terminal rung
+ *
+ * There is no merge rung. One existed, was reached on 2026-07-29, and was retired the same day
+ * when workflows/DAILY-MERGE.md (the 07:00 pass) became the single merge authority for all
+ * routines — every routine rebuilds every page, so two PRs open at once conflict across the whole
+ * site, and one merge pass is the serializer. This gate opens the PR and stops; merging is never
+ * its job, and --promote refuses past pr.
  *
  * "If we believe the gate holds" is a feeling until it has a threshold. The bar, agreed with the
  * operator: 5 CONSECUTIVE runs where the gate's call matched theirs — no PR they would have
  * rejected, no queued item they would have wanted as a PR. Miss one and the counter resets to zero.
- * Five is arbitrary; a stated threshold is not.
+ * Five is arbitrary; a stated threshold is not. At pr the streak keeps recording — the judged
+ * history is the gate's audit trail — it just no longer buys a promotion.
  *
  * Each run appends its decision to `runs` in data/report-queue.json, so promotion is a judgement on
  * a RECORD rather than on somebody's memory of how the last few nights went. Only runs that
@@ -56,7 +62,7 @@
  *   node tools/report-gate.js --queue                        print the deferred queue
  *   node tools/report-gate.js --mode                         current rung, streak, last runs
  *   node tools/report-gate.js --judge agree|disagree [--note ...]   operator verdict on the last run
- *   node tools/report-gate.js --promote                      advance a rung once the bar is met
+ *   node tools/report-gate.js --promote                      advance observe → pr once the bar is met
  */
 const fs = require('fs');
 const path = require('path');
@@ -74,9 +80,10 @@ const arg = (name, dflt = null) => {
 const has = (name) => process.argv.includes(name);
 
 const readJson = (p, dflt) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return dflt; } };
-const RUNGS = ['observe', 'pr', 'merge'];
+const RUNGS = ['observe', 'pr'];   // merge rung retired 2026-07-29 — DAILY-MERGE.md is the merge authority
 const loadQueue = () => {
   const q = readJson(QUEUE, {});
+  if (q.mode === 'merge') q.mode = 'pr';   // a legacy queue file cannot resurrect the retired rung
   return { mode: 'observe', promoteAt: 5, streak: 0, deferred: [], runs: [], ...q };
 };
 const saveQueue = (q) => fs.writeFileSync(QUEUE, JSON.stringify(q, null, 2) + '\n');
@@ -98,7 +105,7 @@ if (has('--mode')) {
     console.log(`    ${r.date}  ${String(r.mode).padEnd(8)}${String(r.call).padEnd(10)}pr=${r.pr.length} queued=${r.queued.length}  ${r.judged || 'UNJUDGED'}${r.note ? ` — ${r.note}` : ''}`);
   }
   const next = RUNGS[RUNGS.indexOf(q.mode) + 1];
-  if (!next) console.log('\n  top rung — nothing above merge.');
+  if (!next) console.log('\n  pr is the terminal rung — merging belongs to the 07:00 daily-merge pass (workflows/DAILY-MERGE.md). Judged runs remain the audit trail.');
   else if (q.streak >= q.promoteAt) console.log(`\n  bar met. \`node tools/report-gate.js --promote\` moves to ${next}.`);
   else console.log(`\n  ${q.promoteAt - q.streak} more matching run(s) to reach ${next}.`);
   process.exit(0);
@@ -123,7 +130,12 @@ if (has('--judge')) {
 if (has('--promote')) {
   const q = loadQueue();
   const next = RUNGS[RUNGS.indexOf(q.mode) + 1];
-  if (!next) { console.log(`  already at ${q.mode} — the top rung`); process.exit(0); }
+  if (!next) {
+    console.error('  ✗ pr is the terminal rung — not promoting. The merge rung was retired 2026-07-29 when');
+    console.error('    workflows/DAILY-MERGE.md became the single merge authority (see workflows/DAILY-REPORTS.md,');
+    console.error('    "Merging is no longer this pass\'s job"). The gate opens the PR and stops.');
+    process.exit(1);
+  }
   if (q.streak < q.promoteAt) {
     console.error(`  ✗ bar not met: ${q.streak}/${q.promoteAt} consecutive matching runs. Not promoting.`);
     process.exit(1);
@@ -210,7 +222,7 @@ if (queue.mode === 'observe' && qualifies) {
   console.log(`\n  => OBSERVE — would have opened a PR for ${decision.pr.length} record(s). Opening none.`);
   console.log('     Grade this call: node tools/report-gate.js --judge agree|disagree --note "…"');
 } else if (act) {
-  console.log(`\n  => OPEN A PR${queue.mode === 'merge' ? ' — and merge it on green CI' : ' — and stop there'}\n`);
+  console.log('\n  => OPEN A PR — and stop there; the 07:00 daily-merge pass owns the merge\n');
 } else {
   console.log('\n  => NO PR — queue only\n');
 }

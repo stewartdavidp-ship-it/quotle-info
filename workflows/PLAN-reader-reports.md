@@ -270,12 +270,15 @@ so our system mails them. Mitigations that hold:
 data/report-queue.json and promote deliberately:
 
   observe -> runs the gate, records what it WOULD have done, changes nothing
-  pr      -> opens the PR, stops
-  merge   -> merges on green CI
+  pr      -> opens the PR, stops — the terminal rung
 
 Bar: 5 consecutive runs where the gate's call matched the operator's — no PR they would have
 rejected, no queued item they would have wanted as a PR. Miss one, the counter resets. Five is
 arbitrary, but a stated threshold beats an unstated one.
+
+> As planned, a third rung — `merge` on green CI — sat above `pr`. It was reached on 2026-07-29 and
+> retired the same day, when the 07:00 daily-merge pass (`workflows/DAILY-MERGE.md`) became the
+> single merge authority for all routines. `report-gate.js --promote` now refuses past `pr`.
 
 Email runs its OWN ladder (draft -> send) on its own counter: mailing strangers is a distinct trust
 question from opening a PR against your own repo.
