@@ -38,6 +38,14 @@ const jsonLd = (obj) => JSON.stringify(obj, null, 2).split('\n').map((l, i) => (
 const records = fs.readdirSync(QUOTES_DIR).filter((f) => f.endsWith('.json'))
   .map((f) => JSON.parse(fs.readFileSync(path.join(QUOTES_DIR, f), 'utf8')));
 
+// Read-only join to the harvest queue for demandScore/harvestedOn, which order the capped fakes
+// strip — see the note on orderedFakes() below. resultSlug (the built record's slug, when the wave
+// renamed it) wins over the candidate's own slug.
+const QUEUE_BY_SLUG = {};
+for (const c of JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'harvest-queue.json'), 'utf8')).candidates || []) {
+  for (const k of [c.slug, c.resultSlug]) if (k) QUEUE_BY_SLUG[k] = c;
+}
+
 // theme slug -> { real: [usable quotes], fake: [misattributed quotes] }
 const byTheme = {};
 for (const t of THEMES) byTheme[t.slug] = { real: [], fake: [] };
@@ -48,10 +56,13 @@ for (const r of records) {
   // record's answer.authorName is often the FALSELY CREDITED name, and a theme page listing a fake
   // quote under the fake author's byline asserts the very misattribution the entry exists to flag.
   const who = plain((r.answer && (r.answer.realAuthorName || r.answer.authorName)) || (r.author && r.author.name) || 'Unknown');
+  const hq = QUEUE_BY_SLUG[r.quoteSlug] || {};
   const entry = {
     slug: r.quoteSlug, quote: plain(r.displayQuote), author: who,
     confidence: r.confidence, rights: (r.source && r.source.rights) || null,
     credited: primaryCredit(r) ? plain(primaryCredit(r)) : null, // the PRIMARY false credit — theme cards show one name
+    demandScore: hq.demandScore != null ? hq.demandScore : null, // ordering only — not rendered, not exported
+    harvestedOn: hq.harvestedOn || null,
   };
   const bucket = r.confidence === 'disputed' ? 'fake' : 'real';
   for (const th of themes) byTheme[th][bucket].push(entry);
@@ -197,6 +208,32 @@ const fakeCard = (q) => `                <a class="mis-card" href="/who-said/${q
                     <p class="mis-real">${misReal(q)}</p>
                 </a>`;
 
+// ---- ordering the capped fakes strip (2026-08-09) ----------------------------------------------
+// The strip caps at 18 and the bucket used to be UNSORTED — insertion order, i.e. alphabetical by
+// record filename — so on busy themes a new record could be correctly tagged and never render:
+// measured on the d20260809 wave, two of its three records landed at positions 30–167 (wisdom
+// carries 210 disputed entries, character 131, truth 126) while apply-tags reported 3/3 with the
+// completeness gate green. The loss was invisible to every existing check. The cap now chooses
+// deliberately:
+//   * 12 DEMAND slots — highest harvest demandScore first. "Commonly shared but misattributed"
+//     should lead with the fakes people actually meet; the score exists on 152 of 833 disputed
+//     records (the deliberately-harvested high-demand tracks — 42 on wisdom alone, so demand alone
+//     would still bury every new record, which is why it does not get all 18).
+//   * 6 FRESHNESS slots — the rest by harvestedOn, newest first (present on 100% of queue-joined
+//     records; the ~174 pre-queue records sort last, they had their run on the old alphabet).
+// Slug is the final tiebreak in both — output must be deterministic or CI's stale-output gate
+// flakes. themes.json is untouched: it always carried the FULL list.
+const DEMAND_SLOTS = 12, FAKE_CAP = 18;
+const bySlug = (a, b) => (a.slug < b.slug ? -1 : a.slug > b.slug ? 1 : 0);
+function orderedFakes(fake) {
+  const demand = fake.filter((q) => q.demandScore != null)
+    .sort((a, b) => (b.demandScore - a.demandScore) || bySlug(a, b)).slice(0, DEMAND_SLOTS);
+  const taken = new Set(demand.map((q) => q.slug));
+  const fresh = fake.filter((q) => !taken.has(q.slug))
+    .sort((a, b) => String(b.harvestedOn || '').localeCompare(String(a.harvestedOn || '')) || bySlug(a, b));
+  return demand.concat(fresh).slice(0, FAKE_CAP);
+}
+
 // ---- per-theme pages ----
 fs.mkdirSync(OUT, { recursive: true });
 let pageCount = 0;
@@ -251,7 +288,7 @@ ${real.map(realCard).join('\n')}
             <div class="sec-head"><p class="kicker">Don&rsquo;t get caught out</p><h2 id="fake-h">Commonly shared about ${esc(t.label.toLowerCase())} &mdash; but misattributed</h2>
             <p class="sec-sub">Popular ${esc(t.label.toLowerCase())} lines that get pinned on the wrong name. If you use one, credit it correctly.</p></div>
             <div class="mis-grid">
-${fake.slice(0, 18).map(fakeCard).join('\n')}
+${orderedFakes(fake).map(fakeCard).join('\n')}
             </div>
         </section>` : '';
 
