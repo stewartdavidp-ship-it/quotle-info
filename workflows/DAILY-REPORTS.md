@@ -242,23 +242,26 @@ nothing to PR — **skip the build, the commit and the PR entirely** and go to s
 It also prints the current rung of the trust ladder:
 
 - **observe** — runs every gate, records what it WOULD have done, opens nothing. Always exits 3.
-- **pr** — opens the PR and stops.
-- **merge** — SUPERSEDED as of 2026-07-29. Do not use it, and do not merge your own PR.
+- **pr** — opens the PR and stops. **The terminal rung** — as of 2026-08-09 the tool has no rung
+  above it, and `--promote` refuses past `pr`.
 
 **Merging is no longer this pass's job.** `workflows/DAILY-MERGE.md` runs at 07:00 as the single
 merge authority for all four routines. That exists because every routine rebuilds every page, so two
 PRs open at once conflict across ~1,163 generated files — while a human merged them one at a time,
 that human WAS the serialization, and auto-merging each routine independently removes the serializer
 rather than the need for one. Merging your own PR here would race the 07:00 pass for the same reason.
+(A `merge` rung existed, was reached on 2026-07-29, and was superseded the same day for exactly this
+reason; it has since been removed from the tool.)
 
-So the live rungs are `observe` (decide, record, open nothing) and `pr` (open it and STOP). Open the
+So the rungs are `observe` (decide, record, open nothing) and `pr` (open it and STOP). Open the
 PR with the right branch prefix and finish.
 
 **It starts in `observe` and only the operator moves it.** Promotion bar: 5 consecutive runs where
 the gate's call matched theirs — no PR they would have rejected, no queued item they would have
 wanted as a PR. Miss one and the counter resets. The gate never grades itself; `--judge` is an
 operator command. Only runs that actually made a call are recorded, so an empty night cannot inflate
-the streak by testing nothing.
+the streak by testing nothing. At `pr` the streak keeps recording — the judged history is the gate's
+audit trail — it just no longer buys a promotion.
 
 ### What to do with the fix-stage edits when the gate exits 3
 
@@ -335,7 +338,7 @@ switching to a different prefix would fail closed as `HUMAN` and never merge.
 
 Then branch, commit, push, and open the PR **READY, never as a draft** (`gh pr create` without
 `--draft`). A draft cannot be merged, so it sits unmergeable until a human clicks a button. Nothing
-here auto-merges below the `merge` rung, so a ready PR still waits for a human either way.
+in this pass ever merges, so a ready PR still waits for the 07:00 merge pass either way.
 
 In the PR body state: which reports drove it, what the audit found, what the skeptic confirmed,
 what changed — **and anything you deliberately did not change and why.** That last line is the most
