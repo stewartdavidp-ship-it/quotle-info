@@ -84,6 +84,13 @@ const CONTEXT_TAG = [
   // must NOT take the not-a-person guard used by the wording-edit family below.
   /\b(vaudeville|music[- ]hall|burlesque)\s+(stock|staple|gag|joke|material)\b/i,
   /\balso\s+borrowed\b/i,
+  // ---- THE LITERAL TAG, closed 2026-08-09 --------------------------------------------------
+  // 28 rows carry the bare tag "context" — the row's printed label IS the word this file exists to
+  // route to. 26 of them were rendering ✕ against it ("Speaker | Shakespeare in his own voice",
+  // "The framing | Not about failing school", "Whose words are these, really? | A character, not
+  // Shakespeare"). Every one of the 28 was read before landing; none denies a person. Anchored to
+  // the WHOLE tag on purpose: "context stripped" is already handled above and stays a separate call.
+  /^context$/i,
 ];
 
 // A tag that DENIES A PERSON is a refutation and must keep the ✕, even if it also happens to match
@@ -147,19 +154,48 @@ function kindForTag(tag) {
 //
 // So 53 rows are genuine, 6 are context, 6 keep the ✕ — where a scope-label match alone said 65.
 const AFFIRMS_TRUTH = /^(the\s+)?(actual|real|true|genuine|verified)\b/i;
-const NO_SUBJECT = /^(unknown|anonymous|unattributed|undocumented|origin unknown|no\s|none)/i;
+// ---- THE SECOND AFFIRMING FAMILY, closed 2026-08-09 ----------------------------------------
+// AFFIRMS_TRUTH keys on the scope PREFIX, so an affirming row phrased as a question or a category
+// fell through to the default ✕ against its own prose — the d20260809 wave hand-marked two of these
+// in a three-record build and reported the gap. MEASURED on 1,509 records / 4,093 rows: the two
+// patterns below flip exactly 16 defaulted rows, every one read before landing —
+//   * "What <X> really/actually/genuinely wrote|said|concludes…" and "What <X> did say|write|claim"
+//     (13 rows): 8 affirm the true attribution outright ("What Gibran actually wrote | Gibran"),
+//     4 are hedged truths routed to context by HEDGED below ("What Gandhi genuinely wrote |
+//     (a different, longer line)"), 1 keeps the ✕ via NO_SUBJECT ("What QI actually concludes |
+//     Nobody").
+//   * "Who … credit(s)" / "The <noun> <Name> credits" (3 rows): "Who deserves credit | Anne
+//     Sullivan", "Who period sources credit | Rep. Bede", "The scholar Wikiquote credits | Jiao
+//     Hong" — all genuine. NOT matched, deliberately: noun-phrase credit LISTS ("Other false
+//     credits", "Rival credits", "Earlier stray credits" — 13 rows), which are refutations and keep
+//     the ✕; the verb-final anchor is what separates them.
+// The other 63 question-shaped defaulted scopes ("What it means", "Where the name came from",
+// "When the beer version appeared") affirm no attribution and were left alone on purpose.
+const AFFIRMS_WHAT = /^what\b.*\b(really|actually|genuinely|truly|in\s+fact)\b.*\b(wrote|said|says?|is|concludes?|claims?)\b|^what\b.*\bdid\s+(say|write|claim)\b/i;
+const AFFIRMS_CREDIT = /^who\b.*\bcredits?\s*$|^the\s+\w+\s+\S+\s+credits\s*$/i;
+// "nobody" added 2026-08-09: "What QI actually concludes | Nobody" affirms no subject — same
+// principle-1 case as "Unknown", the ✕ is correct there.
+const NO_SUBJECT = /^(unknown|anonymous|unattributed|undocumented|origin unknown|nobody|no\s|none)/i;
 const DENIES = /^(not|no)\b/i;
 // "real, but a different X" — true of something, but not the thing this page is about.
-const HEDGED = /\b(precursor|ancestor|echo|seed|earlier|idea,\s*not|not\s+wording|but\s+(a\s+)?different|not\s+the\s+(origin|source))\b/i;
+// The last four alternations landed 2026-08-09 with the AFFIRMS_WHAT family and are measured
+// against it: "(a different, longer line)", "A genuine line, on a different point", "Different
+// words", "related, not the same line", "A genuinely parallel idea" — each affirms a truth the page
+// does NOT hold up as this quote, so ✓ would overclaim. Zero collisions: no defaulted row computed
+// genuine or context before this change (all 802 non-✕ kinds in the corpus are hand-set).
+const HEDGED = /\b(precursor|ancestor|echo|seed|earlier|idea,\s*not|not\s+wording|but\s+(a\s+)?different|not\s+the\s+(origin|source)|a\s+different\b|different\s+words|not\s+the\s+same|parallel)\b/i;
 
 /** '' | 'genuine' | 'context' — for a whole misattribution row, not just its tag. */
 function kindForRow(item) {
   const it = item || {};
   const clean = (x) => String(x || '').replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, "'").trim();
   const scope = clean(it.scope), who = clean(it.who), tag = clean(it.tag);
-  if (AFFIRMS_TRUTH.test(scope) && !DENIES.test(who)) {
+  if ((AFFIRMS_TRUTH.test(scope) || AFFIRMS_WHAT.test(scope) || AFFIRMS_CREDIT.test(scope)) && !DENIES.test(who)) {
     if (NO_SUBJECT.test(who)) return '';                       // nothing affirmed — ✕ is right
-    return HEDGED.test(`${who} ${tag}`) ? 'context' : 'genuine';
+    // An explicit context-shaped tag wins over the scope inference: "What Freud really wrote |
+    // Sigmund Freud, 1958 | context" affirms a real sentence about a DIFFERENT subject — the row's
+    // own label says so, and a ✓ would overclaim exactly the way a hedged truth would.
+    return (HEDGED.test(`${who} ${tag}`) || kindForTag(it.tag) === 'context') ? 'context' : 'genuine';
   }
   const byTag = kindForTag(it.tag);
   if (byTag) return byTag;

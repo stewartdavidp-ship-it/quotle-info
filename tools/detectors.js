@@ -132,7 +132,8 @@ const DETECTORS = [
   },
   {
     id: 'misattr-marker-contradicts-tag',
-    version: 1,
+    // v2 2026-08-09: mis-kind.js CONTEXT_TAG gained the bare /^context$/ tag (26 defaulted rows).
+    version: 2,
     severity: 'medium',
     title: 'a fact-check row tagged with a non-authorship ROLE renders the refutation ✕',
     remedy: 'Set kind:\'context\' on rows whose tag states a non-authorship role (paraphrase, popularizer, translator, drift). Leave rows that deny a person as refutations.',
@@ -154,7 +155,9 @@ const DETECTORS = [
   },
   {
     id: 'truth-row-marked-refuted',
-    version: 1,
+    // v2 2026-08-09: mis-kind.js learned the question/category-shaped affirming family
+    // (AFFIRMS_WHAT / AFFIRMS_CREDIT) + the hedges and NO_SUBJECT term that came with it.
+    version: 2,
     severity: 'high',
     title: 'a row stating the TRUE attribution renders the refutation mark',
     remedy: 'Set kind on the flagged misattribution row: \'genuine\' when it names an affirmative true attribution the page holds up, \'context\' when the truth is hedged (\'real, but a different claim\'), and leave it UNSET when the row affirms nothing (\'True author / Unknown\') because the refutation mark is correct there.',
