@@ -595,8 +595,20 @@ function buildJsonLd(q, url) {
     author: { '@type': 'Organization', name: 'Quotle.info', url: ORIGIN },
     datePublished: s.dateModified,
     claimReviewed: claimReviewedText,
+    // itemReviewed.text = the claim's own content, so the Claim node is legible WITHOUT resolving
+    // the appearance edge. `claimReviewed` is a sentence ABOUT the claim ("X said: …"); `Claim.text`
+    // is the claim itself. A consumer that walks to itemReviewed and finds only an `appearance` @id
+    // has a node with no content — and on the pages where appearance is deliberately suppressed
+    // (right-person-wrong-words, paraphrase) there is no edge to follow at all, so the node said
+    // nothing whatever. Uses claimQuoteText — the wording that actually CIRCULATES — for the same
+    // reason claimReviewed does: quotation.text is the documented original, which on the drift pages
+    // is not the claim under review. MEASURED before shipping (r31 branch, 2026-08-04): 1,402 Claim
+    // nodes across 1,380 pages, ~+139 KB of JSON-LD site-wide (+2.2%), ~110 bytes on a ~96 KB page.
+    // The r24 ceiling is a DIFFERENT budget — verify-corpus's SCHEMA_BUDGET scores the agent-facing
+    // DOSSIER_SCHEMA in workflows/generate.js, not emitted page JSON-LD.
     itemReviewed: {
       '@type': 'Claim',
+      text: claimQuoteText,
       appearance,
     },
     reviewRating: {
@@ -632,8 +644,12 @@ function buildJsonLd(q, url) {
         claimReviewed: `${plain(name)} ${claimVerb}: "${claimQuoteText}"`,
         // No itemReviewed.author here either, for the same reason as the primary node above: the
         // secondary magnets did not make the claim about themselves. `claimReviewed` names them.
+        // `text` IS the same on every node in the set — one quote, several wrong names pinned to
+        // it — so each secondary Claim carries the identical circulating wording. That is correct,
+        // not duplication to dedupe: the claims differ by claimant, not by content.
         itemReviewed: {
           '@type': 'Claim',
+          text: claimQuoteText,
           appearance,
         },
         reviewRating: {
@@ -2009,6 +2025,14 @@ function rightPersonWrongWords(q) {
 const creativeWork = (w) => {
   const node = { '@type': w.type || 'CreativeWork', name: w.name };
   if (w.alternateName) node.alternateName = w.alternateName;
+  // The containing work's OWN author — the article's byline, the letter's writer — which had no
+  // field until now, so the one record that needed it glued the publication into `name` as a
+  // parenthetical ("… handling Buffett's business (Omaha World-Herald)"), prose no machine reads
+  // as a byline or a container. Emitted here rather than in the isPartOf block so a NESTED
+  // container (letter-in-collection: the collection's editor-author) gets it identically. A Person
+  // by default because every byline the corpus has is one; a record whose container is
+  // institutionally authored can say so with `authorType: 'Organization'`.
+  if (w.author) node.author = { '@type': w.authorType || 'Person', name: plain(w.author) };
   if (w.datePublished) node.datePublished = w.datePublished;
   if (w.sameAs) node.sameAs = w.sameAs;
   if (w.pagination) node.pagination = w.pagination;
