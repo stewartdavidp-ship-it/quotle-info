@@ -357,13 +357,24 @@ node tools/build.js
 
 # 7. SHIP
 echo '[]' > /tmp/empty.json && node tools/harvest.js sync /tmp/empty.json   # sweep this wave's selected → ingested
+node tools/build.js                                 # REQUIRED again after the sweep — under-review/ and the
+#    other roll-ups (index, search.json, corpus-state) render the QUEUE, and the sync above just
+#    changed it, so the step-6 build is stale the moment the sweep runs. Late audit fixes stale it
+#    the same way. d20260809 (#404) and d20260810 (#424) both shipped the step-6 build and failed
+#    CI's stale-output gate on the same six files, each needing a manual rebuild + commit after.
 node tools/scan.js                                  # REQUIRED — CI fails the PR without it (see below)
 #    !! This recipe omitted scan.js until r27 and CI failed the wave on it. The "Committed output
 #    matches the generators" job runs build.js AND scan.js and rejects any diff, so a wave that
 #    skips it lands a stale data/scan-state.json and a red PR. DAILY-WAVE.md always had the step;
 #    this recipe did not, so anyone following the r-series runbook hit it. It is incremental and
 #    cheap (r27: 240 checks, 7014 skipped as settled, 0 flagged).
-git checkout -b wave-rN && git add -A && git commit && git push
+git checkout -b wave-rN && git add -A && git commit
+#    BEFORE PUSHING, run CI's staleness check locally — rebuild and require a clean tree. This is
+#    byte-for-byte the "Committed output matches the generators" job in .github/workflows/verify.yml;
+#    the build is deterministic, so any output means the commit is stale, never noise:
+node tools/build.js && node tools/scan.js && git status --porcelain   # must print NOTHING
+#    if it prints anything: git add -A && git commit --amend --no-edit, then re-run until empty.
+git push
 gh pr create ...
 #    !! REBASE-REBUILD BEFORE MERGING — built HTML is COMMITTED, so a wave branched before a
 #    generator fix but merged after it SILENTLY REVERTS that fix on every page the wave rebuilt.

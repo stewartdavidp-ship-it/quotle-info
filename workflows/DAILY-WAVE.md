@@ -138,6 +138,10 @@ then:
 
 ```bash
 echo '[]' > /tmp/empty.json && node tools/harvest.js sync /tmp/empty.json   # selected → ingested
+node tools/build.js   # REQUIRED again here — the sync above just changed the queue, and the
+                      # roll-ups (under-review/, index, search) render it, so the step-6 build is
+                      # now stale. d20260809 (#404) and d20260810 (#424) both shipped without this
+                      # and failed CI's stale-output gate on the same six files.
 node tools/scan.js
 node tools/routine-log.js --routine daily-wave --outcome pr --built <N> --pr <url> \
   --note "audit: N PASS / N FAIL, N issues; anything you could not establish"
@@ -153,7 +157,19 @@ prefix and this PR simply never merges — silently, and looking exactly like a 
 `a distinct wave id, e.g. `wave-d20260729c``. `merge-gate.js` matches on the PREFIX, so a suffix stays in the same lane;
 switching to a different prefix would fail closed as `HUMAN` and never merge.
 
-Branch, commit, push, **open the PR ready — never a draft** (`gh pr create` without `--draft`; a
+Branch and commit. **Then, before pushing, run CI's staleness check yourself:**
+
+```bash
+node tools/build.js && node tools/scan.js
+git status --porcelain   # must print NOTHING
+```
+
+This is the "Committed output matches the generators" job from `.github/workflows/verify.yml`, run
+locally. Any output means the commit is stale — a late stage (the sync above, an audit fix) changed
+inputs after the last rebuild. `git add -A && git commit --amend --no-edit`, re-run the check, and
+push only when it comes back empty. Ship means CI-green, not build-succeeded.
+
+Push, **open the PR ready — never a draft** (`gh pr create` without `--draft`; a
 draft cannot be merged and just waits for a human to click). In the body: the 5 quotes with verdict
 and rights, the audit's PASS/FAIL and issue counts, what you fixed, what you refused to fix and
 why, and anything you could not establish.
