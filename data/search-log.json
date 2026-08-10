@@ -1478,6 +1478,51 @@
         "notThrottling": "Host status clean for 90 days and average response 84ms, so Google is not backing off for host health. This is crawl DEMAND (how much Google thinks the site is worth fetching), not crawl CAPACITY.",
         "waste": "16% of an already-tiny budget returns 301. Internal links were checked and are clean — zero no-slash quote hrefs in the built HTML — so these are Google re-crawling no-slash URLs it learned before the 2026-07-22 contract fix. Self-limiting, should decay. 26% goes to non-HTML (16% other + 10% JSON): llms.txt and openapi.json are deliberate agent surfaces, but the large unlinked build artifacts in the web root (verify-index.json 1.8MB, themes.json 833KB, search.json 456KB, manifest.json 539KB) are NOT disallowed in robots.txt. Untested as a crawl-budget factor; flagged, not diagnosed."
       }
+    },
+    {
+      "date": "2026-08-08",
+      "pulledOn": "2026-08-10",
+      "source": "GSC domain property sc-domain:quotle.info · clean 7-day window 8/2–8/8 (both properties now show identical Performance data; prior readings used the URL-prefix property)",
+      "milestone": "FIRST CLICK EVER ON THE CURRENT BUILD — homepage, from the 8/2–8/8 window. Also: first external link in the Links report (tokusuke-life.com → homepage, anchor 'quotle quote context engine', organic), and the first manual-request cohort proved out: /themes/, /who-recorded/ and god-does-not-play-dice all flipped from unindexed/unknown on 8/7 to 'URL is on Google' by 8/10 (3/3 spot-checked).",
+      "recent7d": {
+        "window": "2026-08-02..08-08",
+        "clicks": 1,
+        "impressions": 403,
+        "avgPosition": 15,
+        "pagesWithImpressions": 106
+      },
+      "indexing": {
+        "reportAlive": true,
+        "reportThrough": "~2026-08-08",
+        "indexed": 338,
+        "notIndexed": 2280,
+        "reasons": {
+          "discoveredNotIndexed": 2013,
+          "excludedByNoindex": 135,
+          "pageWithRedirect": 106,
+          "crawledNotIndexed": 22,
+          "notFound404": 3
+        },
+        "note": "Report UNFROZE ~8/8 and now covers the full corpus for the first time (was 319/202 legacy-only while frozen). Indexed 329 (8/8) -> 338 (8/10). discoveredNotIndexed rising is EXPECTED — it is the whole current build becoming visible in the report while awaiting crawl. crawledNotIndexed 12 -> 22 shows crawl activity ahead of admission. The 'Page with redirect / validation Failed' state is permanent and benign: those are the old no-slash URLs 301ing by design; that validation can never pass — do not act on it."
+      },
+      "sitemap": {
+        "url": "https://quotle.info/sitemap-full.xml",
+        "status": "Success",
+        "note": "unchanged; read daily"
+      },
+      "externalLinks": {
+        "total": 1,
+        "sites": [
+          "tokusuke-life.com"
+        ],
+        "note": "FIRST EVER (was 0 on 8/7). Not the gameshelf footer link yet — that shipped 8/7 and is expected in this report ~8/21+. Internal links known to Google: 840 -> 1,114."
+      },
+      "manualIndexing": {
+        "submittedToDate": 20,
+        "spotChecks": "3/3 of the 8/7 batch indexed by 8/10 (/themes/, /who-recorded/, god-does-not-play-dice)",
+        "note": "Nightly task quotle-index-requests exists but its 8/9 run appended nothing to the state file and the 8/10 run did not fire (app closed at 1am). The 10/day quota went unused on 8/9 and 8/10 pending pre-approval of the task's browser tools ('Run now' once)."
+      },
+      "notes": "PROGRESS IS NOW MEASURABLE AND ATTRIBUTABLE. Three days after the 8/7 interventions (crawlable game->info footer link, honest per-page lastmod, first 10 manual crawl requests): indexed 329->338, all three spot-checked requested pages admitted, first external link recorded, first current-build click, avg position 22.3->15.0, pages-with-impressions/7d 76->106. Daily crawl rate ticked up only modestly (~10-17/day vs the ~2-5 trough of 8/1, still far below the ~830 honeymoon peak) — the deep crawl-demand constraint is NOT solved; what changed is that explicitly queued pages get fetched within ~1-3 days, so the 10/day manual quota is currently the most reliable lever. Impressions/day ~58 vs ~54 prior week: flat-to-slightly-up, not yet a trend. Do not declare recovery until the crawl-rate series rises without manual pushes and the current cohort earns impressions broadly."
     }
   ]
 }
