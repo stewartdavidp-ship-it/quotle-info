@@ -133,7 +133,8 @@ const DETECTORS = [
   {
     id: 'misattr-marker-contradicts-tag',
     // v2 2026-08-09: mis-kind.js CONTEXT_TAG gained the bare /^context$/ tag (26 defaulted rows).
-    version: 2,
+    // v3 2026-08-11: + "reported, not written" and bare "echo" (r35's pair, one row each).
+    version: 3,
     severity: 'medium',
     title: 'a fact-check row tagged with a non-authorship ROLE renders the refutation ✕',
     remedy: 'Set kind:\'context\' on rows whose tag states a non-authorship role (paraphrase, popularizer, translator, drift). Leave rows that deny a person as refutations.',

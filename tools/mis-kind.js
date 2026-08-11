@@ -84,6 +84,16 @@ const CONTEXT_TAG = [
   // must NOT take the not-a-person guard used by the wording-edit family below.
   /\b(vaudeville|music[- ]hall|burlesque)\s+(stock|staple|gag|joke|material)\b/i,
   /\balso\s+borrowed\b/i,
+  // ---- THE r35 PAIR, closed 2026-08-11 — kept literal on purpose ---------------------------
+  // Two r35 fix agents (different pages) reported tags rendering the ✕ "this credit is false"
+  // beside prose saying nobody disputes it: "reported, not written" (the person REPORTED the line,
+  // a non-authorship role in exactly the "<role>, not <authorship-word>" construction — but
+  // "written" is not in that pattern's authorship-word list and widening the list would need its
+  // own measured pass) and the bare tag "echo" (HEDGED already knows the word; kindForTag never
+  // consulted it). Both literal, per this file's own header: the third consecutive wave to hit a
+  // CONTEXT_TAG gap, and each was closed at the width the evidence supported, not wider.
+  /\breported,\s+not\s+written\b/i,
+  /^echo$/i,
   // ---- THE LITERAL TAG, closed 2026-08-09 --------------------------------------------------
   // 28 rows carry the bare tag "context" — the row's printed label IS the word this file exists to
   // route to. 26 of them were rendering ✕ against it ("Speaker | Shakespeare in his own voice",

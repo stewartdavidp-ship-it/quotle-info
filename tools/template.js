@@ -808,6 +808,27 @@ function buildJsonLd(q, url) {
         return `${who} is the author, but this popular wording is not what they wrote — it is a later paraphrase or misquotation.`;
       }
       const lead = wrong ? `Commonly misattributed to ${wrong}.` : 'This attribution is disputed.';
+      // NO OTHER PARTY IS CREDITED. With creditedTo missing, `wrong` is empty, the right-person-
+      // wrong-words guard above cannot fire, and this arm used to emit "This attribution is
+      // disputed. Actually by ⟨the very author the page credits⟩." — a 2026-08-11 r35 fix agent
+      // measured 53 live pages telling an answer engine the page's own creator was falsely
+      // credited ("Actually by William Shakespeare", 1/"False", on the Yorick page). The honest
+      // output depends on evidence this function actually has:
+      //   * the record documents a verbatim original that differs from the popular wording
+      //     (schema.quotationText vs displayQuote, the same test verbatimNote() uses, normalized
+      //     hard because plain() alone treats a trailing period as drift) → the dispute is the
+      //     WORDING, and the right-person-wrong-words sentence is true;
+      //   * no such evidence → say only what is true of every record in this state: the
+      //     attribution is disputed. The bare lead under-informs; "Actually by X" lied.
+      // The 22 no-drift records are heterogeneous (missing creditedTo, shaky creator assertions)
+      // and need record edits, not a generator sentence — that is a data backlog, not this branch.
+      if (who && !wrong) {
+        const norm = (t) => plain(t).toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+        const verbatim = plain(s.quotationText || '');
+        return (verbatim && norm(verbatim) !== norm(q.displayQuote))
+          ? `${who} is the author, but this popular wording is not what they wrote — it is a later paraphrase or misquotation.`
+          : lead;
+      }
       if (who) return `${lead} Actually by ${who}.`;
       // `creator` is deliberately SUPPRESSED on pages where asserting it would name the magnet
       // (creatorOk), so its absence does NOT mean the record is ignorant. answer.realAuthorName is
@@ -1105,7 +1126,11 @@ function verbatimNote(q, shown) {
   // Already corrected by hand — do not say it twice.
   const credit = words((q.copyAttribution != null) ? plain(q.copyAttribution) : '');
   if (credit.includes(words(verbatim).slice(0, 40))) return '';
-  return ` Verbatim: \u201c${verbatim.replace(/\s*$/, '')}\u201d`;
+  // The caller concatenates this directly onto the credit line (`${credit}${verbatimNote(...)}`),
+  // so the old leading bare space produced the run-on "\u2026Via Quotle.info Verbatim: \u2026" in the
+  // copy-paste kit (r35 finding). A bare strip would weld the words together instead; the middot
+  // is the separator the credit line already uses between its own clauses.
+  return ` \u00b7 Verbatim: \u201c${verbatim.replace(/\s*$/, '')}\u201d`;
 }
 
 function buildImagePrompts(q) {
