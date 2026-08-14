@@ -119,6 +119,15 @@ function toRecord(d, item) {
   // which removes the separate tag-themes workflow stage. Older journals predate this, so tolerate
   // absence rather than writing an empty array the theme pages would treat as tagged.
   if (Array.isArray(d.themes) && d.themes.length) rec.themes = d.themes;
+  // Persist the per-link verification evidence instead of discarding it — see the long note at the
+  // same spot in workflows/generate.js. KEEP THESE TWO IN SYNC: this is the path a DAILY wave takes,
+  // so omitting it here would mean only r-waves ever retained the evidence.
+  if (Array.isArray(d.sourcesVerified) && d.sourcesVerified.length) {
+    const rows = d.sourcesVerified.filter((v) => v && v.url);
+    if (rows.length) {
+      rec.sourcesVerified = rows.map((v) => ({ claim: v.claim, url: v.url, containsClaim: !!v.containsClaim, verifiedOn: VERIFIED_DATE }));
+    }
+  }
   return rec;
 }
 

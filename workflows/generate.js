@@ -168,6 +168,23 @@ function toRecord(d, item) {
   // which removes the separate tag-themes workflow stage. Older journals predate this, so tolerate
   // absence rather than writing an empty array the theme pages would treat as tagged.
   if (Array.isArray(d.themes) && d.themes.length) rec.themes = d.themes;
+  // KEEP THE LINK-VERIFICATION EVIDENCE. `sourcesVerified` is REQUIRED of every dossier and the
+  // prompt calls populating it "the site's #1 discipline" — one {claim, url, containsClaim} per
+  // cited link, each confirmed by an actual fetch. It was then read once for a console count
+  // (`verifiedCount`) and dropped on the floor, so 0 of 1,567 records retained any of it: the
+  // single most expensive thing a wave does left no trace, and "was this link ever checked against
+  // the claim it carries?" could not be answered for any page on the site. Every re-verification
+  // sweep, every audit asking whether a dead link was ever live, starts from nothing.
+  //
+  // Costs NOTHING against SCHEMA_BUDGET — that bounds the agent-facing DOSSIER_SCHEMA, which
+  // already carries this field; this only stops discarding what it returns. Filtered to entries
+  // that name a url, so a malformed row cannot land in the corpus.
+  if (Array.isArray(d.sourcesVerified) && d.sourcesVerified.length) {
+    const rows = d.sourcesVerified.filter((v) => v && v.url);
+    if (rows.length) {
+      rec.sourcesVerified = rows.map((v) => ({ claim: v.claim, url: v.url, containsClaim: !!v.containsClaim, verifiedOn: VERIFIED_DATE }));
+    }
+  }
   return rec;
 }
 
