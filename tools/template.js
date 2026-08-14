@@ -274,7 +274,23 @@ function buildJsonLd(q, url) {
       && (isRightPersonWrongWords || heroName.toLowerCase() !== magnetName))
     || (heroUnknown && creatorIsAnon));
   if (creatorOk) {
-    quotation.creator = { '@type': 'Person', name: s.creator.name };
+    // TYPE FROM THE RECORD. `Person` was hardcoded here for 1,567 records because every creator the
+    // corpus had ever met was one — until 2026-08-14, when the d20260814 wave built
+    // `a-future-startup-with-no-patents-of-its-own-will-be-forced/` and the true author came back as
+    // the League for Programming Freedom, an ADVOCACY GROUP. The page then published
+    // `{"@type":"Person","name":"League for Programming Freedom"}`: a machine-readable claim that an
+    // organisation is a human being, on a site whose whole thesis is that attribution claims must be
+    // true. Same shape as the isPartOf/isBasedOn conflation — the generator offering exactly one
+    // shape and the corpus quietly filling it with the other.
+    //
+    // Mirrors `creativeWork()`'s `w.authorType || 'Person'` at the foot of this file. Person stays
+    // the default: it is right 1,566 times out of 1,567, and a record that means Organization says
+    // so. NOT emittable by a wave — `DOSSIER_SCHEMA` sits at exactly SCHEMA_BUDGET (4,072, zero
+    // headroom), so `creatorType` cannot be added to it without freeing bytes first; like
+    // `schema.verdictNote` this is a hand-set record field until that budget moves. A wave that meets
+    // the next organisational creator will therefore ship it as a Person and must be corrected at the
+    // fix stage — which is the argument for freeing the bytes, not for hardcoding again here.
+    quotation.creator = { '@type': s.creator.type || 'Person', name: s.creator.name };
     // An anonymous creator must SAY it is anonymous. Emitting a bare Person named "Anonymous" keeps
     // the CLAUDE.md RULE satisfied but reads to a consumer exactly like a byline — indistinguishable
     // from crediting a person of that name. The name alone cannot carry the distinction, so the node
@@ -1123,8 +1139,16 @@ function verbatimNote(q, shown) {
   if (!verbatim) return '';
   const words = (t) => String(t).toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
   if (words(verbatim) === words(shown)) return '';
-  // Already corrected by hand — do not say it twice.
-  const credit = words((q.copyAttribution != null) ? plain(q.copyAttribution) : '');
+  // Already corrected by hand — do not say it twice. TEST WHAT IS ACTUALLY RENDERED, not the raw
+  // field: the caller emits `creditLine(q)`, which STRIPS a leading quoted segment (see its note),
+  // and on 77 records that stripped segment IS the correction. Testing the unstripped
+  // `copyAttribution` therefore found the verbatim text, concluded "already corrected", and stayed
+  // silent — about a correction the strip had just removed from the very string being rendered.
+  // Both functions are individually right; the interaction was the bug, and it reintroduced the
+  // Shaw failure documented in the block above by a different route (found by the d20260812 wave).
+  // The paste-ready kit shipped the popular clipping with the correction gone and the safety net
+  // disarmed by the text that was removed.
+  const credit = words(plain(creditLine(q)));
   if (credit.includes(words(verbatim).slice(0, 40))) return '';
   // The caller concatenates this directly onto the credit line (`${credit}${verbatimNote(...)}`),
   // so the old leading bare space produced the run-on "\u2026Via Quotle.info Verbatim: \u2026" in the
