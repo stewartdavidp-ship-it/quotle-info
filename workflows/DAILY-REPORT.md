@@ -25,17 +25,32 @@ git checkout main && git fetch origin && git merge --ff-only origin/main
 
 Stop and say so if either fails. A stale checkout reports yesterday's state as today's.
 
-**ONE exception, added 2026-08-04 — the `local main sane` recovery.** If the only failures are
+**TWO exceptions, and only these two. Both are "run the one command preflight itself printed, then
+re-run it".**
+
+**(a) added 2026-08-04 — the `local main sane` recovery.** If the only failures are
 `local main sane` (and, consequently, `git on main`) **and `tree clean` PASSED**, run the single
 command preflight names — `git checkout -B main origin/main` — then re-run preflight and continue
-only if it comes back green. Every other preflight failure is still a hard STOP and is not yours
-to fix.
+only if it comes back green.
 
-This **relaxes WHO acts, not WHAT is checked**: every check must still pass on the re-run, the tree
-must ALREADY be clean so nothing uncommitted is at risk, and the only thing discarded is a local
+**(b) added 2026-08-14 — `git on main` ALONE.** If `git on main` is the *only* failure — with
+`local main sane`, `tree clean` and `current with origin/main` all PASSING — run preflight's own
+printed remedy, `git checkout main`, then re-run and continue only if green. This is the milder
+cousin of (a): nothing is discarded at all, because local `main` is already a sane ancestor of
+`origin/main` and the working tree is already clean; the container simply started off the branch.
+It fired on **all four passes a day for nine consecutive days** (2026-08-06 → 08-14) and every
+routine improvised the identical recovery in prose, which is a procedure gap rather than four
+independent judgement calls. **This does not close the underlying question** — something leaves the
+container off `main` at start, and finding it would remove the need for this exception entirely.
+
+Every other preflight failure is still a hard STOP and is not yours to fix.
+
+Both **relax WHO acts, not WHAT is checked**: every check must still pass on the re-run, the tree
+must ALREADY be clean so nothing uncommitted is at risk, and the only thing (a) discards is a local
 `main` ref that is not an ancestor of `origin/main`. On 2026-08-04 exactly this state stopped the
 reports, review and report passes for a full day, and preflight's old remedy (`git checkout main`)
-would have made it worse by moving the tree onto the stale root.
+would have made it worse by moving the tree onto the stale root — which is precisely why (b) is
+conditioned on `local main sane` PASSING, and why the two must never be collapsed into one rule.
 
 ## Step 1 — gather the facts mechanically
 

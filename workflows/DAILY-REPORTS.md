@@ -56,16 +56,32 @@ git status --porcelain
 
 Preflight checks that the citation sources are reachable, that **`QUOTLE_API` is reachable**, and
 that `reports/` is still in the merge gate's allowlist. Each of those has failed silently at least
-once. 14 checks; expect all 14.
+once. **Expect every check to pass** — the count is deliberately not restated here; it was stated as
+14 while the tool ran 15 for long enough to be carried as a decision item for days, and a number
+duplicated outside the tool goes stale the next time a check is added.
 
-**ONE exception, added 2026-08-04 — the `local main sane` recovery.** If the only failures are
-`local main sane` (and, consequently, `git on main`) **and `tree clean` PASSED**, run the single
-command preflight names — `git checkout -B main origin/main` — then re-run preflight and continue
-only if it comes back green. Every other preflight failure is still a hard STOP and is not yours
-to fix.
+**TWO exceptions, and only these two. Both are "run the one command preflight itself printed, then
+re-run it".**
 
-This **relaxes WHO acts, not WHAT is checked**: every check must still pass on the re-run, the tree
-must ALREADY be clean so nothing uncommitted is at risk, and the only thing discarded is a local
+**(a) added 2026-08-04 — the `local main sane` recovery.** If the only failures are `local main
+sane` (and, consequently, `git on main`) **and `tree clean` PASSED**, run the single command
+preflight names — `git checkout -B main origin/main` — then re-run preflight and continue only if
+it comes back green.
+
+**(b) added 2026-08-14 — `git on main` ALONE.** If `git on main` is the *only* failure — with
+`local main sane`, `tree clean` and `current with origin/main` all PASSING — run preflight's own
+printed remedy, `git checkout main`, then re-run and continue only if green. This is the milder
+cousin of (a): nothing is discarded at all, because local `main` is already a sane ancestor of
+`origin/main` and the tree is already clean; the container simply started off the branch. It fired
+on all four passes a day for nine consecutive days (2026-08-06 → 08-14) and every routine
+improvised the same recovery in prose — a procedure gap, not four independent judgement calls. It
+does NOT close the underlying question: something leaves the container off `main` at start, and
+finding it would retire this exception.
+
+Every other preflight failure is still a hard STOP and is not yours to fix.
+
+Both **relax WHO acts, not WHAT is checked**: every check must still pass on the re-run, the tree
+must ALREADY be clean so nothing uncommitted is at risk, and the only thing (a) discards is a local
 `main` ref that is not an ancestor of `origin/main`. On 2026-08-04 exactly this state stopped the
 reports, review and report passes for a full day, and preflight's old remedy (`git checkout main`)
 would have made it worse by moving the tree onto the stale root.
