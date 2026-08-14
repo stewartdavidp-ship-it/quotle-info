@@ -1523,6 +1523,54 @@
         "note": "Nightly task quotle-index-requests exists but its 8/9 run appended nothing to the state file and the 8/10 run did not fire (app closed at 1am). The 10/day quota went unused on 8/9 and 8/10 pending pre-approval of the task's browser tools ('Run now' once)."
       },
       "notes": "PROGRESS IS NOW MEASURABLE AND ATTRIBUTABLE. Three days after the 8/7 interventions (crawlable game->info footer link, honest per-page lastmod, first 10 manual crawl requests): indexed 329->338, all three spot-checked requested pages admitted, first external link recorded, first current-build click, avg position 22.3->15.0, pages-with-impressions/7d 76->106. Daily crawl rate ticked up only modestly (~10-17/day vs the ~2-5 trough of 8/1, still far below the ~830 honeymoon peak) — the deep crawl-demand constraint is NOT solved; what changed is that explicitly queued pages get fetched within ~1-3 days, so the 10/day manual quota is currently the most reliable lever. Impressions/day ~58 vs ~54 prior week: flat-to-slightly-up, not yet a trend. Do not declare recovery until the crawl-rate series rises without manual pushes and the current cohort earns impressions broadly."
+    },
+    {
+      "date": "2026-08-12",
+      "pulledOn": "2026-08-14",
+      "source": "GSC domain property sc-domain:quotle.info · clean 7-day window 8/6–8/12 (Performance last updated 5.5h before the pull)",
+      "milestone": "IMPRESSIONS NEARLY DOUBLED, 403 -> 789 in one week, and the manual-request pipeline is proved end to end: `the-best-argument-against-democracy-is-a-five-minute` was submitted 2026-08-10, is now 'URL is on Google', and earned 26 impressions by 8/12. Submit -> crawl -> index -> impressions in 4 days.",
+      "recent7d": {
+        "window": "2026-08-06..08-12",
+        "clicks": 1,
+        "impressions": 789,
+        "avgPosition": 14.8,
+        "pagesWithImpressions": 123,
+        "queries": 83
+      },
+      "indexing": {
+        "reportAlive": false,
+        "reportThrough": "2026-08-06",
+        "indexed": 338,
+        "notIndexed": 2280,
+        "note": "FROZEN AGAIN — 'Last update: 8/6/26' read on 8/14, and the stamp has gone BACKWARDS versus the 8/10 pull (which showed data through ~8/8). Every figure is byte-identical to the 8/10 reading: 338 / 2,013 discovered / 22 crawled-not-indexed / 106 redirect / 135 noindex / 3 404. DO NOT read these as current; this is the third freeze this instrument has had. Performance and Crawl stats are the live instruments; URL Inspection is live per-URL."
+      },
+      "crawl": {
+        "reportThrough": "2026-08-11",
+        "totalRequests": 231,
+        "windowStart": "2026-07-24",
+        "avgResponseMs": 82,
+        "hostStatus": "no problems",
+        "note": "231 total vs 210 at the 8/8 pull = ~7/day over 8/9–8/11, inside the same ~7–17/day band that has held since 7/11. Organic crawl demand is NOT recovering. The impressions gain is Google getting more value from the ~340 pages it has indexed, not from crawling more."
+      },
+      "externalLinks": {
+        "total": 1,
+        "sites": [
+          "tokusuke-life.com"
+        ],
+        "note": "unchanged from 8/10. gameshelf.co (static footer shipped 8/07) has NOT appeared yet — not overdue, the 2-4 week expectation puts it ~8/21."
+      },
+      "manualIndexing": {
+        "submittedToDate": 30,
+        "verifiedIndexed": [
+          "themes/ (8/07)",
+          "who-recorded/ (8/07)",
+          "god-does-not-play-dice (8/07)",
+          "we-shall-fight-on-the-beaches (8/08)",
+          "the-best-argument-against-democracy (8/10) — plus 26 impressions"
+        ],
+        "note": "5/5 spot-checked submissions across all three batches are indexed. Conversion to impressions confirmed on at least one. AUTOMATION IS BROKEN: the nightly task fires (cadence restored, lastRun 8/14 01:07 ET, next 8/15) but every run dies at the claude-in-chrome `navigate` call — transcript 38b0d63e ends mid-tool-call 36s in, no result, no error. Quotas for 8/11, 8/12, 8/13, 8/14 all went unspent."
+      },
+      "notes": "THE CLEAREST WEEK OF PROGRESS SO FAR, and the mechanism is now unambiguous. Impressions 403 -> 789 (+96%), pages with impressions 106 -> 123, avg position 15.0 -> 14.8, queries 59 -> 83. Roughly 40% of the impression gain is one page (`nothing-in-life-is-to-be-feared` 112 -> 272, riding a cluster of Marie Curie / 'on ne doit rien craindre dans la vie' / Laval Medical provenance queries — expert-navigational demand on a single question), so this is partly one story finding its audience rather than broad-based lift; the other ~60% is spread across the tail, which is the healthier half. CAUSAL CHAIN NOW CLOSED for manual requests: 5/5 spot-checked submissions indexed, and an 8/10 submission earned 26 impressions by 8/12. WHAT HAS NOT CHANGED: crawl rate (~7/day over the last measured stretch, unchanged band since 7/11), external links (still 1), clicks (still 1 ever). The site is monetising its small indexed set better, not growing it. Also note the Page indexing report froze for the third time and its stamp moved BACKWARDS to 8/6 — never diff against it without checking the stamp."
     }
   ]
 }
