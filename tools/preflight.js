@@ -175,8 +175,19 @@ const head = (url) => new Promise((resolve) => {
     const branch = sh('git', ['rev-parse', '--abbrev-ref', 'HEAD']);
     // Only suggest checking main out when main is worth checking out. Naming a remedy that makes
     // things worse is how a gate teaches people to ignore it.
+    //
+    // AND THE FF IS PART OF THE REMEDY, added 2026-08-16 after this line taught exactly that lesson.
+    // `git checkout main` alone was printed here, and it is NOT sufficient: the observed start state
+    // is not "off the branch" but DETACHED AT THE CURRENT TIP WITH A STALE LOCAL `main` REF BEHIND IT.
+    // Nothing above catches that gap — `local main sane` tests the REF and passes, because "sane"
+    // means *ancestor of* origin/main and a 28-commits-behind ref is a perfectly good ancestor; the
+    // `behind` check below tests HEAD, which is level, so it passes too. The checkout then moves the
+    // tree BACKWARD onto the stale ref: measured at 28 commits on three passes and 31 on a fourth
+    // (2026-08-16), each of which failed its own re-run and improvised the fast-forward. Printing
+    // both commands is what makes the re-run green in one step. The ff discards nothing — the tree is
+    // clean and the ref is an ancestor — which is what makes it safe to name here.
     branch === 'main' ? ok('git on main', branch)
-                      : bad('git on main', `on ${branch}`, sane ? 'git checkout main' : 'git checkout -B main origin/main');
+                      : bad('git on main', `on ${branch}`, sane ? 'git checkout main && git merge --ff-only origin/main' : 'git checkout -B main origin/main');
     const dirty = sh('git', ['status', '--porcelain']);
     dirty ? bad('tree clean', `${dirty.split('\n').length} changed`, 'STOP — the tree is not yours to clean; report it')
           : ok('tree clean', 'nothing uncommitted');
