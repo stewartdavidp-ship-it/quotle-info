@@ -97,10 +97,13 @@ happened", which is indistinguishable from a quiet night. Preflight makes them l
 any work is done.
 
 **Two narrow exceptions** — see `workflows/DAILY-REPORT.md` Step 0 for the full statement and the
-reasoning. Both are "run the one command preflight itself printed, then re-run it, and continue
-only if it comes back green": (a) `local main sane` fails while `tree clean` passes, and (b) `git
-on main` is the ONLY failure, with `local main sane`, `tree clean` and `current with origin/main`
-all passing. Every other preflight failure is still a hard STOP and is not yours to fix.
+reasoning. Both are "run exactly what preflight itself printed, then re-run it, and continue only
+if it comes back green": (a) `local main sane` fails while `tree clean` passes → `git checkout -B
+main origin/main`; and (b) `git on main` is the ONLY failure, with `local main sane`, `tree clean`
+and `current with origin/main` all passing → `git checkout main && git merge --ff-only origin/main`
+(**both** commands — the checkout alone moves the tree backward onto a stale `main` ref, which is
+how this exception shipped broken on 2026-08-14). Every other preflight failure is still a hard
+STOP and is not yours to fix.
 
 It only reads. It fetches no secret, writes nothing, and does not touch git state.
 

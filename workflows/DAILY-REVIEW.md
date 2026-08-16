@@ -23,23 +23,36 @@ any work is done.
 
 It only reads. It fetches no secret, writes nothing, and does not touch git state.
 
-**TWO exceptions, and only these two. Both are "run the one command preflight itself printed, then
-re-run it".**
+**TWO exceptions, and only these two. Both are "run exactly what preflight itself printed, then
+re-run it" — (a) is one command, (b) is two.**
 
 **(a) added 2026-08-04 — the `local main sane` recovery.** If the only failures are `local main
 sane` (and, consequently, `git on main`) **and `tree clean` PASSED**, run the single command
 preflight names — `git checkout -B main origin/main` — then re-run preflight and continue only if
 it comes back green.
 
-**(b) added 2026-08-14 — `git on main` ALONE.** If `git on main` is the *only* failure — with
-`local main sane`, `tree clean` and `current with origin/main` all PASSING — run preflight's own
-printed remedy, `git checkout main`, then re-run and continue only if green. This is the milder
-cousin of (a): nothing is discarded at all, because local `main` is already a sane ancestor of
-`origin/main` and the tree is already clean; the container simply started off the branch. It fired
-on all four passes a day for nine consecutive days (2026-08-06 → 08-14) and every routine
-improvised the same recovery in prose — a procedure gap, not four independent judgement calls. It
-does NOT close the underlying question: something leaves the container off `main` at start, and
-finding it would retire this exception.
+**(b) added 2026-08-14, remedy CORRECTED 2026-08-16 — `git on main` ALONE.** If `git on main` is the
+*only* failure — with `local main sane`, `tree clean` and `current with origin/main` all PASSING —
+run **both** of the commands preflight now prints, then re-run it and continue only if green:
+
+```bash
+git checkout main && git merge --ff-only origin/main
+```
+
+**The checkout ALONE is not enough, and this exception shipped on 2026-08-14 saying it was.** The
+start state is not "off the branch": it is **detached at the current tip with a stale local `main`
+ref behind it**. Neither guard sees that gap — `current with origin/main` measures HEAD, which is
+level, and `local main sane` measures the REF, which passes because "sane" means *ancestor of*
+`origin/main` and a 28-commits-behind ref is a perfectly good ancestor. So the checkout moved the
+tree BACKWARD onto the stale ref: 28 commits on three passes and 31 on a fourth, on 2026-08-16, each
+failing its own re-run and then improvising the fast-forward — the precise failure (a) warns
+`git checkout main` can cause, reached by a route (a)'s condition does not cover. The wave, reports
+and review passes each diagnosed it independently that morning and each correctly refused to edit
+`workflows/` from inside a content PR.
+
+The fast-forward discards nothing: the tree is clean and the ref is an ancestor. It does NOT close
+the underlying question — something leaves the container detached with a stale `main`, and finding
+it would retire this exception.
 
 Every other preflight failure is still a hard STOP and is not yours to fix.
 
