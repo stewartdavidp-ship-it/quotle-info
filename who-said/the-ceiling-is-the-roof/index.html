@@ -634,7 +634,7 @@
             <div class="pkit-card">
                 <div class="pkit-block">
                     <p class="pkit-lbl">Verified quote &amp; credit</p>
-                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;The ceiling is the roof&rdquo; <span class="pkit-cite">Michael Jordan, halftime remarks at the North Carolina–Duke game, Dean E. Smith Center, 4 March 2017 — &quot;The ceiling is the roof.&quot; · Verbatim: “The ceiling is the roof. Let's make it happen. Let's keep moving forward.”</span></blockquote>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;The ceiling is the roof&rdquo; <span class="pkit-cite">Michael Jordan, halftime remarks at the North Carolina–Duke game, Dean E. Smith Center, 4 March 2017 · Verbatim: “The ceiling is the roof. Let's make it happen. Let's keep moving forward.”</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                 </div>
                 <div class="pkit-block pkit-use pkit-tone-warn">
@@ -670,7 +670,7 @@
                 </dl>
                 <p class="excerpt">The ceiling is the roof. Let&rsquo;s make it happen. Let&rsquo;s keep moving forward.
                     <span class="cut-tag">closing lines</span></p>
-                <p class="excerpt-note">No full transcript of the remarks was published. Same-week reporting carries these three sentences from the end of the speech; everything before them was, as one account put it, unremarkable.</p>
+                <p class="excerpt-note">No full transcript of the remarks was published. Same-week reporting carries these three sentences from the end of the speech.</p>
                 <div class="artifact">
                     <span class="artifact-ic" aria-hidden="true">🎥</span>
                     <div class="artifact-txt">
@@ -734,7 +734,7 @@
             <div class="sec-head"><p class="kicker">Context</p><h2 id="story-h">Why it stuck</h2></div>
             <p>It was not a locker-room aphorism. Jordan had come back to the Dean E. Smith Center to announce that his Jordan Brand &mdash; not parent company Nike &mdash; would outfit North Carolina&rsquo;s football team, and he delivered the news at halftime of the Tar Heels&rsquo; game against Duke, a game UNC went on to win 90&ndash;83 <a href="https://www.espn.com/mens-college-basketball/game/_/gameId/400915479/duke-north-carolina" target="_blank" rel="noopener">ESPN ↗</a>.</p>
             <p>Then four words outlived the announcement entirely. Roy Williams offered the charitable reading &mdash; a crossed wire with &ldquo;the sky&rsquo;s the limit&rdquo; &mdash; and Jordan Brand, rather than let the moment die, printed CEILING. ROOF. GOAT. shirts for the UNC marching band and mascot at the ACC Tournament, then put them on sale <a href="https://www.espn.com/mens-college-basketball/story/_/id/18863909/michael-jordan-slip-phrase-t-shirts-going-sale" target="_blank" rel="noopener">ESPN ↗</a>.</p>
-            <p class="pull">It&rsquo;s Michael Jordan &mdash; do what the dickens he wants to do.</p>
+            <p class="pull">&ldquo;It&rsquo;s Michael Jordan &mdash; do what the dickens he wants to do.&rdquo; &mdash; Roy Williams, North Carolina head coach, to reporters <a href="https://www.espn.com/mens-college-basketball/story/_/id/18863909/michael-jordan-slip-phrase-t-shirts-going-sale" target="_blank" rel="noopener">ESPN ↗</a></p>
             <details>
                 <summary>The defence of the sentence, and why no one had to investigate it</summary>
                 <div class="body">
@@ -742,6 +742,14 @@
                     <p>Neither Quote Investigator nor Wikiquote has needed an entry for the line, which is what you would expect. Provenance research exists for quotes that arrive without a paper trail; this one arrived with a broadcast feed, a datable game and a merchandise run inside the week.</p>
                 </div>
             </details>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/success/">Success</a>
+                <a class="theme-chip" href="/themes/hope/">Hope</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
@@ -792,7 +800,7 @@
                 <div>
                     <p class="a-name"><a href="/authors/michael-jordan/">Michael Jordan</a></p>
                     <p class="a-meta">Born 1963 · Six-time NBA champion &amp; North Carolina alumnus</p>
-                    <p><strong>Michael Jeffrey Jordan</strong> was born on 17 February 1963 in Brooklyn, New York. He played at the University of North Carolina from 1981 to 1984, hitting the game-winning jump shot against Georgetown in the 1982 NCAA championship game, then spent fifteen NBA seasons between 1984 and 2003 and won six titles with the Chicago Bulls. The Air Jordan line launched in 1984; he later became part-owner of the Charlotte Hornets in 2006, took a controlling interest in 2010, and sold his majority stake in 2023 &mdash; which is why he was the one on the floor in Chapel Hill announcing a uniform deal.</p>
+                    <p><strong>Michael Jeffrey Jordan</strong> was born on 17 February 1963 in Brooklyn, New York. He played at the University of North Carolina from 1981 to 1984, hitting the game-winning jump shot against Georgetown in the 1982 NCAA championship game, then spent fifteen NBA seasons between 1984 and 2003 and won six titles with the Chicago Bulls. The Air Jordan line launched in 1984 and grew into Jordan Brand &mdash; which is why he was the one on the floor in Chapel Hill announcing a uniform deal. He later became part-owner of the Charlotte Hornets (then named the Bobcats) in 2006, took a controlling interest in 2010, and sold his majority stake in 2023.</p>
                 </div>
             </div>
         </section>
@@ -873,7 +881,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The ceiling is the roof";
-        const copyAttribution = "Michael Jordan, halftime remarks at the North Carolina–Duke game, Dean E. Smith Center, 4 March 2017 — \"The ceiling is the roof.\"";
+        const copyAttribution = "Michael Jordan, halftime remarks at the North Carolina–Duke game, Dean E. Smith Center, 4 March 2017";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -31,8 +31,8 @@
         {
           "@type": "Quotation",
           "@id": "https://quotle.info/who-said/it-is-utterly-false-and-cruelly-arbitrary-to-put-all-the/#quotation",
-          "text": "It is utterly false and cruelly arbitrary to put all the play and learning into childhood, all the work into middle age, and all the regrets into old age.",
-          "alternateName": "It is utterly false and cruelly arbitrary... to put all the play and learning into childhood, all the work into middle age, and all the regrets into old age.",
+          "text": "It is utterly false and cruelly arbitrary… to put all the play and learning into childhood, all the work into middle age, and all the regrets into old age.",
+          "alternateName": "It is utterly false and cruelly arbitrary to put all the play and learning into childhood, all the work into middle age, and all the regrets into old age.",
           "inLanguage": "en",
           "creator": {
             "@type": "Person",
@@ -633,7 +633,7 @@
             <div class="pkit-card pkit-card-attributed">
                 <div class="pkit-block">
                     <p class="pkit-lbl">Unconfirmed quote &amp; credit</p>
-                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;It is utterly false and cruelly arbitrary to put all the play and learning into childhood, all the work into middle age, and all the regrets into old age&rdquo; <span class="pkit-cite">attributed to Margaret Mead (1901–1978). Documented only as quoted in Millard Dale Baughman, comp., Teacher's Treasury of Stories for Every Occasion (Englewood Cliffs, NJ: Prentice-Hall, 1958), p. 69; no source in Mead's own writing has been identified. Via Quotle.info</span></blockquote>
+                    <blockquote class="pkit-credit" id="kitCredit">&ldquo;It is utterly false and cruelly arbitrary… to put all the play and learning into childhood, all the work into middle age, and all the regrets into old age.&rdquo; <span class="pkit-cite">attributed to Margaret Mead (1901–1978). Documented only as quoted in Millard Dale Baughman, comp., Teacher's Treasury of Stories for Every Occasion (Englewood Cliffs, NJ: Prentice-Hall, 1958), p. 69; no source in Mead's own writing has been identified. Via Quotle.info</span></blockquote>
                     <button class="kit-copy act-btn" data-target="kitCredit" type="button">Copy quote + credit</button>
                 </div>
                 <div class="pkit-block pkit-use pkit-tone-warn">
@@ -682,7 +682,7 @@
                 </div>
                 <div class="rights rights-in-copyright">
                     <span class="rights-badge"><span class="rights-mark" aria-hidden="true">©</span>In copyright</span>
-                    <p class="rights-body">The earliest printing on record for this wording is <em>Teacher&rsquo;s Treasury of Stories for Every Occasion</em>, published by Prentice-Hall in <strong>1958</strong> &mdash; comfortably inside the term of US copyright, so the text is treated as <strong>in&#8209;copyright</strong>. Because the underlying Mead source has not been identified, its own publication date and rights position are unknown; any Mead statement of the 1950s would in any case be modern, copyrighted material. Nothing here supports a public-domain claim.</p>
+                    <p class="rights-body">The earliest printing on record for this wording is <em>Teacher&rsquo;s Treasury of Stories for Every Occasion</em>, published by Prentice-Hall in <strong>1958</strong> &mdash; so it is potentially still protected, though US works of that period entered the public domain unless the copyright was renewed in its twenty-eighth year, and no renewal search for this title has been made. The text is nonetheless treated as <strong>in&#8209;copyright</strong> on the stronger ground: the underlying Mead source has not been identified, so its own publication date and rights position are unknown, and any Mead statement of the 1950s would be modern, copyrighted material. Nothing here supports a public-domain claim.</p>
                     <p class="rights-body rights-disclaimer">Rights status is our research, not legal advice &mdash; and copyright varies by country and edition. For commercial or published use, confirm with the rightsholder. See <a href="/terms/">terms</a>.</p>
                 </div>
             </div>
@@ -734,6 +734,16 @@
                     <p>Until then the honest statement is the narrow one: Margaret Mead is the only person the line has ever been credited to, the credit goes back at least to a book published while she was alive and internationally famous, and no one has produced the underlying source.</p>
                 </div>
             </details>
+        </section>
+        <!-- ============ THEMES ============ -->
+        <section aria-labelledby="themes-h">
+            <div class="sec-head"><p class="kicker">Explore</p><h2 id="themes-h">Filed under</h2><p class="sec-sub">More provenance-checked quotes on the same theme, each with its reuse status.</p></div>
+            <div class="theme-chips">
+                <a class="theme-chip" href="/themes/time/">Time</a>
+                <a class="theme-chip" href="/themes/work/">Work</a>
+                <a class="theme-chip" href="/themes/purpose/">Purpose</a>
+                <a class="theme-chip" href="/themes/happiness/">Happiness</a>
+            </div>
         </section>
         <!-- ============ DIG DEEPER ============ -->
         <section aria-labelledby="research-h">
@@ -864,7 +874,7 @@
         // The verified sentence, not the H1: on records where the H1 is the popular clipping, the
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
-        const quoteText = "It is utterly false and cruelly arbitrary to put all the play and learning into childhood, all the work into middle age, and all the regrets into old age";
+        const quoteText = "It is utterly false and cruelly arbitrary… to put all the play and learning into childhood, all the work into middle age, and all the regrets into old age.";
         const copyAttribution = "attributed to Margaret Mead (1901–1978). Documented only as quoted in Millard Dale Baughman, comp., Teacher's Treasury of Stories for Every Occasion (Englewood Cliffs, NJ: Prentice-Hall, 1958), p. 69; no source in Mead's own writing has been identified. Via Quotle.info";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
