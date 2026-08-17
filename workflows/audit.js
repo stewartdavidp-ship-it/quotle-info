@@ -52,7 +52,16 @@ const VERDICT_SCHEMA = {
   properties: { slug: { type: 'string' }, location: { type: 'string' }, finding: { type: 'string' }, standsUp: { type: 'boolean' }, reasoning: { type: 'string' } },
 }
 
+// Agents here re-fetch every source link, so they hit the same blocked-page/quota walls that make a
+// research agent reach for `curl -o`. A relative filename lands in the operator's live checkout —
+// `repo` above is a Read prefix, not a cwd — and a routine's `git add -A` then commits it to main.
+// Full rationale and the measured 2026-08-17 case are in workflows/generate.js (SCRATCH_RULE); keep
+// this copy SHORT so the two cannot drift into disagreeing.
+const SCRATCH_RULE = `SCRATCH FILES — ABSOLUTE PATHS UNDER /tmp ONLY. If a fetch is unusable and you fall back to curl or any write-to-disk step, write to an absolute path under /tmp (e.g. /tmp/probe-$$.html) and read it back by that path. Your working directory is the operator's live git checkout: a relative filename gets committed to main by the next scheduled routine. Write nothing into the repository.`;
+
 const auditPrompt = (p) => `You are an adversarial fact-check AUDITOR for quotle.info. Try to BREAK this page. Assume it is wrong until each claim survives an independent check.
+
+${SCRATCH_RULE}
 
 PAGE (read it in full with the Read tool): ${BASE}/${p.slug}/index.html
 Canonical URL when live: ${ORIGIN}/who-said/${p.slug}   [confidence=${p.confidence}, rights=${p.rights}]
@@ -74,6 +83,8 @@ A MISSING optional field is not a finding. A field asserting something FALSE alw
 For every problem return an issue {severity, location (section + approx line), claim, sourceLink, problem, fix}. severity: blocker (false published fact / wrong verdict / false PD badge), high (link does not support its claim / overclaim past specialist), medium (mis-anchored-but-true / over-specific date), minor (cosmetic / structured-data nit). verdict FAIL if any blocker/high, else PASS. Set page to "${p.slug}/index.html".`
 
 const skepticPrompt = (slug, issue) => `You are a SKEPTIC re-checking one audit finding on the quotle.info page ${BASE}/${slug}/index.html. Default to standsUp=false unless you can independently confirm the problem is real.
+
+${SCRATCH_RULE}
 
 CLAIMED PROBLEM [${issue.severity}] at ${issue.location}: ${issue.problem}
 The claim in question: ${issue.claim}

@@ -32,7 +32,15 @@ const CANDIDATE_SCHEMA = {
   },
 }
 
-const harvestPrompt = (author, cap) => `You are a quote-provenance scout for quotle.info, a verified-provenance / fact-check site whose sweet spot is DOCUMENTED misattributions. Your job is NOT to research from scratch — it is to HARVEST a candidate queue of quotes worth building pages for, sourced from the two authorities we defer to: Wikiquote and Quote Investigator.
+// Scouts fetch Wikiquote and QI directly and hit the same blocked-page walls that make an agent
+// reach for `curl -o`. A relative filename lands in the operator's live checkout and a routine's
+// `git add -A` commits it to main. Full rationale in workflows/generate.js (SCRATCH_RULE); keep this
+// copy SHORT so they cannot drift apart.
+const SCRATCH_RULE = `SCRATCH FILES — ABSOLUTE PATHS UNDER /tmp ONLY. If a fetch is unusable and you fall back to curl or any write-to-disk step, write to an absolute path under /tmp (e.g. /tmp/probe-$$.html) and read it back by that path. Your working directory is the operator's live git checkout: a relative filename gets committed to main by the next scheduled routine. Write nothing into the repository.`;
+
+const harvestPrompt = (author, cap) => `You are a quote-provenance scout for quotle.info, a verified-provenance / fact-check site whose sweet spot is DOCUMENTED misattributions.
+
+${SCRATCH_RULE} Your job is NOT to research from scratch — it is to HARVEST a candidate queue of quotes worth building pages for, sourced from the two authorities we defer to: Wikiquote and Quote Investigator.
 
 MAGNET AUTHOR: ${author}
 (One of the internet's biggest fake-quote magnets — feel-good and clever lines get pinned on them constantly. That is exactly why they are high-value: documented misattributions are our best content.)

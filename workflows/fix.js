@@ -61,7 +61,15 @@ const FIX_SCHEMA = {
   },
 }
 
+// These agents re-verify against live sources before editing, so they meet the same blocked-page and
+// quota walls that make an agent reach for `curl -o`. A relative filename lands in the operator's
+// live checkout and a routine's `git add -A` commits it to main. Full rationale in
+// workflows/generate.js (SCRATCH_RULE); keep this copy SHORT so they cannot drift apart.
+const SCRATCH_RULE = `SCRATCH FILES — ABSOLUTE PATHS UNDER /tmp ONLY. If a fetch is unusable and you fall back to curl or any write-to-disk step, write to an absolute path under /tmp (e.g. /tmp/probe-$$.html) and read it back by that path. Your working directory is the operator's live git checkout: a relative filename gets committed to main by the next scheduled routine. The ONLY file you may write in the repository is your own data/quotes/<slug>.json.`;
+
 const fixPrompt = (p) => `You are a meticulous record-fixer for quotle.info. Apply ONLY the confirmed audit fixes to one record, re-verifying every factual replacement against the cited source before you write it.
+
+${SCRATCH_RULE}
 
 RECORD FILE: ${DIR}/${p.slug}.json  (a JSON record; fields carry inner HTML with entities like &mdash; &rsquo; and inline <a href> links).
 CONFIRMED ISSUES: Read ${FIXES} (a JSON object keyed by slug) and use ONLY the array under the key "${p.slug}" — each entry has {severity, location, problem, fix}, independently verified by a skeptic. Fix every entry for this slug.

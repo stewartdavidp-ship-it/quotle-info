@@ -307,6 +307,35 @@ const DOSSIER_SCHEMA = {
 // framing. Everything after this block — the dossier contract, rights rules, toRecord — is shared,
 // which is why this is a branch here rather than a second generate script: generate.js already
 // carries duplicated copies of slugify and toRecord, and a third copy is how they drift.
+// WHERE A RESEARCH AGENT MAY WRITE FILES, AND WHY IT IS NOT WHERE IT IS STANDING.
+// Nothing here asks an agent to write to disk, but source research reaches for it anyway: a
+// Cloudflare interstitial or an API quota error comes back through WebFetch as unusable text, and
+// the natural workaround is `curl -o something.html` then read the file. That is fine — except the
+// filename is relative and NO workflow sets an agent working directory. audit.js and fix.js take a
+// `repo` argument, but it is only a path prefix for Reads (audit.js:14-15), not a cwd. So a
+// research agent's cwd is the SESSION's cwd, which is the operator's live checkout — even when the
+// wave itself is running in an isolated worktree. Worktree isolation covers the wave's own writes;
+// it has never covered this.
+//
+// That matters because five documented routine steps run `git add -A` (README.md:371, DAILY-WAVE.md,
+// DAILY-MERGE.md:182, DAILY-REPORTS.md:307). Anything an agent leaves in the checkout is committed
+// to main by whichever routine runs next, authored by a routine that has no idea where it came from.
+// CI does not catch it: the "committed output matches the generators" gate fails on an UNCOMMITTED
+// dirty tree, and once `git add -A` has run the tree is clean and the junk is tracked.
+//
+// Measured on 2026-08-17: wave r36's generate run left gb.json (a Google Books 429) and ht.html (a
+// Cloudflare challenge) in the checkout root, from three agents that each picked their own filename.
+// Ignoring those two names would fix nothing — the next agent picks different ones. So the rule is
+// about the LOCATION, and /tmp is already this repo's convention for agent-written files
+// (promote-detectors.js:54).
+const SCRATCH_RULE = `SCRATCH FILES — ABSOLUTE PATHS UNDER /tmp ONLY.
+If a fetch comes back unusable (a Cloudflare challenge, an API quota error, a page WebFetch
+summarises instead of reproducing) and you fall back to curl or any other write-to-disk step, write
+to an ABSOLUTE path under /tmp — e.g. curl -o /tmp/probe-$$.html — never a bare relative filename.
+Your working directory is the operator's live git checkout, not a sandbox: a relative path lands in
+the repo root, and the next scheduled routine's \`git add -A\` commits it to main. Read your temp file
+back by the same absolute path. Do not write anything into the repository.`;
+
 const filmFraming = (dq) => `THE POPULAR WORDING: "${dq}"
 THIS IS A SCREEN LINE THE PUBLIC MISQUOTES. There is NO magnet author and nothing here is fabricated
 — the film is real and the line is nearly real. The error is the WORDING. Your job is to establish
@@ -355,6 +384,8 @@ const researchPrompt = (item) => {
   return `You are a rigorous quote-provenance researcher for quotle.info, a verified-provenance / fact-check site. Your output IS the data for a published page, so every claim must be checkable. Be skeptical; default to honest uncertainty over false precision.
 
 ${item.author ? magnetFraming(dq, item.author) : filmFraming(dq)}
+
+${SCRATCH_RULE}
 
 ANCHOR SOURCES — DEFER TO THE SPECIALISTS: If Quote Investigator (quoteinvestigator.com) OR Wikiquote's *sourced* section has already investigated this quote, treat their finding as the AUTHORITATIVE ANCHOR. Search QI first (site:quoteinvestigator.com "<key phrase>"). Cite QI/Wikiquote prominently (a trail item AND a Dig-deeper link), adopt their earliest-attestation and origin conclusion, and do NOT assert a different or earlier origin, a more confident attribution, or extra specificity (dates, editions, who-really-said-it) beyond what they document — unless you independently confirm it against a primary source you fetched. Where QI is uncertain or calls it apocryphal, MIRROR that: use "attributed" or "disputed" honestly rather than manufacturing a confident answer. quotle.info's value is a clean, structured, honestly-hedged answer built on the best existing research — never an overclaim past it.
 

@@ -783,6 +783,24 @@ how songs got in unchecked.
 - **`REPO` default paths** in audit.js/fix.js/harvest-dedup.js/apply-tags.js fall back to
   `/Users/davidstewart/Developer/quotle-info` — but they all accept an object-form `repo` arg, which
   is MANDATORY in a worktree (see step 5). The fallback only applies in the primary checkout.
+- **A WORKTREE DOES NOT ISOLATE THE AGENTS, only the wave.** `repo` is a Read prefix, not a working
+  directory (audit.js:14-15), and no workflow sets an agent cwd — so every research agent's cwd is
+  the SESSION's cwd, i.e. the primary checkout, even when the wave runs from `/private/tmp/qi-wave-rN`.
+  Nothing asks agents to write files, but source research reaches for it anyway: a Cloudflare
+  interstitial or an API quota error comes back through WebFetch as unusable text and the natural
+  workaround is `curl -o page.html`. On 2026-08-17 wave r36's generate run left `gb.json` (a Google
+  Books 429) and `ht.html` (a Cloudflare challenge) in the checkout root, from three agents that each
+  invented their own filename.
+  **Why that is not cosmetic:** five documented steps run `git add -A` (this file, DAILY-WAVE.md,
+  DAILY-MERGE.md:182, DAILY-REPORTS.md:307), so agent debris is committed to `main` by whichever
+  routine runs next, authored by a routine with no idea where it came from. CI does not catch it —
+  the "committed output matches the generators" gate fails on an UNCOMMITTED dirty tree, and once
+  `git add -A` has run the tree is clean and the junk is tracked.
+  The four agent-running workflows now carry a `SCRATCH_RULE` telling agents to write only to
+  absolute paths under `/tmp` (the convention promote-detectors.js:54 already used). That is a
+  prompt, so it is persuasion rather than a gate: **check `git status` in the PRIMARY checkout after
+  a wave**, not just in the worktree. Ignoring the two observed filenames would fix nothing — the
+  next agent picks different ones, which is why the rule is about the location.
 - **A slow fix/audit agent is not a hung one** — a fix agent hunting a live source can run ~8 min; its Edits
   land on disk incrementally, so its work is safe even before it returns. Check `agent-*.jsonl` mtime.
 - **Auto-merge** may be disabled on the repo — use `gh pr merge <#> --squash` (not `--auto`).
