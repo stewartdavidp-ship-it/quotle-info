@@ -5,8 +5,23 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1506** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r35.** (Waves r6–r34 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1657** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r38.** (Waves r6–r37 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+  **These lines were three waves stale** (they read 1506 / r35 while r35, r36 and r37 had all shipped),
+  which is why the runbook says to take N from `git ls-remote --heads origin 'refs/heads/wave-r*'` and
+  never from this file. Bump them, but do not trust them.
+- **`creditedTo` ON A DISPUTED RECORD WHOSE AUTHOR *IS* THE MAGNET: STAMP IT.** The instinct to
+  withhold — "the record's author matches the magnet, so nobody is falsely credited" — is right for a
+  **verified** record (that is the Dr. Seuss / Richard P. Feynman name-expansion trap, where stamping
+  asserts a genuine quote is false) and **backwards for a disputed one**. `rightPersonWrongWords()`
+  (`tools/template.js:2054`) requires `primaryCredit()` to be non-empty AND equal to the hero name, so
+  on a disputed record the match IS the signal. Withhold it and the page falls through to the
+  fabrication defaults: `1/"False"` plus *"This attribution is disputed. Actually by ⟨the author the
+  page credits⟩"* — the contradiction measured across ~53 live pages during r35. Stamp it and the page
+  renders rating 2 with *"Yes and no."* and *"…is the author, but this popular wording is not what they
+  wrote"*. r37 verified both in the rendered JSON-LD (Balzac, Mae West). Note it is easy to miss: it
+  only looked like a reassignment there because `Honor&eacute; de Balzac` is entity-encoded; in plain
+  ASCII the names match exactly and a name-equality check skips it silently.
   **r34 shipped 39, not 40** — a fix agent found one record duplicated a page the corpus already had
   (the Ali "so fast" joke, under a different wording), so it was dropped along with its rendered
   directory. `sync` dedups on EXACT normalised text, so a reworded variant of an already-built quote
