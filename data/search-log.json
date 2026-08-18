@@ -1571,6 +1571,120 @@
         "note": "5/5 spot-checked submissions across all three batches are indexed. Conversion to impressions confirmed on at least one. AUTOMATION IS BROKEN: the nightly task fires (cadence restored, lastRun 8/14 01:07 ET, next 8/15) but every run dies at the claude-in-chrome `navigate` call — transcript 38b0d63e ends mid-tool-call 36s in, no result, no error. Quotas for 8/11, 8/12, 8/13, 8/14 all went unspent."
       },
       "notes": "THE CLEAREST WEEK OF PROGRESS SO FAR, and the mechanism is now unambiguous. Impressions 403 -> 789 (+96%), pages with impressions 106 -> 123, avg position 15.0 -> 14.8, queries 59 -> 83. Roughly 40% of the impression gain is one page (`nothing-in-life-is-to-be-feared` 112 -> 272, riding a cluster of Marie Curie / 'on ne doit rien craindre dans la vie' / Laval Medical provenance queries — expert-navigational demand on a single question), so this is partly one story finding its audience rather than broad-based lift; the other ~60% is spread across the tail, which is the healthier half. CAUSAL CHAIN NOW CLOSED for manual requests: 5/5 spot-checked submissions indexed, and an 8/10 submission earned 26 impressions by 8/12. WHAT HAS NOT CHANGED: crawl rate (~7/day over the last measured stretch, unchanged band since 7/11), external links (still 1), clicks (still 1 ever). The site is monetising its small indexed set better, not growing it. Also note the Page indexing report froze for the third time and its stamp moved BACKWARDS to 8/6 — never diff against it without checking the stamp."
+    },
+    {
+      "date": "2026-08-18",
+      "pulledOn": "2026-08-18",
+      "source": "LIVE URL Inspection (real-time, not the ~2-day-lagged Performance data) on the URL-prefix property, plus Page indexing report which is stale at 8/13",
+      "milestone": "DEINDEXING DISCOVERED. Pages submitted via Request Indexing are crawled within MINUTES, indexed, served — and then REMOVED. This overturns the crawl-demand diagnosis carried since reading #3: crawl is not the bottleneck for submitted pages, INDEX RETENTION is.",
+      "indexing": {
+        "reportAlive": false,
+        "reportThrough": "2026-08-13",
+        "indexed": 365,
+        "notIndexed": 2400,
+        "reasons": {
+          "discoveredNotIndexed": 2141,
+          "excludedByNoindex": 135,
+          "pageWithRedirect": 108,
+          "crawledNotIndexed": 11,
+          "notFound404": 3
+        },
+        "note": "Report stale at 8/13 and CANNOT show the deindexing found today by live inspection. Do not diff against 365 until the stamp advances past 2026-08-18."
+      },
+      "deindexWatchlist": {
+        "purpose": "Committed per-URL baseline. Re-inspect these EXACT URLs in a few days and diff. Do not re-derive from memory.",
+        "method": "GSC URL Inspection, live, one URL at a time",
+        "observedOn": "2026-08-18",
+        "urls": [
+          {
+            "url": "https://quotle.info/themes/",
+            "submitted": "2026-08-07",
+            "lastCrawl": "2026-08-07T07:51",
+            "wasIndexedOn": "2026-08-10",
+            "statusToday": "Crawled - currently not indexed",
+            "impressions7d": 0
+          },
+          {
+            "url": "https://quotle.info/who-said/god-does-not-play-dice-with-the-universe/",
+            "submitted": "2026-08-07",
+            "lastCrawl": "2026-08-07T07:53",
+            "wasIndexedOn": "2026-08-10",
+            "statusToday": "Crawled - currently not indexed",
+            "impressions7d": 0
+          },
+          {
+            "url": "https://quotle.info/who-said/the-best-argument-against-democracy-is-a-five-minute/",
+            "submitted": "2026-08-10",
+            "lastCrawl": "2026-08-10T15:54",
+            "wasIndexedOn": "2026-08-14",
+            "statusToday": "Crawled - currently not indexed",
+            "impressions7d": 26
+          },
+          {
+            "url": "https://quotle.info/who-said/we-are-what-we-pretend-to-be-so-we-must-be-careful-about/",
+            "submitted": "2026-08-07",
+            "lastCrawl": "2026-08-07T07:51",
+            "wasIndexedOn": null,
+            "statusToday": "Crawled - currently not indexed",
+            "impressions7d": 0
+          },
+          {
+            "url": "https://quotle.info/who-said/hitch-your-wagon-to-a-star/",
+            "submitted": "2026-08-07",
+            "lastCrawl": "2026-08-07T07:52",
+            "wasIndexedOn": null,
+            "statusToday": "Crawled - currently not indexed",
+            "impressions7d": 0
+          },
+          {
+            "url": "https://quotle.info/who-said/blood-sweat-and-tears/",
+            "submitted": "2026-08-07",
+            "lastCrawl": "2026-08-07T07:53",
+            "wasIndexedOn": null,
+            "statusToday": "Crawled - currently not indexed",
+            "impressions7d": 0
+          },
+          {
+            "url": "https://quotle.info/who-recorded/",
+            "submitted": "2026-08-07",
+            "lastCrawl": null,
+            "wasIndexedOn": "2026-08-10",
+            "statusToday": "NOT RE-CHECKED 8/18 — check next pass",
+            "impressions7d": 0
+          },
+          {
+            "url": "https://quotle.info/who-said/nothing-in-life-is-to-be-feared-it-is-only-to-be-understood/",
+            "submitted": null,
+            "lastCrawl": null,
+            "wasIndexedOn": "long-standing",
+            "statusToday": "URL is on Google — STILL INDEXED (control)",
+            "impressions7d": 272
+          },
+          {
+            "url": "https://quotle.info/who-said/a-child-miseducated-is-a-child-lost/",
+            "submitted": null,
+            "lastCrawl": null,
+            "wasIndexedOn": null,
+            "statusToday": "Discovered - currently not indexed, NEVER CRAWLED (legacy control)",
+            "impressions7d": 0
+          }
+        ]
+      },
+      "technicalEliminations": {
+        "note": "All checked 2026-08-18 on a dropped page and found CLEAN — none of these explain the deindexing.",
+        "metaRobots": "absent",
+        "xRobotsTag": "absent",
+        "httpStatus": 200,
+        "userDeclaredCanonical": "self",
+        "googleSelectedCanonical": "Inspected URL (no duplicate consolidation)",
+        "indexingAllowed": "Yes",
+        "pageFetch": "Successful",
+        "robotsTxt": "Allow: / (only editorial working files disallowed)",
+        "manualActions": "none",
+        "contentDepth": "9,000-11,000 chars visible text per page",
+        "templateOverlap": "36-44% unique-word overlap between pages — differentiated, not boilerplate-dominated"
+      },
+      "notes": "READ THIS BEFORE THE NEXT PASS. The measured fact: four pages verified indexed earlier (8/10, 8/14) are 'Crawled - currently not indexed' today; Google crawled our submissions within minutes of each request (7:51/7:52/7:53am on 8/07 for that batch). So Request Indexing works mechanically end to end, and the loss happens AFTER indexing. The INFERENCE, n=4 and not proven: survival correlates with real search demand — the only page still indexed has 272 impressions from a live Marie Curie provenance query cluster, while the page with 26 impressions/0 clicks and the page with 0 impressions were both evicted. That is consistent with provisional indexing (index on trial, evict what earns no engagement), which for a 1,727-pages-in-4-weeks LLM-generated corpus on a zero-external-link domain is the expected treatment. Competing explanation not yet excluded: a site-level quality/scaled-content classification. NEXT PASS should (a) re-inspect the watchlist above and diff, (b) check whether the Page indexing 'indexed' count FALLS once its stamp passes 8/18 — a fall is the aggregate confirmation, (c) widen the sample to ~10 pages across cohorts to test the demand/survival correlation beyond n=4. DO NOT resubmit watchlist URLs — resubmission would destroy the natural experiment."
     }
   ]
 }
