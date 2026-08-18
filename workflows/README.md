@@ -5,8 +5,8 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1657** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r38.** (Waves r6–r37 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1697** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r39.** (Waves r6–r38 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
   **These lines were three waves stale** (they read 1506 / r35 while r35, r36 and r37 had all shipped),
   which is why the runbook says to take N from `git ls-remote --heads origin 'refs/heads/wave-r*'` and
   never from this file. Bump them, but do not trust them.
@@ -22,6 +22,20 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   wrote"*. r37 verified both in the rendered JSON-LD (Balzac, Mae West). Note it is easy to miss: it
   only looked like a reassignment there because `Honor&eacute; de Balzac` is entity-encoded; in plain
   ASCII the names match exactly and a name-equality check skips it silently.
+  **IT IS A CONFIDENCE TEST, NOT A NAME TEST — and `attributed` is the third case (r38).**
+  `rightPersonWrongWords()` gates on `q.confidence === 'disputed'` **explicitly**, so an `attributed`
+  record cannot reach the rating-2 / *"Yes and no."* path at all no matter what `creditedTo` says.
+  Stamping one therefore buys no better rendering; it only asserts a false credit against a page that
+  credits that person. **WITHHOLD on `attributed`** — r38 withheld 6 (Powell ×4, Drucker ×2) on exactly
+  this reasoning and stamped only the 7 disputed. `falseCredits()` (`tools/credits.js`) filters any
+  credit whose slug equals the true author's out of the author hubs and `/verify`, so a wrong stamp on
+  an EQUAL record is inert there — but inert and wrong is still wrong, and the same filter is what makes
+  the disputed-EQUAL stamp safe rather than merely tolerable.
+  **The name-expansion trap has a second form that substring checks miss: a MIDDLE INITIAL.** r38's
+  generator returned `Peter F. Drucker` for 4 records and `Peter Drucker` for 4 others. Neither string
+  contains the other, so a `includes()` comparison classifies the expansion as a REASSIGNMENT and would
+  have stamped 4 genuine Drucker quotes as falsely credited to Drucker. Compare on `schema.creator.sameAs`
+  (both carried `.../wiki/Peter_Drucker`), not on the name string.
   **r34 shipped 39, not 40** — a fix agent found one record duplicated a page the corpus already had
   (the Ali "so fast" joke, under a different wording), so it was dropped along with its rendered
   directory. `sync` dedups on EXACT normalised text, so a reworded variant of an already-built quote
@@ -29,8 +43,16 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   reads them. Until dedup is variant-aware, **check a draw for near-duplicates of built pages before
   generating**, not after. Deleting a record does not delete its page — `rm -rf who-said/<slug>/` too,
   or the rendered-pages invariant fails the build.
-- **THE MISATTRIBUTION SEAM IS NEARLY OUT.** 340 queued, but only **13 misattributed** and **60
-  disputed** against **253 genuine-famous**. Track A is what refills the differentiator — the
+  **r38 found the worse shape of this: two variants of ONE quote inside the SAME draw.** Drucker's
+  "Thirty years from now the big university campuses will be relics" was queued twice, bare and with
+  its trailing clause, and both **slugify to the same string** — so they would not have shipped as two
+  pages, they would have COLLIDED into one record file, with whichever generated last overwriting the
+  other and one slot of the wave silently lost. The batch-vs-corpus check does not see this; the
+  intra-batch check does. Run the near-duplicate pass BOTH ways — every batch item against every built
+  `displayQuote`, AND every batch item against the others — and also just assert that the batch's
+  slugified texts are unique, which is one line and catches the collision exactly.
+- **THE MISATTRIBUTION SEAM IS NEARLY OUT.** 275 queued, but only **12 misattributed** and **47
+  disputed** against **203 genuine-famous** (r38, from `harvest.js report`). Track A is what refills the differentiator — the
   misattribution pages are what the site is *for*, and a backlog draw now returns mostly
   correctly-attributed famous lines. Run `harvest-candidates.js` over magnet authors before the next
   backlog wave, or the corpus keeps growing in the direction that does not distinguish it.
@@ -72,7 +94,7 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   rebase-rebuild below and verified **40 additions / 0 modifications** to r30's records before
   merging. There is no lock on the queue — `4de8f8a9c`'s "one writer" gate is about which code path
   writes the file, not about concurrent sessions, so do not expect it to protect you.
-- Harvest backlog: `data/harvest-queue.json` (committed) — 465 queued. **Track B was refilled 2026-08-03**
+- Harvest backlog: `data/harvest-queue.json` (committed) — **275 queued** after r38. **Track B was refilled 2026-08-03**
   (harvest-only run, no ingest): 8 themes chosen for DEMAND rather than to fill gaps — gratitude,
   friendship, money-wealth, discipline-habit, grief-loss, forgiveness, patience, nature. Six of those
   had **no theme tag on the corpus at all**; gratitude (23) and friendship (33) were the two thinnest
