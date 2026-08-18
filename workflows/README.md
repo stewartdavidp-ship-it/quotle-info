@@ -5,8 +5,8 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1697** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r39.** (Waves r6–r38 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1722** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r40.** (Waves r6–r39 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
   **These lines were three waves stale** (they read 1506 / r35 while r35, r36 and r37 had all shipped),
   which is why the runbook says to take N from `git ls-remote --heads origin 'refs/heads/wave-r*'` and
   never from this file. Bump them, but do not trust them.
@@ -51,8 +51,10 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   intra-batch check does. Run the near-duplicate pass BOTH ways — every batch item against every built
   `displayQuote`, AND every batch item against the others — and also just assert that the batch's
   slugified texts are unique, which is one line and catches the collision exactly.
-- **THE MISATTRIBUTION SEAM IS NEARLY OUT.** 275 queued, but only **12 misattributed** and **47
-  disputed** against **203 genuine-famous** (r38, from `harvest.js report`). Track A is what refills the differentiator — the
+- **THE MISATTRIBUTION SEAM IS NEARLY OUT.** 250 queued, but only **12 misattributed** and **41
+  disputed** against **184 genuine-famous** (r39, from `harvest.js report`). THREE waves running
+  (r37, r38, r39) have drawn essentially NO misattribution material — the count has not moved off 12,
+  because none of the 12 ranks into a draw on demand. Track A is overdue, not merely recommended. Track A is what refills the differentiator — the
   misattribution pages are what the site is *for*, and a backlog draw now returns mostly
   correctly-attributed famous lines. Run `harvest-candidates.js` over magnet authors before the next
   backlog wave, or the corpus keeps growing in the direction that does not distinguish it.
@@ -94,7 +96,7 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   rebase-rebuild below and verified **40 additions / 0 modifications** to r30's records before
   merging. There is no lock on the queue — `4de8f8a9c`'s "one writer" gate is about which code path
   writes the file, not about concurrent sessions, so do not expect it to protect you.
-- Harvest backlog: `data/harvest-queue.json` (committed) — **275 queued** after r38. **Track B was refilled 2026-08-03**
+- Harvest backlog: `data/harvest-queue.json` (committed) — **250 queued** after r39. **Track B was refilled 2026-08-03**
   (harvest-only run, no ingest): 8 themes chosen for DEMAND rather than to fill gaps — gratitude,
   friendship, money-wealth, discipline-habit, grief-loss, forgiveness, patience, nature. Six of those
   had **no theme tag on the corpus at all**; gratitude (23) and friendship (33) were the two thinnest
@@ -807,6 +809,22 @@ how songs got in unchecked.
   list records whose true author differs from the magnet, and stamp only genuine reassignments.
 - **Hero framing on reassigned disputed pages**: answer.authorName + author.* + schema.creator must be the
   TRUE author; the magnet lives only in the misattribution section (Jobs→Brand / Lincoln→Anonymous).
+- **A RESUMED run makes the started-vs-result gate read WRONG, and re-auditing is not idempotent.**
+  Both learned in r39, when a platform outage (`529 Overloaded`, zero tokens — the requests never
+  reached a model) forced three attempts at one audit.
+  - **The gate can fire on an ARTIFACT.** `resumeFromRunId` appends to the SAME journal, so every
+    failed attempt leaves orphaned `started` lines behind. r39's audit journal read *69 started vs 31
+    results* while the final run was 27/27 clean. `--allow-partial` was correct there — but the thing
+    that justified it was checking COVERAGE PER SLUG (all 20 pages had a result), not the counter. A
+    genuinely truncated run looks identical at the counter level; only the per-slug check separates
+    them. Do that before overriding, every time.
+  - **Re-auditing the same page can return a DIFFERENT VERDICT.** Four pages got audited twice and
+    `living-is-like-tearing-through-a-museum` came back **FAIL then PASS on identical input**. Both
+    audits found the SAME defect; one graded it `high`, the other `medium`, and the verdict follows
+    the grade. So the FINDINGS are stable and the VERDICT is not — never treat a PASS on a re-run as
+    clearing an earlier FAIL. `parse-audit.js` keeps one audit's issues per slug, so the other's are
+    silently dropped: union them by hand when a slug was audited more than once. r39 recovered 8
+    findings that way, including a second `high` the surviving audit did not carry.
 - **NEVER read a journal before the workflow finishes.** `journal.jsonl` is appended LIVE and holds
   `started` lines as well as `result` lines, so a line count is not a result count — and a partial
   read looks exactly like a smaller successful run. r23 hit this twice: `prep-wave.js` reported
