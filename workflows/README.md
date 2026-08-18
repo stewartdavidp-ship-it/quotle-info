@@ -5,8 +5,8 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1722** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r40.** (Waves r6–r39 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1727** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r41.** (Waves r6–r40 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
   **These lines were three waves stale** (they read 1506 / r35 while r35, r36 and r37 had all shipped),
   which is why the runbook says to take N from `git ls-remote --heads origin 'refs/heads/wave-r*'` and
   never from this file. Bump them, but do not trust them.
@@ -51,10 +51,15 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   intra-batch check does. Run the near-duplicate pass BOTH ways — every batch item against every built
   `displayQuote`, AND every batch item against the others — and also just assert that the batch's
   slugified texts are unique, which is one line and catches the collision exactly.
-- **THE MISATTRIBUTION SEAM IS NEARLY OUT.** 250 queued, but only **12 misattributed** and **41
-  disputed** against **184 genuine-famous** (r39, from `harvest.js report`). THREE waves running
-  (r37, r38, r39) have drawn essentially NO misattribution material — the count has not moved off 12,
-  because none of the 12 ranks into a draw on demand. Track A is overdue, not merely recommended. Track A is what refills the differentiator — the
+- **THE MISATTRIBUTION SEAM IS NEARLY OUT.** 245 queued, but only **12 misattributed** and **39
+  disputed** against **181 genuine-famous** (r40, from `harvest.js report`). FOUR waves running
+  (r37–r40) have drawn essentially NO misattribution material — the count has not moved off 12,
+  because none of the 12 ranks into a draw on demand. Track A is overdue, not merely recommended.
+  **And do not expect the QUEUE's own `likelyConfidence` to find them for you.** r40 drew two Coco
+  Chanel lines the queue had filed `disputed` — she is a magnet for decorator-aphorisms she never
+  said — and research returned **verified** on both, while a Shankly line filed `genuine-famous` came
+  back `disputed`. Zero reassignments in the wave. The queue's guess is a harvest-time hint, not
+  evidence of where misattributions are; only a Track A sweep aimed at magnet authors refills them. Track A is what refills the differentiator — the
   misattribution pages are what the site is *for*, and a backlog draw now returns mostly
   correctly-attributed famous lines. Run `harvest-candidates.js` over magnet authors before the next
   backlog wave, or the corpus keeps growing in the direction that does not distinguish it.
@@ -96,7 +101,7 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   rebase-rebuild below and verified **40 additions / 0 modifications** to r30's records before
   merging. There is no lock on the queue — `4de8f8a9c`'s "one writer" gate is about which code path
   writes the file, not about concurrent sessions, so do not expect it to protect you.
-- Harvest backlog: `data/harvest-queue.json` (committed) — **250 queued** after r39. **Track B was refilled 2026-08-03**
+- Harvest backlog: `data/harvest-queue.json` (committed) — **245 queued** after r40. **Track B was refilled 2026-08-03**
   (harvest-only run, no ingest): 8 themes chosen for DEMAND rather than to fill gaps — gratitude,
   friendship, money-wealth, discipline-habit, grief-loss, forgiveness, patience, nature. Six of those
   had **no theme tag on the corpus at all**; gratitude (23) and friendship (33) were the two thinnest
@@ -767,6 +772,18 @@ If you add a content type, it needs: a record dir, a `validate-*.js` gate wired 
 how songs got in unchecked.
 
 ## Gotchas (all learned the hard way — do not skip)
+- **`plain()` DELETES any named HTML entity missing from its table — silently.** `tools/template.js`
+  `plain()` decodes named entities through `NAMED_ENTITIES` and maps an unrecognised one to a single
+  SPACE, which the following `\s+` collapse then erases. `copy` is not in the table, so a
+  `source.rightsHolder` of *"the 2006 article &copy; Guardian News &amp; Media"* reaches
+  `quotation.copyrightNotice` as *"the 2006 article Guardian News & Media"* — © gone from the
+  machine-readable notice while the visible rights block renders it correctly. Found in r40.
+  **Measured: 11 of 1,727 records carry `&copy;` in `source.rightsHolder`, and ~40 named entities the
+  corpus actually uses are absent from the table** (`copy reg trade euro pound sect para bull`, the
+  arrows, and the whole Greek block), each vanishing wherever it reaches a `plain()`-fed sink —
+  JSON-LD strings, FAQ answers, meta text. The fix is the table PLUS a design change: return the
+  original `&name;` for an unknown entity instead of `' '`, so the next gap shows up as visible
+  garbage rather than disappearing. A silent-loss default is the reason this went unseen.
 - **Reconstruct from the JOURNAL, never the task-notification `<result>`** — it's truncated for big waves.
   (The double-escaping you may SEE in the notification is a transport artifact; the journal data is clean.)
 - **`prep-wave.js` does the escaping scan + STUB detection** — trust it. Stubs = an agent returning
