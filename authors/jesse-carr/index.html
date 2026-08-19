@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){try{var d=document.documentElement,ls=localStorage;var THEMES={light:1,dark:1,auto:1},SIZES={normal:1,large:1,xl:1,xxl:1};var u=new URL(location.href),q=u.searchParams,qth=q.get('qth'),qts=q.get('qts');if(qth||qts){if(THEMES[qth])ls.setItem('quotle-theme',qth);if(SIZES[qts])ls.setItem('quotle-text-size',qts);q.delete('qth');q.delete('qts');var qs=q.toString();history.replaceState(null,'',u.pathname+(qs?'?'+qs:'')+u.hash);}var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
-    <title>Quotle.info — Real quote? Cleared to use? Verified provenance + reuse rights</title>
-    <meta name="description" content="Before you publish a quote: check it's real, who actually said it, and whether it's cleared to reproduce (public domain or in copyright) — the part AI gets wrong. 1732 quotes traced to a primary source — or marked where none exists.">
-    <link rel="canonical" href="https://quotle.info/">
-    <meta property="og:title" content="Quotle.info — Real quote? Cleared to use? Verified provenance + reuse rights">
-    <meta property="og:description" content="Before you publish a quote: check it's real, who actually said it, and whether it's cleared to reproduce (public domain or in copyright) — the part AI gets wrong. 1732 quotes traced to a primary source — or marked where none exists.">
-    <meta property="og:url" content="https://quotle.info/">
+    <title>Jesse Carr — provenance traced to source · Quotle.info</title>
+    <meta name="description" content="Jesse Carr: 1 quote traced to a primary source where one exists, with attribution verified and misattributions untangled.">
+    <link rel="canonical" href="https://quotle.info/authors/jesse-carr/">
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="Jesse Carr — provenance traced to source">
+    <meta property="og:url" content="https://quotle.info/authors/jesse-carr/">
     <meta property="og:site_name" content="Quotle.info">
     <meta property="og:image" content="https://quotle.info/og/default.png">
     <meta property="og:image:width" content="1200">
@@ -17,12 +17,28 @@
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@graph":[
-      {"@type":"WebSite","@id":"https://quotle.info/#website","url":"https://quotle.info/","name":"Quotle.info","description":"Verified quote provenance and reuse-rights clearance — who really said it, traced to a primary source where one exists, and whether it is public-domain or in-copyright before you publish it.","publisher":{"@id":"https://quotle.info/#org"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://quotle.info/who-said/?q={search_term_string}"},"query-input":"required name=search_term_string"}},
-      {"@type":"Organization","@id":"https://quotle.info/#org","name":"Quotle.info","url":"https://quotle.info/","description":"A verified-provenance fact-check companion to the Quotle game (Game Shelf). Every quote traced to a primary source and dated — or honestly marked where the trail cannot be closed."}
-    ]}
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "@id": "https://quotle.info/authors/jesse-carr/",
+      "mainEntity": {
+        "@type": "Person",
+        "@id": "https://quotle.info/authors/jesse-carr/#person",
+        "name": "Jesse Carr",
+        "description": "American labour leader · head of Teamsters Union Local 959, Anchorage, Alaska",
+        "subjectOf": [
+          {
+            "@type": "Quotation",
+            "@id": "https://quotle.info/who-said/being-powerful-is-like-being-a-lady-if-you-have-to-tell/#quotation",
+            "text": "Being powerful is like being a lady. If you have to tell people you are, you aren't",
+            "url": "https://quotle.info/who-said/being-powerful-is-like-being-a-lady-if-you-have-to-tell/"
+          }
+        ]
+      }
+    }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="gs-app-id" content="quotle-info">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             /* Reading-depth surfaces — quotle.info extension (the game needs only --cream) */
@@ -46,120 +62,109 @@
             --radius-sm: 8px; --radius-md: 14px; --radius-lg: 22px; --radius-xl: 32px;
         }
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family:'Source Serif 4',Georgia,serif; background:var(--bg-deep); color:var(--ink); line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+        html { scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
+        body { font-family:'Source Serif 4',Georgia,serif; background:var(--bg-deep); color:var(--ink); line-height:1.7; overflow-x:hidden; }
         a { color:inherit; }
-        .hero { max-width:1000px; margin:0 auto; padding:44px 24px 12px; }
-        .hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2.3rem,7vw,3.6rem); line-height:1.05; letter-spacing:-0.02em; text-wrap:balance; }
-        .hero h1 em { font-style:italic; color:var(--burgundy); }
-        .hero .lede { font-size:1.12rem; color:var(--slate); margin-top:20px; max-width:640px; }
-        .hero .lede strong { color:var(--ink); }
-        .hero .stat { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); margin-top:18px; letter-spacing:0.02em; }
-        .hero .stat b { color:var(--sage); }
-        .page-head { max-width:1000px; margin:0 auto; padding:38px 24px 4px; }
-        .page-head h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2rem,6vw,3rem); line-height:1.06; letter-spacing:-0.02em; }
-        .page-head .lede { font-size:1.05rem; color:var(--slate); margin-top:14px; max-width:640px; }
-        .page-head .lede strong { color:var(--ink); }
-        main { max-width:1000px; margin:0 auto; padding:8px 24px 60px; }
-        .featured { margin-top:40px; }
-        .feat-kicker { font-family:'DM Sans',sans-serif; text-transform:uppercase; font-size:0.7rem; font-weight:700; letter-spacing:0.2em; color:var(--burgundy); margin-bottom:16px; }
-        .feat-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
-        @media (max-width:820px){ .feat-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-        @media (max-width:520px){ .feat-grid { grid-template-columns:1fr; } }
-        .feat { display:block; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:14px; padding:20px 22px; transition:transform 0.2s; }
-        .feat:hover { transform:translateY(-3px); }
-        .feat-q { font-style:italic; font-size:1.02rem; color:var(--ink); }
-        .feat-swap { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-top:14px; font-family:'DM Sans',sans-serif; font-size:0.8rem; }
-        .feat-no { color:var(--text-muted); text-decoration:line-through; }
-        .feat-arrow { color:var(--burgundy); }
-        .feat-yes { color:var(--sage); font-weight:600; }
-        .tiles { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:44px; }
-        .tile { display:block; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:26px 24px; transition:transform 0.2s,border-color 0.2s; }
-        .tile:hover { transform:translateY(-4px); border-color:var(--border-accent); }
-        .tile-n { font-family:'Playfair Display',serif; font-weight:900; font-size:2.1rem; color:var(--burgundy); line-height:1; }
-        .tile-label { font-family:'DM Sans',sans-serif; font-weight:700; font-size:1.08rem; color:var(--ink); margin-top:10px; }
-        .tile-sub { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-top:6px; line-height:1.5; }
-        .browse { margin-top:30px; }
-        .search { width:100%; font-family:'DM Sans',sans-serif; font-size:1rem; color:var(--ink); background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:14px 18px; outline:none; transition:border-color 0.2s; }
-        .search:focus { border-color:var(--burgundy); }
-        .search::placeholder { color:var(--text-muted); }
-        .chips { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0 22px; }
-        .chip { font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:600; color:var(--slate); background:transparent; border:1px solid var(--border); border-radius:999px; padding:7px 14px; cursor:pointer; display:inline-flex; gap:7px; align-items:center; transition:color 0.2s,border-color 0.2s,background 0.2s; }
-        .chip span { color:var(--text-muted); font-weight:500; }
-        .chip:hover { color:var(--ink); border-color:var(--border-accent); }
-        .chip.active { color:var(--ink); border-color:var(--burgundy); background:var(--burgundy-glow); }
-        .chip.active span { color:var(--burgundy); }
-        .q-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
-        .q-card { display:block; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--border); border-radius:12px; padding:18px 20px; transition:transform 0.2s,border-color 0.2s; }
+        a:focus-visible, button:focus-visible { outline:2px solid var(--sage); outline-offset:3px; border-radius:4px; }
+        .topnav { display:flex; align-items:center; justify-content:space-between; max-width:900px; margin:0 auto; padding:20px 24px 0; }
+        .brand { display:inline-flex; align-items:center; gap:9px; text-decoration:none; font-family:'Playfair Display',serif; font-weight:900; font-size:1.05rem; }
+        .brand-icon { width:30px; height:30px; border-radius:8px; background:linear-gradient(135deg,var(--burgundy),var(--burgundy-deep)); display:grid; place-items:center; font-size:0.95rem; }
+        .brand span { color:var(--burgundy); }
+        .nav-verify { font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:500; color:var(--sage); text-decoration:none; display:inline-flex; align-items:center; gap:6px; padding:7px 13px; border:1px solid rgba(126,179,139,0.3); border-radius:999px; }
+        .breadcrumb { max-width:900px; margin:0 auto; padding:14px 24px 0; font-family:'DM Sans',sans-serif; font-size:0.75rem; color:var(--text-muted); }
+        .breadcrumb a { text-decoration:none; } .breadcrumb a:hover { color:var(--slate); }
+        .breadcrumb .sep { margin:0 7px; opacity:0.6; }
+        main { max-width:900px; margin:0 auto; padding:8px 24px 60px; }
+        .kicker { font-family:'DM Sans',sans-serif; text-transform:uppercase; font-size:0.7rem; font-weight:600; letter-spacing:0.2em; color:var(--burgundy); margin-bottom:14px; }
+        .sec-head { margin:44px 0 20px; }
+        .sec-head h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:1.6rem; letter-spacing:-0.015em; }
+        /* author hero */
+        .author-hero { display:flex; gap:22px; align-items:center; padding:30px 0 8px; }
+        .author-avatar { width:66px; height:66px; border-radius:50%; flex-shrink:0; background:linear-gradient(135deg,var(--burgundy),var(--purple)); display:grid; place-items:center; font-family:'Playfair Display',serif; font-weight:900; font-size:1.6rem; color:#fff; }
+        .author-hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.1; letter-spacing:-0.02em; }
+        .author-meta { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-top:6px; }
+        .author-bio { font-size:1.05rem; color:var(--slate); margin-top:18px; max-width:660px; }
+        .author-bio strong { color:var(--ink); } .author-bio em { color:var(--ink); }
+        /* quote grid + cards */
+        .q-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
+        .q-card { display:flex; flex-direction:column; gap:14px; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-left:3px solid var(--border); border-radius:12px; padding:20px 22px; transition:transform 0.2s,border-color 0.2s; }
         .q-card:hover { transform:translateY(-3px); }
         .q-card.verified { border-left-color:var(--sage); } .q-card.attributed { border-left-color:var(--amber); } .q-card.disputed { border-left-color:var(--caution); }
-        .q-text { font-style:italic; font-size:1rem; color:var(--ink); }
-        .q-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:12px; }
-        .q-author { font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.82rem; color:var(--text-muted); }
-        .q-badge { flex-shrink:0; width:18px; height:18px; border-radius:50%; display:grid; place-items:center; font-size:0.62rem; font-weight:700; color:var(--bg-deep); }
-        .q-badge.verified { background:var(--sage); } .q-badge.attributed { background:var(--amber); } .q-badge.disputed { background:var(--caution); }
-        .filterable[hidden] { display:none; }
-        .no-results { font-family:'DM Sans',sans-serif; color:var(--text-muted); text-align:center; padding:34px 20px; }
-        .no-results a { color:var(--sage); }
-        .bench-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
-        .bench-card { background:var(--bg-card); border:1px dashed var(--border-accent); border-radius:12px; padding:18px 20px; display:flex; flex-direction:column; gap:12px; }
-        .bench-q { font-style:italic; font-size:1rem; color:var(--ink); }
-        .bench-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
-        .bench-cred { font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.8rem; color:var(--text-muted); }
-        .bench-tag { font-family:'DM Sans',sans-serif; font-size:0.68rem; font-weight:600; padding:3px 9px; border-radius:999px; border:1px solid; white-space:nowrap; }
-        .bench-tag.misattributed { color:var(--caution); border-color:rgba(154,163,214,0.45); }
-        .bench-tag.disputed { color:var(--amber); border-color:rgba(224,162,78,0.4); }
-        .bench-tag.genuine-famous { color:var(--sage); border-color:rgba(126,179,139,0.4); }
-        .bench-actions { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:auto; padding-top:4px; }
-        .bench-src { font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:500; color:var(--burgundy-link); text-decoration:none; }
-        .bench-src:hover { text-decoration:underline; }
-        .bench-note { font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); text-align:center; margin-top:22px; }
-        .vote { font-family:'DM Sans',sans-serif; font-size:0.78rem; font-weight:700; color:var(--slate); background:transparent; border:1px solid var(--border); border-radius:999px; padding:5px 12px; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:color 0.15s,border-color 0.15s,background 0.15s; }
-        .vote:hover:not(:disabled) { color:var(--gold); border-color:rgba(255,211,105,0.4); }
-        .vote .vote-caret { font-size:0.68rem; line-height:1; }
-        .vote .vote-n { min-width:0.9em; text-align:center; font-variant-numeric:tabular-nums; }
-        .vote.voted { color:var(--gold); border-color:rgba(255,211,105,0.45); background:rgba(255,211,105,0.08); }
-        .vote:disabled { cursor:default; }
-        /* /report/ — ONE form whose fields adapt to the intent radio. Without these the radios
-           inherit nothing and render as one run-on paragraph with the dots buried mid-sentence;
-           the labels are sentences, so they need a line each. Found by looking at the page, not
-           the markup. The .rf-group[hidden] rule is explicit, not a bare [hidden]: these groups set
-           display:flex, which wins over the UA stylesheet's [hidden]{display:none} on specificity
-           tie-break, so the "hidden" fields would stay visible. (No backticks in this comment: it
-           is inside a JS template literal, where one terminates the string. That has broken this
-           build three times.) */
-        .rf-intent { border:none; padding:0; margin:0 0 6px; display:flex; flex-direction:column; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--ink); }
-        .rf-intent legend { padding:0; font-weight:700; font-size:0.9rem; color:var(--ink); margin-bottom:9px; }
-        .rf-intent label { display:flex; align-items:flex-start; gap:9px; cursor:pointer; line-height:1.45; }
-        .rf-intent input { margin-top:3px; flex-shrink:0; }
-        .rf-group { display:flex; flex-direction:column; gap:6px; }
-        .rf-group[hidden] { display:none; }
-        .rf-lab { font-family:'DM Sans',sans-serif; font-size:0.86rem; font-weight:600; color:var(--ink); }
-        .rf-opt { font-weight:400; color:var(--text-muted); }
-        .rf-help { font-family:'DM Sans',sans-serif; font-size:0.78rem; color:var(--text-muted); line-height:1.5; margin-top:2px; }
-        .report-sec { margin-top:42px; max-width:560px; }
-        .report-sec h2 { font-family:'Playfair Display',serif; font-weight:900; font-size:1.45rem; letter-spacing:-0.015em; margin-bottom:8px; }
-        .report-sub { font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--slate); line-height:1.6; margin-bottom:4px; }
-        .report-why { display:flex; flex-direction:column; gap:9px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--ink); margin:4px 0 2px; }
-        .report-why label { display:flex; align-items:flex-start; gap:9px; cursor:pointer; line-height:1.45; }
-        .report-why input { margin-top:3px; flex-shrink:0; }
-        .nom { margin-top:34px; background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:26px 24px; display:flex; flex-direction:column; gap:10px; max-width:560px; }
-        .nom-h { font-family:'Playfair Display',serif; font-weight:900; font-size:1.15rem; }
-        .nom-sub { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-bottom:6px; }
-        .nom-area { resize:vertical; min-height:64px; line-height:1.5; font-family:'DM Sans',sans-serif; }
-        .nom-in { font-family:'DM Sans',sans-serif; font-size:0.92rem; color:var(--ink); background:var(--bg-deep); border:1px solid var(--border); border-radius:10px; padding:11px 14px; outline:none; transition:border-color 0.2s; }
-        .nom-in:focus { border-color:var(--burgundy); }
-        .nom-in::placeholder { color:var(--text-muted); }
-        .nom-btn { align-self:flex-start; margin-top:4px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.88rem; color:#fff; background:linear-gradient(135deg,var(--burgundy),var(--burgundy-deep)); border:none; border-radius:11px; padding:11px 22px; cursor:pointer; }
-        .nom-btn:disabled { opacity:0.55; cursor:default; }
-        .nom-msg { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--sage); margin-top:4px; }
-        .nom-msg.err { color:var(--caution); }
-        .game-cta { margin-top:56px; text-align:center; background:linear-gradient(135deg,var(--burgundy-glow),rgba(255,211,105,0.1)); border:1px solid rgba(212,98,122,0.25); border-radius:22px; padding:38px 28px; }
-        .game-cta h2 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:8px; }
-        .game-cta p { color:var(--slate); font-size:0.95rem; margin-bottom:20px; }
-        .game-cta a { display:inline-flex; align-items:center; gap:10px; padding:13px 30px; background:linear-gradient(135deg,var(--burgundy),var(--burgundy-deep)); border-radius:14px; font-family:'DM Sans',sans-serif; font-weight:600; color:#fff; text-decoration:none; }
-        footer { max-width:1000px; margin:0 auto; padding:36px 24px 52px; border-top:1px solid var(--border); font-family:'DM Sans',sans-serif; font-size:0.82rem; color:var(--text-muted); }
-        footer a { color:var(--burgundy); text-decoration:none; }
-        @media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+        .q-text { font-style:italic; font-size:1.05rem; color:var(--ink); }
+        .q-conf { display:inline-flex; align-items:center; gap:7px; font-family:'DM Sans',sans-serif; font-weight:600; font-size:0.72rem; }
+        .q-conf .dot { width:15px; height:15px; border-radius:50%; display:grid; place-items:center; font-size:0.6rem; font-weight:700; color:var(--bg-deep); }
+        .q-card.verified .q-conf { color:var(--sage); } .q-card.verified .dot { background:var(--sage); }
+        .q-card.attributed .q-conf { color:var(--amber); } .q-card.attributed .dot { background:var(--amber); }
+        .q-card.disputed .q-conf { color:var(--caution); } .q-card.disputed .dot { background:var(--caution); }
+        .sec-sub { font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--text-muted); margin-top:8px; max-width:620px; }
+        /* often misattributed to X */
+        .mis-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+        .mis-card { display:flex; flex-direction:column; gap:12px; text-decoration:none; background:linear-gradient(135deg,var(--burgundy-glow),transparent); border:1px solid rgba(212,98,122,0.25); border-radius:12px; padding:18px 20px; transition:transform 0.2s; }
+        .mis-card:hover { transform:translateY(-3px); }
+        .mis-q { font-style:italic; font-size:1rem; color:var(--ink); }
+        .mis-q::before, .mis-q::after { content:none; }
+        .mis-real { font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:600; color:var(--sage); margin-top:auto; }
+        .mis-lbl { color:var(--text-muted); font-weight:500; text-transform:uppercase; font-size:0.66rem; letter-spacing:0.12em; margin-right:6px; }
+        /* under review — pinned on X */
+        .rev-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:12px; }
+        .rev-card { display:flex; flex-direction:column; gap:12px; text-decoration:none; background:var(--bg-card); border:1px dashed var(--border-accent); border-radius:12px; padding:18px 20px; transition:transform 0.2s; }
+        .rev-card:hover { transform:translateY(-3px); }
+        .rev-q { font-style:italic; font-size:1rem; color:var(--ink); }
+        .rev-tag { font-family:'DM Sans',sans-serif; font-size:0.75rem; font-weight:600; color:var(--burgundy); margin-top:auto; }
+        .rev-more { margin-top:16px; font-family:'DM Sans',sans-serif; font-size:0.85rem; }
+        .rev-more a { color:var(--burgundy); text-decoration:none; font-weight:600; }
+        .rev-more a:hover { text-decoration:underline; }
+        /* did they really say it? */
+        .ask { margin-top:44px; }
+        .ask-in { width:100%; max-width:620px; font-family:'DM Sans',sans-serif; font-size:1rem; color:var(--ink); background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:14px 18px; outline:none; transition:border-color 0.2s; }
+        .ask-in:focus { border-color:var(--burgundy); }
+        .ask-in::placeholder { color:var(--text-muted); }
+        .ask-out { max-width:620px; margin-top:14px; }
+        .ask-lead { font-family:'DM Sans',sans-serif; font-size:0.85rem; color:var(--text-muted); margin-bottom:10px; }
+        .ask-hit { display:flex; flex-direction:column; gap:3px; text-decoration:none; padding:12px 14px; border:1px solid var(--border); border-radius:11px; margin-bottom:8px; transition:border-color 0.2s,background 0.2s; }
+        .ask-hit:hover { border-color:var(--burgundy); background:var(--burgundy-glow); }
+        .ask-hx { font-style:italic; font-size:0.98rem; color:var(--ink); }
+        .ask-ht { font-family:'DM Sans',sans-serif; font-size:0.75rem; color:var(--text-muted); }
+        .ask-none { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:18px 20px; }
+        .ask-src { display:block; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:600; color:var(--burgundy); text-decoration:none; padding:8px 0; }
+        .ask-src:hover { text-decoration:underline; }
+        .ask-nom { color:var(--sage); }
+        /* authors index */
+        .idx-hero { padding:40px 0 4px; }
+        .idx-hero h1 { font-family:'Playfair Display',serif; font-weight:900; font-size:clamp(2.1rem,6vw,3rem); line-height:1.05; letter-spacing:-0.02em; }
+        .idx-hero .lede { font-size:1.05rem; color:var(--slate); margin-top:14px; }
+        .idx-hero .lede b { color:var(--sage); }
+        .author-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; margin-top:32px; }
+        .ac { display:flex; gap:15px; align-items:center; text-decoration:none; background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:16px 18px; transition:transform 0.2s,border-color 0.2s; }
+        .ac:hover { transform:translateY(-3px); border-color:var(--border-accent); }
+        .ac .author-avatar { width:48px; height:48px; font-size:1.15rem; }
+        .ac-name { font-family:'Playfair Display',serif; font-weight:700; font-size:1.05rem; color:var(--ink); }
+        .ac-meta { font-family:'DM Sans',sans-serif; font-size:0.72rem; color:var(--text-muted); margin-top:2px; }
+        .ac-count { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--sage); margin-top:5px; }
+        .ac-mag { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; color:var(--caution); margin-top:3px; }
+        /* authors filter bar */
+        .fbar { margin-top:28px; display:flex; flex-direction:column; gap:14px; }
+        .fbar-row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+        .fbar-lbl { font-family:'DM Sans',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-right:2px; }
+        .f-in { flex:1; min-width:220px; font-family:'DM Sans',sans-serif; font-size:0.95rem; color:var(--ink); background:var(--bg-card); border:1px solid var(--border); border-radius:12px; padding:12px 16px; outline:none; transition:border-color 0.2s; }
+        .f-in:focus { border-color:var(--border-accent); }
+        .chip { font-family:'DM Sans',sans-serif; font-size:0.8rem; font-weight:600; color:var(--slate); background:var(--bg-card); border:1px solid var(--border); border-radius:999px; padding:7px 14px; cursor:pointer; transition:border-color 0.2s,color 0.2s,background 0.2s; }
+        .chip:hover { border-color:var(--border-accent); color:var(--ink); }
+        .chip[aria-pressed="true"] { background:var(--burgundy-glow); border-color:var(--burgundy); color:var(--ink); }
+        .chip .n { color:var(--text-muted); font-weight:500; }
+        .chip[aria-pressed="true"] .n { color:var(--slate); }
+        .f-count { font-family:'DM Sans',sans-serif; font-size:0.8rem; color:var(--text-muted); margin-top:4px; }
+        .ac[hidden] { display:none; }
+        /* the display:block below beats the UA's [hidden]{display:none}, so restate it explicitly —
+           otherwise el.hidden=true leaves a dead "Show all" button sitting there (same trap as .ac). */
+        .f-more { display:block; margin:26px auto 0; font-family:'DM Sans',sans-serif; font-size:0.85rem; font-weight:600; color:var(--ink); background:var(--bg-card); border:1px solid var(--border-accent); border-radius:999px; padding:11px 24px; cursor:pointer; transition:transform 0.2s; }
+        .f-more[hidden] { display:none; }
+        .f-more:hover { transform:translateY(-2px); }
+        .f-none { display:none; background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:18px 20px; margin-top:20px; font-family:'DM Sans',sans-serif; font-size:0.9rem; color:var(--slate); }
+        footer { text-align:center; padding:40px 24px; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-size:0.8rem; border-top:1px solid var(--border); margin-top:48px; }
+        footer a { color:var(--burgundy-link); text-decoration:none; }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } * { transition:none !important; } }
+        @media (max-width:560px) { .author-hero { flex-direction:column; text-align:center; align-items:center; } }
         /* skip link — first focusable element; visible only on keyboard focus */
         .skip-link { position:absolute; left:12px; top:-48px; z-index:200; background:var(--burgundy); color:#fff; font-family:'DM Sans',sans-serif; font-size:0.9rem; font-weight:600; padding:10px 16px; border-radius:0 0 10px 10px; text-decoration:none; transition:top 0.15s; }
         .skip-link:focus { top:0; outline:2px solid var(--sage); outline-offset:2px; }
@@ -265,7 +270,7 @@
             <a class="nav-link" href="/who-said/">Quotes</a>
             <a class="nav-link" href="/who-recorded/">Songs</a>
             <a class="nav-link" href="/themes/">Themes</a>
-            <a class="nav-link" href="/authors/">Authors</a>
+            <a class="nav-link active" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
@@ -290,58 +295,67 @@
             </div>
         </div>
     </nav>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span class="sep" aria-hidden="true">›</span>
+        <a href="/authors/">Authors</a><span class="sep" aria-hidden="true">›</span>
+        <span aria-current="page">Jesse Carr</span>
+    </nav>
     <main id="main">
-        <header class="hero">
-            <h1>Real quote? <em>Cleared</em> to use?</h1>
-            <p class="lede">Before you put a quote on a slide or in print: Quotle.info traces it to its <strong>real source</strong> — who actually said it — and tells you whether it&rsquo;s <strong>cleared to reproduce</strong> (public domain, or still under copyright). The part an AI usually gets wrong.</p>
-            <p class="stat"><b>1732</b> quotes fact&#8209;checked &mdash; 617 verified, 187 attributed, 928 flagged as misquoted &mdash; each traced as far as the record allows, with its reuse rights marked</p>
+        <header class="author-hero">
+            <div class="author-avatar" aria-hidden="true">JC</div>
+            <div>
+                <h1>Jesse Carr</h1>
+                <p class="author-meta">American labour leader · head of Teamsters Union Local 959, Anchorage, Alaska</p>
+            </div>
         </header>
-        <section class="featured" aria-label="Notable reattributions">
-            <p class="feat-kicker">Not who you think</p>
-            <div class="feat-grid">
-                <a class="feat" href="/who-said/there-is-no-greater-agony-than-bearing-an-untold-story/">
-                    <p class="feat-q">&ldquo;There is no greater agony than bearing an untold story inside you&rdquo;</p>
-                    <p class="feat-swap"><span class="feat-no">Maya Angelou</span><span class="feat-arrow" aria-hidden="true">→</span><span class="feat-yes">Zora Neale Hurston</span></p>
-                </a>
-                <a class="feat" href="/who-said/stay-hungry-stay-foolish/">
-                    <p class="feat-q">&ldquo;Stay hungry, stay foolish&rdquo;</p>
-                    <p class="feat-swap"><span class="feat-no">Steve Jobs</span><span class="feat-arrow" aria-hidden="true">→</span><span class="feat-yes">Stewart Brand</span></p>
-                </a>
-                <a class="feat" href="/who-said/quality-is-not-an-act-it-is-a-habit/">
-                    <p class="feat-q">&ldquo;Quality is not an act, it is a habit&rdquo;</p>
-                    <p class="feat-swap"><span class="feat-no">Aristotle</span><span class="feat-arrow" aria-hidden="true">→</span><span class="feat-yes">Will Durant</span></p>
-                </a>
-                <a class="feat" href="/who-said/the-future-belongs-to-those-who-believe-in-the-beauty-of/">
-                    <p class="feat-q">&ldquo;The future belongs to those who believe in the beauty of their dreams&rdquo;</p>
-                    <p class="feat-swap"><span class="feat-no">Eleanor Roosevelt</span><span class="feat-arrow" aria-hidden="true">→</span><span class="feat-yes">Anonymous (1978)</span></p>
-                </a>
-                <a class="feat" href="/who-said/the-journey-of-a-thousand-miles-begins-with-a-single-step/">
-                    <p class="feat-q">&ldquo;The journey of a thousand miles begins with a single step&rdquo;</p>
-                    <p class="feat-swap"><span class="feat-no">Confucius</span><span class="feat-arrow" aria-hidden="true">→</span><span class="feat-yes">Lao Tzu</span></p>
-                </a>
-                <a class="feat" href="/who-said/whatever-you-are-be-a-good-one/">
-                    <p class="feat-q">&ldquo;Whatever you are, be a good one&rdquo;</p>
-                    <p class="feat-swap"><span class="feat-no">Abraham Lincoln</span><span class="feat-arrow" aria-hidden="true">→</span><span class="feat-yes">Thackeray</span></p>
+        <div class="author-bio"><strong>Jesse L. Carr</strong> led Teamsters Union Local 959 in Anchorage. Wikipedia&rsquo;s account of the Trans-Alaska Pipeline&rsquo;s construction records Local 959 &mdash; more than 23,000 members at its peak &mdash; as &ldquo;by far the most dominant labor force&rdquo; on the project, notes that Carr once halted all truck traffic in the state for four days of safety meetings, and that the <em>Anchorage Daily News</em> won a Pulitzer Prize for a series on the local&rsquo;s rise and its influence on state politics. <em>Newsweek</em> profiled him in September 1976 as &ldquo;The Strongman of Alaska&rdquo;; the profile opened with this line. We could not establish his birth and death dates from a source we could read, so this page states none.</div>
+        <section aria-labelledby="q-h">
+            <div class="sec-head"><p class="kicker">Traced to source</p><h2 id="q-h">1 quote we&rsquo;ve traced</h2></div>
+            <div class="q-grid">
+                <a class="q-card disputed" href="/who-said/being-powerful-is-like-being-a-lady-if-you-have-to-tell/">
+                    <p class="q-text">&ldquo;Being powerful is like being a lady. If you have to tell people you are, you aren't&rdquo;</p>
+                    <span class="q-conf"><span class="dot" aria-hidden="true">?</span>Disputed</span>
                 </a>
             </div>
         </section>
-        <section class="tiles" aria-label="Browse">
-            <a class="tile" href="/who-said/"><div class="tile-n">1732</div><div class="tile-label">Quotes</div><div class="tile-sub">Verified, attributed &amp; misattributed — with the receipts.</div></a>
-            <!-- Songs are a SEPARATE content type and get their own tile. The Quotes tile above
-                 renders CORPUS.quotes.total, which reads data/quotes only, so songs were never
-                 folded into the quote count — but until this tile existed an entire content type
-                 (its own harvest/generate/audit pipeline) was reachable from the home page only
-                 via the nav bar, and nothing on the front page said it existed. -->
-            <a class="tile" href="/who-recorded/"><div class="tile-n">95</div><div class="tile-label">Songs</div><div class="tile-sub">Who <em>recorded</em> it first, and who <em>wrote</em> it — credited to the wrong artist.</div></a>
-            <a class="tile" href="/authors/"><div class="tile-n">917</div><div class="tile-label">Authors</div><div class="tile-sub">Who really said what, quote by quote.</div></a>
-            <a class="tile" href="/under-review/"><div class="tile-n">360</div><div class="tile-label">Under review</div><div class="tile-sub">Flagged as commonly misquoted — queued for a full trace.</div></a>
+
+
+
+        <section class="ask" data-author="Jesse Carr" aria-labelledby="ask-h">
+            <div class="sec-head"><p class="kicker">Did they really say it?</p><h2 id="ask-h">Thought Jesse Carr said something else?</h2><p class="sec-sub">Type a quote you think Jesse Carr said &mdash; we&rsquo;ll tell you what we know, or point you to the best sources.</p></div>
+            <input id="ask-q" class="ask-in" type="search" placeholder="Type or paste the quote&hellip;" aria-label="Type or paste a quote you think Jesse Carr said" autocomplete="off">
+            <div id="ask-out" class="ask-out"></div>
         </section>
-        <aside class="game-cta">
-            <h2>Think you know your quotes?</h2>
-            <p>Quotle is a daily puzzle: guess the author from the words alone.</p>
-            <a href="https://gameshelf.co/quotle/">Play today&rsquo;s Quotle <span aria-hidden="true">→</span></a>
-        </aside>
     </main>
+    <script>
+        (function(){
+            var sec=document.querySelector('.ask'); if(!sec) return;
+            var author=sec.getAttribute('data-author')||'';
+            var input=document.getElementById('ask-q'), out=document.getElementById('ask-out');
+            var idx=null, loading=false;
+            function load(cb){ if(idx){cb();return;} if(loading) return; loading=true;
+                fetch('/search.json').then(function(r){return r.json();}).then(function(d){ idx=d||[]; loading=false; cb(); }).catch(function(){ loading=false; }); }
+            function esc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':String(s)); return d.innerHTML; }
+            var TYPE={q:'Verified',a:'Author',b:'Under review'};
+            function wikiquote(){ return 'https://en.wikiquote.org/wiki/'+encodeURIComponent(author.replace(/ /g,'_')); }
+            function render(term){
+                var t=term.trim().toLowerCase();
+                if(t.length<4){ out.innerHTML=''; return; }
+                var hits=[];
+                for(var i=0;i<idx.length;i++){ var e=idx[i]; if((e.x+' '+(e.a||'')).toLowerCase().indexOf(t)>-1){ hits.push(e); if(hits.length>=6) break; } }
+                if(hits.length){
+                    out.innerHTML='<p class="ask-lead">We&rsquo;ve got this &mdash; here&rsquo;s what we know:</p>'+hits.map(function(e){
+                        return '<a class="ask-hit" href="'+esc(e.u)+'"><span class="ask-hx">'+(e.t==='a'?'':'&ldquo;')+esc(e.x)+(e.t==='a'?'':'&rdquo;')+'</span><span class="ask-ht">'+(TYPE[e.t]||'')+(e.a?' &middot; '+esc(e.a):'')+'</span></a>'; }).join('');
+                } else {
+                    out.innerHTML='<div class="ask-none"><p class="ask-lead">We haven&rsquo;t traced that one yet &mdash; here&rsquo;s where to look:</p>'+
+                        '<a class="ask-src" href="'+wikiquote()+'" target="_blank" rel="noopener nofollow">'+esc(author)+' on Wikiquote (Misattributed &amp; Disputed) <span aria-hidden="true">↗</span></a>'+
+                        '<a class="ask-src" href="https://quoteinvestigator.com/?s='+encodeURIComponent(term)+'" target="_blank" rel="noopener nofollow">Search Quote Investigator <span aria-hidden="true">↗</span></a>'+
+                        '<a class="ask-src ask-nom" href="/under-review/">Nominate it &mdash; we&rsquo;ll trace it <span aria-hidden="true">→</span></a></div>';
+                }
+            }
+            var deb; input.addEventListener('input', function(){ clearTimeout(deb); var v=input.value; deb=setTimeout(function(){ load(function(){ render(v); }); }, 160); });
+        })();
+    </script>
     <footer class="site-footer">
         <nav class="foot-links" aria-label="Site">
             <a href="/about/">About</a>
