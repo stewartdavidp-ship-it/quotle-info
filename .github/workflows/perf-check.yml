@@ -1,0 +1,83 @@
+# perf-check.yml — the morning performance canary.
+#
+# WHY THIS EXISTS
+# quotle.info is prerendered HTML on GitHub Pages behind Fastly, so nothing in this repo's
+# verify gates can notice the SERVING side degrading — an origin slowdown, a cert problem,
+# a Fastly region going sour, or a page class suddenly 404ing would all ship a green build.
+# This runs the two live-site probes every morning:
+#   · tools/loadtest.js — 5 concurrent simulated visitors for 60s from the runner (a stable
+#     US datacenter vantage), TTFB/total percentiles + Fastly HIT/MISS split.
+#   · tools/geotest.js — the same site from real probes on 6 continents via the free
+#     Globalping API (~16 of its ~250/day unauthenticated budget).
+#
+# WHERE RESULTS GO
+# Nothing is committed — this must add zero noise to the merge/verify machinery. Each run
+# writes a human-readable report to its job summary page and uploads the raw per-request
+# JSON as a 90-day artifact for trend digging. A run FAILS (and GitHub emails the owner)
+# only when something is actually wrong: any non-200/errored request in the load test, or
+# any probe region not getting a 200. Slow-but-serving mornings stay green — the numbers
+# are in the summary when a human wants them.
+name: perf-check
+
+on:
+  schedule:
+    # 11:00 UTC = 7:00 am EDT / 6:00 am EST — cron has no timezone support, so the report
+    # lands an hour earlier in winter rather than an hour later in summer.
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  perf:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Load test (5 VUs x 60s from runner)
+        run: |
+          node tools/loadtest.js --vus 5 --duration 60 --out loadtest.json | tee loadtest.txt
+          { echo '## Load test — 5 concurrent visitors, 60s (US datacenter vantage)';
+            echo '```'; cat loadtest.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Geo test (6 continents via Globalping)
+        run: |
+          node tools/geotest.js | tee geotest.txt
+          { echo '## Geo test — homepage + 1 random deep page';
+            echo '```'; cat geotest.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      # The canary bar: every request served, everywhere. Latency is reported, not gated —
+      # a threshold tuned today becomes a flaky alarm as the corpus and CDN drift, and a
+      # flaky morning alarm trains its owner to ignore it.
+      - name: Fail if anything did not serve
+        run: |
+          node -e '
+            const rows = require("./loadtest.json").requests;
+            const bad = rows.filter(r => r.error || r.status !== 200);
+            if (rows.length === 0) { console.error("load test made 0 requests"); process.exit(1); }
+            if (bad.length) {
+              console.error(`${bad.length}/${rows.length} load-test requests failed:`);
+              for (const r of bad.slice(0, 5)) console.error(`  ${r.error || "HTTP " + r.status}  ${r.url}`);
+              process.exit(1);
+            }
+            console.log(`all ${rows.length} load-test requests returned 200`);
+          '
+          if grep -q 'did not get HTTP 200' geotest.txt; then
+            echo 'a geo probe did not get HTTP 200 (see geo test output above)'; exit 1
+          fi
+
+      - name: Upload raw results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-${{ github.run_id }}
+          path: |
+            loadtest.json
+            loadtest.txt
+            geotest.txt
+          retention-days: 90
