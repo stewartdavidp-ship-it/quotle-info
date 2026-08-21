@@ -17,6 +17,12 @@
 //
 // Companion to tools/loadtest.js (concurrency from here) — this answers
 // "how fast is the site from elsewhere in the world?"
+//
+// Failure semantics (perf-check.yml relies on these):
+//   exit 1 only when a region got an HTTP non-200 AND a one-shot retry of that
+//   region repeated it. One-off 503s (GitHub Pages/Fastly emit them rarely) and
+//   probes that never respond (volunteer-node flakiness) are printed as '~'
+//   warnings and do not fail the run.
 
 'use strict';
 
@@ -75,11 +81,11 @@ async function randomSitemapPaths(n) {
 }
 
 // ---------- globalping ----------
-async function measure(path) {
+async function measure(path, countries = COUNTRIES) {
   const body = JSON.stringify({
     type: 'http',
     target: HOST,
-    locations: COUNTRIES.map((c) => ({ country: c, limit: 1 })),
+    locations: countries.map((c) => ({ country: c, limit: 1 })),
     measurementOptions: { protocol: 'HTTPS', request: { path, method: 'GET' } },
   });
   const created = await request('POST', API, '/v1/measurements', body);
@@ -97,26 +103,34 @@ async function measure(path) {
 
 // ---------- report ----------
 const ms = (v) => (v == null ? '   -' : String(Math.round(v)).padStart(4));
-function printMeasurement(path, m) {
-  console.log(`\n${HOST}${path}`);
-  console.log('  probe                    status  dns   tcp   tls  ttfb  total  cache');
+// prints one measurement and returns its problems:
+//   {kind:'http', country, city, status} — the site answered with a non-200 (gate-worthy)
+//   {kind:'probe', country, city}        — the probe never got a response (volunteer-node
+//                                          flakiness far more often than an outage; warn only)
+function printMeasurement(path, m, indent = '  ') {
+  console.log(`${indent}probe                    status  dns   tcp   tls  ttfb  total  cache`);
   const ttfbs = [];
+  const problems = [];
   for (const r of m.results.sort((a, b) => (a.probe.country + a.probe.city).localeCompare(b.probe.country + b.probe.city))) {
     const t = r.result.timings || {};
     const cache = ((r.result.headers || {})['x-cache'] || '-').split(',')[0].trim();
     const status = r.result.statusCode ?? r.result.status ?? '-';
     if (t.firstByte != null && status === 200) ttfbs.push(t.firstByte);
+    if (typeof status === 'number' && status !== 200) {
+      problems.push({ kind: 'http', country: r.probe.country, city: r.probe.city, status });
+    } else if (typeof status !== 'number') {
+      problems.push({ kind: 'probe', country: r.probe.country, city: r.probe.city });
+    }
     console.log(
-      `  ${`${r.probe.city}, ${r.probe.country}`.padEnd(24)} ${String(status).padEnd(6)}` +
+      `${indent}${`${r.probe.city}, ${r.probe.country}`.padEnd(24)} ${String(status).padEnd(6)}` +
       ` ${ms(t.dns)}  ${ms(t.tcp)}  ${ms(t.tls)}  ${ms(t.firstByte)}   ${ms(t.total)}  ${cache}`
     );
   }
   if (ttfbs.length) {
     ttfbs.sort((a, b) => a - b);
-    console.log(`  TTFB world: best ${Math.round(ttfbs[0])}ms  median ${Math.round(ttfbs[Math.floor(ttfbs.length / 2)])}ms  worst ${Math.round(ttfbs[ttfbs.length - 1])}ms`);
+    console.log(`${indent}TTFB world: best ${Math.round(ttfbs[0])}ms  median ${Math.round(ttfbs[Math.floor(ttfbs.length / 2)])}ms  worst ${Math.round(ttfbs[ttfbs.length - 1])}ms`);
   }
-  const bad = m.results.filter((r) => (r.result.statusCode ?? 0) !== 200);
-  if (bad.length) console.log(`  !! ${bad.length} probe(s) did not get HTTP 200`);
+  return problems;
 }
 
 // ---------- main ----------
@@ -127,9 +141,31 @@ function printMeasurement(path, m) {
   else paths = ['/', ...(await randomSitemapPaths(1))];
 
   console.log(`geotest: ${paths.length} page(s) from [${COUNTRIES.join(', ')}] via Globalping (free tier)`);
+  let confirmed = 0; // non-200s that survived a retry
+  let probeFlakes = 0;
   for (const path of paths) {
     const m = await measure(path);
-    printMeasurement(path, m);
+    console.log(`\n${HOST}${path}`);
+    const problems = printMeasurement(path, m);
+    probeFlakes += problems.filter((p) => p.kind === 'probe').length;
+
+    // A single transient non-200 (GitHub Pages/Fastly throw the occasional one-off 503)
+    // should not fail a canary run — re-test exactly the regions that erred, once, and
+    // only count what repeats.
+    const httpBad = problems.filter((p) => p.kind === 'http');
+    if (httpBad.length) {
+      console.log(`  ~ ${httpBad.map((p) => `${p.city} ${p.status}`).join(', ')} — retrying those region(s) once:`);
+      const retry = await measure(path, httpBad.map((p) => p.country));
+      const still = printMeasurement(path, retry, '    ');
+      confirmed += still.filter((p) => p.kind === 'http').length;
+    }
+  }
+  if (probeFlakes) {
+    console.log(`\n~ ${probeFlakes} probe(s) returned no result (volunteer-node flakiness; not counted against the site)`);
+  }
+  if (confirmed) {
+    console.log(`\n!! ${confirmed} probe(s) did not get HTTP 200 even after retry`);
+    process.exitCode = 1;
   }
   console.log('');
 })().catch((err) => {
