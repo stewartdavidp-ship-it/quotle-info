@@ -5,8 +5,8 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1792** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r42.** (Waves r6–r41 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1832** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r43.** (Waves r6–r42 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
   **These lines were three waves stale** (they read 1506 / r35 while r35, r36 and r37 had all shipped),
   which is why the runbook says to take N from `git ls-remote --heads origin 'refs/heads/wave-r*'` and
   never from this file. Bump them, but do not trust them.
@@ -94,7 +94,8 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   rebase-rebuild below and verified **40 additions / 0 modifications** to r30's records before
   merging. There is no lock on the queue — `4de8f8a9c`'s "one writer" gate is about which code path
   writes the file, not about concurrent sessions, so do not expect it to protect you.
-- Harvest backlog: `data/harvest-queue.json` (committed) — **300 queued** after r41. **Track B was refilled 2026-08-03**
+- Harvest backlog: `data/harvest-queue.json` (committed) — **260 queued** after r42. **`misattributed` is down
+  to 22 from the harvest's 60 — two waves consumed most of it. Re-harvest at ~15.** **Track B was refilled 2026-08-03**
   (harvest-only run, no ingest): 8 themes chosen for DEMAND rather than to fill gaps — gratitude,
   friendship, money-wealth, discipline-habit, grief-loss, forgiveness, patience, nature. Six of those
   had **no theme tag on the corpus at all**; gratitude (23) and friendship (33) were the two thinnest
@@ -765,6 +766,23 @@ If you add a content type, it needs: a record dir, a `validate-*.js` gate wired 
 how songs got in unchecked.
 
 ## Gotchas (all learned the hard way — do not skip)
+- **RUN THE NEAR-DUPLICATE CHECK BOTH WAYS — THE SLUG TEST AND JACCARD CATCH DIFFERENT THINGS.** r42
+  proved they are not redundant. The slug-collision test (added after r38's Drucker case) passed
+  CLEAN on *"The man who dies rich dies disgraced"* vs *"The man who dies **thus** rich dies
+  disgraced"* — one word apart, so two different slugs — and only Jaccard caught them. Jaccard then
+  found three more: candidates whose BUILT page already carries the candidate's exact wording as its
+  `schema.quotationText`. That is the highest-value shape to look for, because it means the corpus has
+  already published this sentence, just under the popular clipping as its H1:
+    - Carnegie's *"No man will make a great **business**…"* — r38 built it as the MISQUOTE page and
+      that text is its verbatim.
+    - Frankl's *"He who has a why to live…"* — already built, correctly as **Nietzsche**.
+  **So: batch-vs-corpus, intra-batch, AND slug-uniqueness. Three tests, every wave.** And check the
+  candidate text against built `schema.quotationText`, not just `displayQuote`.
+- **A DROPPED DUPLICATE GOES BACK TO `queued` AND WILL BE REDRAWN.** `unselect --wave rN` releases
+  every straggler, including candidates dropped as duplicates — they never built, so they never swept
+  to `ingested`. r42 released 6: the 2 known-poisoned plus 4 duplicates. The next wave will draw them
+  again and must re-detect them. Until `harvest.js` can retire a candidate as "already covered by
+  <slug>", the near-duplicate check is not a one-time cost — it is a per-wave toll that grows.
 - **A MISATTRIBUTION WAVE FAILS ITS AUDIT HARDER THAN A FAMOUS-QUOTES WAVE — BUDGET FOR IT.** r38–r40
   ran `confidenceHonest`/`rightsHonest` true on all 65 pages. r41, the first wave off the Track A
   harvest, returned **22 PASS / 18 FAIL, 5 blockers, and FOUR honesty failures** (2 confidence, 2
