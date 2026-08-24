@@ -5,8 +5,8 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1727** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r41.** (Waves r6–r40 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1792** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r42.** (Waves r6–r41 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
   **These lines were three waves stale** (they read 1506 / r35 while r35, r36 and r37 had all shipped),
   which is why the runbook says to take N from `git ls-remote --heads origin 'refs/heads/wave-r*'` and
   never from this file. Bump them, but do not trust them.
@@ -51,31 +51,24 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   intra-batch check does. Run the near-duplicate pass BOTH ways — every batch item against every built
   `displayQuote`, AND every batch item against the others — and also just assert that the batch's
   slugified texts are unique, which is one line and catches the collision exactly.
-- **THE MISATTRIBUTION SEAM IS NEARLY OUT.** 245 queued, but only **12 misattributed** and **39
-  disputed** against **181 genuine-famous** (r40, from `harvest.js report`). FOUR waves running
-  (r37–r40) have drawn essentially NO misattribution material — the count has not moved off 12,
-  because none of the 12 ranks into a draw on demand. Track A is overdue, not merely recommended.
-  **And do not expect the QUEUE's own `likelyConfidence` to find them for you.** r40 drew two Coco
-  Chanel lines the queue had filed `disputed` — she is a magnet for decorator-aphorisms she never
-  said — and research returned **verified** on both, while a Shankly line filed `genuine-famous` came
-  back `disputed`. Zero reassignments in the wave. The queue's guess is a harvest-time hint, not
-  evidence of where misattributions are; only a Track A sweep aimed at magnet authors refills them. Track A is what refills the differentiator — the
-  misattribution pages are what the site is *for*, and a backlog draw now returns mostly
-  correctly-attributed famous lines. Run `harvest-candidates.js` over magnet authors before the next
-  backlog wave, or the corpus keeps growing in the direction that does not distinguish it.
-  **`tag-themes.js` drops a record per wave — FIXED 2026-08-07, and the fix is an argument you must
-  pass.** r32 returned `covered: 39, total: 40` and r33 did the same — Epictetus and
-  `i-never-said-most-of-the-things-i-said` respectively, the latter at manifest position 22 of 40, so
-  not a chunk boundary (an agent returned 9 of its own 10). An untagged record never appears on
-  `/themes` and nothing downstream flagged it: `apply-tags.js` wrote what it got and printed success,
-  so the only thing catching it both times was a human reading a counter. Now:
-  **`apply-tags.js --manifest` is REQUIRED** and diffs the manifest against the records on disk — it
-  names every dropped slug, writes `<manifest>-missing.json` for a `chunks:1` re-run, and exits 1.
-  The journal cannot do this itself: what an agent never returned leaves no trace in it, which is why
-  the manifest is mandatory rather than optional. `tag-themes.js` also computes each strided slice's
-  expected size from `total`/`chunks` and **retries a short slice once** before giving up, so the
-  common case repairs itself. Same swallow existed in `cite-styles.js` → `_ingest-cites.js`; that one
-  now takes `--expect`.
+- **THE MISATTRIBUTION SEAM: REFILLED 2026-08-18, AND IT WORKED.** 300 queued — **34 misattributed**
+  and **51 disputed** against 202 genuine-famous. The Track A harvest (#554, 12 magnet authors ×12,
+  +120 candidates) took `misattributed` from 12 → 60, and **r41 was the first wave drawn off it**:
+  22 disputed records and **14 genuine reassignments**, against r38/r39/r40's 3/1/0. That is the
+  differentiator working. Re-run `harvest-candidates.js` when `misattributed` drops toward ~15 again.
+  **Budget the seam against the DAILY waves, not just manual ones.** The refill bought about a week:
+  the scheduled dailies draw from the same ranked queue and eat the top misattributions first, so six
+  days after the harvest the two known-poisoned candidates had climbed back to ranks 2 and 23 from 27
+  and 48.
+  **Do not expect the queue's own `likelyConfidence` to find the seam for you.** r40 drew two Coco
+  Chanel lines filed `disputed` — she is a magnet for decorator-aphorisms — and research returned
+  **verified** on both, while a Shankly line filed `genuine-famous` came back `disputed`. Zero
+  reassignments in that wave. The queue's guess is a harvest-time hint, not evidence.
+  **PICKING AUTHORS: "~134 magnet authors harvested" counts only `misattributed`/`disputed` magnets.**
+  Across ALL categories **314 distinct authors** have been touched, and half of a first-pass shortlist
+  turned out already swept (Goethe, Alan Watts, Frida Kahlo, Anaïs Nin, Harriet Tubman, Camus, Mae
+  West). Filter a pool against BOTH the queue magnets and the built author hubs.
+
 - **A known-corrupt candidate now leads every draw.** `friendship-is-born-at-that-moment-when-one-man-says-to`
   is stored truncated mid-sentence (`…myself . . .`, with a `"What!` that never closes) and sits at
   **demand-rank #1** of the queued pool, so `select` puts it first every time. Four waves — the
@@ -101,7 +94,7 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   rebase-rebuild below and verified **40 additions / 0 modifications** to r30's records before
   merging. There is no lock on the queue — `4de8f8a9c`'s "one writer" gate is about which code path
   writes the file, not about concurrent sessions, so do not expect it to protect you.
-- Harvest backlog: `data/harvest-queue.json` (committed) — **245 queued** after r40. **Track B was refilled 2026-08-03**
+- Harvest backlog: `data/harvest-queue.json` (committed) — **300 queued** after r41. **Track B was refilled 2026-08-03**
   (harvest-only run, no ingest): 8 themes chosen for DEMAND rather than to fill gaps — gratitude,
   friendship, money-wealth, discipline-habit, grief-loss, forgiveness, patience, nature. Six of those
   had **no theme tag on the corpus at all**; gratitude (23) and friendship (33) were the two thinnest
@@ -772,6 +765,21 @@ If you add a content type, it needs: a record dir, a `validate-*.js` gate wired 
 how songs got in unchecked.
 
 ## Gotchas (all learned the hard way — do not skip)
+- **A MISATTRIBUTION WAVE FAILS ITS AUDIT HARDER THAN A FAMOUS-QUOTES WAVE — BUDGET FOR IT.** r38–r40
+  ran `confidenceHonest`/`rightsHonest` true on all 65 pages. r41, the first wave off the Track A
+  harvest, returned **22 PASS / 18 FAIL, 5 blockers, and FOUR honesty failures** (2 confidence, 2
+  rights) out of 40. That is not the pipeline degrading: provenance is murkier on a contested line and
+  the rights are layered, so there is more room to overclaim. Expect a ~45% FAIL rate on a
+  reassignment-heavy draw, and do not read a clean audit on a genuine-famous wave as the baseline.
+  Two r41 examples worth knowing, because the fix ran in the OPPOSITE direction to a downgrade:
+  - **A public-domain badge over an in-copyright TRANSLATION.** `in-questions-of-science` reproduced
+    Drake's 1957 English of Galileo under `public-domain`. The underlying Italian is PD; the
+    translation is not. Fixed by REPLACING the English source with the 1859 Boston Arago edition, so
+    the PD claim became true rather than merely softened. Check the translation layer on any
+    pre-1931 non-English source.
+  - **Over-restricting a work that is actually free.** `i-do-not-believe-in-god` asserted copyright on
+    *Living My Life* from a flat 95-year term. US works published 1923–1963 kept copyright only if
+    **renewed in the 28th year**; the evidence says it was not. Flipped to public-domain.
 - **`plain()` DELETES any named HTML entity missing from its table — silently.** `tools/template.js`
   `plain()` decodes named entities through `NAMED_ENTITIES` and maps an unrecognised one to a single
   SPACE, which the following `\s+` collapse then erases. `copy` is not in the table, so a
