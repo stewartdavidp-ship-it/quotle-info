@@ -5,8 +5,8 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1832** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r43.** (Waves r6–r42 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1867** quotes + **95** songs. **Target: 2000** quotes.
+- **Next wave number: r44.** (Waves r6–r43 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
   **These lines were three waves stale** (they read 1506 / r35 while r35, r36 and r37 had all shipped),
   which is why the runbook says to take N from `git ls-remote --heads origin 'refs/heads/wave-r*'` and
   never from this file. Bump them, but do not trust them.
@@ -94,19 +94,19 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   rebase-rebuild below and verified **40 additions / 0 modifications** to r30's records before
   merging. There is no lock on the queue — `4de8f8a9c`'s "one writer" gate is about which code path
   writes the file, not about concurrent sessions, so do not expect it to protect you.
-- Harvest backlog: `data/harvest-queue.json` (committed) — **260 queued** after r42. **`misattributed` is down
-  to 22 from the harvest's 60 — two waves consumed most of it. Re-harvest at ~15.** **Track B was refilled 2026-08-03**
-  (harvest-only run, no ingest): 8 themes chosen for DEMAND rather than to fill gaps — gratitude,
-  friendship, money-wealth, discipline-habit, grief-loss, forgiveness, patience, nature. Six of those
-  had **no theme tag on the corpus at all**; gratitude (23) and friendship (33) were the two thinnest
-  that existed. +76 candidates, 73 of them public-domain, taking queued `public-domain` from 97 →
-  **170** and `genuine-famous` 314 → **390**. The rest is 111 `disputed`, 30 `misattributed`,
-  7 `film-misquote`, 7 `scripture-misquote`.
-  **Ranked after syncing, and the new harvest took 25 of the top 30 demand slots** — skip the rank
-  and every one of them sorts LAST instead (the r29 lesson, step 1). 60 candidates still carry no
-  demand signal and want a manual look.
-  **Track A was refilled 2026-07-30** (+107 candidates: 8 magnet authors + 4 film titles).
-  Either track can draw ~40 without harvesting first.
+- Harvest backlog: `data/harvest-queue.json` (committed) — **225 queued** after r43. `misattributed` is
+  **22**; re-harvest at ~15.
+  **⚠ THE KNOWN-BAD CLUSTER SITS AT RANKS 1-6 AND RATCHETS.** Six candidates cannot build and cannot be
+  retired: the 2 long-standing poisoned ones (the C. S. Lewis truncation, the Ali duplicate) plus four
+  duplicates r42 dropped — Frankl *"He who has a why"* (built as **Nietzsche**), Shankly *"Football is
+  not a matter"* (r40 documents that wording), Carnegie *"great **business**"* (it IS r38's page
+  verbatim) and Carnegie *"dies **thus** rich"* (sibling shipped r42). They cost **20% of r43's
+  30-record draw**, and the number only grows: `unselect` returns every dropped duplicate to `queued`,
+  where high demand floats it back to the top for the next wave to re-detect. `skip` is hate/harm only
+  and hand-editing the queue is forbidden, so there is no in-pipeline escape.
+  **The fix is a small tool change** — a `harvest.js` way to retire a candidate as "already covered by
+  `<slug>`" — plus an operator decision on the Lewis quote (repair the stored text, or lose it). Until
+  then every wave must draw N+6 and re-derive the same six drops.
 - **Who-wrote axis (`/who-wrote/`, added 2026-07-23):** the second music axis — "who WROTE this song?". Harvest is deterministic (`node workflows/harvest-who-wrote.js` scans the recording corpus → `data/who-wrote-queue.json`). ~14 records shipped (single-axis + dual-axis enrichment); ~78 dual-axis candidates queued. Recipe: the "Songs — the `/who-wrote/` axis" section below.
 - **Songs: next wave number s4, and the backlog is REFILLED.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **79 queued** (62 `high` / 17 `medium` confusion), 89 ingested, 1 dropped. Harvested 2026-08-03 across all six veins, 11–15 each; **all 79 were new** because the run passed the 96 built-or-queued slugs as `exclude`, so no agent spent budget re-finding Tainted Love. ~3 waves' worth. Digest: `data/song-queue.md`.
   - **`sync` now records what the agents REJECTED, not just what they queued** (2026-08-04). A
@@ -766,6 +766,29 @@ If you add a content type, it needs: a record dir, a `validate-*.js` gate wired 
 how songs got in unchecked.
 
 ## Gotchas (all learned the hard way — do not skip)
+- **A MIDDLE INITIAL HIDES IN THREE DIFFERENT PLACES — AND IT IS AMBIGUOUS IN BOTH DIRECTIONS.**
+  `schema.creator.sameAs` is the ONLY reliable discriminator; never compare name strings.
+  - **Across hubs** (r38 `peter-drucker`/`peter-f-drucker`, r42 Maslow + Frankl): a name check reads
+    the expansion as a REASSIGNMENT and would stamp genuine quotes as falsely credited to their own
+    author. Both pairs shared one `sameAs`.
+  - **Inside one record** (r43): `verify-corpus`'s *"a right-person-wrong-words record names its own
+    author as creator"* ABORTED THE BUILD because the hero read `Stephen Covey` and
+    `schema.creator.name` read `Stephen R. Covey`. Same person, and the mismatch silently suppresses
+    the slide-kit warning. Align `creator.name` to the hero; `sameAs` keeps the precise identity.
+  - **The inverse, in the SAME wave**: *"Change happens at the speed of trust"* belongs to **Stephen
+    M. R. Covey**, the SON — a different person with his own hub, and the fork check correctly stayed
+    silent. The father has a Wikipedia article and the son does not, which is exactly why `sameAs`
+    separates them and the name does not.
+- **`plain()` SILENTLY DELETES UNMAPPED NAMED ENTITIES, AND IT REACHES THE VOICE-ASSISTANT LAYER.**
+  Found r40, measured r43: **33 of 1,867 records (1.8%)** carry an entity missing from
+  `NAMED_ENTITIES` in a `plain()`-fed field, and the fallback maps it to a SPACE which the following
+  whitespace collapse then erases. The severe cases are not cosmetic — `and-now-abideth-faith-hope-
+  charity`, `character-is-destiny` and `money-is-the-root-of-all-evil` have **entire Greek phrases
+  collapsing to runs of spaces in the FAQPage `acceptedAnswer` that voice assistants read aloud**,
+  which is the exact output CLAUDE.md says this markup exists to serve. **Not fixable per record**:
+  `schema.faqAnswer` replaces the whole answer and `tools/template.js:735-745` rules that out. One
+  central edit fixes all 33 — add the missing entities AND change the unknown-entity fallback from
+  `' '` to leaving the entity intact, so the next gap is visible instead of silent.
 - **RUN THE NEAR-DUPLICATE CHECK BOTH WAYS — THE SLUG TEST AND JACCARD CATCH DIFFERENT THINGS.** r42
   proved they are not redundant. The slug-collision test (added after r38's Drucker case) passed
   CLEAN on *"The man who dies rich dies disgraced"* vs *"The man who dies **thus** rich dies
