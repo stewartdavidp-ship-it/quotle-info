@@ -5,8 +5,8 @@ Everything needed to keep growing the corpus toward **2,000 quotes** (to match Q
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1867** quotes + **95** songs. **Target: 2000** quotes.
-- **Next wave number: r44.** (Waves r6–r43 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1887** quotes + **95** songs. **Target: 2000** quotes. **113 to go.**
+- **Next wave number: r45.** (Waves r6–r44 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
   **These lines were three waves stale** (they read 1506 / r35 while r35, r36 and r37 had all shipped),
   which is why the runbook says to take N from `git ls-remote --heads origin 'refs/heads/wave-r*'` and
   never from this file. Bump them, but do not trust them.
@@ -94,8 +94,8 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   rebase-rebuild below and verified **40 additions / 0 modifications** to r30's records before
   merging. There is no lock on the queue — `4de8f8a9c`'s "one writer" gate is about which code path
   writes the file, not about concurrent sessions, so do not expect it to protect you.
-- Harvest backlog: `data/harvest-queue.json` (committed) — **225 queued** after r43. `misattributed` is
-  **22**; re-harvest at ~15.
+- Harvest backlog: `data/harvest-queue.json` (committed) — **205 queued** after r44. `misattributed` is
+  **21**; re-harvest at ~15.
   **⚠ THE KNOWN-BAD CLUSTER SITS AT RANKS 1-6 AND RATCHETS.** Six candidates cannot build and cannot be
   retired: the 2 long-standing poisoned ones (the C. S. Lewis truncation, the Ali duplicate) plus four
   duplicates r42 dropped — Frankl *"He who has a why"* (built as **Nietzsche**), Shankly *"Football is
@@ -766,6 +766,28 @@ If you add a content type, it needs: a record dir, a `validate-*.js` gate wired 
 how songs got in unchecked.
 
 ## Gotchas (all learned the hard way — do not skip)
+- **THE HUB-FORK CHECK MUST GROUP THE WHOLE CORPUS, NOT THE BATCH — AND RUN THE RPWW CHECK *AFTER*
+  STAMPING.** r44's build aborted twice, and both were defects in the pre-flight checks, not new
+  phenomena:
+  - **Wave-vs-corpus forks are invisible to an in-batch check.** All three of r44's Covey records
+    agreed with each other on `stephen-r-covey`, so nothing looked wrong inside the wave — but r43
+    had already shipped `stephen-covey`. Group **every record in `data/quotes/`** by
+    `schema.creator.sameAs`, not just the ones you just built.
+  - **Prefer the hub that is already LIVE over the "most records" tiebreak.** The invariant's rule
+    would have picked `stephen-r-covey` 3-to-2 and orphaned a URL r43 already published.
+  - **`verify-corpus`'s right-person-wrong-words check keys on `creditedTo`,** so a pre-flight copy of
+    it that runs BEFORE the stamping pass silently tests nothing.
+  ⚠ **AND DO NOT WRITE A LOOSE FORK DETECTOR.** Grouping the corpus by `sameAs` alone reports ~13
+  "forks" of which most are **misattribution pages working exactly as designed** — the hub is the
+  magnet (`sun-tzu`) and the hero is the true author (Vegetius). The real invariant is SCOPED to
+  records where `schema.creator` IS the hub's own person, by name containment. A detector without
+  that scope would "fix" the site's core shape.
+- **AN ISSUE'S `location` LIST CAN BE INCOMPLETE — CHECK THE HERO.** In r44 a fix agent corrected all
+  six enumerated sites of an unverified universal negative, then reported that `answer.sourceLine`
+  still ended with the same claim, in the hero, because that location was not on the list. It was
+  right to stop (single-record scope) and right to report. **The orchestrator should apply it**:
+  leaving a known instance of the exact defect an issue exists to remove, because an enumerated list
+  was short, follows the letter of the scope against its purpose.
 - **A MIDDLE INITIAL HIDES IN THREE DIFFERENT PLACES — AND IT IS AMBIGUOUS IN BOTH DIRECTIONS.**
   `schema.creator.sameAs` is the ONLY reliable discriminator; never compare name strings.
   - **Across hubs** (r38 `peter-drucker`/`peter-f-drucker`, r42 Maslow + Frankl): a name check reads
