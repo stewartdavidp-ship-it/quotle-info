@@ -76,7 +76,7 @@ node tools/daily-report.js            # the same thing, readable
 ```
 
 **Do not re-derive these numbers.** The tool counts what ran, what merged, what is still open, CI
-state, corpus size, flag count, ladder position and whether the tree is dirty. Your job is to say
+state, corpus size, flag count, ladder position, whether the tree is dirty, and **visitor traffic**. Your job is to say
 what it MEANS. If you find yourself counting, you are doing the tool's job and will eventually
 disagree with it.
 
@@ -108,12 +108,26 @@ Write `data/daily-report/<YYYY-MM-DD>.md` with these sections, in this order:
    and good report.
 2. **What ran** — the table from `daily-report.js`, plus anything missing.
 3. **What shipped** — records built, records audited, reports closed. Numbers from the tool.
-4. **Findings** — what the routines reported, in their own terms, most serious first. Say which
+4. **Traffic** — one line from `traffic` in the tool's JSON: today, last 7d, last 30d, all time.
+
+   This is **GoatCounter**, which counts everybody — AI assistants, Bing, DuckDuckGo, direct — and
+   it is the only traffic number this report carries. Do NOT substitute or supplement it with
+   Search Console. GSC counts Google alone; for six weeks it showed ~8 clicks and the project
+   concluded it had no audience, while GoatCounter had recorded 4,163 visits with **chatgpt.com as
+   the largest single referrer and Google absent from the top six**. A traffic figure that omits
+   the actual audience is worse than none.
+
+   If `traffic` is `null`, say "traffic: unavailable" and check `tool_failures` — that is an
+   analytics outage, NOT a quiet day. Never render a missing number as a zero.
+
+   Referrers are not in the JSON (they need the authenticated API). If a night's traffic moves
+   enough to matter, say so and note that `node tools/traffic.js --refs` gives the breakdown.
+5. **Findings** — what the routines reported, in their own terms, most serious first. Say which
    record or file each concerns.
-5. **Needs a decision** — numbered, each one sentence of what is wrong plus one sentence of what
+6. **Needs a decision** — numbered, each one sentence of what is wrong plus one sentence of what
    doing it would involve. This is the section the operator acts on, so keep it short enough to read
    standing up. If there is nothing, say so plainly.
-6. **Cost** — what the runs reported, if they reported it.
+7. **Cost** — what the runs reported, if they reported it.
 
 **Numbered proposals, not prose.** The operator should be able to reply "do 1 and 3" and have that be
 unambiguous.

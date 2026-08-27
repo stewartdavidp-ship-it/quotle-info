@@ -111,6 +111,39 @@ try { ingest(fs.readFileSync(path.join(ROOT, 'data', 'routine-log.jsonl'), 'utf8
 // False when the open-PR read failed, so a shard we could not FETCH is never reported as a run that
 // did not HAPPEN. Those are opposite claims and this tool exists to keep them apart.
 let branchShardsRead = true;
+// TRAFFIC. Deliberately the PUBLIC GoatCounter counter endpoint and no token: this runs in a cloud
+// checkout that has no ~/.quotle-goatcounter-token, and a report that dies because analytics is down
+// is worse than one without a traffic line. Failures land in toolFailures like every other read here,
+// so "no traffic section" can never be mistaken for "no traffic".
+//
+// WHY THIS IS IN THE REPORT AT ALL: for six weeks this project measured itself with Search Console,
+// which counts GOOGLE ONLY, and concluded it had no audience — 8 clicks, ever. GoatCounter had been
+// recording the whole time: 4,163 visits, ~65/day, chatgpt.com the largest single referrer, Google
+// absent from the top six. Referrers need the authenticated API and are NOT fetched here; use
+// `node tools/traffic.js --refs` locally for those.
+const GC = 'https://quotle.goatcounter.com';
+const gcNum = (v) => parseInt(String(v).replace(/[^\d]/g, ''), 10) || 0;
+async function gcVisits(start, end) {
+  const q = start ? `?start=${start}&end=${end}` : '';
+  const res = await fetch(`${GC}/counter/TOTAL.json${q}`, { signal: AbortSignal.timeout(8000) });
+  if (!res.ok) throw new Error(`GoatCounter ${res.status}`);
+  return gcNum((await res.json()).count_unique);
+}
+async function traffic(since) {
+  const day = (n) => { const d = new Date(since); d.setUTCDate(d.getUTCDate() - n); return d.toISOString().slice(0, 10); };
+  try {
+    return {
+      day: await gcVisits(since, since),
+      d7: await gcVisits(day(6), since),
+      d30: await gcVisits(day(29), since),
+      allTime: await gcVisits(null, null),
+    };
+  } catch (e) {
+    toolFailures.push(`traffic: ${e.message}`);
+    return null;
+  }
+}
+
 async function ingestOpenBranchShards(ghRest, REPO) {
   let prs;
   try { prs = await ghRest.listOpenPRs(); }
@@ -250,6 +283,7 @@ const out = {
   late,
   merged: merged.map((p) => ({ number: p.number, title: p.title })),
   open: open.map((p) => ({ number: p.number, branch: p.headRefName, state: p.mergeStateStatus, draft: p.isDraft, title: p.title, age_days: Math.floor((Date.now() - Date.parse(p.createdAt)) / 86400000) })),
+  traffic: await traffic(SINCE),
   health: {
     ci: ci.conclusion || 'unknown',
     ci_sha: ci.sha || null,
@@ -270,6 +304,12 @@ const out = {
 if (JSON_OUT) { console.log(JSON.stringify(out, null, 2)); process.exit(0); }
 
 console.log(`\n  quotle.info — ${SINCE}\n`);
+if (out.traffic) {
+  const t = out.traffic;
+  console.log('  TRAFFIC  (GoatCounter — ALL referrers, incl. AI assistants; not Search Console)');
+  console.log(`    ${SINCE}: ${t.day}   last 7d: ${t.d7}   last 30d: ${t.d30}   all time: ${t.allTime}`);
+  console.log('');
+}
 console.log('  ROUTINES');
 for (const r of out.ran) {
   // '·' is reserved for "nothing to say". Only a routine that is genuinely overdue gets '✗', and
