@@ -18,13 +18,17 @@
  * public repo. If someone flips the dashboard back to private this tool starts returning 403 and
  * you will know why.
  *
- * WHAT IT CANNOT DO
- * Referrers, browsers and locations are rendered client-side on the dashboard, so they are NOT
- * available here. Those need an API token (Settings -> API tokens) and a different endpoint. Do
- * not scrape the dashboard HTML for them — it is JS-loaded and would break silently.
+ * REFERRERS NEED A TOKEN (optional)
+ * Referrers/browsers/locations are client-rendered on the dashboard, so the public endpoint cannot
+ * see them. They come from the authenticated API instead. The token is read from
+ * $GOATCOUNTER_TOKEN or ~/.quotle-goatcounter-token — NEVER from this repo, which is public.
+ * Without a token everything else still works; --refs just says the token is missing.
+ * (Token page is under the USER menu, not Settings: /user/api, permission "Read statistics".)
+ * Do not scrape the dashboard HTML for referrers — it is JS-loaded and would break silently.
  *
  * USAGE
  *   node tools/traffic.js                       # site totals: today, 2d, 7d, 30d, all-time
+ *   node tools/traffic.js --refs                # + referrer breakdown (needs token)
  *   node tools/traffic.js /who-said/some-slug/  # visits for specific paths (repeatable)
  *   node tools/traffic.js --json                # machine-readable, for the daily report
  */
@@ -46,6 +50,25 @@ async function counter(path, start, end) {
   if (!res.ok) throw new Error(`${res.status} fetching ${url}`);
   const j = await res.json();
   return { count: num(j.count), unique: num(j.count_unique) };
+}
+
+function token() {
+  if (process.env.GOATCOUNTER_TOKEN) return process.env.GOATCOUNTER_TOKEN.trim();
+  try {
+    const os = require('os'), fs = require('fs'), path = require('path');
+    return fs.readFileSync(path.join(os.homedir(), '.quotle-goatcounter-token'), 'utf8').trim();
+  } catch { return null; }
+}
+
+async function topRefs(start, end) {
+  const tok = token();
+  if (!tok) return null;
+  const url = `${SITE}/api/v0/stats/toprefs?start=${start}&end=${end}`;
+  const res = await fetch(url, { headers: { Authorization: `Bearer ${tok}` } });
+  if (res.status === 401 || res.status === 403) throw new Error('GoatCounter token rejected — recreate it at /user/api with "Read statistics".');
+  if (!res.ok) throw new Error(`${res.status} fetching referrers`);
+  const j = await res.json();
+  return (j.stats || []).map((s) => ({ ref: s.name || '(direct / unknown)', visits: s.count }));
 }
 
 (async () => {
@@ -79,12 +102,26 @@ async function counter(path, start, end) {
   }
   out.allTime = (await counter('TOTAL', null, null)).unique;
 
+  if (args.includes('--refs')) {
+    out.referrers7d = await topRefs(daysAgo(6), today);
+  }
+
   if (asJson) return console.log(JSON.stringify(out, null, 2));
   console.log('\nquotle.info — visits (GoatCounter, all referrers incl. AI assistants)\n');
   for (const [label] of windows) {
     console.log(`  ${label.padEnd(14)} ${String(out.windows[label]).padStart(7)}`);
   }
   console.log(`  ${'all time'.padEnd(14)} ${String(out.allTime).padStart(7)}`);
-  console.log('\n  NB: Search Console counts Google only and has shown ~8 clicks ever.');
-  console.log('      Referrer breakdown needs an API token; see the header of this file.\n');
+
+  if (args.includes('--refs')) {
+    console.log('\n  referrers, last 7 days\n');
+    if (!out.referrers7d) {
+      console.log('    (no token — set $GOATCOUNTER_TOKEN or ~/.quotle-goatcounter-token)');
+    } else {
+      const tot = out.referrers7d.reduce((a, r) => a + r.visits, 0) || 1;
+      out.referrers7d.forEach((r) => console.log(
+        `    ${String(r.visits).padStart(6)}  ${String(Math.round(r.visits / tot * 100)).padStart(3)}%  ${r.ref}`));
+    }
+  }
+  console.log('\n  NB: Search Console counts Google only and has shown ~8 clicks ever.\n');
 })().catch((e) => { console.error('traffic.js:', e.message); process.exit(1); });
