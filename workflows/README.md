@@ -108,7 +108,15 @@ wave by following this file. Per-wave intermediates go in gitignored `workflows/
   `<slug>`" — plus an operator decision on the Lewis quote (repair the stored text, or lose it). Until
   then every wave must draw N+6 and re-derive the same six drops.
 - **Who-wrote axis (`/who-wrote/`, added 2026-07-23):** the second music axis — "who WROTE this song?". Harvest is deterministic (`node workflows/harvest-who-wrote.js` scans the recording corpus → `data/who-wrote-queue.json`). ~14 records shipped (single-axis + dual-axis enrichment); ~78 dual-axis candidates queued. Recipe: the "Songs — the `/who-wrote/` axis" section below.
-- **Songs: next wave number s4, and the backlog is REFILLED.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived.) Song backlog `data/song-queue.json` — **79 queued** (62 `high` / 17 `medium` confusion), 89 ingested, 1 dropped. Harvested 2026-08-03 across all six veins, 11–15 each; **all 79 were new** because the run passed the 96 built-or-queued slugs as `exclude`, so no agent spent budget re-finding Tainted Love. ~3 waves' worth. Digest: `data/song-queue.md`.
+- **Songs: next wave number s5.** (s1 2026-07-22: 10 records. s2 2026-07-23: 27. s3 2026-07-23: 26, the tail of the backlog, 26/26 survived. **s4 2026-08-27: 20.**) Song corpus **115**. Song backlog `data/song-queue.json` — **59 queued** (42 `high` / 17 `medium` confusion), 109 ingested, 103 dropped. Digest: `data/song-queue.md`.
+  **⚠ SONGS STALL BECAUSE NOBODY DRIVES THEM, NOT BECAUSE THE SUPPLY RAN OUT.** Between 2026-08-04 and
+  2026-08-27 the song corpus did not move at all while quotes ran daily — because the s4 HARVEST ran
+  on 3-4 August, filled the queue with 79 candidates and logged its 102 rejections, and the s4
+  INGESTION wave never followed. The pipeline was refuelled and then not driven. **If you are asked
+  whether songs are out of material, check `songs.js report` before answering**: the drop reasons say
+  the confusion bar is a filter, not a drought — of 103 dropped, only **12** failed the bar itself,
+  while **54** were "the famous version IS the original", rejected at harvest time before any
+  generation spend. 42 `high` candidates remain, roughly two more waves.
   - **`sync` now records what the agents REJECTED, not just what they queued** (2026-08-04). A
     harvest returns three lists and sync used to read only `candidates`, so every sweep re-derived
     the same negative results. Both other lists are now persisted:
@@ -524,6 +532,26 @@ node tools/build.js
 node tools/songs.js sync /tmp/empty.json    # echo '[]' > /tmp/empty.json — sweeps selected → ingested
 git checkout -b songs-sN && git add -A && git commit && git push && gh pr create ...
 ```
+
+### What s4 caught — and why the FIRST-RECORDING claim needs its own scrutiny
+`noLyrics` and `confusionBarHolds` were true on all 20 pages. **`firstRecordingHolds` was false on
+two** — and that is the only claim this vertical actually makes.
+
+- **`city-of-new-orleans` named the WRONG RECORD.** The verdict was right (Goodman wrote it; Guthrie's
+  1972 hit is a cover) but the page pinned the first recording to Buddah BDS 5096, November 1971. An
+  earlier Goodman recording exists: the Chicago compilation *Gathering at the Earl of Old Town*
+  (Dunwich Productions 670), which Wikipedia calls outright "the first recording of … Steve Goodman
+  performing 'City of New Orleans'", session dated 23 March 1970 by SecondHandSongs. **Right artist,
+  wrong record** — a failure mode the "who recorded it first" axis is uniquely exposed to, because
+  getting the ARTIST right feels like getting the answer right.
+- **The diligence sentence was doing no work.** That page's trail read *"No recording of the song by
+  any artist earlier than Goodman's was found"* — worded to cover only OTHER artists, which let an
+  earlier recording by **Goodman himself** pass unmentioned while the surrounding copy told the reader
+  the Buddah track was first. **When a page states a verification, check that the stated scope is the
+  scope that was actually searched.**
+- **A re-recording by the SAME artist is the trap to look for.** `after-midnight` carries it too: Cale
+  re-cut his own song in 1971 after Clapton's hit, and that remake — not the 1966 Liberty original —
+  is the "J.J. Cale version" most listeners have heard.
 
 ### What the audit caught on its first run (wave s1) — why step 5 is not optional
 All ten pages passed the three headline claims (`firstRecordingHolds`, `confusionBarHolds`,
