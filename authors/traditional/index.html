@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){try{var d=document.documentElement,ls=localStorage;var THEMES={light:1,dark:1,auto:1},SIZES={normal:1,large:1,xl:1,xxl:1};var u=new URL(location.href),q=u.searchParams,qth=q.get('qth'),qts=q.get('qts');if(qth||qts){if(THEMES[qth])ls.setItem('quotle-theme',qth);if(SIZES[qts])ls.setItem('quotle-text-size',qts);q.delete('qth');q.delete('qts');var qs=q.toString();history.replaceState(null,'',u.pathname+(qs?'?'+qs:'')+u.hash);}var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
     <title>Traditional — provenance traced to source · Quotle.info</title>
-    <meta name="description" content="Traditional: 2 songs traced to a primary source where one exists, with attribution verified and misattributions untangled.">
+    <meta name="description" content="Traditional: 3 songs traced to a primary source where one exists, with attribution verified and misattributions untangled.">
     <link rel="canonical" href="https://quotle.info/authors/traditional/">
     <meta property="og:type" content="profile">
     <meta property="og:title" content="Traditional — provenance traced to source">
@@ -25,13 +25,19 @@
         "@type": "Person",
         "@id": "https://quotle.info/authors/traditional/#person",
         "name": "Traditional",
-        "description": "Author unknown; Roud Folk Song Index 6393",
+        "description": "Traditional African American work song · credited on the 1977 single as Traditional and Huddie Ledbetter",
         "subjectOf": [
           {
             "@type": "MusicRecording",
             "@id": "https://quotle.info/who-recorded/baby-please-dont-go/#recording",
             "name": "Baby, Please Don't Go",
             "url": "https://quotle.info/who-recorded/baby-please-dont-go/"
+          },
+          {
+            "@type": "MusicRecording",
+            "@id": "https://quotle.info/who-recorded/black-betty/#recording",
+            "name": "Black Betty",
+            "url": "https://quotle.info/who-recorded/black-betty/"
           },
           {
             "@type": "MusicRecording",
@@ -311,10 +317,10 @@
             <div class="author-avatar" aria-hidden="true">TR</div>
             <div>
                 <h1>Traditional</h1>
-                <p class="author-meta">Author unknown; Roud Folk Song Index 6393</p>
+                <p class="author-meta">Traditional African American work song &middot; credited on the 1977 single as Traditional and Huddie Ledbetter</p>
             </div>
         </header>
-        <div class="author-bio">There is no author to name. The song is traditional, of uncertain authorship, and carries the number 6393 in the Roud Folk Song Index. Its lineage is usually traced to the British broadside ballad tradition, with one theory holding that it travelled from England to the American South; another reads the &ldquo;rising sun&rdquo; as a sunburst insignia dating to the reign of Louis&nbsp;XIV. Ashley&rsquo;s own account &mdash; that he had it from his grandfather &mdash; puts the song comfortably back into the nineteenth century.</div>
+        <div class="author-bio">The song has no identifiable author. It circulated as an African American work song, and Alan Lomax understood the title as prison slang for the whip used on inmates, though scholars have also read it as a whiskey bottle, a prison transfer wagon or, later, a vehicle. The Lomaxes printed a notated version in their 1934 book <em>American Ballads and Folk Songs</em>, the year after they recorded it. Lead Belly&rsquo;s name sits beside &ldquo;Traditional&rdquo; on the writing credit that later records carry, which is a fair description of an arranger&rsquo;s share and a poor description of who invented it.</div>
 
         <section aria-labelledby="s-h">
             <div class="sec-head"><p class="kicker">Who recorded it</p><h2 id="s-h">Songs written by Traditional</h2></div>
@@ -322,6 +328,10 @@
                 <a class="q-card verified" href="/who-recorded/baby-please-dont-go/">
                     <p class="q-text">Baby, Please Don't Go</p>
                     <span class="q-conf"><span class="dot" aria-hidden="true">♪</span>Written by them &mdash; first recorded by Big Joe Williams</span>
+                </a>
+                <a class="q-card verified" href="/who-recorded/black-betty/">
+                    <p class="q-text">Black Betty</p>
+                    <span class="q-conf"><span class="dot" aria-hidden="true">♪</span>Written by them &mdash; first recorded by James &quot;Iron Head&quot; Baker and Clear Rock</span>
                 </a>
                 <a class="q-card verified" href="/who-recorded/the-house-of-the-rising-sun/">
                     <p class="q-text">The House of the Rising Sun</p>
