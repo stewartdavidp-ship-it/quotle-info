@@ -1,24 +1,20 @@
 {
   "meta": {
     "description": "Candidate backlog for quotle.info ingestion. Documented misattribution/famous-quote targets from Wikiquote + Quote Investigator, harvested by the harvest-candidates Workflow. Managed by tools/harvest.js — do not hand-edit counts. Lifecycle: queued → selected → ingested (or skipped).",
-    "updated": "2026-08-26",
+    "updated": "2026-08-27",
     "total": 1751,
-    "queued": 200,
+    "queued": 160,
     "selected": 0,
-    "ingested": 1543,
+    "ingested": 1583,
     "skipped": 8,
     "queuedByCategory": {
       "genuine-famous": 134,
-      "misattributed": 21,
-      "disputed": 32,
-      "scripture-misquote": 7,
-      "film-misquote": 6
+      "disputed": 26
     },
     "queuedByRightsEra": {
-      "in-copyright": 128,
-      "public-domain": 36,
-      "uncertain": 23,
-      "": 13
+      "in-copyright": 123,
+      "public-domain": 26,
+      "uncertain": 11
     }
   },
   "candidates": [
@@ -65,28 +61,6 @@
       "demandViews": 9523,
       "demandScore": 9523,
       "demandRank": 2
-    },
-    {
-      "slug": "he-who-has-a-why-to-live-can-bear-with-almost-any-how",
-      "quote": "He who has a why to live can bear with almost any how.",
-      "magnetAuthor": "Viktor Frankl",
-      "creditedTo": "Viktor Frankl",
-      "trueOrigin": "Friedrich Nietzsche, Twilight of the Idols (1889), 'Maxims and Arrows'. Frankl quoted it repeatedly in Man's Search for Meaning and always credited Nietzsche; popular reuse dropped the credit and it is now widely circulated as Frankl's own.",
-      "category": "misattributed",
-      "whyNotable": "Probably the most-quoted line from Man's Search for Meaning, routinely captioned 'Viktor Frankl' — QI credits Nietzsche 1889, and Frankl himself never claimed it.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "public-domain",
-      "documentedAt": "https://quoteinvestigator.com/2019/10/09/why-how/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-r41.json",
-      "harvestedOn": "2026-08-18",
-      "notes": "",
-      "demandViews": 3472,
-      "demandScore": 5208,
-      "demandRank": 3
     },
     {
       "slug": "football-is-not-a-matter-of-life-and-death-its-much-more",
@@ -174,7 +148,7 @@
       "notes": "",
       "demandViews": 1420,
       "demandScore": 1420,
-      "demandRank": 32
+      "demandRank": 7
     },
     {
       "slug": "we-can-only-be-said-to-be-alive-in-the-moments-when-our",
@@ -196,7 +170,7 @@
       "notes": "",
       "demandViews": 1420,
       "demandScore": 1420,
-      "demandRank": 33
+      "demandRank": 8
     },
     {
       "slug": "a-good-pr-story-is-infinitely-more-effective-than-a-front",
@@ -218,7 +192,7 @@
       "notes": "",
       "demandViews": 1402,
       "demandScore": 1402,
-      "demandRank": 34
+      "demandRank": 9
     },
     {
       "slug": "i-became-an-entrepreneur-by-mistake-ever-since-then-ive",
@@ -240,7 +214,7 @@
       "notes": "",
       "demandViews": 1402,
       "demandScore": 1402,
-      "demandRank": 35
+      "demandRank": 10
     },
     {
       "slug": "my-general-attitude-to-life-is-to-enjoy-every-minute-of",
@@ -262,29 +236,7 @@
       "notes": "",
       "demandViews": 1402,
       "demandScore": 1402,
-      "demandRank": 36
-    },
-    {
-      "slug": "lead-follow-or-get-out-of-the-way",
-      "quote": "Lead, follow, or get out of the way",
-      "magnetAuthor": "Lee Iacocca",
-      "creditedTo": "Lee Iacocca",
-      "trueOrigin": "Wikiquote's Thomas Paine page lists this in Misattributed and points to George S. Patton's actual wording, 'Lead me, follow me, or get out of my way' (quoted in Pocket Patriot: Quotes from American Heroes, 2005, ed. Kelly Nickell, p. 157). Iacocca did not originate it — he popularised the corporate form via Chrysler's 1992 ad campaign ('In the automobile industry, you either lead, follow, or get out of the way'), which is how his name got attached.",
-      "category": "misattributed",
-      "whyNotable": "The one genuinely strong misattribution hub available for Iacocca — the line is a business-poster staple credited variously to Iacocca, Thomas Paine, and Patton, and Wikiquote debunks the Paine credit while reassigning it to Patton.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://en.wikiquote.org/wiki/Thomas_Paine#Misattributed",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-business-2026-07-27.json",
-      "harvestedOn": "2026-07-28",
-      "notes": "",
-      "demandViews": 888,
-      "demandScore": 1332,
-      "demandRank": 37
+      "demandRank": 11
     },
     {
       "slug": "cant-anybody-here-play-this-game",
@@ -306,7 +258,7 @@
       "notes": "",
       "demandViews": 1307,
       "demandScore": 1307,
-      "demandRank": 38
+      "demandRank": 13
     },
     {
       "slug": "ill-never-make-the-mistake-of-being-70-years-old-again",
@@ -328,7 +280,7 @@
       "notes": "",
       "demandViews": 1307,
       "demandScore": 1307,
-      "demandRank": 39
+      "demandRank": 14
     },
     {
       "slug": "the-secret-of-managing-is-to-keep-the-guys-who-hate-you",
@@ -350,7 +302,7 @@
       "notes": "",
       "demandViews": 1307,
       "demandScore": 1307,
-      "demandRank": 40
+      "demandRank": 15
     },
     {
       "slug": "there-comes-a-time-in-every-mans-life-and-ive-had-plenty-of",
@@ -372,7 +324,7 @@
       "notes": "",
       "demandViews": 1307,
       "demandScore": 1307,
-      "demandRank": 41
+      "demandRank": 16
     },
     {
       "slug": "without-losers-where-would-the-winners-be",
@@ -394,7 +346,7 @@
       "notes": "",
       "demandViews": 1307,
       "demandScore": 1307,
-      "demandRank": 42
+      "demandRank": 17
     },
     {
       "slug": "patience-is-the-art-of-hoping",
@@ -416,7 +368,7 @@
       "notes": "",
       "demandViews": 1296,
       "demandScore": 1296,
-      "demandRank": 43
+      "demandRank": 18
     },
     {
       "slug": "in-all-my-years-of-football-ive-never-known-a-man-who",
@@ -438,7 +390,7 @@
       "notes": "",
       "demandViews": 1263,
       "demandScore": 1263,
-      "demandRank": 44
+      "demandRank": 19
     },
     {
       "slug": "were-on-to-cincinnati",
@@ -460,7 +412,7 @@
       "notes": "",
       "demandViews": 1263,
       "demandScore": 1263,
-      "demandRank": 45
+      "demandRank": 20
     },
     {
       "slug": "every-king-springs-from-a-race-of-slaves-and-every-slave",
@@ -482,7 +434,7 @@
       "gameIndex": null,
       "demandViews": 1258,
       "demandScore": 1258,
-      "demandRank": 46
+      "demandRank": 21
     },
     {
       "slug": "it-is-not-the-man-who-has-too-little-but-the-man-who-craves",
@@ -504,7 +456,7 @@
       "gameIndex": null,
       "demandViews": 1258,
       "demandScore": 1258,
-      "demandRank": 47
+      "demandRank": 22
     },
     {
       "slug": "the-wise-man-will-live-as-long-as-he-ought-not-as-long-as",
@@ -526,7 +478,7 @@
       "gameIndex": null,
       "demandViews": 1258,
       "demandScore": 1258,
-      "demandRank": 48
+      "demandRank": 23
     },
     {
       "slug": "an-organizations-ability-to-learn-and-translate-that",
@@ -548,7 +500,7 @@
       "notes": "",
       "demandViews": 1249,
       "demandScore": 1249,
-      "demandRank": 49
+      "demandRank": 24
     },
     {
       "slug": "getting-the-right-people-in-the-right-jobs-is-a-lot-more",
@@ -570,7 +522,7 @@
       "notes": "",
       "demandViews": 1249,
       "demandScore": 1249,
-      "demandRank": 50
+      "demandRank": 25
     },
     {
       "slug": "loyalty-to-a-company-its-nonsense",
@@ -592,139 +544,7 @@
       "notes": "",
       "demandViews": 1249,
       "demandScore": 1249,
-      "demandRank": 51
-    },
-    {
-      "slug": "baseball-is-the-only-field-of-endeavor-where-a-man-can",
-      "quote": "Baseball is the only field of endeavor where a man can succeed three times out of ten and be considered a good performer.",
-      "magnetAuthor": "Ted Williams",
-      "creditedTo": "Ted Williams",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "One of the most-shared inspirational baseball lines pinned on Williams, yet Wikiquote lists it as Unsourced with no primary citation and it circulates attributed to multiple figures.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-sports.json",
-      "harvestedOn": "2026-07-22",
-      "notes": "",
-      "demandViews": 884,
-      "demandScore": 1238,
-      "demandRank": 52
-    },
-    {
-      "slug": "by-the-time-you-know-what-to-do-youre-too-old-to-do-it",
-      "quote": "By the time you know what to do, you're too old to do it.",
-      "magnetAuthor": "Ted Williams",
-      "creditedTo": "Ted Williams",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "A clever aphorism heavily attributed to Williams but unsourced on Wikiquote; the general form floats among several athletes and comedians, a classic reassignment risk.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-sports.json",
-      "harvestedOn": "2026-07-22",
-      "notes": "",
-      "demandViews": 884,
-      "demandScore": 1238,
-      "demandRank": 53
-    },
-    {
-      "slug": "god-gets-you-to-the-plate-but-once-youre-there-youre-on",
-      "quote": "God gets you to the plate, but once you're there you're on your own.",
-      "magnetAuthor": "Ted Williams",
-      "creditedTo": "Ted Williams",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "A feel-good line widely circulated as Williams wisdom on quote sites, but it appears only in Wikiquote's Unsourced list with no located origin.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-sports.json",
-      "harvestedOn": "2026-07-22",
-      "notes": "",
-      "demandViews": 884,
-      "demandScore": 1238,
-      "demandRank": 54
-    },
-    {
-      "slug": "golf-is-the-only-sport-where-the-ball-doesnt-move-until-you",
-      "quote": "Golf is the only sport where the ball doesn't move until you hit it.",
-      "magnetAuthor": "Ted Williams",
-      "creditedTo": "Ted Williams",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "A quippy line commonly credited to Williams yet unsourced; the same observation is attributed to many golfers and comics, so the Williams credit is doubtful.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-sports.json",
-      "harvestedOn": "2026-07-22",
-      "notes": "",
-      "demandViews": 884,
-      "demandScore": 1238,
-      "demandRank": 55
-    },
-    {
-      "slug": "hitting-a-baseball-ive-said-it-a-thousand-times-is-the",
-      "quote": "Hitting a baseball — I've said it a thousand times — is the single most difficult thing to do in sport.",
-      "magnetAuthor": "Ted Williams",
-      "creditedTo": "Ted Williams",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "Williams genuinely championed this idea, but the exact wording varies wildly across sources and this version sits in Wikiquote's Unsourced list rather than any primary text.",
-      "likelyConfidence": "attributed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-sports.json",
-      "harvestedOn": "2026-07-22",
-      "notes": "",
-      "demandViews": 884,
-      "demandScore": 1238,
-      "demandRank": 56
-    },
-    {
-      "slug": "id-have-been-a-290-hitter-without-a-louisville-slugger",
-      "quote": "I'd have been a .290 hitter without a Louisville Slugger.",
-      "magnetAuthor": "Ted Williams",
-      "creditedTo": "Ted Williams",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "A frequently repeated Williams line crediting his bat, but Wikiquote carries it only as Unsourced with no primary citation.",
-      "likelyConfidence": "attributed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-sports.json",
-      "harvestedOn": "2026-07-22",
-      "notes": "",
-      "demandViews": 884,
-      "demandScore": 1238,
-      "demandRank": 57
+      "demandRank": 26
     },
     {
       "slug": "ive-found-that-you-dont-need-to-wear-a-necktie-if-you-can",
@@ -746,7 +566,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 1238,
-      "demandRank": 58
+      "demandRank": 33
     },
     {
       "slug": "the-only-thing-dumber-than-a-pitcher-is-two-pitchers",
@@ -768,7 +588,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 1238,
-      "demandRank": 59
+      "demandRank": 34
     },
     {
       "slug": "they-invented-the-all-star-game-for-willie-mays",
@@ -790,7 +610,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 1238,
-      "demandRank": 61
+      "demandRank": 36
     },
     {
       "slug": "there-has-always-been-a-saying-in-baseball-that-you-cant",
@@ -812,117 +632,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 1238,
-      "demandRank": 60
-    },
-    {
-      "slug": "do-not-wait-to-strike-till-the-iron-is-hot-but-make-it-hot",
-      "quote": "Do not wait to strike till the iron is hot; but make it hot by striking.",
-      "magnetAuthor": "W. B. Yeats",
-      "creditedTo": "W. B. Yeats",
-      "trueOrigin": "Not Yeats. QI's earliest instance is Benjamin Franklin's 1782 letter to Rev. Richard Price (\"it is not only right to strike while the iron is hot, but that it may be very practicable to heat it by continually striking\"), with Richard Sharp's 1806 letter second; the polished form circulated anonymously through the 1800s. Also pinned on Oliver Cromwell and Hemingway. Neil Mann likewise assigns it to Franklin.",
-      "category": "misattributed",
-      "whyNotable": "A motivational-poster perennial credited to Yeats, Cromwell and Hemingway alike; QI shows the earliest version is Franklin's, 82 years before Yeats was born.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "public-domain",
-      "documentedAt": "https://quoteinvestigator.com/2017/05/31/iron-hot/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-r41.json",
-      "harvestedOn": "2026-08-18",
-      "notes": "",
-      "demandViews": 809,
-      "demandScore": 1214,
-      "demandRank": 63
-    },
-    {
-      "slug": "happiness-is-neither-virtue-nor-pleasure-nor-this-thing-nor",
-      "quote": "Happiness is neither virtue nor pleasure nor this thing nor that but simply growth. We are happy when we are growing.",
-      "magnetAuthor": "W. B. Yeats",
-      "creditedTo": "W. B. Yeats",
-      "trueOrigin": "John Butler Yeats, the poet's father, in a 1909 letter to a Miss Grierson — documented by Yeats scholar Neil Mann (author of A Reader's Guide to Yeats's A Vision) on his YeatsVision site.",
-      "category": "misattributed",
-      "whyNotable": "A heavily shared self-help line credited to the poet; the Yeats scholarship attributes it to his father's correspondence, making it the second father-son mix-up in the Yeats corpus.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "public-domain",
-      "documentedAt": "https://yeatsvision.blogspot.com/2018/10/misattribution.html",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-r41.json",
-      "harvestedOn": "2026-08-18",
-      "notes": "",
-      "demandViews": 809,
-      "demandScore": 1214,
-      "demandRank": 64
-    },
-    {
-      "slug": "people-who-lean-on-logic-and-philosophy-and-rational",
-      "quote": "People who lean on logic and philosophy and rational exposition end by starving the best part of the mind.",
-      "magnetAuthor": "W. B. Yeats",
-      "creditedTo": "W. B. Yeats",
-      "trueOrigin": "John Butler Yeats, in a 1906 letter to his son W. B. Yeats — identified by Neil Mann (YeatsVision) among the lines routinely reassigned from father to son.",
-      "category": "misattributed",
-      "whyNotable": "Widely circulated on aggregators under the poet's name; the Yeats scholarship pins it to a 1906 letter from his father, the same drift that produced \"What can be explained is not poetry.\"",
-      "likelyConfidence": "disputed",
-      "rightsEra": "public-domain",
-      "documentedAt": "https://yeatsvision.blogspot.com/2018/10/misattribution.html",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-r41.json",
-      "harvestedOn": "2026-08-18",
-      "notes": "",
-      "demandViews": 809,
-      "demandScore": 1214,
-      "demandRank": 65
-    },
-    {
-      "slug": "what-can-be-explained-is-not-poetry",
-      "quote": "What can be explained is not poetry.",
-      "magnetAuthor": "W. B. Yeats",
-      "creditedTo": "W. B. Yeats",
-      "trueOrigin": "John Butler Yeats — the poet's father, a painter — in a letter to his son dated 6 September 1915, printed in Passages from the Letters of John Butler Yeats (1917), edited by Ezra Pound. Full original: \"What can be explained is not poetry. It is when the powers of explanation desert him that the poet writes verse.\" Carl Sandburg quoted it correctly in Early Moon (1930) and was later miscredited himself.",
-      "category": "misattributed",
-      "whyNotable": "A textbook name-collision misattribution: the line drifts from the obscure father to the Nobel-winning son, and QI documents both the drift and the exact 1915 letter.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "public-domain",
-      "documentedAt": "https://quoteinvestigator.com/2021/01/13/poetry/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-r41.json",
-      "harvestedOn": "2026-08-18",
-      "notes": "",
-      "demandViews": 809,
-      "demandScore": 1214,
-      "demandRank": 66
-    },
-    {
-      "slug": "being-irish-he-had-an-abiding-sense-of-tragedy-which",
-      "quote": "Being Irish, he had an abiding sense of tragedy which sustained him through temporary periods of joy.",
-      "magnetAuthor": "W. B. Yeats",
-      "creditedTo": "W. B. Yeats",
-      "trueOrigin": "Unknown/anonymous. QI's earliest citation is a 1991 San Francisco Chronicle piece in which Oliver Stone used a variant about Jim Morrison and credited Yeats; nothing in Yeats's published work supports it, though QI expects a pre-1991 citation exists.",
-      "category": "misattributed",
-      "whyNotable": "The go-to \"Irish\" epigraph in obituaries and St Patrick's Day columns; QI finds zero basis in Yeats and calls it a false consensus built on repetition.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://quoteinvestigator.com/2023/03/21/irish-joy/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-r41.json",
-      "harvestedOn": "2026-08-18",
-      "notes": "",
-      "demandViews": 809,
-      "demandScore": 1214,
-      "demandRank": 62
+      "demandRank": 35
     },
     {
       "slug": "culture-does-not-consist-in-acquiring-opinions-but-in",
@@ -944,183 +654,7 @@
       "notes": "",
       "demandViews": 809,
       "demandScore": 1133,
-      "demandRank": 67
-    },
-    {
-      "slug": "i-want-to-take-the-calculated-risk-to-dream-and-to-build-to",
-      "quote": "I want to take the calculated risk; to dream and to build, to fail and to succeed. I refuse to barter incentive for a dole. I prefer the challenges of life to the guaranteed existence; the thrill of fulfillment to the stale calm of utopia",
-      "magnetAuthor": "Sam Walton",
-      "creditedTo": "Sam Walton",
-      "trueOrigin": "Dean Alfange. It is an excerpt from his creed beginning \"I do not choose to be a common man\", known as \"My Creed\" or \"An American's Creed\", originally published in This Week Magazine and reprinted in The Reader's Digest, October 1952, p. 10 and January 1954, p. 122. The text was later carried at the end of Alfange's own entry in successive editions of Who's Who in America. Also frequently misattributed to Thomas Paine and Abraham Lincoln.",
-      "category": "misattributed",
-      "whyNotable": "The strongest candidate by far: a documented misattribution visible inside Wikiquote itself, where the Barter page credits the passage to Sam Walton via a 2010 Bergdahl book while the Opportunity page credits Dean Alfange with full 1952 sourcing.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "in-copyright",
-      "documentedAt": "https://en.wikiquote.org/wiki/Opportunity",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-business-2026-07-27.json",
-      "harvestedOn": "2026-07-28",
-      "notes": "",
-      "demandViews": 711,
-      "demandScore": 1067,
-      "demandRank": 68
-    },
-    {
-      "slug": "the-more-numerous-the-laws-the-more-corrupt-the-government",
-      "quote": "The more numerous the laws, the more corrupt the government.",
-      "magnetAuthor": "Marcus Tullius Cicero",
-      "creditedTo": "Marcus Tullius Cicero",
-      "trueOrigin": "Tacitus, Annals, Book III, 27. Also circulates in the loose paraphrase \"The closer the collapse of the Empire, the crazier its laws are.\"",
-      "category": "misattributed",
-      "whyNotable": "A libertarian-meme staple credited to Cicero; the Latin (Corruptissima re publica plurimae leges) is Tacitus, not Cicero.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "public-domain",
-      "documentedAt": "https://en.wikiquote.org/wiki/Cicero#Misattributed",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-20260730-authors.json",
-      "harvestedOn": "2026-07-30",
-      "notes": "",
-      "demandViews": 710,
-      "demandScore": 1065,
-      "demandRank": 73
-    },
-    {
-      "slug": "time-heals-all-wounds",
-      "quote": "Time heals all wounds.",
-      "magnetAuthor": "Marcus Tullius Cicero",
-      "creditedTo": "Marcus Tullius Cicero",
-      "trueOrigin": "Terence, Heauton Timorumenos, Act III, scene i — the Latin line circulated as Cicero's is Terence's.",
-      "category": "misattributed",
-      "whyNotable": "An everyday English proverb frequently credited to Cicero with a fake Latin tag (Diem adimere aegritudinem hominibus); Wikiquote assigns the Latin to Terence.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "public-domain",
-      "documentedAt": "https://en.wikiquote.org/wiki/Cicero#Misattributed",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-20260730-authors.json",
-      "harvestedOn": "2026-07-30",
-      "notes": "",
-      "demandViews": 710,
-      "demandScore": 1065,
-      "demandRank": 74
-    },
-    {
-      "slug": "times-are-bad-children-no-longer-obey-their-parents-and",
-      "quote": "Times are bad. Children no longer obey their parents, and everyone is writing a book.",
-      "magnetAuthor": "Marcus Tullius Cicero",
-      "creditedTo": "Marcus Tullius Cicero",
-      "trueOrigin": "No ancient source. QI traces the \"world is coming to an end / everyone wants to write a book\" family of sayings through 20th-century humor columns from 1908 onward; the Cicero credit is a late graft (Wikiquote cites InfoWorld, 16 April 2001).",
-      "category": "misattributed",
-      "whyNotable": "The classic \"kids these days\" fake — QI traces the joke's family back to 1908 and shows it has been pinned in turn on an Assyrian tablet, an Egyptian priest, and Cicero, with no ancient source for any version.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://quoteinvestigator.com/2012/10/22/world-end/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-20260730-authors.json",
-      "harvestedOn": "2026-07-30",
-      "notes": "",
-      "demandViews": 710,
-      "demandScore": 1065,
-      "demandRank": 75
-    },
-    {
-      "slug": "a-bureaucrat-is-the-most-despicable-of-men-though-he-is",
-      "quote": "A bureaucrat is the most despicable of men, though he is needed as vultures are needed, but one hardly admires vultures whom bureaucrats so strangely resemble.",
-      "magnetAuthor": "Marcus Tullius Cicero",
-      "creditedTo": "Marcus Tullius Cicero",
-      "trueOrigin": "Taylor Caldwell, A Pillar of Iron (1965), p. 451 — one of three passages from the novel routinely passed off as Cicero.",
-      "category": "misattributed",
-      "whyNotable": "A perennial anti-government-quote-card line; Wikiquote pins it to Taylor Caldwell's 1965 novel, p. 451, with nothing corresponding in Cicero.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "in-copyright",
-      "documentedAt": "https://en.wikiquote.org/wiki/Cicero#Misattributed",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-20260730-authors.json",
-      "harvestedOn": "2026-07-30",
-      "notes": "",
-      "demandViews": 710,
-      "demandScore": 1065,
-      "demandRank": 69
-    },
-    {
-      "slug": "a-nation-can-survive-its-fools-and-even-the-ambitious-but",
-      "quote": "A nation can survive its fools, and even the ambitious. But it cannot survive treason from within.",
-      "magnetAuthor": "Marcus Tullius Cicero",
-      "creditedTo": "Marcus Tullius Cicero",
-      "trueOrigin": "Taylor Caldwell, A Pillar of Iron (1965), a novel about Cicero — the passage is her fictional Cicero's speech, not Cicero's. Wikiquote notes it may loosely paraphrase the Second Catiline Oration but drastically changes the rhetoric; it was also spread by a 1965 essay by Florida Justice Millard Caldwell.",
-      "category": "misattributed",
-      "whyNotable": "Probably the single most-shared fake Cicero line in political memes; Wikiquote pins it to Taylor Caldwell's 1965 novel A Pillar of Iron (p. 661), not to any Cicero text.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "in-copyright",
-      "documentedAt": "https://en.wikiquote.org/wiki/Cicero#Misattributed",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-20260730-authors.json",
-      "harvestedOn": "2026-07-30",
-      "notes": "",
-      "demandViews": 710,
-      "demandScore": 1065,
-      "demandRank": 70
-    },
-    {
-      "slug": "the-budget-should-be-balanced-the-treasury-should-be",
-      "quote": "The budget should be balanced, the treasury should be refilled, public debt should be reduced, the arrogance of officialdom should be tempered and controlled, and the assistance to foreign lands should be curtailed lest Rome become bankrupt. People must again learn to work, instead of living on public assistance.",
-      "magnetAuthor": "Marcus Tullius Cicero",
-      "creditedTo": "Marcus Tullius Cicero",
-      "trueOrigin": "Taylor Caldwell, A Pillar of Iron (1965), p. 483 — narration describing what Antonius agreed with, not a Cicero quotation. Spread as fact via US congressional hearings from 1966.",
-      "category": "misattributed",
-      "whyNotable": "Endlessly recirculated as \"Cicero, 55 B.C.\" in budget debates; QI shows it is a rewrite of Taylor Caldwell's 1965 novel that Congressman Otto Passman entered into the record as genuine Cicero from 1966 on.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "in-copyright",
-      "documentedAt": "https://quoteinvestigator.com/2013/05/15/cicero-budget/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-20260730-authors.json",
-      "harvestedOn": "2026-07-30",
-      "notes": "",
-      "demandViews": 710,
-      "demandScore": 1065,
-      "demandRank": 71
-    },
-    {
-      "slug": "the-evil-was-not-in-bread-and-circuses-per-se-but-in-the",
-      "quote": "The evil was not in bread and circuses, per se, but in the willingness of the people to sell their rights as free men for full bellies and the excitement of the games which would serve to distract them from the other human hungers which bread and circuses can never appease.",
-      "magnetAuthor": "Marcus Tullius Cicero",
-      "creditedTo": "Marcus Tullius Cicero",
-      "trueOrigin": "Ben Moreell, \"Of Bread and Circuses,\" The Freeman, January 1956, p. 31. Moreell's piece correctly attributes the phrase \"bread and circuses\" to Juvenal and says nothing about Cicero.",
-      "category": "misattributed",
-      "whyNotable": "The most-quoted \"Cicero on bread and circuses\" line, but Wikiquote traces it to a 1956 Freeman essay by Admiral Ben Moreell that never mentions Cicero at all.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "in-copyright",
-      "documentedAt": "https://en.wikiquote.org/wiki/Cicero#Misattributed",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-20260730-authors.json",
-      "harvestedOn": "2026-07-30",
-      "notes": "",
-      "demandViews": 710,
-      "demandScore": 1065,
-      "demandRank": 72
+      "demandRank": 42
     },
     {
       "slug": "cool-papa-was-so-fast-that-he-could-turn-off-the-light",
@@ -1142,7 +676,7 @@
       "notes": "",
       "demandViews": 1043,
       "demandScore": 1043,
-      "demandRank": 76
+      "demandRank": 51
     },
     {
       "slug": "dont-look-back-something-might-be-gaining-on-you",
@@ -1164,7 +698,7 @@
       "notes": "",
       "demandViews": 1043,
       "demandScore": 1043,
-      "demandRank": 77
+      "demandRank": 52
     },
     {
       "slug": "i-have-never-thrown-an-illegal-pitch-the-trouble-is-some-of",
@@ -1186,7 +720,7 @@
       "notes": "",
       "demandViews": 1043,
       "demandScore": 1043,
-      "demandRank": 78
+      "demandRank": 53
     },
     {
       "slug": "at-60-miles-an-hour-the-loudest-noise-in-this-new-rolls",
@@ -1208,7 +742,7 @@
       "notes": "",
       "demandViews": 998,
       "demandScore": 998,
-      "demandRank": 79
+      "demandRank": 54
     },
     {
       "slug": "if-each-of-us-hires-people-who-are-smaller-than-we-are-we",
@@ -1230,7 +764,7 @@
       "notes": "",
       "demandViews": 998,
       "demandScore": 998,
-      "demandRank": 80
+      "demandRank": 55
     },
     {
       "slug": "never-write-an-advertisement-which-you-wouldnt-want-your",
@@ -1252,7 +786,7 @@
       "notes": "",
       "demandViews": 998,
       "demandScore": 998,
-      "demandRank": 81
+      "demandRank": 56
     },
     {
       "slug": "the-consumer-isnt-a-moron-she-is-your-wife",
@@ -1274,7 +808,7 @@
       "notes": "",
       "demandViews": 998,
       "demandScore": 998,
-      "demandRank": 82
+      "demandRank": 57
     },
     {
       "slug": "i-pay-low-wages-i-can-take-advantage-of-that-were-going-to",
@@ -1296,7 +830,7 @@
       "notes": "",
       "demandViews": 711,
       "demandScore": 995,
-      "demandRank": 83
+      "demandRank": 58
     },
     {
       "slug": "outstanding-leaders-go-out-of-their-way-to-boost-the-self",
@@ -1318,7 +852,7 @@
       "notes": "",
       "demandViews": 711,
       "demandScore": 995,
-      "demandRank": 84
+      "demandRank": 59
     },
     {
       "slug": "there-is-only-one-boss-the-customer-and-he-can-fire",
@@ -1340,7 +874,7 @@
       "notes": "",
       "demandViews": 711,
       "demandScore": 995,
-      "demandRank": 85
+      "demandRank": 60
     },
     {
       "slug": "a-room-without-books-is-like-a-body-without-a-soul",
@@ -1362,7 +896,7 @@
       "notes": "",
       "demandViews": 710,
       "demandScore": 994,
-      "demandRank": 86
+      "demandRank": 61
     },
     {
       "slug": "freedom-is-participation-in-power",
@@ -1384,7 +918,7 @@
       "notes": "",
       "demandViews": 710,
       "demandScore": 994,
-      "demandRank": 87
+      "demandRank": 62
     },
     {
       "slug": "so-i-close-in-saying-that-i-might-have-been-given-a-bad",
@@ -1406,7 +940,7 @@
       "notes": "",
       "demandViews": 926,
       "demandScore": 926,
-      "demandRank": 88
+      "demandRank": 63
     },
     {
       "slug": "today-i-consider-myself-the-luckiest-man-on-the-face-of-the",
@@ -1428,7 +962,7 @@
       "notes": "",
       "demandViews": 926,
       "demandScore": 926,
-      "demandRank": 89
+      "demandRank": 64
     },
     {
       "slug": "it-pains-me-to-see-my-old-company-which-has-meant-so-much",
@@ -1450,7 +984,7 @@
       "notes": "",
       "demandViews": 888,
       "demandScore": 888,
-      "demandRank": 90
+      "demandRank": 65
     },
     {
       "slug": "safety-doesnt-sell",
@@ -1472,7 +1006,7 @@
       "notes": "",
       "demandViews": 888,
       "demandScore": 888,
-      "demandRank": 91
+      "demandRank": 66
     },
     {
       "slug": "weve-got-a-gang-of-clueless-bozos-steering-our-ship-of",
@@ -1494,7 +1028,7 @@
       "notes": "",
       "demandViews": 888,
       "demandScore": 888,
-      "demandRank": 92
+      "demandRank": 67
     },
     {
       "slug": "a-man-has-to-have-goals-for-a-day-for-a-lifetime-and-that",
@@ -1516,7 +1050,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 884,
-      "demandRank": 93
+      "demandRank": 68
     },
     {
       "slug": "if-you-dont-think-too-good-dont-think-too-much",
@@ -1538,7 +1072,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 884,
-      "demandRank": 94
+      "demandRank": 69
     },
     {
       "slug": "care-about-what-other-people-think-and-you-will-always-be",
@@ -1560,7 +1094,7 @@
       "gameIndex": null,
       "demandViews": 615,
       "demandScore": 861,
-      "demandRank": 95
+      "demandRank": 70
     },
     {
       "slug": "friendship-is-born-at-that-moment-when-one-person-says-to",
@@ -1582,7 +1116,7 @@
       "gameIndex": null,
       "demandViews": 842,
       "demandScore": 842,
-      "demandRank": 96
+      "demandRank": 71
     },
     {
       "slug": "there-are-two-kinds-of-people-in-the-end-those-who-say-to",
@@ -1604,7 +1138,7 @@
       "gameIndex": null,
       "demandViews": 842,
       "demandScore": 842,
-      "demandRank": 97
+      "demandRank": 72
     },
     {
       "slug": "in-dreams-begins-responsibility",
@@ -1626,7 +1160,7 @@
       "notes": "",
       "demandViews": 809,
       "demandScore": 809,
-      "demandRank": 98
+      "demandRank": 73
     },
     {
       "slug": "we-make-out-of-the-quarrel-with-others-rhetoric-but-of-the",
@@ -1648,7 +1182,7 @@
       "notes": "",
       "demandViews": 809,
       "demandScore": 809,
-      "demandRank": 100
+      "demandRank": 75
     },
     {
       "slug": "man-can-embody-truth-but-he-cannot-know-it",
@@ -1670,7 +1204,7 @@
       "notes": "",
       "demandViews": 809,
       "demandScore": 809,
-      "demandRank": 99
+      "demandRank": 74
     },
     {
       "slug": "lets-win-one-for-the-gipper",
@@ -1692,7 +1226,7 @@
       "notes": "",
       "demandViews": 751,
       "demandScore": 751,
-      "demandRank": 102
+      "demandRank": 77
     },
     {
       "slug": "football-is-a-game-played-with-arms-legs-and-shoulders-but",
@@ -1714,7 +1248,7 @@
       "notes": "",
       "demandViews": 751,
       "demandScore": 751,
-      "demandRank": 101
+      "demandRank": 76
     },
     {
       "slug": "the-secret-is-to-work-less-as-individuals-and-more-as-a",
@@ -1736,7 +1270,7 @@
       "notes": "",
       "demandViews": 751,
       "demandScore": 751,
-      "demandRank": 103
+      "demandRank": 78
     },
     {
       "slug": "he-had-shoulder-surgery-on-his-elbow",
@@ -1758,7 +1292,7 @@
       "notes": "",
       "demandViews": 729,
       "demandScore": 729,
-      "demandRank": 104
+      "demandRank": 79
     },
     {
       "slug": "if-what-you-did-yesterday-seems-big-you-havent-done",
@@ -1780,7 +1314,7 @@
       "notes": "",
       "demandViews": 729,
       "demandScore": 729,
-      "demandRank": 105
+      "demandRank": 80
     },
     {
       "slug": "on-this-team-were-all-united-in-a-common-goal-to-keep-my-job",
@@ -1802,7 +1336,7 @@
       "notes": "",
       "demandViews": 729,
       "demandScore": 729,
-      "demandRank": 106
+      "demandRank": 81
     },
     {
       "slug": "the-next-flag-they-plant-will-be-all-white-and-itll-be",
@@ -1824,7 +1358,7 @@
       "notes": "",
       "demandViews": 729,
       "demandScore": 729,
-      "demandRank": 107
+      "demandRank": 82
     },
     {
       "slug": "they-say-a-tie-is-like-kissing-your-sister-i-guess-that-is",
@@ -1846,7 +1380,7 @@
       "notes": "",
       "demandViews": 729,
       "demandScore": 729,
-      "demandRank": 108
+      "demandRank": 83
     },
     {
       "slug": "for-this-one-virtue-is-not-only-the-greatest-but-is-also",
@@ -1868,7 +1402,7 @@
       "notes": "",
       "demandViews": 710,
       "demandScore": 710,
-      "demandRank": 109
+      "demandRank": 84
     },
     {
       "slug": "let-the-welfare-of-the-people-be-the-ultimate-law",
@@ -1890,7 +1424,7 @@
       "notes": "",
       "demandViews": 710,
       "demandScore": 710,
-      "demandRank": 110
+      "demandRank": 85
     },
     {
       "slug": "not-to-know-what-happened-before-you-were-born-is-to-be-a",
@@ -1912,7 +1446,7 @@
       "notes": "",
       "demandViews": 710,
       "demandScore": 710,
-      "demandRank": 111
+      "demandRank": 86
     },
     {
       "slug": "a-journey-of-a-thousand-miles-begins-with-a-single-step",
@@ -1934,7 +1468,7 @@
       "gameIndex": null,
       "demandViews": 615,
       "demandScore": 615,
-      "demandRank": 112
+      "demandRank": 87
     },
     {
       "slug": "he-who-knows-does-not-speak-he-who-speaks-does-not-know",
@@ -1956,29 +1490,7 @@
       "gameIndex": null,
       "demandViews": 615,
       "demandScore": 615,
-      "demandRank": 113
-    },
-    {
-      "slug": "dont-just-do-something-sit-there",
-      "quote": "Don't just do something, sit there.",
-      "magnetAuthor": "Thich Nhat Hanh",
-      "creditedTo": "Thich Nhat Hanh",
-      "trueOrigin": "A rearranged cliche in print well before him: Quote Investigator's earliest close match is journalist Ollie Crawford in The Philadelphia Inquirer, August 1954 ('Don't just do something. Sit there.'), with producer Martin Gabel's 'Don't just do something; stand there' from 1945. Thich Nhat Hanh used it in a 1983 Vajradhatu Sun interview and Sylvia Boorstein titled a 1996 book with it — both after it was already circulating.",
-      "category": "misattributed",
-      "whyNotable": "The single most-shared 'Thich Nhat Hanh' one-liner on mindfulness social media, and the only QI investigation that touches him — QI shows he popularized it but did not coin it, ~30 years after it appeared in a newspaper column about radar platforms.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://quoteinvestigator.com/2026/08/06/sit-there/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-r41.json",
-      "harvestedOn": "2026-08-18",
-      "notes": "",
-      "demandViews": 409,
-      "demandScore": 614,
-      "demandRank": 114
+      "demandRank": 88
     },
     {
       "slug": "if-you-want-others-to-be-happy-practice-compassion-if-you",
@@ -2000,7 +1512,7 @@
       "gameIndex": null,
       "demandViews": 551,
       "demandScore": 551,
-      "demandRank": 115
+      "demandRank": 90
     },
     {
       "slug": "love-and-compassion-are-necessities-not-luxuries-without",
@@ -2022,7 +1534,7 @@
       "gameIndex": null,
       "demandViews": 551,
       "demandScore": 551,
-      "demandRank": 116
+      "demandRank": 91
     },
     {
       "slug": "my-true-religion-is-kindness",
@@ -2044,7 +1556,7 @@
       "gameIndex": null,
       "demandViews": 551,
       "demandScore": 551,
-      "demandRank": 117
+      "demandRank": 92
     },
     {
       "slug": "we-must-all-suffer-from-one-of-two-pains-the-pain-of",
@@ -2066,7 +1578,7 @@
       "gameIndex": null,
       "demandViews": 519,
       "demandScore": 519,
-      "demandRank": 118
+      "demandRank": 93
     },
     {
       "slug": "change-the-way-you-look-at-things-and-the-things-you-look",
@@ -2088,7 +1600,7 @@
       "gameIndex": null,
       "demandViews": 347,
       "demandScore": 486,
-      "demandRank": 119
+      "demandRank": 94
     },
     {
       "slug": "we-are-not-human-beings-having-a-spiritual-experience-we",
@@ -2110,7 +1622,7 @@
       "gameIndex": null,
       "demandViews": 347,
       "demandScore": 486,
-      "demandRank": 120
+      "demandRank": 95
     },
     {
       "slug": "the-most-rewarding-things-you-do-in-life-are-often-the-ones",
@@ -2132,7 +1644,7 @@
       "notes": "",
       "demandViews": 317,
       "demandScore": 444,
-      "demandRank": 121
+      "demandRank": 96
     },
     {
       "slug": "its-hard-not-to-play-golf-thats-up-to-jack-nicklaus",
@@ -2154,7 +1666,7 @@
       "notes": "",
       "demandViews": 439,
       "demandScore": 439,
-      "demandRank": 122
+      "demandRank": 97
     },
     {
       "slug": "the-older-you-get-the-stronger-the-wind-gets-and-its-always",
@@ -2176,29 +1688,7 @@
       "notes": "",
       "demandViews": 439,
       "demandScore": 439,
-      "demandRank": 123
-    },
-    {
-      "slug": "those-who-play-with-the-devils-toys-will-be-brought-by",
-      "quote": "Those who play with the devil's toys will be brought by degrees to wield his sword.",
-      "magnetAuthor": "R. Buckminster Fuller",
-      "creditedTo": "R. Buckminster Fuller",
-      "trueOrigin": "Thomas Fuller, The Profane State (1642): 'they which play with the devils rattles, will be brought by degrees to wield his sword.' Reprinted with correct attribution in Chambers's Cyclopaedia of English Literature (1902); an ambiguous 'Fuller' credit in The Evening World (1921) likely seeded the confusion, and citations to Buckminster Fuller appear from about 2005 onward.",
-      "category": "misattributed",
-      "whyNotable": "Widely quoted as a Buckminster Fuller warning about technology — a textbook name-collision misattribution: QI found no evidence Buckminster ever said it, and traced it to the 17th-century English clergyman Thomas Fuller.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "public-domain",
-      "documentedAt": "https://quoteinvestigator.com/2016/07/23/sword/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-r41.json",
-      "harvestedOn": "2026-08-18",
-      "notes": "",
-      "demandViews": 277,
-      "demandScore": 416,
-      "demandRank": 124
+      "demandRank": 98
     },
     {
       "slug": "the-miracle-is-not-to-walk-on-water-the-miracle-is-to-walk",
@@ -2220,7 +1710,7 @@
       "notes": "",
       "demandViews": 409,
       "demandScore": 409,
-      "demandRank": 125
+      "demandRank": 100
     },
     {
       "slug": "the-most-precious-gift-we-can-offer-others-is-our-presence",
@@ -2242,7 +1732,7 @@
       "notes": "",
       "demandViews": 409,
       "demandScore": 409,
-      "demandRank": 126
+      "demandRank": 101
     },
     {
       "slug": "your-true-home-is-in-the-here-and-the-now",
@@ -2264,7 +1754,7 @@
       "notes": "",
       "demandViews": 409,
       "demandScore": 409,
-      "demandRank": 127
+      "demandRank": 102
     },
     {
       "slug": "everyone-is-born-a-genius-but-the-process-of-living-de",
@@ -2286,7 +1776,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 388,
-      "demandRank": 128
+      "demandRank": 103
     },
     {
       "slug": "theres-nothing-in-a-caterpillar-that-tells-you-its-going-to",
@@ -2308,7 +1798,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 388,
-      "demandRank": 129
+      "demandRank": 104
     },
     {
       "slug": "you-never-change-things-by-fighting-the-existing-reality-to",
@@ -2330,7 +1820,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 388,
-      "demandRank": 130
+      "demandRank": 105
     },
     {
       "slug": "when-you-stop-talking-youve-lost-your-customer-when-you",
@@ -2352,7 +1842,7 @@
       "notes": "",
       "demandViews": 365,
       "demandScore": 365,
-      "demandRank": 131
+      "demandRank": 106
     },
     {
       "slug": "you-handle-animals-you-deal-with-people",
@@ -2374,7 +1864,7 @@
       "notes": "",
       "demandViews": 349,
       "demandScore": 349,
-      "demandRank": 132
+      "demandRank": 107
     },
     {
       "slug": "in-a-world-of-individuals-comparison-is-a-senseless-activity",
@@ -2396,7 +1886,7 @@
       "gameIndex": null,
       "demandViews": 347,
       "demandScore": 347,
-      "demandRank": 133
+      "demandRank": 108
     },
     {
       "slug": "you-will-never-win-if-you-have-to-prove-that-you-are-the",
@@ -2418,7 +1908,7 @@
       "gameIndex": null,
       "demandViews": 347,
       "demandScore": 347,
-      "demandRank": 134
+      "demandRank": 109
     },
     {
       "slug": "ive-always-believed-the-british-open-is-one-of-the-greatest",
@@ -2440,7 +1930,7 @@
       "notes": "",
       "demandViews": 317,
       "demandScore": 317,
-      "demandRank": 135
+      "demandRank": 110
     },
     {
       "slug": "maybe-youll-fail-most-of-the-time-but-until-youve-dared-to",
@@ -2462,7 +1952,7 @@
       "notes": "",
       "demandViews": 317,
       "demandScore": 317,
-      "demandRank": 136
+      "demandRank": 111
     },
     {
       "slug": "for-the-love-of-money-is-the-root-of-all-evil",
@@ -2484,7 +1974,7 @@
       "notes": "",
       "demandViews": 284,
       "demandScore": 284,
-      "demandRank": 137
+      "demandRank": 112
     },
     {
       "slug": "in-every-thing-give-thanks-for-this-is-the-will-of-god-in",
@@ -2506,7 +1996,7 @@
       "notes": "",
       "demandViews": 284,
       "demandScore": 284,
-      "demandRank": 138
+      "demandRank": 113
     },
     {
       "slug": "death-is-nothing-at-all-i-have-only-slipped-away-into-the",
@@ -2528,7 +2018,7 @@
       "notes": "",
       "demandViews": 280,
       "demandScore": 280,
-      "demandRank": 139
+      "demandRank": 114
     },
     {
       "slug": "dont-fight-forces-use-them",
@@ -2550,7 +2040,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 277,
-      "demandRank": 140
+      "demandRank": 115
     },
     {
       "slug": "god-to-me-it-seems-is-a-verb-not-a-noun-proper-or-improper",
@@ -2572,7 +2062,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 277,
-      "demandRank": 141
+      "demandRank": 116
     },
     {
       "slug": "now-there-is-one-outstandingly-important-fact-regarding",
@@ -2594,29 +2084,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 277,
-      "demandRank": 142
-    },
-    {
-      "slug": "last-year-over-one-million-quarter-inch-drills-were-sold",
-      "quote": "Last year over one million quarter-inch drills were sold, not because people wanted quarter-inch drills but because they wanted quarter-inch holes.",
-      "magnetAuthor": "Clayton Christensen",
-      "creditedTo": "Theodore Levitt",
-      "trueOrigin": "Leo McGivena — Levitt credited him by name in 'The Marketing Mode' (1969), and Percy H. Whiting's 1947 book had already attributed the line to McGivena; QI finds an earlier anonymous 1942 advertisement using the same argument.",
-      "category": "misattributed",
-      "whyNotable": "The long-form original of the drill/hole adage, still printed under Levitt's byline in marketing textbooks even though Levitt was quoting someone else and Wikiquote's own Levitt entry sources it only to a Christensen anthology.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://quoteinvestigator.com/2019/03/23/drill/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-business-2026-07-27.json",
-      "harvestedOn": "2026-07-28",
-      "notes": "",
-      "demandViews": 181,
-      "demandScore": 272,
-      "demandRank": 143
+      "demandRank": 117
     },
     {
       "slug": "a-real-decision-is-measured-by-the-fact-that-youve-taken-a",
@@ -2638,7 +2106,7 @@
       "gameIndex": null,
       "demandViews": 243,
       "demandScore": 243,
-      "demandRank": 144
+      "demandRank": 119
     },
     {
       "slug": "all-personal-breakthroughs-begin-with-a-change-in-beliefs",
@@ -2660,7 +2128,7 @@
       "gameIndex": null,
       "demandViews": 243,
       "demandScore": 243,
-      "demandRank": 145
+      "demandRank": 120
     },
     {
       "slug": "beliefs-have-the-power-to-create-and-the-power-to-destroy",
@@ -2682,7 +2150,7 @@
       "gameIndex": null,
       "demandViews": 243,
       "demandScore": 243,
-      "demandRank": 146
+      "demandRank": 121
     },
     {
       "slug": "the-quality-of-your-life-is-the-quality-of-your",
@@ -2704,7 +2172,7 @@
       "gameIndex": null,
       "demandViews": 243,
       "demandScore": 243,
-      "demandRank": 147
+      "demandRank": 122
     },
     {
       "slug": "its-easier-to-hold-to-your-principles-100-of-the-time-than",
@@ -2726,7 +2194,7 @@
       "notes": "",
       "demandViews": 181,
       "demandScore": 181,
-      "demandRank": 148
+      "demandRank": 123
     },
     {
       "slug": "management-is-the-most-noble-of-professions-if-its",
@@ -2748,7 +2216,7 @@
       "notes": "",
       "demandViews": 181,
       "demandScore": 181,
-      "demandRank": 149
+      "demandRank": 124
     },
     {
       "slug": "the-prediction-of-my-disruption-theory-would-be-that-apple",
@@ -2770,29 +2238,7 @@
       "notes": "",
       "demandViews": 181,
       "demandScore": 181,
-      "demandRank": 150
-    },
-    {
-      "slug": "the-fox-knows-many-things-but-the-hedgehog-knows-one-big",
-      "quote": "The fox knows many things, but the hedgehog knows one big thing.",
-      "magnetAuthor": "Jim Collins",
-      "creditedTo": "Jim Collins",
-      "trueOrigin": "Archilochus, Greek lyric poet, 7th century BC (Fragment 201). The line entered modern currency through Isaiah Berlin's 1953 essay 'The Hedgehog and the Fox'; Collins borrowed it in Good to Great (2001) as the basis of his 'Hedgehog Concept,' and business readers have credited him for the aphorism ever since.",
-      "category": "misattributed",
-      "whyNotable": "The only documented reassignment in Collins's orbit — business writers routinely present this ~2,700-year-old Greek fragment as 'Jim Collins's hedgehog,' when Wikiquote sources it to Archilochus Fragment 201 by way of Isaiah Berlin.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "public-domain",
-      "documentedAt": "https://en.wikiquote.org/wiki/Archilochus",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-business-2026-07-27.json",
-      "harvestedOn": "2026-07-28",
-      "notes": "",
-      "demandViews": 91,
-      "demandScore": 137,
-      "demandRank": 151
+      "demandRank": 125
     },
     {
       "slug": "blessed-are-they-that-mourn-for-they-shall-be-comforted",
@@ -2814,7 +2260,7 @@
       "notes": "King James Version · King James Version",
       "demandViews": 110,
       "demandScore": 110,
-      "demandRank": 152
+      "demandRank": 127
     },
     {
       "slug": "a-culture-of-discipline-is-not-a-principle-of-business-it",
@@ -2836,7 +2282,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 153
+      "demandRank": 128
     },
     {
       "slug": "for-no-matter-what-we-achieve-if-we-dont-spend-the-vast",
@@ -2858,7 +2304,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 154
+      "demandRank": 129
     },
     {
       "slug": "good-is-the-enemy-of-great",
@@ -2880,7 +2326,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 155
+      "demandRank": 130
     },
     {
       "slug": "it-is-better-to-first-get-the-right-people-on-the-bus-the",
@@ -2902,7 +2348,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 156
+      "demandRank": 131
     },
     {
       "slug": "there-is-a-direct-relationship-between-the-absence-of",
@@ -2924,7 +2370,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 157
+      "demandRank": 132
     },
     {
       "slug": "those-who-built-the-visionary-companies-wisely-understood",
@@ -2946,7 +2392,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 158
+      "demandRank": 133
     },
     {
       "slug": "oh-the-comfort-the-inexpressible-comfort-of-feeling-safe",
@@ -2968,7 +2414,7 @@
       "notes": "",
       "demandViews": 48,
       "demandScore": 48,
-      "demandRank": 159
+      "demandRank": 134
     },
     {
       "slug": "he-that-loveth-silver-shall-not-be-satisfied-with-silver",
@@ -2990,7 +2436,7 @@
       "notes": "Qoheleth), Book of Ecclesiastes · Qoheleth), Book of Ecclesiastes",
       "demandViews": 43,
       "demandScore": 43,
-      "demandRank": 160
+      "demandRank": 135
     },
     {
       "slug": "but-they-that-wait-upon-the-lord-shall-renew-their-strength",
@@ -3012,7 +2458,7 @@
       "notes": "King James Version · King James Version",
       "demandViews": 6,
       "demandScore": 6,
-      "demandRank": 161
+      "demandRank": 136
     },
     {
       "slug": "the-strength-of-the-team-is-each-individual-member-the",
@@ -3034,7 +2480,7 @@
       "notes": "",
       "demandViews": 1,
       "demandScore": 1,
-      "demandRank": 162
+      "demandRank": 137
     },
     {
       "slug": "you-miss-100-of-the-shots-you-dont-take",
@@ -3056,51 +2502,7 @@
       "notes": "",
       "demandViews": 1,
       "demandScore": 1,
-      "demandRank": 163
-    },
-    {
-      "slug": "less-is-more",
-      "quote": "Less is more.",
-      "magnetAuthor": "R. Buckminster Fuller; Ludwig Mies van der Rohe",
-      "creditedTo": "R. Buckminster Fuller; Ludwig Mies van der Rohe",
-      "trueOrigin": "Robert Browning, 'Andrea del Sarto' (1855); earlier German analogue 'minder ist oft mehr' in Christoph Martin Wieland, Der Teutsche Merkur (1774). Fuller's actual contribution was 'doing more with less,' part of his definition of ephemeralization — a distinct idea.",
-      "category": "misattributed",
-      "whyNotable": "The founding motto of minimalism, pinned on Fuller (and on Mies van der Rohe) constantly; Wikiquote's Misattributed section flags it for both men and points to a Victorian poem and an 18th-century German original long predating either.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "public-domain",
-      "documentedAt": "https://en.wikiquote.org/wiki/Buckminster_Fuller#Misattributed",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-r41.json",
-      "harvestedOn": "2026-08-18",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 185
-    },
-    {
-      "slug": "sometimes-i-think-were-alone-in-the-universe-and-sometimes",
-      "quote": "Sometimes I think we're alone in the universe, and sometimes I think we're not. In either case the idea is quite staggering.",
-      "magnetAuthor": "Arthur C. Clarke; R. Buckminster Fuller",
-      "creditedTo": "Arthur C. Clarke; R. Buckminster Fuller",
-      "trueOrigin": "Origin genuinely unresolved. Earliest close match: a November 1966 New Yorker profile in which Stanley Kubrick credited it to an unnamed English science-fiction writer; by September 1968 in Playboy he ascribed it instead to an unnamed 'prominent astronomer.' A thematically related but less dramatic passage appears in Clarke's The Exploration of Space (1951), and a similar idea in Walt Kelly's Pogo (1959). No documented Fuller usage.",
-      "category": "misattributed",
-      "whyNotable": "One of the most-shared lines in science-popularization culture, credited to Clarke and to Fuller alike; QI found neither man can be documented saying it and that Stanley Kubrick popularized it in 1966 while explicitly declining to claim it.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "uncertain",
-      "documentedAt": "https://quoteinvestigator.com/2020/10/22/alone/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-r41.json",
-      "harvestedOn": "2026-08-18",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 208
+      "demandRank": 138
     },
     {
       "slug": "revenge-is-a-dish-best-served-cold",
@@ -3122,7 +2524,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 204
+      "demandRank": 179
     },
     {
       "slug": "alone-bad-friend-good",
@@ -3144,7 +2546,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 166
+      "demandRank": 141
     },
     {
       "slug": "fire-bad",
@@ -3166,7 +2568,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 170
+      "demandRank": 145
     },
     {
       "slug": "its-not-personal-its-strictly-business",
@@ -3188,7 +2590,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 183
+      "demandRank": 158
     },
     {
       "slug": "never-take-sides-against-the-family",
@@ -3210,7 +2612,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 196
+      "demandRank": 171
     },
     {
       "slug": "we-belong-dead",
@@ -3232,7 +2634,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 216
+      "demandRank": 191
     },
     {
       "slug": "what-we-have-here-is-a-failure-to-communicate",
@@ -3254,7 +2656,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 218
+      "demandRank": 193
     },
     {
       "slug": "you-want-the-truth-you-cant-handle-the-truth",
@@ -3276,161 +2678,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 222
-    },
-    {
-      "slug": "charity-begins-at-home",
-      "quote": "Charity begins at home",
-      "magnetAuthor": "the Bible",
-      "creditedTo": "the Bible",
-      "trueOrigin": "",
-      "category": "scripture-misquote",
-      "whyNotable": "A proverb, not scripture; earliest forms trace to Terence and Wycliffe, not the Bible.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 167
-    },
-    {
-      "slug": "neither-a-borrower-nor-a-lender-be",
-      "quote": "Neither a borrower nor a lender be",
-      "magnetAuthor": "the Bible",
-      "creditedTo": "the Bible",
-      "trueOrigin": "",
-      "category": "scripture-misquote",
-      "whyNotable": "Shakespeare (Polonius, Hamlet), not the Bible.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 195
-    },
-    {
-      "slug": "pride-goeth-before-a-fall",
-      "quote": "Pride goeth before a fall",
-      "magnetAuthor": "the Bible",
-      "creditedTo": "the Bible",
-      "trueOrigin": "",
-      "category": "scripture-misquote",
-      "whyNotable": "A compression of Proverbs 16:18 ('Pride goeth before destruction, and an haughty spirit before a fall').",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 203
-    },
-    {
-      "slug": "spare-the-rod-spoil-the-child",
-      "quote": "Spare the rod, spoil the child",
-      "magnetAuthor": "the Bible",
-      "creditedTo": "the Bible",
-      "trueOrigin": "",
-      "category": "scripture-misquote",
-      "whyNotable": "The exact wording is from Samuel Butler's Hudibras (1663), echoing but not quoting Proverbs.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 210
-    },
-    {
-      "slug": "the-lion-shall-lie-down-with-the-lamb",
-      "quote": "The lion shall lie down with the lamb",
-      "magnetAuthor": "the Bible",
-      "creditedTo": "the Bible",
-      "trueOrigin": "",
-      "category": "scripture-misquote",
-      "whyNotable": "A popular conflation; Isaiah 11:6 actually reads 'the wolf shall dwell with the lamb.'",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 211
-    },
-    {
-      "slug": "this-too-shall-pass",
-      "quote": "This too shall pass",
-      "magnetAuthor": "the Bible",
-      "creditedTo": "the Bible",
-      "trueOrigin": "",
-      "category": "scripture-misquote",
-      "whyNotable": "Widely believed to be scripture; it is not in the Bible — a Persian-adage / Sufi origin retold by Edward FitzGerald and Lincoln.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 213
-    },
-    {
-      "slug": "to-thine-own-self-be-true",
-      "quote": "To thine own self be true",
-      "magnetAuthor": "the Bible",
-      "creditedTo": "the Bible",
-      "trueOrigin": "",
-      "category": "scripture-misquote",
-      "whyNotable": "It's Shakespeare (Polonius in Hamlet), routinely mistaken for scripture.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 215
+      "demandRank": 197
     },
     {
       "slug": "father-forgive-them-for-they-know-not-what-they-do",
@@ -3452,7 +2700,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 169
+      "demandRank": 144
     },
     {
       "slug": "he-that-hath-no-rule-over-his-own-spirit-is-like-a-city",
@@ -3474,7 +2722,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 173
+      "demandRank": 148
     },
     {
       "slug": "a-census-taker-once-tried-to-test-me-i-ate-his-liver-with",
@@ -3496,7 +2744,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 164
+      "demandRank": 139
     },
     {
       "slug": "all-weve-got-is-cotton-and-slaves-and-arrogance",
@@ -3518,7 +2766,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 165
+      "demandRank": 140
     },
     {
       "slug": "elementary-my-dear-holmes-elementary",
@@ -3540,7 +2788,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 168
+      "demandRank": 143
     },
     {
       "slug": "frankly-my-dear-i-dont-give-a-damn",
@@ -3562,7 +2810,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 171
+      "demandRank": 146
     },
     {
       "slug": "gentlemen-its-been-a-privilege-flying-with-you",
@@ -3584,7 +2832,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 172
+      "demandRank": 147
     },
     {
       "slug": "heres-looking-at-you-kid",
@@ -3606,7 +2854,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 174
+      "demandRank": 149
     },
     {
       "slug": "hes-dead-jim",
@@ -3628,7 +2876,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 175
+      "demandRank": 150
     },
     {
       "slug": "i-do-wish-we-could-chat-longer-but-im-having-an-old-friend",
@@ -3650,7 +2898,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 177
+      "demandRank": 152
     },
     {
       "slug": "i-love-you-i-know",
@@ -3672,7 +2920,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 178
+      "demandRank": 153
     },
     {
       "slug": "if-you-build-it-he-will-come",
@@ -3694,7 +2942,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 179
+      "demandRank": 154
     },
     {
       "slug": "ill-get-you-my-pretty-and-your-little-dog-too",
@@ -3716,7 +2964,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 180
+      "demandRank": 155
     },
     {
       "slug": "im-gonna-make-him-an-offer-he-cant-refuse",
@@ -3738,7 +2986,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 181
+      "demandRank": 156
     },
     {
       "slug": "its-alive-its-alive",
@@ -3760,7 +3008,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 182
+      "demandRank": 157
     },
     {
       "slug": "leave-the-gun-take-the-cannoli",
@@ -3782,7 +3030,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 184
+      "demandRank": 159
     },
     {
       "slug": "lets-work-the-problem-people-lets-not-make-things-any-worse",
@@ -3804,7 +3052,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 186
+      "demandRank": 161
     },
     {
       "slug": "lips-red-as-the-rose-hair-black-as-ebony-skin-white-as-snow",
@@ -3826,7 +3074,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 188
+      "demandRank": 163
     },
     {
       "slug": "lunch-is-for-wimps",
@@ -3848,7 +3096,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 189
+      "demandRank": 164
     },
     {
       "slug": "magic-mirror-on-the-wall-who-is-the-fairest-one-of-all",
@@ -3870,7 +3118,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 190
+      "demandRank": 165
     },
     {
       "slug": "momma-says-stupid-is-as-stupid-does",
@@ -3892,7 +3140,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 193
+      "demandRank": 168
     },
     {
       "slug": "money-never-sleeps-pal",
@@ -3914,7 +3162,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 194
+      "demandRank": 169
     },
     {
       "slug": "no-try-not-do-or-do-not-there-is-no-try",
@@ -3936,7 +3184,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 197
+      "demandRank": 172
     },
     {
       "slug": "nothin-a-handful-of-nothin-you-stupid-mullet-head-he-beat",
@@ -3958,7 +3206,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 198
+      "demandRank": 173
     },
     {
       "slug": "now-i-know-what-it-feels-like-to-be-god",
@@ -3980,7 +3228,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 199
+      "demandRank": 174
     },
     {
       "slug": "now-you-know-why-they-call-me-dirty-harry-i-get-every-dirty",
@@ -4002,7 +3250,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 200
+      "demandRank": 175
     },
     {
       "slug": "people-will-come-ray-people-will-most-definitely-come",
@@ -4024,7 +3272,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 201
+      "demandRank": 176
     },
     {
       "slug": "round-up-the-usual-suspects",
@@ -4046,7 +3294,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 205
+      "demandRank": 180
     },
     {
       "slug": "run-forrest-run",
@@ -4068,7 +3316,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 206
+      "demandRank": 181
     },
     {
       "slug": "so-eleven-hundred-men-went-in-the-water-three-hundred-and",
@@ -4090,7 +3338,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 207
+      "demandRank": 182
     },
     {
       "slug": "space-the-final-frontier-these-are-the-voyages-of-the",
@@ -4112,7 +3360,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 209
+      "demandRank": 184
     },
     {
       "slug": "theres-no-place-like-home",
@@ -4134,7 +3382,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 212
+      "demandRank": 187
     },
     {
       "slug": "this-was-no-boating-accident",
@@ -4156,7 +3404,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 214
+      "demandRank": 189
     },
     {
       "slug": "when-a-naked-man-is-chasing-a-woman-through-an-alley-with-a",
@@ -4178,7 +3426,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 219
+      "demandRank": 194
     },
     {
       "slug": "yeah-well-sometimes-nothin-can-be-a-real-cool-hand",
@@ -4200,7 +3448,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 220
+      "demandRank": 195
     },
     {
       "slug": "you-cant-handle-the-truth",
@@ -4222,7 +3470,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 221
+      "demandRank": 196
     },
     {
       "slug": "youre-goddamn-right-i-did",
@@ -4244,7 +3492,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 223
+      "demandRank": 198
     },
     {
       "slug": "youve-a-magnificent-brain-moriarty-i-admire-it",
@@ -4266,7 +3514,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 225
+      "demandRank": 200
     },
     {
       "slug": "pressure-is-a-privilege",
@@ -4288,139 +3536,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 202
-    },
-    {
-      "slug": "houston-weve-had-a-problem",
-      "quote": "Houston, we've had a problem",
-      "magnetAuthor": "",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "film-misquote",
-      "whyNotable": "Apollo 13 film says 'Houston, we have a problem'; the real 1970 transmission was past tense: 'Houston, we've had a problem.'",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 176
-    },
-    {
-      "slug": "life-moves-pretty-fast",
-      "quote": "Life moves pretty fast",
-      "magnetAuthor": "",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "film-misquote",
-      "whyNotable": "Ferris Bueller's Day Off (1986) — often truncated from 'Life moves pretty fast. If you don't stop and look around once in a while, you could miss it.'",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 187
-    },
-    {
-      "slug": "me-tarzan-you-jane",
-      "quote": "Me Tarzan, you Jane",
-      "magnetAuthor": "",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "film-misquote",
-      "whyNotable": "Never said in the Tarzan films; a paraphrase Johnny Weissmuller himself popularized in an interview.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 191
-    },
-    {
-      "slug": "mirror-mirror-on-the-wall",
-      "quote": "Mirror, mirror on the wall",
-      "magnetAuthor": "",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "film-misquote",
-      "whyNotable": "Snow White (1937) — the film says 'Magic mirror on the wall.'",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 192
-    },
-    {
-      "slug": "well-nobodys-perfect",
-      "quote": "Well, nobody's perfect",
-      "magnetAuthor": "",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "film-misquote",
-      "whyNotable": "Some Like It Hot (1959) — genuine closing line; frequently attributed with the wrong speaker/film.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 217
-    },
-    {
-      "slug": "youre-gonna-need-a-bigger-boat",
-      "quote": "You're gonna need a bigger boat",
-      "magnetAuthor": "",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "film-misquote",
-      "whyNotable": "Jaws (1975) — widely misquoted as 'We're gonna need a bigger boat.'",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "backlog-seed.json",
-      "harvestedOn": "2026-07-17",
-      "notes": "",
-      "demandViews": 0,
-      "demandScore": 0,
-      "demandRank": 224
+      "demandRank": 177
     },
     {
       "slug": "any-field-that-has-the-word-science-in-its-name-is",
@@ -17271,6 +16387,28 @@
       "demandRank": 8
     },
     {
+      "slug": "he-who-has-a-why-to-live-can-bear-with-almost-any-how",
+      "quote": "He who has a why to live can bear with almost any how.",
+      "magnetAuthor": "Viktor Frankl",
+      "creditedTo": "Viktor Frankl",
+      "trueOrigin": "Friedrich Nietzsche, Twilight of the Idols (1889), 'Maxims and Arrows'. Frankl quoted it repeatedly in Man's Search for Meaning and always credited Nietzsche; popular reuse dropped the credit and it is now widely circulated as Frankl's own.",
+      "category": "misattributed",
+      "whyNotable": "Probably the most-quoted line from Man's Search for Meaning, routinely captioned 'Viktor Frankl' — QI credits Nietzsche 1889, and Frankl himself never claimed it.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "public-domain",
+      "documentedAt": "https://quoteinvestigator.com/2019/10/09/why-how/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "he-who-has-a-why-to-live-can-bear-with-almost-any-how",
+      "harvestedFrom": "harvest-r41.json",
+      "harvestedOn": "2026-08-18",
+      "notes": "",
+      "demandViews": 3472,
+      "demandScore": 5208,
+      "demandRank": 3
+    },
+    {
       "slug": "what-is-to-give-light-must-endure-burning",
       "quote": "What is to give light must endure burning.",
       "magnetAuthor": "Viktor Frankl",
@@ -21253,6 +20391,446 @@
       "demandRank": 31
     },
     {
+      "slug": "lead-follow-or-get-out-of-the-way",
+      "quote": "Lead, follow, or get out of the way",
+      "magnetAuthor": "Lee Iacocca",
+      "creditedTo": "Lee Iacocca",
+      "trueOrigin": "Wikiquote's Thomas Paine page lists this in Misattributed and points to George S. Patton's actual wording, 'Lead me, follow me, or get out of my way' (quoted in Pocket Patriot: Quotes from American Heroes, 2005, ed. Kelly Nickell, p. 157). Iacocca did not originate it — he popularised the corporate form via Chrysler's 1992 ad campaign ('In the automobile industry, you either lead, follow, or get out of the way'), which is how his name got attached.",
+      "category": "misattributed",
+      "whyNotable": "The one genuinely strong misattribution hub available for Iacocca — the line is a business-poster staple credited variously to Iacocca, Thomas Paine, and Patton, and Wikiquote debunks the Paine credit while reassigning it to Patton.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://en.wikiquote.org/wiki/Thomas_Paine#Misattributed",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "lead-follow-or-get-out-of-the-way",
+      "harvestedFrom": "harvest-business-2026-07-27.json",
+      "harvestedOn": "2026-07-28",
+      "notes": "",
+      "demandViews": 888,
+      "demandScore": 1332,
+      "demandRank": 12
+    },
+    {
+      "slug": "baseball-is-the-only-field-of-endeavor-where-a-man-can",
+      "quote": "Baseball is the only field of endeavor where a man can succeed three times out of ten and be considered a good performer.",
+      "magnetAuthor": "Ted Williams",
+      "creditedTo": "Ted Williams",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "One of the most-shared inspirational baseball lines pinned on Williams, yet Wikiquote lists it as Unsourced with no primary citation and it circulates attributed to multiple figures.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "baseball-is-the-only-field-of-endeavor-where-a-man-can",
+      "harvestedFrom": "harvest-sports.json",
+      "harvestedOn": "2026-07-22",
+      "notes": "",
+      "demandViews": 884,
+      "demandScore": 1238,
+      "demandRank": 27
+    },
+    {
+      "slug": "by-the-time-you-know-what-to-do-youre-too-old-to-do-it",
+      "quote": "By the time you know what to do, you're too old to do it.",
+      "magnetAuthor": "Ted Williams",
+      "creditedTo": "Ted Williams",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "A clever aphorism heavily attributed to Williams but unsourced on Wikiquote; the general form floats among several athletes and comedians, a classic reassignment risk.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "by-the-time-you-know-what-to-do-youre-too-old-to-do-it",
+      "harvestedFrom": "harvest-sports.json",
+      "harvestedOn": "2026-07-22",
+      "notes": "",
+      "demandViews": 884,
+      "demandScore": 1238,
+      "demandRank": 28
+    },
+    {
+      "slug": "god-gets-you-to-the-plate-but-once-youre-there-youre-on",
+      "quote": "God gets you to the plate, but once you're there you're on your own.",
+      "magnetAuthor": "Ted Williams",
+      "creditedTo": "Ted Williams",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "A feel-good line widely circulated as Williams wisdom on quote sites, but it appears only in Wikiquote's Unsourced list with no located origin.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "god-gets-you-to-the-plate-but-once-youre-there-youre-on",
+      "harvestedFrom": "harvest-sports.json",
+      "harvestedOn": "2026-07-22",
+      "notes": "",
+      "demandViews": 884,
+      "demandScore": 1238,
+      "demandRank": 29
+    },
+    {
+      "slug": "golf-is-the-only-sport-where-the-ball-doesnt-move-until-you",
+      "quote": "Golf is the only sport where the ball doesn't move until you hit it.",
+      "magnetAuthor": "Ted Williams",
+      "creditedTo": "Ted Williams",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "A quippy line commonly credited to Williams yet unsourced; the same observation is attributed to many golfers and comics, so the Williams credit is doubtful.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "golf-is-the-only-sport-where-the-ball-doesnt-move-until-you",
+      "harvestedFrom": "harvest-sports.json",
+      "harvestedOn": "2026-07-22",
+      "notes": "",
+      "demandViews": 884,
+      "demandScore": 1238,
+      "demandRank": 30
+    },
+    {
+      "slug": "hitting-a-baseball-ive-said-it-a-thousand-times-is-the",
+      "quote": "Hitting a baseball — I've said it a thousand times — is the single most difficult thing to do in sport.",
+      "magnetAuthor": "Ted Williams",
+      "creditedTo": "Ted Williams",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "Williams genuinely championed this idea, but the exact wording varies wildly across sources and this version sits in Wikiquote's Unsourced list rather than any primary text.",
+      "likelyConfidence": "attributed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "hitting-a-baseball-ive-said-it-a-thousand-times-is-the",
+      "harvestedFrom": "harvest-sports.json",
+      "harvestedOn": "2026-07-22",
+      "notes": "",
+      "demandViews": 884,
+      "demandScore": 1238,
+      "demandRank": 31
+    },
+    {
+      "slug": "id-have-been-a-290-hitter-without-a-louisville-slugger",
+      "quote": "I'd have been a .290 hitter without a Louisville Slugger.",
+      "magnetAuthor": "Ted Williams",
+      "creditedTo": "Ted Williams",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "A frequently repeated Williams line crediting his bat, but Wikiquote carries it only as Unsourced with no primary citation.",
+      "likelyConfidence": "attributed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://en.wikiquote.org/wiki/Talk:Ted_Williams",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "id-have-been-a-290-hitter-without-a-louisville-slugger",
+      "harvestedFrom": "harvest-sports.json",
+      "harvestedOn": "2026-07-22",
+      "notes": "",
+      "demandViews": 884,
+      "demandScore": 1238,
+      "demandRank": 32
+    },
+    {
+      "slug": "do-not-wait-to-strike-till-the-iron-is-hot-but-make-it-hot",
+      "quote": "Do not wait to strike till the iron is hot; but make it hot by striking.",
+      "magnetAuthor": "W. B. Yeats",
+      "creditedTo": "W. B. Yeats",
+      "trueOrigin": "Not Yeats. QI's earliest instance is Benjamin Franklin's 1782 letter to Rev. Richard Price (\"it is not only right to strike while the iron is hot, but that it may be very practicable to heat it by continually striking\"), with Richard Sharp's 1806 letter second; the polished form circulated anonymously through the 1800s. Also pinned on Oliver Cromwell and Hemingway. Neil Mann likewise assigns it to Franklin.",
+      "category": "misattributed",
+      "whyNotable": "A motivational-poster perennial credited to Yeats, Cromwell and Hemingway alike; QI shows the earliest version is Franklin's, 82 years before Yeats was born.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "public-domain",
+      "documentedAt": "https://quoteinvestigator.com/2017/05/31/iron-hot/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "do-not-wait-to-strike-till-the-iron-is-hot-but-make-it-hot",
+      "harvestedFrom": "harvest-r41.json",
+      "harvestedOn": "2026-08-18",
+      "notes": "",
+      "demandViews": 809,
+      "demandScore": 1214,
+      "demandRank": 38
+    },
+    {
+      "slug": "happiness-is-neither-virtue-nor-pleasure-nor-this-thing-nor",
+      "quote": "Happiness is neither virtue nor pleasure nor this thing nor that but simply growth. We are happy when we are growing.",
+      "magnetAuthor": "W. B. Yeats",
+      "creditedTo": "W. B. Yeats",
+      "trueOrigin": "John Butler Yeats, the poet's father, in a 1909 letter to a Miss Grierson — documented by Yeats scholar Neil Mann (author of A Reader's Guide to Yeats's A Vision) on his YeatsVision site.",
+      "category": "misattributed",
+      "whyNotable": "A heavily shared self-help line credited to the poet; the Yeats scholarship attributes it to his father's correspondence, making it the second father-son mix-up in the Yeats corpus.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "public-domain",
+      "documentedAt": "https://yeatsvision.blogspot.com/2018/10/misattribution.html",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "happiness-is-neither-virtue-nor-pleasure-nor-this-thing-nor",
+      "harvestedFrom": "harvest-r41.json",
+      "harvestedOn": "2026-08-18",
+      "notes": "",
+      "demandViews": 809,
+      "demandScore": 1214,
+      "demandRank": 39
+    },
+    {
+      "slug": "people-who-lean-on-logic-and-philosophy-and-rational",
+      "quote": "People who lean on logic and philosophy and rational exposition end by starving the best part of the mind.",
+      "magnetAuthor": "W. B. Yeats",
+      "creditedTo": "W. B. Yeats",
+      "trueOrigin": "John Butler Yeats, in a 1906 letter to his son W. B. Yeats — identified by Neil Mann (YeatsVision) among the lines routinely reassigned from father to son.",
+      "category": "misattributed",
+      "whyNotable": "Widely circulated on aggregators under the poet's name; the Yeats scholarship pins it to a 1906 letter from his father, the same drift that produced \"What can be explained is not poetry.\"",
+      "likelyConfidence": "disputed",
+      "rightsEra": "public-domain",
+      "documentedAt": "https://yeatsvision.blogspot.com/2018/10/misattribution.html",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "people-who-lean-on-logic-and-philosophy-and-rational",
+      "harvestedFrom": "harvest-r41.json",
+      "harvestedOn": "2026-08-18",
+      "notes": "",
+      "demandViews": 809,
+      "demandScore": 1214,
+      "demandRank": 40
+    },
+    {
+      "slug": "what-can-be-explained-is-not-poetry",
+      "quote": "What can be explained is not poetry.",
+      "magnetAuthor": "W. B. Yeats",
+      "creditedTo": "W. B. Yeats",
+      "trueOrigin": "John Butler Yeats — the poet's father, a painter — in a letter to his son dated 6 September 1915, printed in Passages from the Letters of John Butler Yeats (1917), edited by Ezra Pound. Full original: \"What can be explained is not poetry. It is when the powers of explanation desert him that the poet writes verse.\" Carl Sandburg quoted it correctly in Early Moon (1930) and was later miscredited himself.",
+      "category": "misattributed",
+      "whyNotable": "A textbook name-collision misattribution: the line drifts from the obscure father to the Nobel-winning son, and QI documents both the drift and the exact 1915 letter.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "public-domain",
+      "documentedAt": "https://quoteinvestigator.com/2021/01/13/poetry/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "what-can-be-explained-is-not-poetry",
+      "harvestedFrom": "harvest-r41.json",
+      "harvestedOn": "2026-08-18",
+      "notes": "",
+      "demandViews": 809,
+      "demandScore": 1214,
+      "demandRank": 41
+    },
+    {
+      "slug": "being-irish-he-had-an-abiding-sense-of-tragedy-which",
+      "quote": "Being Irish, he had an abiding sense of tragedy which sustained him through temporary periods of joy.",
+      "magnetAuthor": "W. B. Yeats",
+      "creditedTo": "W. B. Yeats",
+      "trueOrigin": "Unknown/anonymous. QI's earliest citation is a 1991 San Francisco Chronicle piece in which Oliver Stone used a variant about Jim Morrison and credited Yeats; nothing in Yeats's published work supports it, though QI expects a pre-1991 citation exists.",
+      "category": "misattributed",
+      "whyNotable": "The go-to \"Irish\" epigraph in obituaries and St Patrick's Day columns; QI finds zero basis in Yeats and calls it a false consensus built on repetition.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://quoteinvestigator.com/2023/03/21/irish-joy/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "being-irish-he-had-an-abiding-sense-of-tragedy-which",
+      "harvestedFrom": "harvest-r41.json",
+      "harvestedOn": "2026-08-18",
+      "notes": "",
+      "demandViews": 809,
+      "demandScore": 1214,
+      "demandRank": 37
+    },
+    {
+      "slug": "i-want-to-take-the-calculated-risk-to-dream-and-to-build-to",
+      "quote": "I want to take the calculated risk; to dream and to build, to fail and to succeed. I refuse to barter incentive for a dole. I prefer the challenges of life to the guaranteed existence; the thrill of fulfillment to the stale calm of utopia",
+      "magnetAuthor": "Sam Walton",
+      "creditedTo": "Sam Walton",
+      "trueOrigin": "Dean Alfange. It is an excerpt from his creed beginning \"I do not choose to be a common man\", known as \"My Creed\" or \"An American's Creed\", originally published in This Week Magazine and reprinted in The Reader's Digest, October 1952, p. 10 and January 1954, p. 122. The text was later carried at the end of Alfange's own entry in successive editions of Who's Who in America. Also frequently misattributed to Thomas Paine and Abraham Lincoln.",
+      "category": "misattributed",
+      "whyNotable": "The strongest candidate by far: a documented misattribution visible inside Wikiquote itself, where the Barter page credits the passage to Sam Walton via a 2010 Bergdahl book while the Opportunity page credits Dean Alfange with full 1952 sourcing.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "in-copyright",
+      "documentedAt": "https://en.wikiquote.org/wiki/Opportunity",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "i-want-to-take-the-calculated-risk-to-dream-and-to-build-to",
+      "harvestedFrom": "harvest-business-2026-07-27.json",
+      "harvestedOn": "2026-07-28",
+      "notes": "",
+      "demandViews": 711,
+      "demandScore": 1067,
+      "demandRank": 43
+    },
+    {
+      "slug": "the-more-numerous-the-laws-the-more-corrupt-the-government",
+      "quote": "The more numerous the laws, the more corrupt the government.",
+      "magnetAuthor": "Marcus Tullius Cicero",
+      "creditedTo": "Marcus Tullius Cicero",
+      "trueOrigin": "Tacitus, Annals, Book III, 27. Also circulates in the loose paraphrase \"The closer the collapse of the Empire, the crazier its laws are.\"",
+      "category": "misattributed",
+      "whyNotable": "A libertarian-meme staple credited to Cicero; the Latin (Corruptissima re publica plurimae leges) is Tacitus, not Cicero.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "public-domain",
+      "documentedAt": "https://en.wikiquote.org/wiki/Cicero#Misattributed",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "the-more-numerous-the-laws-the-more-corrupt-the-government",
+      "harvestedFrom": "harvest-20260730-authors.json",
+      "harvestedOn": "2026-07-30",
+      "notes": "",
+      "demandViews": 710,
+      "demandScore": 1065,
+      "demandRank": 48
+    },
+    {
+      "slug": "time-heals-all-wounds",
+      "quote": "Time heals all wounds.",
+      "magnetAuthor": "Marcus Tullius Cicero",
+      "creditedTo": "Marcus Tullius Cicero",
+      "trueOrigin": "Terence, Heauton Timorumenos, Act III, scene i — the Latin line circulated as Cicero's is Terence's.",
+      "category": "misattributed",
+      "whyNotable": "An everyday English proverb frequently credited to Cicero with a fake Latin tag (Diem adimere aegritudinem hominibus); Wikiquote assigns the Latin to Terence.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "public-domain",
+      "documentedAt": "https://en.wikiquote.org/wiki/Cicero#Misattributed",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "time-heals-all-wounds",
+      "harvestedFrom": "harvest-20260730-authors.json",
+      "harvestedOn": "2026-07-30",
+      "notes": "",
+      "demandViews": 710,
+      "demandScore": 1065,
+      "demandRank": 49
+    },
+    {
+      "slug": "times-are-bad-children-no-longer-obey-their-parents-and",
+      "quote": "Times are bad. Children no longer obey their parents, and everyone is writing a book.",
+      "magnetAuthor": "Marcus Tullius Cicero",
+      "creditedTo": "Marcus Tullius Cicero",
+      "trueOrigin": "No ancient source. QI traces the \"world is coming to an end / everyone wants to write a book\" family of sayings through 20th-century humor columns from 1908 onward; the Cicero credit is a late graft (Wikiquote cites InfoWorld, 16 April 2001).",
+      "category": "misattributed",
+      "whyNotable": "The classic \"kids these days\" fake — QI traces the joke's family back to 1908 and shows it has been pinned in turn on an Assyrian tablet, an Egyptian priest, and Cicero, with no ancient source for any version.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://quoteinvestigator.com/2012/10/22/world-end/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "times-are-bad-children-no-longer-obey-their-parents-and",
+      "harvestedFrom": "harvest-20260730-authors.json",
+      "harvestedOn": "2026-07-30",
+      "notes": "",
+      "demandViews": 710,
+      "demandScore": 1065,
+      "demandRank": 50
+    },
+    {
+      "slug": "a-bureaucrat-is-the-most-despicable-of-men-though-he-is",
+      "quote": "A bureaucrat is the most despicable of men, though he is needed as vultures are needed, but one hardly admires vultures whom bureaucrats so strangely resemble.",
+      "magnetAuthor": "Marcus Tullius Cicero",
+      "creditedTo": "Marcus Tullius Cicero",
+      "trueOrigin": "Taylor Caldwell, A Pillar of Iron (1965), p. 451 — one of three passages from the novel routinely passed off as Cicero.",
+      "category": "misattributed",
+      "whyNotable": "A perennial anti-government-quote-card line; Wikiquote pins it to Taylor Caldwell's 1965 novel, p. 451, with nothing corresponding in Cicero.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "in-copyright",
+      "documentedAt": "https://en.wikiquote.org/wiki/Cicero#Misattributed",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "a-bureaucrat-is-the-most-despicable-of-men-though-he-is",
+      "harvestedFrom": "harvest-20260730-authors.json",
+      "harvestedOn": "2026-07-30",
+      "notes": "",
+      "demandViews": 710,
+      "demandScore": 1065,
+      "demandRank": 44
+    },
+    {
+      "slug": "a-nation-can-survive-its-fools-and-even-the-ambitious-but",
+      "quote": "A nation can survive its fools, and even the ambitious. But it cannot survive treason from within.",
+      "magnetAuthor": "Marcus Tullius Cicero",
+      "creditedTo": "Marcus Tullius Cicero",
+      "trueOrigin": "Taylor Caldwell, A Pillar of Iron (1965), a novel about Cicero — the passage is her fictional Cicero's speech, not Cicero's. Wikiquote notes it may loosely paraphrase the Second Catiline Oration but drastically changes the rhetoric; it was also spread by a 1965 essay by Florida Justice Millard Caldwell.",
+      "category": "misattributed",
+      "whyNotable": "Probably the single most-shared fake Cicero line in political memes; Wikiquote pins it to Taylor Caldwell's 1965 novel A Pillar of Iron (p. 661), not to any Cicero text.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "in-copyright",
+      "documentedAt": "https://en.wikiquote.org/wiki/Cicero#Misattributed",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "a-nation-can-survive-its-fools-and-even-the-ambitious-but",
+      "harvestedFrom": "harvest-20260730-authors.json",
+      "harvestedOn": "2026-07-30",
+      "notes": "",
+      "demandViews": 710,
+      "demandScore": 1065,
+      "demandRank": 45
+    },
+    {
+      "slug": "the-budget-should-be-balanced-the-treasury-should-be",
+      "quote": "The budget should be balanced, the treasury should be refilled, public debt should be reduced, the arrogance of officialdom should be tempered and controlled, and the assistance to foreign lands should be curtailed lest Rome become bankrupt. People must again learn to work, instead of living on public assistance.",
+      "magnetAuthor": "Marcus Tullius Cicero",
+      "creditedTo": "Marcus Tullius Cicero",
+      "trueOrigin": "Taylor Caldwell, A Pillar of Iron (1965), p. 483 — narration describing what Antonius agreed with, not a Cicero quotation. Spread as fact via US congressional hearings from 1966.",
+      "category": "misattributed",
+      "whyNotable": "Endlessly recirculated as \"Cicero, 55 B.C.\" in budget debates; QI shows it is a rewrite of Taylor Caldwell's 1965 novel that Congressman Otto Passman entered into the record as genuine Cicero from 1966 on.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "in-copyright",
+      "documentedAt": "https://quoteinvestigator.com/2013/05/15/cicero-budget/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "the-budget-should-be-balanced-the-treasury-should-be",
+      "harvestedFrom": "harvest-20260730-authors.json",
+      "harvestedOn": "2026-07-30",
+      "notes": "",
+      "demandViews": 710,
+      "demandScore": 1065,
+      "demandRank": 46
+    },
+    {
+      "slug": "the-evil-was-not-in-bread-and-circuses-per-se-but-in-the",
+      "quote": "The evil was not in bread and circuses, per se, but in the willingness of the people to sell their rights as free men for full bellies and the excitement of the games which would serve to distract them from the other human hungers which bread and circuses can never appease.",
+      "magnetAuthor": "Marcus Tullius Cicero",
+      "creditedTo": "Marcus Tullius Cicero",
+      "trueOrigin": "Ben Moreell, \"Of Bread and Circuses,\" The Freeman, January 1956, p. 31. Moreell's piece correctly attributes the phrase \"bread and circuses\" to Juvenal and says nothing about Cicero.",
+      "category": "misattributed",
+      "whyNotable": "The most-quoted \"Cicero on bread and circuses\" line, but Wikiquote traces it to a 1956 Freeman essay by Admiral Ben Moreell that never mentions Cicero at all.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "in-copyright",
+      "documentedAt": "https://en.wikiquote.org/wiki/Cicero#Misattributed",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "the-evil-was-not-in-bread-and-circuses-per-se-but-in-the",
+      "harvestedFrom": "harvest-20260730-authors.json",
+      "harvestedOn": "2026-07-30",
+      "notes": "",
+      "demandViews": 710,
+      "demandScore": 1065,
+      "demandRank": 47
+    },
+    {
       "slug": "when-i-let-go-of-what-i-am-i-become-what-i-might-be",
       "quote": "When I let go of what I am, I become what I might be.",
       "magnetAuthor": "Lao Tzu",
@@ -21297,6 +20875,94 @@
       "demandRank": 297
     },
     {
+      "slug": "dont-just-do-something-sit-there",
+      "quote": "Don't just do something, sit there.",
+      "magnetAuthor": "Thich Nhat Hanh",
+      "creditedTo": "Thich Nhat Hanh",
+      "trueOrigin": "A rearranged cliche in print well before him: Quote Investigator's earliest close match is journalist Ollie Crawford in The Philadelphia Inquirer, August 1954 ('Don't just do something. Sit there.'), with producer Martin Gabel's 'Don't just do something; stand there' from 1945. Thich Nhat Hanh used it in a 1983 Vajradhatu Sun interview and Sylvia Boorstein titled a 1996 book with it — both after it was already circulating.",
+      "category": "misattributed",
+      "whyNotable": "The single most-shared 'Thich Nhat Hanh' one-liner on mindfulness social media, and the only QI investigation that touches him — QI shows he popularized it but did not coin it, ~30 years after it appeared in a newspaper column about radar platforms.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://quoteinvestigator.com/2026/08/06/sit-there/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "dont-just-do-something-sit-there",
+      "harvestedFrom": "harvest-r41.json",
+      "harvestedOn": "2026-08-18",
+      "notes": "",
+      "demandViews": 409,
+      "demandScore": 614,
+      "demandRank": 89
+    },
+    {
+      "slug": "those-who-play-with-the-devils-toys-will-be-brought-by",
+      "quote": "Those who play with the devil's toys will be brought by degrees to wield his sword.",
+      "magnetAuthor": "R. Buckminster Fuller",
+      "creditedTo": "R. Buckminster Fuller",
+      "trueOrigin": "Thomas Fuller, The Profane State (1642): 'they which play with the devils rattles, will be brought by degrees to wield his sword.' Reprinted with correct attribution in Chambers's Cyclopaedia of English Literature (1902); an ambiguous 'Fuller' credit in The Evening World (1921) likely seeded the confusion, and citations to Buckminster Fuller appear from about 2005 onward.",
+      "category": "misattributed",
+      "whyNotable": "Widely quoted as a Buckminster Fuller warning about technology — a textbook name-collision misattribution: QI found no evidence Buckminster ever said it, and traced it to the 17th-century English clergyman Thomas Fuller.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "public-domain",
+      "documentedAt": "https://quoteinvestigator.com/2016/07/23/sword/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "those-who-play-with-the-devils-toys-will-be-brought-by",
+      "harvestedFrom": "harvest-r41.json",
+      "harvestedOn": "2026-08-18",
+      "notes": "",
+      "demandViews": 277,
+      "demandScore": 416,
+      "demandRank": 99
+    },
+    {
+      "slug": "last-year-over-one-million-quarter-inch-drills-were-sold",
+      "quote": "Last year over one million quarter-inch drills were sold, not because people wanted quarter-inch drills but because they wanted quarter-inch holes.",
+      "magnetAuthor": "Clayton Christensen",
+      "creditedTo": "Theodore Levitt",
+      "trueOrigin": "Leo McGivena — Levitt credited him by name in 'The Marketing Mode' (1969), and Percy H. Whiting's 1947 book had already attributed the line to McGivena; QI finds an earlier anonymous 1942 advertisement using the same argument.",
+      "category": "misattributed",
+      "whyNotable": "The long-form original of the drill/hole adage, still printed under Levitt's byline in marketing textbooks even though Levitt was quoting someone else and Wikiquote's own Levitt entry sources it only to a Christensen anthology.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://quoteinvestigator.com/2019/03/23/drill/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "last-year-over-one-million-quarter-inch-drills-were-sold",
+      "harvestedFrom": "harvest-business-2026-07-27.json",
+      "harvestedOn": "2026-07-28",
+      "notes": "",
+      "demandViews": 181,
+      "demandScore": 272,
+      "demandRank": 118
+    },
+    {
+      "slug": "the-fox-knows-many-things-but-the-hedgehog-knows-one-big",
+      "quote": "The fox knows many things, but the hedgehog knows one big thing.",
+      "magnetAuthor": "Jim Collins",
+      "creditedTo": "Jim Collins",
+      "trueOrigin": "Archilochus, Greek lyric poet, 7th century BC (Fragment 201). The line entered modern currency through Isaiah Berlin's 1953 essay 'The Hedgehog and the Fox'; Collins borrowed it in Good to Great (2001) as the basis of his 'Hedgehog Concept,' and business readers have credited him for the aphorism ever since.",
+      "category": "misattributed",
+      "whyNotable": "The only documented reassignment in Collins's orbit — business writers routinely present this ~2,700-year-old Greek fragment as 'Jim Collins's hedgehog,' when Wikiquote sources it to Archilochus Fragment 201 by way of Isaiah Berlin.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "public-domain",
+      "documentedAt": "https://en.wikiquote.org/wiki/Archilochus",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "the-fox-knows-many-things-but-the-hedgehog-knows-one-big",
+      "harvestedFrom": "harvest-business-2026-07-27.json",
+      "harvestedOn": "2026-07-28",
+      "notes": "",
+      "demandViews": 91,
+      "demandScore": 137,
+      "demandRank": 126
+    },
+    {
       "slug": "everything-that-can-be-invented-has-been-invented",
       "quote": "Everything that can be invented has been invented",
       "magnetAuthor": "Charles Duell",
@@ -21317,6 +20983,336 @@
       "demandViews": 4,
       "demandScore": 6,
       "demandRank": 312
+    },
+    {
+      "slug": "less-is-more",
+      "quote": "Less is more.",
+      "magnetAuthor": "R. Buckminster Fuller; Ludwig Mies van der Rohe",
+      "creditedTo": "R. Buckminster Fuller; Ludwig Mies van der Rohe",
+      "trueOrigin": "Robert Browning, 'Andrea del Sarto' (1855); earlier German analogue 'minder ist oft mehr' in Christoph Martin Wieland, Der Teutsche Merkur (1774). Fuller's actual contribution was 'doing more with less,' part of his definition of ephemeralization — a distinct idea.",
+      "category": "misattributed",
+      "whyNotable": "The founding motto of minimalism, pinned on Fuller (and on Mies van der Rohe) constantly; Wikiquote's Misattributed section flags it for both men and points to a Victorian poem and an 18th-century German original long predating either.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "public-domain",
+      "documentedAt": "https://en.wikiquote.org/wiki/Buckminster_Fuller#Misattributed",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "less-is-more",
+      "harvestedFrom": "harvest-r41.json",
+      "harvestedOn": "2026-08-18",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 160
+    },
+    {
+      "slug": "sometimes-i-think-were-alone-in-the-universe-and-sometimes",
+      "quote": "Sometimes I think we're alone in the universe, and sometimes I think we're not. In either case the idea is quite staggering.",
+      "magnetAuthor": "Arthur C. Clarke; R. Buckminster Fuller",
+      "creditedTo": "Arthur C. Clarke; R. Buckminster Fuller",
+      "trueOrigin": "Origin genuinely unresolved. Earliest close match: a November 1966 New Yorker profile in which Stanley Kubrick credited it to an unnamed English science-fiction writer; by September 1968 in Playboy he ascribed it instead to an unnamed 'prominent astronomer.' A thematically related but less dramatic passage appears in Clarke's The Exploration of Space (1951), and a similar idea in Walt Kelly's Pogo (1959). No documented Fuller usage.",
+      "category": "misattributed",
+      "whyNotable": "One of the most-shared lines in science-popularization culture, credited to Clarke and to Fuller alike; QI found neither man can be documented saying it and that Stanley Kubrick popularized it in 1966 while explicitly declining to claim it.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "uncertain",
+      "documentedAt": "https://quoteinvestigator.com/2020/10/22/alone/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "sometimes-i-think-were-alone-in-the-universe-and-sometimes",
+      "harvestedFrom": "harvest-r41.json",
+      "harvestedOn": "2026-08-18",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 183
+    },
+    {
+      "slug": "charity-begins-at-home",
+      "quote": "Charity begins at home",
+      "magnetAuthor": "the Bible",
+      "creditedTo": "the Bible",
+      "trueOrigin": "",
+      "category": "scripture-misquote",
+      "whyNotable": "A proverb, not scripture; earliest forms trace to Terence and Wycliffe, not the Bible.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "charity-begins-at-home",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 142
+    },
+    {
+      "slug": "neither-a-borrower-nor-a-lender-be",
+      "quote": "Neither a borrower nor a lender be",
+      "magnetAuthor": "the Bible",
+      "creditedTo": "the Bible",
+      "trueOrigin": "",
+      "category": "scripture-misquote",
+      "whyNotable": "Shakespeare (Polonius, Hamlet), not the Bible.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "neither-a-borrower-nor-a-lender-be",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 170
+    },
+    {
+      "slug": "pride-goeth-before-a-fall",
+      "quote": "Pride goeth before a fall",
+      "magnetAuthor": "the Bible",
+      "creditedTo": "the Bible",
+      "trueOrigin": "",
+      "category": "scripture-misquote",
+      "whyNotable": "A compression of Proverbs 16:18 ('Pride goeth before destruction, and an haughty spirit before a fall').",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "pride-goeth-before-a-fall",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 178
+    },
+    {
+      "slug": "spare-the-rod-spoil-the-child",
+      "quote": "Spare the rod, spoil the child",
+      "magnetAuthor": "the Bible",
+      "creditedTo": "the Bible",
+      "trueOrigin": "",
+      "category": "scripture-misquote",
+      "whyNotable": "The exact wording is from Samuel Butler's Hudibras (1663), echoing but not quoting Proverbs.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "spare-the-rod-spoil-the-child",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 185
+    },
+    {
+      "slug": "the-lion-shall-lie-down-with-the-lamb",
+      "quote": "The lion shall lie down with the lamb",
+      "magnetAuthor": "the Bible",
+      "creditedTo": "the Bible",
+      "trueOrigin": "",
+      "category": "scripture-misquote",
+      "whyNotable": "A popular conflation; Isaiah 11:6 actually reads 'the wolf shall dwell with the lamb.'",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "the-lion-shall-lie-down-with-the-lamb",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 186
+    },
+    {
+      "slug": "this-too-shall-pass",
+      "quote": "This too shall pass",
+      "magnetAuthor": "the Bible",
+      "creditedTo": "the Bible",
+      "trueOrigin": "",
+      "category": "scripture-misquote",
+      "whyNotable": "Widely believed to be scripture; it is not in the Bible — a Persian-adage / Sufi origin retold by Edward FitzGerald and Lincoln.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "this-too-shall-pass",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 188
+    },
+    {
+      "slug": "to-thine-own-self-be-true",
+      "quote": "To thine own self be true",
+      "magnetAuthor": "the Bible",
+      "creditedTo": "the Bible",
+      "trueOrigin": "",
+      "category": "scripture-misquote",
+      "whyNotable": "It's Shakespeare (Polonius in Hamlet), routinely mistaken for scripture.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "to-thine-own-self-be-true",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 190
+    },
+    {
+      "slug": "houston-weve-had-a-problem",
+      "quote": "Houston, we've had a problem",
+      "magnetAuthor": "",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "film-misquote",
+      "whyNotable": "Apollo 13 film says 'Houston, we have a problem'; the real 1970 transmission was past tense: 'Houston, we've had a problem.'",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "houston-weve-had-a-problem",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 151
+    },
+    {
+      "slug": "life-moves-pretty-fast",
+      "quote": "Life moves pretty fast",
+      "magnetAuthor": "",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "film-misquote",
+      "whyNotable": "Ferris Bueller's Day Off (1986) — often truncated from 'Life moves pretty fast. If you don't stop and look around once in a while, you could miss it.'",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "life-moves-pretty-fast",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 162
+    },
+    {
+      "slug": "me-tarzan-you-jane",
+      "quote": "Me Tarzan, you Jane",
+      "magnetAuthor": "",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "film-misquote",
+      "whyNotable": "Never said in the Tarzan films; a paraphrase Johnny Weissmuller himself popularized in an interview.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "me-tarzan-you-jane",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 166
+    },
+    {
+      "slug": "mirror-mirror-on-the-wall",
+      "quote": "Mirror, mirror on the wall",
+      "magnetAuthor": "",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "film-misquote",
+      "whyNotable": "Snow White (1937) — the film says 'Magic mirror on the wall.'",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "mirror-mirror-on-the-wall",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 167
+    },
+    {
+      "slug": "well-nobodys-perfect",
+      "quote": "Well, nobody's perfect",
+      "magnetAuthor": "",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "film-misquote",
+      "whyNotable": "Some Like It Hot (1959) — genuine closing line; frequently attributed with the wrong speaker/film.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "well-nobodys-perfect",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 192
+    },
+    {
+      "slug": "youre-gonna-need-a-bigger-boat",
+      "quote": "You're gonna need a bigger boat",
+      "magnetAuthor": "",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "film-misquote",
+      "whyNotable": "Jaws (1975) — widely misquoted as 'We're gonna need a bigger boat.'",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r45",
+      "resultSlug": "youre-gonna-need-a-bigger-boat",
+      "harvestedFrom": "backlog-seed.json",
+      "harvestedOn": "2026-07-17",
+      "notes": "",
+      "demandViews": 0,
+      "demandScore": 0,
+      "demandRank": 199
     },
     {
       "slug": "sometimes-i-sit-and-think-and-sometimes-i-just-sit",
