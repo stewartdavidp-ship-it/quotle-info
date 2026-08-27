@@ -2,461 +2,18 @@
  "meta": {
   "note": "Song-misattribution backlog for /who-recorded/. Candidates: a cover mistaken for the ORIGINAL recording. Harvested 2026-07-22 (Wikipedia-verified), deduped; second harvest 2026-07-22 added 63 candidates across six veins (blues/British-invasion, soul-Motown, country-folk, reggae-ska, film-TV sync, standards & foreign-language). Tainted Love is already BUILT (data/songs/) — not listed. Build high-confusion first. Each becomes a data/songs/{songSlug}.json record modeled on tainted-love.json.",
   "description": "Song-misattribution backlog for /who-recorded/. A cover mistaken for the ORIGINAL recording. Managed by tools/songs.js — do not hand-edit counts. Lifecycle: queued → selected → ingested (or dropped).",
-  "updated": "2026-08-04",
+  "updated": "2026-08-27",
   "total": 271,
-  "queued": 79,
+  "queued": 59,
   "selected": 0,
-  "ingested": 89,
+  "ingested": 109,
   "dropped": 103,
   "queuedByConfusion": {
-   "high": 62,
+   "high": 42,
    "medium": 17
   }
  },
  "songs": [
-  {
-   "songSlug": "after-midnight",
-   "title": "After Midnight",
-   "creditedTo": "Eric Clapton",
-   "originalArtist": "J.J. Cale",
-   "originalYear": "1966",
-   "originalLabel": "Liberty Records",
-   "writer": "J.J. Cale",
-   "coverArtist": "Eric Clapton",
-   "coverYear": "1970",
-   "confusion": "high",
-   "whyNotable": "A signature Clapton song that most listeners assume he originated. J.J. Cale wrote and first recorded it, released November 1966 as a Liberty single b/w \"Slow Motion\". Clapton recorded his in January 1970 at Island Studios and Polydor released it in October 1970; it reached No. 18 on the Hot 100. The clinching detail: Clapton's success prompted Cale to RE-record his own song for 1971's Naturally, and that re-recording — not the 1966 original — is the Cale version most people have heard, which is a second layer of the same confusion.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/After_Midnight_(J._J._Cale_song)"
-   ],
-   "status": "queued",
-   "vein": "blues",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04",
-   "caveats": [
-    "J.J. Cale re-recorded his own song for Naturally (1971) after Clapton's 1970 hit, releasing it as a single in 1972 (No. 42). The Cale version most listeners have heard is therefore not the 1966 Liberty original."
-   ]
-  },
-  {
-   "songSlug": "angel-from-montgomery",
-   "title": "Angel from Montgomery",
-   "creditedTo": "Bonnie Raitt",
-   "originalArtist": "John Prine",
-   "originalYear": "1971",
-   "originalLabel": "Atlantic Records",
-   "writer": "John Prine",
-   "coverArtist": "Bonnie Raitt",
-   "coverYear": "1974",
-   "confusion": "high",
-   "whyNotable": "Prine wrote it and recorded it for his self-titled 1971 debut on Atlantic. Raitt cut it for Streetlights in 1974, and Wikipedia notes hers is the version that 'first attained wide recognition for the song'. Because Raitt sang it in a woman's voice — and kept it in her live set for fifty years — it reads to most listeners as a Bonnie Raitt song rather than a John Prine record.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Angel_from_Montgomery",
-    "https://en.wikipedia.org/wiki/John_Prine_(album)"
-   ],
-   "status": "queued",
-   "vein": "country",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "at-last",
-   "title": "At Last",
-   "creditedTo": "Etta James",
-   "originalArtist": "Glenn Miller and His Orchestra",
-   "originalYear": "1942",
-   "originalLabel": "RCA Victor",
-   "writer": "Mack Gordon and Harry Warren",
-   "coverArtist": "Etta James",
-   "coverYear": "1960",
-   "confusion": "high",
-   "whyNotable": "Etta James's Argo recording is so completely hers that the wedding-DJ world treats her as its author. It is a Mack Gordon and Harry Warren film song written for Sun Valley Serenade in 1941, and Glenn Miller's orchestra had the hit — the May 20, 1942 studio version with Ray Eberle reached number 2. Note for the editor: this one runs against the vein's usual direction (big-band original, soul cover), but the who-recorded-it-first axis is identical.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/At_Last"
-   ],
-   "status": "queued",
-   "vein": "soul",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04",
-   "caveats": [
-    "the 1941/1942 distinction matters. Glenn Miller's orchestra performed it in Sun Valley Serenade in 1941 (the vocal was cut from the release print; Pat Friday dubbed Lynn Bari), made unreleased recordings in 1941, and the vocal arrangement resurfaced in Orchestra Wives in 1942. The RELEASED studio recording with Ray Eberle is May 20, 1942 on RCA Victor, which is the year given above."
-   ]
-  },
-  {
-   "songSlug": "black-betty",
-   "title": "Black Betty",
-   "creditedTo": "Ram Jam",
-   "originalArtist": "James \"Iron Head\" Baker and Clear Rock",
-   "originalYear": "1933",
-   "originalLabel": "Library of Congress field recording (John and Alan Lomax)",
-   "writer": "Traditional",
-   "coverArtist": "Ram Jam",
-   "coverYear": "1977",
-   "confusion": "high",
-   "whyNotable": "The first known recording was made in December 1933 by the convicts Iron Head and Clear Rock at Central State Farm, Sugar Land, Texas, captured in the field by John and Alan Lomax for the Library of Congress. Lead Belly cut the commercial version in New York in April 1939 for Musicraft, as part of a medley on Negro Sinful Songs. Ram Jam's hard-rock arrangement, released June 1977, reached No. 18 in the US, No. 7 in the UK and No. 3 in Australia — and is now so dominant that the song's origin as an African-American work song is invisible to most listeners.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Black_Betty"
-   ],
-   "status": "queued",
-   "vein": "country",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04",
-   "caveats": [
-    "Lead Belly is the usual answer and is wrong. The earliest known recording is the December 1933 Lomax field recording of Iron Head and Clear Rock at Sugar Land, Texas; Lead Belly's commercial Musicraft version is 1939."
-   ]
-  },
-  {
-   "songSlug": "blue-velvet",
-   "title": "Blue Velvet",
-   "creditedTo": "Bobby Vinton",
-   "originalArtist": "Arthur Prysock",
-   "originalYear": "1951",
-   "originalLabel": "Decca",
-   "writer": "Bernie Wayne and Lee Morris",
-   "coverArtist": "Bobby Vinton",
-   "coverYear": "1963",
-   "confusion": "high",
-   "whyNotable": "Vinton's Epic recording (made 27 May 1963, released 2 August 1963) spent three weeks at number one and was cemented by David Lynch's 1986 film — it is his song in the public mind. It is a 1950 Wayne/Morris composition with a tangled 1951 recording history, and by the time Vinton got to it there had already been charting versions by Tony Bennett (1951) and the Clovers (1955, number 14 R&B). See the contested note: the question of which 1951 record came first is genuinely knotty and is the best material on this page.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Blue_Velvet_(song)"
-   ],
-   "status": "queued",
-   "vein": "standards",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04",
-   "caveats": [
-    "the \"original\" is genuinely disputed. Wikipedia says Tony Bennett recorded it first, on 17 July 1951 (Columbia, released 21 September 1951), but that Arthur Prysock's Decca version, cut about a week after Bennett's session, \"evidently was the first version released, in August 1951.\" First recorded and first released are different artists. I have listed Prysock as originalArtist on the first-released reading; the page should present both and say which test it is applying."
-   ]
-  },
-  {
-   "songSlug": "call-me-the-breeze",
-   "title": "Call Me the Breeze",
-   "creditedTo": "Lynyrd Skynyrd",
-   "originalArtist": "J. J. Cale",
-   "originalYear": "1971",
-   "originalLabel": "Shelter Records (US) / A&M (UK)",
-   "writer": "J. J. Cale",
-   "coverArtist": "Lynyrd Skynyrd",
-   "coverYear": "1974",
-   "confusion": "high",
-   "whyNotable": "Cale recorded it in 1970 and released it on his debut album Naturally (25 October 1971). Lynyrd Skynyrd recorded their version in January 1974 for Second Helping and made it a Southern-rock staple, re-recording it live for One More from the Road in 1976. The boogie-piano Skynyrd arrangement is so identified with the band that the song is widely assumed to be theirs — the second major case, after 'Cocaine', of a Cale original being absorbed by its cover.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Call_Me_the_Breeze",
-    "https://en.wikipedia.org/wiki/Naturally_(J._J._Cale_album)"
-   ],
-   "status": "queued",
-   "vein": "country",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "city-of-new-orleans",
-   "title": "City of New Orleans",
-   "creditedTo": "Arlo Guthrie",
-   "originalArtist": "Steve Goodman",
-   "originalYear": "1971",
-   "originalLabel": "Buddah Records",
-   "writer": "Steve Goodman",
-   "coverArtist": "Arlo Guthrie",
-   "coverYear": "1972",
-   "confusion": "high",
-   "whyNotable": "Goodman wrote it in 1970 and recorded it for his self-titled 1971 album on Buddah. Guthrie's version, released June 1972 from Hobo's Lullaby, reached No. 18 on the Hot 100 and No. 4 Easy Listening, and hit No. 1 in New Zealand in 1973. Willie Nelson's 1984 version topped the country chart and won Goodman a posthumous Grammy for Best Country Song. Guthrie's name and Woody Guthrie's shadow make the song read as an inherited American folk standard rather than a Chicago songwriter's copyright.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/City_of_New_Orleans_(song)"
-   ],
-   "status": "queued",
-   "vein": "country",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "cocaine",
-   "title": "Cocaine",
-   "creditedTo": "Eric Clapton",
-   "originalArtist": "J. J. Cale",
-   "originalYear": "1976",
-   "originalLabel": "Shelter Records",
-   "writer": "J. J. Cale",
-   "coverArtist": "Eric Clapton",
-   "coverYear": "1977",
-   "confusion": "high",
-   "whyNotable": "Cale wrote and recorded it for his album Troubadour, released September 1976 on Shelter Records. Clapton cut it for Slowhand in 1977, where it became one of his signature numbers and was issued as the B-side of 'Lay Down Sally'. Clapton's version so completely displaced Cale's in public memory that the song is routinely listed among Clapton's own compositions; Cale's Tulsa-sound original is the record almost nobody has heard.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Cocaine_(song)",
-    "https://en.wikipedia.org/wiki/Troubadour_(J._J._Cale_album)"
-   ],
-   "status": "queued",
-   "vein": "country",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "devil-with-a-blue-dress-on",
-   "title": "Devil with a Blue Dress On",
-   "creditedTo": "Mitch Ryder & the Detroit Wheels",
-   "originalArtist": "Shorty Long",
-   "originalYear": "1964",
-   "originalLabel": "Motown",
-   "writer": "Shorty Long and William \"Mickey\" Stevenson",
-   "coverArtist": "Mitch Ryder & the Detroit Wheels",
-   "coverYear": "1966",
-   "confusion": "high",
-   "whyNotable": "Mitch Ryder's frantic 1966 medley with 'Good Golly, Miss Molly' hit number 4 and is treated as the source of the song. Shorty Long wrote it with Motown A&R chief Mickey Stevenson and released it as his debut single in 1964, at a far slower tempo; it reached number 26 R&B. The speed is Ryder's invention — the song is not.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Devil_with_a_Blue_Dress_On"
-   ],
-   "status": "queued",
-   "vein": "soul",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "different-drum",
-   "title": "Different Drum",
-   "creditedTo": "Linda Ronstadt / The Stone Poneys",
-   "originalArtist": "The Greenbriar Boys",
-   "originalYear": "1966",
-   "originalLabel": "",
-   "writer": "Michael Nesmith",
-   "coverArtist": "The Stone Poneys featuring Linda Ronstadt",
-   "coverYear": "1967",
-   "confusion": "high",
-   "whyNotable": "Nesmith wrote it in 1964, and the bluegrass group The Greenbriar Boys recorded it first, on their 1966 album Better Late than Never!. The Stone Poneys featuring Linda Ronstadt released their baroque-pop arrangement on Capitol in September 1967; it reached No. 13 on the Billboard Hot 100 and became Ronstadt's first hit. Double misattribution: listeners assume Ronstadt originated it, and those who know better usually credit the Monkees rather than a bluegrass band.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Different_Drum"
-   ],
-   "status": "queued",
-   "vein": "country",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "dont-leave-me-this-way",
-   "title": "Don't Leave Me This Way",
-   "creditedTo": "The Communards",
-   "originalArtist": "Harold Melvin & the Blue Notes",
-   "originalYear": "1975",
-   "originalLabel": "Philadelphia International",
-   "writer": "Kenneth Gamble, Leon Huff and Cary Gilbert",
-   "coverArtist": "The Communards",
-   "coverYear": "1986",
-   "confusion": "high",
-   "whyNotable": "Two different singers had number ones with this and neither cut it first. Gamble, Huff and Cary Gilbert's original was an album track on Harold Melvin & the Blue Notes' 1975 Wake Up Everybody. Thelma Houston's 1976 Tamla version topped the Hot 100 and won a Grammy; the Communards' 1986 version spent four weeks at UK number one and was the best-selling British single of the year. Both famous 'originals' are covers.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Don%27t_Leave_Me_This_Way"
-   ],
-   "status": "queued",
-   "vein": "soul",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "dont-let-me-be-misunderstood",
-   "title": "Don't Let Me Be Misunderstood",
-   "creditedTo": "The Animals",
-   "originalArtist": "Nina Simone",
-   "originalYear": "1964",
-   "originalLabel": "Philips Records",
-   "writer": "Bennie Benjamin, Horace Ott and Sol Marcus",
-   "coverArtist": "The Animals",
-   "coverYear": "1965",
-   "confusion": "high",
-   "whyNotable": "Rolling Stone placed the Animals' version at No. 322 on its 500 Greatest Songs of All Time, and the song is routinely treated as an Animals original alongside their other signature reworkings. Nina Simone recorded the first version in October 1964 for Broadway-Blues-Ballads on Philips; the Animals released theirs on 29 January 1965 in the UK, reaching No. 3 UK, No. 15 US and No. 4 in Canada. Written by Bennie Benjamin, Horace Ott and Sol Marcus. A third layer: Santa Esmeralda's 1977 disco version (US No. 15, No. 1 in Italy and West Germany) is itself widely assumed to be covering the Animals rather than Simone.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Don%27t_Let_Me_Be_Misunderstood"
-   ],
-   "status": "queued",
-   "vein": "blues",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "dueling-banjos",
-   "title": "Dueling Banjos",
-   "creditedTo": "Eric Weissberg and Steve Mandell",
-   "originalArtist": "Arthur \"Guitar Boogie\" Smith with Don Reno (as \"Feudin' Banjos\")",
-   "originalYear": "1955",
-   "originalLabel": "",
-   "writer": "Arthur \"Guitar Boogie\" Smith",
-   "coverArtist": "Eric Weissberg and Steve Mandell",
-   "coverYear": "1972",
-   "confusion": "high",
-   "whyNotable": "The rare misattribution where the film industry made the same mistake the public did, and lost in court for it. Arthur Smith composed the piece in 1954 and first recorded it in 1955 as 'Feudin' Banjos', playing four-string plectrum banjo against Don Reno's five-string. The Eric Weissberg and Steve Mandell arrangement in Deliverance (1972) is what the world knows; the December 1972 single was credited to Weissberg alone, and the filmmakers did not acknowledge Smith as composer at all. Smith sued, won, and received songwriting credit plus royalties. The Weissberg-Mandell recording went to No. 2 on the Billboard Hot 100 in 1973 and took a Grammy for Best Country Instrumental Performance in 1974 — awards for a tune whose author had to litigate to be named.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Dueling_Banjos"
-   ],
-   "status": "queued",
-   "vein": "sync",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04",
-   "caveats": [
-    "the credit was contested in court, not just in public memory. The December 1972 single was credited to Eric Weissberg alone although Steve Mandell arranged and performed it with him, and Arthur Smith received no composer credit from the filmmakers until he sued and won songwriting credit plus royalties."
-   ]
-  },
-  {
-   "songSlug": "evil-ways",
-   "title": "Evil Ways",
-   "creditedTo": "Santana",
-   "originalArtist": "Willie Bobo",
-   "originalYear": "1967",
-   "originalLabel": "",
-   "writer": "Clarence \"Sonny\" Henry",
-   "coverArtist": "Santana",
-   "coverYear": "1969",
-   "confusion": "high",
-   "whyNotable": "Santana's first US Top 40 hit — number nine on the Hot 100 the week of 21 March 1970 — and one of the tracks that made the Woodstock reputation. Wikipedia: \"It was written by Clarence 'Sonny' Henry and originally recorded by jazz percussionist Willie Bobo on his 1967 album Bobo Motion.\" Santana did not record it until May 1969. The Latin-jazz original is genuinely obscure, which makes the misattribution near-total rather than merely common.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Evil_Ways_(Santana_song)"
-   ],
-   "status": "queued",
-   "vein": "standards",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "for-once-in-my-life",
-   "title": "For Once in My Life",
-   "creditedTo": "Stevie Wonder",
-   "originalArtist": "Jean DuShon",
-   "originalYear": "1966",
-   "originalLabel": "Cadet (Chess)",
-   "writer": "Ron Miller and Orlando Murden",
-   "coverArtist": "Stevie Wonder",
-   "coverYear": "1968",
-   "confusion": "high",
-   "whyNotable": "Everyone files this under Stevie Wonder, whose Tamla single came out on October 15, 1968. He recorded it in summer 1967 and Berry Gordy shelved it — by which point Jean DuShon had already released it on Chess's Cadet label in October 1966 and Tony Bennett had charted with it in 1967. Two earlier recordings exist still: see contested.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/For_Once_in_My_Life"
-   ],
-   "status": "queued",
-   "vein": "soul",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04",
-   "caveats": [
-    "Jean DuShon (Cadet, October 1966) is the first RELEASED version, not the first recorded. Wikipedia records a Connie Haines recording made at Motown in July 1965 that stayed unreleased until 2015, and a Barbara McNair recording made in October 1965 and issued on an album in November 1966. Whoever the page names, it is not Stevie Wonder."
-   ]
-  },
-  {
-   "songSlug": "georgia-on-my-mind",
-   "title": "Georgia on My Mind",
-   "creditedTo": "Ray Charles",
-   "originalArtist": "Hoagy Carmichael",
-   "originalYear": "1930",
-   "originalLabel": "Victor",
-   "writer": "Hoagy Carmichael (music) and Stuart Gorrell (lyrics)",
-   "coverArtist": "Ray Charles",
-   "coverYear": "1960",
-   "confusion": "high",
-   "whyNotable": "Charles took it to number one on the Hot 100 in 1960 (ABC-Paramount, recorded May 1960 for The Genius Hits the Road) and it became Georgia's state song largely because of him — most listeners assume it is his, and many assume he wrote it. Wikipedia: \"Carmichael first recorded 'Georgia on My Mind', with Bix Beiderbecke on cornet, in New York City on September 15, 1930.\" Composer, cornetist, decade and idiom all differ from the version people know.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Georgia_on_My_Mind"
-   ],
-   "status": "queued",
-   "vein": "standards",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "gloria",
-   "title": "Gloria",
-   "creditedTo": "Laura Branigan",
-   "originalArtist": "Umberto Tozzi",
-   "originalYear": "1979",
-   "originalLabel": "CGD",
-   "writer": "Umberto Tozzi and Giancarlo Bigazzi; English translation by Jonathan King",
-   "coverArtist": "Laura Branigan",
-   "coverYear": "1982",
-   "confusion": "high",
-   "whyNotable": "Branigan's is the version that reached number two on the Billboard Hot 100 (27 November 1982, held off by Lionel Richie's \"Truly\") and it is treated as her signature song outright. Wikipedia records it as a 1979 Italian recording by Umberto Tozzi, written by Tozzi with Giancarlo Bigazzi, released on CGD. The Tozzi page adds that Branigan worked with Greg Mathieson — the arranger and keyboardist on Tozzi's own version — to give it what she called \"an American kick\", which is about as direct a line back to the original as a cover gets.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Gloria_(Umberto_Tozzi_song)",
-    "https://en.wikipedia.org/wiki/Umberto_Tozzi"
-   ],
-   "status": "queued",
-   "vein": "standards",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "goo-goo-muck",
-   "title": "Goo Goo Muck",
-   "creditedTo": "The Cramps",
-   "originalArtist": "Ronnie Cook and the Gaylads",
-   "originalYear": "1962",
-   "originalLabel": "",
-   "writer": "Ronnie Cook and Ed James",
-   "coverArtist": "The Cramps",
-   "coverYear": "1981",
-   "confusion": "high",
-   "whyNotable": "The most recent and most measurable case in this vein. The Cramps cut it at A&M Studios in January 1981 for Psychedelic Jungle; the original is a 1962 record by Ronnie Cook and the Gaylads. The dance scene in Netflix's Wednesday sent it viral, and the numbers are documented: US on-demand streams went from 2,500 to over 134,000, and Spotify streams rose 9,500 percent. Every one of those listeners arrived at a 1962 song via a 1981 cover in a streaming series, and the near-universal shorthand in the coverage that followed was 'the Cramps song'. One critic went as far as saying the moment 'may have single-handedly revived' goth subculture for Gen Z.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Goo_Goo_Muck",
-    "https://en.wikipedia.org/wiki/The_Cramps"
-   ],
-   "status": "queued",
-   "vein": "sync",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "green-green-grass-of-home",
-   "title": "Green, Green Grass of Home",
-   "creditedTo": "Tom Jones",
-   "originalArtist": "Johnny Darrell",
-   "originalYear": "1965",
-   "originalLabel": "United Artists Records",
-   "writer": "Claude \"Curly\" Putman Jr.",
-   "coverArtist": "Tom Jones",
-   "coverYear": "1966",
-   "confusion": "high",
-   "whyNotable": "Putman's song was first recorded by Johnny Darrell, released as his debut single on United Artists in May 1965. Porter Wagoner followed in July 1965 (No. 4 country, RCA Victor) and Jerry Lee Lewis cut it for Country Songs for City Folks. Jones learned it from the Lewis record and released his Decca version on 28 October 1966; it spent seven weeks at No. 1 in the UK and reached No. 11 in the US. Outside Nashville the song is simply a Tom Jones number — the third-hand chain from Darrell through Lewis to Jones is invisible.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Green,_Green_Grass_of_Home"
-   ],
-   "status": "queued",
-   "vein": "country",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
-  {
-   "songSlug": "heartbeats",
-   "title": "Heartbeats",
-   "creditedTo": "José González",
-   "originalArtist": "The Knife",
-   "originalYear": "2002",
-   "originalLabel": "Rabid Records / V2 Records",
-   "writer": "The Knife (Karin and Olof Dreijer)",
-   "coverArtist": "José González",
-   "coverYear": "2003",
-   "confusion": "high",
-   "whyNotable": "A pure advert-driven misattribution, and the chart record proves the sync did the work rather than the song. The Knife released it on 27 December 2002 on Rabid and V2; it reached No. 26 in Sweden and No. 119 on the UK Singles Chart. González's acoustic cover sat quietly on his 2003 debut Veneer until Sony's Bravia commercial — 250,000 coloured balls bouncing down Russian Hill in San Francisco — put it on television in November 2005. Reissued as a single on 9 January 2006, the cover hit No. 9 in the UK, No. 6 in Scotland, and went platinum in the UK and Denmark. An electro-pop record that barely registered became, for most of its audience, a solo acoustic song by an Argentine-Swedish guitarist.",
-   "sources": [
-    "https://en.wikipedia.org/wiki/Heartbeats_(The_Knife_song)"
-   ],
-   "status": "queued",
-   "vein": "sync",
-   "wave": null,
-   "harvestedFrom": "song-harvest-s4.json",
-   "harvestedOn": "2026-08-04"
-  },
   {
    "songSlug": "hey-joe",
    "title": "Hey Joe",
@@ -1813,6 +1370,76 @@
    "wave": "s1"
   },
   {
+   "songSlug": "after-midnight",
+   "title": "After Midnight",
+   "creditedTo": "Eric Clapton",
+   "originalArtist": "J.J. Cale",
+   "originalYear": "1966",
+   "originalLabel": "Liberty Records",
+   "writer": "J.J. Cale",
+   "coverArtist": "Eric Clapton",
+   "coverYear": "1970",
+   "confusion": "high",
+   "whyNotable": "A signature Clapton song that most listeners assume he originated. J.J. Cale wrote and first recorded it, released November 1966 as a Liberty single b/w \"Slow Motion\". Clapton recorded his in January 1970 at Island Studios and Polydor released it in October 1970; it reached No. 18 on the Hot 100. The clinching detail: Clapton's success prompted Cale to RE-record his own song for 1971's Naturally, and that re-recording — not the 1966 original — is the Cale version most people have heard, which is a second layer of the same confusion.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/After_Midnight_(J._J._Cale_song)"
+   ],
+   "status": "ingested",
+   "vein": "blues",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "J.J. Cale re-recorded his own song for Naturally (1971) after Clapton's 1970 hit, releasing it as a single in 1972 (No. 42). The Cale version most listeners have heard is therefore not the 1966 Liberty original."
+   ]
+  },
+  {
+   "songSlug": "angel-from-montgomery",
+   "title": "Angel from Montgomery",
+   "creditedTo": "Bonnie Raitt",
+   "originalArtist": "John Prine",
+   "originalYear": "1971",
+   "originalLabel": "Atlantic Records",
+   "writer": "John Prine",
+   "coverArtist": "Bonnie Raitt",
+   "coverYear": "1974",
+   "confusion": "high",
+   "whyNotable": "Prine wrote it and recorded it for his self-titled 1971 debut on Atlantic. Raitt cut it for Streetlights in 1974, and Wikipedia notes hers is the version that 'first attained wide recognition for the song'. Because Raitt sang it in a woman's voice — and kept it in her live set for fifty years — it reads to most listeners as a Bonnie Raitt song rather than a John Prine record.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Angel_from_Montgomery",
+    "https://en.wikipedia.org/wiki/John_Prine_(album)"
+   ],
+   "status": "ingested",
+   "vein": "country",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "at-last",
+   "title": "At Last",
+   "creditedTo": "Etta James",
+   "originalArtist": "Glenn Miller and His Orchestra",
+   "originalYear": "1942",
+   "originalLabel": "RCA Victor",
+   "writer": "Mack Gordon and Harry Warren",
+   "coverArtist": "Etta James",
+   "coverYear": "1960",
+   "confusion": "high",
+   "whyNotable": "Etta James's Argo recording is so completely hers that the wedding-DJ world treats her as its author. It is a Mack Gordon and Harry Warren film song written for Sun Valley Serenade in 1941, and Glenn Miller's orchestra had the hit — the May 20, 1942 studio version with Ray Eberle reached number 2. Note for the editor: this one runs against the vein's usual direction (big-band original, soul cover), but the who-recorded-it-first axis is identical.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/At_Last"
+   ],
+   "status": "ingested",
+   "vein": "soul",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the 1941/1942 distinction matters. Glenn Miller's orchestra performed it in Sun Valley Serenade in 1941 (the vocal was cut from the release print; Pat Friday dubbed Lynn Bari), made unreleased recordings in 1941, and the vocal arrangement resurfaced in Orchestra Wives in 1942. The RELEASED studio recording with Ray Eberle is May 20, 1942 on RCA Victor, which is the year given above."
+   ]
+  },
+  {
    "songSlug": "babe-im-gonna-leave-you",
    "title": "Babe I'm Gonna Leave You",
    "creditedTo": "Led Zeppelin",
@@ -1847,6 +1474,30 @@
    ],
    "status": "ingested",
    "wave": "s1"
+  },
+  {
+   "songSlug": "black-betty",
+   "title": "Black Betty",
+   "creditedTo": "Ram Jam",
+   "originalArtist": "James \"Iron Head\" Baker and Clear Rock",
+   "originalYear": "1933",
+   "originalLabel": "Library of Congress field recording (John and Alan Lomax)",
+   "writer": "Traditional",
+   "coverArtist": "Ram Jam",
+   "coverYear": "1977",
+   "confusion": "high",
+   "whyNotable": "The first known recording was made in December 1933 by the convicts Iron Head and Clear Rock at Central State Farm, Sugar Land, Texas, captured in the field by John and Alan Lomax for the Library of Congress. Lead Belly cut the commercial version in New York in April 1939 for Musicraft, as part of a medley on Negro Sinful Songs. Ram Jam's hard-rock arrangement, released June 1977, reached No. 18 in the US, No. 7 in the UK and No. 3 in Australia — and is now so dominant that the song's origin as an African-American work song is invisible to most listeners.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Black_Betty"
+   ],
+   "status": "ingested",
+   "vein": "country",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Lead Belly is the usual answer and is wrong. The earliest known recording is the December 1933 Lomax field recording of Iron Head and Clear Rock at Sugar Land, Texas; Lead Belly's commercial Musicraft version is 1939."
+   ]
   },
   {
    "songSlug": "black-magic-woman",
@@ -1900,6 +1551,30 @@
    "status": "ingested"
   },
   {
+   "songSlug": "blue-velvet",
+   "title": "Blue Velvet",
+   "creditedTo": "Bobby Vinton",
+   "originalArtist": "Arthur Prysock",
+   "originalYear": "1951",
+   "originalLabel": "Decca",
+   "writer": "Bernie Wayne and Lee Morris",
+   "coverArtist": "Bobby Vinton",
+   "coverYear": "1963",
+   "confusion": "high",
+   "whyNotable": "Vinton's Epic recording (made 27 May 1963, released 2 August 1963) spent three weeks at number one and was cemented by David Lynch's 1986 film — it is his song in the public mind. It is a 1950 Wayne/Morris composition with a tangled 1951 recording history, and by the time Vinton got to it there had already been charting versions by Tony Bennett (1951) and the Clovers (1955, number 14 R&B). See the contested note: the question of which 1951 record came first is genuinely knotty and is the best material on this page.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Blue_Velvet_(song)"
+   ],
+   "status": "ingested",
+   "vein": "standards",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the \"original\" is genuinely disputed. Wikipedia says Tony Bennett recorded it first, on 17 July 1951 (Columbia, released 21 September 1951), but that Arthur Prysock's Decca version, cut about a week after Bennett's session, \"evidently was the first version released, in August 1951.\" First recorded and first released are different artists. I have listed Prysock as originalArtist on the first-released reading; the page should present both and say which test it is applying."
+   ]
+  },
+  {
    "songSlug": "bring-it-on-home",
    "title": "Bring It On Home",
    "creditedTo": "Led Zeppelin",
@@ -1916,6 +1591,71 @@
    ],
    "status": "ingested",
    "wave": "s1"
+  },
+  {
+   "songSlug": "call-me-the-breeze",
+   "title": "Call Me the Breeze",
+   "creditedTo": "Lynyrd Skynyrd",
+   "originalArtist": "J. J. Cale",
+   "originalYear": "1971",
+   "originalLabel": "Shelter Records (US) / A&M (UK)",
+   "writer": "J. J. Cale",
+   "coverArtist": "Lynyrd Skynyrd",
+   "coverYear": "1974",
+   "confusion": "high",
+   "whyNotable": "Cale recorded it in 1970 and released it on his debut album Naturally (25 October 1971). Lynyrd Skynyrd recorded their version in January 1974 for Second Helping and made it a Southern-rock staple, re-recording it live for One More from the Road in 1976. The boogie-piano Skynyrd arrangement is so identified with the band that the song is widely assumed to be theirs — the second major case, after 'Cocaine', of a Cale original being absorbed by its cover.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Call_Me_the_Breeze",
+    "https://en.wikipedia.org/wiki/Naturally_(J._J._Cale_album)"
+   ],
+   "status": "ingested",
+   "vein": "country",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "city-of-new-orleans",
+   "title": "City of New Orleans",
+   "creditedTo": "Arlo Guthrie",
+   "originalArtist": "Steve Goodman",
+   "originalYear": "1971",
+   "originalLabel": "Buddah Records",
+   "writer": "Steve Goodman",
+   "coverArtist": "Arlo Guthrie",
+   "coverYear": "1972",
+   "confusion": "high",
+   "whyNotable": "Goodman wrote it in 1970 and recorded it for his self-titled 1971 album on Buddah. Guthrie's version, released June 1972 from Hobo's Lullaby, reached No. 18 on the Hot 100 and No. 4 Easy Listening, and hit No. 1 in New Zealand in 1973. Willie Nelson's 1984 version topped the country chart and won Goodman a posthumous Grammy for Best Country Song. Guthrie's name and Woody Guthrie's shadow make the song read as an inherited American folk standard rather than a Chicago songwriter's copyright.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/City_of_New_Orleans_(song)"
+   ],
+   "status": "ingested",
+   "vein": "country",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "cocaine",
+   "title": "Cocaine",
+   "creditedTo": "Eric Clapton",
+   "originalArtist": "J. J. Cale",
+   "originalYear": "1976",
+   "originalLabel": "Shelter Records",
+   "writer": "J. J. Cale",
+   "coverArtist": "Eric Clapton",
+   "coverYear": "1977",
+   "confusion": "high",
+   "whyNotable": "Cale wrote and recorded it for his album Troubadour, released September 1976 on Shelter Records. Clapton cut it for Slowhand in 1977, where it became one of his signature numbers and was issued as the B-side of 'Lay Down Sally'. Clapton's version so completely displaced Cale's in public memory that the song is routinely listed among Clapton's own compositions; Cale's Tulsa-sound original is the record almost nobody has heard.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Cocaine_(song)",
+    "https://en.wikipedia.org/wiki/Troubadour_(J._J._Cale_album)"
+   ],
+   "status": "ingested",
+   "vein": "country",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
   },
   {
    "songSlug": "cry-baby",
@@ -1972,6 +1712,90 @@
    "wave": "s1"
   },
   {
+   "songSlug": "devil-with-a-blue-dress-on",
+   "title": "Devil with a Blue Dress On",
+   "creditedTo": "Mitch Ryder & the Detroit Wheels",
+   "originalArtist": "Shorty Long",
+   "originalYear": "1964",
+   "originalLabel": "Motown",
+   "writer": "Shorty Long and William \"Mickey\" Stevenson",
+   "coverArtist": "Mitch Ryder & the Detroit Wheels",
+   "coverYear": "1966",
+   "confusion": "high",
+   "whyNotable": "Mitch Ryder's frantic 1966 medley with 'Good Golly, Miss Molly' hit number 4 and is treated as the source of the song. Shorty Long wrote it with Motown A&R chief Mickey Stevenson and released it as his debut single in 1964, at a far slower tempo; it reached number 26 R&B. The speed is Ryder's invention — the song is not.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Devil_with_a_Blue_Dress_On"
+   ],
+   "status": "ingested",
+   "vein": "soul",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "different-drum",
+   "title": "Different Drum",
+   "creditedTo": "Linda Ronstadt / The Stone Poneys",
+   "originalArtist": "The Greenbriar Boys",
+   "originalYear": "1966",
+   "originalLabel": "",
+   "writer": "Michael Nesmith",
+   "coverArtist": "The Stone Poneys featuring Linda Ronstadt",
+   "coverYear": "1967",
+   "confusion": "high",
+   "whyNotable": "Nesmith wrote it in 1964, and the bluegrass group The Greenbriar Boys recorded it first, on their 1966 album Better Late than Never!. The Stone Poneys featuring Linda Ronstadt released their baroque-pop arrangement on Capitol in September 1967; it reached No. 13 on the Billboard Hot 100 and became Ronstadt's first hit. Double misattribution: listeners assume Ronstadt originated it, and those who know better usually credit the Monkees rather than a bluegrass band.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Different_Drum"
+   ],
+   "status": "ingested",
+   "vein": "country",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "dont-leave-me-this-way",
+   "title": "Don't Leave Me This Way",
+   "creditedTo": "The Communards",
+   "originalArtist": "Harold Melvin & the Blue Notes",
+   "originalYear": "1975",
+   "originalLabel": "Philadelphia International",
+   "writer": "Kenneth Gamble, Leon Huff and Cary Gilbert",
+   "coverArtist": "The Communards",
+   "coverYear": "1986",
+   "confusion": "high",
+   "whyNotable": "Two different singers had number ones with this and neither cut it first. Gamble, Huff and Cary Gilbert's original was an album track on Harold Melvin & the Blue Notes' 1975 Wake Up Everybody. Thelma Houston's 1976 Tamla version topped the Hot 100 and won a Grammy; the Communards' 1986 version spent four weeks at UK number one and was the best-selling British single of the year. Both famous 'originals' are covers.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Don%27t_Leave_Me_This_Way"
+   ],
+   "status": "ingested",
+   "vein": "soul",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "dont-let-me-be-misunderstood",
+   "title": "Don't Let Me Be Misunderstood",
+   "creditedTo": "The Animals",
+   "originalArtist": "Nina Simone",
+   "originalYear": "1964",
+   "originalLabel": "Philips Records",
+   "writer": "Bennie Benjamin, Horace Ott and Sol Marcus",
+   "coverArtist": "The Animals",
+   "coverYear": "1965",
+   "confusion": "high",
+   "whyNotable": "Rolling Stone placed the Animals' version at No. 322 on its 500 Greatest Songs of All Time, and the song is routinely treated as an Animals original alongside their other signature reworkings. Nina Simone recorded the first version in October 1964 for Broadway-Blues-Ballads on Philips; the Animals released theirs on 29 January 1965 in the UK, reaching No. 3 UK, No. 15 US and No. 4 in Canada. Written by Bennie Benjamin, Horace Ott and Sol Marcus. A third layer: Santa Esmeralda's 1977 disco version (US No. 15, No. 1 in Italy and West Germany) is itself widely assumed to be covering the Animals rather than Simone.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Don%27t_Let_Me_Be_Misunderstood"
+   ],
+   "status": "ingested",
+   "vein": "blues",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
    "songSlug": "dont-turn-around",
    "title": "Don't Turn Around",
    "creditedTo": "Ace of Base",
@@ -1988,6 +1812,30 @@
    ],
    "status": "ingested",
    "wave": "s1"
+  },
+  {
+   "songSlug": "dueling-banjos",
+   "title": "Dueling Banjos",
+   "creditedTo": "Eric Weissberg and Steve Mandell",
+   "originalArtist": "Arthur \"Guitar Boogie\" Smith with Don Reno (as \"Feudin' Banjos\")",
+   "originalYear": "1955",
+   "originalLabel": "",
+   "writer": "Arthur \"Guitar Boogie\" Smith",
+   "coverArtist": "Eric Weissberg and Steve Mandell",
+   "coverYear": "1972",
+   "confusion": "high",
+   "whyNotable": "The rare misattribution where the film industry made the same mistake the public did, and lost in court for it. Arthur Smith composed the piece in 1954 and first recorded it in 1955 as 'Feudin' Banjos', playing four-string plectrum banjo against Don Reno's five-string. The Eric Weissberg and Steve Mandell arrangement in Deliverance (1972) is what the world knows; the December 1972 single was credited to Weissberg alone, and the filmmakers did not acknowledge Smith as composer at all. Smith sued, won, and received songwriting credit plus royalties. The Weissberg-Mandell recording went to No. 2 on the Billboard Hot 100 in 1973 and took a Grammy for Best Country Instrumental Performance in 1974 — awards for a tune whose author had to litigate to be named.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Dueling_Banjos"
+   ],
+   "status": "ingested",
+   "vein": "sync",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "the credit was contested in court, not just in public memory. The December 1972 single was credited to Eric Weissberg alone although Steve Mandell arranged and performed it with him, and Arthur Smith received no composer credit from the filmmakers until he sued and won songwriting credit plus royalties."
+   ]
   },
   {
    "songSlug": "everybody-needs-somebody-to-love",
@@ -2027,6 +1875,27 @@
    "wave": "s1"
   },
   {
+   "songSlug": "evil-ways",
+   "title": "Evil Ways",
+   "creditedTo": "Santana",
+   "originalArtist": "Willie Bobo",
+   "originalYear": "1967",
+   "originalLabel": "",
+   "writer": "Clarence \"Sonny\" Henry",
+   "coverArtist": "Santana",
+   "coverYear": "1969",
+   "confusion": "high",
+   "whyNotable": "Santana's first US Top 40 hit — number nine on the Hot 100 the week of 21 March 1970 — and one of the tracks that made the Woodstock reputation. Wikipedia: \"It was written by Clarence 'Sonny' Henry and originally recorded by jazz percussionist Willie Bobo on his 1967 album Bobo Motion.\" Santana did not record it until May 1969. The Latin-jazz original is genuinely obscure, which makes the misattribution near-total rather than merely common.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Evil_Ways_(Santana_song)"
+   ],
+   "status": "ingested",
+   "vein": "standards",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
    "songSlug": "fly-me-to-the-moon",
    "title": "Fly Me to the Moon",
    "creditedTo": "Frank Sinatra",
@@ -2043,6 +1912,51 @@
    ],
    "status": "ingested",
    "wave": "s2"
+  },
+  {
+   "songSlug": "for-once-in-my-life",
+   "title": "For Once in My Life",
+   "creditedTo": "Stevie Wonder",
+   "originalArtist": "Jean DuShon",
+   "originalYear": "1966",
+   "originalLabel": "Cadet (Chess)",
+   "writer": "Ron Miller and Orlando Murden",
+   "coverArtist": "Stevie Wonder",
+   "coverYear": "1968",
+   "confusion": "high",
+   "whyNotable": "Everyone files this under Stevie Wonder, whose Tamla single came out on October 15, 1968. He recorded it in summer 1967 and Berry Gordy shelved it — by which point Jean DuShon had already released it on Chess's Cadet label in October 1966 and Tony Bennett had charted with it in 1967. Two earlier recordings exist still: see contested.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/For_Once_in_My_Life"
+   ],
+   "status": "ingested",
+   "vein": "soul",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04",
+   "caveats": [
+    "Jean DuShon (Cadet, October 1966) is the first RELEASED version, not the first recorded. Wikipedia records a Connie Haines recording made at Motown in July 1965 that stayed unreleased until 2015, and a Barbara McNair recording made in October 1965 and issued on an album in November 1966. Whoever the page names, it is not Stevie Wonder."
+   ]
+  },
+  {
+   "songSlug": "georgia-on-my-mind",
+   "title": "Georgia on My Mind",
+   "creditedTo": "Ray Charles",
+   "originalArtist": "Hoagy Carmichael",
+   "originalYear": "1930",
+   "originalLabel": "Victor",
+   "writer": "Hoagy Carmichael (music) and Stuart Gorrell (lyrics)",
+   "coverArtist": "Ray Charles",
+   "coverYear": "1960",
+   "confusion": "high",
+   "whyNotable": "Charles took it to number one on the Hot 100 in 1960 (ABC-Paramount, recorded May 1960 for The Genius Hits the Road) and it became Georgia's state song largely because of him — most listeners assume it is his, and many assume he wrote it. Wikipedia: \"Carmichael first recorded 'Georgia on My Mind', with Bix Beiderbecke on cornet, in New York City on September 15, 1930.\" Composer, cornetist, decade and idiom all differ from the version people know.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Georgia_on_My_Mind"
+   ],
+   "status": "ingested",
+   "vein": "standards",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
   },
   {
    "songSlug": "girl-you-know-its-true",
@@ -2077,6 +1991,92 @@
     "https://en.wikipedia.org/wiki/Girls_Just_Want_to_Have_Fun"
    ],
    "status": "ingested"
+  },
+  {
+   "songSlug": "gloria",
+   "title": "Gloria",
+   "creditedTo": "Laura Branigan",
+   "originalArtist": "Umberto Tozzi",
+   "originalYear": "1979",
+   "originalLabel": "CGD",
+   "writer": "Umberto Tozzi and Giancarlo Bigazzi; English translation by Jonathan King",
+   "coverArtist": "Laura Branigan",
+   "coverYear": "1982",
+   "confusion": "high",
+   "whyNotable": "Branigan's is the version that reached number two on the Billboard Hot 100 (27 November 1982, held off by Lionel Richie's \"Truly\") and it is treated as her signature song outright. Wikipedia records it as a 1979 Italian recording by Umberto Tozzi, written by Tozzi with Giancarlo Bigazzi, released on CGD. The Tozzi page adds that Branigan worked with Greg Mathieson — the arranger and keyboardist on Tozzi's own version — to give it what she called \"an American kick\", which is about as direct a line back to the original as a cover gets.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Gloria_(Umberto_Tozzi_song)",
+    "https://en.wikipedia.org/wiki/Umberto_Tozzi"
+   ],
+   "status": "ingested",
+   "vein": "standards",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "goo-goo-muck",
+   "title": "Goo Goo Muck",
+   "creditedTo": "The Cramps",
+   "originalArtist": "Ronnie Cook and the Gaylads",
+   "originalYear": "1962",
+   "originalLabel": "",
+   "writer": "Ronnie Cook and Ed James",
+   "coverArtist": "The Cramps",
+   "coverYear": "1981",
+   "confusion": "high",
+   "whyNotable": "The most recent and most measurable case in this vein. The Cramps cut it at A&M Studios in January 1981 for Psychedelic Jungle; the original is a 1962 record by Ronnie Cook and the Gaylads. The dance scene in Netflix's Wednesday sent it viral, and the numbers are documented: US on-demand streams went from 2,500 to over 134,000, and Spotify streams rose 9,500 percent. Every one of those listeners arrived at a 1962 song via a 1981 cover in a streaming series, and the near-universal shorthand in the coverage that followed was 'the Cramps song'. One critic went as far as saying the moment 'may have single-handedly revived' goth subculture for Gen Z.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Goo_Goo_Muck",
+    "https://en.wikipedia.org/wiki/The_Cramps"
+   ],
+   "status": "ingested",
+   "vein": "sync",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "green-green-grass-of-home",
+   "title": "Green, Green Grass of Home",
+   "creditedTo": "Tom Jones",
+   "originalArtist": "Johnny Darrell",
+   "originalYear": "1965",
+   "originalLabel": "United Artists Records",
+   "writer": "Claude \"Curly\" Putman Jr.",
+   "coverArtist": "Tom Jones",
+   "coverYear": "1966",
+   "confusion": "high",
+   "whyNotable": "Putman's song was first recorded by Johnny Darrell, released as his debut single on United Artists in May 1965. Porter Wagoner followed in July 1965 (No. 4 country, RCA Victor) and Jerry Lee Lewis cut it for Country Songs for City Folks. Jones learned it from the Lewis record and released his Decca version on 28 October 1966; it spent seven weeks at No. 1 in the UK and reached No. 11 in the US. Outside Nashville the song is simply a Tom Jones number — the third-hand chain from Darrell through Lewis to Jones is invisible.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Green,_Green_Grass_of_Home"
+   ],
+   "status": "ingested",
+   "vein": "country",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
+  },
+  {
+   "songSlug": "heartbeats",
+   "title": "Heartbeats",
+   "creditedTo": "José González",
+   "originalArtist": "The Knife",
+   "originalYear": "2002",
+   "originalLabel": "Rabid Records / V2 Records",
+   "writer": "The Knife (Karin and Olof Dreijer)",
+   "coverArtist": "José González",
+   "coverYear": "2003",
+   "confusion": "high",
+   "whyNotable": "A pure advert-driven misattribution, and the chart record proves the sync did the work rather than the song. The Knife released it on 27 December 2002 on Rabid and V2; it reached No. 26 in Sweden and No. 119 on the UK Singles Chart. González's acoustic cover sat quietly on his 2003 debut Veneer until Sony's Bravia commercial — 250,000 coloured balls bouncing down Russian Hill in San Francisco — put it on television in November 2005. Reissued as a single on 9 January 2006, the cover hit No. 9 in the UK, No. 6 in Scotland, and went platinum in the UK and Denmark. An electro-pop record that barely registered became, for most of its audience, a solo acoustic song by an Argentine-Swedish guitarist.",
+   "sources": [
+    "https://en.wikipedia.org/wiki/Heartbeats_(The_Knife_song)"
+   ],
+   "status": "ingested",
+   "vein": "sync",
+   "wave": "s4",
+   "harvestedFrom": "song-harvest-s4.json",
+   "harvestedOn": "2026-08-04"
   },
   {
    "songSlug": "hooked-on-a-feeling",

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){try{var d=document.documentElement,ls=localStorage;var THEMES={light:1,dark:1,auto:1},SIZES={normal:1,large:1,xl:1,xxl:1};var u=new URL(location.href),q=u.searchParams,qth=q.get('qth'),qts=q.get('qts');if(qth||qts){if(THEMES[qth])ls.setItem('quotle-theme',qth);if(SIZES[qts])ls.setItem('quotle-text-size',qts);q.delete('qth');q.delete('qts');var qs=q.toString();history.replaceState(null,'',u.pathname+(qs?'?'+qs:'')+u.hash);}var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
     <title>Santana — provenance traced to source · Quotle.info</title>
-    <meta name="description" content="Santana: 1 song traced to a primary source where one exists, with attribution verified and misattributions untangled.">
+    <meta name="description" content="Santana: 2 songs traced to a primary source where one exists, with attribution verified and misattributions untangled.">
     <link rel="canonical" href="https://quotle.info/authors/santana/">
     <meta property="og:type" content="profile">
     <meta property="og:title" content="Santana — provenance traced to source">
@@ -25,13 +25,19 @@
         "@type": "Person",
         "@id": "https://quotle.info/authors/santana/#person",
         "name": "Santana",
-        "description": "American Latin-rock band · formed 1966",
+        "description": "American Latin rock band · San Francisco",
         "subjectOf": [
           {
             "@type": "MusicRecording",
             "@id": "https://quotle.info/who-recorded/black-magic-woman/#recording",
             "name": "Black Magic Woman",
             "url": "https://quotle.info/who-recorded/black-magic-woman/"
+          },
+          {
+            "@type": "MusicRecording",
+            "@id": "https://quotle.info/who-recorded/evil-ways/#recording",
+            "name": "Evil Ways",
+            "url": "https://quotle.info/who-recorded/evil-ways/"
           }
         ]
       }
@@ -302,13 +308,13 @@
     </nav>
     <main id="main">
         <header class="author-hero">
-            <div class="author-avatar" aria-hidden="true">SA</div>
+            <div class="author-avatar" aria-hidden="true">S</div>
             <div>
                 <h1>Santana</h1>
-                <p class="author-meta">American Latin-rock band &middot; formed 1966</p>
+                <p class="author-meta">American Latin rock band · San Francisco</p>
             </div>
         </header>
-        <div class="author-bio"><strong>Santana</strong> &mdash; the Latin-rock band led by guitarist Carlos Santana &mdash; released their cover of &lsquo;Black Magic Woman&rsquo; on the 1970 album <em>Abraxas</em>, folding it into a medley with &lsquo;Gypsy Queen&rsquo;. Their version reached No. 4 in the US and became so identified with the band that the Fleetwood Mac original vanished from public memory. The record is genuinely theirs and genuinely great; the only error is assuming a 1970 Santana hit must be where the song began.</div>
+        <div class="author-bio">Santana came together in San Francisco in the late 1960s around Carlos Santana&rsquo;s guitar and Gregg Rolie&rsquo;s Hammond organ, and their reading of &ldquo;Evil Ways&rdquo; is genuinely definitive &mdash; Rolie sings it and takes the organ solo, Carlos Santana takes the guitar solo, and the arrangement gives the tune a lift the 1967 version never had. Recorded in May 1969 and issued as a single that December, it became the band&rsquo;s first US Top 40 hit and one of the songs that carried their Woodstock reputation into record shops. The only error in the popular memory is chronological: they made the song famous, they did not make it first.</div>
 
         <section aria-labelledby="s-h">
             <div class="sec-head"><p class="kicker">Who recorded it</p><h2 id="s-h">Songs credited to Santana that are covers</h2></div>
@@ -316,6 +322,10 @@
                 <a class="q-card disputed" href="/who-recorded/black-magic-woman/">
                     <p class="q-text">Black Magic Woman</p>
                     <span class="q-conf"><span class="dot" aria-hidden="true">♪</span>Cover &mdash; originally recorded by Fleetwood Mac</span>
+                </a>
+                <a class="q-card disputed" href="/who-recorded/evil-ways/">
+                    <p class="q-text">Evil Ways</p>
+                    <span class="q-conf"><span class="dot" aria-hidden="true">♪</span>Cover &mdash; originally recorded by Willie Bobo</span>
                 </a>
             </div>
         </section>
