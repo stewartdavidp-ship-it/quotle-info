@@ -53,8 +53,15 @@
  *   node tools/qi-harvest.js --status          # fetched vs remaining in the gap
  *   node tools/qi-harvest.js --fetch 100       # fetch the next N uncached gap articles (polite, resumable)
  *   node tools/qi-harvest.js --emit            # cache → harvest-input JSON + near-miss report
- *   node tools/qi-harvest.js --emit --limit 60 # only the first N candidates
+ *   node tools/qi-harvest.js --emit --contested --limit 300   # the usual call: bounded + contested-first
  * Then:  node tools/harvest.js sync <the emitted file>  &&  node tools/rank-backlog.js
+ *
+ * !! THE CACHE IS THE RESERVOIR; THE QUEUE IS A WORKING SET. Do not sync all 1,809 at once.
+ * under-review/ renders the WHOLE queue as one page: syncing the full gap took it from 233 KB to
+ * 2.1 MB (9x) and search.json from 509 KB to 822 KB. This site's stated rule is being clean and
+ * fast, so a 2.1 MB page is a regression, not a milestone. Keep the queue a few hundred deep and
+ * top up as waves drain it — data/qi-articles.json is committed, so a top-up is --emit + sync with
+ * no re-fetch of anyone's server.
  */
 const fs = require('fs');
 const path = require('path');
@@ -204,6 +211,10 @@ function cmdEmit(limit, outPath) {
     }
   }
 
+  // --contested: emit only what the traffic data says converts. Disputed pages take 80.3% of
+  // quote-page visits on 52.6% of the corpus; verified take 14.7% on 35.7%. Combined with --limit
+  // this is how the queue stays a working set instead of a dump.
+  const contestedOnly = has('--contested');
   const candidates = [], near = [];
   let skippedMeta = 0, skippedSelf = 0;
   const seen = new Set();
@@ -225,6 +236,7 @@ function cmdEmit(limit, outPath) {
     if (seen.has(selfKey)) { skippedSelf++; continue; }
     seen.add(selfKey);
     const h = infer(a);
+    if (contestedOnly && h.category !== 'misattributed' && h.category !== 'disputed') continue;
     candidates.push({
       quote: a.quote,
       magnetAuthor: h.magnetAuthor,
