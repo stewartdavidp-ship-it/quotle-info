@@ -1,12 +1,15 @@
 # quotle.info content pipeline — the march to 2000
 
-Everything needed to keep growing the corpus toward **2,000 quotes** (to match Quote Investigator),
-**durably across context compaction**. All scripts here are committed; a fresh session can run a full
+Everything needed to keep growing the corpus toward **2,000 quotes**, **durably across context
+compaction**. ⚠ **2,000 is a milestone, NOT parity with Quote Investigator** — that premise was
+wrong and went uncorrected for months. QI's own sitemap was counted on 2026-08-27: **2,444 articles**.
+Run `node tools/qi-coverage.js` for the live gap rather than assuming; it also prints how many QI
+articles we already cite. All scripts here are committed; a fresh session can run a full
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1887** quotes + **95** songs. **Target: 2000** quotes. **113 to go.**
-- **Next wave number: r45.** (Waves r6–r44 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1932** quotes + **115** songs. **Milestone: 2000** quotes — **68 to go.** (QI parity is 2,444: **512 to go**.)
+- **Next wave number: r46.** (Waves r6–r45 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
   **These lines were three waves stale** (they read 1506 / r35 while r35, r36 and r37 had all shipped),
   which is why the runbook says to take N from `git ls-remote --heads origin 'refs/heads/wave-r*'` and
   never from this file. Bump them, but do not trust them.
