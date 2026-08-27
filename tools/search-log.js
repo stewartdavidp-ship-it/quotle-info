@@ -4,6 +4,18 @@
  * search-log.js — the SEARCH PROGRESS LOG. A fixed baseline plus one reading per day, so
  * "are we making progress?" is answered against a committed record instead of a moving report.
  *
+ * ⚠ READ FIRST — THIS LOG MEASURES ONE CHANNEL, NOT THE AUDIENCE.
+ * Everything below comes from Google Search Console, which counts GOOGLE ONLY. On 2026-08-27 that
+ * distinction turned out to be the whole story: GSC had shown ~8 clicks ever, and this project had
+ * spent six weeks concluding the site had almost no audience. GoatCounter — installed site-wide on
+ * 2026-07-09 and recording the entire time — showed 4,163 visits, ~65/day, with chatgpt.com the
+ * single largest referrer and Google ABSENT from the top six.
+ *
+ * So: `visits` is now a first-class field in every reading and the FIRST column of the table, and
+ * the Google numbers sit beside it as one channel among several. Get visits from
+ * `node tools/traffic.js --json` (referrers: `--refs`). Never report traffic from GSC alone, and
+ * never describe a GSC figure as "traffic" — it is Google search traffic and nothing more.
+ *
  * WHY THIS EXISTS
  * Google Search Console is a moving instrument and it has burned this project repeatedly:
  *   - The Page indexing report sat on a stale snapshot for weeks (a Google-side reporting outage).
@@ -34,7 +46,8 @@
  *   node tools/search-log.js cohorts          # re-freeze cohort membership from git (rare)
  *
  * A reading is whatever you can actually pull; every field is optional except `date`:
- *   { "date":"2026-07-25", "totals":{"clicks":5,"impressions":3510,"avgPosition":23.6},
+ *   { "date":"2026-07-25", "visits":{"d7":445,"d30":3046,"allTime":4163,"topReferrer":"chatgpt.com"},
+ *     "totals":{"clicks":5,"impressions":3510,"avgPosition":23.6},
  *     "pagesWithImpressions":207, "queries":667,
  *     "cohort":{"current":{"impressions":0,"clicks":0}, "legacy":{...}},
  *     "sitemap":{"discovered":2048,"status":"Success"}, "notes":"..." }
@@ -97,20 +110,21 @@ function report() {
   console.log(`cohorts: legacy ${log.cohorts.legacy.count} · current ${log.cohorts.current.count}   [${log.cohorts.definition}]\n`);
 
   const base = rs[0];
-  const hdr = ['data date', 'impr', 'clicks', 'avg pos', 'pages w/ impr', 'current-cohort impr'];
+  // VISITS FIRST, deliberately. The Google columns are one channel; the visits column is the
+  // audience. Ordering them the other way is how this log misled the project for six weeks.
+  const hdr = ['data date', 'VISITS 7d', 'g.impr', 'g.clicks', 'avg pos', 'pages w/ impr'];
   console.log('  ' + hdr.join('   |   '));
-  console.log('  ' + '-'.repeat(88));
+  console.log('  ' + '-'.repeat(92));
   rs.forEach((r, i) => {
     const p = i ? rs[i - 1] : null;
-    const cc = r.cohort && r.cohort.current ? r.cohort.current.impressions : null;
-    const pc = p && p.cohort && p.cohort.current ? p.cohort.current.impressions : null;
+    const v = r.visits && r.visits.d7, pv = p && p.visits && p.visits.d7;
     console.log(
       `  ${r.date}  ` +
+      `${n(v).padStart(8)}${delta(v, pv).padStart(7)}  ` +
       `${n(r.totals && r.totals.impressions).padStart(6)}${delta(r.totals && r.totals.impressions, p && p.totals && p.totals.impressions).padStart(7)}  ` +
-      `${n(r.totals && r.totals.clicks).padStart(4)}${delta(r.totals && r.totals.clicks, p && p.totals && p.totals.clicks).padStart(6)}  ` +
+      `${n(r.totals && r.totals.clicks).padStart(6)}${delta(r.totals && r.totals.clicks, p && p.totals && p.totals.clicks).padStart(6)}  ` +
       `${n(r.totals && r.totals.avgPosition).padStart(6)}  ` +
-      `${n(r.pagesWithImpressions).padStart(6)}  ` +
-      `${n(cc).padStart(8)}${delta(cc, pc)}`
+      `${n(r.pagesWithImpressions).padStart(6)}`
     );
   });
 
@@ -118,8 +132,9 @@ function report() {
   if (rs.length > 1) {
     console.log('\n  vs baseline ' + base.date + ':');
     const pairs = [
-      ['impressions', last.totals && last.totals.impressions, base.totals && base.totals.impressions],
-      ['clicks', last.totals && last.totals.clicks, base.totals && base.totals.clicks],
+      ['VISITS (7d, all channels)', last.visits && last.visits.d7, base.visits && base.visits.d7],
+      ['google impressions', last.totals && last.totals.impressions, base.totals && base.totals.impressions],
+      ['google clicks', last.totals && last.totals.clicks, base.totals && base.totals.clicks],
       ['pages with impressions', last.pagesWithImpressions, base.pagesWithImpressions],
       ['current-cohort impressions', last.cohort && last.cohort.current && last.cohort.current.impressions,
         base.cohort && base.cohort.current && base.cohort.current.impressions],
@@ -130,12 +145,18 @@ function report() {
     });
   }
 
-  // THE number to watch. Everything else blends cohorts and will mislead.
+  // THE number to watch — and it is no longer a Google number.
   const cc = last.cohort && last.cohort.current;
-  console.log(
-    '\n  ► The signal: current-cohort impressions. ' +
-    (cc && cc.impressions ? `now ${cc.impressions}.` : 'still ~0 — discovery began 2026-07-25; expect ~4d publish→index latency.')
-  );
+  if (last.visits && last.visits.d7 != null) {
+    console.log(`\n  ► The signal: VISITS (all channels). ${last.visits.d7} in the last 7d` +
+      (last.visits.topReferrer ? `, top referrer ${last.visits.topReferrer}` : '') +
+      (last.visits.allTime ? `; ${last.visits.allTime} all time.` : '.'));
+    console.log('    Google is one channel among several — read the g.* columns as such, not as traffic.');
+  } else {
+    console.log('\n  ► VISITS NOT RECORDED for this reading. Run `node tools/traffic.js --json`' +
+      ' and add a `visits` block — a reading without it measures Google alone and will mislead.');
+  }
+  if (cc && cc.impressions != null) console.log(`    (current-cohort google impressions: ${cc.impressions})`);
   if (last.notes) console.log(`  note (${last.date}): ${last.notes}`);
   console.log('');
 }
