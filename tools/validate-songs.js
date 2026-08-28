@@ -142,13 +142,26 @@ for (const f of files) {
   // official artist/label/service upload rather than someone's rip) is a human judgement recorded
   // in `source`, and whether it still resolves is checked separately, not at build time (external
   // link checks are flaky enough to get a build gate disabled).
-  if (s.listen) {
-    const l = s.listen;
-    if (!l.url) p.push('listen.url is missing — drop the listen block rather than shipping it empty');
-    else if (!/^https:\/\//.test(l.url)) p.push(`listen.url must be https: ${String(l.url).slice(0, 60)}`);
-    else if (/\/embed\/|player\.|autoplay=/.test(l.url)) p.push('listen.url looks like an EMBED — link to the page, never embed a player (weight + third-party cookies)');
-    if (!l.source) w.push('listen.source is empty — record WHY this copy is legitimate (official channel/label/service), or someone will assume it was the first search result');
-    if (!l.what) w.push('listen.what is empty — say which recording is being linked, so it is clear this is the ORIGINAL and not the famous cover');
+  const checkListen = (l, field, whatHint) => {
+    if (!l.url) p.push(`${field}.url is missing — drop the ${field} block rather than shipping it empty`);
+    else if (!/^https:\/\//.test(l.url)) p.push(`${field}.url must be https: ${String(l.url).slice(0, 60)}`);
+    else if (/\/embed\/|player\.|autoplay=/.test(l.url)) p.push(`${field}.url looks like an EMBED — link to the page, never embed a player (weight + third-party cookies)`);
+    if (!l.source) w.push(`${field}.source is empty — record WHY this copy is legitimate (official channel/label/service), or someone will assume it was the first search result`);
+    if (!l.what) w.push(`${field}.what is empty — ${whatHint}`);
+  };
+  if (s.listen) checkListen(s.listen, 'listen', 'say which recording is being linked, so it is clear this is the ORIGINAL and not the famous cover');
+  if (s.listenCover) {
+    checkListen(s.listenCover, 'listenCover', 'say whose version this is, so it is clear it is the COVER and not the original');
+    // A cover link with no original beside it is not a comparison — it is the page linking the one
+    // record it is arguing against, and nothing else. build-songs.js drops it, so this would be an
+    // invisible field rather than a wrong page; flag it so the data does not quietly diverge from
+    // what ships.
+    if (!s.listen || !s.listen.url) {
+      p.push('listenCover without a listen block — the cover is a COMPARISON to the original, not a substitute for it, and build-songs.js will not render it');
+    }
+    if (s.listen && s.listen.url && s.listenCover.url === s.listen.url) {
+      p.push('listenCover.url is identical to listen.url — one of the two links is wrong');
+    }
   }
 
   // sameAs — STABLE identifiers only. The point of this field is that it does not rot; a streaming

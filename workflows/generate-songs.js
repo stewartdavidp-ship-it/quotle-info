@@ -134,6 +134,11 @@ function toRecord(d, item) {
   // warns on a missing `source`, because the whole point is a link to the ORIGINAL recording from a
   // channel someone can justify (artist/label/service), not the first YouTube result.
   if (d.listen && d.listen.url) rec.listen = d.listen;
+  // listenCover — the famous version, for A/B comparison. Only meaningful alongside the original:
+  // build-songs.js renders it ONLY when rec.listen exists, so a cover without an original is dropped
+  // rather than left as the page's single audio link, which would point at the record the page is
+  // arguing against.
+  if (d.listenCover && d.listenCover.url && rec.listen) rec.listenCover = d.listenCover;
   // sameAs — STABLE identifiers only (musicbrainz / wikidata / secondhandsongs). validate-songs.js
   // enforces the host list; a streaming URL here would rot inside structured data.
   if (Array.isArray(d.sameAs) && d.sameAs.length) rec.sameAs = d.sameAs;
@@ -178,6 +183,7 @@ const SONG_DOSSIER_SCHEMA = {
     },
     externalLinks: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['label', 'host', 'url', 'what'], properties: { label: { type: 'string' }, host: { type: 'string' }, url: { type: 'string' }, what: { type: 'string' } } } },
     listen: { type: 'object', additionalProperties: false, required: ['url', 'host', 'what', 'source'], properties: { url: { type: 'string' }, host: { type: 'string' }, what: { type: 'string' }, source: { type: 'string' } } },
+    listenCover: { type: 'object', additionalProperties: false, required: ['url', 'host', 'what', 'source'], properties: { url: { type: 'string' }, host: { type: 'string' }, what: { type: 'string' }, source: { type: 'string' } } },
     sameAs: { type: 'array', items: { type: 'string' } },
     authors: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['name', 'metaLine', 'role', 'bio', 'kicker'], properties: { name: { type: 'string' }, initials: { type: 'string' }, kicker: { type: 'string' }, heading: { type: 'string' }, metaLine: { type: 'string' }, role: { type: 'string', enum: ['original', 'cover', 'writer'] }, bio: { type: 'string' } } } },
     misattribution: {
@@ -277,11 +283,17 @@ themes: exactly 2, from this fixed vocabulary and nothing else: ${THEME_VOCAB}.
 externalLinks: 3-5 {label, host, url, what} — Wikipedia, a cover database, artist pages. Each confirmed relevant.
 
 listen: OPTIONAL — a link to HEAR THE ORIGINAL. This is the most persuasive artifact on the page: reading that a ${it.originalYear} ${it.originalArtist} recording exists is weak, hearing it is proof. It is also the easiest thing on the page to get WRONG, so it has a fixed procedure. Follow all four steps or omit the block.
- 1. Link the ORIGINAL only — NEVER the famous ${it.coverArtist} version. The cover is one search away and the page is not arguing about it.
+ 1. This block is the ORIGINAL only — NEVER the famous ${it.coverArtist} version. The cover has its own field (listenCover, below); putting it here would give the record the page is arguing AGAINST the primary slot.
  2. FETCH THE WATCH PAGE and read the uploader and the &#8471; line. Do not trust a search result, a title, or a thumbnail. Accept ONLY: an official artist/label channel, a VEVO channel, or an auto-generated "Provided to YouTube by <distributor>" upload. A fan upload, a rip, or a compilation channel is NOT acceptable however good the audio is.
  3. *** CHECK THE DURATION AGAINST THE MUSICBRAINZ RECORDING. *** An artist's own channel very often hosts a LATER RE-RECORDING under the original title, and it will pass every check in step 2 while being the wrong record by decades. This single check caught three of them on the last pass: a 2003 re-cut, a set of 1995/2009/2022 re-recordings, and a 2002 re-do — all on legitimate official channels, all wearing the original's name. If the duration does not match, or you cannot establish the original's duration, OMIT.
  4. Never an embed URL (no /embed/, no player., no autoplay=) — the page renders a LINK, not a player. The "source" field must state WHY that copy is legitimate (which channel, and what you confirmed).
  AN ABSENT LINK BEATS A DUBIOUS ONE. On the last pass 4 of 27 songs correctly got no link because no legitimate copy of the original exists. Omitting is a valid, expected outcome — not a failure.
+
+listenCover: OPTIONAL — a link to hear ${it.coverArtist}'s famous version, so a reader who has just discovered the original can play the one they know and hear the difference. That comparison is the payoff of the whole page; making the reader go and find it themselves loses them at the moment the page has worked.
+ SAME FOUR STEPS AS ABOVE, with two differences that matter:
+ • Step 3 matters MORE here, not less. A famous artist re-cuts their own hit far more often than an obscure originator does — live versions, anniversary re-recordings, remasters retitled as the original. Check the duration against the MusicBrainz recording for ${it.coverArtist}'s ${it.coverYear || 'original'} release specifically, not against "a recording of this song".
+ • Only supply this if you also supplied the listen block. The page drops a cover link that has no original beside it, so an unmatched one is wasted work.
+ AN ABSENT LINK STILL BEATS A DUBIOUS ONE. The cover being easy to find is not a reason to lower the bar — a wrong link here is worse than none, because the reader will assume the comparison is fair and it will not be.
 
 sameAs: OPTIONAL but preferred. *** CHECK THAT EACH IDENTIFIER RESOLVES TO THE ORIGINAL, NOT THE FAMOUS COVER. *** One wave shipped three that pointed at the cover's entity (UB40 rather than Lord Creator, Wilson Pickett rather than Sir Mack Rice, Sinatra rather than Claude Francois) — the exact conflation this page exists to undo, asserted in machine-readable form. Open each one and confirm whose recording it describes. STABLE identifiers ONLY — musicbrainz.org, wikidata.org, secondhandsongs.com. Never a streaming URL: those rot, and a dead identifier inside structured data is worse than none.
  • Prefer a MusicBrainz **recording** MBID for the ORIGINAL, confirmed against the release it first appeared on (the ${it.originalYear} ${it.originalLabel || 'original'} release) — not just any recording of the song.
