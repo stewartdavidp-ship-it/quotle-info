@@ -147,8 +147,33 @@ function parse(html, url) {
 }
 
 // ---------- infer the ranking hints ----------
+// A QI conclusion names the FALSE claimant as well as the real author — "crafted by screenwriter
+// Larry Ferguson and NOT Christopher Columbus". Treating every mentioned name as "credited" therefore
+// classified Columbus as credited and left McTiernan — merely the director who disclosed the
+// fabrication — as the only "other", so he became the magnet. Wave r46 shipped that as a blocker: a
+// ClaimReview rating false a claim nobody makes, with the real one absent.
+//
+// So: a name sitting immediately after a denial is NOT evidence that it is credited.
+// This is deliberately the NARROWEST fix that removes the demonstrated failure. A fuller attempt —
+// also inferring trueOrigin from credit verbs — was written, measured against all 544 multi-person
+// articles, and REJECTED: it moved 139 magnets, fixing some and breaking others ("Warner crafted the
+// weather maxim" puts the name before the verb, so Twain stopped being the magnet), and there is no
+// way to tell fixes from regressions at that volume. This version moves 4 of 544, two of them the
+// cases that were provably wrong. The rest of the ambiguity is handled by a GATE, not a guess:
+// validate-records.js now warns when creditedTo disagrees with the page's own "Not X" label.
+const NEGATED_BEFORE = /\b(?:not|never|rather than|instead of|nor)\b[^.;]{0,30}$/i;
+function mentionedAsCredited(conclusion, person) {
+  const surname = person.split(/\s+/).pop().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp(surname, 'gi');
+  let m, affirmed = false;
+  while ((m = re.exec(conclusion))) {
+    if (!NEGATED_BEFORE.test(conclusion.slice(Math.max(0, m.index - 60), m.index))) affirmed = true;
+  }
+  return affirmed;
+}
+
 function infer(a) {
-  const credited = a.people.filter((p) => a.conclusion && new RegExp(p.split(/\s+/).pop().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(a.conclusion));
+  const credited = a.people.filter((p) => a.conclusion && mentionedAsCredited(a.conclusion, p));
   const others = a.people.filter((p) => !credited.includes(p));
   // Two or more people and the conclusion names one → the others carry the false credit.
   if (a.people.length >= 2 && credited.length && others.length) {
@@ -252,7 +277,9 @@ function cmdEmit(limit, outPath) {
       rightsEra: '',
       whyNotable: a.conclusion ? a.conclusion.slice(0, 240) : '',
       documentedAt: a.url,
-      notes: `From QI article metadata (title + category tags + conclusion)${a.kind && a.kind !== 'quote' ? ` · QI calls this a ${a.kind} origin` : ''}. Fields are ranking HINTS — the ingestion agent researches from documentedAt.`,
+      // With 3+ tagged people the magnet is a pick among several, not a finding — say so where the
+      // wave can see it, because that pick becomes creditedTo and asserts a false credit by name.
+      notes: `From QI article metadata (title + category tags + conclusion)${a.kind && a.kind !== 'quote' ? ` · QI calls this a ${a.kind} origin` : ''}. Fields are ranking HINTS — the ingestion agent researches from documentedAt.${a.people.length >= 3 ? ` · AMBIGUOUS MAGNET: QI tags ${a.people.length} people (${a.people.join(', ')}); magnetAuthor is a pick, verify creditedTo before publishing.` : ''}`,
     });
     if (limit && candidates.length >= limit) break;
   }
