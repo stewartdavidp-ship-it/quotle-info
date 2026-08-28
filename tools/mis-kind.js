@@ -105,6 +105,37 @@ const CONTEXT_TAG = [
 
 // A tag that DENIES A PERSON is a refutation and must keep the ✕, even if it also happens to match
 // one of the role patterns above. Checked first, deliberately.
+// ---- tags reported by r45/r46 fix agents, MEASURED before landing (2026-08-28) ----
+// Seven fix agents across two waves independently reported rows where the ✕ ("this credit is
+// false") printed against prose saying the opposite. Twelve patterns were proposed; nine landed and
+// THREE WERE REJECTED because measuring them against all 5,620 corpus rows showed they would soften
+// real refutations — the one error this file exists to prevent:
+//
+//   REJECTED /\bpredates\b/ (15 rows) — MIXED. Where `who` is the credited person the ✕ is CORRECT
+//     ("Benjamin Franklin" / "Predates him by a century" refutes Franklin). Where `who` is the
+//     antecedent source ("Older writers, not Churchill") it is wrong. The tag alone cannot tell them
+//     apart, and the safe half is a real debunk.
+//   REJECTED /\bdifferent\s+(quote|line|sentence|saying)\b/ (42 rows) — MIXED. "Different quote /
+//     Carolyn Wells" affirms (QI credits her); "different quote / Charles Darwin" says the line is
+//     "widely mis-pinned on Darwin" — a refutation with no refutation word in the TAG to veto it.
+//   REJECTED making the repeat suffix optional, /\brepeat(er|ed|s)?\b/ — bare "repeat" catches
+//     "a repeat target" whose `who` is Edmund Burke, i.e. a person repeatedly credited falsely. The
+//     ✕ is right there. The existing /\brepeat(er|ed|s)\b/ stays as it is.
+//
+// The nine below were each read row by row. In every case `who` names a SOURCE or a role, or the
+// page's own author with affirming prose — never a person whose credit the row denies.
+const CONTEXT_TAG_REPORTED = [
+  /^\s*co-?authors?\s*$/i,          // 1 row: "Samuel Crowther, Ford's collaborator", credited on the title page
+  /^genuine$/i,                      // 6 rows: `who` is the page's own author, prose affirms ("really is in The Art of War")
+  /^documented$/i,                   // 8 rows: "Abba Eban", "Nicholas Klein (1918)" — the row states the true origin
+  /^circular$/i,                     // 15 rows: `who` is a SOURCE ("Wikiquote's footnote", "AZQuotes, QuotePark, LibQuotes")
+  /^absent$/i,                       // 14 rows: `who` is where the quote is NOT ("Clara Barton's published works")
+  /^anonymous$/i,                    // 5 rows: "An unnamed speaker", "Nobody in particular" — no person to falsely credit
+  /\bdocumented\b[^,]*\bunverified\b/i,                                  // r46, hand-set by its agent; derive it from now on
+  /\b(stage|theatrical|screen|film)\s+(variant|version|wording|phrasing)\b/i, // a variant qualified by its VECTOR, never a person
+  /\b(first|earliest)\s+strong\s+match\b/i,                              // an evidence role, not a claimant
+];
+
 const REFUTATION_TAG = [
   /^\s*not\s+[A-Z]/,                            // "Not Winston Churchill", "Not Lewis's words"
   /\bno\s+(primary\s+)?source\b/i,
@@ -147,6 +178,7 @@ function kindForTag(tag) {
   const t = String(tag || '').replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, ' ').trim();
   if (!t) return '';
   if (REFUTATION_TAG.some((re) => re.test(t))) return '';
+  if (CONTEXT_TAG_REPORTED.some((re) => re.test(t))) return 'context';
   return CONTEXT_TAG.some((re) => re.test(t)) ? 'context' : '';
 }
 
