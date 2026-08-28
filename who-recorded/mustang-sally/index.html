@@ -110,6 +110,10 @@
            sets third-party cookies on a site that sets none, and breaks the text-first character. */
         .song-listen { display: flex; align-items: center; gap: 12px; margin: 16px 0 4px; padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--sage); border-radius: var(--radius-md); text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
         .song-listen:hover { border-left-color: var(--gold); transform: translateY(-1px); }
+        /* The cover is the comparison, not the claim — slate rather than sage, and tighter to the
+           original above it so the two read as one A/B pair rather than two separate offers. */
+        .song-listen-cover { border-left-color: var(--slate); margin-top: 6px; }
+        .song-listen-cover .song-listen-cue { color: var(--slate); }
         .song-listen-cue { color: var(--sage); font-size: 0.9rem; }
         .song-listen-body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
         .song-listen-what { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--ink); }
@@ -277,6 +281,14 @@
                 <span class="song-listen-body">
                     <span class="song-listen-what">Hear Mack Rice&rsquo;s own 1965 recording of &ldquo;Mustang Sally&rdquo; &mdash; the record that came before Wilson Pickett&rsquo;s.</span>
                     <span class="song-listen-src">www.youtube.com &middot; Auto-generated &ldquo;Mack Rice - Topic&rdquo; channel; the description reads &ldquo;Provided to YouTube by Universal Music Group&rdquo; with a &#8471; 1965 line (The Island Def Jam Music Group). Runtime is 186 seconds, matching the 3:06 length of the MusicBrainz recording for the original single exactly.</span>
+                </span>
+                <span aria-hidden="true">↗</span>
+            </a>
+            <a class="song-listen song-listen-cover" href="https://www.youtube.com/watch?v=efctwrcovJQ" target="_blank" rel="noopener">
+                <span class="song-listen-cue" aria-hidden="true">▶</span>
+                <span class="song-listen-body">
+                    <span class="song-listen-what">Then compare Wilson Pickett&rsquo;s 1966 Atlantic version &mdash; the one most people mean by &ldquo;Mustang Sally&rdquo;.</span>
+                    <span class="song-listen-src">www.youtube.com &middot; Auto-generated &ldquo;Wilson Pickett - Topic&rdquo; channel; description reads &ldquo;Provided to YouTube by Rhino Atlantic&rdquo; for the album &ldquo;The Wicked Pickett&rdquo;. Runtime 188 seconds (3:08) matches the 3:04&ndash;3:09 band MusicBrainz gives for Pickett&rsquo;s recording, so this is the studio cut and not a later re-recording. The &#8471; line reads 1965 rather than 1966 &mdash; Rhino&rsquo;s reissue metadata, not a different take.</span>
                 </span>
                 <span aria-hidden="true">↗</span>
             </a>

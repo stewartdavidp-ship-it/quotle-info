@@ -110,6 +110,10 @@
            sets third-party cookies on a site that sets none, and breaks the text-first character. */
         .song-listen { display: flex; align-items: center; gap: 12px; margin: 16px 0 4px; padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--sage); border-radius: var(--radius-md); text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
         .song-listen:hover { border-left-color: var(--gold); transform: translateY(-1px); }
+        /* The cover is the comparison, not the claim — slate rather than sage, and tighter to the
+           original above it so the two read as one A/B pair rather than two separate offers. */
+        .song-listen-cover { border-left-color: var(--slate); margin-top: 6px; }
+        .song-listen-cover .song-listen-cue { color: var(--slate); }
         .song-listen-cue { color: var(--sage); font-size: 0.9rem; }
         .song-listen-body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
         .song-listen-what { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--ink); }

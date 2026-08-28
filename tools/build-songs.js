@@ -229,17 +229,37 @@ function renderAuthors(s) {
 // to click deserves to know where they are going and why we consider this copy legitimate. Rights
 // posture matches the rest of the site: official artist/label/service uploads only, never "the
 // first YouTube result", which on a 1964 recording is usually someone else's rip.
-function renderListen(s) {
-  const l = s.listen;
-  if (!l || !l.url) return '';
-  return `            <a class="song-listen" href="${esc(l.url)}" target="_blank" rel="noopener">
+function listenRow(l, cls, lead) {
+  return `            <a class="song-listen${cls}" href="${esc(l.url)}" target="_blank" rel="noopener">
                 <span class="song-listen-cue" aria-hidden="true">▶</span>
                 <span class="song-listen-body">
-                    <span class="song-listen-what">Hear ${l.what || 'the original recording'}</span>
+                    <span class="song-listen-what">${lead} ${l.what || 'the recording'}</span>
                     <span class="song-listen-src">${esc(l.host || '')}${l.source ? ` &middot; ${l.source}` : ''}</span>
                 </span>
                 <span aria-hidden="true">↗</span>
             </a>`;
+}
+
+// TWO links, in argument order: the original first, then the famous cover for comparison.
+//
+// The generator's rule used to be "link the ORIGINAL only — NEVER the famous cover", and that rule
+// was right about what it guarded: a page arguing "this was not the cover artist's song" must not
+// hand the cover the primary slot. It was wrong that the reader never wants the cover. The whole
+// experience the page creates is discovering an original you have never heard — and the next thing
+// you want is to play the version you know and hear the difference. Sending that reader to YouTube
+// to find it themselves is losing them at the exact moment the page has succeeded.
+//
+// So the cover is SUBORDINATE, never a substitute: it renders after the original, in slate rather
+// than sage, and ONLY when the original link exists. A page that can offer the famous version but
+// not the original would be arguing for a record it cannot let you hear while linking the one it is
+// arguing against — the conflation this page exists to undo.
+function renderListen(s) {
+  const l = s.listen;
+  if (!l || !l.url) return '';
+  const rows = [listenRow(l, '', 'Hear')];
+  const c = s.listenCover;
+  if (c && c.url) rows.push(listenRow(c, ' song-listen-cover', 'Then compare'));
+  return rows.join('\n');
 }
 
 function renderSubmit(s) {
@@ -452,6 +472,10 @@ const SONG_CSS = `
            sets third-party cookies on a site that sets none, and breaks the text-first character. */
         .song-listen { display: flex; align-items: center; gap: 12px; margin: 16px 0 4px; padding: 12px 16px; background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--sage); border-radius: var(--radius-md); text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
         .song-listen:hover { border-left-color: var(--gold); transform: translateY(-1px); }
+        /* The cover is the comparison, not the claim — slate rather than sage, and tighter to the
+           original above it so the two read as one A/B pair rather than two separate offers. */
+        .song-listen-cover { border-left-color: var(--slate); margin-top: 6px; }
+        .song-listen-cover .song-listen-cue { color: var(--slate); }
         .song-listen-cue { color: var(--sage); font-size: 0.9rem; }
         .song-listen-body { display: flex; flex-direction: column; gap: 2px; flex: 1; }
         .song-listen-what { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; color: var(--ink); }
