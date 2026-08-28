@@ -7,17 +7,37 @@ Run `node tools/qi-coverage.js` for the live gap rather than assuming; it also p
 articles we already cite. All scripts here are committed; a fresh session can run a full
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
-## Current state (update this line each wave)
-- **Corpus: 1972** quotes + **115** songs. **Milestone: 2000** quotes — **28 to go.** (QI parity is 2,444: **472 to go**.)
-- **Next wave number: r47.** (Waves r6–r46 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
-  **These lines were three waves stale** (they read 1506 / r35 while r35, r36 and r37 had all shipped),
-  which is why the runbook says never to take N from this file. Bump them, but do not trust them.
-  **Take N from the shipped commits, NOT from branches:**
-  `git log --oneline --all | grep -oE 'wave\(r[0-9]+\)' | sed 's/wave(r//;s/)//' | sort -n | tail -1`
-  The old instruction here pointed at `git ls-remote --heads origin 'refs/heads/wave-r*'`, which is
-  wrong for the same reason these lines go stale: wave branches are DELETED on squash-merge, so
-  ls-remote only sees waves that have NOT landed. On 2026-08-28 it answered r44 while r45 and r46
-  had both shipped — following it would have reused r45.
+## Current state — DERIVED, never written here
+
+This section used to carry the live numbers and a note telling you to update them every wave. It
+was wrong three times: it read 1506 / r35 while r35, r36 and r37 had all shipped, and it went stale
+again after both r45 and r46. **Every one of those numbers is derived elsewhere, so this file no
+longer restates any of them.** A hand-kept copy of a computed value is a stale value with extra
+steps — and a wave could not fix it even in principle, because merge-gate.js treats any
+`workflows/` path as a scope escape, so the file telling waves to update it was unreachable from a
+wave.
+
+```bash
+# Corpus counts — written by tools/build-state.js on EVERY build, so they cannot drift.
+node -e "const f=require('./data/corpus-state.json').figures;console.log(f.quotes.total+' quotes ('+JSON.stringify(f.quotes.byConfidence)+') · '+f.songs.total+' songs · '+f.authors.total+' authors')"
+
+# Next wave number — from the shipped COMMITS. Add 1 to what this prints.
+git log --oneline --all | grep -oE 'wave\(r[0-9]+\)' | sed 's/wave(r//;s/)//' | sort -n | tail -1
+
+# Backlog depth and category mix.
+node tools/harvest.js report
+
+# Distance to Quote Investigator parity (QI is 2,444 articles, not 2,000 — see the header).
+node tools/qi-coverage.js
+```
+
+**Never take the wave number from branches.** `git ls-remote --heads origin 'refs/heads/wave-r*'`
+was the documented method until 2026-08-28 and is wrong: wave branches are DELETED on squash-merge,
+so it only sees waves that have NOT landed. That day it answered r44 while r45 and r46 had both
+shipped — following it would have reused r45, colliding with a wave already on main. The commit
+message survives the branch deletion; the branch does not.
+
+Milestone 2000 is a milestone, not parity — see the header line.
 - **`creditedTo` ON A DISPUTED RECORD WHOSE AUTHOR *IS* THE MAGNET: STAMP IT.** The instinct to
   withhold — "the record's author matches the magnet, so nobody is falsely credited" — is right for a
   **verified** record (that is the Dr. Seuss / Richard P. Feynman name-expansion trap, where stamping
