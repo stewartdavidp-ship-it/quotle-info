@@ -121,7 +121,12 @@ const saveCache = (c) => fs.writeFileSync(CACHE, JSON.stringify(c, null, 0) + '\
 // Derived at EMIT time, not fetch time, so tuning the extraction never means re-fetching QI.
 // The cache holds the raw <title>; this turns it into the quote.
 // "Quote Origin: X – Quote Investigator®" → X.
-const KIND_RE = /^(Quote|Dialogue|Anecdote|Joke|Saying|Question|Poem)\s+Origin:\s*/i;
+// QI labels articles with 29+ distinct kinds — Quote, Dialogue, Anecdote, Joke, Maxim, Motto,
+// Epitaph, Fable, Adage, Quip, Repartee, Palindrome, "Quiz Question", "Diet Advice"… An enumerated
+// whitelist was tried and missed 7 of them, leaving text like "Quiz Question Origin: Who Is Buried
+// in Grant's Tomb?" as the quote itself. Match the SHAPE instead: capitalised words followed by
+// " Origin:" at the very start. A real quote opening that way is not a thing.
+const KIND_RE = /^([A-Z][A-Za-z]*(?:\s+[A-Z][A-Za-z]*){0,2})\s+Origin:\s*/;
 const quoteFromTitle = (title) => String(title || '')
   .replace(KIND_RE, '')
   .replace(/\s*[-–—]\s*Quote Investigator.*$/i, '')
