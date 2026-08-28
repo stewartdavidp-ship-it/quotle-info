@@ -152,7 +152,7 @@ Queued by rights-era:  260 · in-copyright 123 · public-domain 26 · uncertain 
 | 139 | 0 | disputed | disputed |  | Alexander Woollcott | She Speaks Eighteen Languages, and Can't Say "No" in Any of Them |  | [src](https://quoteinvestigator.com/2010/10/28/speaks-many-languages/) |
 | 140 | 0 | disputed | disputed |  | Alexander Woollcott | The Vanishing Lady and the Vanishing Hotel Room |  | [src](https://quoteinvestigator.com/2010/09/14/vanishing-lady/) |
 | 141 | 0 | disputed | disputed |  | Alexander Woollcott | This Just Shows What God Could Do If He Had Money |  | [src](https://quoteinvestigator.com/2014/12/26/show-money/) |
-| 142 | 0 | disputed | disputed |  | John Godfrey Saxe | Laws are Like Sausages. Better Not to See Them Being Made |  | [src](https://quoteinvestigator.com/2010/07/08/laws-sausages/) |
+| 142 | 0 | disputed | disputed |  | Otto von Bismarck | Laws are Like Sausages. Better Not to See Them Being Made | John Godfrey Saxe | [src](https://quoteinvestigator.com/2010/07/08/laws-sausages/) |
 | 143 | 0 | disputed | disputed |  | Alan Dershowitz | Legal Advice: Pound the Facts, Pound the Law, Pound the Table |  | [src](https://quoteinvestigator.com/2010/07/04/legal-adage/) |
 | 144 | 0 | disputed | disputed |  | Chief Seattle | We Do Not Inherit the Earth from Our Ancestors; We Borrow It from Our Children |  | [src](https://quoteinvestigator.com/2013/01/22/borrow-earth/) |
 | 145 | 0 | disputed | disputed |  | Alice Roosevelt Longworth | If You Can't Say Something Good About Someone, Sit Right Here by Me |  | [src](https://quoteinvestigator.com/2014/08/09/sit-by-me/) |

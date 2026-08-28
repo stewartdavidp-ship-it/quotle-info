@@ -41,6 +41,12 @@ const since = argOf('--since') ? Number(argOf('--since')) : null;
 // pre-build gate (npm run build) without burying the build log under 1058 lines of success.
 const QUIET = argv.includes('--quiet');
 
+// Words that appear in an answer.label's "Not X" slot but name no person — so a label built from
+// them ("Not Hippocrates' words", "Not a verbatim quote") must not be compared against creditedTo.
+const LABEL_NOISE = new Set(['not', 'the', 'his', 'her', 'their', 'own', 'words', 'wording', 'line',
+  'quote', 'quotation', 'real', 'documented', 'verified', 'exact', 'canonical', 'actually', 'quite',
+  'sourced', 'form', 'this', 'and', 'for', 'from', 'with', 'maxim', 'saying', 'phrase', 'verbatim',
+  'scripture', 'text', 'these', 'coined', 'coinage', 'attributed']);
 const CONFIDENCE = new Set(['verified', 'attributed', 'disputed']);
 const RIGHTS = new Set(['public-domain', 'in-copyright']);
 const THEMES = new Set(['wisdom', 'character', 'purpose', 'courage', 'truth', 'hope', 'power',
@@ -81,6 +87,39 @@ for (const { file, r } of recs) {
   if (typeof r.copyAttribution === 'string' && r.confidence !== 'verified'
       && /\bverified by quotle\.info/i.test(r.copyAttribution)) {
     p.push(`copyAttribution claims "verified by Quotle.info" on a ${r.confidence} record — the clipboard string must not overclaim (use "traced by")`);
+  }
+
+  // creditedTo is the machine-readable "this person is FALSELY credited" claim: it drives
+  // ClaimReview.claimReviewed, the FAQ question, and the author-page "misattributed to X" list. The
+  // page's own answer.label already states who is falsely credited, in the form "Not X — actually Y".
+  // When those two disagree, the page argues one thing in prose and asserts another to machines.
+  //
+  // Wave r46 shipped exactly that: creditedTo "John McTiernan" under a label reading "Not Columbus",
+  // so the ClaimReview rated false a claim nobody makes while the real one — Columbus — appeared
+  // nowhere in the structured data an answer engine reads. The generator was innocent; it was fed
+  // the wrong name by a harvest heuristic.
+  //
+  // WARNING, not a failure, and calibrated rather than assumed. Naive forms of this check flagged
+  // 123 then 66 of 1,972 records — nearly all possessive or short-name variants ("Not Pope's words"
+  // vs "Alexander Pope", "Not Napoleon" vs "Napoleon Bonaparte"). Comparing NAME TOKENS with
+  // possessives stripped brings it to 5, of which 4 are benign non-person forms and 1 is a real
+  // defect. A gate that cries wolf 60 times gets ignored, which is worse than no gate.
+  if (r.creditedTo && r.answer && typeof r.answer.label === 'string') {
+    const nameTokens = (t) => String(t || '').toLowerCase()
+      .replace(/<[^>]*>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/'s\b/g, '')
+      .replace(/[^a-z\s-]/g, ' ').split(/\s+/)
+      .filter((x) => x.length > 2 && !LABEL_NOISE.has(x));
+    const m = r.answer.label.replace(/<[^>]*>/g, ' ').replace(/&mdash;|&ndash;/g, '—')
+      .match(/^\s*Not\s+(?:quite\s+)?([^—–]+?)\s*(?:[—–]|$)/i);
+    const claimed = m ? new Set(nameTokens(m[1])) : null;
+    // No tokens left means the label names no person ("Not verified", "Not scripture") — nothing to compare.
+    if (claimed && claimed.size) {
+      const creds = Array.isArray(r.creditedTo) ? r.creditedTo : String(r.creditedTo).split(';');
+      if (!creds.some((c) => nameTokens(c).some((t) => claimed.has(t)))) {
+        w.push(`creditedTo ${JSON.stringify(r.creditedTo)} shares no name with the label's "Not ${m[1].trim()}" — `
+          + 'the prose and the machine-readable claimant disagree; one of them is wrong');
+      }
+    }
   }
 
   if (r.quoteSlug !== file.replace(/\.json$/, '')) p.push(`quoteSlug "${r.quoteSlug}" != filename`);
