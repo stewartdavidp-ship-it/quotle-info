@@ -8,11 +8,16 @@ articles we already cite. All scripts here are committed; a fresh session can ru
 wave by following this file. Per-wave intermediates go in gitignored `workflows/.scratch/`.
 
 ## Current state (update this line each wave)
-- **Corpus: 1932** quotes + **115** songs. **Milestone: 2000** quotes — **68 to go.** (QI parity is 2,444: **512 to go**.)
-- **Next wave number: r46.** (Waves r6–r45 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
+- **Corpus: 1972** quotes + **115** songs. **Milestone: 2000** quotes — **28 to go.** (QI parity is 2,444: **472 to go**.)
+- **Next wave number: r47.** (Waves r6–r46 shipped via this pipeline. Numbering is just a label for batch/scratch files.)
   **These lines were three waves stale** (they read 1506 / r35 while r35, r36 and r37 had all shipped),
-  which is why the runbook says to take N from `git ls-remote --heads origin 'refs/heads/wave-r*'` and
-  never from this file. Bump them, but do not trust them.
+  which is why the runbook says never to take N from this file. Bump them, but do not trust them.
+  **Take N from the shipped commits, NOT from branches:**
+  `git log --oneline --all | grep -oE 'wave\(r[0-9]+\)' | sed 's/wave(r//;s/)//' | sort -n | tail -1`
+  The old instruction here pointed at `git ls-remote --heads origin 'refs/heads/wave-r*'`, which is
+  wrong for the same reason these lines go stale: wave branches are DELETED on squash-merge, so
+  ls-remote only sees waves that have NOT landed. On 2026-08-28 it answered r44 while r45 and r46
+  had both shipped — following it would have reused r45.
 - **`creditedTo` ON A DISPUTED RECORD WHOSE AUTHOR *IS* THE MAGNET: STAMP IT.** The instinct to
   withhold — "the record's author matches the magnet, so nobody is falsely credited" — is right for a
   **verified** record (that is the Dr. Seuss / Richard P. Feynman name-expansion trap, where stamping

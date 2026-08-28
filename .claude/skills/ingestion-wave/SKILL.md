@@ -38,13 +38,20 @@ Opus wave of tokens and ships the wrong kind of record.
 
 ## 2. Wave id
 
-Manual waves are `rN`. Get N from the highest existing branch, never from memory:
+Manual waves are `rN`. Get N from the shipped COMMITS, never from memory and never from branches:
 
 ```bash
-git ls-remote --heads origin 'refs/heads/wave-r*' | sed 's/.*wave-r//' | sort -n | tail -1
+git log --oneline --all | grep -oE 'wave\(r[0-9]+\)' | sed 's/wave(r//;s/)//' | sort -n | tail -1
 ```
 
-Next wave is that + 1. Scheduled daily waves use `dYYYYMMDD` instead. Never reuse an id — the batch
+Next wave is that + 1.
+
+**Do NOT use `git ls-remote --heads origin 'refs/heads/wave-r*'`** — this file said to until
+2026-08-28 and it is wrong: wave branches are DELETED on squash-merge, so it only ever sees waves
+that have not landed yet. Measured the day r46 was drawn: `ls-remote` answered **r44** while r45 and
+r46 had both shipped. Following it literally would have reused r45 — the same batch file, records
+file and branch name as a wave already on main. The commit message survives the branch deletion,
+which is why it is the source of truth. Scheduled daily waves use `dYYYYMMDD` instead. Never reuse an id — the batch
 file, records file and branch all key off it.
 
 ## 3. `--credited` is the one flag that can publish something false
