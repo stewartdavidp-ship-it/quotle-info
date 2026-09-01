@@ -36,6 +36,21 @@ const SITE = 'https://quotle.goatcounter.com';
 
 const iso = (d) => d.toISOString().slice(0, 10);
 const daysAgo = (n) => { const d = new Date(); d.setUTCDate(d.getUTCDate() - n); return iso(d); };
+// *** end MUST be the day AFTER the last day you want counted. ***
+// GoatCounter reads a bare date as RFC-3339 midnight, so `start=D&end=D` is a ZERO-WIDTH window and
+// returns near-nothing: on 2026-09-01 the "today" line read 7 while the day had 56. Every window
+// here previously ended at `today`, so every one of them silently excluded today's traffic, and the
+// "today" line was excluding everything. Measured 2026-09-01: today 7 -> 56, 7d 1444 -> 1493.
+const daysAhead = (n) => { const d = new Date(); d.setUTCDate(d.getUTCDate() + n); return iso(d); };
+
+// Referrer spam. These are NOT the search engines they impersonate — the real ones are .com — and
+// they are bot hits that never render a page. They were background noise (12 visits, 2% of the
+// window) until 2026-08-26, then jumped to 533 in a week, 37% of everything. Reporting a total that
+// includes them turns a real doubling into an apparent tripling, and the search log has been
+// recording the inflated figure. Matched on the impersonation TLDs rather than a host list so a new
+// www.<engine>.info variant is caught the day it appears.
+const SPAM_REF = /\.(info|xyz|top|club|online|site|website|space)$/i;
+const isSpamRef = (name) => SPAM_REF.test(String(name || '').trim()) && !/^www\.quotle\.info$/i.test(String(name || '').trim());
 // GoatCounter renders thousands with a non-breaking-ish space: "4 163" -> 4163
 const num = (s) => parseInt(String(s).replace(/[^\d]/g, ''), 10) || 0;
 
@@ -90,11 +105,12 @@ async function topRefs(start, end) {
     return;
   }
 
+  const tomorrow = daysAhead(1);
   const windows = [
-    ['today', today, today],
-    ['last 2 days', daysAgo(1), today],
-    ['last 7 days', daysAgo(6), today],
-    ['last 30 days', daysAgo(29), today],
+    ['today', today, tomorrow],
+    ['last 2 days', daysAgo(1), tomorrow],
+    ['last 7 days', daysAgo(6), tomorrow],
+    ['last 30 days', daysAgo(29), tomorrow],
   ];
   const out = { site: 'quotle.info', pulledAt: new Date().toISOString(), windows: {} };
   for (const [label, start, end] of windows) {
@@ -102,9 +118,23 @@ async function topRefs(start, end) {
   }
   out.allTime = (await counter('TOTAL', null, null)).unique;
 
-  if (args.includes('--refs')) {
-    out.referrers7d = await topRefs(daysAgo(6), today);
+  // Referrers are fetched WHENEVER a token is available, not just for --refs, because the spam share
+  // is a caveat on the headline totals rather than a detail. The daily report consumes --json.
+  const refs7d = await topRefs(daysAgo(6), tomorrow);
+  if (refs7d) {
+    const spam = refs7d.filter((r) => isSpamRef(r.ref));
+    const seen = refs7d.reduce((a, r) => a + r.visits, 0) || 0;
+    const spamVisits = spam.reduce((a, r) => a + r.visits, 0);
+    out.spam7d = {
+      visits: spamVisits,
+      shareOfAttributed: seen ? +(spamVisits / seen).toFixed(3) : 0,
+      hosts: spam.map((r) => r.ref),
+      // The totals above come from the counter endpoint, which cannot be filtered — it returns one
+      // aggregate. So this is the share of ATTRIBUTED referrals, applied to the total as an estimate.
+      estimatedRealVisits7d: seen ? Math.round(out.windows['last 7 days'] * (1 - spamVisits / seen)) : null,
+    };
   }
+  if (args.includes('--refs')) out.referrers7d = refs7d;
 
   if (asJson) return console.log(JSON.stringify(out, null, 2));
   console.log('\nquotle.info — visits (GoatCounter, all referrers incl. AI assistants)\n');
@@ -113,6 +143,13 @@ async function topRefs(start, end) {
   }
   console.log(`  ${'all time'.padEnd(14)} ${String(out.allTime).padStart(7)}`);
 
+  if (out.spam7d && out.spam7d.visits) {
+    const p = Math.round(out.spam7d.shareOfAttributed * 100);
+    console.log(`\n  ⚠ ${out.spam7d.visits} of the last 7 days' attributed referrals (${p}%) are REFERRER SPAM`);
+    console.log(`    ${out.spam7d.hosts.slice(0, 4).join(', ')} — bots impersonating search engines (.info, not .com)`);
+    console.log(`    Real 7d visits are nearer ${out.spam7d.estimatedRealVisits7d}. Quote that, not ${out.windows['last 7 days']}.`);
+  }
+
   if (args.includes('--refs')) {
     console.log('\n  referrers, last 7 days\n');
     if (!out.referrers7d) {
@@ -120,7 +157,7 @@ async function topRefs(start, end) {
     } else {
       const tot = out.referrers7d.reduce((a, r) => a + r.visits, 0) || 1;
       out.referrers7d.forEach((r) => console.log(
-        `    ${String(r.visits).padStart(6)}  ${String(Math.round(r.visits / tot * 100)).padStart(3)}%  ${r.ref}`));
+        `    ${String(r.visits).padStart(6)}  ${String(Math.round(r.visits / tot * 100)).padStart(3)}%  ${r.ref}${isSpamRef(r.ref) ? '   ← SPAM' : ''}`));
     }
   }
   console.log('\n  NB: Search Console counts Google only and has shown ~8 clicks ever.\n');

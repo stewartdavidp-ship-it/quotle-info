@@ -117,6 +117,14 @@ Write `data/daily-report/<YYYY-MM-DD>.md` with these sections, in this order:
    the largest single referrer and Google absent from the top six**. A traffic figure that omits
    the actual audience is worse than none.
 
+   **These figures are an UPPER BOUND — they are not filtered for referrer spam.** Filtering needs
+   the authenticated API and this report runs in a cloud checkout with no token, so `spamFiltered`
+   is always `false`. On 2026-09-01 roughly **37% of attributed referrals were bots impersonating
+   search engines on `.info` domains** (`www.yahoo.info`, `www.bing.info`, `www.baidu.info`) — they
+   went from 12 visits a fortnight earlier to 533 in a week. Reporting the raw number turned a real
+   doubling into an apparent tripling. Say "up to N" rather than "N", and run
+   `node tools/traffic.js` locally when the number matters — it prints the spam-adjusted estimate.
+
    If `traffic` is `null`, say "traffic: unavailable" and check `tool_failures` — that is an
    analytics outage, NOT a quiet day. Never render a missing number as a zero.
 
