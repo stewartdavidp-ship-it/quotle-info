@@ -1752,6 +1752,16 @@
         "avgPosition": null
       },
       "notes": "READ THIS BEFORE QUOTING ANY TRAFFIC NUMBER. Google Search Console measures ONE CHANNEL and this project treated it as the audience for six weeks. Corrected today: 4,163 real visits vs ~8 Google clicks — roughly 500x — and Google does not appear in the 7-day referrer list at all, not even at 1%. The largest single referrer is chatgpt.com (27%), and the tail is almost entirely AI and alternative search: Copilot, Kagi, Qwant, Ecosia, api.microsoft.ai, noai.duckduckgo.com. That means the agent-discoverability work (llms.txt, openapi.json, /.well-known/ai-plugin.json) is the part of this project that is succeeding, and it was invisible to every measurement taken. WHAT THIS DOES NOT CHANGE: the deindexing finding in reading #6 is real and its watchlist still stands — but it is a GOOGLE-CHANNEL problem on a site whose traffic does not currently depend on Google, so it should be sized accordingly rather than treated as existential. GSC deliberately not re-pulled today: the point of this reading is to re-anchor the log on visits, and mixing in a fresh Google pull would blur that. Next reading should carry BOTH: visits first (tools/traffic.js --json), Google second. tools/daily-report.js now prints traffic every morning, so this no longer requires a special trip."
+    },
+    {
+      "date": "2026-09-01",
+      "visits": {
+        "d7": 942,
+        "d30": 4197,
+        "allTime": 5513,
+        "topReferrer": "Google (207) / chatgpt.com (132)"
+      },
+      "notes": "VISITS FIGURE CORRECTED AND NOT COMPARABLE TO EARLIER READINGS. Two defects found and fixed today. (1) Every GoatCounter window in traffic.js and daily-report.js ended at TODAY, and GoatCounter reads a bare date as RFC-3339 midnight — so start==end was a ZERO-WIDTH window and every window silently dropped its final day. The today figure read 7 on a day with 56. (2) Referrer spam is unfiltered: www.yahoo.info / www.bing.info / www.baidu.info are bots impersonating search engines, and they went from 12 visits (Aug 15-25, 2% of the window) to 533 in the last week, 37% of everything. Raw 7d is 1493; the 942 recorded here is spam-adjusted and is the comparable number. Real traffic per day by window, spam excluded: Jul 33, Aug 1-14 39, Aug 15-25 53, Aug 26-Sep 1 130 — genuine growth, roughly doubling, but not the tripling the raw figure implies. None of the 94 records added since Aug 26 has registered a visit yet."
     }
   ]
 }
