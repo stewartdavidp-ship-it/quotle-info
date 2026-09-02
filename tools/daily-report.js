@@ -129,14 +129,27 @@ async function gcVisits(start, end) {
   if (!res.ok) throw new Error(`GoatCounter ${res.status}`);
   return gcNum((await res.json()).count_unique);
 }
+// *** `end` MUST be the day AFTER the last day you want counted. ***
+// GoatCounter reads a bare date as RFC-3339 midnight, so `start=D&end=D` is a ZERO-WIDTH window that
+// returns near-nothing — this function's `day` figure was reading 7 on a day with 56, and d7/d30
+// were each silently dropping their final day. Measured 2026-09-01: day 7 -> 56, d7 1444 -> 1493.
+// Same defect and same fix as tools/traffic.js; the two compute this independently, so fixing one
+// and not the other would have left the report and the search log disagreeing.
 async function traffic(since) {
   const day = (n) => { const d = new Date(since); d.setUTCDate(d.getUTCDate() - n); return d.toISOString().slice(0, 10); };
+  const after = (n) => { const d = new Date(since); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+  const end = after(1);
   try {
     return {
-      day: await gcVisits(since, since),
-      d7: await gcVisits(day(6), since),
-      d30: await gcVisits(day(29), since),
+      day: await gcVisits(since, end),
+      d7: await gcVisits(day(6), end),
+      d30: await gcVisits(day(29), end),
       allTime: await gcVisits(null, null),
+      // NOT filtered for referrer spam: that needs the authenticated API and this runs in a cloud
+      // checkout with no token. As of 2026-09-01 roughly 37% of attributed referrals are bots
+      // impersonating search engines on .info domains, so read these as an UPPER BOUND and run
+      // `node tools/traffic.js` locally for the spam-adjusted figure.
+      spamFiltered: false,
     };
   } catch (e) {
     toolFailures.push(`traffic: ${e.message}`);
