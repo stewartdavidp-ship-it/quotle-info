@@ -29,7 +29,7 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { scanRecord } = require('./html-safety');
+const { scanRecord, PLAIN_TEXT_FIELDS, hasMarkup } = require('./html-safety');
 const { creditList } = require('./credits'); // creditedTo: string OR array of false credits
 const { VERDICT_LEAD_TOKENS } = require('./template'); // the FAQ lead vocabulary, defined once
 
@@ -166,27 +166,16 @@ for (const { file, r } of recs) {
   if (ex && DOUBLE_ESC.test(ex)) p.push('source.excerpt has double-escaped entities (&amp;mdash; etc.)');
 
   // These render through esc(), not escEm() — a tag here leaks to the page as literal &lt;em&gt;.
-  // Entities are fine (esc preserves them); markup is not. Caught on the Diderot record, whose
-  // metaLine wrapped "Encyclopédie" in <em>.
-  const ESC_ONLY = [
-    ['author.metaLine', r.author && r.author.metaLine],
-    ['author.kicker', r.author && r.author.kicker],
-    ['author.heading', r.author && r.author.heading],
-    ['answer.kicker', r.answer && r.answer.kicker],
-    ['source.cutTag', r.source && r.source.cutTag],
-    ['source.kicker', r.source && r.source.kicker],
-    ['source.heading', r.source && r.source.heading],
-    ['misattribution.kicker', r.misattribution && r.misattribution.kicker],
-    ['misattribution.heading', r.misattribution && r.misattribution.heading],
-    ['context.kicker', r.context && r.context.kicker],
-    ['context.heading', r.context && r.context.heading],
-    // copyAttribution is a PLAIN-TEXT share string: it renders esc()'d into .pkit-cite and is
-    // written to the clipboard verbatim. Markup there leaks as literal &lt;em&gt; on the page and
-    // as raw tags in whatever the user pastes. Caught on the Sound of Music record.
-    ['copyAttribution', r.copyAttribution],
-  ];
-  for (const [name, val] of ESC_ONLY) {
-    if (typeof val === 'string' && /<[a-zA-Z/]/.test(val)) {
+  // Entities are fine (esc preserves them); markup is not.
+  //
+  // The list itself now lives in tools/html-safety.js as PLAIN_TEXT_FIELDS, because workflows/
+  // prep-wave.js STRIPS these at ingest and the two must never disagree about which fields are
+  // plain text — see the note on coined-verb-mismatch below: one definition, two callers. This
+  // check stays as the BUILD GATE: prep only sees a wave's own records, so anything hand-edited
+  // afterwards, or written by another route, is still caught here.
+  for (const name of PLAIN_TEXT_FIELDS) {
+    const val = name.split('.').reduce((o, k) => (o == null ? o : o[k]), r);
+    if (hasMarkup(val)) {
       p.push(`${name} contains HTML markup — that field is esc()'d, so it leaks as literal &lt;em&gt;`);
     }
   }
