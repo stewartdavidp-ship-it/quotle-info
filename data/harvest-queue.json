@@ -1,905 +1,25 @@
 {
   "meta": {
     "description": "Candidate backlog for quotle.info ingestion. Documented misattribution/famous-quote targets from Wikiquote + Quote Investigator, harvested by the harvest-candidates Workflow. Managed by tools/harvest.js — do not hand-edit counts. Lifecycle: queued → selected → ingested (or skipped).",
-    "updated": "2026-09-05",
+    "updated": "2026-09-08",
     "total": 2051,
-    "queued": 346,
+    "queued": 306,
     "selected": 0,
-    "ingested": 1697,
+    "ingested": 1737,
     "skipped": 8,
     "queuedByCategory": {
-      "disputed": 161,
-      "genuine-famous": 133,
-      "misattributed": 52
+      "disputed": 124,
+      "misattributed": 50,
+      "genuine-famous": 132
     },
     "queuedByRightsEra": {
-      "": 187,
-      "in-copyright": 122,
+      "": 148,
+      "in-copyright": 121,
       "public-domain": 26,
       "uncertain": 11
     }
   },
   "candidates": [
-    {
-      "slug": "thank-you-for-the-gift-book-i-shall-lose-no-time-in-reading",
-      "quote": "Thank You for the Gift Book. I Shall Lose No Time In Reading It",
-      "magnetAuthor": "Benjamin Disraeli",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2012/12/28/lose-no-time/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 9971,
-      "demandScore": 13959,
-      "demandRank": 15
-    },
-    {
-      "slug": "what-is-the-difference-between-a-misfortune-and-a-calamity",
-      "quote": "What Is the Difference Between a Misfortune and a Calamity?",
-      "magnetAuthor": "Benjamin Disraeli",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "based on current evidence this joke template originated in France. \"The Leeds Mercury\" and \"Punch\" were loci for its popularization in the United Kingdom. The variability of the tale suggests to QI that deliberate modifications were made to",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2013/11/10/calamity/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 9971,
-      "demandScore": 13959,
-      "demandRank": 16
-    },
-    {
-      "slug": "you-shall-either-die-upon-the-gallows-or-of-the-pox",
-      "quote": "You Shall Either Die Upon the Gallows or of the Pox",
-      "magnetAuthor": "Benjamin Disraeli",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/01/26/gallows-pox/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 9971,
-      "demandScore": 13959,
-      "demandRank": 17
-    },
-    {
-      "slug": "teach-a-parrot-to-say-supply-and-demand-and-you-have-an",
-      "quote": "Teach a Parrot to Say 'Supply and Demand' and You Have an Economist",
-      "magnetAuthor": "Thomas Carlyle",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "QI hypothesizes that this quip evolved from many remarks in the 1800s that attacked the phrase \"supply and demand\" as mere \"parrot words\" and \"parrot-like\". At some point the figurative language was used as transformative guidance and a lit",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2013/07/19/parrot-econ/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 9915,
-      "demandScore": 13881,
-      "demandRank": 18
-    },
-    {
-      "slug": "if-i-could-just-make-them-up-on-the-spot-id-be-famous",
-      "quote": "If I Could Just Make Them Up On the Spot, I'd Be Famous",
-      "magnetAuthor": "Yogi Berra",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "based on the testimony of Yogi himself he did make this statement of self-referential wisdom. Also, QI believes that it is unlikely that these words were said by someone else and then reassigned to Yogi.",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2012/11/13/yogi-make-em-up/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 9726,
-      "demandScore": 13616,
-      "demandRank": 19
-    },
-    {
-      "slug": "so-im-ugly-so-what-i-never-saw-anyone-hit-with-his-face",
-      "quote": "So I'm Ugly. So What? I Never Saw Anyone Hit with His Face",
-      "magnetAuthor": "Yogi Berra",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "based on accounts in books and newspapers starting in 1948 Yogi did create and use this clever riposte although the exact wording varied. Yogi himself provided further corroboration in his books that he delivered the line on multiple occasi",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2012/11/21/never-with-face/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 9726,
-      "demandScore": 13616,
-      "demandRank": 20
-    },
-    {
-      "slug": "were-lost-but-were-making-good-time",
-      "quote": "We're Lost, But We're Making Good Time!",
-      "magnetAuthor": "Yogi Berra",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2012/07/11/making-good-time/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 9726,
-      "demandScore": 13616,
-      "demandRank": 21
-    },
-    {
-      "slug": "would-you-ever-ask-a-man-that-question",
-      "quote": "Would You Ever Ask a Man that Question?",
-      "magnetAuthor": "Hillary Clinton",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "the quotation is accurate, and the interaction took place in 2010 in Kyrgyzstan.",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2012/09/06/clinton-ever-ask/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 9620,
-      "demandScore": 13468,
-      "demandRank": 22
-    },
-    {
-      "slug": "no-respect-for-a-man-who-can-spell-a-word-only-one-way",
-      "quote": "No Respect for a Man Who Can Spell a Word Only One Way",
-      "magnetAuthor": "Andrew Jackson",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2010/06/25/spelling/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 8701,
-      "demandScore": 12181,
-      "demandRank": 23
-    },
-    {
-      "slug": "if-you-want-jobs-then-give-these-workers-spoons-instead-of",
-      "quote": "If You Want Jobs Then Give These Workers Spoons Instead of Shovels",
-      "magnetAuthor": "Milton Friedman",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "this compelling anecdote has many variants. The primary image of replacing the shovels of workers with spoons or teaspoons is very memorable. The acerbic humor touches on deeper issues of efficiency, productivity, and the purpose of human l",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2011/10/10/spoons-shovels/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 8600,
-      "demandScore": 12040,
-      "demandRank": 24
-    },
-    {
-      "slug": "the-price-of-fame-is-not-being-able-to-go-to-the-pub-for-a",
-      "quote": "The Price of Fame Is Not Being Able to Go to the Pub for a Quiet Pint",
-      "magnetAuthor": "John Lennon",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/08/03/fame-pint/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 8050,
-      "demandScore": 11270,
-      "demandRank": 25
-    },
-    {
-      "slug": "you-cant-be-a-real-country-unless-you-have-a-beer-and-an",
-      "quote": "You Can't Be a Real Country Unless You Have a Beer and an Airline",
-      "magnetAuthor": "Frank Zappa",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/09/16/beer-airline/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 7793,
-      "demandScore": 10910,
-      "demandRank": 26
-    },
-    {
-      "slug": "that-is-part-of-the-beauty-of-all-literature-you-discover",
-      "quote": "That Is Part of the Beauty of All Literature. You Discover that Your Longings Are Universal Longings",
-      "magnetAuthor": "F. Scott Fitzgerald",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "the quotation was spoken by F. Scott Fitzgerald to Sheilah Graham according to Graham's memoir. The relationship between the two took place between 1937 and 1940. Yet, the memoir was released about two decades later in 1958. The accuracy of",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/03/24/literature/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 7520,
-      "demandScore": 10528,
-      "demandRank": 27
-    },
-    {
-      "slug": "a-professor-is-one-who-talks-in-someone-elses-sleep",
-      "quote": "A Professor Is One Who Talks in Someone Else's Sleep",
-      "magnetAuthor": "W. H. Auden",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "this jest has been evolving for more than one hundred years. The initial instance in 1900 was self-mocking. By 1906 the barb was aimed at preachers, and the soporific qualities of multiple professions have been highlighted over the years.",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/04/27/sleep-talk/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 7157,
-      "demandScore": 10020,
-      "demandRank": 28
-    },
-    {
-      "slug": "if-we-are-here-to-help-others-i-often-wonder-what-the",
-      "quote": "If We Are Here to Help Others, I Often Wonder What the Others Are Here For",
-      "magnetAuthor": "W. H. Auden",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "this popular joke has been circulating for more than one hundred years. The earliest printed evidence in 1897 suggests that Professor George Herbert Palmer of Harvard first popularized the anecdote in which a child speaks the punch line.",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/04/23/help-others/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 7157,
-      "demandScore": 10020,
-      "demandRank": 29
-    },
-    {
-      "slug": "im-so-fast-last-night-i-cut-the-light-switch-and-was-in-bed",
-      "quote": "I'm so fast last night I cut the light switch and was in bed before the room was dark.",
-      "magnetAuthor": "Muhammad Ali",
-      "creditedTo": "Muhammad Ali",
-      "trueOrigin": "Ali delivered this version (recorded by a Village Voice reporter in 1974); QI notes the underlying 'in bed before the room was dark' joke circulated earlier, so Ali adapted an existing gag.",
-      "category": "genuine-famous",
-      "whyNotable": "A classic Ali speed boast that is genuinely his; QI traces the wording to a 1974 Village Voice report, while noting the joke form predates him.",
-      "likelyConfidence": "verified",
-      "rightsEra": "in-copyright",
-      "documentedAt": "https://quoteinvestigator.com/2013/06/12/before-dark/",
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "harvest-r12.json",
-      "harvestedOn": "2026-07-10",
-      "notes": "",
-      "gameIndex": null,
-      "demandViews": 9523,
-      "demandScore": 9523,
-      "demandRank": 30
-    },
-    {
-      "slug": "dont-tell-me-the-moon-is-shining-show-me-the-glint-of-light",
-      "quote": "Don't Tell Me the Moon Is Shining; Show Me the Glint of Light on Broken Glass",
-      "magnetAuthor": "Anton Chekhov",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2013/07/30/moon-glint/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 6155,
-      "demandScore": 8617,
-      "demandRank": 31
-    },
-    {
-      "slug": "military-command-send-three-and-fourpence-were-going-to-a",
-      "quote": "Military Command: Send Three and Fourpence. We're Going to a Dance",
-      "magnetAuthor": "World War I",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2011/08/26/reinforcements/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 6097,
-      "demandScore": 8536,
-      "demandRank": 32
-    },
-    {
-      "slug": "that-works-very-well-in-practice-but-how-does-it-work-in",
-      "quote": "That Works Very Well in Practice, But How Does It Work In Theory?",
-      "magnetAuthor": "Garret FitzGerald",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "this quip evolved over many decades, and its originator was anonymous. Instances have been popularized by W. R. Rodgers, Claude T. Bissell, Sean MacReamoinn, Walter Heller, and others.",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2015/08/30/practice/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 5709,
-      "demandScore": 7993,
-      "demandRank": 33
-    },
-    {
-      "slug": "a-banker-lends-you-his-umbrella-when-its-sunny-and-wants-it",
-      "quote": "A Banker Lends You His Umbrella When It's Sunny and Wants It Back When It Rains",
-      "magnetAuthor": "Ambrose Bierce",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "the first instances of this maxim are anonymous. Years later, famous people such as Mark Twain, Robert Frost, and Ambrose Bierce were implausibly attached to the quotation. The core idea appeared by 1905, and the full fledged quotation ente",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2011/04/07/banker-umbrella/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 5475,
-      "demandScore": 7665,
-      "demandRank": 34
-    },
-    {
-      "slug": "speak-when-youre-angry-and-youll-make-the-best-speech-youll",
-      "quote": "Speak When You're Angry and You'll Make the Best Speech You'll Ever Regret",
-      "magnetAuthor": "Ambrose Bierce",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "based on current evidence QI suggests that Groucho Marx should be credited with this remark. There is no substantive support for attributing the words to Ambrose Bierce. Also, ascriptions to Henry Ward Beecher and Laurence J. Peter are mist",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/05/17/angry-speech/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 5475,
-      "demandScore": 7665,
-      "demandRank": 35
-    },
-    {
-      "slug": "the-covers-of-this-book-are-too-far-apart",
-      "quote": "The Covers of This Book Are Too Far Apart",
-      "magnetAuthor": "Ambrose Bierce",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/01/30/apart/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 5475,
-      "demandScore": 7665,
-      "demandRank": 36
-    },
-    {
-      "slug": "easy-reading-is-hard-writing",
-      "quote": "Easy Reading Is Hard Writing",
-      "magnetAuthor": "Lord Byron",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "QI would provisionally credit Thomas Hood with the version of the maxim he used in 1837. Yet, it is certainly possible that future researchers will locate earlier instances. This entry provides a snapshot of what is currently known by QI .",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/11/05/hard-writing/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 5442,
-      "demandScore": 7619,
-      "demandRank": 37
-    },
-    {
-      "slug": "kissing-marilyn-monroe-is-like-kissing-hitler",
-      "quote": "Kissing Marilyn Monroe Is Like Kissing Hitler",
-      "magnetAuthor": "Marilyn Monroe",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "the evidence shows that Tony Curtis did say that kissing Marilyn Monroe was like kissing Hitler. He said it during the making of the popular comedy \"Some Like It Hot\" after the kissing scene with Monroe was filmed. It is less clear why he s",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2010/10/04/kissing-marilyn/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 5282,
-      "demandScore": 7395,
-      "demandRank": 38
-    },
-    {
-      "slug": "is-that-a-gun-in-your-pocket-or-are-you-just-glad-to-see-me",
-      "quote": "Is That a Gun in Your Pocket, or Are You Just Glad to See Me?",
-      "magnetAuthor": "Mae West",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2013/08/20/glad-to-see/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 5039,
-      "demandScore": 7055,
-      "demandRank": 39
-    },
-    {
-      "slug": "keep-a-diary-and-perhaps-someday-it-will-keep-you",
-      "quote": "Keep a Diary, and Perhaps Someday It Will Keep You",
-      "magnetAuthor": "Mae West",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "Mae West did popularize this quip as a screenwriter and actress in 1937. Yet, the remark was already being disseminated. In 1922 the witticism was attributed to Margot Asquith, and based on current evidence she should receive the credit.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/05/11/diary/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 5039,
-      "demandScore": 7055,
-      "demandRank": 40
-    },
-    {
-      "slug": "death-was-a-good-career-move",
-      "quote": "Death Was a Good Career Move",
-      "magnetAuthor": "Gore Vidal",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2012/08/04/good-career-move/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 4988,
-      "demandScore": 6983,
-      "demandRank": 41
-    },
-    {
-      "slug": "it-is-not-enough-to-succeed-ones-best-friend-must-fail",
-      "quote": "It Is Not Enough to Succeed; One's Best Friend Must Fail",
-      "magnetAuthor": "Gore Vidal",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "based on current evidence this family of sayings began in 1959 with the statement credited to Somerset Maugham. The quotation may have been influenced by La Rochefoucauld, but it was distinct. Multiple versions were created during decades o",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2012/08/06/succeed-fail/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 4988,
-      "demandScore": 6983,
-      "demandRank": 42
-    },
-    {
-      "slug": "if-i-shoot-at-the-sun-i-may-hit-a-star",
-      "quote": "If I Shoot at the Sun, I May Hit a Star",
-      "magnetAuthor": "George Herbert",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2012/11/20/shoot-at-sun/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 4866,
-      "demandScore": 6812,
-      "demandRank": 43
-    },
-    {
-      "slug": "its-the-guy-you-give-something-to-that-you-cant-please",
-      "quote": "It's the Guy You Give Something To That You Can't Please",
-      "magnetAuthor": "Will Rogers",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2015/05/14/please/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 4845,
-      "demandScore": 6783,
-      "demandRank": 44
-    },
-    {
-      "slug": "the-common-law-consists-of-about-half-a-dozen-obvious",
-      "quote": "The Common Law Consists of About Half A Dozen Obvious Propositions, But Unfortunately …",
-      "magnetAuthor": "Oliver Wendell Holmes Jr.",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "the humorous remark about the law alluded to by the questioner was ascribed to Lord Sterndale by Judge Dowdall beginning in 1931 and 1932. There are multiple legal systems, and the remark was about the common law system.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2013/05/11/common-law/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 4817,
-      "demandScore": 6744,
-      "demandRank": 45
-    },
-    {
-      "slug": "you-may-tell-the-butchers-wife-that-lady-peel-has-finished",
-      "quote": "You May Tell the Butcher's Wife That Lady Peel Has Finished",
-      "magnetAuthor": "Beatrice Lillie",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2015/02/01/lady-peel/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 4686,
-      "demandScore": 6560,
-      "demandRank": 46
-    },
-    {
-      "slug": "humor-can-be-dissected-as-a-frog-can-but-the-thing-dies-in",
-      "quote": "Humor Can Be Dissected, as a Frog Can, But the Thing Dies in the Process",
-      "magnetAuthor": "E. B. White",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/10/14/frog/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 4240,
-      "demandScore": 5936,
-      "demandRank": 47
-    },
-    {
-      "slug": "when-the-last-tree-is-cut-down-the-last-fish-eaten-and-the",
-      "quote": "When the Last Tree Is Cut Down, the Last Fish Eaten, and the Last Stream Poisoned, You Will Realize That You Cannot Eat Money",
-      "magnetAuthor": "Alanis Obomsawin",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2011/10/20/last-tree-cut/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 3958,
-      "demandScore": 5541,
-      "demandRank": 48
-    },
-    {
-      "slug": "i-do-not-want-to-predict-the-future-i-want-to-prevent-it",
-      "quote": "I Do Not Want to Predict the Future. I Want to Prevent It",
-      "magnetAuthor": "Frank Herbert",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2010/10/19/prevent-the-future/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 3951,
-      "demandScore": 5531,
-      "demandRank": 49
-    },
-    {
-      "slug": "all-creative-writing-programs-ought-to-be-abolished-by-law",
-      "quote": "All Creative-Writing Programs Ought to be Abolished by Law",
-      "magnetAuthor": "Cormac McCarthy",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2010/06/04/creative-writing/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 3936,
-      "demandScore": 5510,
-      "demandRank": 50
-    },
-    {
-      "slug": "act-one-get-character-up-a-tree-act-two-throw-rocks-act",
-      "quote": "Act One: Get Character Up a Tree. Act Two: Throw Rocks. Act Three: Get Character Down.",
-      "magnetAuthor": "Vladimir Nabokov",
-      "creditedTo": "Vladimir Nabokov",
-      "trueOrigin": "George M. Cohan",
-      "category": "misattributed",
-      "whyNotable": "this schematic guidance for constructing commercially successful plots was in circulation by 1897. The creator was anonymous. Over the years the statement has been linked to a variety of successful writers, e.g., Harry B. Smith and George M",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2015/09/05/up-tree/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 3596,
-      "demandScore": 5394,
-      "demandRank": 51
-    },
-    {
-      "slug": "the-architect-can-only-advise-his-client-to-plant-vines",
-      "quote": "The Architect Can Only Advise His Client to Plant Vines",
-      "magnetAuthor": "Herbert Hoover",
-      "creditedTo": "Herbert Hoover",
-      "trueOrigin": "Frank Lloyd Wright",
-      "category": "misattributed",
-      "whyNotable": "the quotation provider by the questioner does reflect Wright's sense of humor. The wording of the modern quotation is slightly different from the original remark spoken in 1931.",
-      "likelyConfidence": "disputed",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2011/05/03/architect-vines/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 3504,
-      "demandScore": 5256,
-      "demandRank": 52
-    },
-    {
-      "slug": "once-you-are-dead-you-are-made-for-life",
-      "quote": "Once You Are Dead, You Are Made for Life",
-      "magnetAuthor": "Jimi Hendrix",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "the quotation appears to be authentic. The accuracy is dependent on the music journalist Bob Dawbarn. Some instances currently in circulation have slightly altered wording.",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2012/08/10/made-for-life/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 3432,
-      "demandScore": 4805,
-      "demandRank": 53
-    },
-    {
-      "slug": "actor-a-guy-who-if-you-aint-talking-about-him-he-aint",
-      "quote": "Actor: A Guy Who If You Ain't Talking About Him, He Ain't Listening",
-      "magnetAuthor": "Marlon Brando",
-      "creditedTo": "",
-      "trueOrigin": "",
-      "category": "disputed",
-      "whyNotable": "",
-      "likelyConfidence": "",
-      "rightsEra": "",
-      "documentedAt": "https://quoteinvestigator.com/2014/09/21/actor/",
-      "gameIndex": null,
-      "status": "queued",
-      "wave": null,
-      "resultSlug": null,
-      "harvestedFrom": "qi-harvest-2026-08-27.json",
-      "harvestedOn": "2026-08-27",
-      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
-      "demandViews": 3336,
-      "demandScore": 4670,
-      "demandRank": 54
-    },
     {
       "slug": "a-man-is-a-fool-if-he-drinks-before-he-reaches-fifty-and-a",
       "quote": "A Man Is a Fool If He Drinks Before He Reaches Fifty, and a Fool If He Doesn't Drink Afterward",
@@ -920,7 +40,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 3295,
       "demandScore": 4613,
-      "demandRank": 55
+      "demandRank": 41
     },
     {
       "slug": "television-is-chewing-gum-for-the-eyes",
@@ -942,7 +62,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 3295,
       "demandScore": 4613,
-      "demandRank": 56
+      "demandRank": 42
     },
     {
       "slug": "to-err-is-human-to-really-foul-things-up-requires-a-computer",
@@ -964,7 +84,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 3185,
       "demandScore": 4459,
-      "demandRank": 57
+      "demandRank": 43
     },
     {
       "slug": "chance-coincidence-miracles-pseudonyms-and-god",
@@ -986,7 +106,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2823,
       "demandScore": 4235,
-      "demandRank": 58
+      "demandRank": 44
     },
     {
       "slug": "if-your-actions-inspire-others-to-dream-more-learn-more-do",
@@ -1008,7 +128,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2943,
       "demandScore": 4120,
-      "demandRank": 59
+      "demandRank": 45
     },
     {
       "slug": "there-are-two-lasting-bequests-we-can-give-our-children",
@@ -1030,7 +150,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2741,
       "demandScore": 3837,
-      "demandRank": 60
+      "demandRank": 46
     },
     {
       "slug": "today-a-reader-tomorrow-a-leader",
@@ -1052,7 +172,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2733,
       "demandScore": 3826,
-      "demandRank": 61
+      "demandRank": 47
     },
     {
       "slug": "dying-is-easy-comedy-is-hard",
@@ -1074,7 +194,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2521,
       "demandScore": 3782,
-      "demandRank": 62
+      "demandRank": 48
     },
     {
       "slug": "part-went-for-liquor-part-for-women-the-rest-i-spent",
@@ -1096,7 +216,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2457,
       "demandScore": 3686,
-      "demandRank": 63
+      "demandRank": 49
     },
     {
       "slug": "beneath-the-phony-tinsel-of-hollywood-youll-find-the-real",
@@ -1118,7 +238,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2630,
       "demandScore": 3682,
-      "demandRank": 64
+      "demandRank": 50
     },
     {
       "slug": "cant-act-slightly-bald-can-dance-a-little",
@@ -1140,7 +260,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2572,
       "demandScore": 3601,
-      "demandRank": 65
+      "demandRank": 51
     },
     {
       "slug": "how-old-cary-grant-old-cary-grant-fine-how-you",
@@ -1162,7 +282,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion) · QI calls this a dialogue origin. Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2564,
       "demandScore": 3590,
-      "demandRank": 66
+      "demandRank": 52
     },
     {
       "slug": "the-five-stages-of-an-actors-career",
@@ -1184,7 +304,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2564,
       "demandScore": 3590,
-      "demandRank": 67
+      "demandRank": 53
     },
     {
       "slug": "football-is-not-a-matter-of-life-and-death-its-much-more",
@@ -1206,7 +326,7 @@
       "notes": "",
       "demandViews": 3159,
       "demandScore": 3159,
-      "demandRank": 68
+      "demandRank": 54
     },
     {
       "slug": "no-man-will-make-a-great-business-who-wants-to-do-it-all",
@@ -1228,7 +348,7 @@
       "notes": "",
       "demandViews": 3131,
       "demandScore": 3131,
-      "demandRank": 69
+      "demandRank": 55
     },
     {
       "slug": "the-man-who-dies-thus-rich-dies-disgraced",
@@ -1250,7 +370,7 @@
       "notes": "",
       "demandViews": 3131,
       "demandScore": 3131,
-      "demandRank": 70
+      "demandRank": 56
     },
     {
       "slug": "you-have-reached-the-pinnacle-of-success-as-soon-as-you",
@@ -1272,7 +392,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1945,
       "demandScore": 2918,
-      "demandRank": 71
+      "demandRank": 57
     },
     {
       "slug": "if-at-first-you-dont-succeed-try-try-again-then-quit-theres",
@@ -1294,7 +414,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1911,
       "demandScore": 2867,
-      "demandRank": 72
+      "demandRank": 58
     },
     {
       "slug": "some-people-never-miss-an-opportunity-to-miss-an-opportunity",
@@ -1316,7 +436,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2037,
       "demandScore": 2852,
-      "demandRank": 73
+      "demandRank": 59
     },
     {
       "slug": "a-verbal-contract-isnt-worth-the-paper-its-written-on",
@@ -1338,7 +458,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1880,
       "demandScore": 2820,
-      "demandRank": 74
+      "demandRank": 60
     },
     {
       "slug": "the-next-time-i-send-a-damn-fool-for-something-i-go-myself",
@@ -1360,7 +480,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1880,
       "demandScore": 2820,
-      "demandRank": 75
+      "demandRank": 61
     },
     {
       "slug": "writers-are-just-schmucks-with-underwoods",
@@ -1382,7 +502,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1880,
       "demandScore": 2820,
-      "demandRank": 76
+      "demandRank": 62
     },
     {
       "slug": "the-telephone-is-a-great-invention-but-who-would-ever-want",
@@ -1404,7 +524,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1980,
       "demandScore": 2772,
-      "demandRank": 77
+      "demandRank": 63
     },
     {
       "slug": "i-can-tell-you-in-two-words-im-possible",
@@ -1426,7 +546,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion) · QI calls this a joke origin. Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1880,
       "demandScore": 2632,
-      "demandRank": 78
+      "demandRank": 64
     },
     {
       "slug": "if-george-washington-were-alive-today-hed-turn-over-in-his",
@@ -1448,7 +568,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1880,
       "demandScore": 2632,
-      "demandRank": 79
+      "demandRank": 65
     },
     {
       "slug": "she-speaks-eighteen-languages-and-cant-say-no-in-any-of-them",
@@ -1470,7 +590,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1727,
       "demandScore": 2418,
-      "demandRank": 80
+      "demandRank": 66
     },
     {
       "slug": "the-vanishing-lady-and-the-vanishing-hotel-room",
@@ -1492,7 +612,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1727,
       "demandScore": 2418,
-      "demandRank": 81
+      "demandRank": 67
     },
     {
       "slug": "this-just-shows-what-god-could-do-if-he-had-money",
@@ -1514,7 +634,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1727,
       "demandScore": 2418,
-      "demandRank": 82
+      "demandRank": 68
     },
     {
       "slug": "legal-advice-pound-the-facts-pound-the-law-pound-the-table",
@@ -1536,7 +656,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1649,
       "demandScore": 2309,
-      "demandRank": 83
+      "demandRank": 69
     },
     {
       "slug": "we-do-not-inherit-the-earth-from-our-ancestors-we-borrow-it",
@@ -1558,7 +678,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1640,
       "demandScore": 2296,
-      "demandRank": 84
+      "demandRank": 70
     },
     {
       "slug": "if-you-cant-say-something-good-about-someone-sit-right-here",
@@ -1580,7 +700,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1620,
       "demandScore": 2268,
-      "demandRank": 85
+      "demandRank": 71
     },
     {
       "slug": "storytelling-just-give-them-two-and-two-and-let-them-add-it",
@@ -1602,7 +722,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1559,
       "demandScore": 2183,
-      "demandRank": 86
+      "demandRank": 72
     },
     {
       "slug": "a-gold-mine-is-a-hole-in-the-ground-with-a-liar-at-the-top",
@@ -1624,7 +744,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1430,
       "demandScore": 2145,
-      "demandRank": 87
+      "demandRank": 73
     },
     {
       "slug": "jump-off-the-cliff-and-build-your-wings-on-the-way-down",
@@ -1646,7 +766,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1523,
       "demandScore": 2132,
-      "demandRank": 88
+      "demandRank": 74
     },
     {
       "slug": "amateurs-practice-until-they-get-it-right-professionals",
@@ -1668,7 +788,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1419,
       "demandScore": 1987,
-      "demandRank": 89
+      "demandRank": 75
     },
     {
       "slug": "truth-is-stranger-than-fiction-but-it-is-because-fiction-is",
@@ -1690,7 +810,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1398,
       "demandScore": 1957,
-      "demandRank": 90
+      "demandRank": 76
     },
     {
       "slug": "the-only-unnatural-sex-act-is-that-which-one-cannot-perform",
@@ -1712,7 +832,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1395,
       "demandScore": 1953,
-      "demandRank": 91
+      "demandRank": 77
     },
     {
       "slug": "bigamy-is-having-one-spouse-too-many-monogamy-is-the-same",
@@ -1734,7 +854,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1392,
       "demandScore": 1949,
-      "demandRank": 92
+      "demandRank": 78
     },
     {
       "slug": "drawing-on-my-fine-command-of-language-i-said-nothing",
@@ -1756,7 +876,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1390,
       "demandScore": 1946,
-      "demandRank": 93
+      "demandRank": 79
     },
     {
       "slug": "dont-bend-dont-water-it-down-dont-try-to-make-it-logical",
@@ -1778,7 +898,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1324,
       "demandScore": 1854,
-      "demandRank": 94
+      "demandRank": 80
     },
     {
       "slug": "be-nice-to-people-on-your-way-up-youll-meet-them-on-your",
@@ -1800,7 +920,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1270,
       "demandScore": 1778,
-      "demandRank": 95
+      "demandRank": 81
     },
     {
       "slug": "we-are-never-alone-not-when-the-night-is-darkest-the-wind",
@@ -1822,7 +942,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1239,
       "demandScore": 1735,
-      "demandRank": 96
+      "demandRank": 82
     },
     {
       "slug": "writing-about-music-is-like-dancing-about-architecture",
@@ -1844,7 +964,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1209,
       "demandScore": 1693,
-      "demandRank": 97
+      "demandRank": 83
     },
     {
       "slug": "shirley-temple-visits-a-department-store-santa-claus",
@@ -1866,7 +986,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion) · QI calls this a anecdote origin. Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1196,
       "demandScore": 1674,
-      "demandRank": 98
+      "demandRank": 84
     },
     {
       "slug": "cocaine-isnt-habit-forming-i-should-know-ive-been-using-it",
@@ -1888,7 +1008,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1078,
       "demandScore": 1617,
-      "demandRank": 99
+      "demandRank": 85
     },
     {
       "slug": "the-existence-of-forgetting-has-never-been-proved",
@@ -1910,7 +1030,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1043,
       "demandScore": 1565,
-      "demandRank": 100
+      "demandRank": 86
     },
     {
       "slug": "how-do-you-get-to-carnegie-hall-practice",
@@ -1932,7 +1052,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1110,
       "demandScore": 1554,
-      "demandRank": 101
+      "demandRank": 87
     },
     {
       "slug": "update-antedating-quotation-about-plagiarism-versus-research",
@@ -1954,7 +1074,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1045,
       "demandScore": 1463,
-      "demandRank": 102
+      "demandRank": 88
     },
     {
       "slug": "the-eternal-stars-shine-out-again-so-soon-as-it-is-dark",
@@ -1976,7 +1096,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 950,
       "demandScore": 1425,
-      "demandRank": 103
+      "demandRank": 89
     },
     {
       "slug": "there-is-a-land-of-the-living-and-a-land-of-the-dead-and",
@@ -1998,7 +1118,7 @@
       "notes": "",
       "demandViews": 1420,
       "demandScore": 1420,
-      "demandRank": 104
+      "demandRank": 90
     },
     {
       "slug": "we-can-only-be-said-to-be-alive-in-the-moments-when-our",
@@ -2020,7 +1140,7 @@
       "notes": "",
       "demandViews": 1420,
       "demandScore": 1420,
-      "demandRank": 105
+      "demandRank": 91
     },
     {
       "slug": "a-good-pr-story-is-infinitely-more-effective-than-a-front",
@@ -2042,7 +1162,7 @@
       "notes": "",
       "demandViews": 1402,
       "demandScore": 1402,
-      "demandRank": 106
+      "demandRank": 92
     },
     {
       "slug": "i-became-an-entrepreneur-by-mistake-ever-since-then-ive",
@@ -2064,7 +1184,7 @@
       "notes": "",
       "demandViews": 1402,
       "demandScore": 1402,
-      "demandRank": 107
+      "demandRank": 93
     },
     {
       "slug": "my-general-attitude-to-life-is-to-enjoy-every-minute-of",
@@ -2086,7 +1206,7 @@
       "notes": "",
       "demandViews": 1402,
       "demandScore": 1402,
-      "demandRank": 108
+      "demandRank": 94
     },
     {
       "slug": "it-is-better-to-know-nothing-than-to-know-what-aint-so",
@@ -2108,7 +1228,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 914,
       "demandScore": 1371,
-      "demandRank": 109
+      "demandRank": 95
     },
     {
       "slug": "cant-anybody-here-play-this-game",
@@ -2130,7 +1250,7 @@
       "notes": "",
       "demandViews": 1307,
       "demandScore": 1307,
-      "demandRank": 110
+      "demandRank": 96
     },
     {
       "slug": "ill-never-make-the-mistake-of-being-70-years-old-again",
@@ -2152,7 +1272,7 @@
       "notes": "",
       "demandViews": 1307,
       "demandScore": 1307,
-      "demandRank": 111
+      "demandRank": 97
     },
     {
       "slug": "the-secret-of-managing-is-to-keep-the-guys-who-hate-you",
@@ -2174,7 +1294,7 @@
       "notes": "",
       "demandViews": 1307,
       "demandScore": 1307,
-      "demandRank": 112
+      "demandRank": 98
     },
     {
       "slug": "there-comes-a-time-in-every-mans-life-and-ive-had-plenty-of",
@@ -2196,7 +1316,7 @@
       "notes": "",
       "demandViews": 1307,
       "demandScore": 1307,
-      "demandRank": 113
+      "demandRank": 99
     },
     {
       "slug": "without-losers-where-would-the-winners-be",
@@ -2218,7 +1338,7 @@
       "notes": "",
       "demandViews": 1307,
       "demandScore": 1307,
-      "demandRank": 114
+      "demandRank": 100
     },
     {
       "slug": "patience-is-the-art-of-hoping",
@@ -2240,7 +1360,7 @@
       "notes": "",
       "demandViews": 1296,
       "demandScore": 1296,
-      "demandRank": 115
+      "demandRank": 101
     },
     {
       "slug": "whenever-i-feel-the-urge-to-exercise-i-lie-down-until-it",
@@ -2262,7 +1382,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 855,
       "demandScore": 1283,
-      "demandRank": 116
+      "demandRank": 102
     },
     {
       "slug": "theres-a-sucker-born-every-minute",
@@ -2284,7 +1404,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 914,
       "demandScore": 1280,
-      "demandRank": 117
+      "demandRank": 103
     },
     {
       "slug": "in-all-my-years-of-football-ive-never-known-a-man-who",
@@ -2306,7 +1426,7 @@
       "notes": "",
       "demandViews": 1263,
       "demandScore": 1263,
-      "demandRank": 118
+      "demandRank": 104
     },
     {
       "slug": "were-on-to-cincinnati",
@@ -2328,7 +1448,7 @@
       "notes": "",
       "demandViews": 1263,
       "demandScore": 1263,
-      "demandRank": 119
+      "demandRank": 105
     },
     {
       "slug": "every-king-springs-from-a-race-of-slaves-and-every-slave",
@@ -2350,7 +1470,7 @@
       "gameIndex": null,
       "demandViews": 1258,
       "demandScore": 1258,
-      "demandRank": 120
+      "demandRank": 106
     },
     {
       "slug": "it-is-not-the-man-who-has-too-little-but-the-man-who-craves",
@@ -2372,7 +1492,7 @@
       "gameIndex": null,
       "demandViews": 1258,
       "demandScore": 1258,
-      "demandRank": 121
+      "demandRank": 107
     },
     {
       "slug": "the-wise-man-will-live-as-long-as-he-ought-not-as-long-as",
@@ -2394,7 +1514,7 @@
       "gameIndex": null,
       "demandViews": 1258,
       "demandScore": 1258,
-      "demandRank": 122
+      "demandRank": 108
     },
     {
       "slug": "an-organizations-ability-to-learn-and-translate-that",
@@ -2416,7 +1536,7 @@
       "notes": "",
       "demandViews": 1249,
       "demandScore": 1249,
-      "demandRank": 123
+      "demandRank": 109
     },
     {
       "slug": "getting-the-right-people-in-the-right-jobs-is-a-lot-more",
@@ -2438,7 +1558,7 @@
       "notes": "",
       "demandViews": 1249,
       "demandScore": 1249,
-      "demandRank": 124
+      "demandRank": 110
     },
     {
       "slug": "loyalty-to-a-company-its-nonsense",
@@ -2460,7 +1580,7 @@
       "notes": "",
       "demandViews": 1249,
       "demandScore": 1249,
-      "demandRank": 125
+      "demandRank": 111
     },
     {
       "slug": "ive-found-that-you-dont-need-to-wear-a-necktie-if-you-can",
@@ -2482,7 +1602,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 1238,
-      "demandRank": 126
+      "demandRank": 112
     },
     {
       "slug": "the-only-thing-dumber-than-a-pitcher-is-two-pitchers",
@@ -2504,7 +1624,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 1238,
-      "demandRank": 127
+      "demandRank": 113
     },
     {
       "slug": "they-invented-the-all-star-game-for-willie-mays",
@@ -2526,7 +1646,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 1238,
-      "demandRank": 129
+      "demandRank": 115
     },
     {
       "slug": "there-has-always-been-a-saying-in-baseball-that-you-cant",
@@ -2548,7 +1668,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 1238,
-      "demandRank": 128
+      "demandRank": 114
     },
     {
       "slug": "i-take-my-only-exercise-acting-as-a-pallbearer-to-my",
@@ -2570,7 +1690,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 855,
       "demandScore": 1197,
-      "demandRank": 130
+      "demandRank": 116
     },
     {
       "slug": "teach-them-to-yearn-for-the-vast-and-endless-sea",
@@ -2592,7 +1712,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 810,
       "demandScore": 1134,
-      "demandRank": 131
+      "demandRank": 117
     },
     {
       "slug": "culture-does-not-consist-in-acquiring-opinions-but-in",
@@ -2614,7 +1734,7 @@
       "notes": "",
       "demandViews": 809,
       "demandScore": 1133,
-      "demandRank": 132
+      "demandRank": 118
     },
     {
       "slug": "never-miss-a-chance-to-have-sex-or-appear-on-television",
@@ -2636,7 +1756,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 742,
       "demandScore": 1113,
-      "demandRank": 133
+      "demandRank": 119
     },
     {
       "slug": "a-gift-book-is-an-item-which-you-wouldnt-take-on-any-other",
@@ -2658,7 +1778,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 731,
       "demandScore": 1097,
-      "demandRank": 134
+      "demandRank": 120
     },
     {
       "slug": "let-us-make-a-special-effort-to-stop-communicating-with",
@@ -2680,7 +1800,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 769,
       "demandScore": 1077,
-      "demandRank": 135
+      "demandRank": 121
     },
     {
       "slug": "just-close-your-eyes-and-think-of-england",
@@ -2702,7 +1822,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 756,
       "demandScore": 1058,
-      "demandRank": 136
+      "demandRank": 122
     },
     {
       "slug": "cool-papa-was-so-fast-that-he-could-turn-off-the-light",
@@ -2724,7 +1844,7 @@
       "notes": "",
       "demandViews": 1043,
       "demandScore": 1043,
-      "demandRank": 137
+      "demandRank": 123
     },
     {
       "slug": "dont-look-back-something-might-be-gaining-on-you",
@@ -2746,7 +1866,7 @@
       "notes": "",
       "demandViews": 1043,
       "demandScore": 1043,
-      "demandRank": 138
+      "demandRank": 124
     },
     {
       "slug": "i-have-never-thrown-an-illegal-pitch-the-trouble-is-some-of",
@@ -2768,7 +1888,7 @@
       "notes": "",
       "demandViews": 1043,
       "demandScore": 1043,
-      "demandRank": 139
+      "demandRank": 125
     },
     {
       "slug": "at-60-miles-an-hour-the-loudest-noise-in-this-new-rolls",
@@ -2790,7 +1910,7 @@
       "notes": "",
       "demandViews": 998,
       "demandScore": 998,
-      "demandRank": 140
+      "demandRank": 126
     },
     {
       "slug": "if-each-of-us-hires-people-who-are-smaller-than-we-are-we",
@@ -2812,7 +1932,7 @@
       "notes": "",
       "demandViews": 998,
       "demandScore": 998,
-      "demandRank": 141
+      "demandRank": 127
     },
     {
       "slug": "never-write-an-advertisement-which-you-wouldnt-want-your",
@@ -2834,7 +1954,7 @@
       "notes": "",
       "demandViews": 998,
       "demandScore": 998,
-      "demandRank": 142
+      "demandRank": 128
     },
     {
       "slug": "the-consumer-isnt-a-moron-she-is-your-wife",
@@ -2856,7 +1976,7 @@
       "notes": "",
       "demandViews": 998,
       "demandScore": 998,
-      "demandRank": 143
+      "demandRank": 129
     },
     {
       "slug": "i-pay-low-wages-i-can-take-advantage-of-that-were-going-to",
@@ -2878,7 +1998,7 @@
       "notes": "",
       "demandViews": 711,
       "demandScore": 995,
-      "demandRank": 144
+      "demandRank": 130
     },
     {
       "slug": "outstanding-leaders-go-out-of-their-way-to-boost-the-self",
@@ -2900,7 +2020,7 @@
       "notes": "",
       "demandViews": 711,
       "demandScore": 995,
-      "demandRank": 145
+      "demandRank": 131
     },
     {
       "slug": "there-is-only-one-boss-the-customer-and-he-can-fire",
@@ -2922,7 +2042,7 @@
       "notes": "",
       "demandViews": 711,
       "demandScore": 995,
-      "demandRank": 146
+      "demandRank": 132
     },
     {
       "slug": "a-room-without-books-is-like-a-body-without-a-soul",
@@ -2944,7 +2064,7 @@
       "notes": "",
       "demandViews": 710,
       "demandScore": 994,
-      "demandRank": 147
+      "demandRank": 133
     },
     {
       "slug": "freedom-is-participation-in-power",
@@ -2966,7 +2086,7 @@
       "notes": "",
       "demandViews": 710,
       "demandScore": 994,
-      "demandRank": 148
+      "demandRank": 134
     },
     {
       "slug": "my-mind-is-made-up-dont-confuse-me-with-the-facts",
@@ -2988,7 +2108,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 709,
       "demandScore": 993,
-      "demandRank": 149
+      "demandRank": 135
     },
     {
       "slug": "there-is-no-greater-mistake-than-to-try-to-leap-an-abyss-in",
@@ -3010,7 +2130,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 657,
       "demandScore": 986,
-      "demandRank": 150
+      "demandRank": 136
     },
     {
       "slug": "how-will-you-get-robots-to-pay-union-dues-how-will-you-get",
@@ -3032,7 +2152,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion) · QI calls this a dialogue origin. Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 635,
       "demandScore": 953,
-      "demandRank": 151
+      "demandRank": 137
     },
     {
       "slug": "i-did-it-for-my-own-pleasure-then-i-did-it-for-my-friends",
@@ -3054,7 +2174,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 680,
       "demandScore": 952,
-      "demandRank": 152
+      "demandRank": 138
     },
     {
       "slug": "so-i-close-in-saying-that-i-might-have-been-given-a-bad",
@@ -3076,7 +2196,7 @@
       "notes": "",
       "demandViews": 926,
       "demandScore": 926,
-      "demandRank": 153
+      "demandRank": 139
     },
     {
       "slug": "today-i-consider-myself-the-luckiest-man-on-the-face-of-the",
@@ -3098,7 +2218,7 @@
       "notes": "",
       "demandViews": 926,
       "demandScore": 926,
-      "demandRank": 154
+      "demandRank": 140
     },
     {
       "slug": "the-race-is-not-always-to-the-swift-nor-the-battle-to-the",
@@ -3120,7 +2240,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 648,
       "demandScore": 907,
-      "demandRank": 155
+      "demandRank": 141
     },
     {
       "slug": "it-pains-me-to-see-my-old-company-which-has-meant-so-much",
@@ -3142,7 +2262,7 @@
       "notes": "",
       "demandViews": 888,
       "demandScore": 888,
-      "demandRank": 156
+      "demandRank": 142
     },
     {
       "slug": "safety-doesnt-sell",
@@ -3164,7 +2284,7 @@
       "notes": "",
       "demandViews": 888,
       "demandScore": 888,
-      "demandRank": 157
+      "demandRank": 143
     },
     {
       "slug": "weve-got-a-gang-of-clueless-bozos-steering-our-ship-of",
@@ -3186,7 +2306,7 @@
       "notes": "",
       "demandViews": 888,
       "demandScore": 888,
-      "demandRank": 158
+      "demandRank": 144
     },
     {
       "slug": "a-man-has-to-have-goals-for-a-day-for-a-lifetime-and-that",
@@ -3208,7 +2328,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 884,
-      "demandRank": 159
+      "demandRank": 145
     },
     {
       "slug": "if-you-dont-think-too-good-dont-think-too-much",
@@ -3230,7 +2350,7 @@
       "notes": "",
       "demandViews": 884,
       "demandScore": 884,
-      "demandRank": 160
+      "demandRank": 146
     },
     {
       "slug": "care-about-what-other-people-think-and-you-will-always-be",
@@ -3252,7 +2372,7 @@
       "gameIndex": null,
       "demandViews": 615,
       "demandScore": 861,
-      "demandRank": 161
+      "demandRank": 147
     },
     {
       "slug": "you-just-chip-away-everything-that-doesnt-look-like-david",
@@ -3274,7 +2394,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 563,
       "demandScore": 845,
-      "demandRank": 162
+      "demandRank": 148
     },
     {
       "slug": "friendship-is-born-at-that-moment-when-one-person-says-to",
@@ -3296,7 +2416,7 @@
       "gameIndex": null,
       "demandViews": 842,
       "demandScore": 842,
-      "demandRank": 163
+      "demandRank": 149
     },
     {
       "slug": "there-are-two-kinds-of-people-in-the-end-those-who-say-to",
@@ -3318,7 +2438,7 @@
       "gameIndex": null,
       "demandViews": 842,
       "demandScore": 842,
-      "demandRank": 164
+      "demandRank": 150
     },
     {
       "slug": "in-dreams-begins-responsibility",
@@ -3340,7 +2460,7 @@
       "notes": "",
       "demandViews": 809,
       "demandScore": 809,
-      "demandRank": 165
+      "demandRank": 151
     },
     {
       "slug": "we-make-out-of-the-quarrel-with-others-rhetoric-but-of-the",
@@ -3362,7 +2482,7 @@
       "notes": "",
       "demandViews": 809,
       "demandScore": 809,
-      "demandRank": 167
+      "demandRank": 153
     },
     {
       "slug": "man-can-embody-truth-but-he-cannot-know-it",
@@ -3384,7 +2504,7 @@
       "notes": "",
       "demandViews": 809,
       "demandScore": 809,
-      "demandRank": 166
+      "demandRank": 152
     },
     {
       "slug": "they-havent-done-anything-to-my-book-its-right-there-on-the",
@@ -3406,7 +2526,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 554,
       "demandScore": 776,
-      "demandRank": 168
+      "demandRank": 154
     },
     {
       "slug": "origin-of-a-theatrical-review-i-saw-it-under-adverse",
@@ -3428,7 +2548,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 514,
       "demandScore": 771,
-      "demandRank": 169
+      "demandRank": 155
     },
     {
       "slug": "lets-win-one-for-the-gipper",
@@ -3450,7 +2570,7 @@
       "notes": "",
       "demandViews": 751,
       "demandScore": 751,
-      "demandRank": 171
+      "demandRank": 157
     },
     {
       "slug": "football-is-a-game-played-with-arms-legs-and-shoulders-but",
@@ -3472,7 +2592,7 @@
       "notes": "",
       "demandViews": 751,
       "demandScore": 751,
-      "demandRank": 170
+      "demandRank": 156
     },
     {
       "slug": "the-secret-is-to-work-less-as-individuals-and-more-as-a",
@@ -3494,7 +2614,7 @@
       "notes": "",
       "demandViews": 751,
       "demandScore": 751,
-      "demandRank": 172
+      "demandRank": 158
     },
     {
       "slug": "when-i-read-about-the-evils-of-smoking-i-gave-up-reading",
@@ -3516,7 +2636,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 499,
       "demandScore": 749,
-      "demandRank": 173
+      "demandRank": 159
     },
     {
       "slug": "there-is-a-conspiracy-of-silence-against-me-what-should-i",
@@ -3538,7 +2658,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion) · QI calls this a dialogue origin. Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 522,
       "demandScore": 731,
-      "demandRank": 174
+      "demandRank": 160
     },
     {
       "slug": "he-had-shoulder-surgery-on-his-elbow",
@@ -3560,7 +2680,7 @@
       "notes": "",
       "demandViews": 729,
       "demandScore": 729,
-      "demandRank": 175
+      "demandRank": 161
     },
     {
       "slug": "if-what-you-did-yesterday-seems-big-you-havent-done",
@@ -3582,7 +2702,7 @@
       "notes": "",
       "demandViews": 729,
       "demandScore": 729,
-      "demandRank": 176
+      "demandRank": 162
     },
     {
       "slug": "on-this-team-were-all-united-in-a-common-goal-to-keep-my-job",
@@ -3604,7 +2724,7 @@
       "notes": "",
       "demandViews": 729,
       "demandScore": 729,
-      "demandRank": 177
+      "demandRank": 163
     },
     {
       "slug": "the-next-flag-they-plant-will-be-all-white-and-itll-be",
@@ -3626,7 +2746,7 @@
       "notes": "",
       "demandViews": 729,
       "demandScore": 729,
-      "demandRank": 178
+      "demandRank": 164
     },
     {
       "slug": "they-say-a-tie-is-like-kissing-your-sister-i-guess-that-is",
@@ -3648,7 +2768,7 @@
       "notes": "",
       "demandViews": 729,
       "demandScore": 729,
-      "demandRank": 179
+      "demandRank": 165
     },
     {
       "slug": "melancholy-is-the-pleasure-of-being-sad",
@@ -3670,7 +2790,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 478,
       "demandScore": 717,
-      "demandRank": 180
+      "demandRank": 166
     },
     {
       "slug": "insanity-is-hereditary-you-can-get-it-from-your-children",
@@ -3692,7 +2812,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 474,
       "demandScore": 711,
-      "demandRank": 181
+      "demandRank": 167
     },
     {
       "slug": "niagara-falls-the-first-great-disappointment-in-married-life",
@@ -3714,7 +2834,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 474,
       "demandScore": 711,
-      "demandRank": 182
+      "demandRank": 168
     },
     {
       "slug": "nobody-will-ever-win-the-battle-of-the-sexes-theres-too",
@@ -3736,7 +2856,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 474,
       "demandScore": 711,
-      "demandRank": 183
+      "demandRank": 169
     },
     {
       "slug": "our-host-certainly-is-outspoken-outspoken-by-whom",
@@ -3758,7 +2878,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion) · QI calls this a dialogue origin. Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 474,
       "demandScore": 711,
-      "demandRank": 184
+      "demandRank": 170
     },
     {
       "slug": "for-this-one-virtue-is-not-only-the-greatest-but-is-also",
@@ -3780,7 +2900,7 @@
       "notes": "",
       "demandViews": 710,
       "demandScore": 710,
-      "demandRank": 185
+      "demandRank": 171
     },
     {
       "slug": "let-the-welfare-of-the-people-be-the-ultimate-law",
@@ -3802,7 +2922,7 @@
       "notes": "",
       "demandViews": 710,
       "demandScore": 710,
-      "demandRank": 186
+      "demandRank": 172
     },
     {
       "slug": "not-to-know-what-happened-before-you-were-born-is-to-be-a",
@@ -3824,7 +2944,7 @@
       "notes": "",
       "demandViews": 710,
       "demandScore": 710,
-      "demandRank": 187
+      "demandRank": 173
     },
     {
       "slug": "laughter-would-be-bereaved-if-snobbery-died",
@@ -3846,7 +2966,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 503,
       "demandScore": 704,
-      "demandRank": 188
+      "demandRank": 174
     },
     {
       "slug": "there-are-two-kinds-of-people-those-who-do-the-work-and",
@@ -3868,7 +2988,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 482,
       "demandScore": 675,
-      "demandRank": 189
+      "demandRank": 175
     },
     {
       "slug": "fathers-should-give-the-gift-of-time-to-their-children",
@@ -3890,7 +3010,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 474,
       "demandScore": 664,
-      "demandRank": 190
+      "demandRank": 176
     },
     {
       "slug": "a-journey-of-a-thousand-miles-begins-with-a-single-step",
@@ -3912,7 +3032,7 @@
       "gameIndex": null,
       "demandViews": 615,
       "demandScore": 615,
-      "demandRank": 191
+      "demandRank": 177
     },
     {
       "slug": "he-who-knows-does-not-speak-he-who-speaks-does-not-know",
@@ -3934,7 +3054,7 @@
       "gameIndex": null,
       "demandViews": 615,
       "demandScore": 615,
-      "demandRank": 192
+      "demandRank": 178
     },
     {
       "slug": "millions-are-to-be-grabbed-out-here-and-your-only",
@@ -3956,7 +3076,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 422,
       "demandScore": 591,
-      "demandRank": 193
+      "demandRank": 179
     },
     {
       "slug": "absinthe-after-the-first-glass-you-see-things-as-you-wish",
@@ -3978,7 +3098,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 393,
       "demandScore": 590,
-      "demandRank": 194
+      "demandRank": 180
     },
     {
       "slug": "any-idiot-can-face-a-crisis-its-this-day-to-day-living-that",
@@ -4000,7 +3120,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 382,
       "demandScore": 573,
-      "demandRank": 195
+      "demandRank": 181
     },
     {
       "slug": "the-buck-stops-here",
@@ -4022,7 +3142,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 408,
       "demandScore": 571,
-      "demandRank": 196
+      "demandRank": 182
     },
     {
       "slug": "give-the-people-what-they-want-and-theyll-come",
@@ -4044,7 +3164,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 404,
       "demandScore": 566,
-      "demandRank": 197
+      "demandRank": 183
     },
     {
       "slug": "the-male-libido-is-like-being-chained-to-a-madman",
@@ -4066,7 +3186,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 397,
       "demandScore": 556,
-      "demandRank": 198
+      "demandRank": 184
     },
     {
       "slug": "venice-streets-are-full-of-water-please-advise",
@@ -4088,7 +3208,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 397,
       "demandScore": 556,
-      "demandRank": 199
+      "demandRank": 185
     },
     {
       "slug": "if-you-want-others-to-be-happy-practice-compassion-if-you",
@@ -4110,7 +3230,7 @@
       "gameIndex": null,
       "demandViews": 551,
       "demandScore": 551,
-      "demandRank": 200
+      "demandRank": 186
     },
     {
       "slug": "love-and-compassion-are-necessities-not-luxuries-without",
@@ -4132,7 +3252,7 @@
       "gameIndex": null,
       "demandViews": 551,
       "demandScore": 551,
-      "demandRank": 201
+      "demandRank": 187
     },
     {
       "slug": "my-true-religion-is-kindness",
@@ -4154,7 +3274,7 @@
       "gameIndex": null,
       "demandViews": 551,
       "demandScore": 551,
-      "demandRank": 202
+      "demandRank": 188
     },
     {
       "slug": "a-kiss-is-a-trick-of-nature-to-stop-speech-when-words-are",
@@ -4176,7 +3296,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 366,
       "demandScore": 549,
-      "demandRank": 203
+      "demandRank": 189
     },
     {
       "slug": "fanatic-one-who-cant-change-his-mind-and-wont-change-the",
@@ -4198,7 +3318,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 366,
       "demandScore": 549,
-      "demandRank": 204
+      "demandRank": 190
     },
     {
       "slug": "money-cant-buy-love-but-it-improves-your-bargaining-position",
@@ -4220,7 +3340,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 366,
       "demandScore": 549,
-      "demandRank": 205
+      "demandRank": 191
     },
     {
       "slug": "the-squeaky-wheel-gets-the-grease",
@@ -4242,7 +3362,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 392,
       "demandScore": 549,
-      "demandRank": 206
+      "demandRank": 192
     },
     {
       "slug": "we-must-all-suffer-from-one-of-two-pains-the-pain-of",
@@ -4264,7 +3384,7 @@
       "gameIndex": null,
       "demandViews": 519,
       "demandScore": 519,
-      "demandRank": 207
+      "demandRank": 193
     },
     {
       "slug": "did-you-lose-the-keys-here-no-but-the-light-is-much-better",
@@ -4286,7 +3406,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion) · QI calls this a dialogue origin. Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 366,
       "demandScore": 512,
-      "demandRank": 208
+      "demandRank": 194
     },
     {
       "slug": "change-the-way-you-look-at-things-and-the-things-you-look",
@@ -4308,7 +3428,7 @@
       "gameIndex": null,
       "demandViews": 347,
       "demandScore": 486,
-      "demandRank": 209
+      "demandRank": 195
     },
     {
       "slug": "we-are-not-human-beings-having-a-spiritual-experience-we",
@@ -4330,7 +3450,7 @@
       "gameIndex": null,
       "demandViews": 347,
       "demandScore": 486,
-      "demandRank": 210
+      "demandRank": 196
     },
     {
       "slug": "they-riot-in-the-streets-inflamed-with-wild-notions-their",
@@ -4352,7 +3472,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 318,
       "demandScore": 477,
-      "demandRank": 211
+      "demandRank": 197
     },
     {
       "slug": "st-pauls-cathedral-is-amusing-awful-and-artificial",
@@ -4374,7 +3494,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 335,
       "demandScore": 469,
-      "demandRank": 212
+      "demandRank": 198
     },
     {
       "slug": "the-most-rewarding-things-you-do-in-life-are-often-the-ones",
@@ -4396,7 +3516,7 @@
       "notes": "",
       "demandViews": 317,
       "demandScore": 444,
-      "demandRank": 213
+      "demandRank": 199
     },
     {
       "slug": "its-hard-not-to-play-golf-thats-up-to-jack-nicklaus",
@@ -4418,7 +3538,7 @@
       "notes": "",
       "demandViews": 439,
       "demandScore": 439,
-      "demandRank": 214
+      "demandRank": 200
     },
     {
       "slug": "the-older-you-get-the-stronger-the-wind-gets-and-its-always",
@@ -4440,7 +3560,7 @@
       "notes": "",
       "demandViews": 439,
       "demandScore": 439,
-      "demandRank": 215
+      "demandRank": 201
     },
     {
       "slug": "why-dont-you-carry-a-wrist-watch-like-everyone-else",
@@ -4462,7 +3582,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 290,
       "demandScore": 435,
-      "demandRank": 216
+      "demandRank": 202
     },
     {
       "slug": "combining-the-mount-wilson-and-mount-palomar-telescopes",
@@ -4484,7 +3604,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 285,
       "demandScore": 428,
-      "demandRank": 217
+      "demandRank": 203
     },
     {
       "slug": "the-difficult-we-do-immediately-the-impossible-takes-a",
@@ -4506,7 +3626,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 302,
       "demandScore": 423,
-      "demandRank": 219
+      "demandRank": 205
     },
     {
       "slug": "a-master-in-the-art-of-living-makes-little-distinction",
@@ -4528,7 +3648,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 302,
       "demandScore": 423,
-      "demandRank": 218
+      "demandRank": 204
     },
     {
       "slug": "the-miracle-is-not-to-walk-on-water-the-miracle-is-to-walk",
@@ -4550,7 +3670,7 @@
       "notes": "",
       "demandViews": 409,
       "demandScore": 409,
-      "demandRank": 220
+      "demandRank": 206
     },
     {
       "slug": "the-most-precious-gift-we-can-offer-others-is-our-presence",
@@ -4572,7 +3692,7 @@
       "notes": "",
       "demandViews": 409,
       "demandScore": 409,
-      "demandRank": 221
+      "demandRank": 207
     },
     {
       "slug": "your-true-home-is-in-the-here-and-the-now",
@@ -4594,7 +3714,7 @@
       "notes": "",
       "demandViews": 409,
       "demandScore": 409,
-      "demandRank": 222
+      "demandRank": 208
     },
     {
       "slug": "i-only-write-when-inspiration-strikes-fortunately-it",
@@ -4616,7 +3736,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 262,
       "demandScore": 393,
-      "demandRank": 223
+      "demandRank": 209
     },
     {
       "slug": "everyone-is-born-a-genius-but-the-process-of-living-de",
@@ -4638,7 +3758,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 388,
-      "demandRank": 224
+      "demandRank": 210
     },
     {
       "slug": "theres-nothing-in-a-caterpillar-that-tells-you-its-going-to",
@@ -4660,7 +3780,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 388,
-      "demandRank": 225
+      "demandRank": 211
     },
     {
       "slug": "you-never-change-things-by-fighting-the-existing-reality-to",
@@ -4682,7 +3802,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 388,
-      "demandRank": 226
+      "demandRank": 212
     },
     {
       "slug": "if-men-could-get-pregnant-abortion-would-be-a-sacrament",
@@ -4704,7 +3824,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 275,
       "demandScore": 385,
-      "demandRank": 227
+      "demandRank": 213
     },
     {
       "slug": "figures-dont-lie-but-liars-do-figure",
@@ -4726,7 +3846,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 272,
       "demandScore": 381,
-      "demandRank": 228
+      "demandRank": 214
     },
     {
       "slug": "when-you-stop-talking-youve-lost-your-customer-when-you",
@@ -4748,7 +3868,7 @@
       "notes": "",
       "demandViews": 365,
       "demandScore": 365,
-      "demandRank": 229
+      "demandRank": 215
     },
     {
       "slug": "i-had-six-theories-about-bringing-up-children",
@@ -4770,7 +3890,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 242,
       "demandScore": 363,
-      "demandRank": 230
+      "demandRank": 216
     },
     {
       "slug": "you-handle-animals-you-deal-with-people",
@@ -4792,7 +3912,7 @@
       "notes": "",
       "demandViews": 349,
       "demandScore": 349,
-      "demandRank": 231
+      "demandRank": 217
     },
     {
       "slug": "in-a-world-of-individuals-comparison-is-a-senseless-activity",
@@ -4814,7 +3934,7 @@
       "gameIndex": null,
       "demandViews": 347,
       "demandScore": 347,
-      "demandRank": 232
+      "demandRank": 218
     },
     {
       "slug": "you-will-never-win-if-you-have-to-prove-that-you-are-the",
@@ -4836,7 +3956,7 @@
       "gameIndex": null,
       "demandViews": 347,
       "demandScore": 347,
-      "demandRank": 233
+      "demandRank": 219
     },
     {
       "slug": "when-i-wrote-it-only-god-and-i-knew-the-meaning-now-god",
@@ -4858,7 +3978,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 237,
       "demandScore": 332,
-      "demandRank": 234
+      "demandRank": 220
     },
     {
       "slug": "an-epigram-is-only-a-wisecrack-thats-played-carnegie-hall",
@@ -4880,7 +4000,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 213,
       "demandScore": 320,
-      "demandRank": 235
+      "demandRank": 221
     },
     {
       "slug": "ive-always-believed-the-british-open-is-one-of-the-greatest",
@@ -4902,7 +4022,7 @@
       "notes": "",
       "demandViews": 317,
       "demandScore": 317,
-      "demandRank": 236
+      "demandRank": 222
     },
     {
       "slug": "maybe-youll-fail-most-of-the-time-but-until-youve-dared-to",
@@ -4924,7 +4044,7 @@
       "notes": "",
       "demandViews": 317,
       "demandScore": 317,
-      "demandRank": 237
+      "demandRank": 223
     },
     {
       "slug": "for-the-love-of-money-is-the-root-of-all-evil",
@@ -4946,7 +4066,7 @@
       "notes": "",
       "demandViews": 284,
       "demandScore": 284,
-      "demandRank": 238
+      "demandRank": 224
     },
     {
       "slug": "in-every-thing-give-thanks-for-this-is-the-will-of-god-in",
@@ -4968,7 +4088,7 @@
       "notes": "",
       "demandViews": 284,
       "demandScore": 284,
-      "demandRank": 239
+      "demandRank": 225
     },
     {
       "slug": "cooking-is-like-love-it-should-be-entered-into-with-abandon",
@@ -4990,7 +4110,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 202,
       "demandScore": 283,
-      "demandRank": 240
+      "demandRank": 226
     },
     {
       "slug": "death-is-nothing-at-all-i-have-only-slipped-away-into-the",
@@ -5012,7 +4132,7 @@
       "notes": "",
       "demandViews": 280,
       "demandScore": 280,
-      "demandRank": 241
+      "demandRank": 227
     },
     {
       "slug": "dont-fight-forces-use-them",
@@ -5034,7 +4154,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 277,
-      "demandRank": 242
+      "demandRank": 228
     },
     {
       "slug": "god-to-me-it-seems-is-a-verb-not-a-noun-proper-or-improper",
@@ -5056,7 +4176,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 277,
-      "demandRank": 243
+      "demandRank": 229
     },
     {
       "slug": "now-there-is-one-outstandingly-important-fact-regarding",
@@ -5078,7 +4198,7 @@
       "notes": "",
       "demandViews": 277,
       "demandScore": 277,
-      "demandRank": 244
+      "demandRank": 230
     },
     {
       "slug": "eat-a-live-frog-every-morning-and-nothing-worse-will-happen",
@@ -5100,7 +4220,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 192,
       "demandScore": 269,
-      "demandRank": 245
+      "demandRank": 231
     },
     {
       "slug": "if-i-had-a-single-flower-for-every-time-i-think-of-you-i",
@@ -5122,7 +4242,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 162,
       "demandScore": 243,
-      "demandRank": 249
+      "demandRank": 235
     },
     {
       "slug": "a-real-decision-is-measured-by-the-fact-that-youve-taken-a",
@@ -5144,7 +4264,7 @@
       "gameIndex": null,
       "demandViews": 243,
       "demandScore": 243,
-      "demandRank": 246
+      "demandRank": 232
     },
     {
       "slug": "all-personal-breakthroughs-begin-with-a-change-in-beliefs",
@@ -5166,7 +4286,7 @@
       "gameIndex": null,
       "demandViews": 243,
       "demandScore": 243,
-      "demandRank": 247
+      "demandRank": 233
     },
     {
       "slug": "beliefs-have-the-power-to-create-and-the-power-to-destroy",
@@ -5188,7 +4308,7 @@
       "gameIndex": null,
       "demandViews": 243,
       "demandScore": 243,
-      "demandRank": 248
+      "demandRank": 234
     },
     {
       "slug": "the-quality-of-your-life-is-the-quality-of-your",
@@ -5210,7 +4330,7 @@
       "gameIndex": null,
       "demandViews": 243,
       "demandScore": 243,
-      "demandRank": 250
+      "demandRank": 236
     },
     {
       "slug": "none-of-this-nonsense-about-women-and-children-first",
@@ -5232,7 +4352,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 173,
       "demandScore": 242,
-      "demandRank": 251
+      "demandRank": 237
     },
     {
       "slug": "its-too-caustic-to-hell-with-the-cost",
@@ -5254,7 +4374,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion) · QI calls this a dialogue origin. Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 128,
       "demandScore": 192,
-      "demandRank": 252
+      "demandRank": 238
     },
     {
       "slug": "this-book-fills-a-much-needed-gap",
@@ -5276,7 +4396,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 135,
       "demandScore": 189,
-      "demandRank": 253
+      "demandRank": 239
     },
     {
       "slug": "a-gentleman-is-a-man-who-never-gives-offense-unintentionally",
@@ -5298,7 +4418,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 132,
       "demandScore": 185,
-      "demandRank": 254
+      "demandRank": 240
     },
     {
       "slug": "its-easier-to-hold-to-your-principles-100-of-the-time-than",
@@ -5320,7 +4440,7 @@
       "notes": "",
       "demandViews": 181,
       "demandScore": 181,
-      "demandRank": 255
+      "demandRank": 241
     },
     {
       "slug": "management-is-the-most-noble-of-professions-if-its",
@@ -5342,7 +4462,7 @@
       "notes": "",
       "demandViews": 181,
       "demandScore": 181,
-      "demandRank": 256
+      "demandRank": 242
     },
     {
       "slug": "the-prediction-of-my-disruption-theory-would-be-that-apple",
@@ -5364,7 +4484,7 @@
       "notes": "",
       "demandViews": 181,
       "demandScore": 181,
-      "demandRank": 257
+      "demandRank": 243
     },
     {
       "slug": "gentlemen-you-may-include-me-out",
@@ -5386,7 +4506,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 128,
       "demandScore": 179,
-      "demandRank": 258
+      "demandRank": 244
     },
     {
       "slug": "i-did-not-attend-the-funeral-but-i-sent-a-nice-letter",
@@ -5408,7 +4528,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 128,
       "demandScore": 179,
-      "demandRank": 259
+      "demandRank": 245
     },
     {
       "slug": "even-if-you-win-the-rat-race-youre-still-a-rat",
@@ -5430,7 +4550,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 119,
       "demandScore": 167,
-      "demandRank": 260
+      "demandRank": 246
     },
     {
       "slug": "meretricious-and-a-happy-new-year",
@@ -5452,7 +4572,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 104,
       "demandScore": 156,
-      "demandRank": 261
+      "demandRank": 247
     },
     {
       "slug": "substitute-damn-every-time-youre-inclined-to-write-very",
@@ -5474,7 +4594,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 104,
       "demandScore": 156,
-      "demandRank": 262
+      "demandRank": 248
     },
     {
       "slug": "your-bald-head-feels-as-smooth-as-my-wifes-cheek",
@@ -5496,7 +4616,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 104,
       "demandScore": 146,
-      "demandRank": 263
+      "demandRank": 249
     },
     {
       "slug": "the-graveyards-are-full-of-indispensable-men",
@@ -5518,7 +4638,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 96,
       "demandScore": 144,
-      "demandRank": 264
+      "demandRank": 250
     },
     {
       "slug": "believe-those-who-are-seeking-the-truth-doubt-those-who",
@@ -5540,7 +4660,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 92,
       "demandScore": 138,
-      "demandRank": 265
+      "demandRank": 251
     },
     {
       "slug": "blessed-are-they-that-mourn-for-they-shall-be-comforted",
@@ -5562,7 +4682,7 @@
       "notes": "King James Version · King James Version",
       "demandViews": 110,
       "demandScore": 110,
-      "demandRank": 266
+      "demandRank": 252
     },
     {
       "slug": "aeroplanes-and-tanks-are-only-accessories-to-the-man-and",
@@ -5584,7 +4704,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 69,
       "demandScore": 97,
-      "demandRank": 267
+      "demandRank": 253
     },
     {
       "slug": "a-culture-of-discipline-is-not-a-principle-of-business-it",
@@ -5606,7 +4726,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 268
+      "demandRank": 254
     },
     {
       "slug": "for-no-matter-what-we-achieve-if-we-dont-spend-the-vast",
@@ -5628,7 +4748,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 269
+      "demandRank": 255
     },
     {
       "slug": "good-is-the-enemy-of-great",
@@ -5650,7 +4770,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 270
+      "demandRank": 256
     },
     {
       "slug": "it-is-better-to-first-get-the-right-people-on-the-bus-the",
@@ -5672,7 +4792,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 271
+      "demandRank": 257
     },
     {
       "slug": "there-is-a-direct-relationship-between-the-absence-of",
@@ -5694,7 +4814,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 272
+      "demandRank": 258
     },
     {
       "slug": "those-who-built-the-visionary-companies-wisely-understood",
@@ -5716,7 +4836,7 @@
       "notes": "",
       "demandViews": 91,
       "demandScore": 91,
-      "demandRank": 273
+      "demandRank": 259
     },
     {
       "slug": "if-we-should-have-to-leave-our-bleached-bones-on-these",
@@ -5738,7 +4858,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 55,
       "demandScore": 77,
-      "demandRank": 274
+      "demandRank": 260
     },
     {
       "slug": "it-aint-over-til-the-fat-lady-sings",
@@ -5760,7 +4880,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 55,
       "demandScore": 77,
-      "demandRank": 275
+      "demandRank": 261
     },
     {
       "slug": "reorganizing-is-a-wonderful-method-for-creating-the",
@@ -5782,7 +4902,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 46,
       "demandScore": 64,
-      "demandRank": 276
+      "demandRank": 262
     },
     {
       "slug": "dog-bites-a-man-is-not-news-man-bites-a-dog-is-news",
@@ -5804,7 +4924,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 44,
       "demandScore": 62,
-      "demandRank": 277
+      "demandRank": 263
     },
     {
       "slug": "if-you-can-read-this-youve-come-too-close",
@@ -5826,7 +4946,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 40,
       "demandScore": 60,
-      "demandRank": 278
+      "demandRank": 264
     },
     {
       "slug": "golf-hit-a-very-small-ball-into-an-even-smaller-hole-with",
@@ -5848,7 +4968,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 39,
       "demandScore": 55,
-      "demandRank": 279
+      "demandRank": 265
     },
     {
       "slug": "i-hope-he-will-bite-my-other-generals-and-make-them-mad-too",
@@ -5870,7 +4990,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 39,
       "demandScore": 55,
-      "demandRank": 280
+      "demandRank": 266
     },
     {
       "slug": "oh-the-comfort-the-inexpressible-comfort-of-feeling-safe",
@@ -5892,7 +5012,7 @@
       "notes": "",
       "demandViews": 48,
       "demandScore": 48,
-      "demandRank": 281
+      "demandRank": 267
     },
     {
       "slug": "he-that-loveth-silver-shall-not-be-satisfied-with-silver",
@@ -5914,7 +5034,7 @@
       "notes": "Qoheleth), Book of Ecclesiastes · Qoheleth), Book of Ecclesiastes",
       "demandViews": 43,
       "demandScore": 43,
-      "demandRank": 282
+      "demandRank": 268
     },
     {
       "slug": "at-last-she-sleeps-alone",
@@ -5936,7 +5056,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 26,
       "demandScore": 39,
-      "demandRank": 283
+      "demandRank": 269
     },
     {
       "slug": "the-only-time-an-aircraft-has-too-much-fuel-on-board-is",
@@ -5958,7 +5078,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 18,
       "demandScore": 25,
-      "demandRank": 284
+      "demandRank": 270
     },
     {
       "slug": "only-monarchs-editors-and-people-with-tapeworms-have-the",
@@ -5980,7 +5100,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 13,
       "demandScore": 18,
-      "demandRank": 285
+      "demandRank": 271
     },
     {
       "slug": "why-should-any-man-be-allowed-to-buy-a-printing-press-and",
@@ -6002,7 +5122,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 11,
       "demandScore": 15,
-      "demandRank": 286
+      "demandRank": 272
     },
     {
       "slug": "do-you-prefer-grass-or-astroturf-i-dont-know-i-never-smoked",
@@ -6024,7 +5144,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion) · QI calls this a dialogue origin. Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 8,
       "demandScore": 12,
-      "demandRank": 287
+      "demandRank": 273
     },
     {
       "slug": "comedy-is-tragedy-plus-time",
@@ -6046,7 +5166,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 5,
       "demandScore": 7,
-      "demandRank": 288
+      "demandRank": 274
     },
     {
       "slug": "but-they-that-wait-upon-the-lord-shall-renew-their-strength",
@@ -6068,7 +5188,7 @@
       "notes": "King James Version · King James Version",
       "demandViews": 6,
       "demandScore": 6,
-      "demandRank": 289
+      "demandRank": 275
     },
     {
       "slug": "you-can-get-much-further-with-a-kind-word-and-a-gun-than",
@@ -6090,7 +5210,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 3,
       "demandScore": 5,
-      "demandRank": 290
+      "demandRank": 276
     },
     {
       "slug": "live-fast-die-young-and-leave-a-beautiful-corpse",
@@ -6112,7 +5232,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 3,
       "demandScore": 4,
-      "demandRank": 294
+      "demandRank": 280
     },
     {
       "slug": "french-have-taken-umbrage-english-have-taken-cognizance",
@@ -6134,7 +5254,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 3,
       "demandScore": 4,
-      "demandRank": 292
+      "demandRank": 278
     },
     {
       "slug": "everybody-steals-in-commerce-and-industry-ive-stolen-a-lot",
@@ -6156,7 +5276,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 3,
       "demandScore": 4,
-      "demandRank": 291
+      "demandRank": 277
     },
     {
       "slug": "i-rob-banks-because-thats-where-the-money-is",
@@ -6178,7 +5298,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 3,
       "demandScore": 4,
-      "demandRank": 293
+      "demandRank": 279
     },
     {
       "slug": "confused-on-a-higher-level-and-about-more-important-things",
@@ -6200,7 +5320,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2,
       "demandScore": 3,
-      "demandRank": 295
+      "demandRank": 281
     },
     {
       "slug": "three-things-can-happen-when-you-pass-and-two-of-them-are",
@@ -6222,7 +5342,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 2,
       "demandScore": 3,
-      "demandRank": 296
+      "demandRank": 282
     },
     {
       "slug": "a-rainy-day-lost-luggage-and-tangled-christmas-tree-lights",
@@ -6244,7 +5364,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1,
       "demandScore": 2,
-      "demandRank": 297
+      "demandRank": 283
     },
     {
       "slug": "you-can-avoid-reality-but-you-cannot-avoid-the-consequences",
@@ -6266,7 +5386,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1,
       "demandScore": 2,
-      "demandRank": 298
+      "demandRank": 284
     },
     {
       "slug": "the-strength-of-the-team-is-each-individual-member-the",
@@ -6288,7 +5408,7 @@
       "notes": "",
       "demandViews": 1,
       "demandScore": 1,
-      "demandRank": 301
+      "demandRank": 287
     },
     {
       "slug": "she-is-too-fond-of-books-and-it-has-turned-her-brain",
@@ -6310,7 +5430,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1,
       "demandScore": 1,
-      "demandRank": 300
+      "demandRank": 286
     },
     {
       "slug": "know-your-lines-and-dont-bump-into-the-furniture",
@@ -6332,7 +5452,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 1,
       "demandScore": 1,
-      "demandRank": 299
+      "demandRank": 285
     },
     {
       "slug": "you-miss-100-of-the-shots-you-dont-take",
@@ -6354,7 +5474,7 @@
       "notes": "",
       "demandViews": 1,
       "demandScore": 1,
-      "demandRank": 302
+      "demandRank": 288
     },
     {
       "slug": "revenge-is-a-dish-best-served-cold",
@@ -6376,7 +5496,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 342
+      "demandRank": 328
     },
     {
       "slug": "alone-bad-friend-good",
@@ -6398,7 +5518,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 307
+      "demandRank": 293
     },
     {
       "slug": "fire-bad",
@@ -6420,7 +5540,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 312
+      "demandRank": 298
     },
     {
       "slug": "its-not-personal-its-strictly-business",
@@ -6442,7 +5562,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 326
+      "demandRank": 312
     },
     {
       "slug": "never-take-sides-against-the-family",
@@ -6464,7 +5584,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 335
+      "demandRank": 321
     },
     {
       "slug": "we-belong-dead",
@@ -6486,7 +5606,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 352
+      "demandRank": 338
     },
     {
       "slug": "what-we-have-here-is-a-failure-to-communicate",
@@ -6508,7 +5628,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 353
+      "demandRank": 339
     },
     {
       "slug": "you-want-the-truth-you-cant-handle-the-truth",
@@ -6530,7 +5650,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 358
+      "demandRank": 344
     },
     {
       "slug": "the-market-can-remain-irrational-longer-than-you-can-remain",
@@ -6552,7 +5672,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 348
+      "demandRank": 334
     },
     {
       "slug": "there-is-nothing-so-disastrous-as-a-rational-investment",
@@ -6574,7 +5694,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 349
+      "demandRank": 335
     },
     {
       "slug": "if-you-steal-from-one-author-its-plagiarism-if-you-steal",
@@ -6596,7 +5716,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 322
+      "demandRank": 308
     },
     {
       "slug": "a-story-should-have-a-beginning-a-muddle-and-an-end",
@@ -6618,7 +5738,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 305
+      "demandRank": 291
     },
     {
       "slug": "drunk-on-the-idea-that-love-only-love-could-heal-our",
@@ -6640,7 +5760,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 309
+      "demandRank": 295
     },
     {
       "slug": "if-tetris-has-taught-me-anything-its-that-errors-pile-up",
@@ -6662,7 +5782,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 320
+      "demandRank": 306
     },
     {
       "slug": "the-lion-and-the-gazelle",
@@ -6684,7 +5804,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 347
+      "demandRank": 333
     },
     {
       "slug": "capitalism-the-nastiest-of-men-for-the-nastiest-of-motives",
@@ -6706,7 +5826,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 308
+      "demandRank": 294
     },
     {
       "slug": "modern-man-drives-a-mortgaged-car-over-a-bond-financed",
@@ -6728,7 +5848,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 332
+      "demandRank": 318
     },
     {
       "slug": "a-different-world-cannot-be-built-by-indifferent-people",
@@ -6750,7 +5870,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 304
+      "demandRank": 290
     },
     {
       "slug": "you-have-to-kiss-a-lot-of-frogs-to-find-your-prince",
@@ -6772,7 +5892,7 @@
       "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 357
+      "demandRank": 343
     },
     {
       "slug": "father-forgive-them-for-they-know-not-what-they-do",
@@ -6794,7 +5914,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 311
+      "demandRank": 297
     },
     {
       "slug": "he-that-hath-no-rule-over-his-own-spirit-is-like-a-city",
@@ -6816,7 +5936,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 315
+      "demandRank": 301
     },
     {
       "slug": "a-census-taker-once-tried-to-test-me-i-ate-his-liver-with",
@@ -6838,7 +5958,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 303
+      "demandRank": 289
     },
     {
       "slug": "all-weve-got-is-cotton-and-slaves-and-arrogance",
@@ -6860,7 +5980,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 306
+      "demandRank": 292
     },
     {
       "slug": "elementary-my-dear-holmes-elementary",
@@ -6882,7 +6002,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 310
+      "demandRank": 296
     },
     {
       "slug": "frankly-my-dear-i-dont-give-a-damn",
@@ -6904,7 +6024,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 313
+      "demandRank": 299
     },
     {
       "slug": "gentlemen-its-been-a-privilege-flying-with-you",
@@ -6926,7 +6046,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 314
+      "demandRank": 300
     },
     {
       "slug": "heres-looking-at-you-kid",
@@ -6948,7 +6068,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 316
+      "demandRank": 302
     },
     {
       "slug": "hes-dead-jim",
@@ -6970,7 +6090,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 317
+      "demandRank": 303
     },
     {
       "slug": "i-do-wish-we-could-chat-longer-but-im-having-an-old-friend",
@@ -6992,7 +6112,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 318
+      "demandRank": 304
     },
     {
       "slug": "i-love-you-i-know",
@@ -7014,7 +6134,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 319
+      "demandRank": 305
     },
     {
       "slug": "if-you-build-it-he-will-come",
@@ -7036,7 +6156,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 321
+      "demandRank": 307
     },
     {
       "slug": "ill-get-you-my-pretty-and-your-little-dog-too",
@@ -7058,7 +6178,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 323
+      "demandRank": 309
     },
     {
       "slug": "im-gonna-make-him-an-offer-he-cant-refuse",
@@ -7080,7 +6200,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 324
+      "demandRank": 310
     },
     {
       "slug": "its-alive-its-alive",
@@ -7102,7 +6222,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 325
+      "demandRank": 311
     },
     {
       "slug": "leave-the-gun-take-the-cannoli",
@@ -7124,7 +6244,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 327
+      "demandRank": 313
     },
     {
       "slug": "lets-work-the-problem-people-lets-not-make-things-any-worse",
@@ -7146,7 +6266,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 328
+      "demandRank": 314
     },
     {
       "slug": "lips-red-as-the-rose-hair-black-as-ebony-skin-white-as-snow",
@@ -7168,7 +6288,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 329
+      "demandRank": 315
     },
     {
       "slug": "lunch-is-for-wimps",
@@ -7190,7 +6310,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 330
+      "demandRank": 316
     },
     {
       "slug": "magic-mirror-on-the-wall-who-is-the-fairest-one-of-all",
@@ -7212,7 +6332,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 331
+      "demandRank": 317
     },
     {
       "slug": "momma-says-stupid-is-as-stupid-does",
@@ -7234,7 +6354,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 333
+      "demandRank": 319
     },
     {
       "slug": "money-never-sleeps-pal",
@@ -7256,7 +6376,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 334
+      "demandRank": 320
     },
     {
       "slug": "no-try-not-do-or-do-not-there-is-no-try",
@@ -7278,7 +6398,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 336
+      "demandRank": 322
     },
     {
       "slug": "nothin-a-handful-of-nothin-you-stupid-mullet-head-he-beat",
@@ -7300,7 +6420,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 337
+      "demandRank": 323
     },
     {
       "slug": "now-i-know-what-it-feels-like-to-be-god",
@@ -7322,7 +6442,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 338
+      "demandRank": 324
     },
     {
       "slug": "now-you-know-why-they-call-me-dirty-harry-i-get-every-dirty",
@@ -7344,7 +6464,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 339
+      "demandRank": 325
     },
     {
       "slug": "people-will-come-ray-people-will-most-definitely-come",
@@ -7366,7 +6486,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 340
+      "demandRank": 326
     },
     {
       "slug": "round-up-the-usual-suspects",
@@ -7388,7 +6508,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 343
+      "demandRank": 329
     },
     {
       "slug": "run-forrest-run",
@@ -7410,7 +6530,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 344
+      "demandRank": 330
     },
     {
       "slug": "so-eleven-hundred-men-went-in-the-water-three-hundred-and",
@@ -7432,7 +6552,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 345
+      "demandRank": 331
     },
     {
       "slug": "space-the-final-frontier-these-are-the-voyages-of-the",
@@ -7454,7 +6574,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 346
+      "demandRank": 332
     },
     {
       "slug": "theres-no-place-like-home",
@@ -7476,7 +6596,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 350
+      "demandRank": 336
     },
     {
       "slug": "this-was-no-boating-accident",
@@ -7498,7 +6618,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 351
+      "demandRank": 337
     },
     {
       "slug": "when-a-naked-man-is-chasing-a-woman-through-an-alley-with-a",
@@ -7520,7 +6640,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 354
+      "demandRank": 340
     },
     {
       "slug": "yeah-well-sometimes-nothin-can-be-a-real-cool-hand",
@@ -7542,7 +6662,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 355
+      "demandRank": 341
     },
     {
       "slug": "you-cant-handle-the-truth",
@@ -7564,7 +6684,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 356
+      "demandRank": 342
     },
     {
       "slug": "youre-goddamn-right-i-did",
@@ -7586,7 +6706,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 359
+      "demandRank": 345
     },
     {
       "slug": "youve-a-magnificent-brain-moriarty-i-admire-it",
@@ -7608,7 +6728,7 @@
       "gameIndex": null,
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 360
+      "demandRank": 346
     },
     {
       "slug": "pressure-is-a-privilege",
@@ -7630,7 +6750,7 @@
       "notes": "",
       "demandViews": 0,
       "demandScore": 0,
-      "demandRank": 341
+      "demandRank": 327
     },
     {
       "slug": "beatles-rejection-we-dont-like-their-sound-groups-of",
@@ -17335,6 +16455,72 @@
       "demandRank": 14
     },
     {
+      "slug": "thank-you-for-the-gift-book-i-shall-lose-no-time-in-reading",
+      "quote": "Thank You for the Gift Book. I Shall Lose No Time In Reading It",
+      "magnetAuthor": "Benjamin Disraeli",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2012/12/28/lose-no-time/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "thank-you-for-the-gift-book-i-shall-lose-no-time-in-reading",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 9971,
+      "demandScore": 13959,
+      "demandRank": 1
+    },
+    {
+      "slug": "what-is-the-difference-between-a-misfortune-and-a-calamity",
+      "quote": "What Is the Difference Between a Misfortune and a Calamity?",
+      "magnetAuthor": "Benjamin Disraeli",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "based on current evidence this joke template originated in France. \"The Leeds Mercury\" and \"Punch\" were loci for its popularization in the United Kingdom. The variability of the tale suggests to QI that deliberate modifications were made to",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2013/11/10/calamity/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "what-is-the-difference-between-a-misfortune-and-a-calamity",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 9971,
+      "demandScore": 13959,
+      "demandRank": 2
+    },
+    {
+      "slug": "you-shall-either-die-upon-the-gallows-or-of-the-pox",
+      "quote": "You Shall Either Die Upon the Gallows or of the Pox",
+      "magnetAuthor": "Benjamin Disraeli",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/01/26/gallows-pox/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "you-shall-either-die-upon-the-gallows-or-of-the-pox",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 9971,
+      "demandScore": 13959,
+      "demandRank": 3
+    },
+    {
       "slug": "a-pessimist-is-one-who-sees-a-disaster-in-every-opportunity",
       "quote": "A pessimist is one who sees a disaster in every opportunity. An optimist sees opportunity in every disaster.",
       "magnetAuthor": "John D. Rockefeller",
@@ -17421,6 +16607,28 @@
       "demandViews": 13950,
       "demandScore": 13950,
       "demandRank": 10
+    },
+    {
+      "slug": "teach-a-parrot-to-say-supply-and-demand-and-you-have-an",
+      "quote": "Teach a Parrot to Say 'Supply and Demand' and You Have an Economist",
+      "magnetAuthor": "Thomas Carlyle",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "QI hypothesizes that this quip evolved from many remarks in the 1800s that attacked the phrase \"supply and demand\" as mere \"parrot words\" and \"parrot-like\". At some point the figurative language was used as transformative guidance and a lit",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2013/07/19/parrot-econ/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "teach-a-parrot-to-say-supply-and-demand-and-you-have-an",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 9915,
+      "demandScore": 13881,
+      "demandRank": 4
     },
     {
       "slug": "i-cannot-tell-a-lie-i-did-cut-it-with-my-hatchet",
@@ -17597,6 +16805,94 @@
       "demandViews": 9726,
       "demandScore": 13616,
       "demandRank": 17
+    },
+    {
+      "slug": "if-i-could-just-make-them-up-on-the-spot-id-be-famous",
+      "quote": "If I Could Just Make Them Up On the Spot, I'd Be Famous",
+      "magnetAuthor": "Yogi Berra",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "based on the testimony of Yogi himself he did make this statement of self-referential wisdom. Also, QI believes that it is unlikely that these words were said by someone else and then reassigned to Yogi.",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2012/11/13/yogi-make-em-up/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "if-i-could-just-make-them-up-on-the-spot-id-be-famous",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 9726,
+      "demandScore": 13616,
+      "demandRank": 5
+    },
+    {
+      "slug": "so-im-ugly-so-what-i-never-saw-anyone-hit-with-his-face",
+      "quote": "So I'm Ugly. So What? I Never Saw Anyone Hit with His Face",
+      "magnetAuthor": "Yogi Berra",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "based on accounts in books and newspapers starting in 1948 Yogi did create and use this clever riposte although the exact wording varied. Yogi himself provided further corroboration in his books that he delivered the line on multiple occasi",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2012/11/21/never-with-face/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "so-im-ugly-so-what-i-never-saw-anyone-hit-with-his-face",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 9726,
+      "demandScore": 13616,
+      "demandRank": 6
+    },
+    {
+      "slug": "were-lost-but-were-making-good-time",
+      "quote": "We're Lost, But We're Making Good Time!",
+      "magnetAuthor": "Yogi Berra",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2012/07/11/making-good-time/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "were-lost-but-were-making-good-time",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 9726,
+      "demandScore": 13616,
+      "demandRank": 7
+    },
+    {
+      "slug": "would-you-ever-ask-a-man-that-question",
+      "quote": "Would You Ever Ask a Man that Question?",
+      "magnetAuthor": "Hillary Clinton",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "the quotation is accurate, and the interaction took place in 2010 in Kyrgyzstan.",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2012/09/06/clinton-ever-ask/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "would-you-ever-ask-a-man-that-question",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 9620,
+      "demandScore": 13468,
+      "demandRank": 8
     },
     {
       "slug": "the-real-price-of-every-thing-what-every-thing-really-costs",
@@ -17973,6 +17269,28 @@
       "demandRank": 114
     },
     {
+      "slug": "no-respect-for-a-man-who-can-spell-a-word-only-one-way",
+      "quote": "No Respect for a Man Who Can Spell a Word Only One Way",
+      "magnetAuthor": "Andrew Jackson",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2010/06/25/spelling/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "no-respect-for-a-man-who-can-spell-a-word-only-one-way",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 8701,
+      "demandScore": 12181,
+      "demandRank": 9
+    },
+    {
       "slug": "every-habit-and-faculty-is-maintained-and-increased-by-the",
       "quote": "Every habit and faculty is maintained and increased by the corresponding actions: the habit of walking by walking, the habit of running by running. If you would be a good reader, read; if a writer, write.",
       "magnetAuthor": "Epictetus",
@@ -18191,6 +17509,28 @@
       "demandViews": 8050,
       "demandScore": 12075,
       "demandRank": 38
+    },
+    {
+      "slug": "if-you-want-jobs-then-give-these-workers-spoons-instead-of",
+      "quote": "If You Want Jobs Then Give These Workers Spoons Instead of Shovels",
+      "magnetAuthor": "Milton Friedman",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "this compelling anecdote has many variants. The primary image of replacing the shovels of workers with spoons or teaspoons is very memorable. The acerbic humor touches on deeper issues of efficiency, productivity, and the purpose of human l",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2011/10/10/spoons-shovels/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "if-you-want-jobs-then-give-these-workers-spoons-instead-of",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 8600,
+      "demandScore": 12040,
+      "demandRank": 10
     },
     {
       "slug": "you-dont-have-to-be-crazy-to-work-here-but-it-helps",
@@ -19051,6 +18391,28 @@
       "demandRank": 61
     },
     {
+      "slug": "the-price-of-fame-is-not-being-able-to-go-to-the-pub-for-a",
+      "quote": "The Price of Fame Is Not Being Able to Go to the Pub for a Quiet Pint",
+      "magnetAuthor": "John Lennon",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/08/03/fame-pint/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "the-price-of-fame-is-not-being-able-to-go-to-the-pub-for-a",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 8050,
+      "demandScore": 11270,
+      "demandRank": 11
+    },
+    {
       "slug": "books-will-soon-be-obsolete-in-the-schools",
       "quote": "Books will soon be obsolete in the schools.",
       "magnetAuthor": "Thomas Edison",
@@ -19203,6 +18565,28 @@
       "demandViews": 7281,
       "demandScore": 10922,
       "demandRank": 118
+    },
+    {
+      "slug": "you-cant-be-a-real-country-unless-you-have-a-beer-and-an",
+      "quote": "You Can't Be a Real Country Unless You Have a Beer and an Airline",
+      "magnetAuthor": "Frank Zappa",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/09/16/beer-airline/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "you-cant-be-a-real-country-unless-you-have-a-beer-and-an",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 7793,
+      "demandScore": 10910,
+      "demandRank": 12
     },
     {
       "slug": "no-great-idea-in-its-beginning-can-ever-be-within-the-law",
@@ -19491,6 +18875,28 @@
       "demandRank": 13
     },
     {
+      "slug": "that-is-part-of-the-beauty-of-all-literature-you-discover",
+      "quote": "That Is Part of the Beauty of All Literature. You Discover that Your Longings Are Universal Longings",
+      "magnetAuthor": "F. Scott Fitzgerald",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "the quotation was spoken by F. Scott Fitzgerald to Sheilah Graham according to Graham's memoir. The relationship between the two took place between 1937 and 1940. Yet, the memoir was released about two decades later in 1958. The accuracy of",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/03/24/literature/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "that-is-part-of-the-beauty-of-all-literature-you-discover",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 7520,
+      "demandScore": 10528,
+      "demandRank": 13
+    },
+    {
       "slug": "our-deepest-fears-are-like-dragons-guarding-our-deepest",
       "quote": "Our deepest fears are like dragons guarding our deepest treasure.",
       "magnetAuthor": "Rainer Maria Rilke",
@@ -19731,6 +19137,50 @@
       "demandViews": 7023,
       "demandScore": 10183,
       "demandRank": 210
+    },
+    {
+      "slug": "a-professor-is-one-who-talks-in-someone-elses-sleep",
+      "quote": "A Professor Is One Who Talks in Someone Else's Sleep",
+      "magnetAuthor": "W. H. Auden",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "this jest has been evolving for more than one hundred years. The initial instance in 1900 was self-mocking. By 1906 the barb was aimed at preachers, and the soporific qualities of multiple professions have been highlighted over the years.",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/04/27/sleep-talk/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "a-professor-is-one-who-talks-in-someone-elses-sleep",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 7157,
+      "demandScore": 10020,
+      "demandRank": 14
+    },
+    {
+      "slug": "if-we-are-here-to-help-others-i-often-wonder-what-the",
+      "quote": "If We Are Here to Help Others, I Often Wonder What the Others Are Here For",
+      "magnetAuthor": "W. H. Auden",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "this popular joke has been circulating for more than one hundred years. The earliest printed evidence in 1897 suggests that Professor George Herbert Palmer of Harvard first popularized the anecdote in which a child speaks the punch line.",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/04/23/help-others/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "if-we-are-here-to-help-others-i-often-wonder-what-the",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 7157,
+      "demandScore": 10020,
+      "demandRank": 15
     },
     {
       "slug": "dont-pay-any-attention-to-what-they-write-about-you-just",
@@ -20195,6 +19645,28 @@
       "demandRank": 83
     },
     {
+      "slug": "im-so-fast-last-night-i-cut-the-light-switch-and-was-in-bed",
+      "quote": "I'm so fast last night I cut the light switch and was in bed before the room was dark.",
+      "magnetAuthor": "Muhammad Ali",
+      "creditedTo": "Muhammad Ali",
+      "trueOrigin": "Ali delivered this version (recorded by a Village Voice reporter in 1974); QI notes the underlying 'in bed before the room was dark' joke circulated earlier, so Ali adapted an existing gag.",
+      "category": "genuine-famous",
+      "whyNotable": "A classic Ali speed boast that is genuinely his; QI traces the wording to a 1974 Village Voice report, while noting the joke form predates him.",
+      "likelyConfidence": "verified",
+      "rightsEra": "in-copyright",
+      "documentedAt": "https://quoteinvestigator.com/2013/06/12/before-dark/",
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "im-so-fast-last-night-i-cut-the-light-switch-and-was-in-bed",
+      "harvestedFrom": "harvest-r12.json",
+      "harvestedOn": "2026-07-10",
+      "notes": "",
+      "gameIndex": null,
+      "demandViews": 9523,
+      "demandScore": 9523,
+      "demandRank": 16
+    },
+    {
       "slug": "my-conscience-wont-let-me-go-shoot-my-brother-or-some",
       "quote": "My conscience won't let me go shoot my brother, or some darker people, or some poor hungry people in the mud, for big powerful America",
       "magnetAuthor": "Muhammad Ali",
@@ -20325,6 +19797,28 @@
       "demandViews": 6345,
       "demandScore": 8883,
       "demandRank": 88
+    },
+    {
+      "slug": "dont-tell-me-the-moon-is-shining-show-me-the-glint-of-light",
+      "quote": "Don't Tell Me the Moon Is Shining; Show Me the Glint of Light on Broken Glass",
+      "magnetAuthor": "Anton Chekhov",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2013/07/30/moon-glint/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "dont-tell-me-the-moon-is-shining-show-me-the-glint-of-light",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 6155,
+      "demandScore": 8617,
+      "demandRank": 17
     },
     {
       "slug": "i-only-hope-that-we-never-lose-sight-of-one-thing-that-it",
@@ -20503,6 +19997,28 @@
       "demandRank": 96
     },
     {
+      "slug": "military-command-send-three-and-fourpence-were-going-to-a",
+      "quote": "Military Command: Send Three and Fourpence. We're Going to a Dance",
+      "magnetAuthor": "World War I",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2011/08/26/reinforcements/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "military-command-send-three-and-fourpence-were-going-to-a",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 6097,
+      "demandScore": 8536,
+      "demandRank": 18
+    },
+    {
       "slug": "the-golden-moments-in-the-stream-of-life-rush-past-us-and",
       "quote": "The golden moments in the stream of life rush past us, and we see nothing but sand; the angels come to visit us, and we only know them when they are gone.",
       "magnetAuthor": "George Eliot",
@@ -20677,6 +20193,28 @@
       "demandViews": 8050,
       "demandScore": 8050,
       "demandRank": 104
+    },
+    {
+      "slug": "that-works-very-well-in-practice-but-how-does-it-work-in",
+      "quote": "That Works Very Well in Practice, But How Does It Work In Theory?",
+      "magnetAuthor": "Garret FitzGerald",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "this quip evolved over many decades, and its originator was anonymous. Instances have been popularized by W. R. Rodgers, Claude T. Bissell, Sean MacReamoinn, Walter Heller, and others.",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2015/08/30/practice/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "that-works-very-well-in-practice-but-how-does-it-work-in",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 5709,
+      "demandScore": 7993,
+      "demandRank": 19
     },
     {
       "slug": "if-you-walk-far-enough-youll-meet-yourself",
@@ -21031,6 +20569,94 @@
       "demandRank": 113
     },
     {
+      "slug": "a-banker-lends-you-his-umbrella-when-its-sunny-and-wants-it",
+      "quote": "A Banker Lends You His Umbrella When It's Sunny and Wants It Back When It Rains",
+      "magnetAuthor": "Ambrose Bierce",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "the first instances of this maxim are anonymous. Years later, famous people such as Mark Twain, Robert Frost, and Ambrose Bierce were implausibly attached to the quotation. The core idea appeared by 1905, and the full fledged quotation ente",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2011/04/07/banker-umbrella/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "a-banker-lends-you-his-umbrella-when-its-sunny-and-wants-it",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 5475,
+      "demandScore": 7665,
+      "demandRank": 20
+    },
+    {
+      "slug": "speak-when-youre-angry-and-youll-make-the-best-speech-youll",
+      "quote": "Speak When You're Angry and You'll Make the Best Speech You'll Ever Regret",
+      "magnetAuthor": "Ambrose Bierce",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "based on current evidence QI suggests that Groucho Marx should be credited with this remark. There is no substantive support for attributing the words to Ambrose Bierce. Also, ascriptions to Henry Ward Beecher and Laurence J. Peter are mist",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/05/17/angry-speech/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "speak-when-youre-angry-and-youll-make-the-best-speech-youll",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 5475,
+      "demandScore": 7665,
+      "demandRank": 21
+    },
+    {
+      "slug": "the-covers-of-this-book-are-too-far-apart",
+      "quote": "The Covers of This Book Are Too Far Apart",
+      "magnetAuthor": "Ambrose Bierce",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/01/30/apart/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "the-covers-of-this-book-are-too-far-apart",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 5475,
+      "demandScore": 7665,
+      "demandRank": 22
+    },
+    {
+      "slug": "easy-reading-is-hard-writing",
+      "quote": "Easy Reading Is Hard Writing",
+      "magnetAuthor": "Lord Byron",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "QI would provisionally credit Thomas Hood with the version of the maxim he used in 1837. Yet, it is certainly possible that future researchers will locate earlier instances. This entry provides a snapshot of what is currently known by QI .",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/11/05/hard-writing/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "easy-reading-is-hard-writing",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 5442,
+      "demandScore": 7619,
+      "demandRank": 23
+    },
+    {
       "slug": "every-system-is-perfectly-designed-to-get-the-results-it",
       "quote": "Every system is perfectly designed to get the results it gets",
       "magnetAuthor": "W. Edwards Deming",
@@ -21249,6 +20875,28 @@
       "demandViews": 5282,
       "demandScore": 7395,
       "demandRank": 114
+    },
+    {
+      "slug": "kissing-marilyn-monroe-is-like-kissing-hitler",
+      "quote": "Kissing Marilyn Monroe Is Like Kissing Hitler",
+      "magnetAuthor": "Marilyn Monroe",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "the evidence shows that Tony Curtis did say that kissing Marilyn Monroe was like kissing Hitler. He said it during the making of the popular comedy \"Some Like It Hot\" after the kissing scene with Monroe was filmed. It is less clear why he s",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2010/10/04/kissing-marilyn/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "kissing-marilyn-monroe-is-like-kissing-hitler",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 5282,
+      "demandScore": 7395,
+      "demandRank": 24
     },
     {
       "slug": "your-margin-is-my-opportunity",
@@ -21625,6 +21273,50 @@
       "demandRank": 38
     },
     {
+      "slug": "is-that-a-gun-in-your-pocket-or-are-you-just-glad-to-see-me",
+      "quote": "Is That a Gun in Your Pocket, or Are You Just Glad to See Me?",
+      "magnetAuthor": "Mae West",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2013/08/20/glad-to-see/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "is-that-a-gun-in-your-pocket-or-are-you-just-glad-to-see-me",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 5039,
+      "demandScore": 7055,
+      "demandRank": 25
+    },
+    {
+      "slug": "keep-a-diary-and-perhaps-someday-it-will-keep-you",
+      "quote": "Keep a Diary, and Perhaps Someday It Will Keep You",
+      "magnetAuthor": "Mae West",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "Mae West did popularize this quip as a screenwriter and actress in 1937. Yet, the remark was already being disseminated. In 1922 the witticism was attributed to Margot Asquith, and based on current evidence she should receive the credit.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/05/11/diary/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "keep-a-diary-and-perhaps-someday-it-will-keep-you",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 5039,
+      "demandScore": 7055,
+      "demandRank": 26
+    },
+    {
       "slug": "it-is-not-necessary-to-change-survival-is-not-mandatory",
       "quote": "It is not necessary to change. Survival is not mandatory.",
       "magnetAuthor": "W. Edwards Deming",
@@ -21799,6 +21491,50 @@
       "demandViews": 7002,
       "demandScore": 7002,
       "demandRank": 41
+    },
+    {
+      "slug": "death-was-a-good-career-move",
+      "quote": "Death Was a Good Career Move",
+      "magnetAuthor": "Gore Vidal",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2012/08/04/good-career-move/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "death-was-a-good-career-move",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 4988,
+      "demandScore": 6983,
+      "demandRank": 27
+    },
+    {
+      "slug": "it-is-not-enough-to-succeed-ones-best-friend-must-fail",
+      "quote": "It Is Not Enough to Succeed; One's Best Friend Must Fail",
+      "magnetAuthor": "Gore Vidal",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "based on current evidence this family of sayings began in 1959 with the statement credited to Somerset Maugham. The quotation may have been influenced by La Rochefoucauld, but it was distinct. Multiple versions were created during decades o",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2012/08/06/succeed-fail/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "it-is-not-enough-to-succeed-ones-best-friend-must-fail",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 4988,
+      "demandScore": 6983,
+      "demandRank": 28
     },
     {
       "slug": "first-do-no-harm",
@@ -21997,6 +21733,94 @@
       "demandViews": 4635,
       "demandScore": 6953,
       "demandRank": 10
+    },
+    {
+      "slug": "if-i-shoot-at-the-sun-i-may-hit-a-star",
+      "quote": "If I Shoot at the Sun, I May Hit a Star",
+      "magnetAuthor": "George Herbert",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2012/11/20/shoot-at-sun/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "if-i-shoot-at-the-sun-i-may-hit-a-star",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 4866,
+      "demandScore": 6812,
+      "demandRank": 29
+    },
+    {
+      "slug": "its-the-guy-you-give-something-to-that-you-cant-please",
+      "quote": "It's the Guy You Give Something To That You Can't Please",
+      "magnetAuthor": "Will Rogers",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2015/05/14/please/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "its-the-guy-you-give-something-to-that-you-cant-please",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 4845,
+      "demandScore": 6783,
+      "demandRank": 30
+    },
+    {
+      "slug": "the-common-law-consists-of-about-half-a-dozen-obvious",
+      "quote": "The Common Law Consists of About Half A Dozen Obvious Propositions, But Unfortunately …",
+      "magnetAuthor": "Oliver Wendell Holmes Jr.",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "the humorous remark about the law alluded to by the questioner was ascribed to Lord Sterndale by Judge Dowdall beginning in 1931 and 1932. There are multiple legal systems, and the remark was about the common law system.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2013/05/11/common-law/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "the-common-law-consists-of-about-half-a-dozen-obvious",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 4817,
+      "demandScore": 6744,
+      "demandRank": 31
+    },
+    {
+      "slug": "you-may-tell-the-butchers-wife-that-lady-peel-has-finished",
+      "quote": "You May Tell the Butcher's Wife That Lady Peel Has Finished",
+      "magnetAuthor": "Beatrice Lillie",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2015/02/01/lady-peel/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "you-may-tell-the-butchers-wife-that-lady-peel-has-finished",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 4686,
+      "demandScore": 6560,
+      "demandRank": 32
     },
     {
       "slug": "why-dont-you-come-up-and-see-me-sometime",
@@ -22307,6 +22131,28 @@
       "demandRank": 73
     },
     {
+      "slug": "humor-can-be-dissected-as-a-frog-can-but-the-thing-dies-in",
+      "quote": "Humor Can Be Dissected, as a Frog Can, But the Thing Dies in the Process",
+      "magnetAuthor": "E. B. White",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/10/14/frog/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "humor-can-be-dissected-as-a-frog-can-but-the-thing-dies-in",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 4240,
+      "demandScore": 5936,
+      "demandRank": 33
+    },
+    {
       "slug": "be-at-war-with-your-vices-at-peace-with-your-neighbours-and",
       "quote": "Be at War with Your Vices, at Peace with Your Neighbours, and Let Every New Year Find You a Better Person",
       "magnetAuthor": "Publilius Syrus",
@@ -22593,6 +22439,94 @@
       "demandRank": 83
     },
     {
+      "slug": "when-the-last-tree-is-cut-down-the-last-fish-eaten-and-the",
+      "quote": "When the Last Tree Is Cut Down, the Last Fish Eaten, and the Last Stream Poisoned, You Will Realize That You Cannot Eat Money",
+      "magnetAuthor": "Alanis Obomsawin",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2011/10/20/last-tree-cut/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "when-the-last-tree-is-cut-down-the-last-fish-eaten-and-the",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 3958,
+      "demandScore": 5541,
+      "demandRank": 34
+    },
+    {
+      "slug": "i-do-not-want-to-predict-the-future-i-want-to-prevent-it",
+      "quote": "I Do Not Want to Predict the Future. I Want to Prevent It",
+      "magnetAuthor": "Frank Herbert",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2010/10/19/prevent-the-future/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "i-do-not-want-to-predict-the-future-i-want-to-prevent-it",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 3951,
+      "demandScore": 5531,
+      "demandRank": 35
+    },
+    {
+      "slug": "all-creative-writing-programs-ought-to-be-abolished-by-law",
+      "quote": "All Creative-Writing Programs Ought to be Abolished by Law",
+      "magnetAuthor": "Cormac McCarthy",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2010/06/04/creative-writing/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "all-creative-writing-programs-ought-to-be-abolished-by-law",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 3936,
+      "demandScore": 5510,
+      "demandRank": 36
+    },
+    {
+      "slug": "act-one-get-character-up-a-tree-act-two-throw-rocks-act",
+      "quote": "Act One: Get Character Up a Tree. Act Two: Throw Rocks. Act Three: Get Character Down.",
+      "magnetAuthor": "Vladimir Nabokov",
+      "creditedTo": "Vladimir Nabokov",
+      "trueOrigin": "George M. Cohan",
+      "category": "misattributed",
+      "whyNotable": "this schematic guidance for constructing commercially successful plots was in circulation by 1897. The creator was anonymous. Over the years the statement has been linked to a variety of successful writers, e.g., Harry B. Smith and George M",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2015/09/05/up-tree/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "act-one-get-character-up-a-tree-act-two-throw-rocks-act",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 3596,
+      "demandScore": 5394,
+      "demandRank": 37
+    },
+    {
       "slug": "get-over-yourself-cause-its-not-about-you-man",
       "quote": "Get over yourself! 'Cause it's not about you, man.",
       "magnetAuthor": "Kobe Bryant",
@@ -22811,6 +22745,28 @@
       "demandViews": 5282,
       "demandScore": 5282,
       "demandRank": 90
+    },
+    {
+      "slug": "the-architect-can-only-advise-his-client-to-plant-vines",
+      "quote": "The Architect Can Only Advise His Client to Plant Vines",
+      "magnetAuthor": "Herbert Hoover",
+      "creditedTo": "Herbert Hoover",
+      "trueOrigin": "Frank Lloyd Wright",
+      "category": "misattributed",
+      "whyNotable": "the quotation provider by the questioner does reflect Wright's sense of humor. The wording of the modern quotation is slightly different from the original remark spoken in 1931.",
+      "likelyConfidence": "disputed",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2011/05/03/architect-vines/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "the-architect-can-only-advise-his-client-to-plant-vines",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 3504,
+      "demandScore": 5256,
+      "demandRank": 38
     },
     {
       "slug": "i-very-frequently-get-the-question-whats-going-to-change-in",
@@ -23473,6 +23429,28 @@
       "demandRank": 16
     },
     {
+      "slug": "once-you-are-dead-you-are-made-for-life",
+      "quote": "Once You Are Dead, You Are Made for Life",
+      "magnetAuthor": "Jimi Hendrix",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "the quotation appears to be authentic. The accuracy is dependent on the music journalist Bob Dawbarn. Some instances currently in circulation have slightly altered wording.",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2012/08/10/made-for-life/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "once-you-are-dead-you-are-made-for-life",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 3432,
+      "demandScore": 4805,
+      "demandRank": 39
+    },
+    {
       "slug": "he-who-will-not-reason-is-a-bigot-he-who-cannot-is-a-fool",
       "quote": "He who will not reason is a bigot; he who cannot is a fool; and he who dares not is a slave.",
       "magnetAuthor": "Andrew Carnegie",
@@ -23515,6 +23493,28 @@
       "demandViews": 3131,
       "demandScore": 4697,
       "demandRank": 242
+    },
+    {
+      "slug": "actor-a-guy-who-if-you-aint-talking-about-him-he-aint",
+      "quote": "Actor: A Guy Who If You Ain't Talking About Him, He Ain't Listening",
+      "magnetAuthor": "Marlon Brando",
+      "creditedTo": "",
+      "trueOrigin": "",
+      "category": "disputed",
+      "whyNotable": "",
+      "likelyConfidence": "",
+      "rightsEra": "",
+      "documentedAt": "https://quoteinvestigator.com/2014/09/21/actor/",
+      "gameIndex": null,
+      "status": "ingested",
+      "wave": "r48",
+      "resultSlug": "actor-a-guy-who-if-you-aint-talking-about-him-he-aint",
+      "harvestedFrom": "qi-harvest-2026-08-27.json",
+      "harvestedOn": "2026-08-27",
+      "notes": "From QI article metadata (title + category tags + conclusion). Fields are ranking HINTS — the ingestion agent researches from documentedAt.",
+      "demandViews": 3336,
+      "demandScore": 4670,
+      "demandRank": 40
     },
     {
       "slug": "be-patient-and-tough-some-day-this-pain-will-be-useful-to",
