@@ -159,6 +159,29 @@ const CONTEXT_TAG_REPORTED = [
   // move and is unambiguously better than the ✕; promoting them to ✓ wants its own pass.
   /\b(real|true|actual)\s+(source|origin|author)\s+of\b/i,               // 4 rows
   /^smoothed$/i,                                                         // 2 rows
+  // ---- THE QUALIFIED "genuine" TAG, closed 2026-09-08 --------------------------------------
+  // Found by an r49 AUDIT AGENT against the patterns landed above the same day, which is the point
+  // of running the auditor after the fix. It did not guess: it ran kindForRow() against this file
+  // and reported why the row fell through. `/^genuine$/i` above requires the WHOLE tag to be that
+  // one word, and AFFIRMS_TRUTH (in kindForRow) keys on the SCOPE prefix — so a row whose affirming
+  // signal is a QUALIFIED tag, with a hedge in the scope, matched neither. The reported case:
+  // to-err-is-human… renders the ✕ "this credit is false" beside prose reading "'To err is human'
+  // really is Pope's", because tag="genuine, but only the setup" and scope="The first half only".
+  //
+  // MEASURED over all 6,042 rows: 14 move, and every one was read. They affirm a real thing while
+  // hedging its relevance — "genuine antecedent | Maeterlinck", "Genuine — different words |
+  // Napoleon", "Genuine but his own line | W. B. Yeats", "genuine, but not Kant | Herbert Spencer".
+  //
+  // THE LOOKAHEAD IS LOAD-BEARING. One row reads "genuine fake Seneca", where `genuine` modifies
+  // FAKE, not the credit — a bare /^genuine\b/ softens a real debunk, the one error this file
+  // exists to avoid. REFUTATION_TAG does NOT catch it either: it carries a /fabricat/ rule but no
+  // /fake/ rule, so that row's correct ✕ is currently an accident of nothing matching. Excluding
+  // the refutation nouns here is what makes the pattern safe; do not simplify it away.
+  //
+  // Lands as `context` (~), not `genuine` (✓), which is what kindForTag can return and also the
+  // right call: these rows affirm something real but hedged, and the file's own header records that
+  // "HEDGED TRUTH IS CONTEXT, NOT GENUINE — a ✓ would OVERCLAIM."
+  /^genuine\b(?!\s*(fake|forgery|hoax|myth|fabrication|invention|misquote|error))/i, // 14 rows
   // MEASURED AND DECLINED, so they are not re-proposed:
   //   /^overstated$/i          12 rows, MIXED — "Overstated | Muhammad Ali" and "Overstated |
   //                            Socrates knew nothing" read as corrections, not wording notes. The
