@@ -27,6 +27,7 @@
  * Writes records-*.json (ingest with tools/_ingest.js) + audit-args-*.json (feed to workflows/audit.js).
  */
 const fs = require('fs');
+const { stripPlainTextMarkup } = require('../tools/html-safety'); // PLAIN_TEXT_FIELDS lives there, not here
 const { kindForRow } = require('./../tools/mis-kind');
 const path = require('path');
 
@@ -227,6 +228,27 @@ const unesc1 = (s) => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&am
 let fixed = 0;
 let cleaned = records.map((r) => { const s = JSON.stringify(r); if (SIG.test(s)) { fixed++; return JSON.parse(unesc1(s)); } return r; });
 console.log('escaping-fixed records:', fixed, '| still dirty:', cleaned.filter((r) => SIG.test(JSON.stringify(r))).length);
+
+// 1b. PLAIN-TEXT FIELD SCRUB — a different defect from the scan above, which un-escapes markup that
+// arrived double-escaped. This one strips markup that arrived RAW in a field that renders through
+// esc(), where a tag styles nothing and ships onto the page as the literal string &lt;em&gt;.
+//
+// tools/validate-records.js already fails the build on this, so it never reached production — but it
+// failed the build on r48 (`<em>The Nine Lives of Michael Todd</em>` in source.cutTag) and again on
+// r49 (`<em>Fortune</em>, August 1939`, a different record). Twice in two waves is a generator
+// habit, not an accident: generate.js is asked for a citation-shaped string and italicises the work
+// title, which is right everywhere else in the record and wrong in these ~12 fields. Catching it one
+// step earlier turns a mid-wave manual fix into nothing at all.
+//
+// The field list is tools/html-safety.js PLAIN_TEXT_FIELDS — the SAME list validate-records.js
+// gates on, deliberately not a second copy here. Strip rather than reject: the markup is spurious
+// in a field that is plain text by contract, and both hand fixes were exactly this.
+const scrubbed = [];
+for (const r of cleaned) {
+  const changed = stripPlainTextMarkup(r);
+  if (changed.length) scrubbed.push(`${r.quoteSlug} (${changed.join(', ')})`);
+}
+console.log('plain-text fields scrubbed:', scrubbed.length, scrubbed.length ? scrubbed.slice(0, 6) : '');
 
 // 2. stub detection
 const isStub = (r) => {

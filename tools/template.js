@@ -209,11 +209,22 @@ function buildJsonLd(q, url) {
     text: s.quotationText || q.fullQuote || q.displayQuote,
   };
   if (s.alternateName) quotation.alternateName = s.alternateName;
-  // The DISPLAYED quote text is always English on Quotle.info, so the Quotation's own language is 'en'.
-  // (The old deferral worried about records that set s.inLanguage to the ORIGINAL composition language
-  // of a translated source, e.g. "grc" — but that belongs on the SOURCE work via isPartOf.inLanguage
-  // below, NOT on the English sentence in `text`. Language-of-`text` is unambiguously 'en'.)
-  quotation.inLanguage = 'en';
+  // The DISPLAYED quote text is USUALLY English, so 'en' is the right default — and the reasoning
+  // that put it here still holds for the ordinary case: a record that sets s.inLanguage to the
+  // ORIGINAL composition language of a translated source ("grc") means that about the SOURCE WORK,
+  // which belongs on isPartOf.inLanguage below, not on the English sentence in `text`.
+  //
+  // But the old comment went further and said language-of-`text` is "unambiguously 'en'". That
+  // premise fails whenever schema.quotationText carries a FOREIGN-LANGUAGE VERBATIM, because `text`
+  // is taken from that field a few lines up. r49 shipped one: chance-coincidence-miracles-pseudonyms
+  // -and-god has Quotation.text = "Le hasard, c'est peut-être le pseudonyme de Dieu, quand il ne veut
+  // pas signer." (Gautier, 1845) with only alternateName in English — and the node declared it 'en'.
+  // No record could say otherwise; this was the one string in the graph nothing could reach.
+  //
+  // So: an explicit per-record override, defaulting to today's value. schema.quotationLanguage is
+  // deliberately a NEW key rather than reusing s.inLanguage, which already means the source work's
+  // language on hundreds of records — overloading it would silently relabel every one of them.
+  quotation.inLanguage = s.quotationLanguage || 'en';
   // Quotation.creator must name the TRUE author. On a DISPUTED page, generate sometimes left the
   // magnet (the wrongly-credited name) in schema.creator — a machine-readable contradiction of the
   // page's own verdict. So on disputed pages, only assert a creator when it genuinely matches the
@@ -1296,8 +1307,28 @@ function renderPresentationKit(q) {
   // that's a wording dispute. Everything else disputed is a wrong-name dispute, where the wording
   // is usually verbatim correct and only the attribution is false.
   const wordingDrift = !!(sch.claimQuoteText && plain(sch.claimQuoteText) !== plain(sch.quotationText || q.displayQuote));
-  const warn = (q.confidence === 'disputed' && primaryCredit(q) && !rightPersonWrongWords(q)) ? `
-                    <p class="pkit-warn"><span aria-hidden="true">⚠</span> The slide-ready mistake: crediting this to <strong>${esc(primaryCredit(q))}</strong>. Use the credit shown above instead.</p>` : '';
+  // THE USED-BUT-DIDN'T-COIN CASE. rightPersonWrongWords() suppresses this banner when the magnet IS
+  // the true author and only the wording drifted. It does NOT reach the other shape: a page whose
+  // verdict is that the magnet genuinely SAID the line but did not ORIGINATE it. There the hero
+  // author is the anonymous originator, so the suppression predicate sees no match — and the banner
+  // tells the reader not to credit the very person the pkit-credit block directly above credits.
+  // The two cancel and the reader cannot tell what to paste.
+  //
+  // r49 shipped it on a-man-is-a-fool-if-he-drinks-before-he-reaches-fifty-and-a: hero author
+  // "Unknown — an anonymous medical saying", magnet Frank Lloyd Wright, who is documented saying it
+  // in the New York Times Magazine of 22 June 1958. Reported by that wave's fix agent, which
+  // correctly refused to edit this file mid-wave.
+  //
+  // presentation.pkitWarn lets such a record say the true thing instead. Default unchanged, so every
+  // page that does not set it is byte-identical; set it to '' to suppress the banner outright.
+  const ownWarn = q.presentation && typeof q.presentation.pkitWarn === 'string' ? plain(q.presentation.pkitWarn) : null;
+  const warnBody = ownWarn !== null
+    ? (ownWarn ? `${esc(ownWarn)}` : '')
+    : ((q.confidence === 'disputed' && primaryCredit(q) && !rightPersonWrongWords(q))
+      ? `The slide-ready mistake: crediting this to <strong>${esc(primaryCredit(q))}</strong>. Use the credit shown above instead.`
+      : '');
+  const warn = warnBody ? `
+                    <p class="pkit-warn"><span aria-hidden="true">⚠</span> ${warnBody}</p>` : '';
 
   const [imgA, imgB] = buildImagePrompts(q);
 
