@@ -944,13 +944,49 @@ how songs got in unchecked.
   **The genuinely unmeetable one is different in kind**: `creatorDescription` (CLAUDE.md) has no
   deriving rule and no source to derive from — that is why the RULE was narrowed instead.
 - **`--credited`'s guard mis-fires on name-form expansions, so do not lean on it.** `prep-wave.js`
-  only stamps when `leadName(record author) !== leadName(batch author)` — comparing LAST WORDS. r27
-  produced two records that trip that on the same person: `"Confucius (Kong Qiu)"` (lead `Qiu)`) and
-  `"Socrates, as written by Plato"` (lead `Plato`). With `--credited` both would have been stamped
-  `creditedTo` = the magnet — a machine-readable "falsely credited to Confucius" on a record whose
-  author IS Confucius. `creditedTo` means *falsely* credited (`tools/credits.js`), so a wrong stamp
-  asserts the opposite of the truth. On a mostly-Track-B wave omit the flag and hand-check instead:
-  list records whose true author differs from the magnet, and stamp only genuine reassignments.
+  only stamps when `leadName(record author) !== leadName(batch author)`, and `leadName` splits on
+  dash / paren / comma and keeps the **FIRST** segment:
+
+      leadName = (s) => foldAccents(decodeEnts(s)).split(/\s*[—–(,]|\s-\s/)[0].trim().toLowerCase()
+
+  **This paragraph used to say it compared LAST WORDS, and cited `"Confucius (Kong Qiu)"` (lead
+  `Qiu)`) and `"Socrates, as written by Plato"` (lead `Plato`) as cases it would wrongly stamp.
+  That was measured false on 2026-09-07** — a first-segment split yields `confucius` and `socrates`,
+  so both MATCH the magnet and neither is stamped. r47 confirmed it in a live wave: Confucius and
+  Seneca the Younger were both drawn, and both came out correctly unstamped. Appositives and
+  parentheticals are handled; do not spend the hand-check looking for them.
+
+  **The shape that DOES slip through is a middle name or a fuller form of the same person's name**,
+  because that changes the first segment itself. Measured against the live helper:
+
+      record author                   batch author          stamps?
+      Confucius (Kong Qiu)            Confucius             no
+      Socrates, as written by Plato   Socrates              no
+      Niccolò Machiavelli             Niccolo Machiavelli   no      (accents fold)
+      Hillary Rodham Clinton          Hillary Clinton       YES  <- same person, false stamp
+      John D. Rockefeller Jr.         John D. Rockefeller   YES  <- genuinely two people, correct
+
+  r48 shipped straight into it: `would-you-ever-ask-a-man-that-question` is `verified`, labelled
+  "Spoken by", author `Hillary Rodham Clinton`, with the State Department transcript in the record —
+  and `--credited` stamped `creditedTo: "Hillary Clinton"`, i.e. a machine-readable assertion that a
+  named living person is FALSELY credited with her own verified words, feeding the author-page
+  misattribution list, the ClaimReview node and `/verify`. It was removed before ingest by hand.
+
+  **A substring test does not catch this** — `"hillary clinton"` is not a substring of
+  `"hillary rodham clinton"` — so a hand-check written in the guard's own idiom inherits the guard's
+  blind spot. That happened in r48 before a second pass caught it. **Use a token-subset test**: split
+  both names into word tokens, drop honorifics/suffixes, and flag when one set is a subset of the
+  other, or when they share a surname. Over r48's 26 stamps that surfaced exactly one case — the
+  right one — with no false alarms.
+
+  Note the last row is a TRUE positive: Jr. and Sr. really are two people, so a suffix difference
+  must stay a review trigger and not become an auto-exemption.
+
+  `creditedTo` means *falsely* credited (`tools/credits.js`), so a wrong stamp asserts the opposite
+  of the truth about a named person. **Also check the stamp names a PERSON at all** — r48 stamped
+  `creditedTo: "World War I"` on the "send three and fourpence" record, an event where a claimant
+  belongs. On a mostly-Track-B wave omit the flag and hand-check instead: list records whose true
+  author differs from the magnet, and stamp only genuine reassignments.
 - **Hero framing on reassigned disputed pages**: answer.authorName + author.* + schema.creator must be the
   TRUE author; the magnet lives only in the misattribution section (Jobs→Brand / Lincoln→Anonymous).
 - **A RESUMED run makes the started-vs-result gate read WRONG, and re-auditing is not idempotent.**

@@ -1154,7 +1154,22 @@ function verbatimNote(q, shown) {
   // so the old leading bare space produced the run-on "\u2026Via Quotle.info Verbatim: \u2026" in the
   // copy-paste kit (r35 finding). A bare strip would weld the words together instead; the middot
   // is the separator the credit line already uses between its own clauses.
-  return ` \u00b7 Verbatim: \u201c${verbatim.replace(/\s*$/, '')}\u201d`;
+  //
+  // THE LABEL IS A CLAIM, so a record can soften it. "Verbatim:" asserts that this wording is the
+  // one a cited printing carries. On a page whose whole thesis is that the CIRCULATING wording
+  // appears in no printing, that is false in the one string the reader pastes onto a slide.
+  // Reported by an r48 fix agent against `now-were-just-haggling-over-the-price`, where the credit
+  // names only the 1936 Lyons printing and every cited source words the line differently
+  // ("\u2026determine the degree", "haggling about the price", "already established what you are").
+  //
+  // Opt-in and defaulting to today's wording, so the ~370 records with a genuinely sourced verbatim
+  // are untouched and no page changes without a record asking. Set
+  // `presentation.wordingUnpinned: true` on a record whose quotationText is the popular wording
+  // rather than a printed one. NOTE this is hand-set / fix-agent-set: DOSSIER_SCHEMA is at its
+  // 4,072-byte ceiling (tools/verify-corpus.js), so generate.js cannot emit it and a wave will
+  // never set it at ingest.
+  const label = (q.presentation && q.presentation.wordingUnpinned) ? 'As commonly quoted' : 'Verbatim';
+  return ` \u00b7 ${label}: \u201c${verbatim.replace(/\s*$/, '')}\u201d`;
 }
 
 function buildImagePrompts(q) {
@@ -1224,7 +1239,17 @@ function renderPresentationKit(q) {
 
   const state = q.source && (q.source.rights || (q.source.publicDomain === true ? 'public-domain' : null));
   const u = state && USE[state];
-  const holder = (q.source && q.source.rightsHolder) ? ` (rights held by ${escEm(q.source.rightsHolder)})` : '';
+  // "(rights held by X)" is a flat assertion about a named party, and on some records the holder is
+  // inferred from the publisher of the edition rather than established from a rights record.
+  // Reported by an r47 fix agent: the schema-side `copyrightNotice` was hedged by that wave's fix,
+  // but this VISIBLE interpolation kept asserting it, so the page still read "Still under copyright
+  // (rights held by University of North Carolina Press and the estate of Josephus Daniels)".
+  // Opt-in via `source.rightsHolderPresumed`, defaulting to today's wording so no page changes
+  // unless its record asks. `source.useLine` still overrides the whole sentence where that is better.
+  const holderPresumed = !!(q.source && q.source.rightsHolderPresumed);
+  const holder = (q.source && q.source.rightsHolder)
+    ? ` (rights ${holderPresumed ? 'presumed held by' : 'held by'} ${escEm(q.source.rightsHolder)})`
+    : '';
   // A record may author its own reuse line (`source.useLine`, plus optional `useTone`/`useIcon`).
   // Needed where neither a rights state nor the no-provenance fallback tells the truth — e.g. a page
   // whose ATTRIBUTION is settled but whose REUSE status is not (first publication date unestablished).

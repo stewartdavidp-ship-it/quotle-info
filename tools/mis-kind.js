@@ -134,6 +134,43 @@ const CONTEXT_TAG_REPORTED = [
   /\bdocumented\b[^,]*\bunverified\b/i,                                  // r46, hand-set by its agent; derive it from now on
   /\b(stage|theatrical|screen|film)\s+(variant|version|wording|phrasing)\b/i, // a variant qualified by its VECTOR, never a person
   /\b(first|earliest)\s+strong\s+match\b/i,                              // an evidence role, not a claimant
+  // ---- REPORTED BY r47 + r48 FIX AGENTS, MEASURED 2026-09-07 --------------------------------
+  // Two consecutive waves hand-stamped `kind` because the tag vocabulary outran this list. Each
+  // pattern below was run over all 6,042 misattribution rows and EVERY hit was read before landing.
+  // Counts are rows currently taking the default ✕ that the pattern moves to the tilde.
+  //
+  // THE CONCESSIVE CONSTRUCTION: "<did something> it, didn't coin it". All 21 hits assert a ROLE
+  // (said/wrote/quoted/performed/used/retold/displayed/echoed) and deny only COINAGE — Grant,
+  // Sagan, Orwell, Obama, Reagan, Thoreau, Galileo. Note `never` is deliberately NOT in the
+  // alternation: "Churchill never wrote this" is a genuine person-denial, and measuring showed
+  // dropping `never` loses ZERO of the 21, so the narrower form is free.
+  /\b(did\s+not|did\s?n['’\s]?t|didnt)\s+(coin|originate|invent|write|author)\b/i, // 21 rows
+  // A wording note. 14 hits, every one "the circulating form is compressed" against prose that
+  // affirms the person said the longer version. WORDING_EDIT already covers the verb "compressed"
+  // but is anchored ^, so the noun and the mid-tag use both fell through.
+  /^compress(ion|ed)$/i,                                                 // 14 rows
+  // A PROVENANCE row naming the earliest documented user. 14 hits, all rendering "this credit is
+  // false" beside prose like "Sol Hurok — where the joke actually starts".
+  /^(earliest|first)\s+(in\s+print|instance|known|documented|printing|appearance)\b/i, // 14 rows
+  // Asserts a SOURCE, denies no person: "true origin of the metaphor | Bernard of Chartres",
+  // "Real source of the image | Oliver Wendell Holmes", "The real author of the words | Millar".
+  // These arguably want the ✓ (MIS_MARK.genuine) rather than the tilde, but AFFIRMS_TRUTH keys on
+  // the scope PREFIX and here the affirming signal is in the TAG. The tilde is the conservative
+  // move and is unambiguously better than the ✕; promoting them to ✓ wants its own pass.
+  /\b(real|true|actual)\s+(source|origin|author)\s+of\b/i,               // 4 rows
+  /^smoothed$/i,                                                         // 2 rows
+  // MEASURED AND DECLINED, so they are not re-proposed:
+  //   /^overstated$/i          12 rows, MIXED — "Overstated | Muhammad Ali" and "Overstated |
+  //                            Socrates knew nothing" read as corrections, not wording notes. The
+  //                            r48 agent that proposed it flagged it as the least safe of three;
+  //                            measurement agreed. Softening these would soften real debunks.
+  //   /\bpredates\b/i          16 rows, MIXED — "predates him | Older writers, not Churchill" is
+  //                            context, but "Predates him by a century | who: Benjamin Franklin"
+  //                            denies the magnet's authorship and the ✕ is CORRECT there.
+  //   /^(vaudeville|folklore)$/i  1 ambiguous row; not worth the risk at that volume.
+  //   class-motto / sung-version / "ascribed, not proven" / "Named in print, <date>": 0 rows each —
+  //                            the r47/r48 records that reported them were hand-stamped, so there is
+  //                            no live evidence to measure. Left out rather than guessed.
 ];
 
 const REFUTATION_TAG = [
