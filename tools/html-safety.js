@@ -93,4 +93,56 @@ function scanRecord(node, path = '', out = []) {
   return out;
 }
 
-module.exports = { scanRecord, scanString, ALLOWED_TAGS, ALLOWED_ATTRS, ALLOWED_SCHEMES };
+// ---- PLAIN-TEXT FIELDS -----------------------------------------------------------------------
+// The mirror image of the allowlist above. These fields render through esc(), NOT escEm(), so a
+// tag in one of them does not style anything — it leaks onto the page as the literal string
+// &lt;em&gt;. Entities are fine (esc preserves them); markup is not.
+//
+// The list lived inline in validate-records.js as ESC_ONLY. It moved here on 2026-09-08 so that the
+// BUILD GATE and the INGEST STRIPPER cannot disagree about which fields are plain text — that file's
+// own note on the coined-verb detector says it best: "a signal defined twice drifts. One definition,
+// two callers." Each entry was added because it shipped: author.metaLine (the Diderot record, which
+// wrapped "Encyclopédie" in <em>), copyAttribution (Sound of Music), source.cutTag (r48, then r49
+// again on a different record).
+const PLAIN_TEXT_FIELDS = [
+  'author.metaLine', 'author.kicker', 'author.heading',
+  'answer.kicker',
+  'source.cutTag', 'source.kicker', 'source.heading',
+  'misattribution.kicker', 'misattribution.heading',
+  'context.kicker', 'context.heading',
+  'copyAttribution',
+];
+
+const getPath = (obj, dotted) => dotted.split('.').reduce((o, k) => (o == null ? o : o[k]), obj);
+const setPath = (obj, dotted, val) => {
+  const parts = dotted.split('.');
+  const last = parts.pop();
+  const parent = parts.reduce((o, k) => (o == null ? o : o[k]), obj);
+  if (parent && typeof parent === 'object') parent[last] = val;
+};
+
+/** Does this field carry markup it cannot render? (the build-gate test) */
+const hasMarkup = (val) => typeof val === 'string' && /<[a-zA-Z/]/.test(val);
+
+/**
+ * Strip tags from the plain-text fields of ONE record, in place. Returns the dotted paths changed.
+ *
+ * STRIP, not reject: the markup is spurious in a field that is plain text by contract, and a
+ * wave should not be blocked by it. Both times this shipped (r48, r49) the hand fix was exactly
+ * this — delete the tags, keep the text. Entities are left alone because esc() preserves them.
+ */
+function stripPlainTextMarkup(record) {
+  const changed = [];
+  for (const f of PLAIN_TEXT_FIELDS) {
+    const v = getPath(record, f);
+    if (!hasMarkup(v)) continue;
+    setPath(record, f, v.replace(/<[^>]+>/g, ''));
+    changed.push(f);
+  }
+  return changed;
+}
+
+module.exports = {
+  scanRecord, scanString, ALLOWED_TAGS, ALLOWED_ATTRS, ALLOWED_SCHEMES,
+  PLAIN_TEXT_FIELDS, hasMarkup, stripPlainTextMarkup,
+};
