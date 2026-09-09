@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){try{var d=document.documentElement,ls=localStorage;var THEMES={light:1,dark:1,auto:1},SIZES={normal:1,large:1,xl:1,xxl:1};var u=new URL(location.href),q=u.searchParams,qth=q.get('qth'),qts=q.get('qts');if(qth||qts){if(THEMES[qth])ls.setItem('quotle-theme',qth);if(SIZES[qts])ls.setItem('quotle-text-size',qts);q.delete('qth');q.delete('qts');var qs=q.toString();history.replaceState(null,'',u.pathname+(qs?'?'+qs:'')+u.hash);}var t=ls.getItem('quotle-theme');if(t!=='light'&&t!=='dark'&&t!=='auto')t='auto';var dark=t==='dark'||(t==='auto'&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches);d.setAttribute('data-theme',dark?'dark':'light');var s=ls.getItem('quotle-text-size'),m={normal:'100%',large:'112.5%',xl:'125%',xxl:'140%'};if(m[s])d.style.fontSize=m[s];}catch(e){}})();</script>
     <title>Under review — quotes queued for verification | Quotle.info</title>
-    <meta name="description" content="231 commonly-misquoted lines we&rsquo;ve flagged and queued for a full source trace. Not yet verified.">
+    <meta name="description" content="275 commonly-misquoted lines we&rsquo;ve flagged and queued for a full source trace. Not yet verified.">
     <link rel="canonical" href="https://quotle.info/under-review/">
     <meta property="og:title" content="Under review — quotes queued for verification | Quotle.info">
-    <meta property="og:description" content="231 commonly-misquoted lines we&rsquo;ve flagged and queued for a full source trace. Not yet verified.">
+    <meta property="og:description" content="275 commonly-misquoted lines we&rsquo;ve flagged and queued for a full source trace. Not yet verified.">
     <meta property="og:url" content="https://quotle.info/under-review/">
     <meta property="og:site_name" content="Quotle.info">
     <meta property="og:image" content="https://quotle.info/og/default.png">
@@ -289,17 +289,501 @@
         <header class="page-head">
             <p class="feat-kicker">On the research bench</p>
             <h1>Under review</h1>
-            <p class="lede">Lines we&rsquo;ve flagged as commonly misquoted or misattributed and queued for a full source trace. <strong>Not yet verified</strong> — each links to the catalog entry that flagged it, and you can <strong>▲ bump one up the queue</strong>. 231 in the queue.</p>
+            <p class="lede">Lines we&rsquo;ve flagged as commonly misquoted or misattributed and queued for a full source trace. <strong>Not yet verified</strong> — each links to the catalog entry that flagged it, and you can <strong>▲ bump one up the queue</strong>. 275 in the queue.</p>
         </header>
         <section class="browse" aria-label="Filter quotes under review">
             <input id="pq" class="search" type="search" placeholder="Search a quote or an author…" aria-label="Filter quotes under review" autocomplete="off">
             <div class="chips" role="tablist" aria-label="Filter by type">
-                <button class="chip active" data-f="all" role="tab" aria-selected="true">All <span>231</span></button>
-                <button class="chip" data-f="misattributed" role="tab" aria-selected="false">Misattributed <span>36</span></button>
-                <button class="chip" data-f="disputed" role="tab" aria-selected="false">Disputed <span>85</span></button>
-                <button class="chip" data-f="genuine-famous" role="tab" aria-selected="false">Verifying <span>110</span></button>
+                <button class="chip active" data-f="all" role="tab" aria-selected="true">All <span>275</span></button>
+                <button class="chip" data-f="misattributed" role="tab" aria-selected="false">Misattributed <span>59</span></button>
+                <button class="chip" data-f="disputed" role="tab" aria-selected="false">Disputed <span>93</span></button>
+                <button class="chip" data-f="genuine-famous" role="tab" aria-selected="false">Verifying <span>123</span></button>
             </div>
             <div class="bench-grid" id="results">
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="dead people receive more flowers than the living ones because regret is stronger than gratitude. anne frank">
+                    <p class="bench-q">&ldquo;Dead people receive more flowers than the living ones because regret is stronger than gratitude.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Anne Frank</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="dead-people-receive-more-flowers-than-the-living-ones" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Dead people receive more flowers than the living ones because regret is stronger than gratitude.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=dead-people-receive-more-flowers-than-the-living-ones">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="everyone has inside of him a piece of good news. the good news is that you don't know how great you can be! how much you can love! what you can accomplish! and what your potential is! anne frank">
+                    <p class="bench-q">&ldquo;Everyone has inside of him a piece of good news. The good news is that you don't know how great you can be! How much you can love! What you can accomplish! And what your potential is!&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Anne Frank</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="everyone-has-inside-of-him-a-piece-of-good-news-the-good" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Everyone has inside of him a piece of good news. The good news is that you don't know how great you can be! How much you can love! What you can accomplish! And what your potential is!&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=everyone-has-inside-of-him-a-piece-of-good-news-the-good">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="i believe in the sun even when it is not shining. i believe in love even when feeling it not. i believe in god even when he is silent. anne frank">
+                    <p class="bench-q">&ldquo;I believe in the sun even when it is not shining. I believe in love even when feeling it not. I believe in God even when He is silent.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Anne Frank</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="i-believe-in-the-sun-even-when-it-is-not-shining-i-believe" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;I believe in the sun even when it is not shining. I believe in love even when feeling it not. I believe in God even when He is silent.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=i-believe-in-the-sun-even-when-it-is-not-shining-i-believe">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="look at how a single candle can both defy and define the darkness. anne frank">
+                    <p class="bench-q">&ldquo;Look at how a single candle can both defy and define the darkness.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Anne Frank</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="look-at-how-a-single-candle-can-both-defy-and-define-the" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Look at how a single candle can both defy and define the darkness.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=look-at-how-a-single-candle-can-both-defy-and-define-the">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="life seems but a quick succession of busy nothings. jane austen">
+                    <p class="bench-q">&ldquo;Life seems but a quick succession of busy nothings.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="life-seems-but-a-quick-succession-of-busy-nothings" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Life seems but a quick succession of busy nothings.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=life-seems-but-a-quick-succession-of-busy-nothings">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="it isn't what we say or think that defines us, but what we do. jane austen">
+                    <p class="bench-q">&ldquo;It isn't what we say or think that defines us, but what we do.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="it-isnt-what-we-say-or-think-that-defines-us-but-what-we-do" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;It isn't what we say or think that defines us, but what we do.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=it-isnt-what-we-say-or-think-that-defines-us-but-what-we-do">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="my heart is, and always will be, yours. jane austen">
+                    <p class="bench-q">&ldquo;My heart is, and always will be, yours.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="my-heart-is-and-always-will-be-yours" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;My heart is, and always will be, yours.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=my-heart-is-and-always-will-be-yours">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="perhaps it is our imperfections that make us so perfect for one another. jane austen">
+                    <p class="bench-q">&ldquo;Perhaps it is our imperfections that make us so perfect for one another.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="perhaps-it-is-our-imperfections-that-make-us-so-perfect-for" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Perhaps it is our imperfections that make us so perfect for one another.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=perhaps-it-is-our-imperfections-that-make-us-so-perfect-for">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="there are as many forms of love as there are moments in time. jane austen">
+                    <p class="bench-q">&ldquo;There are as many forms of love as there are moments in time.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="there-are-as-many-forms-of-love-as-there-are-moments-in-time" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;There are as many forms of love as there are moments in time.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=there-are-as-many-forms-of-love-as-there-are-moments-in-time">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="to love is to burn, to be on fire. jane austen">
+                    <p class="bench-q">&ldquo;To love is to burn, to be on fire.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="to-love-is-to-burn-to-be-on-fire" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;To love is to burn, to be on fire.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=to-love-is-to-burn-to-be-on-fire">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="we are all fools in love. jane austen">
+                    <p class="bench-q">&ldquo;We are all fools in love.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="we-are-all-fools-in-love" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;We are all fools in love.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=we-are-all-fools-in-love">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="you have bewitched me, body and soul. jane austen">
+                    <p class="bench-q">&ldquo;You have bewitched me, body and soul.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="you-have-bewitched-me-body-and-soul" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;You have bewitched me, body and soul.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=you-have-bewitched-me-body-and-soul">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="a politician is a man who understands government, and it takes a politician to run a government. a statesman is a politician who's been dead 10 or 15 years. harry s. truman">
+                    <p class="bench-q">&ldquo;A politician is a man who understands government, and it takes a politician to run a government. A statesman is a politician who's been dead 10 or 15 years.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Harry S. Truman</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="a-politician-is-a-man-who-understands-government-and-it" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;A politician is a man who understands government, and it takes a politician to run a government. A statesman is a politician who's been dead 10 or 15 years.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=a-politician-is-a-man-who-understands-government-and-it">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="it's a recession when your neighbor loses his job; it's a depression when you lose yours. harry s. truman">
+                    <p class="bench-q">&ldquo;It's a recession when your neighbor loses his job; it's a depression when you lose yours.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Harry S. Truman</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="its-a-recession-when-your-neighbor-loses-his-job-its-a" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;It's a recession when your neighbor loses his job; it's a depression when you lose yours.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=its-a-recession-when-your-neighbor-loses-his-job-its-a">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card disputed filterable" data-c="disputed" data-s="where there's hope, there's life. it fills us with fresh courage and makes us strong again. anne frank">
+                    <p class="bench-q">&ldquo;Where there's hope, there's life. It fills us with fresh courage and makes us strong again.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Anne Frank</span>
+                        <span class="bench-tag disputed">Disputed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="where-theres-hope-theres-life-it-fills-us-with-fresh" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Where there's hope, there's life. It fills us with fresh courage and makes us strong again.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=where-theres-hope-theres-life-it-fills-us-with-fresh">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card disputed filterable" data-c="disputed" data-s="if a book is well written, i always find it too short. jane austen">
+                    <p class="bench-q">&ldquo;If a book is well written, I always find it too short.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag disputed">Disputed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="if-a-book-is-well-written-i-always-find-it-too-short" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;If a book is well written, I always find it too short.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=if-a-book-is-well-written-i-always-find-it-too-short">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card disputed filterable" data-c="disputed" data-s="run mad as often as you choose, but do not faint. jane austen">
+                    <p class="bench-q">&ldquo;Run mad as often as you choose, but do not faint.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag disputed">Disputed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="run-mad-as-often-as-you-choose-but-do-not-faint" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Run mad as often as you choose, but do not faint.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=run-mad-as-often-as-you-choose-but-do-not-faint">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="in three words i can sum up everything i've learned about life: it goes on. robert frost">
+                    <p class="bench-q">&ldquo;In three words I can sum up everything I've learned about life: it goes on.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Robert Frost</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="in-three-words-i-can-sum-up-everything-ive-learned-about" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;In three words I can sum up everything I've learned about life: it goes on.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=in-three-words-i-can-sum-up-everything-ive-learned-about">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="writing free verse is like playing tennis with the net down. robert frost">
+                    <p class="bench-q">&ldquo;Writing free verse is like playing tennis with the net down.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Robert Frost</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="writing-free-verse-is-like-playing-tennis-with-the-net-down" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Writing free verse is like playing tennis with the net down.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=writing-free-verse-is-like-playing-tennis-with-the-net-down">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="but, said alice, if the world has absolutely no sense, who's stopping us from inventing one? lewis carroll">
+                    <p class="bench-q">&ldquo;But, said Alice, if the world has absolutely no sense, who's stopping us from inventing one?&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="but-said-alice-if-the-world-has-absolutely-no-sense-whos" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;But, said Alice, if the world has absolutely no sense, who's stopping us from inventing one?&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=but-said-alice-if-the-world-has-absolutely-no-sense-whos">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="how long is forever? sometimes, just one second. lewis carroll">
+                    <p class="bench-q">&ldquo;How long is forever? Sometimes, just one second.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="how-long-is-forever-sometimes-just-one-second" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;How long is forever? Sometimes, just one second.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=how-long-is-forever-sometimes-just-one-second">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="i am under no obligation to make sense to you. lewis carroll">
+                    <p class="bench-q">&ldquo;I am under no obligation to make sense to you.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="i-am-under-no-obligation-to-make-sense-to-you" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;I am under no obligation to make sense to you.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=i-am-under-no-obligation-to-make-sense-to-you">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="if you don't know where you're going, any road will take you there. lewis carroll">
+                    <p class="bench-q">&ldquo;If you don't know where you're going, any road will take you there.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="if-you-dont-know-where-youre-going-any-road-will-take-you" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;If you don't know where you're going, any road will take you there.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=if-you-dont-know-where-youre-going-any-road-will-take-you">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="i'm not crazy. my reality is just different than yours. lewis carroll">
+                    <p class="bench-q">&ldquo;I'm not crazy. My reality is just different than yours.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="im-not-crazy-my-reality-is-just-different-than-yours" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;I'm not crazy. My reality is just different than yours.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=im-not-crazy-my-reality-is-just-different-than-yours">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="imagination is the only weapon in the war against reality. lewis carroll">
+                    <p class="bench-q">&ldquo;Imagination is the only weapon in the war against reality.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="imagination-is-the-only-weapon-in-the-war-against-reality" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Imagination is the only weapon in the war against reality.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=imagination-is-the-only-weapon-in-the-war-against-reality">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="the hurrier i go, the behinder i get. lewis carroll">
+                    <p class="bench-q">&ldquo;The hurrier I go, the behinder I get.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="the-hurrier-i-go-the-behinder-i-get" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;The hurrier I go, the behinder I get.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=the-hurrier-i-go-the-behinder-i-get">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="have i gone mad? i'm afraid so. you're entirely bonkers. but i'll tell you a secret. all the best people are. lewis carroll">
+                    <p class="bench-q">&ldquo;Have I gone mad? I'm afraid so. You're entirely bonkers. But I'll tell you a secret. All the best people are.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="have-i-gone-mad-im-afraid-so-youre-entirely-bonkers-but-ill" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Have I gone mad? I'm afraid so. You're entirely bonkers. But I'll tell you a secret. All the best people are.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=have-i-gone-mad-im-afraid-so-youre-entirely-bonkers-but-ill">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="you know what the issue is with this world? everyone wants a magical solution to their problem, and everyone refuses to believe in magic. lewis carroll">
+                    <p class="bench-q">&ldquo;You know what the issue is with this world? Everyone wants a magical solution to their problem, and everyone refuses to believe in magic.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="you-know-what-the-issue-is-with-this-world-everyone-wants-a" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;You know what the issue is with this world? Everyone wants a magical solution to their problem, and everyone refuses to believe in magic.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=you-know-what-the-issue-is-with-this-world-everyone-wants-a">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="stand for something or you will fall for anything. today's mighty oak is yesterday's nut that held its ground. rosa parks">
+                    <p class="bench-q">&ldquo;Stand for something or you will fall for anything. Today's mighty oak is yesterday's nut that held its ground.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Rosa Parks</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="stand-for-something-or-you-will-fall-for-anything-todays" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Stand for something or you will fall for anything. Today's mighty oak is yesterday's nut that held its ground.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=stand-for-something-or-you-will-fall-for-anything-todays">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card misattributed filterable" data-c="misattributed" data-s="you may go on and do so. rosa parks">
+                    <p class="bench-q">&ldquo;You may go on and do so.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Rosa Parks</span>
+                        <span class="bench-tag misattributed">Likely misattributed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="you-may-go-on-and-do-so" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;You may go on and do so.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=you-may-go-on-and-do-so">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="you can always, always give something, even if it is only kindness! anne frank">
+                    <p class="bench-q">&ldquo;You can always, always give something, even if it is only kindness!&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Anne Frank</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="you-can-always-always-give-something-even-if-it-is-only" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;You can always, always give something, even if it is only kindness!&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=you-can-always-always-give-something-even-if-it-is-only">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="i declare after all there is no enjoyment like reading! jane austen">
+                    <p class="bench-q">&ldquo;I declare after all there is no enjoyment like reading!&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="i-declare-after-all-there-is-no-enjoyment-like-reading" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;I declare after all there is no enjoyment like reading!&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=i-declare-after-all-there-is-no-enjoyment-like-reading">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="it is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife. jane austen">
+                    <p class="bench-q">&ldquo;It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Jane Austen</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="it-is-a-truth-universally-acknowledged-that-a-single-man-in" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=it-is-a-truth-universally-acknowledged-that-a-single-man-in">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card disputed filterable" data-c="disputed" data-s="have you ever been hurt and the place tries to heal a bit, and you just pull the scar off of it over and over again. rosa parks">
+                    <p class="bench-q">&ldquo;Have you ever been hurt and the place tries to heal a bit, and you just pull the scar off of it over and over again.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Rosa Parks</span>
+                        <span class="bench-tag disputed">Disputed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="have-you-ever-been-hurt-and-the-place-tries-to-heal-a-bit" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Have you ever been hurt and the place tries to heal a bit, and you just pull the scar off of it over and over again.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=have-you-ever-been-hurt-and-the-place-tries-to-heal-a-bit">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card disputed filterable" data-c="disputed" data-s="i knew someone had to take the first step and i made up my mind not to move. rosa parks">
+                    <p class="bench-q">&ldquo;I knew someone had to take the first step and I made up my mind not to move.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Rosa Parks</span>
+                        <span class="bench-tag disputed">Disputed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="i-knew-someone-had-to-take-the-first-step-and-i-made-up-my" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;I knew someone had to take the first step and I made up my mind not to move.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=i-knew-someone-had-to-take-the-first-step-and-i-made-up-my">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card disputed filterable" data-c="disputed" data-s="you must never be fearful about what you are doing when it is right. rosa parks">
+                    <p class="bench-q">&ldquo;You must never be fearful about what you are doing when it is right.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Rosa Parks</span>
+                        <span class="bench-tag disputed">Disputed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="you-must-never-be-fearful-about-what-you-are-doing-when-it" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;You must never be fearful about what you are doing when it is right.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=you-must-never-be-fearful-about-what-you-are-doing-when-it">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card disputed filterable" data-c="disputed" data-s="i did not get on the bus to get arrested. i got on the bus to go home. rosa parks">
+                    <p class="bench-q">&ldquo;I did not get on the bus to get arrested. I got on the bus to go home.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Rosa Parks</span>
+                        <span class="bench-tag disputed">Disputed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="i-did-not-get-on-the-bus-to-get-arrested-i-got-on-the-bus" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;I did not get on the bus to get arrested. I got on the bus to go home.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=i-did-not-get-on-the-bus-to-get-arrested-i-got-on-the-bus">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card disputed filterable" data-c="disputed" data-s="racism is still with us. but it is up to us to prepare our children for what they have to meet, and, hopefully, we shall overcome. rosa parks">
+                    <p class="bench-q">&ldquo;Racism is still with us. But it is up to us to prepare our children for what they have to meet, and, hopefully, we shall overcome.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Rosa Parks</span>
+                        <span class="bench-tag disputed">Disputed</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="racism-is-still-with-us-but-it-is-up-to-us-to-prepare-our" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Racism is still with us. But it is up to us to prepare our children for what they have to meet, and, hopefully, we shall overcome.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=racism-is-still-with-us-but-it-is-up-to-us-to-prepare-our">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="but i don't want to go among mad people, alice remarked. oh, you can't help that, said the cat: we're all mad here. i'm mad. you're mad. lewis carroll">
+                    <p class="bench-q">&ldquo;But I don't want to go among mad people, Alice remarked. Oh, you can't help that, said the Cat: we're all mad here. I'm mad. You're mad.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="but-i-dont-want-to-go-among-mad-people-alice-remarked-oh" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;But I don't want to go among mad people, Alice remarked. Oh, you can't help that, said the Cat: we're all mad here. I'm mad. You're mad.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=but-i-dont-want-to-go-among-mad-people-alice-remarked-oh">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="one of the deep secrets of life is that all that is really worth the doing is what we do for others. lewis carroll">
+                    <p class="bench-q">&ldquo;One of the deep secrets of life is that all that is really worth the doing is what we do for others.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="one-of-the-deep-secrets-of-life-is-that-all-that-is-really" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;One of the deep secrets of life is that all that is really worth the doing is what we do for others.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=one-of-the-deep-secrets-of-life-is-that-all-that-is-really">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="why, sometimes i've believed as many as six impossible things before breakfast. lewis carroll">
+                    <p class="bench-q">&ldquo;Why, sometimes I've believed as many as six impossible things before breakfast.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Lewis Carroll</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="why-sometimes-ive-believed-as-many-as-six-impossible-things" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;Why, sometimes I've believed as many as six impossible things before breakfast.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=why-sometimes-ive-believed-as-many-as-six-impossible-things">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="but when that white driver stepped back toward us, when he waved his hand and ordered us up and out of our seats, i felt a determination cover my body like a quilt on a winter night. rosa parks">
+                    <p class="bench-q">&ldquo;But when that white driver stepped back toward us, when he waved his hand and ordered us up and out of our seats, I felt a determination cover my body like a quilt on a winter night.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Rosa Parks</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="but-when-that-white-driver-stepped-back-toward-us-when-he" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;But when that white driver stepped back toward us, when he waved his hand and ordered us up and out of our seats, I felt a determination cover my body like a quilt on a winter night.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=but-when-that-white-driver-stepped-back-toward-us-when-he">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="i had been pushed around all my life and felt at this moment that i couldn't take it anymore. rosa parks">
+                    <p class="bench-q">&ldquo;I had been pushed around all my life and felt at this moment that I couldn't take it anymore.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Rosa Parks</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="i-had-been-pushed-around-all-my-life-and-felt-at-this" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;I had been pushed around all my life and felt at this moment that I couldn't take it anymore.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=i-had-been-pushed-around-all-my-life-and-felt-at-this">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
+                <article class="bench-card genuine-famous filterable" data-c="genuine-famous" data-s="people always say that i didn't give up my seat because i was tired, but that isn't true. i was not tired physically, or no more tired than i usually was at the end of a working day. no, the only tired i was, was tired of giving in. rosa parks">
+                    <p class="bench-q">&ldquo;People always say that I didn't give up my seat because I was tired, but that isn't true. I was not tired physically, or no more tired than I usually was at the end of a working day. No, the only tired I was, was tired of giving in.&rdquo;</p>
+                    <div class="bench-foot">
+                        <span class="bench-cred">Pinned on Rosa Parks</span>
+                        <span class="bench-tag genuine-famous">Verifying source</span>
+                    </div>
+                    <div class="bench-actions">
+                        <button class="vote" type="button" data-slug="people-always-say-that-i-didnt-give-up-my-seat-because-i" title="Boost this quote up the review queue" aria-label="Boost priority for &ldquo;People always say that I didn't give up my seat because I was tired, but that isn't true. I was not tired physically, or no more tired than I usually was at the end of a working day. No, the only tired I was, was tired of giving in.&rdquo;"><span class="vote-caret" aria-hidden="true">▲</span> <span class="vote-n">·</span></button>
+                        <a class="bench-src" rel="nofollow" href="/flagged/?q=people-always-say-that-i-didnt-give-up-my-seat-because-i">Why we flagged it <span aria-hidden="true">→</span></a>
+                    </div>
+                </article>
                 <article class="bench-card disputed filterable" data-c="disputed" data-s="i take my only exercise acting as a pallbearer to my friends who exercise chauncey depew">
                     <p class="bench-q">&ldquo;I Take My Only Exercise Acting as a Pallbearer to My Friends Who Exercise&rdquo;</p>
                     <div class="bench-foot">
