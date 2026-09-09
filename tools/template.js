@@ -602,6 +602,41 @@ function buildJsonLd(q, url) {
     // untouched. Names of the "Seneca, the Younger" form would be rejected; none is in the corpus,
     // and losing the framing on one page is the cheap side of this trade.
     if (/,\s+[a-zà-þ]/.test(x)) return false;
+    // AN ANONYMITY NOTE NAMES NO ONE, and the capital-letter test on the next line cannot tell it
+    // from a name: "Nobody — it has no traceable author" has a capital, no leading article, no
+    // dated parenthetical, no slash and no lowercase-after-comma, so it passed every test above and
+    // became the fallback claimant. That is worse than a merely useless magnet — a non-empty
+    // `wrong` in buildJsonLd defeats the right-person/wrong-words guard (which compares `who` to
+    // `wrong`) and lands the `${lead} Actually by ${who}.` arm, the same class as the recorded
+    // "Actually by William Shakespeare" bug. A row saying nobody is documented is the record stating
+    // it has NO claimant; degrading to '' is reading it correctly, and it routes such a page to the
+    // `who && !wrong` arm that was written for exactly this evidence state.
+    //
+    // Vocabulary is mis-kind.js's NO_SUBJECT verbatim (~line 280), where it does the same job on the
+    // other side of the pipeline — deciding an affirming row affirms nothing. Sharing the list keeps
+    // the visible ✕ glyph and the JSON-LD reading the same words the same way. Its `no\s` alternation
+    // is dropped: the article test above already rejects that prefix. `unknown`/`anonymous` overlap
+    // the vector-word test two lines up and are kept anyway, so this reads as one anonymity
+    // vocabulary rather than a diff against another rule.
+    //
+    // The second clause is for the EM-DASH GLOSS form, where the note is a sentence and the anonymity
+    // word is not at the front ("...it has no traceable author"). Anchoring alone misses it. It is
+    // held to "no ⟨adj⟩ ⟨author-noun⟩" rather than a bare unanchored word list, because a magnet's
+    // name can contain almost anything and this shape cannot be part of one. `no documented` and
+    // `no identifiable` are already in the vector-word test; `traceable`/`known`/`recorded` are the
+    // gap that let the live row through.
+    //
+    // MEASURED against all 2,197 records: of the 1,388 whose items[0].who passes this function today,
+    // exactly 3 flip to rejected — "Nobody — it has no traceable author", "Nobody documented",
+    // "Undocumented" — and all three were hand-read. Zero real magnets are lost: every other
+    // anonymity-shaped items[0].who in the corpus (4 on disputed records, 7 across all confidence
+    // states, by a net wider than this rule) is already rejected by the article or vector-word tests.
+    // No rendered page changes, because all 3 are neutralised elsewhere — one by schema.verdictNote
+    // plus wordingDrift, one by creditedTo, one by being `attributed` (misWho unused). This is a
+    // regression guard on a defect the corpus can reach again, not a backfill.
+    const NO_SUBJECT = /^(unknown|anonymous|unattributed|undocumented|origin unknown|nobody|none)\b/i;
+    if (NO_SUBJECT.test(x)) return false;
+    if (/\bno\s+(?:traceable|known|recorded|documented|identifiable)\s+(?:author|source|origin|speaker|originator)\b/i.test(x)) return false;
     return /[A-ZÀ-Þ]/.test(x); // a real name carries a capital
   };
   const misWho = (firstMisWho && !isQuoteNotPerson(firstMisWho) && looksLikePerson(firstMisWho)) ? stripQual(firstMisWho) : '';
