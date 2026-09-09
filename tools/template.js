@@ -515,14 +515,24 @@ function buildJsonLd(q, url) {
   // wording or the documented one.
   // Strip surrounding quote marks (straight + curly) before comparing: a fact-check row often quotes
   // the wording — items[0].who = ‘"I'll never go hungry again"’ — and the leading quote char made the
-  // 24-char prefix never match displayQuote, leaking the fragment in as a Person claimant.
+  // prefix never match displayQuote, leaking the fragment in as a Person claimant.
   const dequote = (s) => String(s || '').replace(/^[\s"'‘’“”]+|[\s"'‘’“”]+$/g, '').toLowerCase().trim();
+  // A row that quotes only the FIRST FEW WORDS of the wording is still the wording, not a person, and
+  // the prefix has to be shorter than the shortest such fragment or the test cannot see it. At 24 the
+  // two live fragments — ‘"Frankly, Scarlett…"’ (18 chars) and ‘"Methinks the lady…"’ (18) — were
+  // both SHORTER than the prefix they were compared against, so neither direction of the includes()
+  // could ever match and both shipped as Person claimants. The elision mark is why trimming the
+  // fragment's own tail does not help: it is the fragment that is truncated, so only the QUOTE's
+  // prefix can be shortened to meet it. 16 clears both with room to spare and was measured against
+  // the whole corpus — see FRAGMENT_PREFIX in the commit note; no correct magnet is 16 characters of
+  // its own page's quote.
+  const FRAGMENT_PREFIX = 16;
   const isQuoteNotPerson = (w) => {
     const x = dequote(w);
     if (!x) return false;
     return [claimQuoteText, quoteText, plain(q.displayQuote)].some((s2) => {
       const y = dequote(s2);
-      return !!y && (x.includes(y.slice(0, 24)) || y.includes(x.slice(0, 24)));
+      return !!y && (x.includes(y.slice(0, FRAGMENT_PREFIX)) || y.includes(x.slice(0, FRAGMENT_PREFIX)));
     });
   };
   // A fallback claimant (no creditedTo) must be the MAGNET — a person. misattribution.items[0].who
@@ -544,6 +554,54 @@ function buildJsonLd(q, url) {
     if (/^(a|an|the|no|not)\s/i.test(x)) return false;
     if (/^(modern|popular|internet|anonymous|unknown|various|multiple)\b/i.test(x)) return false;
     if (/\b(quote ?sites?|aggregator|inspirational|paraphrase[rd]?|quote culture|web-era|quote-book|goodreads|brainyquote|azquotes|passiton|no documented|no identifiable|the discourses|the handbook)\b/i.test(x)) return false;
+    // A DATED PARENTHETICAL MAKES IT A WORK. The trailing paren `stripQual` removes is a scope
+    // qualifier on a name — "(as popularly quoted)", "(Kong Qiu)" — but when it carries a YEAR it is
+    // a citation, and what gets cited that way is a film, a series or a book: "Casablanca (1942)",
+    // "Star Trek: The Original Series (1966–69)", "Snow White and the Seven Dwarfs (Walt Disney
+    // Productions, 1937)". Stripping the date leaves a bare title that reads exactly like a name to
+    // every other test here — "Casablanca" has a capital, no article, no vector word — which is how
+    // four film pages came to say "Commonly misattributed to Casablanca." The year is the only thing
+    // on the string that distinguishes the two, so it has to be read BEFORE it is stripped. Tested
+    // against the raw `w`, since `x` has already lost it. The one dated parenthetical that is NOT a
+    // citation is a LIFESPAN — "Coco Chanel (1883–1971)", "Leonardo da Vinci (1452–1519)",
+    // "(died 1618)", "(c. 470–399 BC)" — which is a gloss on a person and must fall through to the
+    // strip. 26 rows in the corpus are that shape and every one of them is a real person, so the
+    // exemption is what keeps this rule meaning what it says. Two full years separated by a dash is
+    // the discriminator: a run of a work abbreviates its end ("1966–69") and a release cites one
+    // year ("1942"), while a life gives both in full. Known bound: two rows gloss the name INSIDE
+    // the parens as well — "Rumi (Jalal al-Din Muhammad Rumi, 1207–1273)", "Bill Nye (Edgar Wilson
+    // Nye, 1850–1896)" — so they read as citations and are rejected. Both carry a creditedTo and
+    // neither reaches this function; left alone rather than fitted to two strings.
+    const dated = String(w || '').match(/\(([^)]*)\)\s*$/);
+    const LIFESPAN = /^\s*(?:(?:b\.|d\.|born|died)\s*(?:c\.\s*)?\d{3,4}|(?:c\.\s*)?\d{3,4}\s*[–—-]\s*(?:c\.\s*)?\d{3,4})(?:\s*(?:BCE?|AD|CE))?\s*$/i;
+    if (dated && /\b(?:1\d{3}|20\d{2})\b/.test(dated[1]) && !LIFESPAN.test(dated[1])) return false;
+    // A SLASH JOINS TWO ENTITIES; a person's name has one. It is how these rows write a character and
+    // the actor who played them — "Gordon Gekko / Michael Douglas" — and neither half is a magnet:
+    // nobody is falsely credited when a film line is quoted, the words are the screenwriter's.
+    if (/\//.test(x)) return false;
+    // A COMMA FOLLOWED BY A LOWERCASE WORD IS A ROLE QUALIFIER, not part of the name — the same idea
+    // as the parenthetical above, in the punctuation these rows actually use: "Charles Dickens, as
+    // usually quoted", "Warren Buffett, as originator", "Isaac Hewitt, testifying in 1879",
+    // 'Montgomery Scott ("Scotty"), played by James Doohan'.
+    //
+    // REJECT, DO NOT STRIP — the tempting symmetry with stripQual is wrong, and each of the four was
+    // hand-read to establish it. The qualifier is not decoration on a magnet; it is the row telling
+    // you what the row is ABOUT, and in every live case that is something other than a false credit.
+    // Hewitt is the WITNESS whose 1879 testimony is the quote's only source, so stripping to "Isaac
+    // Hewitt" would have invented a misattribution that no one has ever made. Buffett's row is
+    // scope "The credit" on a popularizer page — he really did say the line, he disclaimed coining
+    // it — and "Commonly misattributed to Warren Buffett" denies an utterance that happened, the
+    // same error the claimVerb hedge exists to prevent one field over. Dickens' row is scope "The
+    // wording" and he IS the page's creator, so stripping produced the self-contradiction
+    // "Commonly misattributed to Charles Dickens, as usually quoted. Actually by Charles Dickens."
+    // Rejecting instead reaches the `who && !wrong` arm, which reads the record's own verbatim
+    // original and says the true thing: right person, later paraphrase.
+    //
+    // Lowercase is what separates a qualifier from a name suffix: "Oliver Wendell Holmes Jr.",
+    // "Martin Luther King, Jr." and "John D. Rockefeller, Sr." all continue with a capital and are
+    // untouched. Names of the "Seneca, the Younger" form would be rejected; none is in the corpus,
+    // and losing the framing on one page is the cheap side of this trade.
+    if (/,\s+[a-zà-þ]/.test(x)) return false;
     return /[A-ZÀ-Þ]/.test(x); // a real name carries a capital
   };
   const misWho = (firstMisWho && !isQuoteNotPerson(firstMisWho) && looksLikePerson(firstMisWho)) ? stripQual(firstMisWho) : '';
@@ -842,8 +900,12 @@ function buildJsonLd(q, url) {
       // pages items[0].who is the work or the character — "Star Trek: The Original Series",
       // "Casablanca", "Gordon Gekko / Michael Douglas", 'Montgomery Scott ("Scotty"), played by
       // James Doohan' — or a name carrying a role qualifier after a comma, "Charles Dickens, as
-      // usually quoted", "Warren Buffett, as originator". Those are `looksLikePerson` under-
-      // rejecting, one function up, and they want their own measured pass rather than a proxy here.
+      // usually quoted", "Warren Buffett, as originator". Those were `looksLikePerson` under-
+      // rejecting, one function up, and they got their own measured pass there rather than a proxy
+      // here: the dated-parenthetical, slash and comma-qualifier rejects, plus a fragment prefix
+      // short enough to see '"Frankly, Scarlett…"'. That removed all 11 non-magnets from this
+      // field's 22 live fallbacks and left all 11 correct magnets standing, which is the result
+      // gating on drift could not produce — it would have taken three of the good half with it.
       // Without them, a record that correctly carries NO creditedTo because no claimant is
       // documented still shipped "Commonly misattributed to {items[0].who}" into the one layer an
       // answer engine reads: "…to Clint Eastwood." on a row tagged "Speaker, not author",
