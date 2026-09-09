@@ -4,7 +4,7 @@ Written for a **fresh session with no context**. Each item states what is wrong,
 been measured** (so you do not re-derive it), and what is genuinely still open. Every figure below
 was measured against the code or the corpus on the date given — where a number is a guess, it says so.
 
-> **Update 2026-09-09 (later session).** Items **1** and **3** are CLOSED — see each. Item 3's
+> **Update 2026-09-09 (later session).** Items **1**, **3** and **9** are CLOSED — see each. Item 3's
 > exposure figure was wrong and is corrected there; half of its proposed fix was measured harmful and
 > must not be re-proposed. One new item (**9**) came out of that measurement.
 
@@ -235,6 +235,40 @@ Two notes for whoever takes it:
   "Commonly misattributed to Charles Dickens, as usually quoted. Actually by Charles Dickens."
 - `isQuoteNotPerson` compares on a **24-character** prefix, which is why fragments shorter than that
   ("Frankly, Scarlett") slip through. That constant is the fix for the fourth shape, not a new regex.
+
+**CLOSED 2026-09-09.** Four rejects in `looksLikePerson` / `isQuoteNotPerson`, each aimed at one
+shape and each measured on the whole corpus before shipping:
+
+| reject | catches | corpus rows it would reject |
+|---|---|---|
+| trailing parenthetical carrying a **year** | the 4 works | 71 |
+| a **slash** | character/actor pairs | 20 |
+| a **comma followed by a lowercase word** | the 4 role qualifiers | 157 |
+| fragment prefix **24 → 16** | the 2 quote fragments | — |
+
+**Result: the fallback goes from 22 live pages to 11, and the 11 that remain are exactly the 11
+correct magnets. Zero false positives — no correct magnet was lost.** The build diff is 11 pages and
+nothing else, which is the measurement: `looksLikePerson` reaches every record, so a rule that
+over-rejected anywhere in the corpus would have shown up as a twelfth changed page.
+
+**Reject, do not strip, on the comma form** — the lead above proposed strip by analogy with
+`stripQual`, and hand-reading the four records refutes it. Isaac Hewitt is the *witness* whose 1879
+testimony is the quote's only source, so "Isaac Hewitt" would have invented a misattribution nobody
+ever made. Warren Buffett's row is a popularizer credit — he said the line and disclaimed coining it
+— so naming him denies an utterance that happened. Only Dickens would have survived the strip, and
+rejecting gets him a *better* sentence anyway: the empty `wrong` reaches the `who && !wrong` arm,
+which reads the record's own verbatim original and emits "Charles Dickens is the author, but this
+popular wording is not what they wrote."
+
+The year test carries an exemption for a **lifespan** paren ("Coco Chanel (1883–1971)",
+"(died 1618)"), which is a gloss on a person, not a citation of a work: 25 corpus rows are that
+shape and all 25 are real people. Two rows also gloss the name inside the parens
+("Rumi (Jalal al-Din Muhammad Rumi, 1207–1273)") and are still rejected; both carry a `creditedTo`
+and neither reaches the function, so they were left rather than fitted to two strings.
+
+`wordingDrift` was **not** used, per item 3 — all 8 of the work/character/fragment records are drift
+pages, which is exactly the correlation that made drift look like the right gate, and gating on it
+would still have cost the three genuine magnets item 3 measured.
 
 ---
 
