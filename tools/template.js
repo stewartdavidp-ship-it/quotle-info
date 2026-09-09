@@ -819,7 +819,54 @@ function buildJsonLd(q, url) {
     // Unflagged pages are byte-identical; only a record that sets schema.verdictNote diverges.
     if (s.verdictNote) return plain(s.verdictNote);
     if (q.confidence === 'disputed') {
-      const wrong = plain(magnet || misWho || '');
+      // THE FALLBACK CLAIMANT MUST STILL BE A MAGNET. `misWho` is already filtered for things
+      // that are not people at all (vectors, fragments, anonymity notes), but it never asks the
+      // question this field actually depends on: is this row a REFUTATION? Two record signals say
+      // it is not, and every other consumer of the claimant already honours them —
+      //   * `kind: "context"` is mis-kind.js's explicit "this row is not a refutation". It is the
+      //     same field that renders the neutral tilde instead of the burgundy ✕ on the visible
+      //     list, so reading it here is what makes the glyph and the JSON-LD agree.
+      //
+      // WORDING DRIFT IS NOT THE SECOND SIGNAL, THOUGH THE OBVIOUS SYMMETRY WITH `claimant` SAYS
+      // IT SHOULD BE — it was tried here and MEASURED HARMFUL, twice over.
+      //   * `wordingDrift` compares plain() strings, so a trailing period or a Title-Cased claim
+      //     counts as drift. Gating on it suppressed "Actually by John D. Rockefeller" and
+      //     "Actually by Dolly Parton" — both true, both informative — on two pages whose only
+      //     "drift" was punctuation and letter case.
+      //   * Re-testing it with hard normalisation fixed those two and still cost three genuine
+      //     magnets: Mark Twain on `she-is-always-kind-to-her-inferiors-…`, Oliver Wendell Holmes
+      //     Jr. on `the-common-law-…`, Sigmund Freud on `the-first-human-who-hurled-an-insult-…`.
+      //     A page can be BOTH a real misattribution and a wording drift; drift is a fact about the
+      //     WORDING and carries no evidence about whether items[0].who is a magnet.
+      // The reason drift looked good is that it correlates with a DIFFERENT defect: on film-quote
+      // pages items[0].who is the work or the character — "Star Trek: The Original Series",
+      // "Casablanca", "Gordon Gekko / Michael Douglas", 'Montgomery Scott ("Scotty"), played by
+      // James Doohan' — or a name carrying a role qualifier after a comma, "Charles Dickens, as
+      // usually quoted", "Warren Buffett, as originator". Those are `looksLikePerson` under-
+      // rejecting, one function up, and they want their own measured pass rather than a proxy here.
+      // Without them, a record that correctly carries NO creditedTo because no claimant is
+      // documented still shipped "Commonly misattributed to {items[0].who}" into the one layer an
+      // answer engine reads: "…to Clint Eastwood." on a row tagged "Speaker, not author",
+      // "…to Mother Teresa." on a row tagged "paraphrase", "…to Star Trek: The Original Series."
+      // on a drift page. The record fix looks accepted while the defect survives — which is what
+      // makes this worse than its size.
+      //
+      // MEASURED on the 2,157-record corpus: 1,195 disputed records, but this fallback is only LIVE
+      // on the 88 that carry no magnet, and 26 of those have a first row typed kind:"context".
+      // Counting every disputed record whose first row is kind:"context" gives 148 — but 122 of
+      // those carry a creditedTo and never reach this line, so that filter measures how often the
+      // TAG is used, not how often the defect can ship. The gate changes 6 rendered pages.
+      //
+      // NOT hoisted into `misWho` itself, tempting as that is: claimant and verdictNote want
+      // DIFFERENT rules here. On a paraphrase page the ClaimReview claim — "Mother Teresa said
+      // ⟨this wording⟩" — really is false, so keeping her as the claimant there is right; it is only
+      // the ATTRIBUTION verdict that must not call her a misattribution. Dropping to '' lands in
+      // the `who && !wrong` arm below, which was written for this exact evidence state and already
+      // says the true thing when a differing verbatim original is on the record.
+      const firstMisKind = q.misattribution && q.misattribution.items
+        && q.misattribution.items[0] && q.misattribution.items[0].kind;
+      const misIsMagnet = firstMisKind !== 'context';
+      const wrong = plain(magnet || (misIsMagnet ? misWho : '') || '');
       // An anonymous creator is NOT a name to credit. `creatorIsAnon` pages legitimately emit
       // creator:"Anonymous" (see creatorOk above — it keeps ~30 pages RULE-compliant), but feeding
       // that token in here produced "Actually by Anonymous." — which reads as a byline for a person
