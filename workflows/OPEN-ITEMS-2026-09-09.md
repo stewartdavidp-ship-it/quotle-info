@@ -4,6 +4,10 @@ Written for a **fresh session with no context**. Each item states what is wrong,
 been measured** (so you do not re-derive it), and what is genuinely still open. Every figure below
 was measured against the code or the corpus on the date given — where a number is a guess, it says so.
 
+> **Update 2026-09-09 (later session).** Items **1** and **3** are CLOSED — see each. Item 3's
+> exposure figure was wrong and is corrected there; half of its proposed fix was measured harmful and
+> must not be re-proposed. One new item (**9**) came out of that measurement.
+
 ## State at handoff
 - `main` clean, **2,157 quotes**, backlog **231 queued**, last shipped wave **r52**.
 - Six waves shipped this session: r47 (40), r48 (40), r49 (20), r50 (18), r51 (19), r52 (10).
@@ -25,10 +29,25 @@ gate it" — merged the *existing* splits. **The gate does not prevent new split
 r52 normalised all three by hand before ingesting; the orphan slugs `/authors/seneca/` and
 `/authors/seneca-lucius-annaeus-seneca/` correctly 404 on the live site.
 
-**Open — the proposed fix, not yet written:** `_ingest.js` or `validate-records.js` refuses a **new**
-author slug that collides with an existing hub under normalisation. A one-record author whose name is
-a substring or expansion of an established multi-record hub is almost always this bug, not a new
-person. This is narrow and measurable, unlike the tag-pattern work in item 5.
+**CLOSED 2026-09-09.** `validate-records.js` now enforces it as a **hard failure**. Author names are
+compared as TOKEN SETS with any parenthetical stripped, because the defect class is one name form
+being an expansion of another; only true particles are dropped, since honorifics and regnal numbers
+are what stop `Saint Ambrose` ⊂ `Ambrose Bierce`.
+
+Calibrated on all 2,157 records, every pair read by hand: **12 hits, 4 of them real splits**, merged
+in the same change — `the-buddha-siddhartha-gautama` → `gautama-buddha`, the two Oz screenwriter
+credits, `josh-billings` → `josh-billings-henry-wheeler-shaw`, `artemus-ward` →
+`artemus-ward-charles-farrar-browne`. Three of the four are the **pen-name-in-parentheses** shape,
+which only the paren strip catches and which a substring test misses entirely. The other 8 are
+different people sharing a name prefix and are listed in `DISTINCT_HUBS` with a note each.
+
+Standing count is zero, so the gate is silent until it matters. It reports only on the hub that
+should MOVE — flagging both sides turned one stray Seneca slug into 17 failures, 16 on correct
+records.
+
+**Still open:** nothing for this defect. Note the gate is a **build-time** check, not an ingest-time
+one — a wave that never runs `validate-records.js` still ships a split, so keep it in the wave
+procedure.
 
 ---
 
@@ -74,12 +93,34 @@ fallback consults neither.**
 ships `Commonly misattributed to {items[0].who}`** in the JSON-LD. The record fix appears to be
 accepted while the defect survives — which is why this one matters more than its severity suggests.
 
-**Measured** (by an r50 fix agent, read-only, across the corpus): **59 disputed records (2.8%)** have
-a primary credit whose own fact-check row is `kind: "context"`.
+**CLOSED 2026-09-09** — the `kind: "context"` half. The `wordingDrift` half was tried, measured
+HARMFUL, and deliberately NOT shipped.
 
-**Open — proposed:** gate the `misWho` fallback on the first item not being `kind: "context"` (and,
-for symmetry with `claimant`, skip it on wordingDrift pages), falling through to the existing
-"This attribution is disputed." lead.
+**The 59 does not reproduce, and its filter was the problem.** Today 148 disputed records have a
+first row typed `kind: "context"` — but **122 of them carry a `creditedTo`**, so `magnet` wins and
+the fallback line is never reached. The number that can actually ship a falsehood is **26**, and the
+existing `looksLikePerson` / `isQuoteNotPerson` guards already reject all but **3** of those. The
+old figure counted how often the TAG is used, not how often the defect can ship.
+
+The three that shipped, each contradicting its own visible label:
+
+| page | label says | row | shipped |
+|---|---|---|---|
+| `go-ahead-make-my-day` | "The words are right — the authorship is disputed" | Speaker, not author | Commonly misattributed to Clint Eastwood. |
+| `not-all-of-us-can-do-…` | "Not her exact words — a paraphrase of Mother Teresa" | paraphrase | Commonly misattributed to Mother Teresa. |
+| `the-first-human-who-…` | "Not Sigmund Freud's line — he was quoting someone else" | Popularizer, not author | Commonly misattributed to Sigmund Freud. |
+
+**DO NOT re-propose the wordingDrift half.** It was implemented and reverted on measurement:
+- `wordingDrift` compares `plain()` strings, so a trailing period or a Title-Cased claim counts as
+  drift. It suppressed **"Actually by John D. Rockefeller"** and **"Actually by Dolly Parton"** — both
+  true — on pages whose only "drift" was punctuation and letter case.
+- Re-tested with hard normalisation it still cost three **genuine magnets**: Mark Twain, Oliver
+  Wendell Holmes Jr., Sigmund Freud on `the-common-law-…`. A page can be BOTH a real misattribution
+  and a wording drift. Drift is a fact about the WORDING and carries no evidence about whether
+  `items[0].who` is a magnet.
+- The gate is left as-is on `claimant`, where its only cost is degrading to the bare-quote form.
+
+Drift looked convincing because it correlates with a different defect — now item 9.
 
 ---
 
@@ -165,6 +206,35 @@ whether tag-matching is the right mechanism at all, rather than adding a sixth b
   wording — is unknown. `archive.org` item `niceguysfinishse0000keye` is lending-restricted;
   `/fulltext/inside.php`, `ia-fts` and `api.archivelab.org` all return nothing. The page states the
   limitation rather than asserting either way.
+
+---
+
+## 9. `looksLikePerson` accepts works, characters and role-qualified names — NEW, measured
+
+Found while measuring item 3. `misWho`'s guards (`tools/template.js` ~line 540) exist to stop a
+non-person becoming the fallback claimant, and they catch vectors and anonymity notes. They do not
+catch three shapes that are live right now.
+
+**Measured 2026-09-09:** 22 pages have no `creditedTo` and still render
+`Commonly misattributed to X`. **11 of the 22 name something that is not a falsely-credited person:**
+
+| shape | live examples |
+|---|---|
+| a work | `Star Trek: The Original Series`, `Casablanca`, `Snow White and the Seven Dwarfs`, `Disney's Snow White and the Seven Dwarfs` |
+| a character / the actor | `Gordon Gekko / Michael Douglas`, `Montgomery Scott ("Scotty"), played by James Doohan` |
+| a name + role qualifier after a COMMA | `Charles Dickens, as usually quoted`, `Warren Buffett, as originator`, `Isaac Hewitt, testifying in 1879` |
+| a short quote fragment | `"Frankly, Scarlett…"`, `"Methinks the lady…"` |
+
+The other 11 are correct magnets (Groucho Marx, Tocqueville, Plato, Shakespeare, Sun Tzu, Mark Twain,
+Confucius …), so **any widening must be checked against that half** — this is a field where
+over-rejecting is cheap and over-accepting ships a falsehood, but half the population is legitimate.
+
+Two notes for whoever takes it:
+- `stripQual` already strips a trailing **parenthetical**; the comma form is the same idea and is not
+  handled. `Charles Dickens, as usually quoted` also produces the self-contradicting
+  "Commonly misattributed to Charles Dickens, as usually quoted. Actually by Charles Dickens."
+- `isQuoteNotPerson` compares on a **24-character** prefix, which is why fragments shorter than that
+  ("Frankly, Scarlett") slip through. That constant is the fix for the fourth shape, not a new regex.
 
 ---
 
