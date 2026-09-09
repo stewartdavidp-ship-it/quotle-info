@@ -120,7 +120,13 @@ async function topRefs(start, end) {
 
   // Referrers are fetched WHENEVER a token is available, not just for --refs, because the spam share
   // is a caveat on the headline totals rather than a detail. The daily report consumes --json.
-  const refs7d = await topRefs(daysAgo(6), tomorrow);
+  // Referrers are a CAVEAT on the totals, never a precondition for printing them. GoatCounter's
+  // toprefs endpoint 404s intermittently — twice observed, both times returning 200 to curl minutes
+  // later — and an earlier version of this let that kill the whole tool, totals included. A flaky
+  // enrichment call must never take down the number the tool exists to print.
+  let refs7d = null;
+  try { refs7d = await topRefs(daysAgo(6), tomorrow); }
+  catch (e) { out.refsError = String(e.message || e).slice(0, 80); }
   if (refs7d) {
     const spam = refs7d.filter((r) => isSpamRef(r.ref));
     const seen = refs7d.reduce((a, r) => a + r.visits, 0) || 0;
@@ -142,6 +148,11 @@ async function topRefs(start, end) {
     console.log(`  ${label.padEnd(14)} ${String(out.windows[label]).padStart(7)}`);
   }
   console.log(`  ${'all time'.padEnd(14)} ${String(out.allTime).padStart(7)}`);
+
+  if (out.refsError) {
+    console.log(`\n  ⚠ referrers unavailable (${out.refsError}) — the totals above are RAW and`);
+    console.log('    include referrer spam, which was 37% of the week on 2026-09-01. Re-run for the split.');
+  }
 
   if (out.spam7d && out.spam7d.visits) {
     const p = Math.round(out.spam7d.shareOfAttributed * 100);

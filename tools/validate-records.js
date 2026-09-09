@@ -21,6 +21,8 @@
  *      (a same-name pair is legal but flagged: it is right-person-wrong-words, and 69 records
  *      once had it by mistake, publishing the fake author as real through the /verify API)
  *   7. quoteSlug must match the filename; dayNumber must be unique
+ *   8. one person gets one /authors/ hub — a second name form for an existing author
+ *      splits their quotes across two pages that never link to each other
  *
  *   node tools/validate-records.js              # whole corpus
  *   node tools/validate-records.js --since 513  # just this wave
@@ -31,6 +33,8 @@ const fs = require('fs');
 const path = require('path');
 const { scanRecord, PLAIN_TEXT_FIELDS, hasMarkup } = require('./html-safety');
 const { creditList } = require('./credits'); // creditedTo: string OR array of false credits
+const { slugify } = require('./slugify');    // the ONE slug fn — author.slug is built with it
+const { hasAuthorPage } = require('./authors'); // which author slugs actually mint a /authors/ hub
 const { VERDICT_LEAD_TOKENS } = require('./template'); // the FAQ lead vocabulary, defined once
 
 const ROOT = path.resolve(__dirname, '..');
@@ -58,11 +62,88 @@ const DOUBLE_ESC = /&amp;(?:[a-zA-Z]+|#\d+);/;
 const norm = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
 const dir = path.join(ROOT, 'data', 'quotes');
-let recs = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => ({
+// The whole corpus is always READ, even under --since: the author-hub check below is a
+// corpus-wide invariant, and a wave's new hub can only be judged against the hubs that
+// already exist. --since narrows what gets REPORTED, not what gets loaded.
+const allRecs = fs.readdirSync(dir).filter((f) => f.endsWith('.json')).map((f) => ({
   file: f, r: JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')),
 }));
-if (since != null) recs = recs.filter((x) => Number(x.r.dayNumber) >= since);
+let recs = since != null ? allRecs.filter((x) => Number(x.r.dayNumber) >= since) : allRecs.slice();
 recs.sort((a, b) => (a.r.dayNumber ?? 0) - (b.r.dayNumber ?? 0));
+
+// ---------------------------------------------------------------------------------------
+// ONE PERSON, ONE HUB.
+//
+// author.slug mints /authors/{slug}. Two slugs for the same person split their quotes across
+// two pages, and neither page links to or lists the other — the author hub is the one place
+// the site claims to hold everything by someone, so a split hub is a quiet lie.
+//
+// fix/split-author-hubs merged the seven people who already had two or three hubs each. That
+// was a ONE-OFF CLEANUP: nothing gated new ones. Wave r52 then drew three Seneca quotes and
+// the generate agents returned "Seneca (Lucius Annaeus Seneca)", "Seneca" and "Seneca the
+// Younger" — three slugs, three hubs, out of one wave, against a corpus that already had
+// exactly one Seneca hub with 14 records. They were normalised only because a human read the
+// wave; no tool would have said a word.
+//
+// The comparison is on NAME TOKENS with any parenthetical stripped, because this whole defect
+// class is one name form being an expansion of another:
+//     "Josh Billings (Henry Wheeler Shaw)" -> {josh, billings}  EQUALS "Josh Billings"
+//     "Seneca (Lucius Annaeus Seneca)"     -> {seneca}          INSIDE "Seneca the Younger"
+// Only true particles are dropped. Honorifics and regnal numbers are deliberately KEPT: an
+// earlier stoplist that dropped them produced "Saint Ambrose" ⊂ "Ambrose Bierce" and
+// "Elizabeth II" ⊂ "Elizabeth Barrett Browning". Dropping a token can only ever manufacture
+// more collisions, so the stoplist stays minimal.
+//
+// CALIBRATED against the 2,157-record corpus, every pair read by hand: 12 hits, of which FOUR
+// were real splits — Gautama Buddha, the three Oz screenwriters, Josh Billings and Artemus
+// Ward, all since merged — and eight are different people who share a name prefix, listed in
+// DISTINCT_HUBS. The standing count is therefore ZERO, which is why this is a hard failure
+// rather than another warning in the 337-deep warning backlog: every future hit is either a
+// split to merge or a one-line addition here, and both are worth two minutes of a human.
+const PARTICLES = new Set(['the', 'of', 'de', 'la', 'le', 'van', 'von', 'der', 'den', 'di',
+  'du', 'el', 'al', 'ibn', 'and', 'a', 'an']);
+const hubTokens = (name) => new Set(
+  slugify(String(name).replace(/\([^)]*\)/g, ' ')).split('-').filter((t) => t && !PARTICLES.has(t)));
+
+// Hand-checked pairs that are genuinely DIFFERENT people (or different works). Each was read
+// in the records — dates, bios — before being listed. The note says how they differ, so the
+// next session can re-check the judgement rather than inherit it.
+const DISTINCT_HUBS = new Set([
+  'george-h-w-bush | george-w-bush',               // father and son
+  'john-d-rockefeller | john-d-rockefeller-jr',    // father and son
+  'stephen-covey | stephen-m-r-covey',             // Stephen R. Covey and his eldest son
+  'martin-luther | martin-luther-king-jr',         // the reformer, and the civil-rights leader
+  'jean-paul | jean-paul-sartre',                  // J.P.F. Richter (1763-1825), and Sartre (1905-1980)
+  'john-gardner | john-w-gardner',                 // the novelist (1933-82), and the HEW secretary (1912-2002)
+  'billy-wilder | billy-wilder-i-a-l-diamond',     // a solo credit, and the Wilder/Diamond writing partnership
+  'king-james-bible-book-of-proverbs | the-bible', // a cited edition, and the misattribution-magnet hub
+]);
+
+const hubs = new Map();
+for (const { r } of allRecs) {
+  const a = r.author || {};
+  if (!hasAuthorPage(a.slug)) continue;   // anonymous/unknown placeholders mint no hub
+  if (!hubs.has(a.slug)) hubs.set(a.slug, { slug: a.slug, tokens: hubTokens(a.name || a.slug), n: 0 });
+  hubs.get(a.slug).n++;
+}
+const hubList = [...hubs.values()].filter((h) => h.tokens.size);
+const covers = (x, y) => [...x].every((t) => y.has(t));   // x is contained in y
+const hubClash = new Map();
+for (const A of hubList) {
+  for (const B of hubList) {
+    if (A.slug === B.slug) continue;
+    // Either direction, so equal token sets (the pen-name case) are caught alongside subsets.
+    if (!covers(A.tokens, B.tokens) && !covers(B.tokens, A.tokens)) continue;
+    if (DISTINCT_HUBS.has([A.slug, B.slug].sort().join(' | '))) continue;
+    // Report ONLY on the hub that should move — the smaller one, ties broken deterministically.
+    // Flagging both sides turned one stray Seneca slug into 17 identical failures, 16 of them on
+    // records that were already right; a gate that buries its one actionable line under sixteen
+    // inert ones is the same "cries wolf" failure as a gate that fires too often.
+    if (A.n > B.n || (A.n === B.n && A.slug < B.slug)) continue;
+    if (!hubClash.has(A.slug)) hubClash.set(A.slug, []);
+    hubClash.get(A.slug).push(B);
+  }
+}
 
 const seenDay = new Map();
 let failed = 0, warned = 0;
@@ -225,6 +306,19 @@ for (const { file, r } of recs) {
   if (ipo && ipo.isPartOf) {
     if (!ipo.isPartOf.name) p.push('schema.isPartOf.isPartOf has no name — the renderer drops it silently');
     if (ipo.isPartOf.isPartOf) p.push('schema.isPartOf nests more than one level — the renderer emits only one, so the deepest work would vanish');
+  }
+
+  // See the ONE PERSON, ONE HUB block above. Reported per record because the FIX is per
+  // record — author.slug, author.name and answer.authorHref all move onto the canonical hub.
+  const aslug = r.author && r.author.slug;
+  const clash = aslug && hubClash.get(aslug);
+  if (clash) {
+    p.push(`author hub "${aslug}" (${hubs.get(aslug).n} record(s)) collides with `
+      + clash.map((h) => `"${h.slug}" (${h.n})`).join(', ')
+      + ' — one person gets ONE /authors/ hub. Either normalise author.slug, author.name and '
+      + 'answer.authorHref onto the established hub, or, if these really are different people, add '
+      + clash.map((h) => `'${[aslug, h.slug].sort().join(' | ')}'`).join(' and ')
+      + ' to DISTINCT_HUBS with a note saying how they differ.');
   }
 
   // dayNumber is OPTIONAL and explicitly nullable — 481 records ship with `dayNumber: null`.
