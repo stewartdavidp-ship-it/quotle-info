@@ -1045,3 +1045,27 @@ We are NOT indexed yet (only a stale homepage; 0 deep pages) — that's why cold
 setup is correct (robots/sitemap/JSON-LD/internal links all good). The march to 2000 IS the SEO engine
 (each page is a shot at ranking for a misattribution query). Fastest lever = IndexNow→Bing (run after every
 deploy). Auth-gated user actions that help most: GSC "Request Indexing" + Bing Webmaster Tools sitemap submit.
+
+## Quotle game fields — getting new quotes into the game
+
+The Quotle game (gameshelf.co/quotle) loads `/data/game/feed.json` at start-up: every playable quote with
+its clue fields, and the daily schedule. Publishing here is how quotes reach the game; the game's own code
+is never edited for content. Built by `tools/build-game-feed.js` (part of `node tools/build.js`).
+
+- `data/game/fields.json` — per quote (by quoteSlug): `index` (stable game id, never reused), `author`
+  (the game's spelling), `gender`, `category`, `period`, `difficulty`, `hint`, `location`, `year`, `play`.
+  Vocabulary lives in `tools/game-fields.js` and must match the game's.
+- `data/game/schedule.json` — `{ from, lockedThrough, days[] }`. **Past days and days through
+  `lockedThrough` never change**; the build fails if one does.
+
+**To add newly verified quotes** (after an ingestion wave, or any time):
+1. `node tools/game-todo.js > /tmp/game-todo.json` — verified, named-author quotes not yet in the game.
+2. Agent pass with `workflows/game/BRIEF.md` (batches of ~50, one author's quotes in one batch).
+   Small test batch first.
+3. `node tools/game-check.js /tmp/game-todo.json <enriched.json>` until 0 problems.
+4. `node tools/game-merge.js /tmp/game-todo.json <enriched.json>`
+5. `node tools/game-schedule.js` — keeps locked and past days, re-plans the rest (new quotes worked in),
+   locks the next 60 days.
+6. `node tools/build.js`, commit `data/game/` + the feed.
+
+If nobody runs steps 1–5, nothing breaks: the committed schedule runs ~2 cycles ahead.
