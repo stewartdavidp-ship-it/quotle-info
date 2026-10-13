@@ -1058,10 +1058,14 @@ is never edited for content. Built by `tools/build-game-feed.js` (part of `node 
 - `data/game/schedule.json` — `{ from, lockedThrough, days[] }`. **Past days and days through
   `lockedThrough` never change**; the build fails if one does.
 
-**To add newly verified quotes** (after an ingestion wave, or any time):
+**The daily wave does this automatically** (`DAILY-WAVE.md` step 6b, via the `game-fields` workflow,
+`workflows/game-fields.js`). By hand, the same steps:
+
+**To add newly verified quotes** (any time):
 1. `node tools/game-todo.js > /tmp/game-todo.json` — verified, named-author quotes not yet in the game.
-2. Agent pass with `workflows/game/BRIEF.md` (batches of ~50, one author's quotes in one batch).
-   Small test batch first.
+2. Run the `game-fields` workflow with `{"todo": "<abs path>", "batches": B}` (B is printed by step 1;
+   batches never split an author) and save its `results` array as the enriched file.
+   For a large backlog, run one batch first.
 3. `node tools/game-check.js /tmp/game-todo.json <enriched.json>` until 0 problems.
 4. `node tools/game-merge.js /tmp/game-todo.json <enriched.json>`
 5. `node tools/game-schedule.js` — keeps locked and past days, re-plans the rest (new quotes worked in),

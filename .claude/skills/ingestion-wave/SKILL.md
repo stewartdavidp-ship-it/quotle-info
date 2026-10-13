@@ -86,6 +86,7 @@ Pointers, not instructions; the README step tells you what to do.
 - [ ] **Fix-agent scope gate** (step 5) — `git status --porcelain -- tools workflows` must print nothing. Fix agents once shipped +94/−14 of `template.js` inside a content wave.
 - [ ] **Generator findings** (step 5) — fix agents report generator bugs in `remaining`. Apply each ONCE, centrally, as its own commit. Never smuggled into the wave.
 - [ ] **Theme-tag** (step 6) — untagged records never appear on `/themes`.
+- [ ] **Quotle game** (DAILY-WAVE step 6b) — `node tools/game-todo.js`; if it lists quotes, run the `game-fields` workflow, `game-check` (0 problems), `game-merge`, `game-schedule`. New verified quotes otherwise never reach the game.
 - [ ] **`node tools/scan.js`** (step 7) — REQUIRED. CI fails the PR without it; this recipe omitted it until r27 and the wave went red.
 - [ ] **Rebase-rebuild before merge** (step 7) — built HTML is committed, so a wave branched before a generator fix and merged after it silently reverts that fix on every page it rebuilt.
 
