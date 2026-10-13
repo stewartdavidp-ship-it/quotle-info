@@ -158,6 +158,29 @@ prescribed edit, do the alternative and say so.
 A defect in a shared generator is **one central edit**, not a per-record fix: report it in the PR
 body and change nothing under `tools/`. Then rebuild.
 
+## 6b. Quotle game — put new verified quotes into the game
+
+The Quotle game takes its daily quotes from `/data/game/feed.json` (see `README.md` § "Quotle game
+fields"). Every wave adds any verified quote the game doesn't have yet:
+
+```bash
+node tools/game-todo.js > workflows/.scratch/game-todo-dYYYYMMDD.json   # stderr: N quote(s), B batch(es)
+```
+
+If N is 0, go to step 7. Otherwise run the **`game-fields` workflow** (`workflows/game-fields.js`) with
+args `{"todo": "<absolute path to that file>", "batches": B}`, write the `results` array it returns to
+`workflows/.scratch/game-enriched-dYYYYMMDD.json`, then:
+
+```bash
+node tools/game-check.js workflows/.scratch/game-todo-dYYYYMMDD.json workflows/.scratch/game-enriched-dYYYYMMDD.json  # must say 0 problems
+node tools/game-merge.js workflows/.scratch/game-todo-dYYYYMMDD.json workflows/.scratch/game-enriched-dYYYYMMDD.json
+node tools/game-schedule.js   # keeps past + locked days, works the new quotes into later days
+```
+
+A `game-check` problem is fixed in the enriched file, against `workflows/game/BRIEF.md` — never by
+loosening the check. The `data/game/` changes ship in this wave's PR; step 7's build publishes the
+feed. Say "N quotes added to the Quotle game" in the PR body.
+
 ## 7. Theme-tag, then ship
 
 Tag the new records (see the `tag-themes` step in `README.md`) so they appear on `/themes`, rebuild,

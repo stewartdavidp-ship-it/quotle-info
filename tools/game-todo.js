@@ -24,6 +24,15 @@ const todo = recs
     authorLine: strip(r.author.metaLine), source: strip(r.answer && r.answer.sourceLine).slice(0, 400),
     dateCreated: (r.schema && r.schema.dateCreated) || null, dayNumber: r.dayNumber || null,
     knownAuthor: known[r.author.slug] || null,
-  }));
+  }))
+  .sort((a, b) => a.authorSlug.localeCompare(b.authorSlug) || a.slug.localeCompare(b.slug));
+
+// batches of ~CHUNK for the agent pass (workflows/game-fields.js); an author never spans two
+const CHUNK = 50;
+let batch = 0, size = 0;
+todo.forEach((t, i) => {
+  if (size >= CHUNK && t.authorSlug !== todo[i - 1].authorSlug) { batch++; size = 0; }
+  t.batch = batch; size++;
+});
 process.stdout.write(JSON.stringify(todo, null, 1) + '\n');
-console.error(`${todo.length} verified quote(s) not yet in the game`);
+console.error(`${todo.length} verified quote(s) not yet in the game, in ${todo.length ? batch + 1 : 0} batch(es)`);

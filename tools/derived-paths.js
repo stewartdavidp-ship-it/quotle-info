@@ -62,9 +62,10 @@ const DERIVED = new RegExp('^(?:' + [
   'index\\.html$', '404\\.html$', 'sitemap\\.xml$', 'sitemap-full\\.xml$', 'search\\.json$',
   'themes\\.json$', 'verify-index\\.json$', 'chrome\\.json$', 'openapi\\.json$', 'llms\\.txt$',
   '\\.well-known/ai-plugin\\.json$',
-  // Derived state under data/. These three and ONLY these three are regenerated: build.js writes
-  // the first two, scan.js the third. Every other data/ path is authored by a person or a routine.
-  'data/manifest\\.json$', 'data/corpus-state\\.json$', 'data/scan-state\\.json$',
+  // Derived state under data/. These four and ONLY these four are regenerated: build.js writes
+  // the first two and the game feed, scan.js scan-state. Every other data/ path is authored —
+  // including data/game/fields.json and data/game/schedule.json, which the game tools write.
+  'data/manifest\\.json$', 'data/corpus-state\\.json$', 'data/scan-state\\.json$', 'data/game/feed\\.json$',
 ].join('|') + ')');
 
 const isDerived = (p) => DERIVED.test(p);
@@ -99,10 +100,13 @@ if (require.main === module && process.argv.includes('--self-test')) {
     ['the manifest',              'data/manifest.json', true],
     ['corpus state',              'data/corpus-state.json', true],
     ['scan state (scan.js)',      'data/scan-state.json', true],
+    ['the Quotle game feed',      'data/game/feed.json', true],
 
     // ---- SOURCE: authored. A rebuild does NOT bring these back. ----
     ['a quote record',            'data/quotes/x.json', false],
     ['a song record',             'data/songs/x.json', false],
+    ['game clue fields',          'data/game/fields.json', false],
+    ['the game schedule',         'data/game/schedule.json', false],
     ['a routine-log shard',       'data/routine-log/2026-08-03T12-13-19-529Z-daily-report.jsonl', false],
     ['the legacy routine log',    'data/routine-log.jsonl', false],
     // The seven the first version got wrong — the reason this file was rewritten.
@@ -142,9 +146,10 @@ if (require.main === module && process.argv.includes('--self-test')) {
   }
   // The property that keeps merge-run safe, asserted directly so that widening DERIVED to cover a
   // new data/ path cannot slip through review: nothing under data/ is auto-resolvable except the
-  // three files a rebuild genuinely recomputes.
+  // four files a rebuild genuinely recomputes. (data/game/feed.json added 2026-10-13: build.js writes
+  // it via build-game-feed.js from the authored fields.json + schedule.json, which stay SOURCE.)
   const dataDerived = all.filter((p) => p.startsWith('data/') && isDerived(p)).sort();
-  const expected = ['data/corpus-state.json', 'data/manifest.json', 'data/scan-state.json'];
+  const expected = ['data/corpus-state.json', 'data/game/feed.json', 'data/manifest.json', 'data/scan-state.json'];
   if (JSON.stringify(dataDerived) !== JSON.stringify(expected)) {
     console.error(`  ✗ derived data/ paths drifted: [${dataDerived.join(', ')}]`); bad++;
   }
