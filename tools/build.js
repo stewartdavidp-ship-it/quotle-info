@@ -130,6 +130,7 @@ function build() {
     require('./build-discovery'); // regenerate openapi.json + .well-known/ai-plugin.json (agent API discovery)
     require('./build-sitemap'); // regenerate sitemap.xml + llms.txt (machine discoverability)
     require('./build-chrome-artifact').build(); // publish /chrome.json — the site chrome for the off-origin blog
+    require('./build-game-feed').build(); // publish /data/game/feed.json — the Quotle game's quotes + daily schedule
     require('./build-state'); // write data/corpus-state.json — the committed snapshot of every figure
     // LAST: assert the rendered output reconciles with CORPUS. Exits non-zero on any mismatch, so a
     // build that would publish contradictory numbers fails here instead of shipping (which is how
