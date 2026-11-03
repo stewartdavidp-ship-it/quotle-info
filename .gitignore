@@ -11,3 +11,6 @@ data/.harvest-batch*.json
 # per-wave workflow intermediates (fixes map, records, audit args) — scripts are committed, scratch is not
 workflows/.scratch/*
 !workflows/.scratch/.gitkeep
+
+# a symlinked node_modules (worktrees) is a file, so a trailing-slash rule would miss it
+/node_modules
