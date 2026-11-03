@@ -85,10 +85,31 @@ const NAMED_ENTITIES = {
   Igrave: 'Ì', Iacute: 'Í', Icirc: 'Î', Iuml: 'Ï', Ntilde: 'Ñ',
   Ograve: 'Ò', Oacute: 'Ó', Ocirc: 'Ô', Otilde: 'Õ', Ouml: 'Ö', Oslash: 'Ø', OElig: 'Œ',
   Ugrave: 'Ù', Uacute: 'Ú', Ucirc: 'Û', Uuml: 'Ü',
+  // Greek — a lone missing entity used to collapse to a space, so "&Epsilon;&rho;&mu;&eta;&nu;&epsilon;&iota;&alpha;"
+  // in an FAQ answer came out as "Ἑ logica" (r58 fix report: ~23 records carry Greek this way).
+  alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', epsilon: 'ε', zeta: 'ζ', eta: 'η', theta: 'θ',
+  iota: 'ι', kappa: 'κ', lambda: 'λ', mu: 'μ', nu: 'ν', xi: 'ξ', omicron: 'ο', pi: 'π', rho: 'ρ',
+  sigmaf: 'ς', sigma: 'σ', tau: 'τ', upsilon: 'υ', phi: 'φ', chi: 'χ', psi: 'ψ', omega: 'ω',
+  Alpha: 'Α', Beta: 'Β', Gamma: 'Γ', Delta: 'Δ', Epsilon: 'Ε', Zeta: 'Ζ', Eta: 'Η', Theta: 'Θ',
+  Iota: 'Ι', Kappa: 'Κ', Lambda: 'Λ', Mu: 'Μ', Nu: 'Ν', Xi: 'Ξ', Omicron: 'Ο', Pi: 'Π', Rho: 'Ρ',
+  Sigma: 'Σ', Tau: 'Τ', Upsilon: 'Υ', Phi: 'Φ', Chi: 'Χ', Psi: 'Ψ', Omega: 'Ω',
+  thetasym: 'ϑ', upsih: 'ϒ', piv: 'ϖ',
+  // Symbols and typography measured in data/quotes (sect 67 records, copy 61, rarr 36, uarr 25…).
+  sect: '§', para: '¶', copy: '©', reg: '®', trade: '™', pound: '£', euro: '€', yen: '¥',
+  cent: '¢', iexcl: '¡', iquest: '¿', bull: '•', dagger: '†', Dagger: '‡', prime: '′', Prime: '″',
+  lowast: '∗', rarr: '→', larr: '←', uarr: '↑', darr: '↓', harr: '↔', ne: '≠', le: '≤', ge: '≥',
+  minus: '−', plusmn: '±', frac12: '½', frac14: '¼', frac34: '¾', sup1: '¹', sup2: '²', sup3: '³',
+  ordm: 'º', ordf: 'ª', micro: 'µ', bdquo: '„', sbquo: '‚', lsaquo: '‹', rsaquo: '›', percnt: '%',
+  num: '#', commat: '@', thinsp: ' ', ensp: ' ', emsp: ' ', shy: '', zwj: '', zwnj: '',
+  lstrok: 'ł', Lstrok: 'Ł', eth: 'ð', ETH: 'Ð', thorn: 'þ', THORN: 'Þ', scaron: 'š', Scaron: 'Š',
+  zcaron: 'ž', Zcaron: 'Ž', Yacute: 'Ý', Yuml: 'Ÿ', circ: 'ˆ', tilde: '˜', acute: '´', uml: '¨',
+  cedil: '¸', macr: '¯',
 };
 const plain = (x) => String(x || '').replace(/<[^>]+>/g, '')
-  .replace(/&#(\d+);/g, (m, d) => String.fromCharCode(+d))
-  .replace(/&#x([0-9a-f]+);/gi, (m, h) => String.fromCharCode(parseInt(h, 16)))
+  // fromCodePoint, not fromCharCode: &#128214; (📖, in 31 records) is above U+FFFF, and fromCharCode
+  // truncates it to an unrelated BMP character.
+  .replace(/&#(\d+);/g, (m, d) => String.fromCodePoint(+d))
+  .replace(/&#x([0-9a-f]+);/gi, (m, h) => String.fromCodePoint(parseInt(h, 16)))
   .replace(/&([a-zA-Z]+);/g, (m, e) => (e in NAMED_ENTITIES ? NAMED_ENTITIES[e] : ' '))
   // "↗" is link-affordance chrome: it lives inside an anchor in our prose and means "opens in a new
   // tab". Stripping tags leaves it stranded mid-sentence in plain-text sinks (JSON-LD FAQ answers,
