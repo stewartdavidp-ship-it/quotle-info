@@ -871,7 +871,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I Was the Toast of Two Continents: Greenland and Australia";
-        const copyAttribution = "Dorothy Parker, as quoted by Leonard Lyons, 1956. The familiar \"Greenland and Australia\" version is a later reshaping. Via quotle.info";
+        const copyAttribution = "Dorothy Parker, as quoted by Leonard Lyons, 1956. The familiar \"Greenland and Australia\" version is a later reshaping. Via quotle.info · Verbatim: “I once was the toast of two continents, Asia and Africa.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

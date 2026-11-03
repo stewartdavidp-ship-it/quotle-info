@@ -856,7 +856,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "It is the mark of an educated mind to entertain a thought without accepting it";
-        const copyAttribution = "is routinely attributed to Aristotle, but he never wrote it. The line appears nowhere in his works; its earliest known print source is Lowell L. Bennion's \"Religion and the Pursuit of Truth\" (1959), p. 52, where he set it in quotation marks and credited it to Aristotle. Aristotle's genuine \"mark of an educated man\" line (Nicomachean Ethics I.3) is about matching precision to the subject.";
+        const copyAttribution = "is routinely attributed to Aristotle, but he never wrote it. The line appears nowhere in his works; its earliest known print source is Lowell L. Bennion's \"Religion and the Pursuit of Truth\" (1959), p. 52, where he set it in quotation marks and credited it to Aristotle. Aristotle's genuine \"mark of an educated man\" line (Nicomachean Ethics I.3) is about matching precision to the subject. · Verbatim: “It is the mark of an educated mind to be able to entertain a thought without accepting it.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

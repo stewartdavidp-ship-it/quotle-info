@@ -859,7 +859,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "A champion is defined not by their wins but by how they can recover when they fall";
-        const copyAttribution = "Serena Williams, quoted in The National, 2012";
+        const copyAttribution = "Serena Williams, quoted in The National, 2012 · Verbatim: “I really think a champion is defined not by their wins but by how they can recover when they fall. I have fallen several times. Each time I just get up and dust myself off and I pray, and I'm able to do better or I'm able to get back to the level that I want to be on.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

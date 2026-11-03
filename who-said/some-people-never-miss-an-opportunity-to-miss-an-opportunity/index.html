@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Some People Never Miss an Opportunity to Miss an Opportunity";
-        const copyAttribution = "commonly credited to Abba Eban, but the oldest documented form is in Sir Algernon West's Private Diaries (E. P. Dutton, 1922, p. 35), where Bernard Shaw is said to have described Lord Rosebery as \"a man who never missed an occasion of losing an opportunity.\" Eban used his own versions of the joke from October 1970 onward. Via Quotle.info";
+        const copyAttribution = "commonly credited to Abba Eban, but the oldest documented form is in Sir Algernon West's Private Diaries (E. P. Dutton, 1922, p. 35), where Bernard Shaw is said to have described Lord Rosebery as \"a man who never missed an occasion of losing an opportunity.\" Eban used his own versions of the joke from October 1970 onward. Via Quotle.info · Verbatim: “Bernard Shaw, in later years, described him as a man who never missed an occasion of losing an opportunity.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

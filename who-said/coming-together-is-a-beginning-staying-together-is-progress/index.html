@@ -855,7 +855,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Coming together is a beginning, staying together is progress, working together is success";
-        const copyAttribution = "'Coming together is a beginning, staying together is progress, working together is success' is popularly credited to Henry Ford, but there is no evidence he said it. The earliest documented use is a 1927 U.S. presidential budget address crediting Edward Everett Hale — and no original source in Hale's own writing has been found. Quotle.info";
+        const copyAttribution = "'Coming together is a beginning, staying together is progress, working together is success' is popularly credited to Henry Ford, but there is no evidence he said it. The earliest documented use is a 1927 U.S. presidential budget address crediting Edward Everett Hale — and no original source in Hale's own writing has been found. Quotle.info · Verbatim: “Together — one of the most inspiring words in the English language. Coming together is a beginning; keeping together is progress; working together is success.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

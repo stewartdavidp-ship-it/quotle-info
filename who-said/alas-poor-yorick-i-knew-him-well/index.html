@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Alas, poor Yorick, I knew him well";
-        const copyAttribution = "William Shakespeare, Hamlet, Act 5, Scene 1 (first printed 1603). The line reads \"Alas, poor Yorick! I knew him, Horatio\" — \"I knew him well\" is a later misquotation. Verified via Quotle.info";
+        const copyAttribution = "William Shakespeare, Hamlet, Act 5, Scene 1 (first printed 1603). The line reads \"Alas, poor Yorick! I knew him, Horatio\" — \"I knew him well\" is a later misquotation. Verified via Quotle.info · Verbatim: “Alas, poor Yorick! I knew him, Horatio: a fellow of infinite jest, of most excellent fancy.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

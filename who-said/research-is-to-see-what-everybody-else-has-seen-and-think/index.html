@@ -99,7 +99,7 @@
               "name": "Who is \"Research Is to See What Everybody Else Has Seen and Think What Nobody Has Thought\" really by?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The idea is genuinely Schopenhauer's: he set it down in German in 1851, in 76 of the second volume of Parerga und Paralipomena. The sentence is not. Schopenhauer never used the word \"research,\" and Quote Investigator traces the snappy English form to a 1957 epigraph in Albert Szent-Györgyi's Bioenergetics — where Szent-Györgyi himself printed it inside quotation marks, signalling he was quoting somebody else.",
+                "text": "The idea is genuinely Schopenhauer's: he set it down in German in 1851, in § 76 of the second volume of Parerga und Paralipomena. The sentence is not. Schopenhauer never used the word \"research,\" and Quote Investigator traces the snappy English form to a 1957 epigraph in Albert Szent-Györgyi's Bioenergetics — where Szent-Györgyi himself printed it inside quotation marks, signalling he was quoting somebody else.",
                 "url": "https://quotle.info/who-said/research-is-to-see-what-everybody-else-has-seen-and-think/"
               }
             }
@@ -877,7 +877,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Research Is to See What Everybody Else Has Seen and Think What Nobody Has Thought";
-        const copyAttribution = "The thought is Arthur Schopenhauer's, from Parerga und Paralipomena, vol. 2, § 76 (Berlin: A. W. Hayn, 1851), p. 93 — written in German, with no word for \"research\" in it. The familiar English sentence is not his: its earliest documented appearance is as an unattributed epigraph, already inside quotation marks, in Albert Szent-Györgyi's Bioenergetics (New York: Academic Press, 1957), p. 57. The exact circulating wording, with \"else,\" is dated to a Daily Standard (Sikeston, Missouri) filler item of 29 December 1958. Chronology: Quote Investigator, 4 July 2015. — quotle.info";
+        const copyAttribution = "The thought is Arthur Schopenhauer's, from Parerga und Paralipomena, vol. 2, § 76 (Berlin: A. W. Hayn, 1851), p. 93 — written in German, with no word for \"research\" in it. The familiar English sentence is not his: its earliest documented appearance is as an unattributed epigraph, already inside quotation marks, in Albert Szent-Györgyi's Bioenergetics (New York: Academic Press, 1957), p. 57. The exact circulating wording, with \"else,\" is dated to a Daily Standard (Sikeston, Missouri) filler item of 29 December 1958. Chronology: Quote Investigator, 4 July 2015. — quotle.info · Verbatim: “Daher ist die Aufgabe nicht sowohl zu sehen was noch keiner gesehen hat, als bei Dem was Jeder sieht, zu denken was noch Keiner gedacht hat.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

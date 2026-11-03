@@ -898,7 +898,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "It is only with the heart that one can see rightly; what is essential is invisible to the eye";
-        const copyAttribution = "the fox, in Antoine de Saint-Exupéry, The Little Prince, trans. Katherine Woods (Reynal & Hitchcock, 1943), ch. 21. Verified at quotle.info";
+        const copyAttribution = "the fox, in Antoine de Saint-Exupéry, The Little Prince, trans. Katherine Woods (Reynal & Hitchcock, 1943), ch. 21. Verified at quotle.info · Verbatim: “And now here is my secret, a very simple secret: It is only with the heart that one can see rightly; what is essential is invisible to the eye.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

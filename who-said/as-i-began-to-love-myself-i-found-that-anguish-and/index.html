@@ -868,7 +868,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "As I began to love myself I found that anguish and emotional suffering are only warning signs";
-        const copyAttribution = "NOT Charlie Chaplin. The line is an English re-translation of a Brazilian Portuguese version of Kim McMillen's \"When I Loved Myself Enough\" (St. Martin's Press, 2001). Wikiquote lists it under Chaplin's misattributed quotations; Chaplin's office has said he did not write it. Traced by Quotle.info, 22 Jul 2026.";
+        const copyAttribution = "NOT Charlie Chaplin. The line is an English re-translation of a Brazilian Portuguese version of Kim McMillen's \"When I Loved Myself Enough\" (St. Martin's Press, 2001). Wikiquote lists it under Chaplin's misattributed quotations; Chaplin's office has said he did not write it. Traced by Quotle.info, 22 Jul 2026. · Verbatim: “As I began to love myself I found that anguish and emotional suffering are only warning signs that I was living against my own truth. Today, I know, this is \"AUTHENTICITY\".”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

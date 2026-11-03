@@ -884,7 +884,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "In a democracy, the people get the government they deserve";
-        const copyAttribution = "\"Every nation gets the government it deserves.\" Joseph de Maistre, letter 76, Saint Petersburg, 15 (27) August 1811, in Lettres et opuscules inédits du comte Joseph de Maistre, 4th ed. (Paris: A. Vaton, 1861), tome premier, p. 264. Commonly misattributed to Alexis de Tocqueville; \"In a democracy, the people get the government they deserve\" is a later English reworking with no identified source. Via Quotle.info";
+        const copyAttribution = "\"Every nation gets the government it deserves.\" Joseph de Maistre, letter 76, Saint Petersburg, 15 (27) August 1811, in Lettres et opuscules inédits du comte Joseph de Maistre, 4th ed. (Paris: A. Vaton, 1861), tome premier, p. 264. Commonly misattributed to Alexis de Tocqueville; \"In a democracy, the people get the government they deserve\" is a later English reworking with no identified source. Via Quotle.info · Verbatim: “Toute nation a le gouvernement qu'elle mérite.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

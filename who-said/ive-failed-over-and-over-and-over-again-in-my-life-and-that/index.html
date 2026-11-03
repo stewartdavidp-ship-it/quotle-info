@@ -858,7 +858,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I've failed over and over and over again in my life, and that is why I succeed";
-        const copyAttribution = "Michael Jordan, voiceover in Nike's \"Failure\" commercial (1997), written by Jamie Barrett; documented in Nike Culture: The Sign of the Swoosh (1998), p. 49.";
+        const copyAttribution = "Michael Jordan, voiceover in Nike's \"Failure\" commercial (1997), written by Jamie Barrett; documented in Nike Culture: The Sign of the Swoosh (1998), p. 49. · Verbatim: “I've missed more than 9,000 shots in my career. I've lost almost 300 games. 26 times I've been trusted to take the game-winning shot and missed. I've failed over and over and over again in my life. And that is why I succeed.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

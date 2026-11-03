@@ -880,7 +880,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Legal Advice: Pound the Facts, Pound the Law, Pound the Table";
-        const copyAttribution = "Anonymous — an American lawyers' adage, not Alan Dershowitz. Earliest documented version: Byron K. Elliott and William F. Elliott, The Work of the Advocate, 2nd ed. (Indianapolis: Bobbs-Merrill, 1911), 390, footnote 17. Quotle.info";
+        const copyAttribution = "Anonymous — an American lawyers' adage, not Alan Dershowitz. Earliest documented version: Byron K. Elliott and William F. Elliott, The Work of the Advocate, 2nd ed. (Indianapolis: Bobbs-Merrill, 1911), 390, footnote 17. Quotle.info · As commonly quoted: “When the facts are on your side, pound the facts. When the law is on your side, pound the law. When neither is on your side, pound the table.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -879,7 +879,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The Telegraph is Like a Very, Very Long Cat (or Dog)";
-        const copyAttribution = "Not Albert Einstein. An anonymous joke: the telegraph as a very long animal is documented from August 1866 (with a dog), and the cat version appears in the Commercial Telegraphers Journal, April 1924. Einstein’s name was attached no earlier than a 1985 Unix \"fortune\" file.";
+        const copyAttribution = "Not Albert Einstein. An anonymous joke: the telegraph as a very long animal is documented from August 1866 (with a dog), and the cat version appears in the Commercial Telegraphers Journal, April 1924. Einstein’s name was attached no earlier than a 1985 Unix \"fortune\" file. · Verbatim: “Well, if you had a very long cat, reaching from New York to Albany, and you trod on its tail in New York, it would throw out a wail in Albany. That’s telegraphy; and wireless is precisely the same thing without the cat.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

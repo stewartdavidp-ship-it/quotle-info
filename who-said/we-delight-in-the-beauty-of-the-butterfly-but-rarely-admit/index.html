@@ -42,7 +42,7 @@
           },
           "copyrightNotice": "In copyright — Estate of Maya Angelou",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Maya Angelou, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Maya Angelou, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -846,7 +846,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "We delight in the beauty of the butterfly, but rarely admit the changes it has gone through";
-        const copyAttribution = "widely attributed to Maya Angelou; no primary source has been located. Quotle.info";
+        const copyAttribution = "widely attributed to Maya Angelou; no primary source has been located. Quotle.info · Verbatim: “We delight in the beauty of the butterfly, but rarely admit the changes it has gone through to achieve that beauty.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

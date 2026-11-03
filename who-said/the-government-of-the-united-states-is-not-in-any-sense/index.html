@@ -851,7 +851,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The government of the United States is not, in any sense, founded on the Christian religion";
-        const copyAttribution = "Treaty of Tripoli (1796–97), Article 11 — English text drafted by Joel Barlow; ratified under President John Adams. Not a quotation of George Washington.";
+        const copyAttribution = "Treaty of Tripoli (1796–97), Article 11 — English text drafted by Joel Barlow; ratified under President John Adams. Not a quotation of George Washington. · Verbatim: “As the government of the United States of America is not in any sense founded on the Christian Religion, as it has in itself no character of enmity against the laws, religion or tranquility of Musselmen, … it is declared by the parties that no pretext arising from religious opinions shall ever produce an interruption of the harmony existing between the two countries.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

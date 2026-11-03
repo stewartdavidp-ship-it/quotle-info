@@ -50,7 +50,7 @@
           },
           "copyrightNotice": "In copyright — Sir Richard Branson (the spoken remark); the publishers of the quotation dictionaries in which it is recorded",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Richard Branson, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Richard Branson, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I believe in a benevolent dictatorship - as long as I am the benevolent dictator";
-        const copyAttribution = "Richard Branson, remark reported 25 November 1984, as recorded in Sayings of the Eighties (W. H. Allen, 1989). The widely circulated \"a benevolent dictatorship … as long as I am the benevolent dictator\" is a later paraphrase. Via Quotle.info";
+        const copyAttribution = "Richard Branson, remark reported 25 November 1984, as recorded in Sayings of the Eighties (W. H. Allen, 1989). The widely circulated \"a benevolent dictatorship … as long as I am the benevolent dictator\" is a later paraphrase. Via Quotle.info · Verbatim: “I believe in benevolent dictatorship provided I am the dictator.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

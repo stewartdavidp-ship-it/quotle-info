@@ -875,7 +875,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Americans are so enamored of equality that they would rather be equal in slavery than unequal in freedom";
-        const copyAttribution = "is a modern paraphrase, not Tocqueville’s wording. In Democracy in America, vol. 1 (trans. Henry Reeve; London: Saunders and Otley, 1835), ch. III, he wrote that a “depraved taste for equality … reduces men to prefer equality in slavery to inequality with freedom” — a claim about the human heart, not about Americans.";
+        const copyAttribution = "is a modern paraphrase, not Tocqueville’s wording. In Democracy in America, vol. 1 (trans. Henry Reeve; London: Saunders and Otley, 1835), ch. III, he wrote that a “depraved taste for equality … reduces men to prefer equality in slavery to inequality with freedom” — a claim about the human heart, not about Americans. · Verbatim: “There exists also in the human heart a depraved taste for equality, which impels the weak to attempt to lower the powerful to their own level, and reduces men to prefer equality in slavery to inequality with freedom.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

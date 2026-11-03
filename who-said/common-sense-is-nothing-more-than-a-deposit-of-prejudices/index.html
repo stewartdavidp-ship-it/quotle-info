@@ -50,7 +50,7 @@
           },
           "copyrightNotice": "In copyright — The estate of Lincoln Barnett; Harper & Brothers and Victor Gollancz as original publishers",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Albert Einstein, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Albert Einstein, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -878,7 +878,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Common Sense Is Nothing More Than a Deposit of Prejudices Laid Down in the Mind Before Age Eighteen";
-        const copyAttribution = "Lincoln Barnett, attributing the view to Albert Einstein, in “The Universe and Dr. Einstein: Part II,” Harper’s Magazine 196 (May 1948): 473; book edition p. 49. Barnett did not use quotation marks, and no source in Einstein’s own words has been found. — Quotle.info";
+        const copyAttribution = "Lincoln Barnett, attributing the view to Albert Einstein, in “The Universe and Dr. Einstein: Part II,” Harper’s Magazine 196 (May 1948): 473; book edition p. 49. Barnett did not use quotation marks, and no source in Einstein’s own words has been found. — Quotle.info · Verbatim: “Common sense is actually nothing more than a deposit of prejudices laid down in the mind prior to the age of eighteen.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

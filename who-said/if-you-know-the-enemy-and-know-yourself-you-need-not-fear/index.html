@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "If you know the enemy and know yourself, you need not fear the result of a hundred battles";
-        const copyAttribution = "Sun Tzu, The Art of War, chapter III (\"Attack by Stratagem\"), verse 18, in Lionel Giles's 1910 translation. Verified: quotle.info";
+        const copyAttribution = "Sun Tzu, The Art of War, chapter III (\"Attack by Stratagem\"), verse 18, in Lionel Giles's 1910 translation. Verified: quotle.info · Verbatim: “Hence the saying: If you know the enemy and know yourself, you need not fear the result of a hundred battles. If you know yourself but not the enemy, for every victory gained you will also suffer a defeat. If you know neither the enemy nor yourself, you will succumb in every battle.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

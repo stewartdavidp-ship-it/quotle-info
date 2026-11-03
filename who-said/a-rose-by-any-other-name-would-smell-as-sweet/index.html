@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "A rose by any other name would smell as sweet";
-        const copyAttribution = "Juliet, in William Shakespeare, Romeo and Juliet, Act 2, Scene 2. \"Name\" is the reading of the first quarto (London, 1597); the 1599 second quarto and the 1623 First Folio read \"by any other word would smell as sweete.\" — Quotle.info";
+        const copyAttribution = "Juliet, in William Shakespeare, Romeo and Juliet, Act 2, Scene 2. \"Name\" is the reading of the first quarto (London, 1597); the 1599 second quarto and the 1623 First Folio read \"by any other word would smell as sweete.\" — Quotle.info · Verbatim: “What's in a name? That which we call a rose, By any other name would smell as sweet.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

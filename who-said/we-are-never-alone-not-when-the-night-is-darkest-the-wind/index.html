@@ -874,7 +874,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "We Are Never Alone. Not When the Night Is Darkest, the Wind Coldest";
-        const copyAttribution = "Taylor Caldwell, \"My Christmas Miracle,\" Family Circle, 24 December 1961; reprinted in Christmas in My Heart, ed. Joe Wheeler (Guideposts, 1996), 209–14.";
+        const copyAttribution = "Taylor Caldwell, \"My Christmas Miracle,\" Family Circle, 24 December 1961; reprinted in Christmas in My Heart, ed. Joe Wheeler (Guideposts, 1996), 209–14. · Verbatim: “We are never alone. Not when the night is darkest, the wind coldest, the world seemingly most indifferent. For this is still the time God chooses.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

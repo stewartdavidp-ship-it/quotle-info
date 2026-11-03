@@ -859,7 +859,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "To reach a port we must sail, sometimes with the wind and sometimes against it. But we must sail, and not drift, nor lie at anchor";
-        const copyAttribution = "Oliver Wendell Holmes Sr., The Autocrat of the Breakfast-Table, ch. 4 (1858). Often credited to Franklin D. Roosevelt, who used a shortened version (\"For to reach a port, we must sail — sail, not lie at anchor, sail, not drift.\") in his fireside chat of April 14, 1938.";
+        const copyAttribution = "Oliver Wendell Holmes Sr., The Autocrat of the Breakfast-Table, ch. 4 (1858). Often credited to Franklin D. Roosevelt, who used a shortened version (\"For to reach a port, we must sail — sail, not lie at anchor, sail, not drift.\") in his fireside chat of April 14, 1938. · Verbatim: “To reach the port of heaven, we must sail sometimes with the wind and sometimes against it,—but we must sail, and not drift, nor lie at anchor.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -48,7 +48,7 @@
           },
           "copyrightNotice": "In copyright — The estate of Abraham H. Maslow; Brooks/Cole Publishing Company (1972 memorial volume)",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Abraham Maslow, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Abraham Maslow, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -880,7 +880,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The way to recover the meaning of life and the worthwhileness of life is to recover the power of experience, to have impulse voices from within, and to be able to hear these impulse voices from within";
-        const copyAttribution = "attributed to Abraham Maslow (1908–1970). Not found in any book Maslow published himself; the earliest printing located is 'Abraham H. Maslow: A Memorial Volume' (Brooks/Cole, 1972), where it appears among what read as working notes. Wikiquote files it under \"Attributed.\" Via Quotle.info";
+        const copyAttribution = "attributed to Abraham Maslow (1908–1970). Not found in any book Maslow published himself; the earliest printing located is 'Abraham H. Maslow: A Memorial Volume' (Brooks/Cole, 1972), where it appears among what read as working notes. Wikiquote files it under \"Attributed.\" Via Quotle.info · Verbatim: “The way to recover the meaning of life and the worthwhileness of life is to recover the power of experience, to have impulse voices from within, and to be able to hear these impulse voices from within — and make the point: This can be done.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

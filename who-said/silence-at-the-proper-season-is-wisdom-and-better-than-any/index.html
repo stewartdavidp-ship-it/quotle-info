@@ -102,7 +102,7 @@
               "name": "Is \"Silence at the proper season is wisdom, and better than any speech\" really by Plutarch?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. This exact English wording comes from Plutarch's Moralia essay The Education of Children (De liberis educandis), 14, in the translation by A. R. Shilleto for Bohn's Classical Library (1898). The thought is genuinely in the Plutarchan corpus, but two honest caveats apply: the standard modern Loeb (Babbitt, 1927) renders the same Greek as \"timely silence is a wise thing, and better than any speech,\" and most scholars regard this particular essay as spurious 'pseudo-Plutarch.'",
+                "text": "Yes. This exact English wording comes from Plutarch's Moralia essay The Education of Children (De liberis educandis), §14, in the translation by A. R. Shilleto for Bohn's Classical Library (1898). The thought is genuinely in the Plutarchan corpus, but two honest caveats apply: the standard modern Loeb (Babbitt, 1927) renders the same Greek as \"timely silence is a wise thing, and better than any speech,\" and most scholars regard this particular essay as spurious 'pseudo-Plutarch.'",
                 "url": "https://quotle.info/who-said/silence-at-the-proper-season-is-wisdom-and-better-than-any/"
               }
             }
@@ -875,7 +875,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Silence at the proper season is wisdom, and better than any speech";
-        const copyAttribution = "Plutarch (attrib.), Moralia — \"The Education of Children\" §14, trans. A. R. Shilleto (Bohn's Classical Library, 1898)";
+        const copyAttribution = "Plutarch (attrib.), Moralia — \"The Education of Children\" §14, trans. A. R. Shilleto (Bohn's Classical Library, 1898) · Verbatim: “For silence at the proper season is wisdom, and better than any speech.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

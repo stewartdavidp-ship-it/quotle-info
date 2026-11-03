@@ -892,7 +892,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Let's win one for the Gipper";
-        const copyAttribution = "George Gipp, as reported by Knute Rockne — \"win just one for the Gipper\" — Collier's, reprinted by the Associated Press, Daily Alaska Empire, 16 December 1930";
+        const copyAttribution = "George Gipp, as reported by Knute Rockne — \"win just one for the Gipper\" — Collier's, reprinted by the Associated Press, Daily Alaska Empire, 16 December 1930 · Verbatim: “Tell them to go in there with all they have got and win just one for the Gipper.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

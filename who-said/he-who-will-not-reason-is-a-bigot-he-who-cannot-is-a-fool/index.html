@@ -876,7 +876,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "He who will not reason is a bigot; he who cannot is a fool; and he who dares not is a slave";
-        const copyAttribution = "He who will not reason is a bigot; he who cannot is a fool; and he who dares not is a slave. — William Drummond, Academical Questions, vol. 1 (London, 1805), preface, pp. xiv–xv. Commonly misattributed to Andrew Carnegie, who had a variant of the line carved on his library mantels but named no author, and earlier to Lord Byron, who quoted it and credited Drummond. Provenance: quotle.info";
+        const copyAttribution = "He who will not reason is a bigot; he who cannot is a fool; and he who dares not is a slave. — William Drummond, Academical Questions, vol. 1 (London, 1805), preface, pp. xiv–xv. Commonly misattributed to Andrew Carnegie, who had a variant of the line carved on his library mantels but named no author, and earlier to Lord Byron, who quoted it and credited Drummond. Provenance: quotle.info · Verbatim: “Philosophy, wisdom, and liberty, support each other; he, who will not reason, is a bigot; he, who cannot, is a fool; and he, who dares not, is a slave.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

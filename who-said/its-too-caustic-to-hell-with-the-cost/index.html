@@ -875,7 +875,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "It's Too Caustic\" \"To Hell With the Cost";
-        const copyAttribution = "said a director, when asked his opinion of a script. “To hell with the cost,” replied Sam. “If it's a good picture, we'll make it.” —Not Samuel Goldwyn: a joke in print by 9 January 1930, credited by Walter Winchell to Robert Benchley; this wording from Alva Johnston, The Great Goldwyn (1937), p. 34. Traced by Quotle.info";
+        const copyAttribution = "said a director, when asked his opinion of a script. “To hell with the cost,” replied Sam. “If it's a good picture, we'll make it.” —Not Samuel Goldwyn: a joke in print by 9 January 1930, credited by Walter Winchell to Robert Benchley; this wording from Alva Johnston, The Great Goldwyn (1937), p. 34. Traced by Quotle.info · Verbatim: “\"It's too caustic,\" said a director, when asked his opinion of a script. \"To hell with the cost,\" replied Sam. \"If it's a good picture, we'll make it.\"”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

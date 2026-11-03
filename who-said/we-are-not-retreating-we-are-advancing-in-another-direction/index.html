@@ -871,7 +871,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "We are not retreating, we are advancing in another direction";
-        const copyAttribution = "Maj. Gen. Oliver P. Smith, USMC, Chosin Reservoir, as quoted in TIME, 18 December 1950 (often misattributed to Douglas MacArthur)";
+        const copyAttribution = "Maj. Gen. Oliver P. Smith, USMC, Chosin Reservoir, as quoted in TIME, 18 December 1950 (often misattributed to Douglas MacArthur) · Verbatim: “Retreat, hell! We're not retreating, we're just advancing in a different direction.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

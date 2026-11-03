@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I am the greatest! I'm the greatest thing that ever lived";
-        const copyAttribution = "Muhammad Ali (then Cassius Clay), shouted at ringside in Miami Beach on 25 February 1964, moments after taking the world heavyweight title from Sonny Liston. Verified via quotle.info";
+        const copyAttribution = "Muhammad Ali (then Cassius Clay), shouted at ringside in Miami Beach on 25 February 1964, moments after taking the world heavyweight title from Sonny Liston. Verified via quotle.info · Verbatim: “I am the greatest! I'm the greatest thing that ever lived. I don't have a mark on my face, and I upset Sonny Liston, and I just turned twenty-two years old. I must be the greatest.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

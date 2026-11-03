@@ -863,7 +863,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Experience is a brutal teacher, but you learn. My God, do you learn";
-        const copyAttribution = "Not C.S. Lewis. Written by William Nicholson for the film Shadowlands (1993), spoken by Anthony Hopkins as Lewis; not found in Lewis's writings.";
+        const copyAttribution = "Not C.S. Lewis. Written by William Nicholson for the film Shadowlands (1993), spoken by Anthony Hopkins as Lewis; not found in Lewis's writings. · Verbatim: “Experience: that most brutal of teachers. But you learn, my God do you learn.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

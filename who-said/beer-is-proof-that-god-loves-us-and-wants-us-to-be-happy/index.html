@@ -862,7 +862,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Beer is proof that God loves us and wants us to be happy";
-        const copyAttribution = "Misattributed to Benjamin Franklin. He wrote it about WINE, not beer — a line from his c.1779 letter to the Abbé Morellet, first published in 1818. The \"beer\" wording is a 1990s substitution.";
+        const copyAttribution = "Misattributed to Benjamin Franklin. He wrote it about WINE, not beer — a line from his c.1779 letter to the Abbé Morellet, first published in 1818. The \"beer\" wording is a 1990s substitution. · Verbatim: “Behold the rain which descends from heaven upon our vineyards, and which incorporates itself with the grapes to be changed into wine; a constant proof that God loves us, and loves to see us happy!”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

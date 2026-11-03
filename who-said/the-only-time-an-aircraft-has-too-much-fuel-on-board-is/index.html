@@ -862,7 +862,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The Only Time an Aircraft Has Too Much Fuel On Board Is When It Is On Fire";
-        const copyAttribution = "aviation adage, often misattributed to Charles Kingsford Smith; earliest known form in Ernest K. Gann, Ernest K. Gann’s Flying Circus (Macmillan, 1974), p. 191. Source: Quotle.info";
+        const copyAttribution = "aviation adage, often misattributed to Charles Kingsford Smith; earliest known form in Ernest K. Gann, Ernest K. Gann’s Flying Circus (Macmillan, 1974), p. 191. Source: Quotle.info · Verbatim: “the only time there was too much fuel aboard any aircraft was if it was on fire”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

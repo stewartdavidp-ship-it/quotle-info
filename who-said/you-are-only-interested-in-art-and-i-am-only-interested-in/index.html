@@ -50,7 +50,7 @@
           "license": "https://creativecommons.org/publicdomain/mark/1.0/",
           "isAccessibleForFree": true,
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to George Bernard Shaw, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to George Bernard Shaw, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -875,7 +875,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "You Are Only Interested in Art and I Am Only Interested in Money";
-        const copyAttribution = "attributed to George Bernard Shaw, addressing film producer Samuel Goldwyn. Earliest documented printing: the Baltimore American, 1 May 1921, from a London cable. Shaw retold the exchange himself in 1922 and 1926, using different wording each time, and a 1937 biography of Goldwyn credits this polished version to publicist Howard Dietz. quotle.info";
+        const copyAttribution = "attributed to George Bernard Shaw, addressing film producer Samuel Goldwyn. Earliest documented printing: the Baltimore American, 1 May 1921, from a London cable. Shaw retold the exchange himself in 1922 and 1926, using different wording each time, and a 1937 biography of Goldwyn credits this polished version to publicist Howard Dietz. quotle.info · Verbatim: “Well, Mr. Goldwyn, there is not much use in going on. There is this difference between you and me: You are only interested in art and I am only interested in money.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

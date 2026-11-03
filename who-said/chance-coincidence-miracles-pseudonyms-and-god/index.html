@@ -884,7 +884,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Chance, Coincidence, Miracles, Pseudonyms, and God";
-        const copyAttribution = "is not a quotation — it is the title of Quote Investigator's article of 20 April 2015. Helena Blavatsky never wrote it; in The Secret Doctrine (1888, vol. 1, p. 653) she quoted \"Chance is but the pseudonym of God…\" and credited Coleridge, an ascription first recorded in 1862 and never substantiated. The line is Théophile Gautier's, from La Croix de Berny (1845). — Quotle.info";
+        const copyAttribution = "is not a quotation — it is the title of Quote Investigator's article of 20 April 2015. Helena Blavatsky never wrote it; in The Secret Doctrine (1888, vol. 1, p. 653) she quoted \"Chance is but the pseudonym of God…\" and credited Coleridge, an ascription first recorded in 1862 and never substantiated. The line is Théophile Gautier's, from La Croix de Berny (1845). — Quotle.info · Verbatim: “Le hasard, c’est peut-être le pseudonyme de Dieu, quand il ne veut pas signer.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

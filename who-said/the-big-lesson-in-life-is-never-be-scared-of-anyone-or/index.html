@@ -48,7 +48,7 @@
           },
           "copyrightNotice": "In copyright — Estate of Frank Sinatra; Bill Zehme / HarperCollins (The Way You Wear Your Hat, 1997)",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Frank Sinatra, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Frank Sinatra, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -859,7 +859,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The big lesson in life is never be scared of anyone or anything";
-        const copyAttribution = "Frank Sinatra, as documented in Bill Zehme, The Way You Wear Your Hat (1997)";
+        const copyAttribution = "Frank Sinatra, as documented in Bill Zehme, The Way You Wear Your Hat (1997) · Verbatim: “The big lesson in life, baby, is never be scared of anyone or anything.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

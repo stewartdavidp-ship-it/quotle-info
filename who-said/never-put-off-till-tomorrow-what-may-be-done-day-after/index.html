@@ -863,7 +863,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Never put off till tomorrow what may be done day after tomorrow just as well";
-        const copyAttribution = "Mark Twain, \"The Late Benjamin Franklin,\" The Galaxy, July 1870 — a satirical fake-Franklin maxim, signed \"B. F.\"";
+        const copyAttribution = "Mark Twain, \"The Late Benjamin Franklin,\" The Galaxy, July 1870 — a satirical fake-Franklin maxim, signed \"B. F.\" · Verbatim: “Never put off till to-morrow what you can do day after to-morrow just as well.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -871,7 +871,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "It Ain’t Over ’Til the Fat Lady Sings";
-        const copyAttribution = "Ralph Carpenter, Texas Tech sports information director, quoted by Sam Blair in the Dallas Morning News, March 10, 1976 (earliest known “opera/fat lady” version; provisionally credited by Quote Investigator)";
+        const copyAttribution = "Ralph Carpenter, Texas Tech sports information director, quoted by Sam Blair in the Dallas Morning News, March 10, 1976 (earliest known “opera/fat lady” version; provisionally credited by Quote Investigator) · Verbatim: “The opera ain't over until the fat lady sings.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -879,7 +879,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Niagara Falls: The First Great Disappointment in Married Life";
-        const copyAttribution = "Oscar Wilde, Impressions of America (lecture, 1883; printed Sunderland: Keystone Press, 1906) — Wilde's words were “the sight of the stupendous waterfall must be one of the earliest, if not the keenest, disappointments in American married life”; the short form is a later condensation, and the “second greatest disappointment” variant is not his";
+        const copyAttribution = "Oscar Wilde, Impressions of America (lecture, 1883; printed Sunderland: Keystone Press, 1906) — Wilde's words were “the sight of the stupendous waterfall must be one of the earliest, if not the keenest, disappointments in American married life”; the short form is a later condensation, and the “second greatest disappointment” variant is not his · Verbatim: “Every American bride is taken there, and the sight of the stupendous waterfall must be one of the earliest, if not the keenest, disappointments in American married life.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

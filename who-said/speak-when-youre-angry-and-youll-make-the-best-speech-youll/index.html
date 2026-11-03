@@ -870,7 +870,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Speak When You're Angry and You'll Make the Best Speech You'll Ever Regret";
-        const copyAttribution = "Widely credited to Ambrose Bierce, but the line appears in none of his works. The earliest documented instance is Groucho Marx, quoted in Eve Starr's \"Inside TV\" column, Greensboro Record, 3 November 1954. Research: Quote Investigator.";
+        const copyAttribution = "Widely credited to Ambrose Bierce, but the line appears in none of his works. The earliest documented instance is Groucho Marx, quoted in Eve Starr's \"Inside TV\" column, Greensboro Record, 3 November 1954. Research: Quote Investigator. · Verbatim: “If you speak when angry, you'll make the best speech you'll ever regret.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

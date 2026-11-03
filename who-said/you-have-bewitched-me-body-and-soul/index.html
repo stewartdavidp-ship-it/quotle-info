@@ -865,7 +865,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "You have bewitched me, body and soul";
-        const copyAttribution = "Jane Austen did not write “You have bewitched me, body and soul.” It is Darcy’s line in the 2005 film of Pride & Prejudice, screenplay credited to Deborah Moggach. The rest of that speech is adapted almost verbatim from the novel’s chapter 58 — this clause is the screenwriter’s addition. Via quotle.info";
+        const copyAttribution = "Jane Austen did not write “You have bewitched me, body and soul.” It is Darcy’s line in the 2005 film of Pride & Prejudice, screenplay credited to Deborah Moggach. The rest of that speech is adapted almost verbatim from the novel’s chapter 58 — this clause is the screenwriter’s addition. Via quotle.info · Verbatim: “If, however, your feelings have changed, I would have to tell you: you have bewitched me, body and soul, and I love… I love… I love you.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

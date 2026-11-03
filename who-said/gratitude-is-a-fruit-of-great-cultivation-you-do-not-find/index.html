@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Gratitude is a fruit of great cultivation; you do not find it among gross people";
-        const copyAttribution = "Samuel Johnson, spoken at Dunvegan, Isle of Skye, 20 September 1773 — recorded in James Boswell, The Journal of a Tour to the Hebrides, with Samuel Johnson, LL.D. (London: Henry Baldwin for Charles Dilly, 1785), pp. 283–84.";
+        const copyAttribution = "Samuel Johnson, spoken at Dunvegan, Isle of Skye, 20 September 1773 — recorded in James Boswell, The Journal of a Tour to the Hebrides, with Samuel Johnson, LL.D. (London: Henry Baldwin for Charles Dilly, 1785), pp. 283–84. · Verbatim: “Sir, gratitude is a fruit of great cultivation; you do not find it among gross people.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -869,7 +869,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "In essentials, unity; in non-essentials, liberty; in all things, charity";
-        const copyAttribution = "Not Augustine. Earliest known source: Marco Antonio de Dominis, De republica ecclesiastica, vol. 1 (London, 1617), bk. 4, ch. 8, p. 676 (Latin). Long credited to Rupertus Meldenius (Peter Meiderlin), Paraenesis votiva (1626). — via Quotle.info";
+        const copyAttribution = "Not Augustine. Earliest known source: Marco Antonio de Dominis, De republica ecclesiastica, vol. 1 (London, 1617), bk. 4, ch. 8, p. 676 (Latin). Long credited to Rupertus Meldenius (Peter Meiderlin), Paraenesis votiva (1626). — via Quotle.info · Verbatim: “Omnesque mutuam amplecteremur unitatem in necessariis, in non necessariis libertatem, in omnibus caritatem.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -843,7 +843,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "In the final analysis, it is between you and God. It was never between you and them anyway";
-        const copyAttribution = "Not Mother Teresa. This is an anonymous coda (added c. 1995–1999) to Kent M. Keith's 1968 \"Paradoxical Commandments\"; Keith says he did not write these final lines.";
+        const copyAttribution = "Not Mother Teresa. This is an anonymous coda (added c. 1995–1999) to Kent M. Keith's 1968 \"Paradoxical Commandments\"; Keith says he did not write these final lines. · Verbatim: “You see, in the final analysis, it is between you and God; it was never between you and them anyway.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

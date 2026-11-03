@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Perhaps the most valuable result of all education is the ability to make yourself do the thing you have to do, when it ought to be done, whether you like it or not";
-        const copyAttribution = "Thomas Henry Huxley, \"Technical Education\" (1877), an address to the Working Men's Club and Institute Union; collected in Science and Education (Collected Essays, vol. III), p. 414.";
+        const copyAttribution = "Thomas Henry Huxley, \"Technical Education\" (1877), an address to the Working Men's Club and Institute Union; collected in Science and Education (Collected Essays, vol. III), p. 414. · Verbatim: “Perhaps the most valuable result of all education is the ability to make yourself do the thing you have to do, when it ought to be done, whether you like it or not; it is the first lesson that ought to be learned; and, however early a man's training begins, it is probably the last lesson that he learns thoroughly.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The man who dies rich dies disgraced";
-        const copyAttribution = "Andrew Carnegie, “Wealth,” North American Review 148, no. 391 (June 1889): 664. The popular form drops the word “thus”; Carnegie used the shorter version himself in the December 1889 sequel.";
+        const copyAttribution = "Andrew Carnegie, “Wealth,” North American Review 148, no. 391 (June 1889): 664. The popular form drops the word “thus”; Carnegie used the shorter version himself in the December 1889 sequel. · Verbatim: “The man who dies thus rich dies disgraced.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

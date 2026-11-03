@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The Male Libido is Like Being Chained to a Madman";
-        const copyAttribution = "Sophocles (c. 497–406 BC), as relayed by Cephalus in Plato's Republic, Book 1 — the modern \"chained to a madman\" wording is a paraphrase, not a translation";
+        const copyAttribution = "Sophocles (c. 497–406 BC), as relayed by Cephalus in Plato's Republic, Book 1 — the modern \"chained to a madman\" wording is a paraphrase, not a translation · Verbatim: “Peace… most gladly have I escaped the thing of which you speak; I feel as if I had escaped from a mad and furious master.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -875,7 +875,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "By working faithfully eight hours a day, you may eventually get to be a boss and work twelve hours a day";
-        const copyAttribution = "printed by the syndicated humorist Robert Quillen (1887–1948) in his column \"Editorial Epigrams,\" The Evening Repository (Canton, OH), 6 April 1923. Credited to Robert Frost only from a Walter Winchell column of 1940, on no evidence. Via Quotle.info.";
+        const copyAttribution = "printed by the syndicated humorist Robert Quillen (1887–1948) in his column \"Editorial Epigrams,\" The Evening Repository (Canton, OH), 6 April 1923. Credited to Robert Frost only from a Walter Winchell column of 1940, on no evidence. Via Quotle.info. · Verbatim: “By working faithfully eight hours a day you may eventually get to be boss and work twelve hours a day.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

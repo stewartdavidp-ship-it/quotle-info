@@ -869,7 +869,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "A black cat crossing your path signifies that the animal is going somewhere";
-        const copyAttribution = "Earliest credited to Jack Oakie (The Marion Star, 15 January 1931), not Groucho Marx, who was credited with it in July 1931. Via quotle.info";
+        const copyAttribution = "Earliest credited to Jack Oakie (The Marion Star, 15 January 1931), not Groucho Marx, who was credited with it in July 1931. Via quotle.info · Verbatim: “A black cat crossing in front of a person signifies that the animal is going somewhere.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

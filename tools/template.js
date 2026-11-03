@@ -85,10 +85,31 @@ const NAMED_ENTITIES = {
   Igrave: 'Ì', Iacute: 'Í', Icirc: 'Î', Iuml: 'Ï', Ntilde: 'Ñ',
   Ograve: 'Ò', Oacute: 'Ó', Ocirc: 'Ô', Otilde: 'Õ', Ouml: 'Ö', Oslash: 'Ø', OElig: 'Œ',
   Ugrave: 'Ù', Uacute: 'Ú', Ucirc: 'Û', Uuml: 'Ü',
+  // Greek — a lone missing entity used to collapse to a space, so "&Epsilon;&rho;&mu;&eta;&nu;&epsilon;&iota;&alpha;"
+  // in an FAQ answer came out as "Ἑ logica" (r58 fix report: ~23 records carry Greek this way).
+  alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', epsilon: 'ε', zeta: 'ζ', eta: 'η', theta: 'θ',
+  iota: 'ι', kappa: 'κ', lambda: 'λ', mu: 'μ', nu: 'ν', xi: 'ξ', omicron: 'ο', pi: 'π', rho: 'ρ',
+  sigmaf: 'ς', sigma: 'σ', tau: 'τ', upsilon: 'υ', phi: 'φ', chi: 'χ', psi: 'ψ', omega: 'ω',
+  Alpha: 'Α', Beta: 'Β', Gamma: 'Γ', Delta: 'Δ', Epsilon: 'Ε', Zeta: 'Ζ', Eta: 'Η', Theta: 'Θ',
+  Iota: 'Ι', Kappa: 'Κ', Lambda: 'Λ', Mu: 'Μ', Nu: 'Ν', Xi: 'Ξ', Omicron: 'Ο', Pi: 'Π', Rho: 'Ρ',
+  Sigma: 'Σ', Tau: 'Τ', Upsilon: 'Υ', Phi: 'Φ', Chi: 'Χ', Psi: 'Ψ', Omega: 'Ω',
+  thetasym: 'ϑ', upsih: 'ϒ', piv: 'ϖ',
+  // Symbols and typography measured in data/quotes (sect 67 records, copy 61, rarr 36, uarr 25…).
+  sect: '§', para: '¶', copy: '©', reg: '®', trade: '™', pound: '£', euro: '€', yen: '¥',
+  cent: '¢', iexcl: '¡', iquest: '¿', bull: '•', dagger: '†', Dagger: '‡', prime: '′', Prime: '″',
+  lowast: '∗', rarr: '→', larr: '←', uarr: '↑', darr: '↓', harr: '↔', ne: '≠', le: '≤', ge: '≥',
+  minus: '−', plusmn: '±', frac12: '½', frac14: '¼', frac34: '¾', sup1: '¹', sup2: '²', sup3: '³',
+  ordm: 'º', ordf: 'ª', micro: 'µ', bdquo: '„', sbquo: '‚', lsaquo: '‹', rsaquo: '›', percnt: '%',
+  num: '#', commat: '@', thinsp: ' ', ensp: ' ', emsp: ' ', shy: '', zwj: '', zwnj: '',
+  lstrok: 'ł', Lstrok: 'Ł', eth: 'ð', ETH: 'Ð', thorn: 'þ', THORN: 'Þ', scaron: 'š', Scaron: 'Š',
+  zcaron: 'ž', Zcaron: 'Ž', Yacute: 'Ý', Yuml: 'Ÿ', circ: 'ˆ', tilde: '˜', acute: '´', uml: '¨',
+  cedil: '¸', macr: '¯',
 };
 const plain = (x) => String(x || '').replace(/<[^>]+>/g, '')
-  .replace(/&#(\d+);/g, (m, d) => String.fromCharCode(+d))
-  .replace(/&#x([0-9a-f]+);/gi, (m, h) => String.fromCharCode(parseInt(h, 16)))
+  // fromCodePoint, not fromCharCode: &#128214; (📖, in 31 records) is above U+FFFF, and fromCharCode
+  // truncates it to an unrelated BMP character.
+  .replace(/&#(\d+);/g, (m, d) => String.fromCodePoint(+d))
+  .replace(/&#x([0-9a-f]+);/gi, (m, h) => String.fromCodePoint(parseInt(h, 16)))
   .replace(/&([a-zA-Z]+);/g, (m, e) => (e in NAMED_ENTITIES ? NAMED_ENTITIES[e] : ' '))
   // "↗" is link-affordance chrome: it lives inside an anchor in our prose and means "opens in a new
   // tab". Stripping tags leaves it stranded mid-sentence in plain-text sinks (JSON-LD FAQ answers,
@@ -96,6 +117,11 @@ const plain = (x) => String(x || '').replace(/<[^>]+>/g, '')
   // Drop it with any space that preceded it, so "…a breath earlier ↗, which…" closes up cleanly.
   .replace(/\s*↗/g, '')
   .replace(/\s+/g, ' ').trim();
+
+// Two quote strings carry the same WORDS when they match after case-folding and collapsing every
+// run of non-letters/digits — so "Men" vs "men." and curly vs straight quotes are not "drift".
+const normWords = (x) => plain(x).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+const sameWords = (a, b) => normWords(a) === normWords(b);
 
 const CONFIDENCE = {
   verified:   { cls: 'verified',   glyph: '✓', text: 'Verified',   label: 'Written by' },
@@ -241,7 +267,12 @@ function buildJsonLd(q, url) {
   // This is NOT the test for "right person, wrong words" — see rightPersonWrongWords below. Two
   // different strings is a property of the WORDING; whether the credited person is nonetheless the
   // true author is a property of the ATTRIBUTION, and the corpus carries both shapes independently.
-  const wordingDrift = !!(s.claimQuoteText && plain(s.claimQuoteText) !== plain(quotation.text));
+  // Compared as WORDS, not strings: plain() alone treats letter case and a trailing period as
+  // drift. "The Graveyards Are Full of Indispensable Men" vs "The graveyards are full of
+  // indispensable men." counted as drift, which dropped the valid misWho (Charles de Gaulle) and
+  // shipped a bare-quote ClaimReview rated False — read as "this adage is false". 12 disputed
+  // records were that shape (r54 fix report, 2026-11-02).
+  const wordingDrift = !!(s.claimQuoteText && !sameWords(s.claimQuoteText, quotation.text));
   // RIGHT PERSON, WRONG WORDS — the credited name IS the true author and the dispute is the WORDING,
   // not the attribution (Franklin really wrote it, but about wine; Durocher really said it, but
   // differently). There the "hero must not be the magnet" test below is a false positive: creator
@@ -553,6 +584,17 @@ function buildJsonLd(q, url) {
     // "A. A. Milne" (a real person). The longer vector words keep \b since they can't be initials.
     if (/^(a|an|the|no|not)\s/i.test(x)) return false;
     if (/^(modern|popular|internet|anonymous|unknown|various|multiple)\b/i.test(x)) return false;
+    // PROPAGATION VECTORS NAMED BY TRADE. "Early printers of the speech (unknown)" survived every
+    // test here once stripQual took the paren: no article, no vector word, a capital — and was typed
+    // as the Person who said the line (r58 fix report). The people who printed, edited, translated
+    // or copied a line are how it travelled, never a magnet; a real magnet is a NAME, and none of
+    // these words is a name. A leading early/later is the same tell ("Later anthologists").
+    if (/\b(printers?|translators?|editors?|publishers?|compilers?|anthologists?|reporters?|copyists?|scribes?|transcribers?)\b/i.test(x)) return false;
+    if (/^(early|earlier|later)\s/i.test(x)) return false;
+    // A who that OPENS WITH A QUOTATION MARK is wording, not a person: '“Niels Bohr wrote…”' is how
+    // the popular framing goes, and it reached the FAQ as `Is … really by "Niels Bohr wrote…"?` once
+    // wordingDrift stopped hiding it. isQuoteNotPerson only catches fragments of THIS page's quote.
+    if (/^["'“‘«„]/.test(x)) return false;
     if (/\b(quote ?sites?|aggregator|inspirational|paraphrase[rd]?|quote culture|web-era|quote-book|goodreads|brainyquote|azquotes|passiton|no documented|no identifiable|the discourses|the handbook)\b/i.test(x)) return false;
     // A DATED PARENTHETICAL MAKES IT A WORK. The trailing paren `stripQual` removes is a scope
     // qualifier on a name — "(as popularly quoted)", "(Kong Qiu)" — but when it carries a YEAR it is
@@ -1019,9 +1061,25 @@ function buildJsonLd(q, url) {
     }
     if (q.confidence === 'attributed') {
       const who = trueAuthor || (quotation.creator && plain(quotation.creator.name)) || '';
+      // "NOT TRACED TO A PRIMARY SOURCE" IS A FINDING, NOT A DEFAULT. Most attributed records DO
+      // cite a dated source — a memoir reporting the remark (Malcolm on Wittgenstein), a newspaper
+      // interview, a speech text whose wording differs. Stamping "not traced to a primary source" on
+      // all of them put a falsehood beside the record's own isPartOf/citation in the same JSON-LD
+      // node (r54 fix reports #4 and #8, 2026-11-02). What every attributed record shares is only
+      // that the credit is UNCONFIRMED, so that is the default. The stronger sentence is kept for
+      // the records whose provenance block itself says no primary source was found — measured 34 of
+      // 292 attributed records without a verdictNote; the other 258 get the neutral line.
+      // schema.verdictNote still overrides either.
+      const untraced = /no primary source|not traced|no (?:documented|known) source|unsourced|no source (?:located|found)|no contemporaneous/i
+        .test(JSON.stringify((q.source && q.source.docMeta) || []));
+      if (untraced) {
+        return who
+          ? `Widely attributed to ${who}, but not traced to a primary source. Treat the attribution as unconfirmed.`
+          : 'Widely repeated, but not traced to a primary source. Treat the attribution as unconfirmed.';
+      }
       return who
-        ? `Widely attributed to ${who}, but not traced to a primary source. Treat the attribution as unconfirmed.`
-        : 'Widely repeated, but not traced to a primary source. Treat the attribution as unconfirmed.';
+        ? `Attributed to ${who}, but the sources found do not confirm it. Treat the attribution as unconfirmed.`
+        : 'Widely repeated, but the sources found do not confirm the attribution. Treat it as unconfirmed.';
     }
     return 'Attribution traced to a primary source.';
   })();
@@ -1450,7 +1508,7 @@ function renderPresentationKit(q) {
   // claimQuoteText is saying "the line in circulation differs from the documented sentence" —
   // that's a wording dispute. Everything else disputed is a wrong-name dispute, where the wording
   // is usually verbatim correct and only the attribution is false.
-  const wordingDrift = !!(sch.claimQuoteText && plain(sch.claimQuoteText) !== plain(sch.quotationText || q.displayQuote));
+  const wordingDrift = !!(sch.claimQuoteText && !sameWords(sch.claimQuoteText, sch.quotationText || q.displayQuote));
   // THE USED-BUT-DIDN'T-COIN CASE. rightPersonWrongWords() suppresses this banner when the magnet IS
   // the true author and only the wording drifted. It does NOT reach the other shape: a page whose
   // verdict is that the magnet genuinely SAID the line but did not ORIGINATE it. There the hero
@@ -1759,7 +1817,11 @@ function renderSourceSubmit(q) {
 }
 
 function renderTail(q) {
-  const copyAttr = creditLine(q);
+  // Same string the kit's blockquote shows (kitCredit): the Copy/Share buttons used to paste the
+  // popular wording under a clean citation with the verbatim correction dropped, on every record
+  // whose quotationText differs from the shown wording (r58 fix report). verbatimNote() already
+  // de-duplicates against creditLine, so this cannot say the correction twice.
+  const copyAttr = creditLine(q) + verbatimNote(q, kitQuote(q));
   return `
         <!-- ============ GAME CTA ============ -->
         <aside class="game-cta" aria-label="Related game">

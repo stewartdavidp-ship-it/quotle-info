@@ -871,7 +871,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Eat a Live Frog Every Morning, and Nothing Worse Will Happen to You the Rest of the Day";
-        const copyAttribution = "Nicolas Chamfort, Oeuvres de Chamfort, vol. 4 (1794–95), 335 — not Mark Twain and not Émile Zola. Earliest English wording: an unattributed sign quoted in the Seattle Times, 17 December 1976.";
+        const copyAttribution = "Nicolas Chamfort, Oeuvres de Chamfort, vol. 4 (1794–95), 335 — not Mark Twain and not Émile Zola. Earliest English wording: an unattributed sign quoted in the Seattle Times, 17 December 1976. · Verbatim: “M. de Lassay, a very indulgent man, but with a great knowledge of society, said that we should swallow a toad every morning, in order to fortify ourselves against the disgust of the rest of the day, when we have to spend it in society.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

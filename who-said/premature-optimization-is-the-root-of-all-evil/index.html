@@ -101,7 +101,7 @@
               "name": "Is \"Premature optimization is the root of all evil\" really by Donald Knuth?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. Knuth wrote the line, in these exact words, in \"Structured Programming with go to Statements,\" published in ACM Computing Surveys in December 1974 — it sits on page 268 of the scanned paper. What almost never travels with it is the sentence that follows, in which Knuth insists the critical 3 of code should be optimized.",
+                "text": "Yes. Knuth wrote the line, in these exact words, in \"Structured Programming with go to Statements,\" published in ACM Computing Surveys in December 1974 — it sits on page 268 of the scanned paper. What almost never travels with it is the sentence that follows, in which Knuth insists the critical 3% of code should be optimized.",
                 "url": "https://quotle.info/who-said/premature-optimization-is-the-root-of-all-evil/"
               }
             }
@@ -868,7 +868,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Premature optimization is the root of all evil";
-        const copyAttribution = "Donald Knuth, \"Structured Programming with go to Statements,\" ACM Computing Surveys 6, no. 4 (December 1974): 261–301, at 268. Verified by Quotle.info.";
+        const copyAttribution = "Donald Knuth, \"Structured Programming with go to Statements,\" ACM Computing Surveys 6, no. 4 (December 1974): 261–301, at 268. Verified by Quotle.info. · Verbatim: “We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

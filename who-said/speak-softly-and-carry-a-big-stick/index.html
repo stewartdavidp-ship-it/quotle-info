@@ -855,7 +855,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Speak softly and carry a big stick";
-        const copyAttribution = "Theodore Roosevelt, letter to Henry L. Sprague, 26 January 1900 (also his Minnesota State Fair speech, 2 September 1901)";
+        const copyAttribution = "Theodore Roosevelt, letter to Henry L. Sprague, 26 January 1900 (also his Minnesota State Fair speech, 2 September 1901) · Verbatim: “Speak softly and carry a big stick; you will go far.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

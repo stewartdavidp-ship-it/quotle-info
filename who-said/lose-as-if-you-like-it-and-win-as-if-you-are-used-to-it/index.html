@@ -871,7 +871,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Lose As If You Like It, and Win As If You Are Used to It";
-        const copyAttribution = "Lose as if you like it, and win as if you were used to it. — Anonymous sporting adage; quoted as already current in Harry S. Page's Between the Flags (Derrydale Press, 1929), with half of it already in print in 1920. Widely credited to Ralph Waldo Emerson, but Quote Investigator found no evidence for that attribution. Via quotle.info";
+        const copyAttribution = "Lose as if you like it, and win as if you were used to it. — Anonymous sporting adage; quoted as already current in Harry S. Page's Between the Flags (Derrydale Press, 1929), with half of it already in print in 1920. Widely credited to Ralph Waldo Emerson, but Quote Investigator found no evidence for that attribution. Via quotle.info · Verbatim: “Win as if you are used to it. Lose as if you liked it.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

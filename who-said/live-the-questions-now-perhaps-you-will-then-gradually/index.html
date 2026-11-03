@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Live the questions now. Perhaps you will then gradually, without noticing it, live along some distant day into the answer";
-        const copyAttribution = "Rainer Maria Rilke, Letters to a Young Poet, Letter Four (Worpswede, near Bremen, 16 July 1903), translated by M. D. Herter Norton (New York: W. W. Norton & Company, 1934). Originally published as Briefe an einen jungen Dichter (Leipzig: Insel Verlag, 1929). English translation still in copyright.";
+        const copyAttribution = "Rainer Maria Rilke, Letters to a Young Poet, Letter Four (Worpswede, near Bremen, 16 July 1903), translated by M. D. Herter Norton (New York: W. W. Norton & Company, 1934). Originally published as Briefe an einen jungen Dichter (Leipzig: Insel Verlag, 1929). English translation still in copyright. · Verbatim: “And the point is, to live everything. Live the questions now. Perhaps you will then gradually, without noticing it, live along some distant day into the answer.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

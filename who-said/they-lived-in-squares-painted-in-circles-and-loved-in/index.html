@@ -858,7 +858,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "They lived in squares, painted in circles and loved in triangles";
-        const copyAttribution = "Not Virginia Woolf. The joke began with Margaret Irwin: “a few squares where all the couples are triangles,” Fire Down Below (London: William Heinemann, 1928), p. 109. The “painted in circles … loved in triangles” wording is a later embellishment. (Quotle.info)";
+        const copyAttribution = "Not Virginia Woolf. The joke began with Margaret Irwin: “a few squares where all the couples are triangles,” Fire Down Below (London: William Heinemann, 1928), p. 109. The “painted in circles … loved in triangles” wording is a later embellishment. (Quotle.info) · Verbatim: “It is a circle, my fair child, composed of a few squares where all the couples are triangles.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

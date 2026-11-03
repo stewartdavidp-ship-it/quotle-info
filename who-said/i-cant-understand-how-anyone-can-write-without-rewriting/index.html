@@ -884,7 +884,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I can't understand how anyone can write without rewriting everything over and over again";
-        const copyAttribution = "Leo Tolstoy, recorded by A. B. Goldenveizer, Talks with Tolstoi, trans. S. S. Koteliansky and Virginia Woolf (Hogarth Press, 1923), p. 26. Via Quotle.info";
+        const copyAttribution = "Leo Tolstoy, recorded by A. B. Goldenveizer, Talks with Tolstoi, trans. S. S. Koteliansky and Virginia Woolf (Hogarth Press, 1923), p. 26. Via Quotle.info · Verbatim: “I can't understand how any one can write without rewriting everything over and over again. I scarcely ever re-read my published writings, but if by chance I come across a page, it always strikes me: All this must be rewritten; this is how I should have written it.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

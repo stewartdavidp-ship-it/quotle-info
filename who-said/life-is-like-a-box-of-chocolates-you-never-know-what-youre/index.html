@@ -881,7 +881,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Life is like a box of chocolates. You never know what you're gonna get";
-        const copyAttribution = "Forrest Gump (Tom Hanks), written by Eric Roth, Forrest Gump (1994)";
+        const copyAttribution = "Forrest Gump (Tom Hanks), written by Eric Roth, Forrest Gump (1994) · Verbatim: “My Momma always said life was like a box of chocolates. You never know what you're gonna get.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

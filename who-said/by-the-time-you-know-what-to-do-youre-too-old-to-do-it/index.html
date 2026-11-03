@@ -49,7 +49,7 @@
           },
           "copyrightNotice": "In copyright — The estate of Ted Williams (the remark); Thomas Boswell and Doubleday, and Bob Chieger and New American Library, for the books in which it is documented.",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Ted Williams, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Ted Williams, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "By the time you know what to do, you're too old to do it";
-        const copyAttribution = "attributed to Ted Williams (1918–2002). Full wording documented in Thomas Boswell, How Life Imitates the World Series (Doubleday, 1982); no primary source by Williams located. Via Quotle.info";
+        const copyAttribution = "attributed to Ted Williams (1918–2002). Full wording documented in Thomas Boswell, How Life Imitates the World Series (Doubleday, 1982); no primary source by Williams located. Via Quotle.info · Verbatim: “You dumb hitters. By the time you know what to do, you're too old to do it.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -50,7 +50,7 @@
           },
           "copyrightNotice": "In copyright — Estate of Jean Lartéguy (French text); estate of translator Xan Fielding and the publisher (English translation)",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Jean Lartéguy, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Jean Lartéguy, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -874,7 +874,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "If We Should Have to Leave Our Bleached Bones on These Desert Sands in Vain, Then Beware the Anger of the Legions";
-        const copyAttribution = "epigraph to Jean Lartéguy's novel Les Centurions (1960), tr. Xan Fielding (1962); presented as a letter from a Roman centurion, \"Marcus Flavinius,\" and later disowned by Lartéguy as a fabrication.";
+        const copyAttribution = "epigraph to Jean Lartéguy's novel Les Centurions (1960), tr. Xan Fielding (1962); presented as a letter from a Roman centurion, \"Marcus Flavinius,\" and later disowned by Lartéguy as a fabrication. · Verbatim: “If we should have to leave our bleached bones on these desert sands in vain, then beware of the anger of the Legions!”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

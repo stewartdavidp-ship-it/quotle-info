@@ -860,7 +860,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Be realistic, demand the impossible";
-        const copyAttribution = "Anonymous wall slogan (“Soyez réalistes, demandez l’impossible”), Censier, Paris, May 1968, recorded in Julien Besançon, Les murs ont la parole (Tchou, 1968). Not Che Guevara.";
+        const copyAttribution = "Anonymous wall slogan (“Soyez réalistes, demandez l’impossible”), Censier, Paris, May 1968, recorded in Julien Besançon, Les murs ont la parole (Tchou, 1968). Not Che Guevara. · Verbatim: “Soyez réalistes, demandez l'impossible. (Be realistic, demand the impossible.)”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

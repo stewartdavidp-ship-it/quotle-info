@@ -896,7 +896,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Promise yourself to be so strong that nothing can disturb your peace of mind";
-        const copyAttribution = "Christian D. Larson, \"Promise Yourself,\" in Your Forces and How to Use Them (New York: Thomas Y. Crowell Company, 1912).";
+        const copyAttribution = "Christian D. Larson, \"Promise Yourself,\" in Your Forces and How to Use Them (New York: Thomas Y. Crowell Company, 1912). · Verbatim: “To be so strong that nothing can disturb your peace of mind.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "It is not the critic who counts; not the man who points out how the strong man stumbles, or where the doer of deeds could have done them better";
-        const copyAttribution = "Theodore Roosevelt, \"Citizenship in a Republic,\" address at the Sorbonne, Paris, 23 April 1910 — printed in African and European Addresses, with an introduction by Lawrence F. Abbott (New York: G. P. Putnam's Sons, 1910). Verified at quotle.info.";
+        const copyAttribution = "Theodore Roosevelt, \"Citizenship in a Republic,\" address at the Sorbonne, Paris, 23 April 1910 — printed in African and European Addresses, with an introduction by Lawrence F. Abbott (New York: G. P. Putnam's Sons, 1910). Verified at quotle.info. · Verbatim: “It is not the critic who counts; not the man who points out how the strong man stumbles, or where the doer of deeds could have done them better. The credit belongs to the man who is actually in the arena, whose face is marred by dust and sweat and blood.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -865,7 +865,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Maybe you'll fail most of the time, but until you've dared to try and have brought off an impossible shot from the rough or from the water, you haven't really tasted the game";
-        const copyAttribution = "Arnold Palmer, My Game and Yours (1965), p. 83, as cited by Wikiquote. The ending “you haven't really tasted the game” is a later paraphrase. Traced by Quotle.info";
+        const copyAttribution = "Arnold Palmer, My Game and Yours (1965), p. 83, as cited by Wikiquote. The ending “you haven't really tasted the game” is a later paraphrase. Traced by Quotle.info · Verbatim: “Maybe you'll fail most of the time, but until you've dared to try and have brought off an impossible shot from the rough or from the water, or have salvaged a hole by laying a monster of a 2-iron shot stiff against the pin, you will have missed golf's greatest playing thrill.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

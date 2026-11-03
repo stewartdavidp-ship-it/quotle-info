@@ -48,7 +48,7 @@
           },
           "copyrightNotice": "In copyright — Thích Nhất Hạnh's estate and/or the publisher of Shambhala Sun",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Thích Nhất Hạnh, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Thích Nhất Hạnh, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -830,7 +830,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Your true home is in the here and the now";
-        const copyAttribution = "Thích Nhất Hạnh. Wikiquote sources this wording to his essay \"Returning Home,\" Shambhala Sun, March 2006; that magazine page is no longer online and the primary text is unverified. — Quotle.info";
+        const copyAttribution = "Thích Nhất Hạnh. Wikiquote sources this wording to his essay \"Returning Home,\" Shambhala Sun, March 2006; that magazine page is no longer online and the primary text is unverified. — Quotle.info · Verbatim: “Your true home is in the here and the now. It is not limited by time, space, nationality, or race.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

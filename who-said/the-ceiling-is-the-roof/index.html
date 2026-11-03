@@ -881,7 +881,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The ceiling is the roof";
-        const copyAttribution = "Michael Jordan, halftime remarks at the North Carolina–Duke game, Dean E. Smith Center, 4 March 2017";
+        const copyAttribution = "Michael Jordan, halftime remarks at the North Carolina–Duke game, Dean E. Smith Center, 4 March 2017 · Verbatim: “The ceiling is the roof. Let's make it happen. Let's keep moving forward.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

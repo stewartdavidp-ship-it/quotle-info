@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "From so simple a beginning endless forms most beautiful and most wonderful have been, and are being, evolved";
-        const copyAttribution = "Charles Darwin, On the Origin of Species (London: John Murray, 1859), pp. 489-90 — the closing sentence of chapter XIV. Verified at quotle.info";
+        const copyAttribution = "Charles Darwin, On the Origin of Species (London: John Murray, 1859), pp. 489-90 — the closing sentence of chapter XIV. Verified at quotle.info · Verbatim: “There is grandeur in this view of life, with its several powers, having been originally breathed into a few forms or into one; and that, whilst this planet has gone cycling on according to the fixed law of gravity, from so simple a beginning endless forms most beautiful and most wonderful have been, and are being, evolved.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

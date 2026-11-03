@@ -877,7 +877,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Happiness is neither virtue nor pleasure nor this thing nor that but simply growth. We are happy when we are growing";
-        const copyAttribution = "John Butler Yeats, letter of 2 June 1909, collected in J. B. Yeats: Letters to His Son W. B. Yeats and Others, 1869–1922, ed. Joseph Hone. Commonly misattributed to his son, the poet W. B. Yeats. Via quotle.info";
+        const copyAttribution = "John Butler Yeats, letter of 2 June 1909, collected in J. B. Yeats: Letters to His Son W. B. Yeats and Others, 1869–1922, ed. Joseph Hone. Commonly misattributed to his son, the poet W. B. Yeats. Via quotle.info · Verbatim: “I say it is neither virtue nor pleasure nor this thing or that, but simply growth. We are happy when we are growing.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I can't write a book commensurate with Shakespeare, but I can write a book by me";
-        const copyAttribution = "Walter Alexander Raleigh (1861–1922), Oxford's first Professor of English Literature, in a letter to T. H. Warren, 28 April 1907; first published in The Letters of Sir Walter Raleigh (1879–1922), vol. 2 (Methuen, 1926), p. 314. Not Dale Carnegie, who quoted it in 1948, and not Sir Walter Raleigh the Elizabethan explorer.";
+        const copyAttribution = "Walter Alexander Raleigh (1861–1922), Oxford's first Professor of English Literature, in a letter to T. H. Warren, 28 April 1907; first published in The Letters of Sir Walter Raleigh (1879–1922), vol. 2 (Methuen, 1926), p. 314. Not Dale Carnegie, who quoted it in 1948, and not Sir Walter Raleigh the Elizabethan explorer. · Verbatim: “I can't write a book commensurate with Shakespeare, but I can write a book by me,—which is all that any one can do.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

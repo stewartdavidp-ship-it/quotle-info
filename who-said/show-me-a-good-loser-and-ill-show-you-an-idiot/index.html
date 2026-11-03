@@ -895,7 +895,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Show me a good loser and I'll show you an idiot";
-        const copyAttribution = "Leo Durocher, Nice Guys Finish Last (1975). The shorter popular form \"Show me a good loser and I'll show you an idiot\" predates him: it was printed in January 1956 by Bennett Cerf, credited to Paul Gilbert. Traced by Quotle.info.";
+        const copyAttribution = "Leo Durocher, Nice Guys Finish Last (1975). The shorter popular form \"Show me a good loser and I'll show you an idiot\" predates him: it was printed in January 1956 by Bennett Cerf, credited to Paul Gilbert. Traced by Quotle.info. · Verbatim: “Show me a good loser in professional sports, and I'll show you an idiot.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

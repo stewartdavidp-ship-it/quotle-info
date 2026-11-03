@@ -862,7 +862,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Beauty in things exists in the mind which contemplates them";
-        const copyAttribution = "David Hume, \"Of the Standard of Taste,\" Four Dissertations (1757)";
+        const copyAttribution = "David Hume, \"Of the Standard of Taste,\" Four Dissertations (1757) · Verbatim: “Beauty is no quality in things themselves: It exists merely in the mind which contemplates them; and each mind perceives a different beauty.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

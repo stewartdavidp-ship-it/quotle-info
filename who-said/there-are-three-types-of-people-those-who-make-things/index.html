@@ -875,7 +875,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "There are three types of people: those who make things happen, those who watch things happen, and those who wonder what happened";
-        const copyAttribution = "Nicholas Murray Butler, Charter Day address, University of California, Berkeley, March 1931. The popular \"those who wonder what happened\" version is a later anonymous rewrite; it is not Casey Stengel's. Via Quotle.info";
+        const copyAttribution = "Nicholas Murray Butler, Charter Day address, University of California, Berkeley, March 1931. The popular \"those who wonder what happened\" version is a later anonymous rewrite; it is not Casey Stengel's. Via Quotle.info · Verbatim: “There are the few who make things happen, the many more who watch things happen, and the overwhelming majority who have no notion of what happens.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

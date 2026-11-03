@@ -856,7 +856,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Teach Them to Yearn for the Vast and Endless Sea";
-        const copyAttribution = "a modern paraphrase, not Saint-Exupéry's words. The idea comes from section LXXV of his posthumous Citadelle (1948); the English saying first surfaces in 1999.";
+        const copyAttribution = "a modern paraphrase, not Saint-Exupéry's words. The idea comes from section LXXV of his posthumous Citadelle (1948); the English saying first surfaces in 1999. · Verbatim: “Building a boat isn't about weaving canvas, forging nails, or reading the sky. It's about giving a shared taste for the sea, by the light of which you will see nothing contradictory but rather a community of love.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

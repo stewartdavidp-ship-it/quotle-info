@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The fact is that far more crime and child abuse has been committed by zealots in the name of God, Jesus and Mohammed than has ever been committed in the name of Satan";
-        const copyAttribution = "Kenneth V. Lanning, FBI Supervisory Special Agent, \"Satanic, Occult, Ritualistic Crime: A Law Enforcement Perspective,\" The Police Chief 56, no. 10 (October 1989): 62–84; quoted by Carl Sagan in The Demon-Haunted World (1995), ch. 9. Commonly misattributed to Sagan himself.";
+        const copyAttribution = "Kenneth V. Lanning, FBI Supervisory Special Agent, \"Satanic, Occult, Ritualistic Crime: A Law Enforcement Perspective,\" The Police Chief 56, no. 10 (October 1989): 62–84; quoted by Carl Sagan in The Demon-Haunted World (1995), ch. 9. Commonly misattributed to Sagan himself. · Verbatim: “The fact is that far more crime and child abuse has been committed by zealots in the name of God, Jesus and Mohammed than has ever been committed in the name of Satan. Many people don't like that statement, but few can argue with it.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -881,7 +881,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Every Ambitious Would-Be Empire Clarions It Abroad That She Is Conquering the World to Bring It Peace";
-        const copyAttribution = "Not Henry David Thoreau. Written by Taylor Caldwell in her 1968 novel \"Testimony of Two Men\" (p. 452), where a character attributes the words to the politician George S. Boutwell.";
+        const copyAttribution = "Not Henry David Thoreau. Written by Taylor Caldwell in her 1968 novel \"Testimony of Two Men\" (p. 452), where a character attributes the words to the politician George S. Boutwell. · Verbatim: “Every ambitious would-be empire clarions it abroad that she is conquering the world to bring it peace, security and freedom, and is sacrificing her sons only for the most noble and humanitarian purposes. That is a lie, and it is an ancient lie, yet generations still rise and believe it!”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

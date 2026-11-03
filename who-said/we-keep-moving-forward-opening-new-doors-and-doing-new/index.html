@@ -889,7 +889,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "We keep moving forward, opening new doors, and doing new things, because we're curious and curiosity keeps leading us down new paths";
-        const copyAttribution = "Walt Disney, \"The Disney Team: Production,\" Walt Disney Productions Annual Report 1965. The popular short form drops the word \"up.\" Verified by quotle.info";
+        const copyAttribution = "Walt Disney, \"The Disney Team: Production,\" Walt Disney Productions Annual Report 1965. The popular short form drops the word \"up.\" Verified by quotle.info · Verbatim: “Around here, however, we don't look backwards for very long. We keep moving forward, opening up new doors and doing new things, because we're curious … and curiosity keeps leading us down new paths.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

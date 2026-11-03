@@ -851,7 +851,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Nothing is too wonderful to be true, if it be consistent with the laws of nature";
-        const copyAttribution = "Michael Faraday, laboratory journal, 19 March 1849 (The Life and Letters of Faraday, Vol. II, 1870)";
+        const copyAttribution = "Michael Faraday, laboratory journal, 19 March 1849 (The Life and Letters of Faraday, Vol. II, 1870) · Verbatim: “Nothing is too wonderful to be true, if it be consistent with the laws of nature; and in such things as these, experiment is the best test of such consistency.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

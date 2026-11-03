@@ -877,7 +877,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "An aim in life is the only fortune worth finding";
-        const copyAttribution = "Robert Louis Stevenson, The Amateur Emigrant, ch. 4 \"Steerage Types\" (written 1879–80; first published in full 1895). Commonly trimmed to \"worth finding\" and sometimes mis-credited to Jacqueline Kennedy Onassis; Napoleon Hill reprinted it — crediting Stevenson — in The Law of Success (1928). Via Quotle.info";
+        const copyAttribution = "Robert Louis Stevenson, The Amateur Emigrant, ch. 4 \"Steerage Types\" (written 1879–80; first published in full 1895). Commonly trimmed to \"worth finding\" and sometimes mis-credited to Jacqueline Kennedy Onassis; Napoleon Hill reprinted it — crediting Stevenson — in The Law of Success (1928). Via Quotle.info · Verbatim: “An aim in life is the only fortune worth the finding; and it is not to be found in foreign lands, but in the heart itself.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

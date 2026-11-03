@@ -857,7 +857,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I am much less interested in what is called God's word than in God's deeds";
-        const copyAttribution = "John Burroughs, \"Religious Contrasts: Letters of a Pantheist and a Churchman,\" The Atlantic Monthly (October 1921), p. 520 — frequently misattributed to Thomas Edison.";
+        const copyAttribution = "John Burroughs, \"Religious Contrasts: Letters of a Pantheist and a Churchman,\" The Atlantic Monthly (October 1921), p. 520 — frequently misattributed to Thomas Edison. · Verbatim: “I am much less interested in what is called God's word than in God's deeds. All bibles are man-made.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

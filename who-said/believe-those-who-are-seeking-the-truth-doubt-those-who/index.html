@@ -876,7 +876,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Believe Those Who Are Seeking the Truth; Doubt Those Who Find It";
-        const copyAttribution = "André Gide, So Be It: Or The Chips Are Down (Ainsi soit-il, 1952; trans. Justin O’Brien, 1959). Often misattributed to François Truffaut.";
+        const copyAttribution = "André Gide, So Be It: Or The Chips Are Down (Ainsi soit-il, 1952; trans. Justin O’Brien, 1959). Often misattributed to François Truffaut. · Verbatim: “Believe those who are seeking the truth; doubt those who find it; doubt everything...”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

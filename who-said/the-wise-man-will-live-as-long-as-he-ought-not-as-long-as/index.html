@@ -884,7 +884,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The wise man will live as long as he ought, not as long as he can";
-        const copyAttribution = "Seneca the Younger, Moral Letters to Lucilius 70.4 (written c. AD 62–65), translated by Richard M. Gummere, Loeb Classical Library, Vol. II, 1920. Latin: \"Itaque sapiens vivet quantum debet, non quantum potest.\"";
+        const copyAttribution = "Seneca the Younger, Moral Letters to Lucilius 70.4 (written c. AD 62–65), translated by Richard M. Gummere, Loeb Classical Library, Vol. II, 1920. Latin: \"Itaque sapiens vivet quantum debet, non quantum potest.\" · Verbatim: “Accordingly, the wise man will live as long as he ought, not as long as he can.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

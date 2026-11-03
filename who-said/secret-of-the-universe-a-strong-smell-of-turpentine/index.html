@@ -891,7 +891,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Secret of the Universe: A Strong Smell of Turpentine Prevails Throughout";
-        const copyAttribution = "Oliver Wendell Holmes Sr., \"Mechanism in Thought and Morals,\" address to the Phi Beta Kappa Society, Harvard University, 29 June 1870 (Boston: James R. Osgood & Co., 1871), 46–47. Not Oliver Wendell Holmes Jr., the Supreme Court justice.";
+        const copyAttribution = "Oliver Wendell Holmes Sr., \"Mechanism in Thought and Morals,\" address to the Phi Beta Kappa Society, Harvard University, 29 June 1870 (Boston: James R. Osgood & Co., 1871), 46–47. Not Oliver Wendell Holmes Jr., the Supreme Court justice. · Verbatim: “A strong smell of turpentine prevails throughout.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -863,7 +863,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Love all, trust a few, do wrong to none";
-        const copyAttribution = "— William Shakespeare, All's Well That Ends Well, Act 1, Scene 1 (First Folio, 1623)";
+        const copyAttribution = "— William Shakespeare, All's Well That Ends Well, Act 1, Scene 1 (First Folio, 1623) · Verbatim: “Love all, trust a few, Do wrong to none: be able for thine enemy Rather in power than use, and keep thy friend Under thy own life's key: be cheque'd for silence, But never tax'd for speech.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

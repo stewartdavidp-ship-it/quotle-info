@@ -887,7 +887,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "To learn who rules over you, simply find out who you are not allowed to criticize";
-        const copyAttribution = "is not Voltaire. It is an anonymous paraphrase of Kevin Alfred Strom, \"All America Must Know the Terror That Is Upon Us,\" American Dissident Voices broadcast, 14 August 1993. Oxford's Voltaire Foundation lists it among one-liners Voltaire never said; fact-checkers found no trace of it in his collected works or correspondence. — Quotle.info";
+        const copyAttribution = "is not Voltaire. It is an anonymous paraphrase of Kevin Alfred Strom, \"All America Must Know the Terror That Is Upon Us,\" American Dissident Voices broadcast, 14 August 1993. Oxford's Voltaire Foundation lists it among one-liners Voltaire never said; fact-checkers found no trace of it in his collected works or correspondence. — Quotle.info · Verbatim: “To determine the true rulers of any society, all you must do is ask yourself this question: Who is it that I am not permitted to criticize?”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

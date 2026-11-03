@@ -863,7 +863,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "In every walk with nature one receives far more than he seeks";
-        const copyAttribution = "John Muir, \"Mormon Lilies\" (1877), collected in Steep Trails (1918)";
+        const copyAttribution = "John Muir, \"Mormon Lilies\" (1877), collected in Steep Trails (1918) · Verbatim: “But in every walk with Nature one receives far more than he seeks.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

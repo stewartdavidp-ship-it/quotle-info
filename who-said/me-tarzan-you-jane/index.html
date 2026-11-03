@@ -885,7 +885,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Me Tarzan, you Jane";
-        const copyAttribution = "is not in Tarzan the Ape Man (Metro-Goldwyn-Mayer, 1932). On screen the exchange is only the two names, with pointing: \"Jane. Tarzan. Jane. Tarzan…\" The screen dialogue was credited to Ivor Novello (1893–1951), over Cyril Hume's adaptation. The catchphrase came from Johnny Weissmuller himself, in Photoplay for June 1932: \"You see, I'm no actor. Well, I didn't have to act in 'Tarzan, the Ape Man' — just said, 'Me Tarzan, you Jane.'\" — Quotle.info";
+        const copyAttribution = "is not in Tarzan the Ape Man (Metro-Goldwyn-Mayer, 1932). On screen the exchange is only the two names, with pointing: \"Jane. Tarzan. Jane. Tarzan…\" The screen dialogue was credited to Ivor Novello (1893–1951), over Cyril Hume's adaptation. The catchphrase came from Johnny Weissmuller himself, in Photoplay for June 1932: \"You see, I'm no actor. Well, I didn't have to act in 'Tarzan, the Ape Man' — just said, 'Me Tarzan, you Jane.'\" — Quotle.info · Verbatim: “Jane. Tarzan. Jane. Tarzan. Jane. Tarzan.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -876,7 +876,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Wine is sunlight, held together by water";
-        const copyAttribution = "Galileo, but not in these words. The only source for the saying is Lorenzo Magalotti, Lettere scientifiche ed erudite (Florence, 1721), p. 43, reporting what Don Raffaello Magiotti told him Galileo \"era usato di dire\": \"il vino è un composto d'umore, e di luce\" — wine is a compound of moisture and light. Nothing Galileo wrote contains it, and the English wording is an unattributed modern paraphrase. Traced by Quotle.info.";
+        const copyAttribution = "Galileo, but not in these words. The only source for the saying is Lorenzo Magalotti, Lettere scientifiche ed erudite (Florence, 1721), p. 43, reporting what Don Raffaello Magiotti told him Galileo \"era usato di dire\": \"il vino è un composto d'umore, e di luce\" — wine is a compound of moisture and light. Nothing Galileo wrote contains it, and the English wording is an unattributed modern paraphrase. Traced by Quotle.info. · Verbatim: “Wine is a mixture of moisture and light”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

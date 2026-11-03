@@ -860,7 +860,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Education is the passport to the future";
-        const copyAttribution = "Malcolm X, Founding Rally of the Organization of Afro-American Unity, 28 June 1964 (in By Any Means Necessary, 1970)";
+        const copyAttribution = "Malcolm X, Founding Rally of the Organization of Afro-American Unity, 28 June 1964 (in By Any Means Necessary, 1970) · Verbatim: “Education is our passport to the future, for tomorrow belongs only to the people who prepare for it today.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

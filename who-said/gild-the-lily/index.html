@@ -873,7 +873,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Gild the lily";
-        const copyAttribution = "Shakespeare wrote \"to gild refined gold, to paint the lily\" — King John, Act 4, Scene 2, first printed in the 1623 First Folio. \"Gild the lily\" is a later misquotation; the earliest example Phrase Finder can locate is an 1895 American newspaper.";
+        const copyAttribution = "Shakespeare wrote \"to gild refined gold, to paint the lily\" — King John, Act 4, Scene 2, first printed in the 1623 First Folio. \"Gild the lily\" is a later misquotation; the earliest example Phrase Finder can locate is an 1895 American newspaper. · Verbatim: “Therefore, to be possess'd with double pomp, To guard a title that was rich before, To gild refined gold, to paint the lily, To throw a perfume on the violet, To smooth the ice, or add another hue Unto the rainbow, or with taper-light To seek the beauteous eye of heaven to garnish, Is wasteful and ridiculous excess.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

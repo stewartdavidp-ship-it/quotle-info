@@ -868,7 +868,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "This Book Fills a Much-Needed Gap";
-        const copyAttribution = "Anonymous — a reviewers' blunder documented from 1857, in a book review by February 1895. Not Moses Hadas, to whom it was first credited in a 1980s quotation collection.";
+        const copyAttribution = "Anonymous — a reviewers' blunder documented from 1857, in a book review by February 1895. Not Moses Hadas, to whom it was first credited in a 1980s quotation collection. · Verbatim: “There has been no exhaustive book on this subject in this country, and Dr. Hamilton's system fills a much-needed gap.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

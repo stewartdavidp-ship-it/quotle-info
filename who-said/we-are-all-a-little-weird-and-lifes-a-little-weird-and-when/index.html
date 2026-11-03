@@ -855,7 +855,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "We are all a little weird and life's a little weird, and when we find someone whose weirdness is compatible with ours, we join up with them and fall in mutual weirdness and call it love";
-        const copyAttribution = "Robert Fulghum, True Love (1997) — original: \"…fall into mutually satisfying weirdness—and call it love—true love.\" Often misattributed to Dr. Seuss.";
+        const copyAttribution = "Robert Fulghum, True Love (1997) — original: \"…fall into mutually satisfying weirdness—and call it love—true love.\" Often misattributed to Dr. Seuss. · Verbatim: “We're all a little weird. And life is a little weird. And when we find someone whose weirdness is compatible with ours, we join up with them and fall into mutually satisfying weirdness—and call it love—true love.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

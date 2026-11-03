@@ -864,7 +864,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Everyone thinks of changing the world, but no one thinks of changing himself";
-        const copyAttribution = "Leo Tolstoy — but this exact wording is a later paraphrase, not his own";
+        const copyAttribution = "Leo Tolstoy — but this exact wording is a later paraphrase, not his own · Verbatim: “And yet in our world everybody thinks of changing humanity, and nobody thinks of changing himself.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -100,7 +100,7 @@
               "name": "Is \"Begin at once to live, and count each separate day as a separate life\" really by Seneca?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. From Seneca's Moral Letters to Lucilius, Letter 101 (\"On the Futility of Planning Ahead\"), 10, written c. AD 65. The familiar English is Richard M. Gummere's Loeb translation of the Latin 'Ideo propera, Lucili mi, vivere, et singulos dies singulas vitas puta.'",
+                "text": "Yes. From Seneca's Moral Letters to Lucilius, Letter 101 (\"On the Futility of Planning Ahead\"), §10, written c. AD 65. The familiar English is Richard M. Gummere's Loeb translation of the Latin 'Ideo propera, Lucili mi, vivere, et singulos dies singulas vitas puta.'",
                 "url": "https://quotle.info/who-said/begin-at-once-to-live-and-count-each-separate-day-as-a/"
               }
             }
@@ -835,7 +835,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Begin at once to live, and count each separate day as a separate life";
-        const copyAttribution = "Begin at once to live, and count each separate day as a separate life. — Seneca, Moral Letters to Lucilius 101.10 (trans. Richard M. Gummere)";
+        const copyAttribution = "Begin at once to live, and count each separate day as a separate life. — Seneca, Moral Letters to Lucilius 101.10 (trans. Richard M. Gummere) · Verbatim: “Therefore, my dear Lucilius, begin at once to live, and count each separate day as a separate life.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

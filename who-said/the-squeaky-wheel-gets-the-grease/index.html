@@ -873,7 +873,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The Squeaky Wheel Gets the Grease";
-        const copyAttribution = "the modern condensation of Cal Stewart’s verse “But the wheel what squeaks the loudest / Is the one what gets the grease,” in Uncle Josh Weathersby’s “Punkin Centre” Stories (1903); not Josh Billings — traced by Quotle.info";
+        const copyAttribution = "the modern condensation of Cal Stewart’s verse “But the wheel what squeaks the loudest / Is the one what gets the grease,” in Uncle Josh Weathersby’s “Punkin Centre” Stories (1903); not Josh Billings — traced by Quotle.info · Verbatim: “I don't believe in kickin', It aint apt to bring one peace; But the wheel what squeaks the loudest Is the one what gets the grease.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

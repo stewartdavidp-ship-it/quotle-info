@@ -875,7 +875,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Fly, my pretties, fly!";
-        const copyAttribution = "the Wicked Witch of the West in The Wizard of Oz (1939), screenplay credited to Noel Langley, Florence Ryerson & Edgar Allan Woolf. The popular \"Fly, my pretties, fly!\" is a misquote; the film never says \"pretties,\" and the line is not in L. Frank Baum's 1900 novel. Via Quotle.info";
+        const copyAttribution = "the Wicked Witch of the West in The Wizard of Oz (1939), screenplay credited to Noel Langley, Florence Ryerson & Edgar Allan Woolf. The popular \"Fly, my pretties, fly!\" is a misquote; the film never says \"pretties,\" and the line is not in L. Frank Baum's 1900 novel. Via Quotle.info · Verbatim: “Now, fly! Fly! … Fly, fly, fly!”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

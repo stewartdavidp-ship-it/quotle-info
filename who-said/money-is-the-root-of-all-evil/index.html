@@ -93,7 +93,7 @@
               "name": "Who is \"Money is the root of all evil\" really by?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The verse this comes from does not say money is the root of all evil. In the King James Version, 1 Timothy 6:10 reads \"For the love of money is the root of all evil\" — the Greek is philargyria ( ), 'love of money.' Dropping those three words turns a warning about greed into a condemnation of money itself, which the passage never makes.",
+                "text": "The verse this comes from does not say money is the root of all evil. In the King James Version, 1 Timothy 6:10 reads \"For the love of money is the root of all evil\" — the Greek is philargyria (φιλαργυρια), 'love of money.' Dropping those three words turns a warning about greed into a condemnation of money itself, which the passage never makes.",
                 "url": "https://quotle.info/who-said/money-is-the-root-of-all-evil/"
               }
             }
@@ -853,7 +853,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Money is the root of all evil";
-        const copyAttribution = "Misquote of the Bible, 1 Timothy 6:10. The verse (KJV) says \"the love of money is the root of all evil\" — not money itself.";
+        const copyAttribution = "Misquote of the Bible, 1 Timothy 6:10. The verse (KJV) says \"the love of money is the root of all evil\" — not money itself. · Verbatim: “For the love of money is the root of all evil: which while some coveted after, they have erred from the faith, and pierced themselves through with many sorrows.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

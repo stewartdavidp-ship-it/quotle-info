@@ -874,7 +874,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The music business is a cruel and shallow money trench, a long plastic hallway where thieves and pimps run free, and good men die like dogs. There's also a negative side";
-        const copyAttribution = "Hunter S. Thompson, San Francisco Examiner, November 4, 1985; collected in Generation of Swine (1988). The \"music business\" version and its \"There's also a negative side\" tag are later alterations.";
+        const copyAttribution = "Hunter S. Thompson, San Francisco Examiner, November 4, 1985; collected in Generation of Swine (1988). The \"music business\" version and its \"There's also a negative side\" tag are later alterations. · Verbatim: “The TV business is uglier than most things. It is normally perceived as some kind of cruel and shallow money trench through the heart of the journalism industry, a long plastic hallway where thieves and pimps run free and good men die like dogs, for no good reason.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

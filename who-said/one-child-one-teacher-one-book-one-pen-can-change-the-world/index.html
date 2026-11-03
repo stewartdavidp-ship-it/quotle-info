@@ -863,7 +863,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "One child, one teacher, one book, one pen can change the world";
-        const copyAttribution = "Malala Yousafzai, speech to the UN Youth Assembly, New York, 12 July 2013";
+        const copyAttribution = "Malala Yousafzai, speech to the UN Youth Assembly, New York, 12 July 2013 · Verbatim: “One child, one teacher, one pen and one book can change the world.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

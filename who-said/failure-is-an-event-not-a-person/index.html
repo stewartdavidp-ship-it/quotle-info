@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Failure is an event, not a person";
-        const copyAttribution = "Zig Ziglar, See You at the Top (Pelican Publishing; sentence documented in the revised 25th-anniversary edition, 2000). The shorter form \"Failure is an event, not a person\" is also Ziglar's, printed in his own later books. Verified via Quotle.info";
+        const copyAttribution = "Zig Ziglar, See You at the Top (Pelican Publishing; sentence documented in the revised 25th-anniversary edition, 2000). The shorter form \"Failure is an event, not a person\" is also Ziglar's, printed in his own later books. Verified via Quotle.info · Verbatim: “Failure is an event, it is not a person — yesterday ended last night.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

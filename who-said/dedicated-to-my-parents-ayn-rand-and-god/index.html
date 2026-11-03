@@ -864,7 +864,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Dedicated to my parents, Ayn Rand and God";
-        const copyAttribution = "R. M. Bevensee, dedication, Electromagnetic Slow Wave Systems (John Wiley & Sons, 1964). The comma-less “Dedicated to my parents, Ayn Rand and God” is an apocryphal joke version, not Ayn Rand’s words (Quote Investigator, 2022).";
+        const copyAttribution = "R. M. Bevensee, dedication, Electromagnetic Slow Wave Systems (John Wiley & Sons, 1964). The comma-less “Dedicated to my parents, Ayn Rand and God” is an apocryphal joke version, not Ayn Rand’s words (Quote Investigator, 2022). · Verbatim: “This Book is Dedicated to my parents, Ayn Rand, and the glory of GOD”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

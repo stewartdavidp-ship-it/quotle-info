@@ -833,7 +833,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Beliefs have the power to create and the power to destroy";
-        const copyAttribution = "Tony Robbins, Awaken the Giant Within (New York: Simon & Schuster, 1991) — quoted at p. 75 of the 1992 Simon & Schuster edition.";
+        const copyAttribution = "Tony Robbins, Awaken the Giant Within (New York: Simon & Schuster, 1991) — quoted at p. 75 of the 1992 Simon & Schuster edition. · Verbatim: “Beliefs have the power to create and the power to destroy. Human beings have the awesome ability to take any experience of their lives and create a meaning that disempowers them or one that can literally save their lives.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

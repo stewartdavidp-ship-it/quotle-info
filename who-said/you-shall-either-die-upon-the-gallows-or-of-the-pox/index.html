@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "You Shall Either Die Upon the Gallows or of the Pox";
-        const copyAttribution = "not Benjamin Disraeli. The earliest documented telling, in The European Magazine and London Review (London, January 1784), gives the line to John Montagu, 4th Earl of Sandwich, and the famous reply to the actor Samuel Foote. The Gladstone-and-Disraeli version is not recorded before a 1950 memoir. Chronology: Quote Investigator, quoteinvestigator.com/2014/01/26/gallows-pox/ — via Quotle.info";
+        const copyAttribution = "not Benjamin Disraeli. The earliest documented telling, in The European Magazine and London Review (London, January 1784), gives the line to John Montagu, 4th Earl of Sandwich, and the famous reply to the actor Samuel Foote. The Gladstone-and-Disraeli version is not recorded before a 1950 memoir. Chronology: Quote Investigator, quoteinvestigator.com/2014/01/26/gallows-pox/ — via Quotle.info · Verbatim: “Which do you think will happen to you first, the experience of a certain disease, or an intimate acquaintance with the gallows?”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

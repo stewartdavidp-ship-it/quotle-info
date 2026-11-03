@@ -877,7 +877,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "No Respect for a Man Who Can Spell a Word Only One Way";
-        const copyAttribution = "Anonymous — the punch line of a comic courtroom anecdote first printed in the Jamestown Journal (Jamestown, New York), 31 August 1855, and reprinted in Harper's New Monthly Magazine, November 1855, p. 860. Not Andrew Jackson, who died in 1845; the earliest Jackson credit located by Quote Investigator is 1882. Source: Quote Investigator, \"Quote Origin: No Respect for a Man Who Can Spell a Word Only One Way.\"";
+        const copyAttribution = "Anonymous — the punch line of a comic courtroom anecdote first printed in the Jamestown Journal (Jamestown, New York), 31 August 1855, and reprinted in Harper's New Monthly Magazine, November 1855, p. 860. Not Andrew Jackson, who died in 1845; the earliest Jackson credit located by Quote Investigator is 1882. Source: Quote Investigator, \"Quote Origin: No Respect for a Man Who Can Spell a Word Only One Way.\" · Verbatim: “I have no respect for a man who can spell a word only one way.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

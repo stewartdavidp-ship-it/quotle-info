@@ -885,7 +885,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Houston, we've had a problem";
-        const copyAttribution = "Jack Swigert, command module pilot, Apollo 13, transmitted at 055:55:19 mission elapsed time on 13 April 1970 and repeated seconds later by commander Jim Lovell as \"Ah, Houston, we've had a problem. We've had a Main B Bus Undervolt.\" Recorded in the Apollo 13 Flight Journal's corrected air-to-ground transcript; Swigert credited by NASA's own accident history. The familiar \"Houston, we have a problem\" is the 1995 film's rewrite, not the transmission.";
+        const copyAttribution = "Jack Swigert, command module pilot, Apollo 13, transmitted at 055:55:19 mission elapsed time on 13 April 1970 and repeated seconds later by commander Jim Lovell as \"Ah, Houston, we've had a problem. We've had a Main B Bus Undervolt.\" Recorded in the Apollo 13 Flight Journal's corrected air-to-ground transcript; Swigert credited by NASA's own accident history. The familiar \"Houston, we have a problem\" is the 1995 film's rewrite, not the transmission. · Verbatim: “Okay, Houston... we've had a problem here.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

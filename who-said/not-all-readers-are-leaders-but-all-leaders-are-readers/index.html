@@ -881,7 +881,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Not all readers are leaders, but all leaders are readers";
-        const copyAttribution = "Harry S. Truman, printed in Strictly Personal and Confidential: The Letters Harry Truman Never Mailed, ed. Monte M. Poen (Little, Brown, 1982), and in The Autobiography of Harry S. Truman, ed. Robert H. Ferrell (1980). The widely shared \"Not all readers are leaders, but all leaders are readers\" is a later paraphrase.";
+        const copyAttribution = "Harry S. Truman, printed in Strictly Personal and Confidential: The Letters Harry Truman Never Mailed, ed. Monte M. Poen (Little, Brown, 1982), and in The Autobiography of Harry S. Truman, ed. Robert H. Ferrell (1980). The widely shared \"Not all readers are leaders, but all leaders are readers\" is a later paraphrase. · Verbatim: “Not all readers become leaders. But all leaders must be readers.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

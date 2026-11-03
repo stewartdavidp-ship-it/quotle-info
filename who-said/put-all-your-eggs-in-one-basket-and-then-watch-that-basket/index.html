@@ -889,7 +889,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Put all your eggs in one basket, and then watch that basket";
-        const copyAttribution = "Andrew Carnegie, \"The Road to Business Success: A Talk to Young Men,\" address to students of the Curry Commercial College, Pittsburg, June 23, 1885; printed in The Empire of Business (New York: Doubleday, Page & Co., 1902), 17.";
+        const copyAttribution = "Andrew Carnegie, \"The Road to Business Success: A Talk to Young Men,\" address to students of the Curry Commercial College, Pittsburg, June 23, 1885; printed in The Empire of Business (New York: Doubleday, Page & Co., 1902), 17. · Verbatim: ““Don’t put all your eggs in one basket” is all wrong. I tell you “put all your eggs in one basket, and then watch that basket.””";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -884,7 +884,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Life Is Too Important To Be Taken Seriously";
-        const copyAttribution = "a compression of Oscar Wilde, not his wording. Wilde's line, spoken by Lord Darlington in Act I of Lady Windermere's Fan (staged 1892, published 1893), is \"life is far too important a thing ever to talk seriously about it.\" G. K. Chesterton dropped the \"talk\" when paraphrasing the play in 1902. Via Quotle.info.";
+        const copyAttribution = "a compression of Oscar Wilde, not his wording. Wilde's line, spoken by Lord Darlington in Act I of Lady Windermere's Fan (staged 1892, published 1893), is \"life is far too important a thing ever to talk seriously about it.\" G. K. Chesterton dropped the \"talk\" when paraphrasing the play in 1902. Via Quotle.info. · Verbatim: “Because I think that life is far too important a thing ever to talk seriously about it.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

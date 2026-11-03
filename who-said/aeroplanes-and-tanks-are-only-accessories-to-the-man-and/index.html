@@ -867,7 +867,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Aeroplanes and Tanks Are Only Accessories to the Man and the Horse";
-        const copyAttribution = "Douglas Haig, as reported in indirect speech in The Times (London), 5 June 1925, from his speech to the Royal College of Veterinary Surgeons on 4 June 1925. The popular first-person wording, often dated 1926, is not verbatim; Quote Investigator suggests it may be a recasting of this report. (Quotle.info; via Quote Investigator)";
+        const copyAttribution = "Douglas Haig, as reported in indirect speech in The Times (London), 5 June 1925, from his speech to the Royal College of Veterinary Surgeons on 4 June 1925. The popular first-person wording, often dated 1926, is not verbatim; Quote Investigator suggests it may be a recasting of this report. (Quotle.info; via Quote Investigator) · Verbatim: “He was all for using aeroplanes and tanks, but they were only accessories to the man and the horse, and he felt sure that as time went on they would find just as much use for the horse—the well-bred horse—as they had ever done in the past.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -839,7 +839,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "There isn't anyone you couldn't love once you've heard their story";
-        const copyAttribution = "Mary Lou Kownacki, OSB — first documented in More Random Acts of Kindness (Conari Press, 1994); later carried and popularized by Fred Rogers. Often misattributed to Mister Rogers.";
+        const copyAttribution = "Mary Lou Kownacki, OSB — first documented in More Random Acts of Kindness (Conari Press, 1994); later carried and popularized by Fred Rogers. Often misattributed to Mister Rogers. · Verbatim: “Engrave this upon my heart: There isn't anyone you couldn't love once you've heard their story.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

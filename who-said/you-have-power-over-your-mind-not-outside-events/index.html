@@ -863,7 +863,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "You have power over your mind - not outside events";
-        const copyAttribution = "Popularly attributed to Marcus Aurelius, Meditations — but this exact wording is a modern paraphrase that appears in no standard translation. The nearest genuine line is Meditations VIII.47.";
+        const copyAttribution = "Popularly attributed to Marcus Aurelius, Meditations — but this exact wording is a modern paraphrase that appears in no standard translation. The nearest genuine line is Meditations VIII.47. · Verbatim: “You have power over your mind - not outside events. Realize this, and you will find strength.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

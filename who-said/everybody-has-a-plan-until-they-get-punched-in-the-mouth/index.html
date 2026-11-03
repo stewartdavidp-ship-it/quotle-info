@@ -49,7 +49,7 @@
           },
           "copyrightNotice": "In copyright — The Associated Press (1987 wire report); Mike Tyson for his spoken words",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Mike Tyson, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Mike Tyson, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -872,7 +872,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Everybody has a plan until they get punched in the mouth";
-        const copyAttribution = "Mike Tyson, Associated Press wire story, 19 August 1987, on challenger Tyrell Biggs. The popular wording \"Everybody has a plan until they get punched in the mouth\" is a later variant, documented no earlier than 2004. Via Quotle.info";
+        const copyAttribution = "Mike Tyson, Associated Press wire story, 19 August 1987, on challenger Tyrell Biggs. The popular wording \"Everybody has a plan until they get punched in the mouth\" is a later variant, documented no earlier than 2004. Via Quotle.info · Verbatim: “Everybody has plans until they get hit for the first time.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

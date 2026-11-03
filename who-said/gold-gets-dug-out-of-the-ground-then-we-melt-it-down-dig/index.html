@@ -41,7 +41,7 @@
             "jobTitle": "Investor",
             "sameAs": "https://en.wikipedia.org/wiki/Warren_Buffett"
           },
-          "disambiguatingDescription": "Widely attributed to Warren Buffett, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Warren Buffett, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -872,7 +872,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Gold Gets Dug Out of the Ground; Then We Melt It Down, Dig Another Hole, Bury It Again";
-        const copyAttribution = "attributed to Warren Buffett, credited to a speech at Harvard in 1998, though no transcript has ever been located. Earliest documented appearance: Mineweb.com, 4 March 2003; earliest newspaper printing: The Times (London), 21 July 2003, Business, p. 21, per Quote Investigator.";
+        const copyAttribution = "attributed to Warren Buffett, credited to a speech at Harvard in 1998, though no transcript has ever been located. Earliest documented appearance: Mineweb.com, 4 March 2003; earliest newspaper printing: The Times (London), 21 July 2003, Business, p. 21, per Quote Investigator. · Verbatim: “It gets dug out of the ground in Africa, or some place. Then we melt it down, dig another hole, bury it again and pay people to stand around guarding it. It has no utility. Anyone watching from Mars would be scratching their head.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

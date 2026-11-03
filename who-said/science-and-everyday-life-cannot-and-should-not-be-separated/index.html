@@ -841,7 +841,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Science and everyday life cannot and should not be separated";
-        const copyAttribution = "Rosalind Franklin, letter to her father, 1940 (quoted in Brenda Maddox, \"Rosalind Franklin: The Dark Lady of DNA,\" 2002)";
+        const copyAttribution = "Rosalind Franklin, letter to her father, 1940 (quoted in Brenda Maddox, \"Rosalind Franklin: The Dark Lady of DNA,\" 2002) · Verbatim: “Science and everyday life cannot and should not be separated. Science, for me, gives a partial explanation of life.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

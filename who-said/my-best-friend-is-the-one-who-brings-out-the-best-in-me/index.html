@@ -851,7 +851,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "My best friend is the one who brings out the best in me";
-        const copyAttribution = "Not Henry Ford — a modern trimming of Harris Weinstock's May 1914 line, misattributed to Ford by 1948.";
+        const copyAttribution = "Not Henry Ford — a modern trimming of Harris Weinstock's May 1914 line, misattributed to Ford by 1948. · Verbatim: “My best friend is the man who can bring out of me my best, and your best friend is the one who tends to bring out the best in you.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

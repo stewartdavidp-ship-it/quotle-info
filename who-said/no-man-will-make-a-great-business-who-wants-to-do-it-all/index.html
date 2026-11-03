@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "No man will make a great business who wants to do it all himself, or to get all the credit of doing it";
-        const copyAttribution = "Andrew Carnegie, interviewed in the St. Louis Globe-Democrat, 15 October 1899. Verified at Quotle.info";
+        const copyAttribution = "Andrew Carnegie, interviewed in the St. Louis Globe-Democrat, 15 October 1899. Verified at Quotle.info · Verbatim: “No man will make a great business who wants to do it all himself, or to get all the credit of doing it. That spirit is fatal, and the sure proof of a small mind.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

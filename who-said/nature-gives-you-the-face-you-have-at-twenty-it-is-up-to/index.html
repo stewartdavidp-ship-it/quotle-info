@@ -50,7 +50,7 @@
           },
           "copyrightNotice": "In copyright — The estate of Gabrielle Chanel and the publisher of Vogue",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Coco Chanel, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Coco Chanel, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -872,7 +872,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Nature gives you the face you have at twenty; it is up to you to merit the face you have at fifty";
-        const copyAttribution = "Coco Chanel (1883–1971), from \"Maximes et Sentences,\" Vogue (Paris), September 1938. The French maxim has three parts — twenty, thirty, fifty; the popular English two-part wording is a later condensation. Documented by Quote Investigator. Via Quotle.info.";
+        const copyAttribution = "Coco Chanel (1883–1971), from \"Maximes et Sentences,\" Vogue (Paris), September 1938. The French maxim has three parts — twenty, thirty, fifty; the popular English two-part wording is a later condensation. Documented by Quote Investigator. Via Quotle.info. · Verbatim: “Nature gives you the face you have at twenty; life molds the face you have at thirty; it is up to you to merit the face you have at fifty.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

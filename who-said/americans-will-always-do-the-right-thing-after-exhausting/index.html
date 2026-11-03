@@ -852,7 +852,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Americans will always do the right thing, after exhausting all the alternatives";
-        const copyAttribution = "Not Churchill — no Churchill source exists. The idea traces to Israeli diplomat Abba Eban (1967); the \"Americans\" wording first appears in a 1970 U.S. Congressional hearing, and Churchill's name was only attached from about 1980. (Quote Investigator, 2012)";
+        const copyAttribution = "Not Churchill — no Churchill source exists. The idea traces to Israeli diplomat Abba Eban (1967); the \"Americans\" wording first appears in a 1970 U.S. Congressional hearing, and Churchill's name was only attached from about 1980. (Quote Investigator, 2012) · Verbatim: “Men and nations do behave wisely once they have exhausted all other alternatives.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -869,7 +869,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I Had Six Theories About Bringing Up Children";
-        const copyAttribution = "Anonymous. Earliest documented printing: Rev. James A. Magner, \"The Social Values of the Home\", in Parent Education Through Home and School (Washington, D.C.: N.C.W.C. Family Life Bureau, 1946), 11 — where it is already credited, without evidence, to \"Lord Rochester\". Not John Wilmot, 2nd Earl of Rochester (1647–1680), and not Leonard Lyons, who was credited only in 1955. A newspaper precursor ran in 1916. Quotle.info";
+        const copyAttribution = "Anonymous. Earliest documented printing: Rev. James A. Magner, \"The Social Values of the Home\", in Parent Education Through Home and School (Washington, D.C.: N.C.W.C. Family Life Bureau, 1946), 11 — where it is already credited, without evidence, to \"Lord Rochester\". Not John Wilmot, 2nd Earl of Rochester (1647–1680), and not Leonard Lyons, who was credited only in 1955. A newspaper precursor ran in 1916. Quotle.info · Verbatim: “Before I got married I had six theories about bringing up children. Now I have six children and no theories.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

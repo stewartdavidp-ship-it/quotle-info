@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Every individual is an exception to the rule";
-        const copyAttribution = "Carl Jung, \"Psychological Types,\" in Problems of Personality (London: Kegan Paul, Trench, Trubner & Co., 1925), 295; paper read at the International Congress of Education, Territet, 1923. Note: an anonymous reviewer in The Edinburgh Review wrote a near-identical line in 1906. Verified via Quotle.info.";
+        const copyAttribution = "Carl Jung, \"Psychological Types,\" in Problems of Personality (London: Kegan Paul, Trench, Trubner & Co., 1925), 295; paper read at the International Congress of Education, Territet, 1923. Note: an anonymous reviewer in The Edinburgh Review wrote a near-identical line in 1906. Verified via Quotle.info. · Verbatim: “Clear and simple though the fundamental principle of the two opposing attitudes may be, nevertheless their concrete reality is complicated and obscure, for every individual is an exception to the rule.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -881,7 +881,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "This would be the best of all possible worlds, if there were no religion in it";
-        const copyAttribution = "John Adams, letter to Thomas Jefferson, April 19, 1817. Adams immediately added: “But in this exclamation I Should have been as fanatical as Bryant or Cleverly. Without Religion this World would be Something not fit to be mentioned in polite Company, I mean Hell.”";
+        const copyAttribution = "John Adams, letter to Thomas Jefferson, April 19, 1817. Adams immediately added: “But in this exclamation I Should have been as fanatical as Bryant or Cleverly. Without Religion this World would be Something not fit to be mentioned in polite Company, I mean Hell.” · Verbatim: “Twenty times, in the course of my late Reading, have I been upon the point of breaking out, \"This would be the best of all possible Worlds, if there were no Religion in it\"!!! But in this exclamation I Should have been as fanatical as Bryant or Cleverly. Without Religion this World would be Something not fit to be mentioned in polite Company, I mean Hell.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

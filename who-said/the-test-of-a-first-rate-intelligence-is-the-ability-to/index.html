@@ -867,7 +867,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The test of a first-rate intelligence is the ability to hold two opposed ideas in mind at the same time";
-        const copyAttribution = "F. Scott Fitzgerald, \"The Crack-Up,\" Esquire, February 1936";
+        const copyAttribution = "F. Scott Fitzgerald, \"The Crack-Up,\" Esquire, February 1936 · Verbatim: “The test of a first-rate intelligence is the ability to hold two opposed ideas in the mind at the same time, and still retain the ability to function.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

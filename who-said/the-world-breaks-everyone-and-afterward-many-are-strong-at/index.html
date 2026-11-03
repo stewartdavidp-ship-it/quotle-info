@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The world breaks everyone, and afterward many are strong at the broken places";
-        const copyAttribution = "Ernest Hemingway, A Farewell to Arms (New York: Charles Scribner's Sons, 1929), Chapter XXXIV. Verified via Quotle.info";
+        const copyAttribution = "Ernest Hemingway, A Farewell to Arms (New York: Charles Scribner's Sons, 1929), Chapter XXXIV. Verified via Quotle.info · Verbatim: “The world breaks every one and afterward many are strong at the broken places.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

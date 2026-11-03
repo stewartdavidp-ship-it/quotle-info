@@ -843,7 +843,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "A man who dares to waste one hour of time has not discovered the value of life";
-        const copyAttribution = "Charles Darwin, letter to his sister Susan Darwin from Bahia, Brazil, 4 August 1836, written aboard HMS Beagle on the voyage home. Printed in The Life and Letters of Charles Darwin (1887), vol. I, ch. VI.";
+        const copyAttribution = "Charles Darwin, letter to his sister Susan Darwin from Bahia, Brazil, 4 August 1836, written aboard HMS Beagle on the voyage home. Printed in The Life and Letters of Charles Darwin (1887), vol. I, ch. VI. · Verbatim: “I trust one part at least will turn out true, and that I shall act as I now think—as a man who dares to waste one hour of time has not discovered the value of life.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

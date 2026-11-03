@@ -864,7 +864,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Education Is What Remains After You Have Forgotten Everything You Learned In School";
-        const copyAttribution = "an anonymous adage, quoted by Albert Einstein in “On Education” (dated 1936), Out of My Later Years, p. 36, where he credits an unnamed “wit”. Versions were in English print by December 1907, and Ellen Key called it “an admirable paradox” in 1909. Origin unknown. — Quotle.info";
+        const copyAttribution = "an anonymous adage, quoted by Albert Einstein in “On Education” (dated 1936), Out of My Later Years, p. 36, where he credits an unnamed “wit”. Versions were in English print by December 1907, and Ellen Key called it “an admirable paradox” in 1909. Origin unknown. — Quotle.info · Verbatim: “Education is that which remains, if one has forgotten everything he learned in school.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

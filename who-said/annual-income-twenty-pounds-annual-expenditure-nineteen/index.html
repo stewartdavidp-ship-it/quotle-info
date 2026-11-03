@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Annual income twenty pounds, annual expenditure nineteen nineteen and six, result happiness. Annual income twenty pounds, annual expenditure twenty pounds ought and six, result misery";
-        const copyAttribution = "Charles Dickens, David Copperfield, chapter 12 — spoken by Mr. Micawber; first printed in monthly part No. IV, August 1849 (London: Bradbury & Evans). Dickens's text reads 'nineteen nineteen six'; the familiar 'nineteen nineteen and six' adds a word. Verified by Quotle.info.";
+        const copyAttribution = "Charles Dickens, David Copperfield, chapter 12 — spoken by Mr. Micawber; first printed in monthly part No. IV, August 1849 (London: Bradbury & Evans). Dickens's text reads 'nineteen nineteen six'; the familiar 'nineteen nineteen and six' adds a word. Verified by Quotle.info. · Verbatim: “Annual income twenty pounds, annual expenditure nineteen nineteen six, result happiness. Annual income twenty pounds, annual expenditure twenty pounds ought and six, result misery.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -873,7 +873,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "If you don't know where you're going, any road will take you there";
-        const copyAttribution = "Not Lewis Carroll's words. A 20th-century proverb that grew out of his Cheshire Cat scene in Alice's Adventures in Wonderland (1865); the modern wording is documented from 1941. Source: Quotle.info";
+        const copyAttribution = "Not Lewis Carroll's words. A 20th-century proverb that grew out of his Cheshire Cat scene in Alice's Adventures in Wonderland (1865); the modern wording is documented from 1941. Source: Quotle.info · Verbatim: “That depends a good deal on where you want to get to.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

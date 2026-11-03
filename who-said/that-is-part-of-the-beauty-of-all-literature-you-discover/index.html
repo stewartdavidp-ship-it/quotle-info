@@ -881,7 +881,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "That Is Part of the Beauty of All Literature. You Discover that Your Longings Are Universal Longings";
-        const copyAttribution = "F. Scott Fitzgerald, as recalled by Sheilah Graham in Beloved Infidel: The Education of a Woman (New York: Henry Holt and Company, 1958), 260. Attributed: the wording rests on Graham's memoir, published about two decades after the conversation, not on anything Fitzgerald wrote. Via Quotle.info";
+        const copyAttribution = "F. Scott Fitzgerald, as recalled by Sheilah Graham in Beloved Infidel: The Education of a Woman (New York: Henry Holt and Company, 1958), 260. Attributed: the wording rests on Graham's memoir, published about two decades after the conversation, not on anything Fitzgerald wrote. Via Quotle.info · Verbatim: “That is part of the beauty of all literature. You discover that your longings are universal longings, that you're not lonely and isolated from anyone. You belong.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

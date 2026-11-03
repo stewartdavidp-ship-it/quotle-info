@@ -897,7 +897,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The Race Is Not Always to the Swift, Nor the Battle to the Strong; But That Is the Best Way to Bet";
-        const copyAttribution = "Hugh E. Keough (1864–1912), Chicago sportswriter, as quoted by Franklin P. Adams in Collier's, 8 February 1919. Widely credited to Damon Runyon, who quoted it and named Keough. Traced by quotle.info";
+        const copyAttribution = "Hugh E. Keough (1864–1912), Chicago sportswriter, as quoted by Franklin P. Adams in Collier's, 8 February 1919. Widely credited to Damon Runyon, who quoted it and named Keough. Traced by quotle.info · Verbatim: “The race is not always to the swift, nor the battle to the strong; but that is the way to bet.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

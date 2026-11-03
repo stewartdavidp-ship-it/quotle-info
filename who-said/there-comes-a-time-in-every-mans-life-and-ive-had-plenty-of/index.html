@@ -49,7 +49,7 @@
           },
           "copyrightNotice": "In copyright — The estate of Casey Stengel; Parade and The Lubbock Avalanche-Journal for their respective 1953 texts",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Casey Stengel, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Casey Stengel, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -866,7 +866,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "There comes a time in every man's life, and I've had plenty of them";
-        const copyAttribution = "Casey Stengel, quoted by Kevin Roberts in Parade, 23 August 1953, and reprinted in the Lubbock Avalanche-Journal, 13 September 1953. The widely circulated short form drops \"at least once.\" Via quotle.info";
+        const copyAttribution = "Casey Stengel, quoted by Kevin Roberts in Parade, 23 August 1953, and reprinted in the Lubbock Avalanche-Journal, 13 September 1953. The widely circulated short form drops \"at least once.\" Via quotle.info · Verbatim: “There comes a time at least once in every man's life, and I've had plenty of them.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

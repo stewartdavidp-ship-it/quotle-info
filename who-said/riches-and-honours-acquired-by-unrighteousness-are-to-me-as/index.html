@@ -889,7 +889,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Riches and honours acquired by unrighteousness are to me as a floating cloud";
-        const copyAttribution = "Confucius, Analects, Book VII, ch. XV (also numbered 7.16), translated by James Legge in The Chinese Classics, vol. 1 (1861; rev. 1893). Verified against the primary text; the English wording is Legge's.";
+        const copyAttribution = "Confucius, Analects, Book VII, ch. XV (also numbered 7.16), translated by James Legge in The Chinese Classics, vol. 1 (1861; rev. 1893). Verified against the primary text; the English wording is Legge's. · Verbatim: “With coarse rice to eat, with water to drink, and my bended arm for a pillow;—I have still joy in the midst of these things. Riches and honours acquired by unrighteousness, are to me as a floating cloud.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

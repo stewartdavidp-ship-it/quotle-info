@@ -867,7 +867,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Our Host Certainly Is Outspoken\" \"Outspoken By Whom?";
-        const copyAttribution = "Anonymous — earliest known appearance in The New York Times, 1901. Not Ann Landers, who used it in 1969, and not securely Dorothy Parker, first credited in 1944";
+        const copyAttribution = "Anonymous — earliest known appearance in The New York Times, 1901. Not Ann Landers, who used it in 1969, and not securely Dorothy Parker, first credited in 1944 · Verbatim: “Minnick—Well, there was one thing I remarked about your wife the first time I saw her; she was undoubtedly outspoken. Henpeck—You don’t say! By whom?”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

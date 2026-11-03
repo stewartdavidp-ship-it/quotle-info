@@ -879,7 +879,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I'll never make the mistake of being 70 years old again";
-        const copyAttribution = "Casey Stengel, to reporters at the New York Yankees press conference announcing his departure, 18 October 1960; quoted in Joseph Durso, \"Casey: The Life and Legend of Charles Dillon Stengel\" (Prentice-Hall, 1967). Verified via Quotle.info";
+        const copyAttribution = "Casey Stengel, to reporters at the New York Yankees press conference announcing his departure, 18 October 1960; quoted in Joseph Durso, \"Casey: The Life and Legend of Charles Dillon Stengel\" (Prentice-Hall, 1967). Verified via Quotle.info · Verbatim: “I guess this means they fired me. I'll never make the mistake of being 70 years old again.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

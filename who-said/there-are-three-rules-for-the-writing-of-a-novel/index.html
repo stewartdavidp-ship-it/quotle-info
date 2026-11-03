@@ -877,7 +877,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "There Are Three Rules for the Writing of a Novel";
-        const copyAttribution = "not Oscar Wilde. Credited to W. Somerset Maugham (1874–1965); the earliest known printing is Ralph Daigh, Maybe You Should Write a Book (Prentice-Hall, 1977), p. 7, which itself reports it secondhand. Wilde's genuine “three rules” joke was about playwriting. Via Quotle.info";
+        const copyAttribution = "not Oscar Wilde. Credited to W. Somerset Maugham (1874–1965); the earliest known printing is Ralph Daigh, Maybe You Should Write a Book (Prentice-Hall, 1977), p. 7, which itself reports it secondhand. Wilde's genuine “three rules” joke was about playwriting. Via Quotle.info · Verbatim: “There are three rules for the writing of a novel. Unfortunately no one knows what they are.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

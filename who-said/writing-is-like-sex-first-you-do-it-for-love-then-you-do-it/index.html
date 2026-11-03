@@ -866,7 +866,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Writing is like sex. First you do it for love, then you do it for your friends, and then you do it for money";
-        const copyAttribution = "Ferenc Molnár, as quoted in The Intimate Notebooks of George Jean Nathan (Knopf, 1932), pp. 63–64. Often misattributed to Virginia Woolf as “Writing is like sex…”";
+        const copyAttribution = "Ferenc Molnár, as quoted in The Intimate Notebooks of George Jean Nathan (Knopf, 1932), pp. 63–64. Often misattributed to Virginia Woolf as “Writing is like sex…” · Verbatim: “Like a whore. First, I did it for my own pleasure. Then I did it for the pleasure of my friends. And now—I do it for money.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Religion is the opium of the people";
-        const copyAttribution = "Karl Marx, introduction to A Contribution to the Critique of Hegel's Philosophy of Right, first printed in the Deutsch-Französische Jahrbücher (Paris, February 1844), p. 72; English translation by H. J. Stenning, Selected Essays (New York: International Publishers, 1926), p. 12. Verified at quotle.info";
+        const copyAttribution = "Karl Marx, introduction to A Contribution to the Critique of Hegel's Philosophy of Right, first printed in the Deutsch-Französische Jahrbücher (Paris, February 1844), p. 72; English translation by H. J. Stenning, Selected Essays (New York: International Publishers, 1926), p. 12. Verified at quotle.info · Verbatim: “Religion is the moan of the oppressed creature, the sentiment of a heartless world, as it is the spirit of spiritless conditions. It is the opium of the people.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

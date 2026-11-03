@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Success ultimately rests on small things, lots of small things";
-        const copyAttribution = "Colin Powell, It Worked for Me: In Life and Leadership (New York: Harper, 2012), 18 — from Rule 8, \"Check Small Things.\"";
+        const copyAttribution = "Colin Powell, It Worked for Me: In Life and Leadership (New York: Harper, 2012), 18 — from Rule 8, \"Check Small Things.\" · Verbatim: “Success ultimately rests on small things, lots of small things. Leaders have to have a feel for small things — a feel for what is going on in the depths of an organization where small things reside.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

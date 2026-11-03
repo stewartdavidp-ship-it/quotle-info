@@ -863,7 +863,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "To send men to the firing squad, judicial proof is unnecessary. These procedures are an archaic bourgeois detail. This is a revolution! And a revolutionary must become a cold killing machine motivated by pure hate";
-        const copyAttribution = "Not Che Guevara. The words trace to Humberto Fontova’s 2004 article “Che Guevara: Assassin and Bumbler” (per Wikiquote, Disputed). Only the phrase “cold killing machine” is Guevara’s own, from his 1967 Message to the Tricontinental. — Quotle.info";
+        const copyAttribution = "Not Che Guevara. The words trace to Humberto Fontova’s 2004 article “Che Guevara: Assassin and Bumbler” (per Wikiquote, Disputed). Only the phrase “cold killing machine” is Guevara’s own, from his 1967 Message to the Tricontinental. — Quotle.info · Verbatim: “To send men to the firing squad, judicial proof is unnecessary. These procedures are an archaic bourgeois detail. This is a revolution! And a revolutionary must become a cold killing machine motivated by pure hate. We must create the pedagogy of the paredon (The Wall)!”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

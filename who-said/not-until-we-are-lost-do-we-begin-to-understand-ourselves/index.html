@@ -856,7 +856,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Not until we are lost do we begin to understand ourselves";
-        const copyAttribution = "Henry David Thoreau, Walden; or, Life in the Woods (1854), \"The Village\" — the popular \"Not until we are lost do we begin to understand ourselves\" is a paraphrase of his actual line, \"Not till we are lost … do we begin to find ourselves.\"";
+        const copyAttribution = "Henry David Thoreau, Walden; or, Life in the Woods (1854), \"The Village\" — the popular \"Not until we are lost do we begin to understand ourselves\" is a paraphrase of his actual line, \"Not till we are lost … do we begin to find ourselves.\" · Verbatim: “Not till we are lost, in other words not till we have lost the world, do we begin to find ourselves, and realize where we are and the infinite extent of our relations.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

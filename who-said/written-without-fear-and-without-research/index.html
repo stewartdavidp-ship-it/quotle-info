@@ -887,7 +887,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Written Without Fear and Without Research";
-        const copyAttribution = "Carl L. Becker, \"The Reviewing of Historical Books,\" Annual Report of the American Historical Association for the Year 1912 (Washington: GPO, 1914), p. 133 — not Dorothy Parker.";
+        const copyAttribution = "Carl L. Becker, \"The Reviewing of Historical Books,\" Annual Report of the American Historical Association for the Year 1912 (Washington: GPO, 1914), p. 133 — not Dorothy Parker. · Verbatim: “written, it must be confessed, without fear and without research”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

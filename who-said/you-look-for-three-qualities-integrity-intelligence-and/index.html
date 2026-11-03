@@ -874,7 +874,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "You look for three qualities: integrity, intelligence and energy. And if they don't have the first, the other two will kill you";
-        const copyAttribution = "Warren Buffett, relaying an unnamed source, in a 1993 talk to students at Columbia Business School; earliest printed record: Jim Rasmussen, \"Billionaire Talks Strategy With Students,\" Omaha World-Herald, 2 January 1994, p. 17S. The originator is unidentified. Via Quotle.info";
+        const copyAttribution = "Warren Buffett, relaying an unnamed source, in a 1993 talk to students at Columbia Business School; earliest printed record: Jim Rasmussen, \"Billionaire Talks Strategy With Students,\" Omaha World-Herald, 2 January 1994, p. 17S. The originator is unidentified. Via Quotle.info · Verbatim: “Somebody once said that in looking for people to hire, you look for three qualities: integrity, intelligence and energy. And if they don't have the first, the other two will kill you.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

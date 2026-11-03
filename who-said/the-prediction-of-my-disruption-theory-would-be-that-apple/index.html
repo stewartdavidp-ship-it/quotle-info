@@ -43,7 +43,7 @@
           "dateCreated": "2007",
           "copyrightNotice": "In copyright",
           "usageInfo": "https://quotle.info/how-we-verify/",
-          "disambiguatingDescription": "Widely attributed to Clayton Christensen, but not traced to a primary source. Treat the attribution as unconfirmed."
+          "disambiguatingDescription": "Attributed to Clayton Christensen, but the sources found do not confirm it. Treat the attribution as unconfirmed."
         },
         {
           "@type": "ClaimReview",
@@ -849,7 +849,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The prediction of my disruption theory would be that Apple won't succeed with the iPhone. History speaks pretty loudly on that";
-        const copyAttribution = "Clayton Christensen, 2007, as documented at Wikiquote; its cited source is now offline. Traced by Quotle.info";
+        const copyAttribution = "Clayton Christensen, 2007, as documented at Wikiquote; its cited source is now offline. Traced by Quotle.info · Verbatim: “[T]he prediction of [my disruption] theory would be that Apple won't succeed with the iPhone. They've launched an innovation that the existing players in the industry are heavily motivated to beat: It's not [truly] disruptive. History speaks pretty loudly on that, that the probability of success is going to be limited.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

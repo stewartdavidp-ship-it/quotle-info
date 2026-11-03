@@ -885,7 +885,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Reports of my death are greatly exaggerated";
-        const copyAttribution = "Mark Twain — but not in these words. His 1897 note read \"the report of my death was an exaggeration\" (New York Journal, 2 June 1897); in his 1906 autobiography he made it \"Say the report is greatly exaggerated.\" The familiar six-word version matches neither. — Quotle.info";
+        const copyAttribution = "Mark Twain — but not in these words. His 1897 note read \"the report of my death was an exaggeration\" (New York Journal, 2 June 1897); in his 1906 autobiography he made it \"Say the report is greatly exaggerated.\" The familiar six-word version matches neither. — Quotle.info · Verbatim: “The report of my illness grew out of his illness; the report of my death was an exaggeration.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));
