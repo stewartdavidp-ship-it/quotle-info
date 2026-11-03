@@ -36,6 +36,7 @@
  * Canonical data:   data/song-queue.json  ({meta, songs})
  * Human digest:     data/song-queue.md    (generated; never hand-edit)
  */
+const { ymdET } = require('./et-date');
 const fs = require('fs');
 const path = require('path');
 const { slugify } = require('./slugify');
@@ -64,7 +65,7 @@ function norm(s) {
   return String(s == null ? '' : s).toLowerCase().replace(/[’'‘`"“”]/g, '')
     .replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, ' ');
 }
-function today() { return new Date().toISOString().slice(0, 10); }
+function today() { return ymdET(); } // the ET calendar day, not UTC — see tools/et-date.js
 function trunc(s, n) { s = String(s || ''); return s.length > n ? s.slice(0, n - 1) + '…' : s; }
 function esc(s) { return String(s || '').replace(/\|/g, '\\|').replace(/\n/g, ' '); }
 

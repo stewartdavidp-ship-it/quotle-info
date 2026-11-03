@@ -365,7 +365,9 @@ node tools/harvest.js select 40 --wave rN           # review the list; `harvest.
 node tools/harvest.js batch  --wave rN              # writes data/.harvest-batch-rN.json = [{text,author,index}]
                                                     # index = gameIndex (track D) or null (tracks A/B/C)
 
-# 2. GENERATE (Opus, QI-deference). Pass TODAY'S date.
+# 2. GENERATE (Opus, QI-deference). Pass TODAY'S date — the America/New_York day, NOT the UTC one:
+#    `node tools/et-date.js` prints both flags. A UTC date rolls over at 19:00 ET and stamps
+#    tomorrow on every record (r55–r57 shipped 58 records dated a day early); prep-wave refuses it.
 Workflow generate.js  args={items:<contents of data/.harvest-batch-rN.json>, verifiedDate:"D Mon YYYY", dateModified:"YYYY-MM-DD"}
 
 # 3. PREP — reconstruct + escaping-scan + STUB-detect + (track A) creditedTo. Use the Transcript dir from step 2.
@@ -685,7 +687,8 @@ be REFUTED** — that is the skeptic working, not a wasted stage.
   workflow time across generate + audit + fix. Budget accordingly; the audit stage is the expensive
   half, because every page gets an agent and every high/blocker gets a second one.
 - **`verifiedDate` format is `"D Mon YYYY"`** — e.g. `"22 Jul 2026"`, matching `answer.lastVerified`
-  in the records. `dateModified` is ISO `"YYYY-MM-DD"`. Pass TODAY's date, per wave.
+  in the records. `dateModified` is ISO `"YYYY-MM-DD"`. Pass TODAY's date, per wave, in America/New_York —
+  `node tools/et-date.js` prints both; prep-wave/prep-songs refuse a pair that disagrees or is in the future.
 - **A dead agent is hard to identify from the journal.** `started` lines carry an opaque agent id and
   no label, so "which page did I lose?" cannot be answered from the journal directly. Diff the slugs
   present in the `result` lines against the batch you submitted — that is the only reliable method,

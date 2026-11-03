@@ -36,6 +36,7 @@ const VERIFIED_DATE = arg('verified-date', '');
 const DATE_MODIFIED = arg('date-modified', '');
 if (!JOURNAL || !BATCH || !OUT) { console.error('usage: prep-songs.js --journal <journal.jsonl> --batch <batch.json> --out <songs.json> --verified-date "D Mon YYYY" --date-modified "YYYY-MM-DD"'); process.exit(1); }
 if (!VERIFIED_DATE || !DATE_MODIFIED) { console.error('ERROR: pass --verified-date and --date-modified (must match what generate-songs.js was launched with).'); process.exit(1); }
+{ const bad = require('../tools/et-date').checkWaveDates(VERIFIED_DATE, DATE_MODIFIED); if (bad) { console.error(`ERROR: ${bad}`); process.exit(1); } }
 
 // The journal is appended LIVE. Reading it mid-run yields a fraction of the wave and looks exactly
 // like a small successful run. Same gate the quote pipeline uses, same reason.

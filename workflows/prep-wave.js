@@ -41,6 +41,7 @@ const DATE_MODIFIED = arg('date-modified', '');
 const STAMP_CREDITED = has('credited');
 if (!JOURNAL || !BATCH || !OUT) { console.error('usage: prep-wave.js --journal <journal.jsonl> --batch <batch.json> --out <records.json> --verified-date "D Mon YYYY" --date-modified "YYYY-MM-DD" [--credited]'); process.exit(1); }
 if (!VERIFIED_DATE || !DATE_MODIFIED) { console.error('ERROR: pass --verified-date and --date-modified (must match what generate.js was launched with).'); process.exit(1); }
+{ const bad = require('../tools/et-date').checkWaveDates(VERIFIED_DATE, DATE_MODIFIED); if (bad) { console.error(`ERROR: ${bad}`); process.exit(1); } }
 
 // The journal is appended LIVE. Reading it mid-run yields a fraction of the wave and looks like
 // success — r23 got "dossiers: 2" from a 10-quote batch this way. Abort unless every started agent

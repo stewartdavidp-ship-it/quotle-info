@@ -64,6 +64,7 @@
  *   node tools/report-gate.js --judge agree|disagree [--note ...]   operator verdict on the last run
  *   node tools/report-gate.js --promote                      advance observe → pr once the bar is met
  */
+const { ymdET } = require('./et-date');
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
@@ -87,7 +88,7 @@ const loadQueue = () => {
   return { mode: 'observe', promoteAt: 5, streak: 0, deferred: [], runs: [], ...q };
 };
 const saveQueue = (q) => fs.writeFileSync(QUEUE, JSON.stringify(q, null, 2) + '\n');
-const today = () => new Date().toISOString().slice(0, 10);
+const today = () => ymdET(); // ET calendar day — see tools/et-date.js
 
 if (has('--queue')) {
   const q = loadQueue();
