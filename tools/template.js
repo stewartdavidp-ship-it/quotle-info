@@ -1061,9 +1061,25 @@ function buildJsonLd(q, url) {
     }
     if (q.confidence === 'attributed') {
       const who = trueAuthor || (quotation.creator && plain(quotation.creator.name)) || '';
+      // "NOT TRACED TO A PRIMARY SOURCE" IS A FINDING, NOT A DEFAULT. Most attributed records DO
+      // cite a dated source — a memoir reporting the remark (Malcolm on Wittgenstein), a newspaper
+      // interview, a speech text whose wording differs. Stamping "not traced to a primary source" on
+      // all of them put a falsehood beside the record's own isPartOf/citation in the same JSON-LD
+      // node (r54 fix reports #4 and #8, 2026-11-02). What every attributed record shares is only
+      // that the credit is UNCONFIRMED, so that is the default. The stronger sentence is kept for
+      // the records whose provenance block itself says no primary source was found — measured 34 of
+      // 292 attributed records without a verdictNote; the other 258 get the neutral line.
+      // schema.verdictNote still overrides either.
+      const untraced = /no primary source|not traced|no (?:documented|known) source|unsourced|no source (?:located|found)|no contemporaneous/i
+        .test(JSON.stringify((q.source && q.source.docMeta) || []));
+      if (untraced) {
+        return who
+          ? `Widely attributed to ${who}, but not traced to a primary source. Treat the attribution as unconfirmed.`
+          : 'Widely repeated, but not traced to a primary source. Treat the attribution as unconfirmed.';
+      }
       return who
-        ? `Widely attributed to ${who}, but not traced to a primary source. Treat the attribution as unconfirmed.`
-        : 'Widely repeated, but not traced to a primary source. Treat the attribution as unconfirmed.';
+        ? `Attributed to ${who}, but the sources found do not confirm it. Treat the attribution as unconfirmed.`
+        : 'Widely repeated, but the sources found do not confirm the attribution. Treat it as unconfirmed.';
     }
     return 'Attribution traced to a primary source.';
   })();
