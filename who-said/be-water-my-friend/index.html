@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Be water, my friend";
-        const copyAttribution = "Bruce Lee, interviewed by Pierre Berton, The Pierre Berton Show, edition of 9 December 1971, filmed in Hong Kong — reciting dialogue written for him as Li Tsung in Longstreet, \"The Way of the Intercepting Fist\" (ABC, 16 September 1971), credited to Stirling Silliphant. Via Quotle.info.";
+        const copyAttribution = "Bruce Lee, interviewed by Pierre Berton, The Pierre Berton Show, edition of 9 December 1971, filmed in Hong Kong — reciting dialogue written for him as Li Tsung in Longstreet, \"The Way of the Intercepting Fist\" (ABC, 16 September 1971), credited to Stirling Silliphant. Via Quotle.info. · Verbatim: “Empty your mind, be formless, shapeless, like water. Now you put water into a cup, it becomes the cup. You put water into a bottle, it becomes the bottle. You put it in a teapot, it becomes the teapot. Now water can flow, or it can crash. Be water, my friend.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

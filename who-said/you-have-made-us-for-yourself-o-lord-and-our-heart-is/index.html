@@ -865,7 +865,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "You have made us for yourself, O Lord, and our heart is restless until it rests in you";
-        const copyAttribution = "Augustine of Hippo, Confessions, Book I, ch. 1 (c. 397–400)";
+        const copyAttribution = "Augustine of Hippo, Confessions, Book I, ch. 1 (c. 397–400) · Verbatim: “You have made us for yourself, and our heart is restless until it rests in you.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

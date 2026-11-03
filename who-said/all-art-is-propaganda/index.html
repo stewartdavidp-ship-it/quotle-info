@@ -875,7 +875,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "All art is propaganda";
-        const copyAttribution = "George Orwell, \"Charles Dickens,\" in Inside the Whale and Other Essays (Victor Gollancz, 1940). Orwell wrote the line but did not coin it: Quote Investigator documents the expression in print from 1916. Verified at quotle.info";
+        const copyAttribution = "George Orwell, \"Charles Dickens,\" in Inside the Whale and Other Essays (Victor Gollancz, 1940). Orwell wrote the line but did not coin it: Quote Investigator documents the expression in print from 1916. Verified at quotle.info · Verbatim: “All art is propaganda … on the other hand, not all propaganda is art.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

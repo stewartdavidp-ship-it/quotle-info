@@ -898,7 +898,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Custom is a violent and treacherous schoolmistress";
-        const copyAttribution = "Michel de Montaigne, Essays, Book I, Ch. XXII, \"Of custom, and that we should not easily change a law received,\" trans. Charles Cotton (1685–86), ed. W. C. Hazlitt. Verified at quotle.info";
+        const copyAttribution = "Michel de Montaigne, Essays, Book I, Ch. XXII, \"Of custom, and that we should not easily change a law received,\" trans. Charles Cotton (1685–86), ed. W. C. Hazlitt. Verified at quotle.info · Verbatim: “For, in truth, custom is a violent and treacherous schoolmistress.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

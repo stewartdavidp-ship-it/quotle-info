@@ -891,7 +891,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I never vote for anybody. I always vote against";
-        const copyAttribution = "W. C. Fields, as recounted in Robert Lewis Taylor, W. C. Fields: His Follies and Fortunes (Doubleday, 1949), p. 275. Commonly misattributed to H. L. Mencken; the saying traces to Tammany Hall boss Richard Croker in 1893.";
+        const copyAttribution = "W. C. Fields, as recounted in Robert Lewis Taylor, W. C. Fields: His Follies and Fortunes (Doubleday, 1949), p. 275. Commonly misattributed to H. L. Mencken; the saying traces to Tammany Hall boss Richard Croker in 1893. · Verbatim: “Hell, I never vote for anybody … I always vote against.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

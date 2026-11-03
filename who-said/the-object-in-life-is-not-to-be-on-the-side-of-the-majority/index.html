@@ -859,7 +859,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The object in life is not to be on the side of the majority, but to escape finding oneself in the ranks of the insane";
-        const copyAttribution = "Attributed to Marcus Aurelius, but not from the Meditations — the wording is a paraphrase from the close of Leo Tolstoy's essay \"Bethink Yourselves!\" (1904), a passage Tolstoy himself signed \"Marcus Aurelius.\"";
+        const copyAttribution = "Attributed to Marcus Aurelius, but not from the Meditations — the wording is a paraphrase from the close of Leo Tolstoy's essay \"Bethink Yourselves!\" (1904), a passage Tolstoy himself signed \"Marcus Aurelius.\" · Verbatim: “The object of life is not to be on the side of the majority, but to escape finding oneself in the ranks of the insane.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "There is no wealth but life";
-        const copyAttribution = "John Ruskin, \"Unto This Last\" (London: Smith, Elder & Co., 1862), Essay IV: \"Ad Valorem,\" section 77 — first published in the Cornhill Magazine, 1860.";
+        const copyAttribution = "John Ruskin, \"Unto This Last\" (London: Smith, Elder & Co., 1862), Essay IV: \"Ad Valorem,\" section 77 — first published in the Cornhill Magazine, 1860. · Verbatim: “There is no wealth but life. Life, including all its powers of love, of joy, and of admiration.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

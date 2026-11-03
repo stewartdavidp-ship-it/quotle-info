@@ -877,7 +877,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "How Will You Get Robots to Pay Union Dues?\" \"How Will You Get Robots to Buy Cars?";
-        const copyAttribution = "Walter Reuther's anecdote, first printed in Automation: A Report to the UAW-CIO Economic and Collective Bargaining Conference (January 1955), p. 6 — the other speaker was an unnamed Ford official, not Henry Ford II";
+        const copyAttribution = "Walter Reuther's anecdote, first printed in Automation: A Report to the UAW-CIO Economic and Collective Bargaining Conference (January 1955), p. 6 — the other speaker was an unnamed Ford official, not Henry Ford II · Verbatim: ““How are you going to collect union dues from these guys?” — “How are you going to get them to buy Fords?””";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

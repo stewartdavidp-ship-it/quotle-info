@@ -879,7 +879,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The real minimum wage is zero";
-        const copyAttribution = "Thomas Sowell, “Minimum Journalism Evident in Wage Story,” Sun-Sentinel, August 4, 2001";
+        const copyAttribution = "Thomas Sowell, “Minimum Journalism Evident in Wage Story,” Sun-Sentinel, August 4, 2001 · Verbatim: “The minimum wage law is very cleverly misnamed. The real minimum wage is zero — and that is what many inexperienced and low-skilled people receive as a result of legislation that makes it illegal to pay them what they are currently worth to an employer.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

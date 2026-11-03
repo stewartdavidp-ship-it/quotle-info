@@ -868,7 +868,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "In spite of everything, I still believe that people are really good at heart";
-        const copyAttribution = "Anne Frank, The Diary of a Young Girl (entry of 15 July 1944; trans. B. M. Mooyaart-Doubleday, 1952)";
+        const copyAttribution = "Anne Frank, The Diary of a Young Girl (entry of 15 July 1944; trans. B. M. Mooyaart-Doubleday, 1952) · Verbatim: “It's really a wonder that I haven't dropped all my ideals, because they seem so absurd and impossible to carry out. Yet I keep them, because in spite of everything I still believe that people are really good at heart.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

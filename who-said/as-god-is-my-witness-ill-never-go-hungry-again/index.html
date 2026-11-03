@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "As God is my witness, I'll never go hungry again!";
-        const copyAttribution = "Scarlett O'Hara in Gone with the Wind (1939), screenplay credited to Sidney Howard, compressing Margaret Mitchell's vow from Chapter XXV of her 1936 novel. The popular \"never go hungry again\" is a misquote.";
+        const copyAttribution = "Scarlett O'Hara in Gone with the Wind (1939), screenplay credited to Sidney Howard, compressing Margaret Mitchell's vow from Chapter XXV of her 1936 novel. The popular \"never go hungry again\" is a misquote. · Verbatim: “As God is my witness, as God is my witness they're not goin' to lick me. I'm goin' to live through this and when it's all over, I'll never be hungry again. No, nor any of my folk. If I have to lie, steal, cheat or kill. As God is my witness, I'll never be hungry again!”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

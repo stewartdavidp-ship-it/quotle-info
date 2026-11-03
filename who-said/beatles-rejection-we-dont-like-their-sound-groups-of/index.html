@@ -878,7 +878,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Beatles Rejection: We Don't Like Their Sound. Groups of Guitars Are On Their Way Out";
-        const copyAttribution = "Dick Rowe of Decca Records, as reported by Brian Epstein in A Cellarful of Noise (Doubleday, 1964), chapter 5, page 46. Rowe denied saying it. The shorter “groups of guitars are on the way out” is a later paraphrase. — Quotle.info";
+        const copyAttribution = "Dick Rowe of Decca Records, as reported by Brian Epstein in A Cellarful of Noise (Doubleday, 1964), chapter 5, page 46. Rowe denied saying it. The shorter “groups of guitars are on the way out” is a later paraphrase. — Quotle.info · Verbatim: “Not to mince words, Mr. Epstein, we don’t like your boys’ sound. Groups of four guitarists are on the way out.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -855,7 +855,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Spread love everywhere you go. Let no one ever come to you without leaving happier";
-        const copyAttribution = "Mother Teresa (attributed — the popular wording is a truncation of \"leaving better and happier\")";
+        const copyAttribution = "Mother Teresa (attributed — the popular wording is a truncation of \"leaving better and happier\") · Verbatim: “Spread love everywhere you go; first of all in your house. Give love to your children, to your wife or husband, to a next door neighbor. Let no one ever come to you without leaving better and happier.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

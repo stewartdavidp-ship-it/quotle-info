@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "It's a big club and you ain't in it";
-        const copyAttribution = "George Carlin, \"Dumb Americans,\" Life Is Worth Losing (HBO special recorded live at the Beacon Theatre, New York, 5 November 2005). Via Quotle.info";
+        const copyAttribution = "George Carlin, \"Dumb Americans,\" Life Is Worth Losing (HBO special recorded live at the Beacon Theatre, New York, 5 November 2005). Via Quotle.info · Verbatim: “It's a big club and you ain't in it. You and I are not in the big club.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

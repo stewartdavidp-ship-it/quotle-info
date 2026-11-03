@@ -870,7 +870,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "This is not a novel to be tossed aside lightly. It should be thrown with great force";
-        const copyAttribution = "Bill Miller, To You I Tell It (1929); widely misattributed to Dorothy Parker. Via quotle.info";
+        const copyAttribution = "Bill Miller, To You I Tell It (1929); widely misattributed to Dorothy Parker. Via quotle.info · Verbatim: “Not a book to be lightly thrown aside. Should be thrown with great force.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

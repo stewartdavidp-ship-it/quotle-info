@@ -880,7 +880,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "When the anecdotes and the data disagree, the anecdotes are usually right";
-        const copyAttribution = "Jeff Bezos, Closing Conversation, Forum on Leadership, George W. Bush Presidential Center, Dallas, 20 April 2018";
+        const copyAttribution = "Jeff Bezos, Closing Conversation, Forum on Leadership, George W. Bush Presidential Center, Dallas, 20 April 2018 · Verbatim: “The thing I have noticed is when the anecdotes and the data disagree, the anecdotes are usually right. There's something wrong with the way you are measuring it.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

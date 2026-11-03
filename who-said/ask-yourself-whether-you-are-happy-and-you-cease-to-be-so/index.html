@@ -835,7 +835,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Ask yourself whether you are happy, and you cease to be so";
-        const copyAttribution = "John Stuart Mill, Autobiography (1873), ch. 5";
+        const copyAttribution = "John Stuart Mill, Autobiography (1873), ch. 5 · Verbatim: “Ask yourself whether you are happy, and you cease to be so. The only chance is to treat, not happiness, but some end external to it, as the purpose of life.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

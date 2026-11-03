@@ -853,7 +853,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I have recently been examining all the known superstitions of the world, and do not find in our particular superstition one redeeming feature";
-        const copyAttribution = "Not Thomas Jefferson — no such letter has ever been produced. The only source Wikiquote cites is John E. Remsburg’s Six Historic Americans (1906), quoting a letter to a \"Dr. Woods\" that it does not reproduce; the Thomas Jefferson Foundation lists the quotation as spurious. Provenance traced at quotle.info";
+        const copyAttribution = "Not Thomas Jefferson — no such letter has ever been produced. The only source Wikiquote cites is John E. Remsburg’s Six Historic Americans (1906), quoting a letter to a \"Dr. Woods\" that it does not reproduce; the Thomas Jefferson Foundation lists the quotation as spurious. Provenance traced at quotle.info · Verbatim: “I have recently been examining all the known superstitions of the world, and do not find in our particular superstition one redeeming feature. They are all alike founded on fables and mythology.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

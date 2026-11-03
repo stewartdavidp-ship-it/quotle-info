@@ -861,7 +861,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Be a yardstick of quality. Some people aren't used to an environment where excellence is expected";
-        const copyAttribution = "attributed to Steve Jobs; no primary source has been produced. Wikiquote lists it as unsourced; a 2011 compilation credits Jeffrey S. Young's 1987 biography, unverified. Via Quotle.info";
+        const copyAttribution = "attributed to Steve Jobs; no primary source has been produced. Wikiquote lists it as unsourced; a 2011 compilation credits Jeffrey S. Young's 1987 biography, unverified. Via Quotle.info · Verbatim: “People judge you by your performance, so focus on the outcome. Be a yardstick of quality. Some people aren't used to an environment where excellence is expected.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

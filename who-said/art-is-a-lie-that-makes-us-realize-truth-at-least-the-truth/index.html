@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Art is a lie that makes us realize truth, at least the truth that is given us to understand";
-        const copyAttribution = "Pablo Picasso, \"Picasso Speaks: A Statement by the Artist,\" statement to Marius de Zayas, The Arts (New York), vol. 3, no. 5, May 1923, p. 315.";
+        const copyAttribution = "Pablo Picasso, \"Picasso Speaks: A Statement by the Artist,\" statement to Marius de Zayas, The Arts (New York), vol. 3, no. 5, May 1923, p. 315. · Verbatim: “We all know that art is not truth. Art is a lie that makes us realize truth, at least the truth that is given us to understand.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -865,7 +865,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "You Just Chip Away Everything That Doesn't Look Like David";
-        const copyAttribution = "not Michelangelo. Quote Investigator found no evidence any sculptor said it. The idea appears seriously in The Methodist Quarterly Review in 1858 and as a joke in The Index on 10 July 1879, credited there to John Ruskin; Orison Swett Marden printed a version on page 278 of Pushing to the Front (1894), crediting \"a rustic\". Michelangelo and the David are first named together in the NEA Journal in September 1964. Via Quotle.info";
+        const copyAttribution = "not Michelangelo. Quote Investigator found no evidence any sculptor said it. The idea appears seriously in The Methodist Quarterly Review in 1858 and as a joke in The Index on 10 July 1879, credited there to John Ruskin; Orison Swett Marden printed a version on page 278 of Pushing to the Front (1894), crediting \"a rustic\". Michelangelo and the David are first named together in the NEA Journal in September 1964. Via Quotle.info · Verbatim: “All I did was chip away everything that didn’t look like David.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

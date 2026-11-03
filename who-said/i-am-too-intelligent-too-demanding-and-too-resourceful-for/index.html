@@ -868,7 +868,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely";
-        const copyAttribution = "Simone de Beauvoir, Cahiers de jeunesse, 1926–1930 (Gallimard, 2008); displayed English is an uncredited popular translation of the French";
+        const copyAttribution = "Simone de Beauvoir, Cahiers de jeunesse, 1926–1930 (Gallimard, 2008); displayed English is an uncredited popular translation of the French · Verbatim: “I am too intelligent, too demanding, and too resourceful for anyone to be able to take charge of me entirely. No one knows me or loves me completely. I have only myself.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

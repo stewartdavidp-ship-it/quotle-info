@@ -869,7 +869,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Who Is Buried in Grant's Tomb? Answer: Grant!";
-        const copyAttribution = "Not Groucho Marx's joke: he used it as a consolation question on You Bet Your Life, which debuted on ABC Radio on 27 October 1947, but the gag was already in print in Ed Wynn's syndicated column of 13 September 1925, and Quote Investigator thinks it is older still. Strictly, nobody is buried there: the Grants lie in above-ground sarcophagi. — quotle.info";
+        const copyAttribution = "Not Groucho Marx's joke: he used it as a consolation question on You Bet Your Life, which debuted on ABC Radio on 27 October 1947, but the gag was already in print in Ed Wynn's syndicated column of 13 September 1925, and Quote Investigator thinks it is older still. Strictly, nobody is buried there: the Grants lie in above-ground sarcophagi. — quotle.info · Verbatim: “Do you know the name of the general who is buried in Grant's tomb? If you don't know, ask me.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

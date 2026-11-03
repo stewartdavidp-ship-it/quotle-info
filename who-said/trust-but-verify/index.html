@@ -897,7 +897,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Trust, but verify";
-        const copyAttribution = "Ronald Reagan, quoting what he called an old Russian maxim, Remarks on Signing the Intermediate-Range Nuclear Forces Treaty, the White House, 8 December 1987";
+        const copyAttribution = "Ronald Reagan, quoting what he called an old Russian maxim, Remarks on Signing the Intermediate-Range Nuclear Forces Treaty, the White House, 8 December 1987 · Verbatim: “We have listened to the wisdom in an old Russian maxim. And I'm sure you're familiar with it, Mr. General Secretary, though my pronunciation may give you difficulty. The maxim is: Dovorey no provorey—trust, but verify.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

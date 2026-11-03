@@ -835,7 +835,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "This country's billionaires are tired of subsidizing everyone else's schools, parks, health care";
-        const copyAttribution = "Not Elon Musk — a fabricated X-post screenshot first posted to the satire subreddit r/ToiletPaperUSA on February 15, 2025 (Lead Stories; PolitiFact).";
+        const copyAttribution = "Not Elon Musk — a fabricated X-post screenshot first posted to the satire subreddit r/ToiletPaperUSA on February 15, 2025 (Lead Stories; PolitiFact). · Verbatim: “Here's the hard truth: this country's billionaires are tired of subsidizing everyone else's schools, parks, health care, even food and entertainment. You want nature? Buy some land. Health care? Befriend a doctor. Entertainment? Roll around in the mud with your fellow pigs.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

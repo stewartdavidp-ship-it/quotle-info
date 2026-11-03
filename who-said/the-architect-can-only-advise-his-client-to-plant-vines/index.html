@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The Architect Can Only Advise His Client to Plant Vines";
-        const copyAttribution = "Frank Lloyd Wright, \"To the Young Man in Architecture,\" in Two Lectures on Architecture (The Art Institute of Chicago, 1931), p. 62. Not Herbert Hoover, whose similar line is about engineers, not architects.";
+        const copyAttribution = "Frank Lloyd Wright, \"To the Young Man in Architecture,\" in Two Lectures on Architecture (The Art Institute of Chicago, 1931), p. 62. Not Herbert Hoover, whose similar line is about engineers, not architects. · Verbatim: “The physician can bury his mistakes,—but the architect can only advise his client to plant vines.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -868,7 +868,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Sometimes I sits and thinks, and sometimes I just sits";
-        const copyAttribution = "not Satchel Paige. The wording comes from a Gunning King cartoon caption in Punch, 24 October 1906; the joke was already in US newspapers in February 1905, credited to an anonymous Maine fisherman. Via Quotle.info";
+        const copyAttribution = "not Satchel Paige. The wording comes from a Gunning King cartoon caption in Punch, 24 October 1906; the joke was already in US newspapers in February 1905, credited to an anonymous Maine fisherman. Via Quotle.info · Verbatim: “Well, mum, sometimes I sits and thinks and then again I just sits.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

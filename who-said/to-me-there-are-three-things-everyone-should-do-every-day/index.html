@@ -869,7 +869,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "To me, there are three things everyone should do every day. Number one is laugh. Number two is think. And number three, you should have your emotions moved to tears";
-        const copyAttribution = "Jim Valvano, acceptance speech, ESPY Awards, 4 March 1993 — but he said 'three things we all should do every day', not 'everyone'. Traced by Quotle.info.";
+        const copyAttribution = "Jim Valvano, acceptance speech, ESPY Awards, 4 March 1993 — but he said 'three things we all should do every day', not 'everyone'. Traced by Quotle.info. · Verbatim: “To me, there are three things we all should do every day. We should do this every day of our lives. Number one is laugh. Number two is think. Number three is you should have your emotions moved to tears.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

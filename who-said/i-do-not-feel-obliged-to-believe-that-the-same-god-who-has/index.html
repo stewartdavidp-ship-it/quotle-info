@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I do not feel obliged to believe that the same God who has endowed us with senses, reason, and intellect has intended us to forgo their use";
-        const copyAttribution = "Galileo Galilei, \"Letter to the Grand Duchess Christina\" (1615), in Discoveries and Opinions of Galileo, trans. Stillman Drake (Garden City, NY: Doubleday Anchor, 1957), 183. Drake's published text reads \"that that same God … has intended to forgo their use\"; the popular version inserts \"us.\" Verified via quotle.info.";
+        const copyAttribution = "Galileo Galilei, \"Letter to the Grand Duchess Christina\" (1615), in Discoveries and Opinions of Galileo, trans. Stillman Drake (Garden City, NY: Doubleday Anchor, 1957), 183. Drake's published text reads \"that that same God … has intended to forgo their use\"; the popular version inserts \"us.\" Verified via quotle.info. · Verbatim: “But I do not feel obliged to believe that that same God who has endowed us with senses, reason, and intellect has intended to forgo their use and by some other means to give us knowledge which we can attain by them.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

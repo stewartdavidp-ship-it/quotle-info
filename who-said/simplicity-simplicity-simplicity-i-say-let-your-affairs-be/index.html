@@ -835,7 +835,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Simplicity, simplicity, simplicity! I say, let your affairs be as two or three, and not a hundred or a thousand";
-        const copyAttribution = "Henry David Thoreau, Walden; or, Life in the Woods (1854), \"Where I Lived, and What I Lived For\"";
+        const copyAttribution = "Henry David Thoreau, Walden; or, Life in the Woods (1854), \"Where I Lived, and What I Lived For\" · Verbatim: “Simplicity, simplicity, simplicity! I say, let your affairs be as two or three, and not a hundred or a thousand; instead of a million count half a dozen, and keep your accounts on your thumb nail.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

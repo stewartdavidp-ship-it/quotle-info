@@ -854,7 +854,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Empathy is the highest form of knowledge";
-        const copyAttribution = "Not Plato. Traced to educator Bill Bullard's commencement speech at San Francisco University High School (documented online in 2007); Bullard himself credited George Eliot, an attribution that is also unsupported. — Quotle.info";
+        const copyAttribution = "Not Plato. Traced to educator Bill Bullard's commencement speech at San Francisco University High School (documented online in 2007); Bullard himself credited George Eliot, an attribution that is also unsupported. — Quotle.info · Verbatim: “Opinion is really the lowest form of human knowledge; it requires no accountability, no understanding. The highest form of knowledge is empathy, for it requires us to suspend our egos and live in another's world.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

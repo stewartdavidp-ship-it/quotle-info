@@ -887,7 +887,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Shut up and calculate!";
-        const copyAttribution = "Shut up and calculate! — N. David Mermin, \"What's Wrong with this Pillow?\", Physics Today 42, no. 4 (April 1989): 9. Widely misattributed to Richard Feynman, who died in February 1988, more than a year before the line was published. Via Quotle.info";
+        const copyAttribution = "Shut up and calculate! — N. David Mermin, \"What's Wrong with this Pillow?\", Physics Today 42, no. 4 (April 1989): 9. Widely misattributed to Richard Feynman, who died in February 1988, more than a year before the line was published. Via Quotle.info · Verbatim: “If I were forced to sum up in one sentence what the Copenhagen interpretation says to me, it would be \"Shut up and calculate!\"”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

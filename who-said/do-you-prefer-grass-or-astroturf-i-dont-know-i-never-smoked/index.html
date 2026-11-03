@@ -865,7 +865,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Do You Prefer Grass or Astroturf\" \"I Don't Know. I Never Smoked Astroturf";
-        const copyAttribution = "Tug McGraw, quoted in the New York Times, June 30, 1974; earliest documented in The Times (San Mateo), April 30, 1974. Often misattributed to “Mean” Joe Greene.";
+        const copyAttribution = "Tug McGraw, quoted in the New York Times, June 30, 1974; earliest documented in The Times (San Mateo), April 30, 1974. Often misattributed to “Mean” Joe Greene. · Verbatim: “And I told him that I had never smoked astroturf.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

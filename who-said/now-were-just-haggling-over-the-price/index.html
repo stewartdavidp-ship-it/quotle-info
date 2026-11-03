@@ -866,7 +866,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Now We’re Just Haggling Over the Price";
-        const copyAttribution = "Not Bertrand Russell. An anonymous joke: the earliest documented telling (Leonard Lyons, \"Lyons Den,\" New York Post, 6 June 1936) tells it of Lord Beaverbrook and ends \"Now we're trying to determine the degree.\" Traced by Quote Investigator. Via Quotle.info";
+        const copyAttribution = "Not Bertrand Russell. An anonymous joke: the earliest documented telling (Leonard Lyons, \"Lyons Den,\" New York Post, 6 June 1936) tells it of Lord Beaverbrook and ends \"Now we're trying to determine the degree.\" Traced by Quote Investigator. Via Quotle.info · As commonly quoted: “We've already established that. Now we're just haggling over the price.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -887,7 +887,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "There has always been a saying in baseball that you can't make a hitter, but I think you can improve a hitter. More than you can improve a fielder";
-        const copyAttribution = "Ted Williams (1918–2002), quoted by Ed Linn in \"The Kid's Last Game,\" SPORT, February 1961 — reprinted in The Best of Sport, 1946–1971, p. 186.";
+        const copyAttribution = "Ted Williams (1918–2002), quoted by Ed Linn in \"The Kid's Last Game,\" SPORT, February 1961 — reprinted in The Best of Sport, 1946–1971, p. 186. · Verbatim: “There has always been a saying in baseball that you can't make a hitter. But I think you can improve a hitter. More than you can improve a fielder. More mistakes are made in hitting than in any other part of the game.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

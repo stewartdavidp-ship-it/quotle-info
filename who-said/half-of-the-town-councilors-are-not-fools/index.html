@@ -863,7 +863,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Half of the Town Councilors Are Not Fools";
-        const copyAttribution = "Not Disraeli. An anonymous newspaper anecdote first printed in July 1927 about a town councillor near Uppsala, Sweden; attached to Disraeli in 1958.";
+        const copyAttribution = "Not Disraeli. An anonymous newspaper anecdote first printed in July 1927 about a town councillor near Uppsala, Sweden; attached to Disraeli in 1958. · Verbatim: “I said that half of the town councilors are fools. I now declare that half of the town councilors are not fools.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

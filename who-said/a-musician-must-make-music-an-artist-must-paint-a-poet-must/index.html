@@ -881,7 +881,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "A musician must make music, an artist must paint, a poet must write, if he is to be ultimately at peace with himself";
-        const copyAttribution = "Abraham H. Maslow, Motivation and Personality (1954); the earlier 1943 Psychological Review version reads \"ultimately happy.\" Via Quotle.info";
+        const copyAttribution = "Abraham H. Maslow, Motivation and Personality (1954); the earlier 1943 Psychological Review version reads \"ultimately happy.\" Via Quotle.info · Verbatim: “A musician must make music, an artist must paint, a poet must write, if he is to be ultimately at peace with himself. What a man can be, he must be.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

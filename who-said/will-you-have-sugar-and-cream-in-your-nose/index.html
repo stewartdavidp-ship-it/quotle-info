@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Will you have sugar and cream in your nose?";
-        const copyAttribution = "not J. P. Morgan. In every telling the line is a hostess's blunder, not the banker's; Morgan is the guest. The earliest known printing is Mary Roberts Rinehart, \"Just a Touch of Celebrity,\" The Saturday Evening Post, 14 January 1928, where no one is named. Morgan and the Morrows were attached by 1936, twenty-three years after his death in 1913, and Anne Morrow Lindbergh said the story had \"not a grain of truth in it.\" Via Quotle.info";
+        const copyAttribution = "not J. P. Morgan. In every telling the line is a hostess's blunder, not the banker's; Morgan is the guest. The earliest known printing is Mary Roberts Rinehart, \"Just a Touch of Celebrity,\" The Saturday Evening Post, 14 January 1928, where no one is named. Morgan and the Morrows were attached by 1936, twenty-three years after his death in 1913, and Anne Morrow Lindbergh said the story had \"not a grain of truth in it.\" Via Quotle.info · Verbatim: “Mr. Blank, will you have sugar and cream in your nose?”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

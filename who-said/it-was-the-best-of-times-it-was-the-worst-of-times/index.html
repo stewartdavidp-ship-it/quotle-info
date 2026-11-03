@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "It was the best of times, it was the worst of times";
-        const copyAttribution = "Charles Dickens, A Tale of Two Cities, Book the First, Chapter I (\"The Period\"). First printed in All the Year Round, 30 April 1859; book edition London: Chapman & Hall, 1859.";
+        const copyAttribution = "Charles Dickens, A Tale of Two Cities, Book the First, Chapter I (\"The Period\"). First printed in All the Year Round, 30 April 1859; book edition London: Chapman & Hall, 1859. · Verbatim: “It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the epoch of belief, it was the epoch of incredulity, it was the season of Light, it was the season of Darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us, we were all going direct to Heaven, we were all going direct the other way.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

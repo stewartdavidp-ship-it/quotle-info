@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The income tax has made more liars out of the American people than golf has";
-        const copyAttribution = "Will Rogers, The Illiterate Digest (New York: Albert & Charles Boni, 1924), 72; first printed in his syndicated newspaper column, April 1923.";
+        const copyAttribution = "Will Rogers, The Illiterate Digest (New York: Albert & Charles Boni, 1924), 72; first printed in his syndicated newspaper column, April 1923. · Verbatim: “The Income Tax has made more Liars out of the American people than Golf has. Even when you make one out on the level, you don't know when it's through if you are a Crook or a Martyr.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -860,7 +860,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Golf: Hit a Very Small Ball into an Even Smaller Hole, with Weapons Singularly Ill-Designed for the Purpose";
-        const copyAttribution = "Anonymous, “Confessions of a Duffer. I.—Golf,” Punch, 16 January 1892. Often credited to Lord Curzon, Winston Churchill or Woodrow Wilson.";
+        const copyAttribution = "Anonymous, “Confessions of a Duffer. I.—Golf,” Punch, 16 January 1892. Often credited to Lord Curzon, Winston Churchill or Woodrow Wilson. · Verbatim: “The object is to put a very small ball into a very tiny and remotely distant hole, with engines singularly ill adapted for the purpose.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

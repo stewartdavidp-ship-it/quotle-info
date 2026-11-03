@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Grief is the price we pay for love";
-        const copyAttribution = "Elizabeth II, message to the service of remembrance for British victims of the September 11 attacks, read by Sir Christopher Meyer at St Thomas Church, New York, 20 September 2001; full text printed in The Guardian, 21 September 2001. The phrasing condenses Colin Murray Parkes, \"Bereavement: Studies of Grief in Adult Life\" (1972).";
+        const copyAttribution = "Elizabeth II, message to the service of remembrance for British victims of the September 11 attacks, read by Sir Christopher Meyer at St Thomas Church, New York, 20 September 2001; full text printed in The Guardian, 21 September 2001. The phrasing condenses Colin Murray Parkes, \"Bereavement: Studies of Grief in Adult Life\" (1972). · Verbatim: “But nothing that can be said can begin to take away the anguish and the pain of these moments. Grief is the price we pay for love.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

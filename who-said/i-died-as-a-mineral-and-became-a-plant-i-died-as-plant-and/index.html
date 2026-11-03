@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I died as a mineral and became a plant, I died as plant and rose to animal, I died as animal and I was man";
-        const copyAttribution = "Rumi, Masnavi-i Ma'navi, Book III, lines 3901–3906 (dictated c. 1258–1273), translated in Reynold A. Nicholson, The Mystics of Islam (London: G. Bell & Sons, 1914), page 168. Nicholson's printed text reads \"I died as mineral… and I was man\"; the widely shared \"a mineral… Man\" is later drift. Via Quotle.info";
+        const copyAttribution = "Rumi, Masnavi-i Ma'navi, Book III, lines 3901–3906 (dictated c. 1258–1273), translated in Reynold A. Nicholson, The Mystics of Islam (London: G. Bell & Sons, 1914), page 168. Nicholson's printed text reads \"I died as mineral… and I was man\"; the widely shared \"a mineral… Man\" is later drift. Via Quotle.info · Verbatim: “I died as mineral and became a plant, I died as plant and rose to animal, I died as animal and I was man. Why should I fear? When was I less by dying?”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

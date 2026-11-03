@@ -870,7 +870,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Why Should Any Man Be Allowed to Buy a Printing Press and Disseminate Pernicious Opinions?";
-        const copyAttribution = "George Riddell, diary entry for 12 June 1920, giving the words as a speech by Lenin; Lord Riddell's Intimate Diary of the Peace Conference and After, 1918–1923 (London: Gollancz, 1933).";
+        const copyAttribution = "George Riddell, diary entry for 12 June 1920, giving the words as a speech by Lenin; Lord Riddell's Intimate Diary of the Peace Conference and After, 1918–1923 (London: Gollancz, 1933). · Verbatim: “And as to the freedom of the Press, why should any man be allowed to buy a printing press and disseminate pernicious opinions calculated to embarrass the Government?”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

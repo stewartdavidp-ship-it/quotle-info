@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Not one shred of evidence exists that life is serious";
-        const copyAttribution = "Not Joseph Campbell. Brendan Gill wrote it in \"Here at The New Yorker\" (New York: Random House, 1975), chapter 6, page 49 — as \"not a shred of evidence exists in favor of the argument that life is serious, though it is often hard and even terrible.\" The trimmed version credited to Campbell is first documented in a Usenet message of 29 March 1993. — Quotle.info";
+        const copyAttribution = "Not Joseph Campbell. Brendan Gill wrote it in \"Here at The New Yorker\" (New York: Random House, 1975), chapter 6, page 49 — as \"not a shred of evidence exists in favor of the argument that life is serious, though it is often hard and even terrible.\" The trimmed version credited to Campbell is first documented in a Usenet message of 29 March 1993. — Quotle.info · Verbatim: “In fact, not a shred of evidence exists in favor of the argument that life is serious, though it is often hard and even terrible.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

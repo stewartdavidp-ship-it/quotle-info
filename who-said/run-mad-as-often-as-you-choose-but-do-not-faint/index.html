@@ -866,7 +866,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Run mad as often as you choose, but do not faint";
-        const copyAttribution = "Jane Austen, Love and Freindship, Letter the 14th, manuscript dated 13 June 1790, when she was fourteen; first published 1922. It is spoken by the character Sophia on her deathbed, in a burlesque of sentimental novels — she is dying of a chill caught while fainting, so the advice is a joke. Modern versions spell it \"choose\". Via Quotle.info";
+        const copyAttribution = "Jane Austen, Love and Freindship, Letter the 14th, manuscript dated 13 June 1790, when she was fourteen; first published 1922. It is spoken by the character Sophia on her deathbed, in a burlesque of sentimental novels — she is dying of a chill caught while fainting, so the advice is a joke. Modern versions spell it \"choose\". Via Quotle.info · Verbatim: “Run mad as often as you chuse; but do not faint—”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

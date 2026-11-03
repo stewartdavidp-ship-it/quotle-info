@@ -835,7 +835,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "There is no charm equal to tenderness of heart";
-        const copyAttribution = "Jane Austen, Emma (1815)";
+        const copyAttribution = "Jane Austen, Emma (1815) · Verbatim: “There is no charm equal to tenderness of heart. There is nothing to be compared to it. Warmth and tenderness of heart, with an affectionate, open manner, will beat all the clearness of head in the world, for attraction, I am sure it will.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

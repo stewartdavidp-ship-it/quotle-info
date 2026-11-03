@@ -863,7 +863,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "People always say that I didn't give up my seat because I was tired, but that isn't true. I was not tired physically, or no more tired than I usually was at the end of a working day. No, the only tired I was, was tired of giving in";
-        const copyAttribution = "Rosa Parks with Jim Haskins, Rosa Parks: My Story (1992), p. 116. Popularly quoted with the two sentences about her age removed.";
+        const copyAttribution = "Rosa Parks with Jim Haskins, Rosa Parks: My Story (1992), p. 116. Popularly quoted with the two sentences about her age removed. · Verbatim: “People always say that I didn’t give up my seat because I was tired, but that isn’t true. I was not tired physically, or no more tired than I usually was at the end of a working day. I was not old, although some people have an image of me as being old then. I was forty-two. No, the only tired I was, was tired of giving in.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

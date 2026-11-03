@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Your pain is the breaking of the shell that encloses your understanding";
-        const copyAttribution = "Kahlil Gibran, \"On Pain,\" The Prophet (New York: Alfred A. Knopf, 1923). Gibran wrote The Prophet in English; the wording is his own, not a translation. Verified against the full 1923 text. Via quotle.info";
+        const copyAttribution = "Kahlil Gibran, \"On Pain,\" The Prophet (New York: Alfred A. Knopf, 1923). Gibran wrote The Prophet in English; the wording is his own, not a translation. Verified against the full 1923 text. Via quotle.info · Verbatim: “Your pain is the breaking of the shell that encloses your understanding. Even as the stone of the fruit must break, that its heart may stand in the sun, so must you know pain.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

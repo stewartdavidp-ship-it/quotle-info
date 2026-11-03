@@ -888,7 +888,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "'Dog Bites a Man' Is Not News. 'Man Bites a Dog' Is News";
-        const copyAttribution = "anonymous newsroom saying, in print by 1899 (Jesse Lynch Williams, The Stolen Story and Other Newspaper Stories); first credited to Charles A. Dana in 1902, after his death in 1897. Via Quotle.info";
+        const copyAttribution = "anonymous newsroom saying, in print by 1899 (Jesse Lynch Williams, The Stolen Story and Other Newspaper Stories); first credited to Charles A. Dana in 1902, after his death in 1897. Via Quotle.info · Verbatim: “'A dog bites a man'—that's a story; 'A man bites a dog'—that's a good story.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

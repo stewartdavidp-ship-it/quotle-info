@@ -898,7 +898,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Thank You for the Gift Book. I Shall Lose No Time In Reading It";
-        const copyAttribution = "Not Benjamin Disraeli. An anonymous joke, first printed in The British Quarterly Review, vol. 54 (1871), credited only to \"a celebrated botanist\"; attached to Disraeli in print from 1898, seventeen years after his death. Via Quotle.info";
+        const copyAttribution = "Not Benjamin Disraeli. An anonymous joke, first printed in The British Quarterly Review, vol. 54 (1871), credited only to \"a celebrated botanist\"; attached to Disraeli in print from 1898, seventeen years after his death. Via Quotle.info · Verbatim: “I have received your book, and shall lose no time in reading it.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

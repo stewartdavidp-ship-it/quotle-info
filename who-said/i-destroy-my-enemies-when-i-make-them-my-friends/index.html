@@ -850,7 +850,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I destroy my enemies when I make them my friends";
-        const copyAttribution = "Not Abraham Lincoln. This anecdote was first printed in 1818 about Emperor Sigismund (d. 1437); the Lincoln attribution only appears in 1940. Quote Investigator classifies it as apocryphal.";
+        const copyAttribution = "Not Abraham Lincoln. This anecdote was first printed in 1818 about Emperor Sigismund (d. 1437); the Lincoln attribution only appears in 1940. Quote Investigator classifies it as apocryphal. · Verbatim: “Do I not destroy my enemies when I make them my friends?”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -884,7 +884,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Just give them two and two and let them add it up";
-        const copyAttribution = "Billy Wilder, in a seminar at the American Film Institute, published in Conversations with the Great Moviemakers of Hollywood's Golden Age at the American Film Institute, ed. George Stevens Jr. (Knopf, 2006), p. 320. Wilder credited the advice to Ernst Lubitsch; no source in Lubitsch's own words has been found. Verified via quotle.info";
+        const copyAttribution = "Billy Wilder, in a seminar at the American Film Institute, published in Conversations with the Great Moviemakers of Hollywood's Golden Age at the American Film Institute, ed. George Stevens Jr. (Knopf, 2006), p. 320. Wilder credited the advice to Ernst Lubitsch; no source in Lubitsch's own words has been found. Verified via quotle.info · Verbatim: “No, just give them two and two and let them add it up. They're going to do it for you. And they're going to have fun with it. They're going to play the game with you.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

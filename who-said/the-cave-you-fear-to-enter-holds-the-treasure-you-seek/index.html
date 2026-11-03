@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The cave you fear to enter holds the treasure you seek";
-        const copyAttribution = "Joseph Campbell, Reflections on the Art of Living: A Joseph Campbell Companion, ed. Diane K. Osbon (HarperCollins, 1991), pp. 8, 24. The popular one-liner \"The cave you fear to enter holds the treasure you seek\" is a later condensation, not Campbell's wording (per Quote Investigator). — quotle.info";
+        const copyAttribution = "Joseph Campbell, Reflections on the Art of Living: A Joseph Campbell Companion, ed. Diane K. Osbon (HarperCollins, 1991), pp. 8, 24. The popular one-liner \"The cave you fear to enter holds the treasure you seek\" is a later condensation, not Campbell's wording (per Quote Investigator). — quotle.info · Verbatim: “The very cave you are afraid to enter turns out to be the source of what you are looking for.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

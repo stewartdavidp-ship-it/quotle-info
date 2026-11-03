@@ -1817,7 +1817,11 @@ function renderSourceSubmit(q) {
 }
 
 function renderTail(q) {
-  const copyAttr = creditLine(q);
+  // Same string the kit's blockquote shows (kitCredit): the Copy/Share buttons used to paste the
+  // popular wording under a clean citation with the verbatim correction dropped, on every record
+  // whose quotationText differs from the shown wording (r58 fix report). verbatimNote() already
+  // de-duplicates against creditLine, so this cannot say the correction twice.
+  const copyAttr = creditLine(q) + verbatimNote(q, kitQuote(q));
   return `
         <!-- ============ GAME CTA ============ -->
         <aside class="game-cta" aria-label="Related game">

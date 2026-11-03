@@ -857,7 +857,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Almighty and most merciful Father, we humbly beseech Thee, of Thy great goodness, to restrain these immoderate rains with which we have had to contend. Grant us fair weather for Battle";
-        const copyAttribution = "composed by Chaplain James H. O'Neill at the order of Lt. Gen. George S. Patton Jr., Third Army prayer card, December 1944 (often misattributed to Patton).";
+        const copyAttribution = "composed by Chaplain James H. O'Neill at the order of Lt. Gen. George S. Patton Jr., Third Army prayer card, December 1944 (often misattributed to Patton). · Verbatim: “Almighty and most merciful Father, we humbly beseech Thee, of Thy great goodness, to restrain these immoderate rains with which we have had to contend. Grant us fair weather for Battle. Graciously hearken to us as soldiers who call upon Thee that, armed with Thy power, we may advance from victory to victory, and crush the oppression and wickedness of our enemies and establish Thy justice among men and nations.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

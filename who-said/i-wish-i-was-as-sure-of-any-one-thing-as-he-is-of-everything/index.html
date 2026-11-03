@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I Wish I Was As Sure of Any One Thing As He is of Everything";
-        const copyAttribution = "attributed to Lord Melbourne (1779–1848), quoted in Earl Cowper's preface to Lord Melbourne's Papers (1889). Commonly misattributed to Benjamin Disraeli; that version first appears in Bennett Cerf's Try and Stop Me (1944). Verified via Quotle.info";
+        const copyAttribution = "attributed to Lord Melbourne (1779–1848), quoted in Earl Cowper's preface to Lord Melbourne's Papers (1889). Commonly misattributed to Benjamin Disraeli; that version first appears in Bennett Cerf's Try and Stop Me (1944). Verified via Quotle.info · Verbatim: “I wish I was as cock-sure of anything as Tom Macaulay is of everything.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

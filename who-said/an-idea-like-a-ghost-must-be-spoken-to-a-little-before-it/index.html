@@ -880,7 +880,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "An idea, like a ghost, must be spoken to a little before it will explain itself";
-        const copyAttribution = "Charles Dickens, Dombey and Son, chapter 12 (Bradbury & Evans, 1848). The familiar singular version, \"An idea, like a ghost, must be spoken to a little before it will explain itself,\" is first recorded in an 1862 quotation compilation, not in Dickens's text. Traced by Quotle.info";
+        const copyAttribution = "Charles Dickens, Dombey and Son, chapter 12 (Bradbury & Evans, 1848). The familiar singular version, \"An idea, like a ghost, must be spoken to a little before it will explain itself,\" is first recorded in an 1862 quotation compilation, not in Dickens's text. Traced by Quotle.info · Verbatim: “Ideas, like ghosts (according to the common notion of ghosts), must be spoken to a little before they will explain themselves.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

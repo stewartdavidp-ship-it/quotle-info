@@ -874,7 +874,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "An organization's ability to learn, and translate that learning into action rapidly, is the ultimate competitive business advantage";
-        const copyAttribution = "Jack Welch, as quoted in Robert Slater, Jack Welch & the G.E. Way (New York: McGraw-Hill, 1998), p. 12. Attributed, not verified: no source published under Welch's own name has been shown to contain this wording. Via Quotle.info";
+        const copyAttribution = "Jack Welch, as quoted in Robert Slater, Jack Welch & the G.E. Way (New York: McGraw-Hill, 1998), p. 12. Attributed, not verified: no source published under Welch's own name has been shown to contain this wording. Via Quotle.info · Verbatim: “At the heart of this culture is an understanding that an organization's ability to learn, and translate that learning into action rapidly, is the ultimate competitive business advantage.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

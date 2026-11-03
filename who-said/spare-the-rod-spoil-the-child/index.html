@@ -892,7 +892,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Spare the rod, spoil the child";
-        const copyAttribution = "Not the Bible. \"Then spare the rod and spoil the child\" is Samuel Butler's line from the satirical poem Hudibras, Part II, Canto I (1664) — a joke about whipping Cupid, not a maxim about raising children. The nearest biblical wording, Proverbs 13:24 (KJV), is \"He that spareth his rod hateth his son: but he that loveth him chasteneth him betimes.\" — verified at quotle.info";
+        const copyAttribution = "Not the Bible. \"Then spare the rod and spoil the child\" is Samuel Butler's line from the satirical poem Hudibras, Part II, Canto I (1664) — a joke about whipping Cupid, not a maxim about raising children. The nearest biblical wording, Proverbs 13:24 (KJV), is \"He that spareth his rod hateth his son: but he that loveth him chasteneth him betimes.\" — verified at quotle.info · Verbatim: “Love is a boy by poets stil'd; Then spare the rod and spoil the child.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

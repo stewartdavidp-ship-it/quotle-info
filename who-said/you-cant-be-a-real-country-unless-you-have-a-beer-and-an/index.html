@@ -888,7 +888,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "You Can't Be a Real Country Unless You Have a Beer and an Airline";
-        const copyAttribution = "Frank Zappa, The Real Frank Zappa Book (with Peter Occhiogrosso), chapter 12, \"America Drinks & Goes Marching,\" page 231. New York: Poseidon Press, 1989. Genuine — but in the book the line is a parenthetical aside, and the popular short form is trimmed and slightly altered. Via Quotle.info";
+        const copyAttribution = "Frank Zappa, The Real Frank Zappa Book (with Peter Occhiogrosso), chapter 12, \"America Drinks & Goes Marching,\" page 231. New York: Poseidon Press, 1989. Genuine — but in the book the line is a parenthetical aside, and the popular short form is trimmed and slightly altered. Via Quotle.info · Verbatim: “Every major industrialized nation has A BEER (you can't be a Real Country unless you have A BEER and an airline—it helps if you have some kind of a football team, or some nuclear weapons, but at the very least you need A BEER).”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

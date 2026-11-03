@@ -866,7 +866,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The problem isn't that Johnny can't read. The problem isn't even that Johnny can't think. The problem is that Johnny doesn't know what thinking is; he confuses it with feeling";
-        const copyAttribution = "Thomas Sowell, Inside American Education (1993), ch. 1, p. 4";
+        const copyAttribution = "Thomas Sowell, Inside American Education (1993), ch. 1, p. 4 · Verbatim: “In short, it is not merely that Johnny can't read, or even that Johnny can't think. Johnny doesn't know what thinking is, because thinking is so often confused with feeling in many public schools.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

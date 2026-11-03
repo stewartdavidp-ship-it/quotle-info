@@ -891,7 +891,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The harder I practice, the luckier I get";
-        const copyAttribution = "is not documented as Arnold Palmer's. The wording first appears in print in Gary Player's Golf Secrets (Prentice-Hall, 1962, p. 66), where Player credits golfer Jerry Barber; the earliest Palmer credit found by Quote Investigator is a secondhand 1984 newspaper remark using \"The more I practice, the luckier I get.\" — Quotle.info";
+        const copyAttribution = "is not documented as Arnold Palmer's. The wording first appears in print in Gary Player's Golf Secrets (Prentice-Hall, 1962, p. 66), where Player credits golfer Jerry Barber; the earliest Palmer credit found by Quote Investigator is a secondhand 1984 newspaper remark using \"The more I practice, the luckier I get.\" — Quotle.info · Verbatim: “And the harder I practice, the luckier I get.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

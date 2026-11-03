@@ -884,7 +884,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Hello, Clarice";
-        const copyAttribution = "Dr. Hannibal Lecter in The Silence of the Lambs (1991), screenplay by Ted Tally, from the novel by Thomas Harris. Commonly misquoted as \"Hello, Clarice,\" a line Lecter never says in that film — he says \"Well, hello Clarice\" in the 2001 sequel, Hannibal.";
+        const copyAttribution = "Dr. Hannibal Lecter in The Silence of the Lambs (1991), screenplay by Ted Tally, from the novel by Thomas Harris. Commonly misquoted as \"Hello, Clarice,\" a line Lecter never says in that film — he says \"Well, hello Clarice\" in the 2001 sequel, Hannibal. · Verbatim: “Good evening, Clarice.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

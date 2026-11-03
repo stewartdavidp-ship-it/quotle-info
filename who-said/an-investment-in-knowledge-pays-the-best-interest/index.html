@@ -848,7 +848,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "An investment in knowledge pays the best interest";
-        const copyAttribution = "commonly credited to Benjamin Franklin, but unverified. No source exists in his writings; the earliest known printing is an 1849 Boston newspaper, ~59 years after his death.";
+        const copyAttribution = "commonly credited to Benjamin Franklin, but unverified. No source exists in his writings; the earliest known printing is an 1849 Boston newspaper, ~59 years after his death. · Verbatim: “If a man empties his purse into his head, no man can take it away from him. An investment in knowledge always pays the best interest.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

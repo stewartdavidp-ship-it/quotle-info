@@ -839,7 +839,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I've always believed the British Open is one of the greatest championships in the world";
-        const copyAttribution = "Arnold Palmer, Arnold Palmer: Memories, Stories, and Memorabilia from a Life on and Off the Course (2004), p. 52. Verified by Quotle.info";
+        const copyAttribution = "Arnold Palmer, Arnold Palmer: Memories, Stories, and Memorabilia from a Life on and Off the Course (2004), p. 52. Verified by Quotle.info · Verbatim: “I've always believed the British Open is one of the greatest championships in the world. As a kid I read about Bob Jones and Walter Hagen and other Americans who had won the British Open (or Open Championship, as they call it in Britain), and I remember the hero's welcome Ben Hogan received after returning home with the Claret Jug in 1953.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

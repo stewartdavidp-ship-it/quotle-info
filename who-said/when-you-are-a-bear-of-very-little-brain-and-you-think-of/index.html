@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "when you are a Bear of Very Little Brain, and you Think of Things, you find sometimes that a Thing which seemed very Thingish inside you is quite different when it gets out into the open and has other people looking at it";
-        const copyAttribution = "A. A. Milne, The House at Pooh Corner (E. P. Dutton, 1928), chapter 6. Narration, not Pooh's dialogue; not from the 1926 book Winnie-the-Pooh.";
+        const copyAttribution = "A. A. Milne, The House at Pooh Corner (E. P. Dutton, 1928), chapter 6. Narration, not Pooh's dialogue; not from the 1926 book Winnie-the-Pooh. · Verbatim: “Pooh began to feel a little more comfortable, because when you are a Bear of Very Little Brain, and you Think of Things, you find sometimes that a Thing which seemed very Thingish inside you is quite different when it gets out into the open and has other people looking at it.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

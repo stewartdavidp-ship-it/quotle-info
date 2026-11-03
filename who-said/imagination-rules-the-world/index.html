@@ -896,7 +896,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Imagination rules the world";
-        const copyAttribution = "attributed to Napoleon Bonaparte, recorded by Emmanuel de Las Cases at Longwood, Saint Helena, January 1816, and published in Mémorial de Sainte-Hélène (1823). The French text reads \"Voilà le fanatisme! Oui, l'imagination gouverne le monde!\"";
+        const copyAttribution = "attributed to Napoleon Bonaparte, recorded by Emmanuel de Las Cases at Longwood, Saint Helena, January 1816, and published in Mémorial de Sainte-Hélène (1823). The French text reads \"Voilà le fanatisme! Oui, l'imagination gouverne le monde!\" · Verbatim: “This is fanaticism! Yes, imagination rules the world!”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

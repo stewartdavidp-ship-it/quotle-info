@@ -855,7 +855,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Blessed is he who has found his work; let him ask no other blessedness";
-        const copyAttribution = "Thomas Carlyle, Past and Present (1843), Book III, ch. XI \"Labour\"";
+        const copyAttribution = "Thomas Carlyle, Past and Present (1843), Book III, ch. XI \"Labour\" · Verbatim: “Blessed is he who has found his work; let him ask no other blessedness. He has a work, a life-purpose; he has found it, and will follow it!”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

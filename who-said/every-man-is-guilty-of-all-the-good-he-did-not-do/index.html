@@ -868,7 +868,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Every man is guilty of all the good he did not do";
-        const copyAttribution = "Every man is guilty of all the good he did not do. —commonly credited to Voltaire; it is a paraphrase of his line in The Age of Louis XIV (1751), where he wrote that a minister of state \"is guilty of all the good he does not do.\"";
+        const copyAttribution = "Every man is guilty of all the good he did not do. —commonly credited to Voltaire; it is a paraphrase of his line in The Age of Louis XIV (1751), where he wrote that a minister of state \"is guilty of all the good he does not do.\" · Verbatim: “A minister of state is excusable for the harm he does when the helm of government has forced his hand in a storm; but in the calm he is guilty of all the good he does not do.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

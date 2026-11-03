@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "You may not realize it when it happens, but a kick in the teeth may be the best thing in the world for you";
-        const copyAttribution = "Walt Disney, quoted in Diane Disney Miller (as told to Pete Martin), The Story of Walt Disney (New York: Henry Holt and Company, 1957), 89. A variant reading \"a kick in the pants\" appeared earlier in the Saturday Evening Post, 1 December 1956. Verified via Quotle.info.";
+        const copyAttribution = "Walt Disney, quoted in Diane Disney Miller (as told to Pete Martin), The Story of Walt Disney (New York: Henry Holt and Company, 1957), 89. A variant reading \"a kick in the pants\" appeared earlier in the Saturday Evening Post, 1 December 1956. Verified via Quotle.info. · Verbatim: “I function better when things are going badly than when they're as smooth as whipped cream. When I'm in a fight I don't worry, but when things are going good I'm afraid that something's going to crack under me any minute. You may not realize it when it happens, but a kick in the teeth may be the best thing in the world for you.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

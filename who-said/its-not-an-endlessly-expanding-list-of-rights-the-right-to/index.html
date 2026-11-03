@@ -880,7 +880,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "It's not an endlessly expanding list of rights — the 'right' to education, the 'right' to health care, the 'right' to food and housing. That's not freedom, that's dependency. Those aren't rights, those are the rations of slavery — hay and a barn for human cattle";
-        const copyAttribution = "Not Alexis de Tocqueville. P. J. O'Rourke, The Liberty Manifesto, delivered at the Cato Institute on 6 May 1993, collected in Age and Guile Beat Youth, Innocence, and a Bad Haircut (1996), p. 227. Traced by Quotle.info.";
+        const copyAttribution = "Not Alexis de Tocqueville. P. J. O'Rourke, The Liberty Manifesto, delivered at the Cato Institute on 6 May 1993, collected in Age and Guile Beat Youth, Innocence, and a Bad Haircut (1996), p. 227. Traced by Quotle.info. · Verbatim: “It’s not an endlessly expanding list of rights — the “right” to education, the “right” to food and housing. That’s not freedom, that’s dependency. Those aren’t rights, those are the rations of slavery — hay and a barn for human cattle.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

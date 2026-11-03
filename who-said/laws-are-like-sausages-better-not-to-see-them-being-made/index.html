@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Laws are Like Sausages. Better Not to See Them Being Made";
-        const copyAttribution = "John Godfrey Saxe, quoted in the University Chronicle (University of Michigan), 27 March 1869. Not Otto von Bismarck: no German source exists and the Bismarck attribution first appears in 1933, thirty-five years after his death. Via Quotle.info";
+        const copyAttribution = "John Godfrey Saxe, quoted in the University Chronicle (University of Michigan), 27 March 1869. Not Otto von Bismarck: no German source exists and the Bismarck attribution first appears in 1933, thirty-five years after his death. Via Quotle.info · Verbatim: “Laws, like sausages, cease to inspire respect in proportion as we know how they are made.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

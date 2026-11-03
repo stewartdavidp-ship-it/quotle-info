@@ -878,7 +878,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "A Master in the Art of Living Makes Little Distinction Between His Work and His Play";
-        const copyAttribution = "L. P. Jacks, Education through Recreation (University of London Press, 1932), ch. 1, pp. 1–2 — not James Michener, and not a Zen text";
+        const copyAttribution = "L. P. Jacks, Education through Recreation (University of London Press, 1932), ch. 1, pp. 1–2 — not James Michener, and not a Zen text · Verbatim: “A master in the art of living draws no sharp distinction between his work and his play, his labour and his leisure, his mind and his body, his education and his recreation. He hardly knows which is which. He simply pursues his vision of excellence through whatever he is doing and leaves others to determine whether he is working or playing. To himself he always seems to be doing both. Enough for him that he does it well.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

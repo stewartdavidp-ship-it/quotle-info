@@ -873,7 +873,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I've been around so long, I knew Doris Day before she was a virgin";
-        const copyAttribution = "Oscar Levant, not Groucho Marx. The line above is a later paraphrase, printed in Max Wilk's The Wit and Wisdom of Hollywood (1972); Levant's own sentence is in his memoir of 1965. Via quotle.info";
+        const copyAttribution = "Oscar Levant, not Groucho Marx. The line above is a later paraphrase, printed in Max Wilk's The Wit and Wisdom of Hollywood (1972); Levant's own sentence is in his memoir of 1965. Via quotle.info · Verbatim: “My last picture for Warners was Romance on the High Seas. It was Doris Day’s first picture; that was before she became a virgin.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Each friend represents a world in us, a world not born until they arrive";
-        const copyAttribution = "attributed to Anaïs Nin, diary entry dated March 1937. Note: the widely shared version drops the word \"possibly,\" and no volume or page has been confirmed. Via quotle.info";
+        const copyAttribution = "attributed to Anaïs Nin, diary entry dated March 1937. Note: the widely shared version drops the word \"possibly,\" and no volume or page has been confirmed. Via quotle.info · Verbatim: “Each friend represents a world in us, a world possibly not born until they arrive, and it is only by this meeting that a new world is born.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

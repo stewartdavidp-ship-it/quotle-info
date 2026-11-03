@@ -872,7 +872,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Winning isn't a sometime thing; it's an all the time thing";
-        const copyAttribution = "Vince Lombardi, opening of \"What It Takes to Be Number One\" (speech, undated; text published by the Lombardi family). Attributed: no dated transcript or recording of the speech has been located. Quotle.info";
+        const copyAttribution = "Vince Lombardi, opening of \"What It Takes to Be Number One\" (speech, undated; text published by the Lombardi family). Attributed: no dated transcript or recording of the speech has been located. Quotle.info · Verbatim: “Winning is not a sometime thing; it's an all the time thing. You don't win once in a while; you don't do things right once in a while; you do them right all of the time. Winning is a habit. Unfortunately, so is losing.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

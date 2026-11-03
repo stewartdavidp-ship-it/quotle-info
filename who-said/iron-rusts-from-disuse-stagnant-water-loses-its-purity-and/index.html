@@ -874,7 +874,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Iron rusts from disuse; stagnant water loses its purity and in cold weather becomes frozen; even so does inaction sap the vigor of the mind";
-        const copyAttribution = "Leonardo da Vinci, Leonardo da Vinci's Note-Books, trans. Edward McCurdy (New York: Empire State Book Company, 1923), p. 51. Verified at Quotle.info";
+        const copyAttribution = "Leonardo da Vinci, Leonardo da Vinci's Note-Books, trans. Edward McCurdy (New York: Empire State Book Company, 1923), p. 51. Verified at Quotle.info · Verbatim: “Iron rusts from disuse; stagnant water loses its purity and in cold weather becomes frozen; even so does inaction sap the vigour of the mind.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Give the People What They Want and They'll Come";
-        const copyAttribution = "George Jessel (1898–1981), as quoted by Goodman Ace in The Saturday Review, 13 August 1955";
+        const copyAttribution = "George Jessel (1898–1981), as quoted by Goodman Ace in The Saturday Review, 13 August 1955 · Verbatim: “You see, you give the people what they want and they'll come.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

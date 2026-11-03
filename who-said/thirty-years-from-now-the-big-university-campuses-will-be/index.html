@@ -880,7 +880,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Thirty years from now the big university campuses will be relics. Universities won't survive";
-        const copyAttribution = "Peter Drucker, interviewed by Robert Lenzner and Stephen S. Johnson, “Seeing things as they really are,” Forbes, March 10, 1997. Verified verbatim — the thirty-year horizon he named runs to 2027.";
+        const copyAttribution = "Peter Drucker, interviewed by Robert Lenzner and Stephen S. Johnson, “Seeing things as they really are,” Forbes, March 10, 1997. Verified verbatim — the thirty-year horizon he named runs to 2027. · Verbatim: “Thirty years from now the big university campuses will be relics. Universities won't survive. It's as large a change as when we first got the printed book.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

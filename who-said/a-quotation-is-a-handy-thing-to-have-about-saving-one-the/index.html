@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "A quotation is a handy thing to have about, saving one the trouble of thinking for oneself, always a laborious business";
-        const copyAttribution = "A. A. Milne, \"The Record Lie,\" in If I May (London: Methuen & Co., 1920), p. 90";
+        const copyAttribution = "A. A. Milne, \"The Record Lie,\" in If I May (London: Methuen & Co., 1920), p. 90 · Verbatim: “For a quotation is a handy thing to have about, saving one the trouble of thinking for oneself, always a laborious business.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

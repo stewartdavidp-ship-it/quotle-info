@@ -870,7 +870,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Facts are stubborn things";
-        const copyAttribution = "John Adams, closing argument for the defense, Boston Massacre trial, December 1770 (The Trial of William Wemms…, Boston: J. Fleeming, 1770)";
+        const copyAttribution = "John Adams, closing argument for the defense, Boston Massacre trial, December 1770 (The Trial of William Wemms…, Boston: J. Fleeming, 1770) · Verbatim: “Facts are stubborn things; and whatever may be our wishes, our inclinations, or the dictates of our passions, they cannot alter the state of facts and evidence.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -877,7 +877,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I am one of those who think like Nobel, that humanity will draw more good than evil from new discoveries";
-        const copyAttribution = "Pierre Curie (not Marie Curie), Nobel Lecture, \"Radioactive Substances, Especially Radium,\" June 6, 1905. The popular \"think like Nobel… draw more good than evil\" wording is a loose rendering.";
+        const copyAttribution = "Pierre Curie (not Marie Curie), Nobel Lecture, \"Radioactive Substances, Especially Radium,\" June 6, 1905. The popular \"think like Nobel… draw more good than evil\" wording is a loose rendering. · Verbatim: “I am one of those who believe with Nobel that mankind will derive more good than harm from the new discoveries.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

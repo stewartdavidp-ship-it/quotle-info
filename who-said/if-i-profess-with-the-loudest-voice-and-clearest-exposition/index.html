@@ -864,7 +864,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "If I profess with the loudest voice and clearest exposition every portion of the truth of God except precisely that little point which the world and the devil are at that moment attacking, I am not confessing Christ, however boldly I may be professing Christ. Where the battle rages, there the loyalty of the soldier is proved";
-        const copyAttribution = "Elizabeth Rundle Charles, Chronicles of the Schönberg-Cotta Family, \"Fritz's Story\" (often misattributed to Martin Luther)";
+        const copyAttribution = "Elizabeth Rundle Charles, Chronicles of the Schönberg-Cotta Family, \"Fritz's Story\" (often misattributed to Martin Luther) · Verbatim: “If I profess, with the loudest voice and the clearest exposition, every portion of the truth of God except precisely that little point which the world and the devil are at that moment attacking, I am not confessing Christ, however boldly I may be professing Christianity. Where the battle rages the loyalty of the soldier is proved; and to be steady on all the battle-fields besides is mere flight and disgrace to him if he flinches at that one point.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

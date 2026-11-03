@@ -868,7 +868,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I became an entrepreneur by mistake. Ever since then I've gone into business, not to make money, but because I think I can do it better than it's been done elsewhere";
-        const copyAttribution = "Sir Richard Branson, interviewed by Martyn Lewis in \"Reflections on Success\" (1997). Attributed — the citation is documented at Wikiquote, but the book's text was not independently checked. Via Quotle.info";
+        const copyAttribution = "Sir Richard Branson, interviewed by Martyn Lewis in \"Reflections on Success\" (1997). Attributed — the citation is documented at Wikiquote, but the book's text was not independently checked. Via Quotle.info · Verbatim: “I became an entrepreneur by mistake. Ever since then I've gone into business, not to make money, but because I think I can do it better than it's been done elsewhere. And, quite often, just out of personal frustration about the way it's been done by other people.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

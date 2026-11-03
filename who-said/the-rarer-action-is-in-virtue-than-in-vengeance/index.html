@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The rarer action is in virtue than in vengeance";
-        const copyAttribution = "The rarer action is / In virtue than in vengeance. — Prospero, in William Shakespeare, The Tempest, Act 5, Scene 1. First printed in the 1623 First Folio.";
+        const copyAttribution = "The rarer action is / In virtue than in vengeance. — Prospero, in William Shakespeare, The Tempest, Act 5, Scene 1. First printed in the 1623 First Folio. · Verbatim: “Though with their high wrongs I am struck to th' quick, yet with my nobler reason 'gainst my fury do I take part. The rarer action is in virtue than in vengeance.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

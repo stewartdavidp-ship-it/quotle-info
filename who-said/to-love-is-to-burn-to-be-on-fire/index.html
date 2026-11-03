@@ -865,7 +865,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "To love is to burn, to be on fire";
-        const copyAttribution = "Jane Austen did not write “To love is to burn, to be on fire.” Emma Thompson wrote it for Marianne Dashwood in the 1995 film of Sense and Sensibility (published screenplay, scene 51), and the real line continues: “…all made of passion, of adoration, of sacrifice! Like Juliet, or Guinevere or Heloise —”. Via quotle.info";
+        const copyAttribution = "Jane Austen did not write “To love is to burn, to be on fire.” Emma Thompson wrote it for Marianne Dashwood in the 1995 film of Sense and Sensibility (published screenplay, scene 51), and the real line continues: “…all made of passion, of adoration, of sacrifice! Like Juliet, or Guinevere or Heloise —”. Via quotle.info · Verbatim: “To love is to burn — to be on fire, all made of passion, of adoration, of sacrifice! Like Juliet, or Guinevere or Heloise —”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

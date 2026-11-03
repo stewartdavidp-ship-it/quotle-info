@@ -888,7 +888,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "If You Want Jobs Then Give These Workers Spoons Instead of Shovels";
-        const copyAttribution = "credited to Milton Friedman, but the joke was in print by 1901, eleven years before he was born. Earliest known telling: an anonymous onlooker in The Chicago Daily Tribune, 20 September 1901. Earliest credit to Friedman: an unsourced blog post of 6 December 2006, three weeks after his death; the first in a book is The End of Prosperity (2008). Research: Quote Investigator. Via Quotle.info";
+        const copyAttribution = "credited to Milton Friedman, but the joke was in print by 1901, eleven years before he was born. Earliest known telling: an anonymous onlooker in The Chicago Daily Tribune, 20 September 1901. Earliest credit to Friedman: an unsourced blog post of 6 December 2006, three weeks after his death; the first in a book is The End of Prosperity (2008). Research: Quote Investigator. Via Quotle.info · Verbatim: “Oh, I see. I thought you were trying to build a canal. If you really want to create jobs, then by all means give these men spoons, not shovels.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

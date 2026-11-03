@@ -861,7 +861,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "In the lexicon of youth there is no such word as fail";
-        const copyAttribution = "Edward Bulwer-Lytton, Richelieu; or, The Conspiracy (1839), Act III, Scene I";
+        const copyAttribution = "Edward Bulwer-Lytton, Richelieu; or, The Conspiracy (1839), Act III, Scene I · Verbatim: “In the lexicon of youth, which Fate reserves / For a bright manhood, there is no such word / As 'fail.'”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

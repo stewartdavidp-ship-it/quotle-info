@@ -854,7 +854,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Success is never final, failure is never fatal. It is the courage to continue that counts";
-        const copyAttribution = "not Winston Churchill. Earliest full version: a Budweiser advertisement, Trenton Evening Times, 21 September 1938. Via Quotle.info";
+        const copyAttribution = "not Winston Churchill. Earliest full version: a Budweiser advertisement, Trenton Evening Times, 21 September 1938. Via Quotle.info · Verbatim: “Success is not final, failure is not fatal: it is the courage to continue that counts.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

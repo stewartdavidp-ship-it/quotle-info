@@ -873,7 +873,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "In this world nothing can be said to be certain, except death and taxes";
-        const copyAttribution = "Benjamin Franklin, letter to Jean-Baptiste Le Roy, 13 November 1789, first printed in The Private Correspondence of Benjamin Franklin (1817), vol. 1, p. 266. The saying was already proverbial: Christopher Bullock used it in 1716. Provenance verified at quotle.info";
+        const copyAttribution = "Benjamin Franklin, letter to Jean-Baptiste Le Roy, 13 November 1789, first printed in The Private Correspondence of Benjamin Franklin (1817), vol. 1, p. 266. The saying was already proverbial: Christopher Bullock used it in 1716. Provenance verified at quotle.info · Verbatim: “Our new Constitution is now established, and has an appearance that promises permanency; but in this world nothing can be said to be certain, except death and taxes.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

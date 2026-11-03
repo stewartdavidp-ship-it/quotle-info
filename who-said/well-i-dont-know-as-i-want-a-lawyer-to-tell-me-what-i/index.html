@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Well, I don't know as I want a lawyer to tell me what I cannot do. I hire him to tell how to do what I want to do";
-        const copyAttribution = "attributed to J. P. Morgan (1837–1913), as recollected by Judge Elbert H. Gary in Ida M. Tarbell, The Life of Elbert H. Gary: The Story of Steel (New York: D. Appleton and Company, 1925), p. 81. The widely circulated version drops the word \"me.\"";
+        const copyAttribution = "attributed to J. P. Morgan (1837–1913), as recollected by Judge Elbert H. Gary in Ida M. Tarbell, The Life of Elbert H. Gary: The Story of Steel (New York: D. Appleton and Company, 1925), p. 81. The widely circulated version drops the word \"me.\" · Verbatim: “Well, I don't know as I want a lawyer to tell me what I cannot do. I hire him to tell me how to do what I want to do.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -876,7 +876,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "It Will Take Them Ten Years to Prove Me Wrong";
-        const copyAttribution = "Not verified as Winston Churchill. No documented source exists. The oldest related version is a March 1945 Coronet magazine story set in the Second World War with a different punchline; this wording first appears in OR/MS Today, April 1991, whose author heard it at a convention and never found a written source. Quote Investigator declines to reach a verdict.";
+        const copyAttribution = "Not verified as Winston Churchill. No documented source exists. The oldest related version is a March 1945 Coronet magazine story set in the Second World War with a different punchline; this wording first appears in OR/MS Today, April 1991, whose author heard it at a convention and never found a written source. Quote Investigator declines to reach a verdict. · Verbatim: “If I give him my best guess at three this afternoon, it will take ten years for anyone to prove me wrong.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

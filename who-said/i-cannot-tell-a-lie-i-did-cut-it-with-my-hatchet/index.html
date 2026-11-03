@@ -892,7 +892,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I cannot tell a lie... I did cut it with my hatchet";
-        const copyAttribution = "written by Mason Locke Weems and put in the mouth of a young George Washington, The Life of Washington, fifth edition (1806). Not a documented statement by Washington. Via Quotle.info";
+        const copyAttribution = "written by Mason Locke Weems and put in the mouth of a young George Washington, The Life of Washington, fifth edition (1806). Not a documented statement by Washington. Via Quotle.info · Verbatim: “I can't tell a lie, Pa; you know I can't tell a lie. I did cut it with my hatchet.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

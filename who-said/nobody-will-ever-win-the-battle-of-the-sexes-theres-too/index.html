@@ -874,7 +874,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Nobody Will Ever Win the Battle of the Sexes. There's Too Much Fraternizing with the Enemy";
-        const copyAttribution = "Anonymous — earliest known appearance in the Lubbock Morning Avalanche, February 1944. Not Ann Landers, who printed it unattributed in 1958, and not Henry Kissinger, credited as a joke in 1979";
+        const copyAttribution = "Anonymous — earliest known appearance in the Lubbock Morning Avalanche, February 1944. Not Ann Landers, who printed it unattributed in 1958, and not Henry Kissinger, credited as a joke in 1979 · Verbatim: “One war that will never be won by either side is the continual war between the sexes…there is so much fraternizing with the enemy on the part of both sides.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

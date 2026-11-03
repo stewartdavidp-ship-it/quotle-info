@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I am grateful for what I am and have. My thanksgiving is perpetual";
-        const copyAttribution = "Henry David Thoreau, letter to H. G. O. Blake, Concord, 6 December 1856; first printed in Letters to Various Persons (Boston: Ticknor and Fields, 1865), p. 145. Verified via Quotle.info.";
+        const copyAttribution = "Henry David Thoreau, letter to H. G. O. Blake, Concord, 6 December 1856; first printed in Letters to Various Persons (Boston: Ticknor and Fields, 1865), p. 145. Verified via Quotle.info. · Verbatim: “I am grateful for what I am and have. My thanksgiving is perpetual. It is surprising how contented one can be with nothing definite,—only a sense of existence.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

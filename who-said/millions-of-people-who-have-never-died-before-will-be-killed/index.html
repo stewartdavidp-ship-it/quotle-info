@@ -879,7 +879,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Millions of people who have never died before will be killed";
-        const copyAttribution = "Ernest Hemingway, letter to Henry Strater, 1930, quoting his friend Edward \"Bra\" Saunders. The popular version, \"Millions of people who have never died before will be killed,\" is not what Hemingway wrote, and it is not from any film.";
+        const copyAttribution = "Ernest Hemingway, letter to Henry Strater, 1930, quoting his friend Edward \"Bra\" Saunders. The popular version, \"Millions of people who have never died before will be killed,\" is not what Hemingway wrote, and it is not from any film. · Verbatim: “He advised us all to be careful as men are dying this year who have never died before.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

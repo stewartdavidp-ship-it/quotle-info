@@ -857,7 +857,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "There is a direct relationship between the absence of celebrity and the presence of good-to-great results";
-        const copyAttribution = "Jim Collins, interview by Alan M. Webber, “Good Questions, Great Answers,” Fast Company (Web exclusive), 2001.";
+        const copyAttribution = "Jim Collins, interview by Alan M. Webber, “Good Questions, Great Answers,” Fast Company (Web exclusive), 2001. · Verbatim: “There is something directly related between the absence of celebrity and the presence of good-to-great results.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

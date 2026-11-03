@@ -852,7 +852,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Substitute 'Damn' Every Time You're Inclined to Write 'Very'";
-        const copyAttribution = "advice credited to William Allen White, Seattle Daily Times, October 18, 1935 (via Quote Investigator). Not Franklin P. Adams, who is the listener in a 1946 retelling.";
+        const copyAttribution = "advice credited to William Allen White, Seattle Daily Times, October 18, 1935 (via Quote Investigator). Not Franklin P. Adams, who is the listener in a 1946 retelling. · Verbatim: “If you feel the urge of 'very' coming on, just write the word, 'damn,' in the place of 'very.' The editor will strike out the word, 'damn,' and you will have a good sentence.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

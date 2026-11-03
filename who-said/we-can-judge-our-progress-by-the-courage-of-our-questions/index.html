@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "We can judge our progress by the courage of our questions and the depths of our answers, our willingness to embrace what is true rather than what feels good";
-        const copyAttribution = "Carl Sagan, \"The Age of Exploration,\" in Carl Sagan's Universe, ed. Yervant Terzian and Elizabeth Bilson (Cambridge University Press, 1997). The widely shared \"depths of our answers\" is a one-word variant of the printed line.";
+        const copyAttribution = "Carl Sagan, \"The Age of Exploration,\" in Carl Sagan's Universe, ed. Yervant Terzian and Elizabeth Bilson (Cambridge University Press, 1997). The widely shared \"depths of our answers\" is a one-word variant of the printed line. · Verbatim: “We can judge our progress by the courage of our questions and the depth of our answers, our willingness to embrace what is true rather than what feels good.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

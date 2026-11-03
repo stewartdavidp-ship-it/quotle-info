@@ -880,7 +880,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Stand for something or you will fall for anything. Today's mighty oak is yesterday's nut that held its ground";
-        const copyAttribution = "Unverified. This two-sentence saying is not documented to Rosa Parks. The first sentence is an anonymous modern proverb; its earliest known close match is Gordon A. Eadie, M.D., in Mental Hygiene, January 1945, p. 103. The second sentence circulates as David Icke’s, with no primary source located. — Quotle.info";
+        const copyAttribution = "Unverified. This two-sentence saying is not documented to Rosa Parks. The first sentence is an anonymous modern proverb; its earliest known close match is Gordon A. Eadie, M.D., in Mental Hygiene, January 1945, p. 103. The second sentence circulates as David Icke’s, with no primary source located. — Quotle.info · Verbatim: “If they don't stand for something, they will fall for anything.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

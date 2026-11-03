@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Three Weeks to Prepare a Good Impromptu Speech";
-        const copyAttribution = "Apocryphal — no Mark Twain source has been identified for \"It usually takes me more than three weeks to prepare a good impromptu speech.\" Twain's documented versions run to \"several hours\" (Chicago, 1879), \"four days\" (as Gen. Sherman told it, 1887) and \"about a week ahead\" (London, 1899). See Quote Investigator, \"Three Weeks to Prepare a Good Impromptu Speech,\" 9 June 2010.";
+        const copyAttribution = "Apocryphal — no Mark Twain source has been identified for \"It usually takes me more than three weeks to prepare a good impromptu speech.\" Twain's documented versions run to \"several hours\" (Chicago, 1879), \"four days\" (as Gen. Sherman told it, 1887) and \"about a week ahead\" (London, 1899). See Quote Investigator, \"Three Weeks to Prepare a Good Impromptu Speech,\" 9 June 2010. · Verbatim: “But I never was happy, never could make a good impromptu speech without several hours to prepare it.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

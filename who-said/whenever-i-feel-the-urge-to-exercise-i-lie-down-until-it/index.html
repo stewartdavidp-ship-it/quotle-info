@@ -875,7 +875,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Whenever I Feel the Urge to Exercise I Lie Down Until It Goes Away";
-        const copyAttribution = "earliest documented printing: Lucius Beebe's column \"New York Speaking,\" Cleveland Plain Dealer, 13 June 1937, where it is credited to animator Paul Terry. Not Chauncey Depew: he died on 5 April 1928, and the joke was first pinned on him in January 1938, nearly ten years posthumously. Source trail: Quote Investigator. Via Quotle.info";
+        const copyAttribution = "earliest documented printing: Lucius Beebe's column \"New York Speaking,\" Cleveland Plain Dealer, 13 June 1937, where it is credited to animator Paul Terry. Not Chauncey Depew: he died on 5 April 1928, and the joke was first pinned on him in January 1938, nearly ten years posthumously. Source trail: Quote Investigator. Via Quotle.info · Verbatim: “When I feel like exercising, I just lie down until the feeling goes away.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -880,7 +880,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I don't think the human race will survive the next thousand years, unless we spread into space";
-        const copyAttribution = "Stephen Hawking, interviewed by Roger Highfield in \"Colonies in space may be only hope, says Hawking,\" The Daily Telegraph (London), October 16, 2001, p. 1. Verified — Quotle.info";
+        const copyAttribution = "Stephen Hawking, interviewed by Roger Highfield in \"Colonies in space may be only hope, says Hawking,\" The Daily Telegraph (London), October 16, 2001, p. 1. Verified — Quotle.info · Verbatim: “I don't think the human race will survive the next thousand years, unless we spread into space. There are too many accidents that can befall life on a single planet. But I'm an optimist. We will reach out to the stars.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

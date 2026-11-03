@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "What lies behind us and what lies ahead of us are tiny matters compared to what lies within us";
-        const copyAttribution = "Henry Stanley Haskins, Meditations in Wall Street (New York: William Morrow & Co., 1940), p. 131 (popular wording; QI transcribes p. 131 as 'lies before us'). Not Ralph Waldo Emerson.";
+        const copyAttribution = "Henry Stanley Haskins, Meditations in Wall Street (New York: William Morrow & Co., 1940), p. 131 (popular wording; QI transcribes p. 131 as 'lies before us'). Not Ralph Waldo Emerson. · Verbatim: “What lies behind us and what lies before us are tiny matters compared to what lies within us.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

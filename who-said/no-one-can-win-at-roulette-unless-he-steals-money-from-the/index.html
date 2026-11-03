@@ -866,7 +866,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "No One Can Win at Roulette Unless He Steals Money from the Table While the Croupier Isn't Looking";
-        const copyAttribution = "not Albert Einstein. The earliest known appearance is Ted Thackrey, Jr., “Secrets of a Master Gambler,” Toledo Blade, 30 October 1968, and his book Gambling Secrets of Nick the Greek the same year. Quote Investigator judges the anecdote a tall tale. — Quotle.info";
+        const copyAttribution = "not Albert Einstein. The earliest known appearance is Ted Thackrey, Jr., “Secrets of a Master Gambler,” Toledo Blade, 30 October 1968, and his book Gambling Secrets of Nick the Greek the same year. Quote Investigator judges the anecdote a tall tale. — Quotle.info · Verbatim: “No one could possibly win at roulette unless he steals money from the table while the croupier isn’t looking.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

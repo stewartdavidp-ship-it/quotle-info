@@ -867,7 +867,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I Take My Only Exercise Acting as a Pallbearer to My Friends Who Exercise";
-        const copyAttribution = "popularly credited to Chauncey Depew, but the joke was in print by 1925 and the Depew credit only appears from 1930, two years after his death. Quote Investigator's earliest evidence points to the Kansas editor William Allen White.";
+        const copyAttribution = "popularly credited to Chauncey Depew, but the joke was in print by 1925 and the Depew credit only appears from 1930, two years after his death. Quote Investigator's earliest evidence points to the Kansas editor William Allen White. · Verbatim: “I get my exercise by acting as pallbearer for golfers who exercise to prolong useless lives.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

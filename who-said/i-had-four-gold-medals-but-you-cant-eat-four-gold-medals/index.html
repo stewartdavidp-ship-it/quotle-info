@@ -863,7 +863,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I had four gold medals, but you can't eat four gold medals";
-        const copyAttribution = "attributed to Jesse Owens (1913–1980). Widely reported from an interview dated 1971, but the interview has never been identified and no transcript or recording has been located. Via Quotle.info";
+        const copyAttribution = "attributed to Jesse Owens (1913–1980). Widely reported from an interview dated 1971, but the interview has never been identified and no transcript or recording has been located. Via Quotle.info · Verbatim: “People said it was degrading for an Olympic champion to run against a horse, but what was I supposed to do? I had four gold medals, but you can't eat four gold medals.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

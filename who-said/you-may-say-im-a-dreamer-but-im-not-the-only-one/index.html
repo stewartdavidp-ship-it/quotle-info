@@ -867,7 +867,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "You may say I'm a dreamer, but I'm not the only one";
-        const copyAttribution = "John Lennon, \"Imagine\" (1971)";
+        const copyAttribution = "John Lennon, \"Imagine\" (1971) · Verbatim: “You may say I'm a dreamer, but I'm not the only one. I hope someday you'll join us, and the world will live as one.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

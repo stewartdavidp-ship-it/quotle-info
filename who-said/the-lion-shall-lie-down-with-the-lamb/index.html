@@ -877,7 +877,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The lion shall lie down with the lamb";
-        const copyAttribution = "is not in the Bible. Isaiah 11:6 pairs the lamb with the wolf — \"The wolf also shall dwell with the lamb, and the leopard shall lie down with the kid\" — and Isaiah 65:25 has the lion eating straw like the bullock. The popular line blends the two. The oldest documented instance of the blended wording is John Quincy Adams's Third Annual Message to Congress, 4 December 1827. — Quotle.info";
+        const copyAttribution = "is not in the Bible. Isaiah 11:6 pairs the lamb with the wolf — \"The wolf also shall dwell with the lamb, and the leopard shall lie down with the kid\" — and Isaiah 65:25 has the lion eating straw like the bullock. The popular line blends the two. The oldest documented instance of the blended wording is John Quincy Adams's Third Annual Message to Congress, 4 December 1827. — Quotle.info · Verbatim: “presenting, though as yet with painful exceptions, a foretaste of that blessed period of promise when the lion shall lie down with the lamb and wars shall be no more.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

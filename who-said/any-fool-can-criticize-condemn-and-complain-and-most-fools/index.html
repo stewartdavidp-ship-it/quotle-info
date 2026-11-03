@@ -847,7 +847,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Any fool can criticize, condemn and complain - and most fools do";
-        const copyAttribution = "Dale Carnegie, How to Win Friends and Influence People (1936) — not Benjamin Franklin";
+        const copyAttribution = "Dale Carnegie, How to Win Friends and Influence People (1936) — not Benjamin Franklin · Verbatim: “Any fool can criticize, condemn and complain - and most fools do. But it takes character and self-control to be understanding and forgiving.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

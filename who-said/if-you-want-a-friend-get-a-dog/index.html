@@ -876,7 +876,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "If you want a friend, get a dog";
-        const copyAttribution = "Gordon Gekko (Michael Douglas) in Wall Street (1987), written by Stanley Weiser and Oliver Stone. Commonly misquoted as \"If you want a friend, get a dog\" — and the saying predates the film by decades: a Philadelphia Inquirer classified ad of 19 November 1911 already read \"IF YOU WANT A FRIEND / Buy a dog.\" Via Quotle.info";
+        const copyAttribution = "Gordon Gekko (Michael Douglas) in Wall Street (1987), written by Stanley Weiser and Oliver Stone. Commonly misquoted as \"If you want a friend, get a dog\" — and the saying predates the film by decades: a Philadelphia Inquirer classified ad of 19 November 1911 already read \"IF YOU WANT A FRIEND / Buy a dog.\" Via Quotle.info · Verbatim: “You win a few, you lose a few, but you keep on fighting . . . and if you need a friend, get a dog.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

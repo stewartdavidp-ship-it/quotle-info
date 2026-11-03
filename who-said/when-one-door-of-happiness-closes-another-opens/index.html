@@ -877,7 +877,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "When one door of happiness closes, another opens";
-        const copyAttribution = "recorded by Helen Keller in We Bereaved (1929); originally an older anonymous saying, not coined by her.";
+        const copyAttribution = "recorded by Helen Keller in We Bereaved (1929); originally an older anonymous saying, not coined by her. · Verbatim: “When one door of happiness closes, another opens; but often we look so long at the closed door that we do not see the one which has been opened for us.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

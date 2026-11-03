@@ -884,7 +884,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Contentment is natural wealth, luxury is artificial poverty";
-        const copyAttribution = "— actually Joseph Addison, The Spectator No. 574, 30 July 1714. Addison credited only \"Content is natural Wealth\" to Socrates and added \"Luxury is artificial Poverty\" himself; no source has been located for the Socrates half.";
+        const copyAttribution = "— actually Joseph Addison, The Spectator No. 574, 30 July 1714. Addison credited only \"Content is natural Wealth\" to Socrates and added \"Luxury is artificial Poverty\" himself; no source has been located for the Socrates half. · Verbatim: “In short, Content is equivalent to Wealth, and Luxury to Poverty; or, to give the Thought a more agreeable Turn, Content is natural Wealth, says Socrates; to which I shall add, Luxury is artificial Poverty.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

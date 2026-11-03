@@ -861,7 +861,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Change is the law of life. And those who look only to the past are certain to miss the future";
-        const copyAttribution = "John F. Kennedy, Address at the Paulskirche, Frankfurt, June 25, 1963. He actually said \"those who look only to the past or the present\" — the popular version drops \"or the present.\"";
+        const copyAttribution = "John F. Kennedy, Address at the Paulskirche, Frankfurt, June 25, 1963. He actually said \"those who look only to the past or the present\" — the popular version drops \"or the present.\" · Verbatim: “Change is the law of life. And those who look only to the past or the present are certain to miss the future.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

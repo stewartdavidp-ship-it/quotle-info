@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "The Common Law Consists of About Half A Dozen Obvious Propositions, But Unfortunately …";
-        const copyAttribution = "credited to Lord Sterndale (William Pickford, 1848–1923) by Judge H. C. Dowdall, letter to The Times (London), 26 January 1932. Earliest printed text: Dowdall, \"The Psychological Origins of Law,\" Report of the Centenary Meeting, British Association for the Advancement of Science (London, 1932), p. 449. Not Oliver Wendell Holmes Jr. — verified at Quotle.info";
+        const copyAttribution = "credited to Lord Sterndale (William Pickford, 1848–1923) by Judge H. C. Dowdall, letter to The Times (London), 26 January 1932. Earliest printed text: Dowdall, \"The Psychological Origins of Law,\" Report of the Centenary Meeting, British Association for the Advancement of Science (London, 1932), p. 449. Not Oliver Wendell Holmes Jr. — verified at Quotle.info · Verbatim: “The common law consists of about half a dozen obvious propositions, but unfortunately nobody knows what they are.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

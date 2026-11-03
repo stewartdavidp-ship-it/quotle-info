@@ -882,7 +882,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Less is more";
-        const copyAttribution = "Robert Browning, \"Andrea del Sarto,\" in Men and Women, vol. 2 (1855), p. 5. Not coined by Ludwig Mies van der Rohe or R. Buckminster Fuller; Mies adopted the line as a motto, and Fuller's own phrase was \"doing more with less.\"";
+        const copyAttribution = "Robert Browning, \"Andrea del Sarto,\" in Men and Women, vol. 2 (1855), p. 5. Not coined by Ludwig Mies van der Rohe or R. Buckminster Fuller; Mies adopted the line as a motto, and Fuller's own phrase was \"doing more with less.\" · Verbatim: “Well, less is more, Lucrezia! I am judged.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

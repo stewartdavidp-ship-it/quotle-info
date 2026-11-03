@@ -833,7 +833,7 @@ And if each and all be aware I sit content.</p>
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I exist as I am, that is enough";
-        const copyAttribution = "Walt Whitman, \"Song of Myself,\" Leaves of Grass (1855)";
+        const copyAttribution = "Walt Whitman, \"Song of Myself,\" Leaves of Grass (1855) · Verbatim: “I exist as I am, that is enough, If no other in the world be aware I sit content, And if each and all be aware I sit content.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

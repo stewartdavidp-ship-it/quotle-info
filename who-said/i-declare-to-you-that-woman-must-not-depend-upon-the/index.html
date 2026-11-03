@@ -854,7 +854,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I declare to you that woman must not depend upon the protection of man";
-        const copyAttribution = "Susan B. Anthony, speech in San Francisco, July 1871";
+        const copyAttribution = "Susan B. Anthony, speech in San Francisco, July 1871 · Verbatim: “I declare to you that woman must not depend upon the protection of man, but must be taught to protect herself, and there I take my stand.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -884,7 +884,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Whatever is Not Nailed Down is Mine and Whatever I Can Pry Loose is Not Nailed Down";
-        const copyAttribution = "David Starr Jordan, The Days of a Man, Volume One (World Book Company, 1922), p. 479, describing Collis P. Huntington’s reputed “code of power.” Often miscredited to Upton Sinclair, who quoted it in 1923 while crediting Jordan, and to Huntington himself, for whom no evidence exists.";
+        const copyAttribution = "David Starr Jordan, The Days of a Man, Volume One (World Book Company, 1922), p. 479, describing Collis P. Huntington’s reputed “code of power.” Often miscredited to Upton Sinclair, who quoted it in 1923 while crediting Jordan, and to Huntington himself, for whom no evidence exists. · Verbatim: “Whatever is not nailed down is mine. Whatever I can pry loose is not nailed down.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

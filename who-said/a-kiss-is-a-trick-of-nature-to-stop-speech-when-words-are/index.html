@@ -853,7 +853,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "A Kiss Is A Trick of Nature to Stop Speech When Words Are Superfluous";
-        const copyAttribution = "Anonymous — earliest documented in Esar's Comic Dictionary (1943), p. 154, as \"A trick of nature to stop speech when words become superfluous\"; not Ingrid Bergman, whose name was attached only in 1970 — traced by Quotle.info";
+        const copyAttribution = "Anonymous — earliest documented in Esar's Comic Dictionary (1943), p. 154, as \"A trick of nature to stop speech when words become superfluous\"; not Ingrid Bergman, whose name was attached only in 1970 — traced by Quotle.info · Verbatim: “Kiss. A trick of nature to stop speech when words become superfluous.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

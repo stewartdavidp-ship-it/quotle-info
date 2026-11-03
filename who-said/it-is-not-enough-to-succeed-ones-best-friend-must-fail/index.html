@@ -877,7 +877,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "It Is Not Enough to Succeed; One's Best Friend Must Fail";
-        const copyAttribution = "commonly credited to Gore Vidal, but the earliest documented form is from Bennett Cerf's column of 8 July 1959, quoting W. Somerset Maugham second-hand; the \"others must fail\" wording usually printed under Vidal's name was already in Iris Murdoch's The Black Prince (1973), three years before the line was ever credited to Vidal. Via Quotle.info";
+        const copyAttribution = "commonly credited to Gore Vidal, but the earliest documented form is from Bennett Cerf's column of 8 July 1959, quoting W. Somerset Maugham second-hand; the \"others must fail\" wording usually printed under Vidal's name was already in Iris Murdoch's The Black Prince (1973), three years before the line was ever credited to Vidal. Via Quotle.info · Verbatim: “Now that I've grown old, I realize that for most of us it is not enough to have achieved personal success. One's best friend must also have failed.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

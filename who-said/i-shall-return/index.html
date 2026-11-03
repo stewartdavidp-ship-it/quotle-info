@@ -864,7 +864,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "I shall return";
-        const copyAttribution = "Gen. Douglas MacArthur, Terowie, South Australia, 20 March 1942; printed in The Advertiser (Adelaide), 21 March 1942, p. 1.";
+        const copyAttribution = "Gen. Douglas MacArthur, Terowie, South Australia, 20 March 1942; printed in The Advertiser (Adelaide), 21 March 1942, p. 1. · Verbatim: “The President of the United States ordered me to break through the Japanese lines and proceed from Corregidor to Australia for the purpose, as I understand it, of organising an American offensive against Japan, the primary purpose of which is the relief of the Philippines. I came through and I shall return.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -865,7 +865,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "My heart is, and always will be, yours";
-        const copyAttribution = "Jane Austen did not write “My heart is, and always will be, yours.” Emma Thompson did, for Edward Ferrars in the 1995 film of Sense and Sensibility (published screenplay, scene 186 — with no commas). In the novel, chapter 49, Austen declines to report the proposal at all. Via quotle.info";
+        const copyAttribution = "Jane Austen did not write “My heart is, and always will be, yours.” Emma Thompson did, for Edward Ferrars in the 1995 film of Sense and Sensibility (published screenplay, scene 186 — with no commas). In the novel, chapter 49, Austen declines to report the proposal at all. Via quotle.info · Verbatim: “I have come with no expectations. Only to profess, now that I am at liberty to do so, that my heart is and always will be yours.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -897,7 +897,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "No man will make a great leader who wants to do it all himself, or get all the credit for doing it";
-        const copyAttribution = "Andrew Carnegie, quoted in Barnard Alderson, Andrew Carnegie: The Man and His Work (New York: Doubleday, Page & Company, 1902), 57–58; from an interview published in the St. Louis Globe-Democrat, 15 October 1899. The familiar \"great leader\" wording is a later alteration — Carnegie said \"business.\"";
+        const copyAttribution = "Andrew Carnegie, quoted in Barnard Alderson, Andrew Carnegie: The Man and His Work (New York: Doubleday, Page & Company, 1902), 57–58; from an interview published in the St. Louis Globe-Democrat, 15 October 1899. The familiar \"great leader\" wording is a later alteration — Carnegie said \"business.\" · Verbatim: “No man will make a great business who wants to do it all himself or to get all the credit for doing it.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

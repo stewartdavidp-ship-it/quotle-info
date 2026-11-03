@@ -876,7 +876,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "We shall overcome";
-        const copyAttribution = "'We shall overcome' — a gospel- and labor-rooted civil-rights anthem (from Charles Tindley's 1901 hymn; shaped by Zilphia Horton, Pete Seeger and Guy Carawan). Lyndon B. Johnson quoted it in his March 15, 1965 voting-rights speech — he did not coin it.";
+        const copyAttribution = "'We shall overcome' — a gospel- and labor-rooted civil-rights anthem (from Charles Tindley's 1901 hymn; shaped by Zilphia Horton, Pete Seeger and Guy Carawan). Lyndon B. Johnson quoted it in his March 15, 1965 voting-rights speech — he did not coin it. · Verbatim: “And we shall overcome.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

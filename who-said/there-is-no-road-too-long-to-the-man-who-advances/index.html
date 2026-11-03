@@ -861,7 +861,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "There is no road too long to the man who advances deliberately and without undue haste";
-        const copyAttribution = "Jean de La Bruyère, Les Caractères (1688), “Des jugements,” no. 108. The French original is documented; this English wording is an unattributed translation. Via Quotle.info";
+        const copyAttribution = "Jean de La Bruyère, Les Caractères (1688), “Des jugements,” no. 108. The French original is documented; this English wording is an unattributed translation. Via Quotle.info · Verbatim: “There is no road too long to the man who advances deliberately and without undue haste; there are no honours too distant to the man who prepares himself for them with patience.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

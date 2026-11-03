@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "If you can't stand the heat, get out of the kitchen";
-        const copyAttribution = "popularized by Harry S. Truman, who credited it to \"my old friend and colleague on the Jackson County Court\" in his Remarks at the Wright Memorial Dinner of the Aero Club of Washington, 17 December 1952. Truman used the saying but did not originate it. Via Quotle.info";
+        const copyAttribution = "popularized by Harry S. Truman, who credited it to \"my old friend and colleague on the Jackson County Court\" in his Remarks at the Wright Memorial Dinner of the Aero Club of Washington, 17 December 1952. Truman used the saying but did not originate it. Via Quotle.info · Verbatim: “Harry, if you can't stand the heat you better get out of the kitchen.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

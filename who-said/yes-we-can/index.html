@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Yes we can";
-        const copyAttribution = "Barack Obama, \"Remarks Following the New Hampshire Primary,\" Nashua, New Hampshire, 8 January 2008. Adapted from \"¡Sí, se puede!\", coined by Dolores Huerta of the United Farm Workers in 1972. Via quotle.info";
+        const copyAttribution = "Barack Obama, \"Remarks Following the New Hampshire Primary,\" Nashua, New Hampshire, 8 January 2008. Adapted from \"¡Sí, se puede!\", coined by Dolores Huerta of the United Farm Workers in 1972. Via quotle.info · Verbatim: “For when we have faced down impossible odds, when we've been told we're not ready or that we shouldn't try or that we can't, generations of Americans have responded with a simple creed that sums up the spirit of a people: Yes, we can.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

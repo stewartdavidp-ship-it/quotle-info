@@ -889,7 +889,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Humor Can Be Dissected, as a Frog Can, But the Thing Dies in the Process";
-        const copyAttribution = "E. B. White, Preface to \"A Subtreasury of American Humor,\" edited by E. B. White and Katharine S. White (New York: Coward-McCann, 1941), p. xvii. Not Mark Twain.";
+        const copyAttribution = "E. B. White, Preface to \"A Subtreasury of American Humor,\" edited by E. B. White and Katharine S. White (New York: Coward-McCann, 1941), p. xvii. Not Mark Twain. · Verbatim: “Humor can be dissected, as a frog can, but the thing dies in the process and the innards are discouraging to any but the pure scientific mind.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

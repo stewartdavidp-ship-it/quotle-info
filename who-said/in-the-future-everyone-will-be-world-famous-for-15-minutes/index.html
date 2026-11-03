@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "In the future everyone will be world-famous for 15 minutes";
-        const copyAttribution = "first printed in the book and poster series for Andy Warhol's 1968 retrospective at Moderna Museet, Stockholm (February–March 1968). Authorship disputed: Olle Granath, who compiled the book's quotations, records that the line was not in any of the Warhol material and that curator Pontus Hultén had it inserted. Time reported a looser version as Warhol's on 13 October 1967.";
+        const copyAttribution = "first printed in the book and poster series for Andy Warhol's 1968 retrospective at Moderna Museet, Stockholm (February–March 1968). Authorship disputed: Olle Granath, who compiled the book's quotations, records that the line was not in any of the Warhol material and that curator Pontus Hultén had it inserted. Time reported a looser version as Warhol's on 13 October 1967. · Verbatim: “In the future everybody will be world famous for fifteen minutes.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

@@ -868,7 +868,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Loss is nothing else than change. But the universal nature delights in change";
-        const copyAttribution = "Marcus Aurelius, Meditations, Book IX, 35, translated by George Long (1862). Verified via quotle.info";
+        const copyAttribution = "Marcus Aurelius, Meditations, Book IX, 35, translated by George Long (1862). Verified via quotle.info · Verbatim: “Loss is nothing else than change. But the universal nature delights in change, and in obedience to her all things are now done well, and from eternity have been in like form, and will be such to time without end.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

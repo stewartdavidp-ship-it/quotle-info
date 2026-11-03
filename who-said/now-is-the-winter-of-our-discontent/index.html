@@ -890,7 +890,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Now is the winter of our discontent";
-        const copyAttribution = "William Shakespeare, The Tragedy of King Richard the Third, act 1, scene 1, lines 1–2 (first printed 1597). Via Quotle.info";
+        const copyAttribution = "William Shakespeare, The Tragedy of King Richard the Third, act 1, scene 1, lines 1–2 (first printed 1597). Via Quotle.info · Verbatim: “Now is the winter of our discontent, / Made glorious summer by this son of York”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

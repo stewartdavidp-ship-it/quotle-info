@@ -863,7 +863,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "Death Was a Good Career Move";
-        const copyAttribution = "Gore Vidal, on being told of Truman Capote's death, August 1984 (recalled in his own words in George Plimpton, ed., Truman Capote, Nan A. Talese/Doubleday, 1997, p. 430). Vidal did not coin the line: the same gibe was in print on 1 March 1978 in Esquire, aimed at Elvis Presley and credited only to \"a Hollywood cynic.\" Chronology traced by Quote Investigator. quotle.info";
+        const copyAttribution = "Gore Vidal, on being told of Truman Capote's death, August 1984 (recalled in his own words in George Plimpton, ed., Truman Capote, Nan A. Talese/Doubleday, 1997, p. 430). Vidal did not coin the line: the same gibe was in print on 1 March 1978 in Esquire, aimed at Elvis Presley and credited only to \"a Hollywood cynic.\" Chronology traced by Quote Investigator. quotle.info · Verbatim: “Good career move.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));

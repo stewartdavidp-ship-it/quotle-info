@@ -883,7 +883,7 @@
         // copy/share text must carry the full quote the credit's page number actually supports.
         // (Identical to the H1 for every record without presentation.verifiedQuote.)
         const quoteText = "For every complex problem there is an answer that is clear, simple, and wrong";
-        const copyAttribution = "H. L. Mencken actually wrote: \"there is always a well-known solution to every human problem—neat, plausible, and wrong.\" — \"The Divine Afflatus,\" Prejudices: Second Series (New York: Alfred A. Knopf, 1920). The popular line \"For every complex problem there is an answer that is clear, simple, and wrong\" is a later paraphrase, found in none of his texts. Via Quotle.info";
+        const copyAttribution = "H. L. Mencken actually wrote: \"there is always a well-known solution to every human problem—neat, plausible, and wrong.\" — \"The Divine Afflatus,\" Prejudices: Second Series (New York: Alfred A. Knopf, 1920). The popular line \"For every complex problem there is an answer that is clear, simple, and wrong\" is a later paraphrase, found in none of his texts. Via Quotle.info · Verbatim: “Explanations exist; they have existed for all time; there is always a well-known solution to every human problem—neat, plausible, and wrong.”";
         function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
         async function copy(text, label){ try { await navigator.clipboard.writeText(text); toast(label||'Copied'); } catch(e){ toast('Copy failed'); } }
         document.getElementById('copyBtn').addEventListener('click', () => copy('"'+quoteText+'" '+copyAttribution, 'Copied'));
