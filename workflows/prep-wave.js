@@ -89,7 +89,7 @@ function toRecord(d, item) {
     // the gap. Unrecognised tags keep the default ✕ and stay a human call — marking a genuine
     // refutation as context would soften a debunk, which is worse than the marker being wrong.
     const items = (d.misattribution.items || []).map((it) => (
-      it.kind || !kindForRow(it) ? it : { ...it, kind: kindForRow(it) }));
+      it.kind || !kindForRow(it, rec) ? it : { ...it, kind: kindForRow(it, rec) }));
     rec.misattribution = { kicker: 'Fact-check', heading: d.misattribution.heading || 'Often misattributed', intro: d.misattribution.intro, items, truthLine: d.misattribution.truthLine };
   }
   if (d.context) { rec.context = { kicker: 'Context', heading: d.context.heading || 'Why it mattered', lead: d.context.lead, detailsSummary: d.context.detailsSummary || 'Read the full story', detailsBody: d.context.detailsBody || [] }; if (d.context.pull) rec.context.pull = d.context.pull; }
