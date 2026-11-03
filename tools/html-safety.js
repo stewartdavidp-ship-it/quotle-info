@@ -111,6 +111,10 @@ const PLAIN_TEXT_FIELDS = [
   'misattribution.kicker', 'misattribution.heading',
   'context.kicker', 'context.heading',
   'copyAttribution',
+  // meta.* render into <title> and <meta content="…"> through esc()/attr(): 17 pages shipped a
+  // literal &lt;em&gt; in their meta/og description this way (audit-pages, flagged since before
+  // r54). Titles carry none today; listed so the first one is stripped at ingest, not shipped.
+  'meta.title', 'meta.description', 'meta.ogTitle', 'meta.ogDescription',
 ];
 
 const getPath = (obj, dotted) => dotted.split('.').reduce((o, k) => (o == null ? o : o[k]), obj);
