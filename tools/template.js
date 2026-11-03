@@ -97,6 +97,11 @@ const plain = (x) => String(x || '').replace(/<[^>]+>/g, '')
   .replace(/\s*↗/g, '')
   .replace(/\s+/g, ' ').trim();
 
+// Two quote strings carry the same WORDS when they match after case-folding and collapsing every
+// run of non-letters/digits — so "Men" vs "men." and curly vs straight quotes are not "drift".
+const normWords = (x) => plain(x).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+const sameWords = (a, b) => normWords(a) === normWords(b);
+
 const CONFIDENCE = {
   verified:   { cls: 'verified',   glyph: '✓', text: 'Verified',   label: 'Written by' },
   attributed: { cls: 'attributed', glyph: '≈', text: 'Attributed', label: 'Attributed to' },
@@ -241,7 +246,12 @@ function buildJsonLd(q, url) {
   // This is NOT the test for "right person, wrong words" — see rightPersonWrongWords below. Two
   // different strings is a property of the WORDING; whether the credited person is nonetheless the
   // true author is a property of the ATTRIBUTION, and the corpus carries both shapes independently.
-  const wordingDrift = !!(s.claimQuoteText && plain(s.claimQuoteText) !== plain(quotation.text));
+  // Compared as WORDS, not strings: plain() alone treats letter case and a trailing period as
+  // drift. "The Graveyards Are Full of Indispensable Men" vs "The graveyards are full of
+  // indispensable men." counted as drift, which dropped the valid misWho (Charles de Gaulle) and
+  // shipped a bare-quote ClaimReview rated False — read as "this adage is false". 12 disputed
+  // records were that shape (r54 fix report, 2026-11-02).
+  const wordingDrift = !!(s.claimQuoteText && !sameWords(s.claimQuoteText, quotation.text));
   // RIGHT PERSON, WRONG WORDS — the credited name IS the true author and the dispute is the WORDING,
   // not the attribution (Franklin really wrote it, but about wine; Durocher really said it, but
   // differently). There the "hero must not be the magnet" test below is a false positive: creator
@@ -553,6 +563,17 @@ function buildJsonLd(q, url) {
     // "A. A. Milne" (a real person). The longer vector words keep \b since they can't be initials.
     if (/^(a|an|the|no|not)\s/i.test(x)) return false;
     if (/^(modern|popular|internet|anonymous|unknown|various|multiple)\b/i.test(x)) return false;
+    // PROPAGATION VECTORS NAMED BY TRADE. "Early printers of the speech (unknown)" survived every
+    // test here once stripQual took the paren: no article, no vector word, a capital — and was typed
+    // as the Person who said the line (r58 fix report). The people who printed, edited, translated
+    // or copied a line are how it travelled, never a magnet; a real magnet is a NAME, and none of
+    // these words is a name. A leading early/later is the same tell ("Later anthologists").
+    if (/\b(printers?|translators?|editors?|publishers?|compilers?|anthologists?|reporters?|copyists?|scribes?|transcribers?)\b/i.test(x)) return false;
+    if (/^(early|earlier|later)\s/i.test(x)) return false;
+    // A who that OPENS WITH A QUOTATION MARK is wording, not a person: '“Niels Bohr wrote…”' is how
+    // the popular framing goes, and it reached the FAQ as `Is … really by "Niels Bohr wrote…"?` once
+    // wordingDrift stopped hiding it. isQuoteNotPerson only catches fragments of THIS page's quote.
+    if (/^["'“‘«„]/.test(x)) return false;
     if (/\b(quote ?sites?|aggregator|inspirational|paraphrase[rd]?|quote culture|web-era|quote-book|goodreads|brainyquote|azquotes|passiton|no documented|no identifiable|the discourses|the handbook)\b/i.test(x)) return false;
     // A DATED PARENTHETICAL MAKES IT A WORK. The trailing paren `stripQual` removes is a scope
     // qualifier on a name — "(as popularly quoted)", "(Kong Qiu)" — but when it carries a YEAR it is
@@ -1450,7 +1471,7 @@ function renderPresentationKit(q) {
   // claimQuoteText is saying "the line in circulation differs from the documented sentence" —
   // that's a wording dispute. Everything else disputed is a wrong-name dispute, where the wording
   // is usually verbatim correct and only the attribution is false.
-  const wordingDrift = !!(sch.claimQuoteText && plain(sch.claimQuoteText) !== plain(sch.quotationText || q.displayQuote));
+  const wordingDrift = !!(sch.claimQuoteText && !sameWords(sch.claimQuoteText, sch.quotationText || q.displayQuote));
   // THE USED-BUT-DIDN'T-COIN CASE. rightPersonWrongWords() suppresses this banner when the magnet IS
   // the true author and only the wording drifted. It does NOT reach the other shape: a page whose
   // verdict is that the magnet genuinely SAID the line but did not ORIGINATE it. There the hero
