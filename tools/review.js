@@ -33,6 +33,7 @@
  *
  * Lifecycle a record moves through: due -> audited -> (fixed) -> stamped.
  */
+const { ymdET } = require('./et-date');
 const fs = require('fs');
 const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
@@ -576,7 +577,7 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
     console.log(`\n  ${toClose.length} to close (${toClose.filter((d) => d.act === 'accepted').length} will email), ${decisions.length - toClose.length} left pending`);
     if (dry) { console.log('  --dry-run: nothing closed'); return; }
     for (const d of toClose) {
-      const res = await closeReports([d.s.id], d.act, `fix merged to main; verified ${new Date().toISOString().slice(0, 10)}`);
+      const res = await closeReports([d.s.id], d.act, `fix merged to main; verified ${ymdET()}`);
       if (res.error) console.log(`  ! #${d.s.id} not closed: ${res.error}`);
     }
     console.log(`  closed ${toClose.length}`);
@@ -623,7 +624,7 @@ const LIMIT = parseInt(flag('--limit', '25'), 10);
       console.log('      with --verdict PASS   -> closed rejected, no email sent');
       process.exitCode = 1; return;
     }
-    const today = new Date().toISOString().slice(0, 10);
+    const today = ymdET();
     let n = 0;
       const stamped = [];
     for (const slug of slugs) {

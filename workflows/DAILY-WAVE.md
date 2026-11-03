@@ -116,8 +116,11 @@ Never invent a citation, a date, or an excerpt. A thin record is fine; a fabrica
 node workflows/prep-wave.js --journal /tmp/gen-dYYYYMMDD.jsonl \
   --batch data/.harvest-batch-dYYYYMMDD.json \
   --out workflows/.scratch/records-dYYYYMMDD.json \
-  --verified-date "D Mon YYYY" --date-modified "YYYY-MM-DD" --credited
+  $(node tools/et-date.js) --credited
 ```
+
+`tools/et-date.js` prints today's `--verified-date`/`--date-modified` in America/New_York. Never
+type a UTC date: after 19:00 ET it is tomorrow, and prep-wave refuses a future date.
 
 Escaping scan, STUB detection, `creditedTo` stamping. If it reports stubs, re-generate those quotes
 rather than shipping them.

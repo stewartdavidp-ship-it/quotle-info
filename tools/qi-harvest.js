@@ -63,6 +63,7 @@
  * top up as waves drain it — data/qi-articles.json is committed, so a top-up is --emit + sync with
  * no re-fetch of anyone's server.
  */
+const { ymdET } = require('./et-date');
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
@@ -284,7 +285,7 @@ function cmdEmit(limit, outPath) {
     if (limit && candidates.length >= limit) break;
   }
 
-  const stamp = new Date().toISOString().slice(0, 10);
+  const stamp = ymdET();
   const out = outPath || path.join(ROOT, 'workflows', '.scratch', `qi-harvest-${stamp}.json`);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, JSON.stringify({ meta: { source: 'quoteinvestigator.com', builtOn: stamp, tool: 'tools/qi-harvest.js' }, candidates }, null, 2) + '\n');
