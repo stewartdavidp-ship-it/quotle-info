@@ -884,7 +884,7 @@ function buildJsonLd(q, url) {
   // lead — the answer opens with its own sentence", which is what the no-claimant branch already does.
   const verdictLead = !claimant ? ''
     : (s.verdictLead !== undefined) ? leadToken(s.verdictLead)
-      : (ratingValue === 2 && isRightPersonWrongWords) ? 'Yes and no. '
+      : (ratingValue === 2 && isRightPersonWrongWords && !creditedButUnsourced(q)) ? 'Yes and no. '
         : (VERDICT_LEAD[ratingValue] || '');
   // FULL-STRING OVERRIDE, the residue valve. A derived lead is right for the shapes the scale
   // models; it cannot be right for every record, because the rating is one number and the honest
@@ -1018,6 +1018,8 @@ function buildJsonLd(q, url) {
       // and it is the very self-contradiction this field exists to prevent. validate-records already
       // warns on this shape ("real == credited"); ~a fifth of disputed records are it.
       if (who && wrong && who.toLowerCase() === wrong.toLowerCase()) {
+        // See creditedButUnsourced(): "X is the author" is the one claim such a page cannot make.
+        if (creditedButUnsourced(q)) return `Commonly credited to ${who}, but it is not established that ${who} said these words.`;
         return `${who} is the author, but this popular wording is not what they wrote — it is a later paraphrase or misquotation.`;
       }
       const lead = wrong ? `Commonly misattributed to ${wrong}.` : 'This attribution is disputed.';
@@ -2320,6 +2322,32 @@ function rightPersonWrongWords(q) {
   if (!magnetName || heroName.toLowerCase() !== magnetName) return false;
   const explicitReal = plain((q.answer && q.answer.realAuthorName) || '');
   return q.confidence === 'disputed' && (!explicitReal || explicitReal.toLowerCase() === magnetName);
+}
+
+// CREDITED, BUT NO SOURCE AT ALL — a SECOND finding that rightPersonWrongWords() cannot tell apart
+// from the first. Both have the hero == the magnet and no other true author on record, so the
+// predicate above fires on both. But "Franklin wrote it, about wine" and "nobody has found Babe Ruth
+// saying this" are opposite verdicts: one affirms the person and corrects the words, the other
+// affirms nothing. Feeding the second into the FAQ lead produced "Yes and no." and into verdictNote
+// produced "Babe Ruth is the author, but this popular wording is not what they wrote" — the page
+// asserting authorship its own label denies, in the layer answer engines read aloud.
+//
+// NOT folded into rightPersonWrongWords: that predicate also drives the derived 2/5 rating, the
+// creator guard and the presentation kit, all of which are still right for these pages (the person
+// is not falsely credited by the page; the words are merely unproven). Only the two strings that
+// AFFIRM authorship need the distinction, so only they ask.
+//
+// Record signals only, both already in the corpus and both stated by the record about itself:
+// a hand-set rating name ("Unproven"/"Unsourced"), or a label that opens by saying no source is
+// documented or that the attribution is disputed. MEASURED 2026-11-03 on 2,600 records: 95 are
+// right-person-wrong-words, and this matches 3 of them (Luther's "Here I stand", the Babe Ruth
+// strike-out line, the Armenians line) — every other match is a genuine paraphrase page.
+const NO_SOURCE_RATING_RE = /^\s*(unproven|unsourced)\b/i;
+const NO_SOURCE_LABEL_RE = /^\s*(no\s+(documented|known|verified)\s+source|disputed\b|unproven\b)/i;
+function creditedButUnsourced(q) {
+  const s = (q && q.schema) || {};
+  return NO_SOURCE_RATING_RE.test(plain(s.claimRatingName || ''))
+    || NO_SOURCE_LABEL_RE.test(plain((q && q.answer && q.answer.label) || ''));
 }
 
 // A CreativeWork node from a record's isPartOf-shaped sub-object. ONE builder for both nesting levels:
