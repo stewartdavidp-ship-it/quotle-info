@@ -134,7 +134,8 @@ const DETECTORS = [
     id: 'misattr-marker-contradicts-tag',
     // v2 2026-08-09: mis-kind.js CONTEXT_TAG gained the bare /^context$/ tag (26 defaulted rows).
     // v3 2026-08-11: + "reported, not written" and bare "echo" (r35's pair, one row each).
-    version: 3,
+    // v4 2026-11-03: + the r54–r58 literal tags (punctuation, spreaders, "Later use", …).
+    version: 4,
     severity: 'medium',
     title: 'a fact-check row tagged with a non-authorship ROLE renders the refutation ✕',
     remedy: 'Set kind:\'context\' on rows whose tag states a non-authorship role (paraphrase, popularizer, translator, drift). Leave rows that deny a person as refutations.',
@@ -158,7 +159,8 @@ const DETECTORS = [
     id: 'truth-row-marked-refuted',
     // v2 2026-08-09: mis-kind.js learned the question/category-shaped affirming family
     // (AFFIRMS_WHAT / AFFIRMS_CREDIT) + the hedges and NO_SUBJECT term that came with it.
-    version: 2,
+    // v3 2026-11-03: kindForRow takes the record (attributed own-author, translation, secondary).
+    version: 3,
     severity: 'high',
     title: 'a row stating the TRUE attribution renders the refutation mark',
     remedy: 'Set kind on the flagged misattribution row: \'genuine\' when it names an affirmative true attribution the page holds up, \'context\' when the truth is hedged (\'real, but a different claim\'), and leave it UNSET when the row affirms nothing (\'True author / Unknown\') because the refutation mark is correct there.',
@@ -171,7 +173,7 @@ const DETECTORS = [
     // ("real, but a different claim") is context, not genuine — a ✓ would overclaim. Backfilled
     // 53 genuine + 6 context, 6 correctly left alone. Tripwire now.
     test(r) {
-      const bad = (((r.misattribution || {}).items) || []).filter((i) => !i.kind && kindForRow(i));
+      const bad = (((r.misattribution || {}).items) || []).filter((i) => !i.kind && kindForRow(i, r));
       return bad.length ? `${bad.length} row(s) state the true attribution but render the refutation mark` : null;
     },
   },

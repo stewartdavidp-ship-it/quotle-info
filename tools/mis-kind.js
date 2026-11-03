@@ -151,7 +151,7 @@ const CONTEXT_TAG_REPORTED = [
   /^compress(ion|ed)$/i,                                                 // 14 rows
   // A PROVENANCE row naming the earliest documented user. 14 hits, all rendering "this credit is
   // false" beside prose like "Sol Hurok — where the joke actually starts".
-  /^(earliest|first)\s+(in\s+print|instance|known|documented|printing|appearance)\b/i, // 14 rows
+  /^(earliest|first)\s+(in\s+print|instance|known|documented|printing|appearance|found)\b/i, // 14 rows (+ "found", r57)
   // Asserts a SOURCE, denies no person: "true origin of the metaphor | Bernard of Chartres",
   // "Real source of the image | Oliver Wendell Holmes", "The real author of the words | Millar".
   // These arguably want the ✓ (MIS_MARK.genuine) rather than the tilde, but AFFIRMS_TRUTH keys on
@@ -182,11 +182,39 @@ const CONTEXT_TAG_REPORTED = [
   // right call: these rows affirm something real but hedged, and the file's own header records that
   // "HEDGED TRUTH IS CONTEXT, NOT GENUINE — a ✓ would OVERCLAIM."
   /^genuine\b(?!\s*(fake|forgery|hoax|myth|fabrication|invention|misquote|error))/i, // 14 rows
+  // ---- REPORTED BY r54–r58 FIX AGENTS, MEASURED 2026-11-03 ----------------------------------
+  // Each of these waves hand-stamped `kind` because a tag fell through. Every pattern was run over
+  // all rows with no `kind` in data/quotes and each open hit read; most are 0 open rows today
+  // because the reporting agent already hand-set its own row — they are here so the next wave
+  // derives it at ingest instead of hand-stamping again. Literal and anchored, per this file's rule.
+  /^punctuation$/i,                                   // 3 rows: who is the wording ("the vocative comma")
+  /^spoken\s+(variant|version)$/i,                    // 1 row: who is the spoken wording
+  /^messenger\b/i,                                    // 0 open: Hellman RELAYED the Parker story
+  /^possible,?\s+(but\s+)?unproven$/i,                // 0 open — NOT bare /unproven/, see DECLINED
+  /\blater\s+use\b/i,                                 // 0 open: a later user, a role
+  /^different\s+telling$/i,                           // 0 open: a variant ACCOUNT of an anecdote
+  /\b(quoted|recorded|reported)\s+using\s+it\b/i,     // 0 open: a role, names nobody
+  /\bpress\s+polish\b/i,                              // 0 open: the press tidied the wording
+  /^likely\s+addition$/i, /^scholarly\s+theory$/i, /^minority\s+view$/i, // 0 open each (r58)
+  /\breal,?\s+but\s+later\b/i,                         // 0 open: "Real, but later" (r54)
+  /\bsource\s+of\s+a\s+retelling\b/i,                  // 0 open (r54)
+  // SPREADERS — 8 open rows, all read: Goodreads, a Banksy piece, a management bestseller, "Quoted
+  // as Planck from conference stages". Each names how the line TRAVELLED, never who it is pinned
+  // on. "spread the error | Banksy (2018)" was read twice: Banksy is the amplifier, not a credit.
+  /^\s*(spread(\s+it)?\b|still\s+spreading\b|how\s+it\s+spread\b)/i,
   // MEASURED AND DECLINED, so they are not re-proposed:
   //   /^overstated$/i          12 rows, MIXED — "Overstated | Muhammad Ali" and "Overstated |
   //                            Socrates knew nothing" read as corrections, not wording notes. The
   //                            r48 agent that proposed it flagged it as the least safe of three;
   //                            measurement agreed. Softening these would soften real debunks.
+  //   /\b(possible|unproven|plausible)\b/i  25 rows, MIXED (2026-11-03) — "Unproven | Napoleon",
+  //                            "| Keynes", "| Dorothy Parker" on disputed pages are the MAGNETS, and
+  //                            the ✕ is the page's finding. Only the literal "Possible, unproven"
+  //                            landed. (Own-author "Unproven" on an ATTRIBUTED page is handled by
+  //                            the record-aware rule in kindForRow, where the subject is known.)
+  //   /\bsecondary\b/ as a tag pattern — one of 9 rows is "Vernon Law, Vince Lombardi, Joe
+  //                            Paterno | secondary | Also credited", a list of false credits; it
+  //                            lands in kindForRow with a scope veto instead.
   //   /\bpredates\b/i          16 rows, MIXED — "predates him | Older writers, not Churchill" is
   //                            context, but "Predates him by a century | who: Benjamin Franklin"
   //                            denies the magnet's authorship and the ✕ is CORRECT there.
@@ -287,8 +315,53 @@ const DENIES = /^(not|no)\b/i;
 // genuine or context before this change (all 802 non-✕ kinds in the corpus are hand-set).
 const HEDGED = /\b(precursor|ancestor|echo|seed|earlier|idea,\s*not|not\s+wording|but\s+(a\s+)?different|not\s+the\s+(origin|source)|a\s+different\b|different\s+words|not\s+the\s+same|parallel)\b/i;
 
-/** '' | 'genuine' | 'context' — for a whole misattribution row, not just its tag. */
-function kindForRow(item) {
+// ---- RULES THAT NEED THE RECORD, added 2026-11-03 (r54–r58 fix reports) -----------------------
+// kindForRow used to see only the row, so a row could not know what PAGE it sits on. Three cases
+// need that, each measured over every row with no `kind` and read before landing:
+//
+//   ATTRIBUTED OWN-AUTHOR (22 rows). On an `attributed` page the badge reads "Attributed to X" —
+//   unconfirmed, not refuted. A row naming X with a tag that says only that X's credit is
+//   UNCONFIRMED ("Unsourced", "Secondhand only", "Unverified", "Probably genuine", "Not refuted")
+//   rendered the ✕ "this credit is false" beside that badge: Galileo, Franklin, Berle, Groucho.
+//   Kept to the unconfirmed vocabulary on purpose: own-author rows tagged "reworded", "Spliced",
+//   "Overstated" or scoped "Words wrongly credited to…" (23 more) are wording or refutation notes
+//   and stay a human call. REFUTATION_TAG still vetoes ("No primary source | Muhammad Ali").
+//
+//   TRANSLATION (25 rows). A bare "translation" tag names the TRANSLATOR whose English is quoted
+//   ("Lionel Giles, for the English") — WORDING_EDIT knows the word but demands a non-person
+//   subject, and translators are people. Not on a DISPUTED page: the one disputed hit, "Lao Tzu —
+//   as though the English words were his", denies the credited person and keeps the ✕.
+//
+//   SECONDARY SOURCE (8 rows). who is a book/encyclopedia/website the citation comes from. The 9th
+//   hit, "Vernon Law, Vince Lombardi, Joe Paterno | secondary | Also credited", is a list of false
+//   credits; the scope veto keeps its ✕.
+//
+//   ADDED LATER (3 rows), under the same not-a-person guard as WORDING_EDIT: "'universal' | added
+//   later" is a wording note. Person/work subjects ("General James Wolfe", "Das Kapital, 1867" as a
+//   claimed source) stay a human call.
+const UNCONFIRMED_TAG = /^(unsourced|unverified|unconfirmed|unproven|second-?\s?hand(\s+only)?|hearsay|reported|as\s+reported|credited\s+without\s+a\s+source|attributed,?\s+unverified|probably\s+genuine|not\s+refuted)$/i;
+const SCOPE_REFUTES = /\b(wrongly|falsely|misattribut\w*|mis-?credited|never\s+(said|wrote))\b/i;
+const foldName = (x) => String(x || '').replace(/<[^>]+>/g, '')
+  .replace(/&([a-z])(acute|grave|uml|circ|tilde|cedil|ring|slash);/gi, '$1').replace(/&[a-z]+;/gi, ' ')
+  .normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s*\([^)]*\)\s*$/, '')
+  .replace(/[^\w ]+/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
+
+function kindForRecordRow(it, rec, tag, scope) {
+  if (!rec) return '';
+  if (REFUTATION_TAG.some((re) => re.test(tag))) return '';
+  if (rec.confidence === 'attributed' && UNCONFIRMED_TAG.test(tag) && !SCOPE_REFUTES.test(scope)) {
+    const who = foldName(it.who), author = foldName((rec.answer || {}).authorName);
+    if (who && who === author && who !== foldName(rec.creditedTo)) return 'context';
+  }
+  if (/^translations?$/i.test(tag) && rec.confidence !== 'disputed') return 'context';
+  if (/^secondary(\s+(only|source))?$/i.test(tag) && !/\bcredit/i.test(scope)) return 'context';
+  if (/^added\s+later$/i.test(tag) && NOT_A_PERSON.test(String(it.who || '').trim())) return 'context';
+  return '';
+}
+
+/** '' | 'genuine' | 'context' — for a whole misattribution row, not just its tag. Pass the record
+ *  as the second argument wherever it is available: some rows can only be decided knowing the page. */
+function kindForRow(item, rec) {
   const it = item || {};
   const clean = (x) => String(x || '').replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, "'").trim();
   const scope = clean(it.scope), who = clean(it.who), tag = clean(it.tag);
@@ -304,7 +377,8 @@ function kindForRow(item) {
   // The wording-edit family, last: a tag the tag-only rule declined, on a row whose subject is the
   // wording rather than a person. REFUTATION_TAG has already had its say inside kindForTag.
   if (REFUTATION_TAG.some((re) => re.test(tag))) return '';
-  return WORDING_EDIT.test(tag) && NOT_A_PERSON.test(String(it.who || '').trim()) ? 'context' : '';
+  if (WORDING_EDIT.test(tag) && NOT_A_PERSON.test(String(it.who || '').trim())) return 'context';
+  return kindForRecordRow(it, rec, tag, scope);
 }
 
 module.exports = { kindForTag, kindForRow };

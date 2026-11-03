@@ -27,7 +27,7 @@ for (const f of fs.readdirSync(DIR).filter((x) => x.endsWith('.json'))) {
   for (const it of items) {
     if (it.kind) continue;
     const t = String(it.tag || '').replace(/<[^>]+>/g, '').trim();
-    const k = kindForRow(it);
+    const k = kindForRow(it, r);
     if (k) { it.kind = k; rows++; touched++; byKind[k] = (byKind[k] || 0) + 1; }
     else if (t) tail[t] = (tail[t] || 0) + 1;
   }
