@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"ive-missed-over-9-000-shots-in-my-career-ive-lost-almost","url":"https://quotle.info/who-said/ive-missed-over-9-000-shots-in-my-career-ive-lost-almost/","quote":"I've missed over 9,000 shots in my career. I've lost almost 300 games. 26 times I've been trusted to take the game-winning shot and missed. I've failed over and over and over again in my life. And that is why I succeed","claim":"Michael Jordan wrote the words \"I've missed over 9,000 shots in my career. I've lost almost 300 games. 26 times I've been trusted to take the game-winning shot and missed. I've failed over and over and over again in my life. And that is why I succeed\" himself, as his own reflection on his career.","rating":1,"verdict":"Not supported","answer":"Yes and no. Michael Jordan really did speak these words — they are his voice-over in Nike's 30-second spot \"9,000 Shots,\" widely known as \"Failure,\" which the Paley Center's television archive records as first aired on 30 April 1997. He did not compose them: the same catalog record credits Jamie Barrett — a Wieden + Kennedy copywriter, per Gale — as the spot's writer, and Gale's history of the campaign says Barrett wrote the script from his own knowledge of Jordan's career and worked out the statistics in it himself.","credit":"Written by Jamie Barrett (Wieden + Kennedy) for Nike's \"9,000 Shots\" television commercial, first aired 30 April 1997; spoken by Michael Jordan in voice-over. — Quotle.info","comparison":"","citation":"Nike, Inc. \"9,000 Shots\" (television commercial, widely known as \"Failure\"). Written by Jamie Barrett, Wieden & Kennedy; art direction Larry Frey; directed by Mark Romanek; voice-over by Michael Jordan. First aired 30 April 1997. Paley Center for Media catalog no. AT:49338.013. Copy text as transcribed in William D. Baue, \"Nike, Inc.: 9,000 Shots Campaign,\" Encyclopedia of Major Marketing Campaigns (Gale). The exact wording quoted here follows Wikiquote, which cites Robert Goldman and Stephen Papson, Nike Culture: The Sign of the Swoosh (London: Sage, 1998), p. 49.","rights":"This is 1997 advertising copy, written for Nike by its agency and first broadcast on 30 April 1997 — squarely within US copyright, with no plausible public-domain claim. The line is reproduced here in short form for identification, attribution and comment, which is the entire purpose of this page.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -875,6 +883,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

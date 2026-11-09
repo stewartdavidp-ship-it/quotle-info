@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"drama-is-life-with-the-dull-bits-cut-out","url":"https://quotle.info/who-said/drama-is-life-with-the-dull-bits-cut-out/","quote":"Drama is life with the dull bits cut out","claim":"Alfred Hitchcock said: \"Drama is life with the dull bits cut out\"","rating":5,"verdict":"Supported","answer":"Yes. Hitchcock said it on the record, and the popular wording is his. Columnist Leonard Lyons quoted him saying \"After all, drama is life with the dull bits cut out\" after a preview screening of The Man Who Knew Too Much, in a column syndicated on 2 March 1956; he made the same point at book length to François Truffaut eleven years later.","credit":"Alfred Hitchcock, speaking after a preview of The Man Who Knew Too Much; reported by Leonard Lyons, \"The Lyons Den,\" March 2, 1956. Via quotle.info · Verbatim: “Movies have lost a lot by this new trend towards documentary realism at the sacrifice of fantasy. After all, drama is life with the dull bits cut out.”","comparison":"Movies have lost a lot by this new trend towards documentary realism at the sacrifice of fantasy. After all, drama is life with the dull bits cut out.","citation":"Leonard Lyons, \"The Lyons Den,\" Pittsburgh Press, March 2, 1956, 19; syndicated the same day in the Reading Eagle, March 2, 1956, 10. Restated in François Truffaut, Hitchcock (New York: Simon and Schuster, 1967), 71.","rights":"Both documented sources are modern: the Lyons column was published in 1956 and Truffaut's Hitchcock in 1967, so neither is in the US public domain — the pre-1931 cutoff is nowhere near either date. The eight-word remark is reproduced here as brief attributed quotation for the purpose of establishing its provenance, not as public-domain text.","checked":"15 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 15 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -875,6 +883,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-you-believe-what-you-like-in-the-gospels-and-reject-what","url":"https://quotle.info/who-said/if-you-believe-what-you-like-in-the-gospels-and-reject-what/","quote":"If you believe what you like in the gospels, and reject what you don't like, it is not the gospel you believe, but yourself","claim":"Augustine of Hippo said: \"If you believe what you like in the gospels, and reject what you don't like, it is not the gospel you believe, but yourself\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The thought is Augustine's. It closes Reply to Faustus the Manichaean (Contra Faustum), Book XVII, §3, which Richard Stothert translated in 1887 as \"For to believe what you please, and not to believe what you please, is to believe yourselves, and not the gospel.\" The familiar wording, beginning \"If you believe what you like in the gospels…\", is a later paraphrase. No verified translation contains it.","credit":"a modern paraphrase of Augustine of Hippo, Reply to Faustus the Manichaean XVII.3 (trans. Richard Stothert, 1887: “For to believe what you please, and not to believe what you please, is to believe yourselves, and not the gospel.”)","comparison":"","citation":"Augustine of Hippo, Reply to Faustus the Manichaean (Contra Faustum), bk. 17, §3, trans. Richard Stothert, in Nicene and Post-Nicene Fathers, First Series, vol. 4, ed. Philip Schaff (Buffalo, NY: Christian Literature Publishing Co., 1887). The popular wording is a modern paraphrase; its earliest attribution on Wikiquote is George Sweeting, Who Said That? (1995).","rights":"The popular wording is an anonymous modern paraphrase. Its first appearance is unknown (Wikiquote's earliest attribution is 1995), so we assert no rights status for it. The underlying passage, in Richard Stothert's translation in Nicene and Post-Nicene Fathers vol. 4 (1887), is a pre-1931 publication and is in the public domain in the US.","checked":"2 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 2 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -842,6 +850,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"everything-should-be-made-as-simple-as-possible-but-not","url":"https://quotle.info/who-said/everything-should-be-made-as-simple-as-possible-but-not/","quote":"Everything should be made as simple as possible, but not simpler","claim":"Albert Einstein said: \"Everything should be made as simple as possible, but not simpler\"","rating":1,"verdict":"Not supported","answer":"No. Writing in The New York Times on 8 January 1950, the composer Roger Sessions said Einstein had remarked \"in effect, that everything should be as simple as it can be but not simpler.\" The words 'in effect' mark it plainly as a paraphrase. Five months later Louis Zukofsky printed the same line inside quotation marks and credited it straight to Einstein — and that is the version the world kept.","credit":"It can scarcely be denied that the supreme goal of all theory is to make the irreducible basic elements as simple and as few as possible without having to surrender the adequate representation of a single datum of experience. —Albert Einstein, Herbert Spencer Lecture, Oxford, 1933 (the popular short form is a 1950 paraphrase by Roger Sessions)","comparison":"","citation":"Sessions, Roger. \"How a 'Difficult' Composer Gets That Way.\" The New York Times, 8 January 1950, p. 89. Paraphrasing Albert Einstein.","rights":"Layered. Einstein's 1933 lecture text was published in 1933 — public domain in the EU/UK since 1 January 2026, with US status depending on renewal (potentially protected to 2029). Sessions' 1950 New York Times article and Zukofsky's 1950 Poetry review are both within the US copyright window. Quote any of them as a short excerpt with citation rather than reproducing at length. This is not legal advice.","checked":"20 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 20 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -848,6 +856,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

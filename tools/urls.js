@@ -59,7 +59,7 @@ const SECTIONS = ['who-said', 'authors', 'themes', 'who-recorded', 'who-wrote'];
 // browse list and correctly concluded there was no way to report anything. Now `/report/` owns both
 // reporting jobs ("a page here is wrong" / "you're missing one") and `/under-review/` is only a
 // browse list. Never point a correction link at `/under-review/` again.
-const STANDING = ['about', 'contact', 'privacy', 'terms', 'how-we-verify', 'vs-ai', 'under-review', 'report'];
+const STANDING = ['about', 'contact', 'privacy', 'terms', 'how-we-verify', 'vs-ai', 'under-review', 'report', 'challenge'];
 const standingPath = (name) => `/${name}/`;
 const standingUrl = (name) => `${ORIGIN}${standingPath(name)}`;
 

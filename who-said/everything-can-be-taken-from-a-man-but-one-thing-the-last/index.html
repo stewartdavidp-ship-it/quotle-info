@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"everything-can-be-taken-from-a-man-but-one-thing-the-last","url":"https://quotle.info/who-said/everything-can-be-taken-from-a-man-but-one-thing-the-last/","quote":"Everything can be taken from a man but one thing: the last of the human freedoms — to choose one's attitude in any given set of circumstances, to choose one's own way","claim":"Viktor Frankl said: \"Everything can be taken from a man but one thing: the last of the human freedoms — to choose one's attitude in any given set of circumstances, to choose one's own way\"","rating":5,"verdict":"Supported","answer":"Yes. Genuinely Frankl, and unusually easy to check. It is in Part One of Man's Search for Meaning — the camp memoir Ilse Lasch translated from his 1946 German book — and we read it on p. 104 of the scanned 1963 Washington Square Press printing. In the book it is not a standalone maxim but the end of a longer sentence about men who gave away their last piece of bread.","credit":"Verified. Viktor E. Frankl, Man's Search for Meaning: An Introduction to Logotherapy, Part One translated by Ilse Lasch (New York: Washington Square Press, 1963), 104. Part One is the English translation of Frankl's German memoir published in Vienna in 1946; the English text first appeared as From Death-Camp to Existentialism (Beacon Press, 1959). — Quotle.info","comparison":"","citation":"Viktor E. Frankl, Man's Search for Meaning: An Introduction to Logotherapy, Part One trans. Ilse Lasch (New York: Washington Square Press, 1963), 104. Part One is the English translation of Frankl's German memoir published in Vienna in 1946; the English text first appeared as From Death-Camp to Existentialism (Boston: Beacon Press, 1959).","rights":"In copyright. The German memoir was published in Vienna in 1946 and the English text — Ilse Lasch's translation of Part One — first appeared in the United States in 1959 as From Death-Camp to Existentialism (Beacon Press); the printing we verified carries \"Copyright, ©, 1959, 1963, by Viktor E. Frankl.\" Both the German original and this translation are far too recent to be public domain in the United States, so quote the sentence with attribution rather than reproducing the passage at length.","checked":"24 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 24 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -864,6 +872,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

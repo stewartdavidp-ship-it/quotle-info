@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-smallest-minority-on-earth-is-the-individual-those-who","url":"https://quotle.info/who-said/the-smallest-minority-on-earth-is-the-individual-those-who/","quote":"The smallest minority on earth is the individual. Those who deny individual rights cannot claim to be defenders of minorities","claim":"Ayn Rand said: \"The smallest minority on earth is the individual. Those who deny individual rights cannot claim to be defenders of minorities\"","rating":5,"verdict":"Supported","answer":"Yes. From Rand's essay \"America's Persecuted Minority: Big Business,\" collected in Capitalism: The Unknown Ideal (1966), p. 61. The original sentence begins \"Remember also that…\"; the popular version leaves that out.","credit":"Ayn Rand, “America’s Persecuted Minority: Big Business,” Capitalism: The Unknown Ideal (1966), p. 61 · Verbatim: “Remember also that the smallest minority on earth is the individual. Those who deny individual rights, cannot claim to be defenders of minorities.”","comparison":"Remember also that the smallest minority on earth is the individual. Those who deny individual rights, cannot claim to be defenders of minorities.","citation":"Ayn Rand, \"America's Persecuted Minority: Big Business,\" in Capitalism: The Unknown Ideal (New York: New American Library, 1966), 61 (page as cited by The Ayn Rand Lexicon and Wikiquote).","rights":"The line comes from an essay first published in 1962 and collected in Capitalism: The Unknown Ideal (New American Library, 1966). Both dates are well after 1931, so in the United States the text is under copyright, held by Rand's estate and her publisher. A short quotation like this one is normally fair use.","checked":"3 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -852,6 +860,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

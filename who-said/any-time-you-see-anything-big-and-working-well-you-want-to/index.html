@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"any-time-you-see-anything-big-and-working-well-you-want-to","url":"https://quotle.info/who-said/any-time-you-see-anything-big-and-working-well-you-want-to/","quote":"Any Time You See Anything Big and Working Well, You Want To Take It Over","claim":"Winston Churchill said: \"Any Time You See Anything Big and Working Well, You Want To Take It Over\"","rating":1,"verdict":"Not supported","answer":"No. There is no contemporary record of Churchill saying this. The earliest trace Quote Investigator found is a private letter of 22 December 1958 from Dean Acheson to Felix Frankfurter, and even that is third-hand: Acheson had it from the journalists Scotty Reston and Stewart Alsop, who were relaying a story told by Hubert Humphrey. In that version the target is Clement Attlee and the wording is different — \"whenever you see a means of production in good working order you want to nationalize it\". The wording on this page first appears in 1965, in the broadcasting executive Harry Bannister's memoir, where the man at the other end of the washroom is not Attlee but the Labour politician Emanuel Shinwell. The Churchill quotation scholar Richard M. Langworth places the anecdote in the \"Red Herrings: False Attributions\" appendix of Churchill By Himself and gives the verdict \"Apocryphal Churchill\".","credit":"Not verified as Winston Churchill. The House of Commons washroom anecdote has no contemporary record: the earliest trace is a third-hand letter from Dean Acheson dated 22 December 1958, and this wording first appears in Harry Bannister’s memoir The Education of a Broadcaster (1965), where the other man is Emanuel Shinwell rather than Clement Attlee. Churchill scholar Richard M. Langworth files it under \"Red Herrings: False Attributions\" — verdict: apocryphal Churchill. · Verbatim: “I don’t take chances, Mannie. I know you. Any time you see anything big and working well, you want to take it over.”","comparison":"I don’t take chances, Mannie. I know you. Any time you see anything big and working well, you want to take it over.","citation":"Bannister, Harry. The Education of a Broadcaster, 279. New York: Simon and Schuster, 1965. Earlier and differently worded: Dean Acheson to Felix Frankfurter, 22 December 1958, in Among Friends: Personal Letters of Dean Acheson, edited by David S. McLellan and David C. Acheson, 153. New York: Dodd, Mead, 1980.","rights":"Quote sparingly and attribute. The passage reproduced above is from Harry Bannister's The Education of a Broadcaster, published by Simon and Schuster in 1965 — long after the 1930 cut-off for the United States public domain — and remains in copyright, as do the 1958 Acheson letter as published in 1980, Manchester's 1983 biography and Langworth's compilation. Because the remark is not Churchill's, the separate question of his estate's rights does not arise. This is not legal advice.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

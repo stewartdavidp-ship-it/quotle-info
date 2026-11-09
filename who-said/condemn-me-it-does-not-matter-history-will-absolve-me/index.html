@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"condemn-me-it-does-not-matter-history-will-absolve-me","url":"https://quotle.info/who-said/condemn-me-it-does-not-matter-history-will-absolve-me/","quote":"Condemn me, it does not matter: history will absolve me","claim":"Fidel Castro said: \"Condemn me, it does not matter: history will absolve me\"","rating":5,"verdict":"Supported","answer":"Yes. This is the closing declaration in the English text of Fidel Castro’s History Will Absolve Me, his defense following the failed Moncada assault in 1953. The online translation separates the words into three sentences.","credit":"Fidel Castro, History Will Absolve Me, defense associated with 16 October 1953; English translation credited to Pedro Álvarez Tabío and Andrew Paul Booth, rechecked in 1981 according to Marxists Internet Archive. Punctuation differs from the popular form.","comparison":"","citation":"Castro, Fidel. History Will Absolve Me. Defense associated with 16 October 1953. English translation credited to Pedro Álvarez Tabío and Andrew Paul Booth, Marxists Internet Archive; source header lists Editorial de Ciencias Sociales, Havana, 1975, and a translation recheck in 1981.","rights":"The checked English text credits Pedro Álvarez Tabío and Andrew Paul Booth as translators. Its header lists Editorial de Ciencias Sociales, Havana, 1975, and says the translation was rechecked against the Spanish text in 1981. This modern English translation is treated as copyrighted; the 1953 speech date does not make its English wording public domain.","checked":"9 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -803,6 +811,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

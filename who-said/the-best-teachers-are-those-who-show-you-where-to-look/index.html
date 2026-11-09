@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -516,6 +518,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -562,6 +567,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -618,7 +624,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-best-teachers-are-those-who-show-you-where-to-look","url":"https://quotle.info/who-said/the-best-teachers-are-those-who-show-you-where-to-look/","quote":"The best teachers are those who show you where to look but don't tell you what to see","claim":"Alexandra K. Trenfor said: \"The best teachers are those who show you where to look but don't tell you what to see\"","rating":1,"verdict":"Not supported","answer":"No. Nobody has ever produced a book, an essay, a lecture, an interview, a birth record, an obituary or a photograph for Alexandra K. Trenfor. The name appears on quotation sites, teacher posters and social media, attached to this sentence and one or two others, and essentially nowhere else. People have looked hard: a public search has been running on and off since 2012, and in 2014 a Forbes columnist who admired the line tried to find her and came back with nothing beyond an unrelated family in the 1940 US census. The honest statement is not 'she does not exist' — it is that no evidence of her existence has been found by anyone who has gone looking, and the search has now been going on for well over a decade.","credit":"Attributed to Alexandra K. Trenfor, a name for which no publication, record or biography has ever been found. Author unverified.","comparison":"","citation":"Attributed to Alexandra K. Trenfor; no publication, record or biography located for that name. No dated first appearance established.","rights":"We publish no rights status here, because we cannot identify an author or a date of first publication, and without those there is no term to calculate. If the sentence was written by a living or recently living person, it is in copyright somewhere and to someone — a single sentence quoted with attribution is ordinarily fine, but it is not free stock text. Note also that being unable to identify a rights holder is not the same as there being none. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -867,6 +875,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

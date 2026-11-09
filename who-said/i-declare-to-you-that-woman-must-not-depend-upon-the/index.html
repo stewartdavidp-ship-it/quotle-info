@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-declare-to-you-that-woman-must-not-depend-upon-the","url":"https://quotle.info/who-said/i-declare-to-you-that-woman-must-not-depend-upon-the/","quote":"I declare to you that woman must not depend upon the protection of man","claim":"Susan B. Anthony said: \"I declare to you that woman must not depend upon the protection of man\"","rating":5,"verdict":"Supported","answer":"Yes. Anthony spoke this during her 1871 lecture tour of the Pacific Coast. Wikiquote's sourced section ties the line to her \"Speech in San Francisco (July 1871),\" where the documented wording runs \"Woman must not depend upon the protection of man, but must be taught to protect herself.\" The widely circulated fuller form — \"I declare to you … and there I take my stand\" — adds a rhetorical preface and coda but preserves the same statement.","credit":"Susan B. Anthony, speech in San Francisco, July 1871 · Verbatim: “I declare to you that woman must not depend upon the protection of man, but must be taught to protect herself, and there I take my stand.”","comparison":"I declare to you that woman must not depend upon the protection of man, but must be taught to protect herself, and there I take my stand.","citation":"Susan B. Anthony, speech in San Francisco, July 1871; documented in Wikiquote, \"Susan B. Anthony\" (sourced section), and in the context of her 1871 Pacific Coast tour recounted in Ida Husted Harper, The Life and Work of Susan B. Anthony (Indianapolis: Bowen-Merrill, 1898).","rights":"The line was spoken and reported in 1871 and is long in the public domain in the United States; Anthony died in 1906, and no 1931-or-later edition or translation governs this English-language text.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -840,6 +848,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

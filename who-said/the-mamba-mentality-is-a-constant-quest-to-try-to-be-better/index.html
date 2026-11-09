@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-mamba-mentality-is-a-constant-quest-to-try-to-be-better","url":"https://quotle.info/who-said/the-mamba-mentality-is-a-constant-quest-to-try-to-be-better/","quote":"The mamba mentality is a constant quest to try to be better today than you were yesterday","claim":"Kobe Bryant said: \"The mamba mentality is a constant quest to try to be better today than you were yesterday\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Kobe Bryant really did say this, and there is a datable occasion for it: a press gathering on the Manila stop of Nike's \"Mamba Mentality Tour,\" covered by at least four Philippine outlets on 25–26 June 2016. But no contemporaneous transcription matches the sentence that circulates — every one of them renders his answer as two or more clauses, and they disagree with each other over where the word \"try\" falls. No transcript, recording or book page has been located carrying this exact wording.","credit":"Kobe Bryant, remarks at the Manila stop of Nike's \"Mamba Mentality Tour,\" reported 25–26 June 2016. Contemporaneous reports render the remark in several slightly different ways; the widely shared one-sentence version matches none of them exactly. Via Quotle.info","comparison":"","citation":"Olmin Leyba, \"Kobe Bryant returns, preaches 'Mamba Mentality' to Filipinos,\" Philstar.com, 25 June 2016; JC Gonzales, \"Kobe Bryant seeks to continue spreading Mamba Mentality,\" Tiebreaker Times, 25 June 2016; Mark Giongco, \"Kobe's Mamba Mentality Tour strikes Manila,\" Philippine Daily Inquirer, 25 June 2016; and Joel Orellana, \"Kobe: It's 'Mamba Mentality',\" BusinessMirror, 26 June 2016 — all reporting remarks made at the Manila stop of Nike's Mamba Mentality Tour. No one of the four carries the popular one-sentence wording.","rights":"These are modern spoken remarks from June 2016, not a pre-1931 text, so nothing here is public domain. The wordings shown are taken from news reports that are themselves under copyright to their publishers; Quotle.info reproduces them as short, attributed quotations for the purpose of identifying the source.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -878,6 +886,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

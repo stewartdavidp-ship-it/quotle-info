@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"half-the-money-i-spend-on-advertising-is-wasted-the-trouble","url":"https://quotle.info/who-said/half-the-money-i-spend-on-advertising-is-wasted-the-trouble/","quote":"Half the money I spend on advertising is wasted; the trouble is I don't know which half","claim":"David Ogilvy said: \"Half the money I spend on advertising is wasted; the trouble is I don't know which half\"","rating":1,"verdict":"Not supported","answer":"No. David Ogilvy really did print a form of this line — \"…wasted, and the trouble is I don't know which half,\" in Confessions of an Advertising Man (Atheneum, 1963), chapter 3, p. 59; the semicolon version above is the popular clipping — but he handed the credit straight to the first Lord Leverhulme and to John Wanamaker rather than keeping it, as Quote Investigator documents. The earliest match Quote Investigator has found runs decades earlier and credits Wanamaker: a 1919 address printed in Winona Echoes, p. 333, which quotes him saying \"about one-half the money I spend for advertising is wasted, but I have never been able to decide which half.\" No letter, speech text or store publication in Wanamaker's own hand has ever been produced, so even his claim stays unconfirmed.","credit":"attributed to John Wanamaker, not David Ogilvy. Ogilvy printed it as \"...wasted, and the trouble is I don't know which half\" in Confessions of an Advertising Man (Atheneum, 1963), ch. 3, p. 59 — the semicolon form above is the popular variant — but he credited the first Lord Leverhulme and Wanamaker rather than himself. The earliest match known to Quote Investigator is Roy L. Smith, \"The Salesmanship of Preaching,\" in Winona Echoes (Winona Publishing Society, 1919), p. 333, quoting Wanamaker: \"I am convinced that about one-half the money I spend for advertising is wasted, but I have never been able to decide which half.\" No text written or spoken by Wanamaker himself has been traced. Via Quotle.info.","comparison":"","citation":"Roy L. Smith, \"The Salesmanship of Preaching,\" in Winona Echoes: Notable Addresses Delivered at the Twenty-Fifth Annual Bible Conference, Winona Lake, Indiana, August 1919 (Winona Publishing Society, 1919), 333 — the earliest match known to Quote Investigator, quoting John Wanamaker. The familiar wording descends from David Ogilvy, Confessions of an Advertising Man (New York: Atheneum, 1963), chap. 3, p. 59, which Quote Investigator transcribes as \"Half the money I spend on advertising is wasted, and the trouble is I don't know which half\" — the semicolon form used here is the popular variant. Ogilvy credits the first Lord Leverhulme and Wanamaker rather than himself.","rights":"The \"the trouble is I don't know which half\" form appears in David Ogilvy's Confessions of an Advertising Man (Atheneum, 1963), chapter 3, p. 59, which prints it as \"…wasted, and the trouble is I don't know which half\" — the semicolon version on this page is the popular variant, not the 1963 text. That book remains in copyright in the United States, so treat its text as in-copyright and quote it with attribution. No rightsholder in the sentence itself is established: the saying predates Ogilvy by decades and he disclaimed it. The 1919 Winona Echoes volume excerpted above is public domain, but its wording is different, and since no text in Wanamaker's own words has been traced there is no earlier edition to point to for this phrasing.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -875,6 +883,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

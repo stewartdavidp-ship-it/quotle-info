@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"life-is-either-a-daring-adventure-or-nothing-at-all","url":"https://quotle.info/who-said/life-is-either-a-daring-adventure-or-nothing-at-all/","quote":"Life is either a daring adventure or nothing at all","claim":"\"Life is either a daring adventure or nothing at all\"","rating":3,"verdict":"Not confirmed","answer":"Keller wrote the sentence — but she stopped at \"nothing.\" It is the next-to-last sentence of a paragraph in Let Us Have Faith (Doubleday, Doran & Co., New York, 1940), in the chapter \"Faith Fears Not,\" on pages 50–51: \"Faith alone defends. Life is either a daring adventure or nothing.\" You can read it in the scanned first edition. Quote Investigator traces the appended \"at all\" to a 1980 printing in Business Quarterly that carried no attribution; by 1984 a Dallas newspaper was pinning the longer form on Keller, and that is the version the internet kept.","credit":"Helen Keller wrote \"Life is either a daring adventure or nothing.\" — Let Us Have Faith (New York: Doubleday, Doran & Co., 1940), 50–51, ch. \"Faith Fears Not.\" The popular \"…or nothing at all\" wording is a later expansion: per Quote Investigator it first appears in print in 1980, unattributed, and is credited to Keller by 1984. Source: Quotle.info","comparison":"Life is either a daring adventure or nothing.","citation":"Helen Keller, Let Us Have Faith (New York: Doubleday, Doran & Co., 1940), 50–51: \"Faith alone defends. Life is either a daring adventure or nothing.\" The popular \"…or nothing at all\" wording is a later expansion; per Quote Investigator it first appears in print in 1980, unattributed, and is credited to Keller by 1984.","rights":"Let Us Have Faith was first published in 1940 — well after the pre-1931 line beyond which US publications are reliably public domain — and its copyright page reads \"COPYRIGHT, 1940 BY HELEN KELLER. ALL RIGHTS RESERVED.\" Treat the passage as in copyright; the sentence and short surrounding excerpt are quoted here for identification and comment. The two-word popular variant, \"…at all,\" has no identified author.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

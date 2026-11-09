@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"with-all-this-manure-there-must-be-a-pony-somewhere","url":"https://quotle.info/who-said/with-all-this-manure-there-must-be-a-pony-somewhere/","quote":"With all this manure, there must be a pony somewhere!","claim":"Ronald Reagan said: \"With all this manure, there must be a pony somewhere!\"","rating":1,"verdict":"Not supported","answer":"No. The pony gag is an anonymous American joke that Quote Investigator traces to 1902 in print, reporting an Agate Club banquet held on December 20 — December 1901, since the issue carrying it is dated January 1902, a decade before Reagan was born. Reagan genuinely loved it and used the punchline on the record five times between 1981 and 1987, telling the full joke at least twice; in every full telling it ran \"There's got to be a pony in here somewhere\" (once varied to \"someplace\") — and in this joke he never once said \"manure.\"","credit":"not Ronald Reagan's line. The joke is anonymous, documented in print by January 1902 (a decade before Reagan was born). Reagan used the punchline on the record five times between 1981 and 1987, telling the full joke at least twice, and in every full telling it ran \"There's got to be a pony in here somewhere.\" He never said \"manure\" when telling it. Via Quotle.info","comparison":"There's got to be a pony in here somewhere.","citation":"Ronald Reagan, \"Remarks and a Panel Discussion With Community Leaders on Welfare Reform,\" February 11, 1987, in Public Papers of the Presidents of the United States: Ronald Reagan (Washington, DC: Government Printing Office); online via Gerhard Peters and John T. Woolley, The American Presidency Project. On the joke's pre-Reagan history, see \"Quote Origin: There Must Be a Pony Somewhere,\" Quote Investigator, December 13, 2013, which cites Advertising Experience (January 1902) as the earliest known printing. The popular \"With all this manure…\" wording matches no located transcript; its closest published form is Peter Robinson, How Ronald Reagan Changed My Life (New York: ReganBooks, 2003), though QI documents \"manure\" versions of the joke circulating anonymously from 1949 and William Safire connecting the tale to Reagan in the New York Times on March 11, 1984.","rights":"No located source contains this exact wording, so no rights status can honestly be asserted for it. The pieces around it are clearer: the joke's earliest documented forms (in print by 1902) are long in the public domain and anonymous; Reagan's own tellings, quoted above, are US Government works in the Public Papers of the Presidents and are free of copyright. But the popular \"With all this manure…\" phrasing is closest to Peter Robinson's How Ronald Reagan Changed My Life (2003), which is firmly in copyright — and even that reads \"a pony in here somewhere.\" We do not claim public domain for a wording we cannot tie to a specific work.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -853,6 +861,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

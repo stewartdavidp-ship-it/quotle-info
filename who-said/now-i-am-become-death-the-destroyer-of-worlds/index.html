@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"now-i-am-become-death-the-destroyer-of-worlds","url":"https://quotle.info/who-said/now-i-am-become-death-the-destroyer-of-worlds/","quote":"Now I am become Death, the destroyer of worlds","claim":"J. Robert Oppenheimer said: \"Now I am become Death, the destroyer of worlds\"","rating":5,"verdict":"Supported","answer":"Yes. The words are his, and the scene is wrong. Oppenheimer spoke them on camera for the NBC White Paper documentary The Decision to Drop the Bomb (1965), produced by Fred Freed, describing what he remembered in the seconds after the Trinity test of 16 July 1945: 'I remembered the line from the Hindu scripture, the Bhagavad-Gita…' He is quoting Bhagavad Gita 11.32, in his own English rendering — he had read the poem in Sanskrit under Arthur Ryder at Berkeley. What he actually said aloud in the desert, according to his brother Frank, was closer to 'I guess it worked.'","credit":"J. Robert Oppenheimer, in the NBC documentary The Decision to Drop the Bomb, 1965, recalling Bhagavad Gita 11.32. He did not say it aloud at the Trinity test.","comparison":"","citation":"Oppenheimer, J. Robert. Interview in The Decision to Drop the Bomb, NBC White Paper, produced by Fred Freed, 1965. Quoting Bhagavad Gita 11.32 in his own translation.","rights":"Oppenheimer's words are in copyright. He died in 1967, so his spoken text is protected in the UK and EU until the end of 2037, and the 1965 NBC broadcast is separately protected as an audiovisual work with its own rights holder — quoting the sentence is one thing, reusing the footage is another. The Sanskrit of the Bhagavad Gita is ancient and free; this English wording is not the Gita, it is Oppenheimer's translation of it, and translations carry their own copyright. Arthur Ryder's competing rendering has its own status again. Attribute, quote briefly, and do not treat the footage as stock. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -879,6 +887,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

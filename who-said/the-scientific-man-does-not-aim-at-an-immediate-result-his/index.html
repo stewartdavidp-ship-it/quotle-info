@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -534,6 +536,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -580,6 +585,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -636,7 +642,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-scientific-man-does-not-aim-at-an-immediate-result-his","url":"https://quotle.info/who-said/the-scientific-man-does-not-aim-at-an-immediate-result-his/","quote":"The scientific man does not aim at an immediate result. His duty is to lay the foundation for those who are to come, and point the way","claim":"Nikola Tesla said: \"The scientific man does not aim at an immediate result. His duty is to lay the foundation for those who are to come, and point the way\"","rating":5,"verdict":"Supported","answer":"Yes. Both sentences are Tesla's own, from the closing paragraph of his signed, first-person essay \"The Problem of Increasing Human Energy\" in The Century Illustrated Magazine, June 1900, pp. 175–211. He repeated the whole passage 34 years later in Modern Mechanix and Inventions, July 1934, which is the printing the quote sites cite. The one-liner in circulation is word-for-word accurate but stitches together the paragraph's first and fourth sentences, silently dropping the two in between.","credit":"Nikola Tesla, \"The Problem of Increasing Human Energy,\" The Century Illustrated Magazine, June 1900, pp. 175–211. The final sentence continues \"… with the poet who says:\" into Goethe's \"Hope\"; Tesla restated the passage, ending on \"hopes.\", in Modern Mechanix and Inventions, July 1934. Verified via Quotle.info","comparison":"The scientific man does not aim at an immediate result. He does not expect that his advanced ideas will be readily taken up. His work is like that of the planter — for the future. His duty is to lay the foundation for those who are to come, and point the way. He lives and labors and hopes.","citation":"Nikola Tesla, \"The Problem of Increasing Human Energy,\" The Century Illustrated Magazine, June 1900, 175-211. Restated in Nikola Tesla, as told to Alfred Albelli, \"Radio Power Will Revolutionize the World,\" Modern Mechanix and Inventions, July 1934, 40-42, 117-19 — the printing most quote sites cite.","rights":"The passage was first published in June 1900, in The Century Illustrated Magazine — long before 1929, and so comfortably clear of this site's conservative United States cutoff, which treats anything first published in 1931 or later as protected. It is public domain in the United States. Tesla's July 1934 restatement in Modern Mechanix and Inventions reprints words he had already published 34 years earlier, so no copyright in that later issue reaches these sentences. The 1900 essay in full","checked":"29 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 29 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -898,6 +906,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

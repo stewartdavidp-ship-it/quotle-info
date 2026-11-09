@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-is-not-necessary-to-change-survival-is-not-mandatory","url":"https://quotle.info/who-said/it-is-not-necessary-to-change-survival-is-not-mandatory/","quote":"It is not necessary to change. Survival is not mandatory","claim":"W. Edwards Deming said: \"It is not necessary to change. Survival is not mandatory\"","rating":1,"verdict":"Not supported","answer":"No. The thought is recognisably Deming's, but these exact words have never been traced to anything he wrote or is recorded as saying. Mark Graban, who went looking, reports the line \"doesn't appear in Out of the Crisis or The New Economics\" and that the Deming Institute has not been able to confirm it as a direct quote; Deming's own collaborator Clare Crawford-Mason remembered him saying something different — \"Survival is optional. No one has to change.\"","credit":"commonly credited to W. Edwards Deming (1900–1993), but no documented source has been found. The line appears in neither \"Out of the Crisis\" nor \"The New Economics,\" and the Deming Institute's citation-bearing quote database does not carry it. Deming's collaborator Clare Crawford-Mason remembered his words as \"Survival is optional. No one has to change.\" — quotle.info","comparison":"","citation":"No documented source located in W. Edwards Deming's published works. Attribution examined in Mark Graban, \"Did Deming Really Say 'Survival Is Not Mandatory'?\" Lean Blog, February 19, 2013; and John Willis, \"It is not necessary to change. Survival is not mandatory,\" Profound Deming. Deming's collaborator Clare Crawford-Mason recalls the line as \"Survival is optional. No one has to change\" (Lean Blog Interviews podcast, episode 167).","rights":"No rights status can honestly be asserted, because no source work has been identified. The sentence has not been tied to any book, article, letter or transcript, so there is no first-publication date to reason from. Deming's actual published books remain in copyright, held by his estate and their publishers — but this line is not in them, which is precisely the point.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -847,6 +855,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

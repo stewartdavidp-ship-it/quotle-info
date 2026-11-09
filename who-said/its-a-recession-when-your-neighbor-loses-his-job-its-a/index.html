@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"its-a-recession-when-your-neighbor-loses-his-job-its-a","url":"https://quotle.info/who-said/its-a-recession-when-your-neighbor-loses-his-job-its-a/","quote":"It's a recession when your neighbor loses his job; it's a depression when you lose yours","claim":"Harry S. Truman coined: \"It's a recession when your neighbor loses his job; it's a depression when you lose yours\"","rating":1,"verdict":"Not supported","answer":"Yes and no. Truman really did use this line, but he did not invent it. The earliest documented appearance Barry Popik records is in the Harlan News-Advertiser of Harlan, Iowa, on 9 February 1954, where a columnist reports it simply as something \"overheard on the street\" — nobody's name attached. Within the same month the Teamsters president Dave Beck was using it in widely reprinted remarks on the auto slump, and it is Beck, not Truman, whom The Yale Book of Quotations credits, noting that the earliest evidence of Truman using it is later than 1954. Truman's documented use dates from 1958.","credit":"Harry Truman used this line, but he did not coin it. It appears in print on 9 February 1954 in the Harlan News-Advertiser (Harlan, Iowa) as a saying \"overheard on the street,\" with no author named, and was popularised later that month by Teamsters president Dave Beck. The Yale Book of Quotations files it under Beck and notes that the earliest evidence of Truman using it is later than 1954; Truman's own documented use is from 1958. Ronald Reagan added \"and recovery is when Jimmy Carter loses his\" in 1980. Via Quotle.info · Verbatim: “I define a recession as when your neighbor loses his job, but a depression is when you lose your own.”","comparison":"I define a recession as when your neighbor loses his job, but a depression is when you lose your own.","citation":"Earliest documented appearance: Elsie Graves, \"The Lady's Notebook,\" Harlan News-Advertiser (Harlan, IA), 9 February 1954, sec. 2, p. 2, col. 2 — printed as overheard, with no author named. Earliest named user: Dave Beck, quoted in Norman Walker, \"Union President Says Auto Industry In Bad Shape,\" St. Petersburg Times, 15 February 1954, p. 4, and in \"Unemployment Uproar,\" Time, 22 February 1954. Credit: Fred R. Shapiro, ed., The Yale Book of Quotations (New Haven: Yale University Press, 2006), 49, s.v. \"Dave Beck.\" Chronology: Barry Popik, \"A recession is when your neighbor loses his job; a depression is when you lose your job,\" 14 January 2009, barrypopik.com.","rights":"No rights status can honestly be asserted for this wording. The saying's first documented appearance is an unattributed newspaper filler item of 9 February 1954 — no named author, and no single work that can be called its first publication. Both 1954 printings post-date the 1931 cut-off for United States public domain, so the line cannot be called public-domain; but with the originator unknown there is no identifiable rights holder to name either. quotle.info therefore makes no claim in either direction.","checked":"13 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 13 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -833,6 +841,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

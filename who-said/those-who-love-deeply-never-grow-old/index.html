@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"those-who-love-deeply-never-grow-old","url":"https://quotle.info/who-said/those-who-love-deeply-never-grow-old/","quote":"Those Who Love Deeply Never Grow Old","claim":"Benjamin Franklin said: \"Those Who Love Deeply Never Grow Old\"","rating":1,"verdict":"Not supported","answer":"No. The line belongs to Fay Zuliani in act 5 of Pinero's 1897 comedy The Princess and the Butterfly; or, The Fantastics, where it is printed in broken-English dialect: \"Dose who love deep never grow old … Dey may die of age, but dey die young.\" Benjamin Franklin died in 1790, more than a century before the play was written, and Quote Investigator found the Franklin credit — which turns up in a 2001 wedding-vows book — unsupported by any substantive citation.","credit":"Arthur Wing Pinero, \"The Princess and the Butterfly; or, The Fantastics\" (London: William Heinemann, 1898), act 5, p. 218: \"Dose who love deep never grow old, I have 'eard it said. Dey may die of age, but dey die young.\" Not Benjamin Franklin — the popular wording is a smoothed-out later version of Pinero's line. Via Quotle.info","comparison":"Dose who love deep never grow old, I have 'eard it said. Dey may die of age, but dey die young.","citation":"Arthur W. Pinero, The Princess and the Butterfly; or, The Fantastics: A Comedy in Five Acts (London: William Heinemann, 1898), act 5, 218. See also Quote Investigator, \"Quote Origin: Those Who Love Deeply Never Grow Old,\" January 16, 2015.","rights":"The play was staged in March 1897 and published in book form by William Heinemann of London, the printed text carrying a 1897 copyright notice. A work first published this long before 1931 is in the public domain in the United States, and Pinero, who died in 1934, wrote in English, so no translation copyright is involved. The quoted dialogue may be reproduced freely.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -876,6 +884,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

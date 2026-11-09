@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-cant-write-a-book-commensurate-with-shakespeare-but-i-can","url":"https://quotle.info/who-said/i-cant-write-a-book-commensurate-with-shakespeare-but-i-can/","quote":"I can't write a book commensurate with Shakespeare, but I can write a book by me","claim":"Dale Carnegie said: \"I can't write a book commensurate with Shakespeare, but I can write a book by me\"","rating":1,"verdict":"Not supported","answer":"No. The line comes from a letter Walter Alexander Raleigh — the Oxford English professor, not the Elizabethan explorer — wrote to T. H. Warren, President of Magdalen College, on 28 April 1907, first printed in The Letters of Sir Walter Raleigh (1879–1922), Volume 2 (Methuen, 1926) at page 314. Dale Carnegie quoted it in How to Stop Worrying and Start Living (1948) and credited Professor Raleigh by name; as Quote Investigator documents, Carnegie is the popularizer, not the author.","credit":"Walter Alexander Raleigh (1861–1922), Oxford's first Professor of English Literature, in a letter to T. H. Warren, 28 April 1907; first published in The Letters of Sir Walter Raleigh (1879–1922), vol. 2 (Methuen, 1926), p. 314. Not Dale Carnegie, who quoted it in 1948, and not Sir Walter Raleigh the Elizabethan explorer. · Verbatim: “I can't write a book commensurate with Shakespeare, but I can write a book by me,—which is all that any one can do.”","comparison":"I can't write a book commensurate with Shakespeare, but I can write a book by me,—which is all that any one can do.","citation":"Raleigh, Walter Alexander. The Letters of Sir Walter Raleigh (1879–1922). Edited by Lady Raleigh. Vol. 2. London: Methuen & Co., 1926, 314 (letter to T. H. Warren, President of Magdalen College, 28 April 1907). Quoted in Dale Carnegie, How to Stop Worrying and Start Living (New York: Simon and Schuster, 1948), ch. 16, 125.","rights":"The wording is from a letter written in 1907 and first published in The Letters of Sir Walter Raleigh (1879–1922) (Methuen, London) in 1926 — before 1931, so the volume is in the public domain in the United States; Raleigh himself died in 1922. Dale Carnegie's 1948 How to Stop Worrying and Start Living, where many readers first met the line, remains in copyright, which is why we quote Raleigh's letter and only describe Carnegie's use of it.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -869,6 +877,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

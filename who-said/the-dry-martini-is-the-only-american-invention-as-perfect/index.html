@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-dry-martini-is-the-only-american-invention-as-perfect","url":"https://quotle.info/who-said/the-dry-martini-is-the-only-american-invention-as-perfect/","quote":"The dry martini is the only American invention as perfect as a sonnet","claim":"H. L. Mencken said: \"The dry martini is the only American invention as perfect as a sonnet\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Widely credited to Mencken and entirely in his voice — but no Mencken text containing it has ever been produced. Its earliest known appearance is Alistair Cooke's 1977 memoir Six Men, where Cooke, who knew Mencken, reports that he \"once called\" the dry martini this — without saying whether Mencken wrote it or spoke it. Mencken scholar S. T. Joshi, who has transcribed the complete published writings, calls the attribution \"highly unlikely.\"","credit":"attributed to H. L. Mencken (1880–1956). Earliest known appearance: Alistair Cooke, Six Men (New York: Alfred A. Knopf, 1977), reporting a remark Mencken \"once called\" the drink; the line has not been found anywhere in Mencken's published writing. Via Quotle.info","comparison":"","citation":"Earliest known appearance identified by drinks historian David Wondrich: Alistair Cooke, Six Men (New York: Alfred A. Knopf, 1977), chapter on H. L. Mencken (pp. 105–6 in the 1980 paperback), where Cooke reports that Mencken \"once called\" the dry martini \"the only American invention as perfect as a sonnet.\" Wikiquote lists the line under Attributed. Mencken's own published martini passage: H. L. Mencken, \"Meditations in the Methodist Desert,\" in Prejudices: Fourth Series (New York: Alfred A. Knopf, 1924).","rights":"The sonnet line cannot be tied to any Mencken publication, so it carries no public-domain Mencken source: the only documented text of it is in Alistair Cooke's Six Men (Alfred A. Knopf, 1977), which remains in copyright. The 1924 passage excerpted above, from Prejudices: Fourth Series, is separately in the public domain in the United States.","checked":"10 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -867,6 +875,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

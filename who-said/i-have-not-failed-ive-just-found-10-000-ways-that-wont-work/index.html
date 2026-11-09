@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-have-not-failed-ive-just-found-10-000-ways-that-wont-work","url":"https://quotle.info/who-said/i-have-not-failed-ive-just-found-10-000-ways-that-wont-work/","quote":"I have not failed. I've just found 10,000 ways that won't work","claim":"Thomas Edison said: \"I have not failed. I've just found 10,000 ways that won't work\"","rating":2,"verdict":"Needs context","answer":"Yes and no. The optimistic sentiment is genuinely Edison's and is documented as early as 1910, but he is not recorded saying this polished sentence. According to Quote Investigator, the earliest and best version of the anecdote — from the 1910 biography Edison: His Life and Inventions, as told by his associate Walter S. Mallory — has Edison saying \"I have gotten a lot of results! I know several thousand things that won't work.\" The rounded-up \"10,000 ways that won't work\" wording is a later retelling, filed under \"Disputed\" by Wikiquote.","credit":"Not Edison's exact words — a later paraphrase. His documented 1910 remark was \"I know several thousand things that won't work.\"","comparison":"","citation":"Frank Lewis Dyer and Thomas Commerford Martin, Edison: His Life and Inventions (New York: Harper & Brothers, 1910), recounting Walter S. Mallory; earliest \"10,000 ways\" wording in J. L. Elkhorne, \"Edison — The Fabulous Drone,\" 73 XLVI, no. 3 (March 1967), p. 52.","rights":"The polished sentence \"I have not failed. I've just found 10,000 ways that won't work\" cannot be tied to a specific documented Edison source; its earliest known appearance is a 1967 magazine retelling, and it reads as an anonymous paraphrase. Because the exact wording's origin is unknown, we assert no copyright status. (The authentic 1910 remark, by contrast, appears in a public-domain book.)","checked":"10 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -830,6 +838,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

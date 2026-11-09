@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"death-was-a-good-career-move","url":"https://quotle.info/who-said/death-was-a-good-career-move/","quote":"Death Was a Good Career Move","claim":"Gore Vidal said: \"Death Was a Good Career Move\"","rating":1,"verdict":"Not supported","answer":"No. Gore Vidal really did deliver the line — \"Good career move,\" said down the telephone from Ravello when his editor Jason Epstein rang with the news that Truman Capote had died on 25 August 1984 — but he was repeating, not inventing. The same gibe was already in print on 1 March 1978, aimed at Elvis Presley and credited to nobody more specific than \"a Hollywood cynic\", and Vidal flagged its second-hand origin himself in a letter to Paul Bowles.","credit":"Gore Vidal, on being told of Truman Capote's death, August 1984 (recalled in his own words in George Plimpton, ed., Truman Capote, Nan A. Talese/Doubleday, 1997, p. 430). Vidal did not coin the line: the same gibe was in print on 1 March 1978 in Esquire, aimed at Elvis Presley and credited only to \"a Hollywood cynic.\" Chronology traced by Quote Investigator. quotle.info · Verbatim: “Good career move.”","comparison":"Good career move.","citation":"Peter Bogdanovich, \"The Murder of Sal Mineo,\" Esquire 89 (1 March 1978): 118 — the earliest currently known instance, aimed at Elvis Presley and credited only to \"a Hollywood cynic.\" Gore Vidal's use of the line, on the death of Truman Capote, is recorded in his own words in George Plimpton, ed., Truman Capote: In Which Various Friends, Enemies, Acquaintances, and Detractors Recall His Turbulent Career (New York: Nan A. Talese/Doubleday, 1997), 430. Chronology traced by Quote Investigator, \"Quote Origin: Death Was a Good Career Move\" (4 August 2012).","rights":"No public-domain claim is possible here. The quip's originator is unknown — the earliest citations name only \"a Hollywood cynic\" — so there is no author or first publication to attach a status to, and the popular sentence \"Death was a good career move\" has no documented source at all. Every text in which the remark is actually recorded is a modern, in-copyright publication: Esquire (1978), Time (1981), George Plimpton's Truman Capote (Nan A. Talese/Doubleday, 1997) and Fred Kaplan's Gore Vidal: A Biography (1999). Quote the three words with attribution; do not reproduce the surrounding passages.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -849,6 +857,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

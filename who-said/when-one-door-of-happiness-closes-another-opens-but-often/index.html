@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"when-one-door-of-happiness-closes-another-opens-but-often","url":"https://quotle.info/who-said/when-one-door-of-happiness-closes-another-opens-but-often/","quote":"When one door of happiness closes, another opens; but often we look so long at the closed door that we do not see the one which has been opened for us","claim":"Helen Keller said: \"When one door of happiness closes, another opens; but often we look so long at the closed door that we do not see the one which has been opened for us\"","rating":5,"verdict":"Supported","answer":"Yes. Confirmed against the book itself: the sentence is printed, word for word, on page 23 of Keller's We Bereaved (Leslie Fulenwider, New York, 1929), whose complete scan is free to read at the Internet Archive. One honest caveat: Keller printed the line with no source attached, and Quote Investigator documents a near-identical saying in American newspapers by 1909. The words are genuinely hers to quote — the idea behind them is anonymous.","credit":"Helen Keller, We Bereaved (New York: Leslie Fulenwider, 1929), p. 23. Keller printed the line without attribution; a near-identical saying was in American newspapers by 1909, and Quote Investigator concludes the adage itself is anonymous. It is not Alexander Graham Bell's.","comparison":"","citation":"Helen Keller, We Bereaved (New York: Leslie Fulenwider, 1929), 23. Reprinted in The Open Door (Garden City, NY: Doubleday, 1957), 11. For earlier, near-identical wordings from 1909 onward, see \"Quote Origin: When One Door Closes Another Opens, But Often We Look So Long Upon the Closed Door That We Do Not See the Open Door,\" Quote Investigator, December 3, 2018.","rights":"We Bereaved was first published in 1929, which places it in the public domain in the United States — which is why the complete first-edition scan is openly readable rather than lending-restricted. The saying Keller was drawing on is older and equally free: in American newspapers by 1909, and in its six-word form in English print by 1586. Quote and reproduce it freely.","checked":"10 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -877,6 +885,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

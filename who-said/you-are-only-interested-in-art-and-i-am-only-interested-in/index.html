@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"you-are-only-interested-in-art-and-i-am-only-interested-in","url":"https://quotle.info/who-said/you-are-only-interested-in-art-and-i-am-only-interested-in/","quote":"You Are Only Interested in Art and I Am Only Interested in Money","claim":"George Bernard Shaw said: \"You Are Only Interested in Art and I Am Only Interested in Money\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Shaw's parting shot to film producer Samuel Goldwyn reached print in a London cable published by the Baltimore American on 1 May 1921, and Shaw claimed the exchange as his own when he retold it in 1922 and again in 1926 — but with different wording each time. A 1937 biography of Goldwyn credits the polished version everyone quotes to the producer's publicity chief, and Quote Investigator concludes only that Shaw \"likely did make the statement\". No text in Shaw's own hand carries this sentence.","credit":"attributed to George Bernard Shaw, addressing film producer Samuel Goldwyn. Earliest documented printing: the Baltimore American, 1 May 1921, from a London cable. Shaw retold the exchange himself in 1922 and 1926, using different wording each time, and a 1937 biography of Goldwyn credits this polished version to publicist Howard Dietz. quotle.info · Verbatim: “Well, Mr. Goldwyn, there is not much use in going on. There is this difference between you and me: You are only interested in art and I am only interested in money.”","comparison":"Well, Mr. Goldwyn, there is not much use in going on. There is this difference between you and me: You are only interested in art and I am only interested in money.","citation":"\"Shaw Refuses to Write for Movies\" (special cable to the New York Herald and the Baltimore American, dateline London), Baltimore American (Baltimore, MD), 1 May 1921, sec. 2, p. 1, col. 2 — the earliest printing located by Quote Investigator, \"Quote Origin: You Are Only Interested in Art and I Am Only Interested in Money,\" 30 March 2013.","rights":"The wording survives because American newspapers printed it: the Baltimore American of 1 May 1921, its reprints later that month, and the further reports of Shaw's own retellings in 1922 and 1926. All of those are United States publications from well before the 1931 public-domain cutoff, so the printed text is free to reproduce. That is a statement about the newspaper text only — it is not a warrant that Shaw framed the sentence in exactly these words.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

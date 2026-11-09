@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-master-in-the-art-of-living-makes-little-distinction","url":"https://quotle.info/who-said/a-master-in-the-art-of-living-makes-little-distinction/","quote":"A Master in the Art of Living Makes Little Distinction Between His Work and His Play","claim":"James Michener said: \"A Master in the Art of Living Makes Little Distinction Between His Work and His Play\"","rating":1,"verdict":"Not supported","answer":"No. Lawrence Pearsall Jacks wrote the passage in Education through Recreation (1932), where it opens the first chapter. We read it in a scan of the 1932 edition, pages 1–2. Jacks wrote \"draws no sharp distinction\" — the familiar \"makes little distinction\" is a later rewrite.","credit":"L. P. Jacks, Education through Recreation (University of London Press, 1932), ch. 1, pp. 1–2 — not James Michener, and not a Zen text · Verbatim: “A master in the art of living draws no sharp distinction between his work and his play, his labour and his leisure, his mind and his body, his education and his recreation. He hardly knows which is which. He simply pursues his vision of excellence through whatever he is doing and leaves others to determine whether he is working or playing. To himself he always seems to be doing both. Enough for him that he does it well.”","comparison":"A master in the art of living draws no sharp distinction between his work and his play, his labour and his leisure, his mind and his body, his education and his recreation. He hardly knows which is which. He simply pursues his vision of excellence through whatever he is doing and leaves others to determine whether he is working or playing. To himself he always seems to be doing both. Enough for him that he does it well.","citation":"Jacks, Lawrence Pearsall. Education through Recreation. London: University of London Press, 1932, chap. 1, pp. 1–2. Misattribution history via Quote Investigator, \"Quote Origin: A Master in the Art of Living Makes Little Distinction Between His Work and His Play,\" August 27, 2010.","rights":"Education through Recreation was first published in 1932, after the 1930 cutoff for the United States public domain, so we do not claim public-domain status for it. The scan linked here is served by the Internet Archive from the Digital Library of India collection.","checked":"8 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -864,6 +872,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

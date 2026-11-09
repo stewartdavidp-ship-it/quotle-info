@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -515,6 +517,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -561,6 +566,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -617,7 +623,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-road-to-the-olympics-leads-to-no-city-no-country-it","url":"https://quotle.info/who-said/the-road-to-the-olympics-leads-to-no-city-no-country-it/","quote":"The road to the Olympics, leads to no city, no country. It goes far beyond New York or Moscow, ancient Greece or Nazi Germany. The road to the Olympics leads — in the end — to the best within us","claim":"Jesse Owens said: \"The road to the Olympics, leads to no city, no country. It goes far beyond New York or Moscow, ancient Greece or Nazi Germany. The road to the Olympics leads — in the end — to the best within us\"","rating":3,"verdict":"Not confirmed","answer":"Yes and no. Owens really did write this — in the last months of his life, in a bylined article arguing against the American boycott of the 1980 Moscow Olympics, syndicated by the Independent News Alliance and reprinted in full in the Congressional Record of 1 April 1980. But the wording that circulates has been altered: the article reads \"far beyond Lake Placid or Moscow,\" and it opens with a sentence the web copies drop, \"The road to the Olympics does not lead to Moscow.\"","credit":"Jesse Owens, in an article opposing the U.S. boycott of the 1980 Moscow Olympics, syndicated by the Independent News Alliance in the final months of his life. The documented wording is \"The road to the Olympics does not lead to Moscow. It leads to no city, no country. It goes far beyond Lake Placid or Moscow, Ancient Greece or Nazi Germany. The road to the Olympics leads, in the end, to the best within us.\" Reprinted in full in the Congressional Record, Senate, 1 April 1980 (vol. 126 pt. 6, pp. 7247-48). Via Quotle.info","comparison":"The road to the Olympics does not lead to Moscow. It leads to no city, no country. It goes far beyond Lake Placid or Moscow, Ancient Greece or Nazi Germany. The road to the Olympics leads, in the end, to the best within us.","citation":"Jesse Owens, untitled article opposing the U.S. boycott of the 1980 Moscow Olympics, syndicated by the Independent News Alliance, early 1980; reprinted in full as \"Story by Jesse Owens,\" Congressional Record, Senate, 1 April 1980, 96th Cong., 2d sess., vol. 126 pt. 6, pp. 7247–48. Also quoted in William J. Baker, Jesse Owens: An American Life (New York: Free Press, 1986), and reprinted in Jessie Carney Smith, Black Heroes (Visible Ink Press, 2001). Which newspapers carried the syndicated release, and on what date, has not been traced.","rights":"The article was published in 1980, and anything first published in the United States in 1931 or later is presumed still in copyright, so this line should be treated as in copyright rather than free to reproduce. The 1980 syndicating publisher is named in the Congressional Record as the Independent News Alliance; how the copyright is now divided between Owens's estate and whoever succeeded that syndicate has not been traced, so both are named here as the conservative default. Short quotation with attribution is normal practice, but wholesale reuse is not something this page can clear.","checked":"25 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 25 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -859,6 +867,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

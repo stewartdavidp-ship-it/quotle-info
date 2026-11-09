@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"who-looks-outside-dreams-who-looks-inside-awakes","url":"https://quotle.info/who-said/who-looks-outside-dreams-who-looks-inside-awakes/","quote":"Who looks outside, dreams; who looks inside, awakes","claim":"Carl Jung said: \"Who looks outside, dreams; who looks inside, awakes\"","rating":5,"verdict":"Supported","answer":"Yes. Confirmed in the primary published source. The sentence closes Jung's letter to Fanny Bowditch of 22 October 1916, printed in C. G. Jung: Letters, Vol. 1: 1906–1950. Jung wrote to her in German; the familiar English is R. F. C. Hull's translation, printed in 1973 — and the printed text carries no commas: \"Who looks outside dreams; who looks inside awakes.\"","credit":"Carl Jung, letter to Fanny Bowditch, 22 October 1916, in C. G. Jung: Letters, Vol. 1: 1906–1950, ed. Gerhard Adler and Aniela Jaffé, trans. R. F. C. Hull (Princeton, NJ: Princeton University Press, 1973), 33. The printed text reads \"Who looks outside dreams; who looks inside awakes.\" — without commas. Verified at Quotle.info.","comparison":"","citation":"Jung, C. G. To Fanny Bowditch, 22 October 1916. In C. G. Jung: Letters, Vol. 1: 1906–1950, edited by Gerhard Adler and Aniela Jaffé, translated by R. F. C. Hull, 33. Bollingen Series XCV:1. Princeton, NJ: Princeton University Press, 1973.","rights":"The letter was written in 1916, but under US law what matters is first publication — and this text first reached print in the 1973 Letters of C. G. Jung, Volume I, long after the cutoff for US public domain by publication date (as of 2026, works published in 1930 or earlier). The wording as printed is therefore in copyright, held by Jung's estate together with the publisher — and because the English is R. F. C. Hull's translation of Jung's German, the translation carries its own copyright layer on top of the underlying letter. Quoted here in brief for attribution and comment.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -864,6 +872,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

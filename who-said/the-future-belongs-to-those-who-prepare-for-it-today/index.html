@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-future-belongs-to-those-who-prepare-for-it-today","url":"https://quotle.info/who-said/the-future-belongs-to-those-who-prepare-for-it-today/","quote":"The future belongs to those who prepare for it today","claim":"Malcolm X said: \"The future belongs to those who prepare for it today\"","rating":1,"verdict":"Not supported","answer":"No. The thought — and a nearly identical line — is genuinely Malcolm X's, but this exact wording is a later paraphrase. What he actually said, reading the OAAU 'Statement of Basic Aims' at the group's founding rally on 28 June 1964, was \"Education is our passport to the future, for tomorrow belongs only to the people who prepare for it today.\" The popular standalone swaps \"tomorrow\" for \"the future,\" drops the education framing, and even floats to Emerson on quote sites.","credit":"Paraphrase of Malcolm X. His documented 1964 words: \"Education is our passport to the future, for tomorrow belongs only to the people who prepare for it today.\" — OAAU Founding Rally, June 28, 1964.","comparison":"Education is our passport to the future, for tomorrow belongs only to the people who prepare for it today.","citation":"Malcolm X. Address at the founding rally of the Organization of Afro-American Unity (reading the 'Statement of Basic Aims and Objectives,' §III, Education), Audubon Ballroom, New York, 28 June 1964. Collected in By Any Means Necessary: Speeches, Interviews, and a Letter by Malcolm X (New York: Pathfinder Press, 1970).","rights":"The underlying work — Malcolm X's 28 June 1964 OAAU founding-rally address and its 'Statement of Basic Aims' — was first delivered in 1964 and published in book form in By Any Means Necessary (Pathfinder Press, 1970), both well after 1931, so it is in copyright in the United States. Rights rest with the Malcolm X / Shabazz estate and its publishers; this is separate from the attribution question.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -844,6 +852,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

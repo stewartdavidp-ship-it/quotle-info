@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"when-i-let-go-of-what-i-am-i-become-what-i-might-be","url":"https://quotle.info/who-said/when-i-let-go-of-what-i-am-i-become-what-i-might-be/","quote":"When I let go of what I am, I become what I might be","claim":"Lao Tzu said: \"When I let go of what I am, I become what I might be\"","rating":1,"verdict":"Not supported","answer":"No. The sentence is John Heider's, from The Tao of Leadership: Lao Tzu's Tao Te Ching Adapted for a New Age (Humanics New Age, 1985) — a book whose own subtitle calls it an adaptation, not a translation. Taoism author Stefan Stenudd traces this line and its companion sentence to page 43 of Heider's book, very loosely spun from the opening lines of Tao Te Ching chapter 22. Standard translations of that chapter say nothing resembling it.","credit":"When I let go of what I am, I become what I might be. — John Heider, The Tao of Leadership: Lao Tzu's Tao Te Ching Adapted for a New Age (Humanics New Age, 1985). Widely misattributed to Lao Tzu; the line is Heider's own free adaptation of Tao Te Ching chapter 22, not a translation of it.","comparison":"When I let go of what I am, I become what I might be. When I let go of what I have, I receive what I need.","citation":"Heider, John. The Tao of Leadership: Lao Tzu's Tao Te Ching Adapted for a New Age. Atlanta: Humanics New Age, 1985, p. 43 (page cited by Stefan Stenudd, Fake Lao Tzu Quotes, taoistic.com). Compare Laozi, The Tao Teh King, chap. 22, translated by James Legge (Project Gutenberg ebook 216), which contains no such line.","rights":"The idea reaches back to a text long in the public domain, but this wording does not. It was first published in 1985 by Humanics New Age as John Heider's original composition, so it is a modern, in-copyright text and is quoted here only in brief. Public-domain translations of Tao Te Ching chapter 22, such as James Legge's, are freely reusable — but they do not contain this sentence.","checked":"27 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

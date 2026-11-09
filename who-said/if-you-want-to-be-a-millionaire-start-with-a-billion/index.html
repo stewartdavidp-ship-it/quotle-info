@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-you-want-to-be-a-millionaire-start-with-a-billion","url":"https://quotle.info/who-said/if-you-want-to-be-a-millionaire-start-with-a-billion/","quote":"If you want to be a Millionaire, start with a billion dollars and launch a new airline","claim":"Richard Branson said: \"If you want to be a Millionaire, start with a billion dollars and launch a new airline\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Branson really does tell this joke — he told CNBC in 2024, \"I personally have said that the best way of becoming a millionaire is to start off as a billionaire, and go into the airline industry.\" But that is his wording, not this one: the sentence quoted here surfaces as an unsourced epigraph in a 2001 Harvard Business School case, credited onward to an MSNBC travel article that can no longer be found, and no Branson speech, book or transcript is known to carry it.","credit":"Attributed to Richard Branson — but the wording is secondhand. The earliest source found is the epigraph of Harvard Business School case 801354, \"JetBlue Airways: Starting from Scratch\" (2001), which credits an MSNBC article that can no longer be located. Branson's own version, to CNBC in 2024: \"the best way of becoming a millionaire is to start off as a billionaire, and go into the airline industry.\" The joke's formula is documented from February 1950 onward, applied to many industries.","comparison":"","citation":"Jody Hoffer Gittell and Charles A. O'Reilly, \"JetBlue Airways: Starting from Scratch,\" Harvard Business School Case No. 801354 (Boston: Harvard Business School Publishing, published 10 February 2001; copy consulted stamped REV: OCTOBER 29, 2001), opening epigraph, citing P. Greenberg, \"Why JetBlue will be different,\" MSNBC. For Branson's own phrasing, see Tom Huddleston Jr., \"Richard Branson says this decision helped build his $2.5B net worth,\" CNBC Make It, 29 April 2024.","rights":"No first publication can be fixed for this exact sentence. The oldest source we located is a 2001 Harvard Business School case epigraph, and the article it names as its own source — an MSNBC piece by P. Greenberg — is no longer findable, so it is not possible to say who first put the words in this order. Both documented carriers of the joke are modern and under copyright to their publishers (Harvard Business School Publishing; CNBC); nothing here is public domain.","checked":"25 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 25 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -855,6 +863,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

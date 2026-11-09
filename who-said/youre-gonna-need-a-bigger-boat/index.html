@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"youre-gonna-need-a-bigger-boat","url":"https://quotle.info/who-said/youre-gonna-need-a-bigger-boat/","quote":"You're gonna need a bigger boat","claim":"Roy Scheider said: \"You're gonna need a bigger boat\"","rating":5,"verdict":"Supported","answer":"Yes. The popular wording is the real wording: Wikiquote's transcription of Jaws (1975) and the American Film Institute's official quotes list both give it as \"You're gonna need a bigger boat.\" What is not straightforward is where it came from — the screenplay is credited to Peter Benchley and Carl Gottlieb, but the line was never scripted. Scheider ad-libbed it into the scene, and Gottlieb himself says it was already a standing joke among the crew about the boats the production had been given.","credit":"You're gonna need a bigger boat. — Roy Scheider, ad-libbing as Chief Martin Brody in Jaws (1975), screenplay credited to Peter Benchley and Carl Gottlieb. Commonly misquoted as 'We're gonna need a bigger boat.'","comparison":"","citation":"Jaws, directed by Steven Spielberg, screenplay by Peter Benchley and Carl Gottlieb, based on the 1974 novel by Peter Benchley (Universal Pictures / Zanuck–Brown Company, released 20 June 1975). Line spoken by Roy Scheider as Chief Martin Brody; transcribed at Wikiquote, \"Jaws (film)\", and listed at No. 35 in AFI's 100 Years…100 Movie Quotes.","rights":"Jaws was released by Universal Pictures on 20 June 1975 and remains in copyright — US public-domain status reaches only works first published through 1930. Screen writing is work-for-hire, so the rights in the film and its dialogue sit with the studio rather than with any individual writer or performer, whatever the origin of a given line.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"men-never-do-evil-so-completely-and-cheerfully","url":"https://quotle.info/who-said/men-never-do-evil-so-completely-and-cheerfully/","quote":"Men never do evil so completely and cheerfully as when they do it from religious conviction","claim":"Blaise Pascal said: \"Men never do evil so completely and cheerfully as when they do it from religious conviction\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The thought is genuinely Pascal's and the fragment is catalogued: Lafuma 813, Sellier 658, printed in the Pensées and numbered 895 in the Brunschvicg edition everyone quotes from. But the famous English has been sharpened twice. Pascal's own manuscript reads 'par conscience'. His Port-Royal editors printed 'par un faux principe de conscience'. And W. F. Trotter's 1910 translation rendered that as 'religious conviction' — a word that appears in neither French version.","credit":"Blaise Pascal, Pensées, fragment 895, trans. W. F. Trotter (1910). Pascal's own French: \"Jamais on ne fait le mal si pleinement et si gaiement que quand on le fait par conscience.\"","comparison":"","citation":"Pascal, Blaise. Pensées, fragment Lafuma 813 / Sellier 658; Brunschvicg 895. First printed Port-Royal edition, 1670. English: trans. W. F. Trotter, 1910.","rights":"The wording you are most likely to quote is free to reuse. Pascal died in 1662 and the French is long out of copyright; W. F. Trotter's English was published in 1910 and is public domain in the United States and in life-plus-seventy countries alike. The catch is that the faithful translations are the ones you cannot freely reuse: A. J. Krailsheimer's Penguin version (1966) and Roger Ariew's (2004) are both in copyright, and both say 'conscience' rather than 'religious conviction'. Reproducing a modern editor's notes or fragment ordering is a separate question again. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -874,6 +882,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

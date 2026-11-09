@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-race-is-not-always-to-the-swift-nor-the-battle-to-the","url":"https://quotle.info/who-said/the-race-is-not-always-to-the-swift-nor-the-battle-to-the/","quote":"The Race Is Not Always to the Swift, Nor the Battle to the Strong; But That Is the Best Way to Bet","claim":"Damon Runyon said: \"The Race Is Not Always to the Swift, Nor the Battle to the Strong; But That Is the Best Way to Bet\"","rating":1,"verdict":"Not supported","answer":"No. Keough signed himself HEK in the Chicago Tribune, and the line appears as a page epigram in \"By Hek\" in the Wake of the News, the collection his friend Hugh S. Fullerton assembled after his death in 1912, in the form \"The race is not always to the swift, but that is where to look.\" The betting wording is credited to him by Franklin P. Adams in Collier's in February 1919. Runyon, Adams, Grantland Rice and Burns Mantle all used the joke; every one of them named Keough.","credit":"Hugh E. Keough (1864–1912), Chicago sportswriter, as quoted by Franklin P. Adams in Collier's, 8 February 1919. Widely credited to Damon Runyon, who quoted it and named Keough. Traced by quotle.info · Verbatim: “The race is not always to the swift, nor the battle to the strong; but that is the way to bet.”","comparison":"The race is not always to the swift, nor the battle to the strong; but that is the way to bet.","citation":"Keough, Hugh Edmund. \"By Hek\" in the Wake of the News: A Collection of the Writings of the Late Hugh Edmund Keough. Compiled and edited by Hugh S. Fullerton. Chicago, 1912. Page epigram: \"The race is not always to the swift, but that is where to look.\" The betting wording is credited to Keough by Franklin P. Adams, \"Demobilizing Washington,\" Collier's: The National Weekly, 8 February 1919, 9.","rights":"Both documented printings are comfortably clear of US copyright: Keough's collection was published in 1912 and Adams's Collier's piece in 1919, and everything first published in the United States before 1931 is in the public domain. The 1912 volume is freely readable at the Internet Archive, scanned from a Library of Congress copy. Ecclesiastes 9:11 is quoted here from the King James Version, also public domain. This is not legal advice.","checked":"25 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 25 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -883,6 +891,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

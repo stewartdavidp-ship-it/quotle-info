@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"we-do-not-see-things-as-they-are-we-see-them-as-we-are","url":"https://quotle.info/who-said/we-do-not-see-things-as-they-are-we-see-them-as-we-are/","quote":"We do not see things as they are, we see them as we are","claim":"Anaïs Nin coined: \"We do not see things as they are, we see them as we are\"","rating":1,"verdict":"Not supported","answer":"No. The words really do appear in Anaïs Nin's novel Seduction of the Minotaur (1961) — but not as her own. She writes them as a quotation: \"Lillian was reminded of the talmudic words.\" Nin credited the line to someone else, and Quote Investigator concludes that its true origin is unknown and the saying should be labelled anonymous.","credit":"Anonymous, not Anaïs Nin. Nin quoted the line in Seduction of the Minotaur (1961), crediting it to \"talmudic words\" — but Berakhot 55b is about dreams, and Quote Investigator finds variants back to 1831 with no known author. Via quotle.info","comparison":"","citation":"Anaïs Nin, Seduction of the Minotaur (Swallow Press, 1961), 124 — where the line appears as a quotation Nin credits to \"talmudic words,\" per the citation given in Quote Investigator, \"Quote Origin: We Don't See Things As They Are, We See Them As We Are,\" 9 March 2014, https://quoteinvestigator.com/2014/03/09/as-we-are/. Earliest documented variant: \"Things As They Are,\" The Atlas (London), 1 May 1831, as documented by Quote Investigator. Origin otherwise anonymous.","rights":"No public-domain claim can honestly be made here, because the line has no established origin to date — Quote Investigator labels it anonymous. Separately, the specific text we excerpt above, Nin's 1961 novel, is itself firmly in copyright: the Internet Archive holds its Swallow Press printing as a lending-restricted scan, not a free download.","checked":"15 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 15 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -855,6 +863,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"sex-is-the-most-fun-i-ever-had-without-laughing","url":"https://quotle.info/who-said/sex-is-the-most-fun-i-ever-had-without-laughing/","quote":"Sex is the most fun I ever had without laughing","claim":"\"Sex is the most fun I ever had without laughing\"","rating":1,"verdict":"Not supported","answer":"Woody Allen did say a version of this, but he did not coin it. In Annie Hall (1977), his character Alvy Singer tells Annie after they first make love: \"That was the most fun I've ever had without laughing.\" Quote Investigator finds the joke already in print in Walter Winchell's column of January 1938 as a \"definition of necking,\" which QI suspects was a cleaned-up version of a saying about sex. It concludes that an anonymous version about sex or love-making was in use by 1938. The popular wording, \"Sex is the most fun I ever had…\", appears in no primary or documented source: it circulates on quote sites as a blend of the old \"Sex is the most fun you can have without laughing\" and Allen's first-person screen line.","credit":"Anonymous — in print by 1938 (Walter Winchell's column, 25 January 1938, as a \"definition of necking\"); Woody Allen used a variant, \"That was the most fun I've ever had without laughing,\" in Annie Hall (1977) but did not coin it — traced by Quotle.info · Verbatim: “The latest definition of necking: How you can have the most fun without laughing.”","comparison":"The latest definition of necking: How you can have the most fun without laughing.","citation":"Winchell, Walter. \"On Broadway.\" Wilkes-Barre Times Leader (Wilkes-Barre, PA), January 25, 1938, 24, col. 6. Unsigned \"necking\" version; earliest match located by Quote Investigator, \"The Most Fun You Can Have Without Laughing,\" June 16, 2018. Woody Allen's variant: Annie Hall, directed by Woody Allen, screenplay by Woody Allen and Marshall Brickman (1977).","rights":"No rights status can honestly be given for the popular wording. \"Sex is the most fun I ever had without laughing\" has no identifiable source. The earliest version, from 1938, is anonymous and after the 1931 U.S. public-domain cut-off. Allen's own line is dialogue from Annie Hall (1977), a work still in copyright. quotle.info makes no public-domain claim for this line.","checked":"3 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -850,6 +858,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

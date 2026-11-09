@@ -74,6 +74,13 @@ function runSourceGates() {
       process.exit(1);
     }
   }
+  // CI uses this same entry point, so audience regressions must also stop publication.
+  try {
+    execFileSync(process.execPath, ['--test', path.join(__dirname, 'audience.test.js')], { stdio: 'inherit' });
+  } catch (_) {
+    console.error('\n  ✗ Audience regression tests failed — fix them before building.\n');
+    process.exit(1);
+  }
 }
 
 function build() {
@@ -127,6 +134,7 @@ function build() {
     require('./build-songs'); // regenerate /who-recorded/{slug} song-misattribution pages
     require('./build-themes'); // regenerate /themes/{slug} intent pages + index + themes.json
     require('./build-check'); // regenerate /check paste-a-quote verifier
+    require('./build-challenge').build(); // reviewed daily claims, kept separate from the author game
     require('./build-discovery'); // regenerate openapi.json + .well-known/ai-plugin.json (agent API discovery)
     require('./build-sitemap'); // regenerate sitemap.xml + llms.txt (machine discoverability)
     require('./build-chrome-artifact').build(); // publish /chrome.json — the site chrome for the off-origin blog

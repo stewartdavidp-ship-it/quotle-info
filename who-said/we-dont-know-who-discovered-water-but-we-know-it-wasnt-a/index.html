@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"we-dont-know-who-discovered-water-but-we-know-it-wasnt-a","url":"https://quotle.info/who-said/we-dont-know-who-discovered-water-but-we-know-it-wasnt-a/","quote":"We Don't Know Who Discovered Water, But We Know It Wasn't a Fish","claim":"Albert Einstein said: \"We Don't Know Who Discovered Water, But We Know It Wasn't a Fish\"","rating":1,"verdict":"Not supported","answer":"No. Einstein did write a sentence built on the same image, but it is not this one. His three-paragraph essay Self-Portrait, dated 1936 and published in English in Out of My Later Years, asks: \"What does a fish know about the water in which he swims all his life?\" The wording people actually quote is a different sentence with a different joke in it. Its earliest close match appears in April 1966, in Howard Gossage's Ramparts article \"Understanding Marshall McLuhan\", where it is credited not to McLuhan but to Father John Culkin of Fordham: \"We don't know who it was discovered water, but we're pretty sure it wasn't a fish.\" McLuhan himself used the saying from November 1966 onward and each time credited it to \"someone\" or \"a wit\". Quote Investigator notes that even Culkin's authorship is not firmly established.","credit":"Not Albert Einstein, and not Marshall McLuhan, who credited \"someone\" every time he used it. The earliest close match is credited to Father John Culkin in Howard Gossage’s \"Understanding Marshall McLuhan\", Ramparts, April 1966: \"We don’t know who it was discovered water, but we’re pretty sure it wasn’t a fish.\" Einstein’s own 1936 essay Self-Portrait asks a different question: \"What does a fish know about the water in which he swims all his life?\"","comparison":"We don’t know who it was discovered water, but we’re pretty sure it wasn’t a fish.","citation":"Gossage, Howard. \"Understanding Marshall McLuhan.\" Ramparts 4, no. 12 (April 1966): 34, 37. Compare Einstein, Albert. \"Self-Portrait\" (essay dated 1936), in Out of My Later Years.","rights":"Quote sparingly and attribute. The passage reproduced above comes from Howard Gossage's article in Ramparts, April 1966 — well after the 1930 cut-off for the United States public domain — and remains in copyright, as does Einstein's 1936 essay Self-Portrait and its English publication in Out of My Later Years. The 1909 antecedent in Every-Day Japan is old enough to be public domain in the United States, but it is a different sentence and not the line on this page. This is not legal advice.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -864,6 +872,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

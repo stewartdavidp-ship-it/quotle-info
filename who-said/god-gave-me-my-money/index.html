@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"god-gave-me-my-money","url":"https://quotle.info/who-said/god-gave-me-my-money/","quote":"God gave me my money","claim":"John D. Rockefeller said: \"God gave me my money\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Rockefeller is very widely and credibly credited with the line, and his 1932 biographer John T. Flynn thought it central enough to name a book after it. But the printed page it came from has not been produced: reference works disagree on whether the Woman's Home Companion article that carried it ran in December 1905 or in 1915, and no digitised copy of that issue could be located to confirm the six words as Rockefeller spoke them.","credit":"attributed to John D. Rockefeller (1839–1937). Traced to a Woman's Home Companion profile (cited as December 1905, p. 14) and quoted in John T. Flynn's God's Gold (1932); no scan of the original page has been located, and the longer \"power to make money is a gift from God\" passage comes from a separate interview. Quotle.info","comparison":"","citation":"Reo Bennett, \"How the Richest Man in the World Observes Christmas,\" Woman's Home Companion, December 1905, 14 — as cited in Arthur C. Brooks, \"Why Giving Matters,\" BYU Speeches. Wikiquote instead cites Woman's Home Companion (1915), quoted in John T. Flynn, God's Gold: The Story of Rockefeller and His Times (New York: Harcourt, Brace, 1932). No digitised copy of the original article has been located.","rights":"Both candidate printings of the line are pre-1931 American periodical issues of Woman's Home Companion — December 1905 on Brooks's citation, 1915 on Wikiquote's — so the wording is in the public domain in the United States either way. John T. Flynn's God's Gold (1932), which quotes it, is a separate work and its own text is not covered by that finding.","checked":"6 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 6 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

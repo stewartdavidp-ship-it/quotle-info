@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-have-never-killed-any-one-but-i-have-read-some-obituary","url":"https://quotle.info/who-said/i-have-never-killed-any-one-but-i-have-read-some-obituary/","quote":"I Have Never Killed Any One, But I Have Read Some Obituary Notices with Great Satisfaction","claim":"Mark Twain said: \"I Have Never Killed Any One, But I Have Read Some Obituary Notices with Great Satisfaction\"","rating":1,"verdict":"Not supported","answer":"No. This is Darrow's wording, word for word, from his 1932 autobiography The Story of My Life. He had been sharpening the same joke for a decade — a looser version in a 1922 speech, another in 1926 congressional testimony against the death penalty — before it settled into the one-liner people now pin on Twain, who died in 1910.","credit":"Clarence Darrow, The Story of My Life (New York: Charles Scribner's Sons, 1932), ch. 10 \"Child Training\" — \"I have never killed any one, but I have read some obituary notices with great satisfaction.\" Widely misattributed to Mark Twain, who died in 1910. Verified via Quote Investigator, Wikiquote and Snopes. quotle.info","comparison":"","citation":"Clarence Darrow, The Story of My Life (New York: Charles Scribner's Sons, 1932), ch. 10, \"Child Training.\" Quote Investigator quotes the sentence from page 86 of the Da Capo Press reprint of the 1932 edition.","rights":"The sentence in this exact form was first published in The Story of My Life in 1932, which falls after the 1931 cutoff quotle.info uses for the US public domain — so we treat it as in-copyright and quote it only as the subject of this fact-check. Darrow's earlier and differently worded 1922 and 1926 versions appear in state and federal publications that are themselves free of restriction, but those are not this wording.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -871,6 +879,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

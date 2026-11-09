@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"price-is-what-you-pay-value-is-what-you-get","url":"https://quotle.info/who-said/price-is-what-you-pay-value-is-what-you-get/","quote":"Price is what you pay, value is what you get","claim":"Warren Buffett said: \"Price is what you pay, value is what you get\"","rating":5,"verdict":"Supported","answer":"Yes. The sentence is Buffett's own, in print. It appears — in quotation marks, in parentheses, with no attribution at all — in his 22 January 1969 letter to the limited partners of Buffett Partnership, Ltd., and again in his Berkshire Hathaway Chairman's Letters for 2008 and 2013, where he hands the credit to his teacher Benjamin Graham.","credit":"Price is what you pay, value is what you get. — Warren Buffett, letter to limited partners, Buffett Partnership, Ltd., 22 January 1969; used again in his 2008 and 2013 Berkshire Hathaway Chairman's Letters, where he credits the line to Benjamin Graham.","comparison":"","citation":"Warren E. Buffett, letter to limited partners, Buffett Partnership, Ltd., 22 January 1969, in the collected Buffett Partnership letters (PDF, Ivey Business School), p. 126; repeated in Berkshire Hathaway Inc., 2008 Chairman's Letter (dated 27 February 2009), p. 5, where Buffett credits Benjamin Graham, and in the 2013 Chairman's Letter (dated 28 February 2014).","rights":"Every documented source for this line is modern and protected: the partnership letter dates from 1969 and the Berkshire Chairman's Letters from 2009 and 2014, all far later than the 1931 US public-domain cutoff. Berkshire's own letters index states that all shareholder letters include copyrighted material reproduced with permission. Short quotation for identification and comment is ordinary practice; wholesale reproduction is not.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -882,6 +890,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

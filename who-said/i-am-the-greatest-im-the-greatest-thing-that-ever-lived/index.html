@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-am-the-greatest-im-the-greatest-thing-that-ever-lived","url":"https://quotle.info/who-said/i-am-the-greatest-im-the-greatest-thing-that-ever-lived/","quote":"I am the greatest! I'm the greatest thing that ever lived","claim":"Muhammad Ali said: \"I am the greatest! I'm the greatest thing that ever lived\"","rating":5,"verdict":"Supported","answer":"Yes. Shouted at ringside in Miami Beach on 25 February 1964, minutes after Cassius Clay took the world heavyweight title from Sonny Liston. Wikiquote's sourced section carries the full transcription word for word — citing Dave Kindred's Sound and Fury, p. 58, and surviving broadcast footage — so the popular wording is genuine, not a later polish. The catchphrase itself was already his trademark: Columbia had released his spoken-word LP I Am the Greatest! the previous August.","credit":"Muhammad Ali (then Cassius Clay), shouted at ringside in Miami Beach on 25 February 1964, moments after taking the world heavyweight title from Sonny Liston. Verified via quotle.info · Verbatim: “I am the greatest! I'm the greatest thing that ever lived. I don't have a mark on my face, and I upset Sonny Liston, and I just turned twenty-two years old. I must be the greatest.”","comparison":"I am the greatest! I'm the greatest thing that ever lived. I don't have a mark on my face, and I upset Sonny Liston, and I just turned twenty-two years old. I must be the greatest.","citation":"Cassius Clay (Muhammad Ali), ringside remarks after defeating Sonny Liston, Miami Beach, Florida, February 25, 1964; transcribed in Dave Kindred, Sound and Fury: Two Powerful Lives, One Fateful Friendship (2007), 58, as cited in the sourced section of Wikiquote, \"Muhammad Ali.\"","rights":"Nothing here is public domain. The words were spoken in 1964 and the catchphrase was fixed on a 1963 Columbia LP — both far later than the 1931 US public-domain cutoff — and the broadcast footage in which the outburst survives is a separately protected recording. A shout this short may fall below the threshold of copyrightability on its own, but quote it as living material, with attribution, not as a free text.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

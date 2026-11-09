@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"fear-is-the-true-enemy-the-only-enemy","url":"https://quotle.info/who-said/fear-is-the-true-enemy-the-only-enemy/","quote":"Fear is the true enemy, the only enemy","claim":"Sun Tzu said: \"Fear is the true enemy, the only enemy\"","rating":1,"verdict":"Not supported","answer":"No. The line was written for Commander William Riker in \"The Last Outpost,\" the Star Trek: The Next Generation episode that first aired 19 October 1987, from a teleplay credited to Herbert Wright. It appears in no translation of The Art of War, and no known source for the wording predates the broadcast — though, as with any television teleplay, the credited writer may not be the only hand on a given line.","credit":"Cmdr. William Riker in Star Trek: The Next Generation, \"The Last Outpost\" (1987); teleplay by Herbert Wright. Not Sun Tzu — the line appears in no translation of The Art of War, and no source for it predates the 1987 broadcast.","comparison":"","citation":"Herbert Wright (teleplay) and Richard Krzemien (story), \"The Last Outpost,\" Star Trek: The Next Generation, season 1, episode 5, directed by Richard Colla, first aired 19 October 1987 (Paramount Domestic Television). Shooting script dated 8/7/87. Earliest documented appearance of the wording; the line is absent from Sun Tzu, The Art of War, trans. Lionel Giles (1910).","rights":"This wording is not an ancient text and is not public domain. It originates in a television teleplay first broadcast in 1987 — far later than the 1931 US public-domain cutoff — so it remains in copyright, held by the Star Trek: The Next Generation rights holder. Note the trap: Sun Tzu's actual text is millennia old and Giles's 1910 translation is public domain, so people assume anything wearing Sun Tzu's name is free to use. Because this line is not his, that inference fails — the Sun Tzu label launders a 1987 in-copyright line into an apparently ancient one.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -876,6 +884,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

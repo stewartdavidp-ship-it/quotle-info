@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"you-may-not-realize-it-when-it-happens-but-a-kick-in-the","url":"https://quotle.info/who-said/you-may-not-realize-it-when-it-happens-but-a-kick-in-the/","quote":"You may not realize it when it happens, but a kick in the teeth may be the best thing in the world for you","claim":"Walt Disney said: \"You may not realize it when it happens, but a kick in the teeth may be the best thing in the world for you\"","rating":5,"verdict":"Supported","answer":"Yes. This one is real. The exact wording sits at page 89 of The Story of Walt Disney (Henry Holt and Company, New York, 1957) — the memoir Disney's daughter Diane Disney Miller told to Saturday Evening Post writer Pete Martin, who wrote it up — where it is set inside quotation marks as Disney's own words. A close variant reading \"a kick in the pants\" had already run in the Post on 1 December 1956, and Quote Investigator suspects Disney approved both formulations for publication.","credit":"Walt Disney, quoted in Diane Disney Miller (as told to Pete Martin), The Story of Walt Disney (New York: Henry Holt and Company, 1957), 89. A variant reading \"a kick in the pants\" appeared earlier in the Saturday Evening Post, 1 December 1956. Verified via Quotle.info. · Verbatim: “I function better when things are going badly than when they're as smooth as whipped cream. When I'm in a fight I don't worry, but when things are going good I'm afraid that something's going to crack under me any minute. You may not realize it when it happens, but a kick in the teeth may be the best thing in the world for you.”","comparison":"I function better when things are going badly than when they're as smooth as whipped cream. When I'm in a fight I don't worry, but when things are going good I'm afraid that something's going to crack under me any minute. You may not realize it when it happens, but a kick in the teeth may be the best thing in the world for you.","citation":"Miller, Diane Disney, as told to Pete Martin. The Story of Walt Disney. New York: Henry Holt and Company, 1957, 89. Earlier variant wording (\"a kick in the pants\") in Diane Disney Miller and Pete Martin, \"The Coming of the Mouse,\" Saturday Evening Post, 1 December 1956, 67.","rights":"The Story of Walt Disney was first published in 1957 — a US work from the 1929–1963 window, which remains in copyright if the registration was renewed in its 28th year. We have not found a renewal record either way, so treat the book as protected, and Disney's remark as protected within that text rather than as a separately free-standing utterance. The earlier Saturday Evening Post printing of December 1956 falls in the same window and should likewise not be assumed free; quote it as an excerpt with attribution, not as public-domain material.","checked":"6 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 6 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

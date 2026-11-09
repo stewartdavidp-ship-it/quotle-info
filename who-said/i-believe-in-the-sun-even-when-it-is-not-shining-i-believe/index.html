@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -513,6 +515,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -559,6 +564,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -615,7 +621,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-believe-in-the-sun-even-when-it-is-not-shining-i-believe","url":"https://quotle.info/who-said/i-believe-in-the-sun-even-when-it-is-not-shining-i-believe/","quote":"I believe in the sun even when it is not shining. I believe in love even when feeling it not. I believe in God even when He is silent","claim":"Anne Frank said: \"I believe in the sun even when it is not shining. I believe in love even when feeling it not. I believe in God even when He is silent\"","rating":1,"verdict":"Not supported","answer":"No. These three lines were found written on the wall of a cellar in Cologne and were circulating in print by the late 1950s, with no connection to Anne Frank in any source we could find. The Key West Citizen of 2 January 1959 prints all three sentences and says plainly where they came from; by 1963 the Phoenix Jewish News was printing them again with a different account of who did the writing.","credit":"Anonymous inscription found on a cellar wall in Cologne; earliest printing located: The Key West Citizen, 2 January 1959. Not Anne Frank. Source: Quotle.info","comparison":"","citation":"Anonymous inscription, cellar wall, Cologne; quoted in The Key West Citizen (Key West, FL), January 2, 1959, image 5, and in The Phoenix Jewish News (Phoenix, AZ), May 3, 1963, image 8.","rights":"No rights badge, deliberately. The inscription is anonymous, its date of composition is unknown, and the person who wrote it on that wall was never identified — so there is no work, no author and no publication date to reason from. The 1959 and 1963 newspaper pages we quote are held in the Library of Congress's Chronicling America collection.","checked":"12 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 12 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -845,6 +853,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

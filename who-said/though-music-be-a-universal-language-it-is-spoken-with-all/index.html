@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"though-music-be-a-universal-language-it-is-spoken-with-all","url":"https://quotle.info/who-said/though-music-be-a-universal-language-it-is-spoken-with-all/","quote":"Though music be a universal language, it is spoken with all sorts of accents","claim":"George Bernard Shaw said: \"Music may be a universal language, but it's spoken with all sorts of peculiar accents.\"","rating":2,"verdict":"Needs context","answer":"Shaw wrote the sentence in his weekly music column dated 10 December 1890, reviewing a Manchester band on tour in London and comparing its drummer with the London players. It stands at pages 91–92 of Music in London 1890-94, Volume I — confirmed in the scanned volume, whose own front note says the criticisms were \"contributed week by week to The World during the years 1890-94.\" The version that circulates — \"Music may be a universal language, but it's spoken with all sorts of peculiar accents\" — is a loose paraphrase of that sentence. Thoreau wrote a different sentence about music, universal language and accents; he did not write this one.","credit":"George Bernard Shaw, music column dated 10 December 1890 (Music in London 1890-94, vol. 1, pp. 91-92). Via Quotle.info","comparison":"","citation":"Bernard Shaw, Music in London 1890-94, vol. 1 (London: Constable and Company, 1932), 91–92; music column dated 10 December 1890, originally contributed to The World.","rights":"The sentence first appeared in Shaw's weekly music column in The World for 10 December 1890 — publication long before 1931, so the review is in the public domain in the United States. The text quoted here follows the collected Music in London 1890-94 (Constable, 1932), whose title page notes it was \"Revised and reprinted for this Standard Edition 1932\"; that edition's apparatus and any 1932 revisions sit with Shaw's estate and publisher, but the 1890 sentence itself is free.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -865,6 +873,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

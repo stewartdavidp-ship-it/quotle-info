@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"people-are-taking-their-comedians-seriously-and-their","url":"https://quotle.info/who-said/people-are-taking-their-comedians-seriously-and-their/","quote":"People are taking their comedians seriously and their politicians as a joke","claim":"Will Rogers said: \"People are taking their comedians seriously and their politicians as a joke\"","rating":5,"verdict":"Supported","answer":"Yes. Rogers wired it as one of his daily squibs for the McNaught Syndicate, datelined Los Angeles, 22 November 1932; it ran on page one of papers dated 23 November 1932 under the standing head \"Will Rogers Says.\" The popular wording is verbatim on the scanned front page of The Washington Times — what has gone missing since is the opening words \"in America\" and the closing punchline, \"It used to be vice versa.\"","credit":"Will Rogers, daily syndicated column (McNaught Syndicate), filed from Los Angeles 22 November 1932 (dateline per the Imperial Valley Press printing); printed in The Washington Times, 23 November 1932, page 1. · Verbatim: “Everything is changing in America. People are taking their comedians seriously and their politicians as a joke. It used to be vice versa.”","comparison":"Everything is changing in America. People are taking their comedians seriously and their politicians as a joke. It used to be vice versa.","citation":"Will Rogers, \"Will Rogers Says,\" daily syndicated column, McNaught Syndicate, filed 22 November 1932 (dateline \"Los Angeles, Nov. 22\" per the Imperial Valley Press, El Centro, Calif., November 23, 1932, p. 1); printed in The Washington Times (Washington, DC), November 23, 1932, p. 1. Origin traced in \"Quote Origin: People Are Taking Their Comedians Seriously, and Their Politicians as a Joke,\" Quote Investigator, April 30, 2019.","rights":"The line was first published in November 1932 under the notice \"Copyright, 1932, by McNaught Syndicate,\" legible at the foot of the scanned Washington Times column. That is past the cut-off for automatic US public domain, and we have not confirmed whether the syndicate's 1932 copyright was renewed, so quotle.info treats the column as in copyright and quotes only the short passage above. Rogers's columns are published today by the Will Rogers Memorial Museum.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -874,6 +882,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

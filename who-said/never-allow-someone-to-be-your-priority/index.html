@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"never-allow-someone-to-be-your-priority","url":"https://quotle.info/who-said/never-allow-someone-to-be-your-priority/","quote":"Never allow someone to be your priority while allowing yourself to be their option","claim":"Mark Twain said: \"Never allow someone to be your priority while allowing yourself to be their option\"","rating":1,"verdict":"Not supported","answer":"No. There is no Twain source — nothing in his books, sketches, speeches, letters or notebooks. The earliest name attached to this exact wording belongs to Nina Potts-Jefferies, quoted on page 213 of Sherry Argov's 2002 relationship book Why Men Love Bitches. Treat that as the earliest located credit rather than proof of coinage: a saying that turns up in an unattributed newspaper filler in 2005 and as 'Author Unknown' in 2007 was clearly already loose in the world. The Twain credit begins on Twitter in 2008. And note the twin: the same idea, reworded as 'Never make someone a priority when all you are to them is an option,' is credited just as confidently to Maya Angelou — also with no source.","credit":"Credited to Nina Potts-Jefferies, quoted in Sherry Argov, Why Men Love Bitches (2002), p. 213. Not Mark Twain.","comparison":"","citation":"Credited to Nina Potts-Jefferies in Sherry Argov, Why Men Love Bitches (2002), p. 213 — the earliest located print instance. Anonymous instances follow in 2005 and 2007; the Mark Twain credit begins in 2008. No Twain source exists.","rights":"We cannot state a rights status and have left the field empty rather than guess. Two live questions sit underneath it: whether a one-sentence aphorism is protectable at all, and whether this one belongs to the person credited in 2002 or to the anonymous circulation it plainly came out of. What is clear is the trap. The Twain name implies public domain — he died in 1910 — so the line goes onto prints, journals, phone cases and captions on the assumption that it is free. If the text is really a 2002 or earlier modern composition, that assumption has no basis, and pinning a dead author's name on it does not create one. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

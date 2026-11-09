@@ -68,7 +68,7 @@ const hubs = ['/', '/who-said/', '/authors/', '/themes/', '/who-recorded/'];
 // Editorial and tool pages are hand-written and do NOT change with the corpus. Their true mtime is
 // not derivable here (the corpus knows nothing about them), and lastmod is optional per the sitemap
 // spec — so omit it rather than assert a date we know to be wrong.
-const staticPages = ['/how-we-verify/', '/vs-ai/', '/about/', '/contact/', '/privacy/', '/terms/', '/check/', '/report/'];
+const staticPages = ['/how-we-verify/', '/vs-ai/', '/about/', '/contact/', '/privacy/', '/terms/', '/check/', '/report/', '/challenge/'];
 
 const urls = [
   ...hubs.map((p) => ({ loc: `${ORIGIN}${p}`, lastmod: latest })),

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-ladder-of-success-is-never-crowded-at-the-top","url":"https://quotle.info/who-said/the-ladder-of-success-is-never-crowded-at-the-top/","quote":"The ladder of success is never crowded at the top","claim":"Napoleon Hill said: \"The ladder of success is never crowded at the top\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Hill's name is genuinely on the sentence: it is printed on p. 247 of Succeed and Grow Rich Through Persuasion (Fawcett Crest, 1970), the book he shares with co-author E. Harold Keown. But the same line was already circulating unsigned — word for word in a 1963 dental journal and a 1968 student paper, in garbled form in a 1965 classified ad — so the earliest documented printings carry no author, and nothing ties the wording to anything Hill published earlier. Barry Popik, who compiled that record, adds that Hill may well have used the saying before then in lectures or articles.","credit":"attributed to Napoleon Hill. Printed in Napoleon Hill and E. Harold Keown, Succeed and Grow Rich Through Persuasion (Fawcett Crest, 1970), p. 247; but the line was already in print, unattributed, in 1963. It is not in Think and Grow Rich.","comparison":"","citation":"Napoleon Hill and E. Harold Keown, Succeed and Grow Rich Through Persuasion (New York: Fawcett Crest, 1970), 247. Earliest documented printing, unattributed: West Virginia Dental Journal 36–37 (1963): 35, per Barry Popik.","rights":"Nothing here is safely public domain. The earliest documented printing, in 1963, carries no author, so no rights holder can be identified for the wording itself — and the earliest printing under Hill's name, Succeed and Grow Rich Through Persuasion (1970), is a modern in-copyright book. Treat the sentence as a short maxim of unknown ownership, not as free-and-clear text; only the nineteenth-century ancestor proverb, 'there's always room at the top', is genuinely out of copyright, and that is different wording.","checked":"18 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 18 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -860,6 +868,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

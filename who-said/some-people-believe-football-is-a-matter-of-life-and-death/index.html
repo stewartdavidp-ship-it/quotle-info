@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"some-people-believe-football-is-a-matter-of-life-and-death","url":"https://quotle.info/who-said/some-people-believe-football-is-a-matter-of-life-and-death/","quote":"Some people believe football is a matter of life and death. I can assure you it is much, much more important than that","claim":"Bill Shankly said: \"Some people believe football is a matter of life and death. I can assure you it is much, much more important than that\"","rating":2,"verdict":"Needs context","answer":"Yes and no. Shankly really did make the joke, but not in this sentence. On Granada Television on 20 May 1981 he told it as an anecdote — \"Somebody said that football's a matter of life and death to you. I said, 'Listen, it's more important than that'\" — and Oxford Essential Quotations cites an earlier printed version reading \"much more serious than that\" in the Guardian of 24 December 1973. The popular wording, with \"Some people believe\" and \"much, much more important,\" matches neither; and the gag itself was already in American newspapers credited to UCLA coach Red Sanders.","credit":"Bill Shankly said it differently: \"Somebody said that football's a matter of life and death to you. I said, 'Listen, it's more important than that.'\" — Granada Television interview with Shelley Rohde, 20 May 1981. An earlier printed version, \"much more serious than that,\" is cited to the Guardian of 24 December 1973 in Oxford Essential Quotations. The popular \"Some people believe… much, much more important than that\" wording matches neither, and the joke was already in American papers credited to UCLA coach Red Sanders. Via Quotle.info","comparison":"Somebody said that football's a matter of life and death to you. I said, \"Listen, it's more important than that.\"","citation":"Bill Shankly, interviewed by Shelley Rohde, Granada Television, 20 May 1981. An earlier printed version — \"Some people think football is a matter of life and death…I can assure them it is much more serious than that\" — is cited to the Guardian, 24 December 1973, in Susan Ratcliffe, ed., Oxford Essential Quotations, 5th ed. (Oxford: Oxford University Press, 2017).","rights":"Both documented sources are modern and firmly in copyright: a 1981 Granada Television broadcast and a Guardian report of 24 December 1973. The popular wording quoted at the top of this page has no identified source at all, so no public-domain status can be claimed for it either — treat the excerpt as a short quotation from copyrighted material.","checked":"18 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 18 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -874,6 +882,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

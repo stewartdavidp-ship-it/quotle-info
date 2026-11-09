@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"patience-is-the-art-of-hoping","url":"https://quotle.info/who-said/patience-is-the-art-of-hoping/","quote":"Patience is the art of hoping","claim":"Luc de Clapiers, Marquis de Vauvenargues said: \"Patience is the art of hoping\"","rating":5,"verdict":"Supported","answer":"Yes. He wrote it in French — \"La patience est l'art d'espérer\" — as one of the numbered maxims appended to Introduction à la connoissance de l'esprit humain, the single volume he published anonymously in 1746, the year before he died. The familiar four-word English sentence is a translator's rendering, and it matches Elizabeth Lee's 1903 translation, page 180 word for word.","credit":"Patience is the art of hoping. — Luc de Clapiers, Marquis de Vauvenargues, Réflexions et maximes (1746), maxim 251; English translation by Elizabeth Lee, 1903. Verified at quotle.info","comparison":"","citation":"Luc de Clapiers, Marquis de Vauvenargues, Introduction à la connoissance de l'esprit humain, suivie de Réflexions et de Maximes (Paris: Antoine-Claude Briasson, 1746), Réflexions, book III, no. CV — numbered 251 in later collected editions. English: La Bruyère and Vauvenargues: Selections from the Characters, Reflexions and Maxims, trans. Elizabeth Lee (Westminster: Archibald Constable & Co., 1903), 180.","rights":"Both halves of this quotation are out of copyright in the United States. The French original was first published in 1746, and the English wording matches Elizabeth Lee's translation of 1903 — with the identical sentence already in print in an American anthology of 1880. F. G. Stevens's 1940 translation happens to render it the same way, but nothing here depends on that later edition.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -869,6 +877,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

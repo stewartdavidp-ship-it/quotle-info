@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -515,6 +517,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -561,6 +566,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -617,7 +623,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-you-fail-to-prepare-you-are-preparing-to-fail","url":"https://quotle.info/who-said/if-you-fail-to-prepare-you-are-preparing-to-fail/","quote":"If you fail to prepare, you are preparing to fail","claim":"John Wooden said: \"If you fail to prepare, you are preparing to fail\"","rating":1,"verdict":"Not supported","answer":"No. The wording is genuine and very old — it simply isn't Wooden's. The exact sentence closes a short item of advice reprinted in The Biblical World, January 1919: \"Remember, if you fail to prepare, you are preparing to fail,\" credited there to Rev. H. K. Williams. Quote Investigator calls this the first match it has found, treats the saying as proverbial wisdom of anonymous origin, and expects earlier instances to turn up — so Williams is best described as the earliest documented voice, not the coiner.","credit":"Rev. H. K. Williams, quoted in \"The Group Plan,\" The Biblical World 53, no. 1 (January 1919): 81. Commonly credited to John Wooden or Benjamin Franklin; Wikiquote lists it as misattributed to both, and Quote Investigator traces the earliest known printing to Williams in 1919 while treating the saying itself as an anonymous proverb. · Verbatim: “Remember, if you fail to prepare, you are preparing to fail.”","comparison":"Remember, if you fail to prepare, you are preparing to fail.","citation":"H. K. Williams, quoted in \"The Group Plan,\" under \"The Church and the World,\" The Biblical World 53, no. 1 (January 1919): 80–81. Earliest instance located by Quote Investigator, \"Quote Origin: If You Fail To Prepare You Are Preparing To Fail\" (8 July 2018; updated 10 April 2025), which classes the saying as proverbial wisdom of anonymous origin.","rights":"The work containing the earliest documented instance — The Biblical World, Vol. 53, No. 1, published by the University of Chicago Press in January 1919 — was first published well before 1931, so the issue and this passage are in the public domain in the United States. The 1919 date is confirmed on the scanned issue itself, not inferred.","checked":"27 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -859,6 +867,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

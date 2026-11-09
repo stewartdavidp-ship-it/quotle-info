@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"no-great-thing-is-created-suddenly-any-more-than-a-bunch-of","url":"https://quotle.info/who-said/no-great-thing-is-created-suddenly-any-more-than-a-bunch-of/","quote":"No great thing is created suddenly, any more than a bunch of grapes or a fig. If you tell me that you desire a fig, I answer you that there must be time. Let it first blossom, then bear fruit, then ripen","claim":"Epictetus said: \"No great thing is created suddenly, any more than a bunch of grapes or a fig. If you tell me that you desire a fig, I answer you that there must be time. Let it first blossom, then bear fruit, then ripen\"","rating":5,"verdict":"Supported","answer":"Yes. Genuine. The passage stands at Discourses I.15.7, in the chapter \"What Philosophy Promises,\" taken down by his pupil Arrian. This exact English, however, is a translator's: it first appears in Thomas Wentworth Higginson's revision of Elizabeth Carter's translation, first published Boston: Little, Brown, 1865 — the scan linked here is the 1866 printing, same text, p. 48.","credit":"Epictetus, Discourses I.15.7, in the translation of Thomas Wentworth Higginson, revised edition (New York: Thomas Nelson and Sons, 1890), pp. 55–56. Punctuation as usually quoted; both printings read \"I answer you, that there must be time.\"","comparison":"","citation":"Epictetus, The Works of Epictetus: Consisting of His Discourses, in Four Books, the Enchiridion, and Fragments, a translation from the Greek based on that of Elizabeth Carter, by Thomas Wentworth Higginson (Boston: Little, Brown, 1866), Book I, ch. 15, \"What Philosophy Promises,\" 48; first published 1865. Greek text at Discourses I.15.7. The sentence as usually quoted follows the punctuation of the revised edition (New York: Thomas Nelson and Sons, 1890), 55–56, except that both printings read \"I answer you, that there must be time.\"","rights":"The Greek text is ancient and long out of copyright. The English wording quoted here was published in Boston by Little, Brown in 1866 — far earlier than the 1931 US copyright cut-off — so this translation is in the public domain as well.","checked":"6 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 6 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -869,6 +877,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

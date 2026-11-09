@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"what-is-written-without-effort-is-in-general-read-without","url":"https://quotle.info/who-said/what-is-written-without-effort-is-in-general-read-without/","quote":"What Is Written Without Effort Is In General Read Without Pleasure","claim":"Samuel Johnson said: \"What Is Written Without Effort Is In General Read Without Pleasure\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. No work by Johnson — and no page of Boswell — is known to contain this sentence. The entire credit rests on a single unsourced footnote in William Seward's Biographiana (1799), printed fifteen years after Johnson died, reading only the sentence itself followed by a dash and \"Dr. Johnson.\" Seward knew Johnson personally, so the report is not idle; but he gives no occasion, no date and no witness, and a near-identical phrasing had already appeared anonymously in The Scots Magazine in December 1764.","credit":"attributed to Samuel Johnson (1709–1784). No work by Johnson or Boswell is known to contain it. The earliest source crediting him is an unsourced footnote in William Seward's Biographiana (1799), page 260, fifteen years after Johnson's death; Hill's Johnsonian Miscellanies (1897), 2:309, simply reprints that footnote. A near-identical phrasing appeared anonymously in \"Memoirs of Mr Charles Churchill,\" The Scots Magazine, December 1764. Via Quotle.info","comparison":"","citation":"Earliest documented in William Seward, Biographiana (1799), 260 — a footnote credited only to \"Dr. Johnson,\" fifteen years after Johnson's death. Reprinted in George Birkbeck Hill, ed., Johnsonian Miscellanies (1897), 2:309, which cites Seward's page 260 as its sole authority. A closely similar phrasing appeared anonymously in \"Memoirs of Mr Charles Churchill,\" The Scots Magazine 26 (December 1764). No work by Johnson or Boswell is known to contain the sentence.","rights":"Public domain in the United States. The sentence's earliest printing is William Seward's Biographiana (1799), and the standard scholarly reprint is George Birkbeck Hill's Johnsonian Miscellanies (1897) — both published well before 1931, as was everything Samuel Johnson (d. 1784) wrote. The text is English throughout; no translation is involved.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -876,6 +884,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

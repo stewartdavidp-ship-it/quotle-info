@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-bird-doesnt-sing-because-it-has-an-answer-it-sings","url":"https://quotle.info/who-said/a-bird-doesnt-sing-because-it-has-an-answer-it-sings/","quote":"A bird doesn't sing because it has an answer, it sings because it has a song","claim":"Maya Angelou said: \"A bird doesn't sing because it has an answer, it sings because it has a song\"","rating":1,"verdict":"Not supported","answer":"No. The line comes from Anglund's 1967 poetry collection A Cup of Sun (p. 15), where it reads \"A bird does not sing because he has an answer. He sings because he has a song.\" The familiar \"it\" version was pinned on Maya Angelou around 2001 and printed on a 2015 U.S. postage stamp; Angelou never claimed authorship, and Anglund confirmed the words were hers. Per Quote Investigator.","credit":"Actually Joan Walsh Anglund, not Maya Angelou. Original: \"A bird does not sing because he has an answer. He sings because he has a song.\" — A Cup of Sun (1967), p. 15.","comparison":"A bird does not sing because he has an answer. He sings because he has a song.","citation":"Joan Walsh Anglund, A Cup of Sun: A Book of Poems (New York: Harcourt, Brace & World, 1967), 15. Attribution history documented at Quote Investigator, \"A Bird Doesn't Sing Because It Has an Answer, It Sings Because It Has a Song,\" Dec. 3, 2015.","rights":"The line first appeared in Joan Walsh Anglund's A Cup of Sun (Harcourt, Brace & World, 1967). As a work first published in 1967 by an identifiable author and publisher, it is in copyright in the United States; rights rest with Anglund's estate and her publisher.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -842,6 +850,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

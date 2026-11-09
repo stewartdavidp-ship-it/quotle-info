@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"everybody-talks-about-the-weather-but-nobody-does-anything","url":"https://quotle.info/who-said/everybody-talks-about-the-weather-but-nobody-does-anything/","quote":"Everybody Talks About the Weather, But Nobody Does Anything About It","claim":"Mark Twain said: \"Everybody Talks About the Weather, But Nobody Does Anything About It\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator concludes that \"the preponderance of the evidence indicates that Charles Dudley Warner crafted the weather maxim,\" with versions credited to him in print from 1884 onward and the Twain credit appearing only from 1905. Twain's own name is attached to no primary text: Respectfully Quoted records that the saying \"has never been verified in his writings.\"","credit":"attributed to Charles Dudley Warner (1829–1900), not Mark Twain. Versions credited to Warner appear in print from 1884; the Hartford Courant credited him unequivocally in 1912. Via Quotle.info.","comparison":"","citation":"Annie Fields, Charles Dudley Warner (New York: McClure, Phillips & Co., 1904), 206, quoting William Dean Howells's \"Editor's Easy Chair\" tribute in Harper's Magazine: \"Everybody is talking about the weather, why doesn't somebody do something?\" Earliest documented version located by Quote Investigator: Proceedings of the Chamber of Commerce of the State of New York, 18 November 1884, 58.","rights":"Every documented printing of this saying — the 1884 Chamber of Commerce proceedings, the 1889 Book Buyer, the 1897 and 1912 Hartford Courant, Howells's tribute as reprinted in Annie Fields's 1904 memoir — is an American work published long before 1931, so all of it is in the public domain in the United States. Warner himself died in 1900. The polished modern wording is a proverbial refinement with no identifiable later claimant.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -876,6 +884,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-difficult-we-do-immediately-the-impossible-takes-a","url":"https://quotle.info/who-said/the-difficult-we-do-immediately-the-impossible-takes-a/","quote":"The Difficult We Do Immediately. The Impossible Takes a Little Longer","claim":"Charles Alexandre de Calonne said: \"The Difficult We Do Immediately. The Impossible Takes a Little Longer\"","rating":2,"verdict":"Needs context","answer":"Yes and no. Calonne is where the trail starts, but not where this sentence comes from. The earliest record, printed in 1794, has him telling Marie Antoinette: \"If it is possible, madam, the affair is done; if it is impossible, it shall be done!\" The version in circulation today — difficult/immediately, impossible/a little longer — is an American military slogan documented in 1942, after a century and a half of the saying being reworded and re-credited to a long line of other people.","credit":"The slogan “The difficult we do immediately; the impossible takes a little longer” is documented in 1942 as a training slogan of the U.S. Army Ordnance Department. Its oldest known ancestor is a remark ascribed to Louis XVI's finance minister Charles Alexandre de Calonne in 1794: “If it is possible, madam, the affair is done; if it is impossible, it shall be done!”","comparison":"If it is possible, Madam, the affair is done; if it is impossible, it shall be done!","citation":"[Disraeli, Isaac]. Domestic Anecdotes of the French Nation, During the Last Thirty Years: Indicative of the French Revolution. London: Printed for C. and G. Kearsley, 1794. Chapter: The Queen.","rights":"The excerpt shown is from a book published in London in 1794, long out of copyright and in the public domain in the United States. The familiar modern wording is a separate matter: it is first documented as an unsigned 1942 U.S. Army training slogan, and no author of it has been established.","checked":"7 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -884,6 +892,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

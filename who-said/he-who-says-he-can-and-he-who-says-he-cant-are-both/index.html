@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"he-who-says-he-can-and-he-who-says-he-cant-are-both","url":"https://quotle.info/who-said/he-who-says-he-can-and-he-who-says-he-cant-are-both/","quote":"He who says he can and he who says he can't are both usually right","claim":"Confucius said: \"He who says he can and he who says he can't are both usually right\"","rating":1,"verdict":"Not supported","answer":"No. There is no Analects source and, decisively, no Chinese text — the Analects is 20 books and about 500 numbered passages, all searchable in the original, and nothing of this sense appears in any of them. It restates the sentiment usually credited to Henry Ford — though no source records how the Confucius credit arose — the line popularly put in his mouth being 'Whether you think you can, or think you can't — you're right.' And that one has a twist too. It is an old proverb Ford probably never said: Joseph Trapp put it into English in 1718, translating Virgil — 'They can, because they think they can.'","credit":"An anonymous proverb, in English since 1718 and usually credited to Henry Ford. Not Confucius, and not in the Analects.","comparison":"","citation":"Not in the Analects in Chinese or in translation. Modern form of an English proverb: 'They can, because they think they can' (Joseph Trapp, translating Virgil, 1718); the 'you're right' wording by 1940; credited to Henry Ford in Reader's Digest, September 1947, after his death.","rights":"Two different texts are on this page, with two different rights pictures. The Analects excerpt shown above — the Chinese original and James Legge's English translation (1861–1893) — is long out of copyright and free to quote; that is the only genuine source text here, and it is not the headline sentence. The headline sentence is a separate matter: its wording has no traceable author or date, so we cannot establish a public-domain — or any other — rights status for it. In practice a short proverbial sentence like this is unlikely to be something anyone licenses or enforces, but that is an observation, not a clearance. The real problem with reproducing it is factual rather than legal: do not reproduce it with Confucius's name attached. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -872,6 +880,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

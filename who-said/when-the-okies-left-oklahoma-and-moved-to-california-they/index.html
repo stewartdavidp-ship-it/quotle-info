@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -510,6 +512,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -556,6 +561,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -612,7 +618,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"when-the-okies-left-oklahoma-and-moved-to-california-they","url":"https://quotle.info/who-said/when-the-okies-left-oklahoma-and-moved-to-california-they/","quote":"When the Okies left Oklahoma and moved to California, they raised the average intelligence level in both states","claim":"Will Rogers said: \"When the Okies left Oklahoma and moved to California, they raised the average intelligence level in both states\"","rating":1,"verdict":"Not supported","answer":"No. Will Rogers died in 1935, and Quote Investigator could find no match for this quip anywhere in his writings. The joke first appears in print in April 1939 — after Rogers was already dead, and told about two Mississippi counties rather than Okies. It attaches to the Okie migration by January 1955, and Rogers's name is first attached to it in February 1970, when Oklahoma Governor Dewey F. Bartlett told a Long Beach audience \"I like what Will Rogers once said.\" QI's verdict is that Rogers probably did not employ this joke.","credit":"attributed to Will Rogers, but not his. Rogers died in August 1935; the joke is documented in print from April 1939 (told about two Mississippi counties), reached the Okie migration by January 1955, and was first credited to Rogers in February 1970. Source: Quote Investigator, \"Quote Origin: When the Okies Migrated To California, It Raised the I.Q. in Both States,\" 16 October 2021.","comparison":"","citation":"No source located in Will Rogers's columns, telegrams, films or broadcasts. Earliest documented instance of the joke: Herbert L. Carver, \"The Jackson Go-Round,\" McComb Daily Journal (McComb, MS), April 6, 1939, 5. Earliest Okie-specific instance: Leland Gourley, \"Seeds From the Grass Roots,\" The Seminole Producer (Seminole, OK), January 5, 1955, 6. Earliest attribution to Rogers: Robert E. Wood, \"'Okie-Type Companies' Cutting Job Erosion,\" Los Angeles Times, February 6, 1970, sec. 3, p. 10. See Quote Investigator, \"Quote Origin: When the Okies Migrated To California, It Raised the I.Q. in Both States,\" October 16, 2021.","rights":"No rights status can honestly be asserted here. The sentence in circulation matches none of the dated instances on record, so there is no identifiable author, work or first-publication date against which copyright could be assessed — and the earliest documented ancestor, a 1939 newspaper column, is neither this wording nor Will Rogers's. Treat the line as an anonymous saying of unestablished origin rather than as public-domain Rogers material.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -854,6 +862,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

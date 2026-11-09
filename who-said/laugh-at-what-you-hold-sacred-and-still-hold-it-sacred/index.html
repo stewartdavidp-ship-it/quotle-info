@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"laugh-at-what-you-hold-sacred-and-still-hold-it-sacred","url":"https://quotle.info/who-said/laugh-at-what-you-hold-sacred-and-still-hold-it-sacred/","quote":"Laugh at what you hold sacred, and still hold it sacred","claim":"Abraham Maslow said: \"Laugh at what you hold sacred, and still hold it sacred\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Widely credited to Maslow, and squarely in keeping with his writing on self-actualizing people — his own list of their traits includes a \"philosophical, unhostile sense of humor.\" But no book, paper, lecture or journal entry of his has been shown to contain this sentence. Wikiquote files it under Attributed, and the only citation anyone offers is a 1998 stress-and-humour book published twenty-eight years after Maslow's death.","credit":"attributed to Abraham Maslow (1908–1970). No source in Maslow's own writings has been identified; Wikiquote lists it under \"Attributed,\" citing Loretta LaRoche, Relax — You May Only Have a Few Minutes Left (Villard, 1998), p. xvii. Checked via Quotle.info.","comparison":"","citation":"Attributed to Abraham Maslow; no source in his own writings has been identified. Wikiquote lists the line in its \"Attributed\" section, citing Loretta LaRoche, Relax — You May Only Have a Few Minutes Left: Using the Power of Humor to Overcome Stress in Your Life and Work (New York: Villard, 1998), p. xvii.","rights":"Rights cannot be settled because the origin cannot be. No work by Maslow has been identified as containing this sentence, so there is no publication date to reason from — and nothing here should be treated as public domain. If the wording in fact originates with the 1998 LaRoche book rather than with Maslow, it would be in copyright to that author and publisher. Treat the line as of undetermined status and quote it with attribution and a hedge.","checked":"24 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 24 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -848,6 +856,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

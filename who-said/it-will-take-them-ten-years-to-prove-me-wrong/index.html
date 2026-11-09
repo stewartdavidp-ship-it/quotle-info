@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-will-take-them-ten-years-to-prove-me-wrong","url":"https://quotle.info/who-said/it-will-take-them-ten-years-to-prove-me-wrong/","quote":"It Will Take Them Ten Years to Prove Me Wrong","claim":"Winston Churchill said: \"It Will Take Them Ten Years to Prove Me Wrong\"","rating":2,"verdict":"Needs context","answer":"Not confirmed. No source has ever been produced for this. The story — Churchill as Chancellor of the Exchequer, told an estimate would take ten years, promising the Prime Minister an answer that afternoon — first appears with this punchline in 1991, in an operations-research journal, and its author says plainly that he heard it at a conference and \"never learned whether there was a written source\". The oldest relative Quote Investigator could find is a March 1945 Coronet magazine item in which Churchill is Prime Minister, the setting is the Second World War, the invented figure is precise to the sixpence, and the punchline is different: it will take the opposition \"at least three months and a score of clerks to prove me wrong\". The same writer who published the 1991 version later reported that the Churchill Archive and two Churchill scholars had told him the answer seemed to be \"apocryphal\". QI, unusually, declines to rule either way: the evidence, it says, is inadequate for a verdict.","credit":"Not verified as Winston Churchill. No documented source exists. The oldest related version is a March 1945 Coronet magazine story set in the Second World War with a different punchline; this wording first appears in OR/MS Today, April 1991, whose author heard it at a convention and never found a written source. Quote Investigator declines to reach a verdict. · Verbatim: “If I give him my best guess at three this afternoon, it will take ten years for anyone to prove me wrong.”","comparison":"If I give him my best guess at three this afternoon, it will take ten years for anyone to prove me wrong.","citation":"Samuelson, Doug. \"Oracle: Churchill's Theorem.\" OR/MS Today, April 1991, 80. Earliest related version: Hirsch, Louis. \"Cost Accounting.\" Coronet 17 (March 1945): 34.","rights":"Quote sparingly and attribute. The passage reproduced above is from OR/MS Today for April 1991, published by INFORMS — far beyond the 1930 cut-off for the United States public domain — and remains in copyright, as do the 1945 Coronet article, the 1984 and 1998 magazine versions and the 2009 book. Since the remark is not established as Churchill's, the separate question of his estate's rights does not arise. This is not legal advice.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

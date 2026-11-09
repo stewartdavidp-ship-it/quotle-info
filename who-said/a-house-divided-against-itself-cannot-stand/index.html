@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -532,6 +534,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -578,6 +583,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -634,7 +640,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-house-divided-against-itself-cannot-stand","url":"https://quotle.info/who-said/a-house-divided-against-itself-cannot-stand/","quote":"A house divided against itself cannot stand","claim":"Abraham Lincoln said: \"A house divided against itself cannot stand\"","rating":5,"verdict":"Supported","answer":"Yes. Lincoln used exactly these words in the opening paragraph of his speech accepting the Illinois Republican nomination for U.S. Senator at Springfield on 16 June 1858 — it is the fifth sentence of that paragraph, not its first line — and he set them in quotation marks himself, because he was quoting the Gospels. The wording is confirmed in the 1860 campaign volume of the 1858 speeches, and the standard text descends from the printing Lincoln supplied and proofread for the Illinois State Journal of 18 June 1858.","credit":"A house divided against itself cannot stand. — Abraham Lincoln, \"A House Divided\" speech, Springfield, Illinois, 16 June 1858 (quoting Mark 3:25, King James Version). Via Quotle.info","comparison":"","citation":"Abraham Lincoln, \"A House Divided\": Speech at Springfield, Illinois, June 16, 1858. First printed in the Illinois State Journal, 18 June 1858; reprinted in Political Debates Between Hon. Abraham Lincoln and Hon. Stephen A. Douglas, in the Celebrated Campaign of 1858, in Illinois (Columbus: Follett, Foster and Company, 1860). Standard text: The Collected Works of Abraham Lincoln, ed. Roy P. Basler (New Brunswick, NJ: Rutgers University Press, 1953), 2:461–69. Lincoln is quoting Mark 3:25, King James Version.","rights":"The speech was first published in the Illinois State Journal of 18 June 1858 and reprinted in book form in 1860 — both far earlier than the 1931 U.S. copyright line, so the text is in the public domain, as is the King James wording Lincoln was quoting. Basler's Collected Works (1953) is a separate copyrighted compilation; the 1858 words inside it are not.","checked":"29 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 29 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -885,6 +893,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

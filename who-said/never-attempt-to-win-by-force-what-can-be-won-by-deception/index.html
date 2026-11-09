@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"never-attempt-to-win-by-force-what-can-be-won-by-deception","url":"https://quotle.info/who-said/never-attempt-to-win-by-force-what-can-be-won-by-deception/","quote":"Never attempt to win by force what can be won by deception","claim":"Niccolò Machiavelli said: \"Never attempt to win by force what can be won by deception\"","rating":2,"verdict":"Needs context","answer":"Yes and no. The sentence appears nowhere in Machiavelli. Wikiquote files it under \"Misattributed,\" noting that it is falsely credited to The Prince and is \"not found there textually,\" and the writer Ian Chadwick, who searched more than seventeen translations of Machiavelli, traces the line to a 1982 magazine paraphrase by the journalist Edward Jay Epstein — who told him by email that it may have been just that, a paraphrase.","credit":"not Machiavelli. The sentence appears in none of his works; Wikiquote lists it as misattributed to The Prince, and the word \"deception\" does not occur in the standard English translation. Its documented ancestor is a paraphrase, set in quotation marks without a citation, in Edward Jay Epstein's essay \"Disinformation,\" Commentary, July 1982. Machiavelli's genuine version of the idea is Discourses on Livy, Bk. II ch. 13, \"That Men rise from humble to high Fortunes rather by Fraud than by Force.\" — Quotle.info, verified 3 Aug 2026","comparison":"","citation":"No source in Machiavelli. The line's documented ancestor is Edward Jay Epstein, \"Disinformation: Or, Why the CIA Cannot Verify an Arms-Control Agreement,\" Commentary, July 1982, which paraphrases Machiavelli on force and fraud without citing any source; the popular \"deception\" wording is a later variant. Compare Niccolò Machiavelli, Discourses on the First Decade of Titus Livius, trans. Ninian Hill Thomson (London: Kegan Paul, Trench & Co., 1883), Bk. II, ch. 13 and Bk. III, ch. 40.","rights":"No rights status can honestly be asserted for the popular one-liner, because no author has been identified for that exact wording. The excerpt displayed above is Ninian Hill Thomson's 1883 translation of the Discourses, long in the public domain; the 1982 Commentary essay that carries the earlier \"by fraud\" paraphrase is a modern work and remains in copyright.","checked":"3 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -857,6 +865,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

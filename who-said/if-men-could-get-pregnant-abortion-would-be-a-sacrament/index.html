@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-men-could-get-pregnant-abortion-would-be-a-sacrament","url":"https://quotle.info/who-said/if-men-could-get-pregnant-abortion-would-be-a-sacrament/","quote":"If Men Could Get Pregnant, Abortion Would Be a Sacrament","claim":"Florynce Kennedy originated: \"If men could get pregnant, abortion would be a sacrament\"","rating":2,"verdict":"Needs context","answer":"Not confirmed. This one is unusual: the two famous women it is credited to both tried to give it back. Florynce Kennedy is the earliest person documented saying it in public — at a Washington rally on 15 May 1971 — and Gloria Steinem put it in her speeches the same year. But Steinem said for decades that neither of them coined it. She and Kennedy heard it from the elderly Irish woman driving their taxi in Boston while they talked about Kennedy's book Abortion Rap, and Steinem's regret was always that \"I didn't get her name.\"","credit":"Quote Investigator concludes this saying should be credited to an anonymous Boston taxi driver. Florynce Kennedy is the earliest person documented using it publicly — at a Washington, D.C. rally on 15 May 1971, reported in Off Our Backs that June — and Gloria Steinem, who was in the cab with her, credited “its elderly Irish woman driver” in her 1983 book Outrageous Acts and Everyday Rebellions: “Honey, if men could get pregnant, abortion would be a sacrament.”","comparison":"Honey, if men could get pregnant, abortion would be a sacrament.","citation":"Hobbs, Chris. \"bringing it home: if men could get pregnant, abortion would be a sacrament.\" Off Our Backs: A Women's News Journal 1, no. 23 (24 June 1971): 20. Earliest documented printing, reporting Florynce Kennedy's speech at a rally of 15 May 1971.","rights":"The earliest printing is a 1971 issue of Off Our Backs, which remains in copyright, as does Steinem's 1983 memoir. The sentence itself was spoken by someone who was never identified, so no author or estate can be named for it — and nothing about it is in the public domain on age, since 1971 is well after the 1931 cutoff.","checked":"10 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-only-thing-necessary-for-the-triumph-of-evil-is-for","url":"https://quotle.info/who-said/the-only-thing-necessary-for-the-triumph-of-evil-is-for/","quote":"The only thing necessary for the triumph of evil is for good men to do nothing","claim":"Edmund Burke said: \"The only thing necessary for the triumph of evil is for good men to do nothing\"","rating":1,"verdict":"Not supported","answer":"No. No one has ever located this sentence in Burke. Bartlett's Familiar Quotations printed it under his name in 1968 and cited a specific document — his letter to William Smith of 9 January 1795 — but that letter contains nothing of the kind, and Bartlett's fifteenth edition in 1980 acknowledged the line had not been located in his writings. Quote Investigator traces the earliest credit to Burke only as far back as a July 1920 church address, and concludes the record is too incomplete to say who actually crafted the wording.","credit":"There is no evidence Edmund Burke wrote \"The only thing necessary for the triumph of evil is for good men to do nothing\" — the line has never been located in his works, and Bartlett's Familiar Quotations withdrew its 1795 letter citation in 1980. The closest documented source is John Stuart Mill's inaugural address at the University of St Andrews, 1 February 1867, page 36: 'Bad men need nothing more to compass their ends, than that good men should look on and do nothing.' — via Quotle.info","comparison":"","citation":"John Stuart Mill, Inaugural Address Delivered to the University of St. Andrews, Feb. 1st 1867 (London: Longmans, Green, Reader, and Dyer, 1867), p. 36 — the closest documented antecedent, not the popular wording. No source for the popular wording has been located in Edmund Burke; the earliest credit to Burke known to Quote Investigator is an address by Sir R. Murray Hyslop at the Fourth International Congregational Council, Boston, 5 July 1920.","rights":"No copyright status can honestly be asserted for the famous sentence, because it has no traceable first publication and no identified author. The two documented texts quoted on this page are both long out of copyright — Burke's Thoughts on the Cause of the Present Discontents (first published 23 April 1770) and Mill's St Andrews inaugural address (1867) — but neither of them contains the wording people actually quote.","checked":"3 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -850,6 +858,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"im-not-concerned-with-your-liking-or-disliking-me-all-i-ask","url":"https://quotle.info/who-said/im-not-concerned-with-your-liking-or-disliking-me-all-i-ask/","quote":"I'm not concerned with your liking or disliking me. All I ask is that you respect me as a human being","claim":"Jackie Robinson said: \"I'm not concerned with your liking or disliking me. All I ask is that you respect me as a human being\"","rating":5,"verdict":"Supported","answer":"Yes. Robinson said it in 1954 on a plane, to a baseball umpire who had known him since his 1946 minor-league season and who had just told him, \"I liked you much better when you were less aggressive.\" He printed the exchange himself in Baseball Has Done It (Lippincott, 1964) — the two famous sentences open a much longer answer that ends \"I am not an Uncle Tom. I am in this fight to stay.\"","credit":"Jackie Robinson, replying to an umpire in 1954, published in his book Baseball Has Done It (Lippincott, 1964). Verified at Quotle.info","comparison":"","citation":"Jackie Robinson, Baseball Has Done It, ed. Charles Dexter (Philadelphia: Lippincott, 1964), 9–10 (page numbers per Wikiquote's citation); the exchange is also reproduced in \"Jackie Robinson,\" The Harvard Crimson, 31 October 1972.","rights":"Baseball Has Done It was first published by Lippincott in Philadelphia in 1964, so the text remains under United States copyright; it is not public domain. The book was reissued in 2005 by Ig Publishing, and it is that edition the Internet Archive lends. The lines are quoted here for identification and comment.","checked":"25 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 25 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -866,6 +874,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

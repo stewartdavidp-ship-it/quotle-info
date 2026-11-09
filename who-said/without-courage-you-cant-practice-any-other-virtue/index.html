@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"without-courage-you-cant-practice-any-other-virtue","url":"https://quotle.info/who-said/without-courage-you-cant-practice-any-other-virtue/","quote":"Without courage, you can't practice any other virtue consistently","claim":"Maya Angelou said: \"Without courage, you can't practice any other virtue consistently\"","rating":5,"verdict":"Supported","answer":"Yes. This one is real, and she said it more than once. The American Academy of Achievement's published interview with Angelou carries the line almost exactly — \"Because without courage, you cannot practice any other virtue consistently\". Wikiquote cites the popular form — contraction, \"erratically\" sentence and all — to Stedman Graham's Diversity: Leaders Not Labels (2006), p. 224, and the contraction wording to the Iconoclasts episode of 30 November 2006. Its USA Today citation of 5 March 1988 belongs to a different wording: \"without courage we cannot practice any other virtue with consistency.\"","credit":"Maya Angelou: “Without courage, you can’t practice any other virtue consistently. You can practice any virtue erratically, but nothing consistently without courage.” This wording is cited to Stedman Graham, Diversity: Leaders Not Labels (2006), p. 224; Angelou states the line in her American Academy of Achievement interview (High Point, NC, 22 January 1997, condensed from 1991, 1994 and 1997 broadcasts), there worded “cannot.” Verified at quotle.info","comparison":"Without courage, you can't practice any other virtue consistently. You can practice any virtue erratically, but nothing consistently without courage.","citation":"Maya Angelou, interview, American Academy of Achievement, High Point, North Carolina, January 22, 1997 (published text condensed from Achievement Television broadcasts of 1991, 1994, and 1997), https://achievement.org/achiever/maya-angelou/. The popular contraction wording is cited by Wikiquote to Stedman Graham, Diversity: Leaders Not Labels (2006), 224.","rights":"Angelou spoke this line in interviews from the late 1980s onward, so the wording is modern and firmly in copyright — nothing here is public domain, and no pre-1931 source exists to make it so. The text shown comes from the American Academy of Achievement's published transcript and appears here as short attributed quotation for the purpose of documenting provenance.","checked":"29 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 29 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -867,6 +875,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

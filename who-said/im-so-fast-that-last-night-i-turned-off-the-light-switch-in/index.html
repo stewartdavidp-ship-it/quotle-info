@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"im-so-fast-that-last-night-i-turned-off-the-light-switch-in","url":"https://quotle.info/who-said/im-so-fast-that-last-night-i-turned-off-the-light-switch-in/","quote":"I'm so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark","claim":"Muhammad Ali said: \"I'm so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark\"","rating":2,"verdict":"Needs context","answer":"Yes and no. Ali genuinely used this boast — reporters recorded versions of it in the Village Voice on 25 July 1974 and The New York Times on 29 June 1975, and it survives on film in When We Were Kings. But he did not invent it: Quote Investigator traces the light-switch gag to April 1917, twenty-five years before Ali was born, and no documented Ali source matches the smooth wording that circulates online.","credit":"Muhammad Ali did use this boast, but he did not invent it. The light-switch gag was in print by April 1917 and Satchel Paige told it about Cool Papa Bell before Ali did. The versions actually documented from Ali — Village Voice, 25 July 1974 (\"I'm so fast last night I cut the light and hit the switch and was in bed before the room was dark\") and The New York Times, 29 June 1975 — do not match the polished sentence that circulates online, which has no known source. Chronology: Quote Investigator, \"Quote Origin: When He Turned Out the Light He Was in Bed Before the Room Was Dark,\" 12 June 2013.","comparison":"","citation":"Nick Browne, \"The Rumble in the Jungle: Ali's Camp: You Can't Get Zaire From Here,\" Village Voice (New York), 25 July 1974, 9; and Robert Lipsyte, \"King of All Kings: Lonely Man of Wisdom, Champion of the World,\" The New York Times, 29 June 1975, 44. Chronology from Quote Investigator, \"Quote Origin: When He Turned Out the Light He Was in Bed Before the Room Was Dark,\" 12 June 2013, which traces the joke to The Marines Magazine, April 1917.","rights":"The exact sentence that circulates online has no identified source, so no rights status can honestly be asserted for it. The wordings that are documented sit inside copyrighted twentieth-century journalism — the Village Voice of 25 July 1974 and The New York Times of 29 June 1975 — both well after the 1931 public-domain cutoff, so treat any quotation of them as in-copyright and attribute it. The 1917 Marines Magazine item is old enough to be public domain, but it is a different sentence about a different man.","checked":"27 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -867,6 +875,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

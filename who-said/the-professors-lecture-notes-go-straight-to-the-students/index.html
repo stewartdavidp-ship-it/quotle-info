@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-professors-lecture-notes-go-straight-to-the-students","url":"https://quotle.info/who-said/the-professors-lecture-notes-go-straight-to-the-students/","quote":"The Professor's Lecture Notes Go Straight to the Students' Lecture Notes","claim":"Mark Twain said: \"The Professor's Lecture Notes Go Straight to the Students' Lecture Notes\"","rating":1,"verdict":"Not supported","answer":"No. Mark Twain died in 1910, and Quote Investigator found \"no substantive evidence\" connecting the saying to him — the earliest instance it could locate is from 1927, seventeen years after his death. That instance is in Harry Lloyd Miller's Creative Learning and Teaching, where Miller credits it to \"Slosson\" — probably Edwin E. Slosson, whose 1910 book Great American Universities makes the same complaint at length. QI is careful to add that no version in Slosson's own writing has been found, so even his authorship of the polished quip is credited rather than proven.","credit":"not Mark Twain, who died in 1910. The earliest documented version appears in Harry Lloyd Miller's \"Creative Learning and Teaching\" (Charles Scribner's Sons, 1927), p. 120, where it is credited to Edwin E. Slosson. Via Quotle.info · Verbatim: “Lecturing is that mysterious process by means of which the contents of the note-book of the professor are transferred through the instrument of the fountain pen to the note-book of the student without passing through the mind of either.”","comparison":"Lecturing is that mysterious process by means of which the contents of the note-book of the professor are transferred through the instrument of the fountain pen to the note-book of the student without passing through the mind of either.","citation":"Harry Lloyd Miller, Creative Learning and Teaching (New York: Charles Scribner's Sons, 1927), 120 — the earliest instance located by Quote Investigator, \"Quote Origin: The Professor's Lecture Notes Go Straight to the Students' Lecture Notes,\" 17 August 2012. Miller credits the phrasing to Edwin E. Slosson; no version has been found in Slosson's own writing.","rights":"No copyright status is asserted for the popular Twain-branded wording: it has no identified author and no known first publication, so there is nothing to attach a status to. The two historical texts quoted on this page are a different matter — Slosson's Great American Universities (Macmillan, 1910) and Miller's Creative Learning and Teaching (Charles Scribner's Sons, 1927) were both published well before 1931 and are in the US public domain; the Internet Archive scan of the Slosson is marked not in copyright.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -873,6 +881,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

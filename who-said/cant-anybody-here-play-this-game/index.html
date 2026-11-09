@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"cant-anybody-here-play-this-game","url":"https://quotle.info/who-said/cant-anybody-here-play-this-game/","quote":"Can't anybody here play this game?","claim":"Casey Stengel said: \"Can't anybody here play this game?\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Universally credited to Stengel about the 40–120 New York Mets of 1962, and entirely consistent with how he talked that season. But the wording everyone repeats is the title of Jimmy Breslin's 1963 book about that team — no contemporaneous 1962 record of Stengel saying it in exactly these words has been located, and his biographers give the remark in a different word order.","credit":"attributed to Casey Stengel (1890–1975) on his 1962 New York Mets. The familiar wording is the title of Jimmy Breslin's 'Can't Anybody Here Play This Game?' (New York: Viking Press, 1963); Stengel's biographers record the remark with the word order reversed. Traced by Quotle.info","comparison":"","citation":"Breslin, Jimmy. Can't Anybody Here Play This Game? New York: Viking Press, 1963. (Earliest documented appearance located for this wording, which Breslin used as his title in quoting Stengel's lament over the 1962 New York Mets.)","rights":"The wording quoted here reaches us through Jimmy Breslin's Can't Anybody Here Play This Game?, first published by Viking Press in New York in 1963 — comfortably inside US copyright, so the book and its text remain protected. A short spoken phrase is not itself the kind of thing copyright protects, but we make no public-domain claim here, because the only documented text this wording can be traced to is an in-copyright 1963 book.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -867,6 +875,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

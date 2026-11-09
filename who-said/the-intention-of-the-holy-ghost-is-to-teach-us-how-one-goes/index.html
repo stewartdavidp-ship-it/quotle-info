@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-intention-of-the-holy-ghost-is-to-teach-us-how-one-goes","url":"https://quotle.info/who-said/the-intention-of-the-holy-ghost-is-to-teach-us-how-one-goes/","quote":"The intention of the Holy Ghost is to teach us how one goes to heaven, not how heaven goes","claim":"Galileo Galilei said: \"The intention of the Holy Ghost is to teach us how one goes to heaven, not how heaven goes\"","rating":1,"verdict":"Not supported","answer":"No. The sentence really is in Galileo's hand — in his Letter to the Grand Duchess Christina of 1615 — but he presents it as a quotation, not a coinage. He introduces it as something \"heard from an ecclesiastic of the most eminent degree,\" and the marginal note printed beside it in the Edizione Nazionale reads simply \"Cardinal Baronio\". Baronio died in 1607, eight years before the letter.","credit":"Not Galileo's own line. He quotes it in his Letter to the Grand Duchess Christina (1615) as something heard from \"an ecclesiastic of the most eminent degree,\" and his marginal note names Cardinal Cesare Baronio (1538–1607). Italian text: Le opere di Galileo Galilei, Edizione Nazionale, ed. Antonio Favaro, vol. 5 (Florence: Tipografia di G. Barbera, 1895), 319. English wording: Stillman Drake, trans., Discoveries and Opinions of Galileo (Garden City, NY: Doubleday Anchor, 1957), 186. · Verbatim: “That the intention of the Holy Ghost is to teach us how one goes to heaven, not how heaven goes.”","comparison":"That the intention of the Holy Ghost is to teach us how one goes to heaven, not how heaven goes.","citation":"Galileo Galilei, \"Lettera a Madama Cristina di Lorena\" (1615), in Le opere di Galileo Galilei, Edizione Nazionale, ed. Antonio Favaro, vol. 5 (Florence: Tipografia di G. Barbèra, 1895), 319, with the marginal note \"Cardinal Baronio.\" English wording from Stillman Drake, trans., Discoveries and Opinions of Galileo (Garden City, NY: Doubleday Anchor Books, 1957), 186.","rights":"Two different rights questions sit on this page. Galileo's 1615 Italian, as printed in Favaro's 1895 Edizione Nazionale, is long in the public domain. The English wording people actually quote is not: it is Stillman Drake's, from Discoveries and Opinions of Galileo, copyright © 1957 by Stillman Drake, published by Doubleday Anchor Books. We classify by the translation shown.","checked":"23 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 23 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -855,6 +863,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

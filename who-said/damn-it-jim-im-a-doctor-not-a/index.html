@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"damn-it-jim-im-a-doctor-not-a","url":"https://quotle.info/who-said/damn-it-jim-im-a-doctor-not-a/","quote":"Damn it, Jim! I'm a doctor, not a..","claim":"\"Damn it, Jim! I'm a doctor, not a..\"","rating":1,"verdict":"Not supported","answer":"Dr. McCoy's catchphrase was born in \"The Devil in the Dark\" (Star Trek, 9 March 1967), written by Gene L. Coon: Kirk orders McCoy to treat a silicon-based creature and McCoy snaps, \"I'm a doctor, not a bricklayer!\" He never says \"Damn it\" — the word was taboo on 1960s network television — and he doesn't say \"Jim\" in the line either. Both halves of the popular wording are later accretions.","credit":"Gene L. Coon, \"The Devil in the Dark,\" Star Trek, NBC, 9 March 1967. The actual line is \"I'm a doctor, not a bricklayer!\" — McCoy never said \"Damn it, Jim\" in the original series.","comparison":"I'm a doctor, not a bricklayer!","citation":"Gene L. Coon, \"The Devil in the Dark,\" Star Trek, season 1, episode 25, directed by Joseph Pevney, aired 9 March 1967, on NBC.","rights":"\"The Devil in the Dark\" was first broadcast in 1967, well after the 1930 US public-domain cutoff, so it remains in copyright. Television writing is work-for-hire: the rights belong to the studio, not to Gene L. Coon's estate. Per Wikipedia, \"Norway Productions and Desilu Productions produced the series from September 1966 to December 1967\" — the window this episode falls in — with the franchise television rights now held by CBS Media Ventures under Paramount Global. The short quoted exchange above is reproduced for identification and commentary.","checked":"16 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -873,6 +881,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

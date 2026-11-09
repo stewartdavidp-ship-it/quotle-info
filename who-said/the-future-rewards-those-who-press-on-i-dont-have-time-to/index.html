@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-future-rewards-those-who-press-on-i-dont-have-time-to","url":"https://quotle.info/who-said/the-future-rewards-those-who-press-on-i-dont-have-time-to/","quote":"The future rewards those who press on. I don't have time to feel sorry for myself. I don't have time to complain. I'm going to press on","claim":"Barack Obama said: \"The future rewards those who press on. I don't have time to feel sorry for myself. I don't have time to complain. I'm going to press on\"","rating":5,"verdict":"Supported","answer":"Yes. Obama said this at the Congressional Black Caucus Foundation's Annual Phoenix Awards Dinner in Washington, D.C., on 24 September 2011. Every word is his and the White House transcript confirms it — but the version that circulates is a condensation: four sentences are silently cut from the middle, and his \"I am going to press on\" is contracted to \"I'm going to press on.\"","credit":"Barack Obama, Remarks at the Congressional Black Caucus Foundation Annual Phoenix Awards Dinner, Washington, D.C., 24 September 2011. Note: the widely shared version omits the four sentences about jobs, equality, children and struggling families. Via Quotle.info · Verbatim: “So I don't know about you, CBC, but the future rewards those who press on. With patient and firm determination, I am going to press on for jobs. I'm going to press on for equality. I'm going to press on for the sake of our children. I'm going to press on for the sake of all those families who are struggling right now. I don't have time to feel sorry for myself. I don't have time to complain. I am going to press on.”","comparison":"So I don't know about you, CBC, but the future rewards those who press on. With patient and firm determination, I am going to press on for jobs. I'm going to press on for equality. I'm going to press on for the sake of our children. I'm going to press on for the sake of all those families who are struggling right now. I don't have time to feel sorry for myself. I don't have time to complain. I am going to press on.","citation":"Obama, Barack. \"Remarks by the President at Congressional Black Caucus Foundation Annual Phoenix Awards Dinner.\" Washington Convention Center, Washington, D.C., 24 September 2011. The White House, Office of the Press Secretary. Archived at obamawhitehouse.archives.gov.","rights":"This is not public domain because of its age — it's from 2011. It's public domain because it is a work of the U.S. Government: remarks by the President released by the White House Office of the Press Secretary. The White House site states plainly that \"government-produced materials appearing on this site are not copyright protected\". Quote and reuse freely; the courtesy of naming the occasion still applies.","checked":"15 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 15 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -884,6 +892,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

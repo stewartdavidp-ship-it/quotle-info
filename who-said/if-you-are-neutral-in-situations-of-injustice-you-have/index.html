@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-you-are-neutral-in-situations-of-injustice-you-have","url":"https://quotle.info/who-said/if-you-are-neutral-in-situations-of-injustice-you-have/","quote":"If you are neutral in situations of injustice, you have chosen the side of the oppressor","claim":"Desmond Tutu said: \"If you are neutral in situations of injustice, you have chosen the side of the oppressor\"","rating":5,"verdict":"Supported","answer":"Yes. This is one of the rare feel-good justice lines the famous name really did say. It is documented in print by 1984: Robert McAfee Brown quotes Tutu with these exact words in Unexpected News: Reading the Bible with Third World Eyes (p. 19), and Wikiquote lists it in its Sourced section. Because Brown is quoting Tutu, the original occasion (a sermon or address during apartheid) isn't separately pinned — but authorship is genuine and undisputed.","credit":"If you are neutral in situations of injustice, you have chosen the side of the oppressor. —Desmond Tutu, quoted in Robert McAfee Brown, Unexpected News (1984)","comparison":"If you are neutral in situations of injustice, you have chosen the side of the oppressor. If an elephant has its foot on the tail of a mouse and you say that you are neutral, the mouse will not appreciate your neutrality.","citation":"Robert McAfee Brown, Unexpected News: Reading the Bible with Third World Eyes (Philadelphia: Westminster Press, 1984), 19 (quoting Desmond Tutu).","rights":"The words are Desmond Tutu's, and their earliest documented appearance in print is Robert McAfee Brown's Unexpected News (1984) — a work published well after 1931. In the United States both Tutu's quoted words and Brown's book remain under copyright; this page reproduces the short line for commentary and attribution.","checked":"16 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -854,6 +862,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

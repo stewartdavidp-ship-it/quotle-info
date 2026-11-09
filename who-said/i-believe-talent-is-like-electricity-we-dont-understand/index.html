@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-believe-talent-is-like-electricity-we-dont-understand","url":"https://quotle.info/who-said/i-believe-talent-is-like-electricity-we-dont-understand/","quote":"I believe talent is like electricity. We don't understand electricity. We use it","claim":"Maya Angelou said: \"I believe talent is like electricity. We don't understand electricity. We use it\"","rating":5,"verdict":"Supported","answer":"Yes. Angelou said this to the literary critic Claudia Tate in an interview published in Black Women Writers at Work (1983), answering a question about her creative range. Quote Investigator verified the passage against scans of the book — quote page 7 — and logged its reprint in Conversations with Maya Angelou (1989) at page 152. The famous short form is just the opening of a longer answer, and it stops one sentence before her actual point.","credit":"Maya Angelou, interview by Claudia Tate, in Black Women Writers at Work, ed. Claudia Tate (Harpenden: Oldcastle Books, 1985; 1983 copyright), 7. First published New York: Continuum, 1983. Reprinted in Conversations with Maya Angelou, ed. Jeffrey M. Elliot (Jackson: University Press of Mississippi, 1989), 152. · Verbatim: “I believe talent is like electricity. We don't understand electricity. We use it. Electricity makes no judgment. You can plug into it and light up a lamp, keep a heart pump going, light a cathedral, or you can electrocute a person with it. Electricity will do all that. It makes no judgment. I think talent is like that. I believe every person is born with talent.”","comparison":"I believe talent is like electricity. We don't understand electricity. We use it. Electricity makes no judgment. You can plug into it and light up a lamp, keep a heart pump going, light a cathedral, or you can electrocute a person with it. Electricity will do all that. It makes no judgment. I think talent is like that. I believe every person is born with talent.","citation":"Maya Angelou, interview by Claudia Tate, in Black Women Writers at Work, ed. Claudia Tate (Harpenden: Oldcastle Books, 1985; 1983 copyright), 7 — the printing verified against scans by Quote Investigator. First published New York: Continuum, 1983. Reprinted in Conversations with Maya Angelou, ed. Jeffrey M. Elliot (Jackson: University Press of Mississippi, 1989), 152.","rights":"Black Women Writers at Work was first published in 1983, per Open Library's edition record — well after the 1931 US public-domain line, so both the interview text and the volume are still in copyright. Angelou's literary legacy is administered by Caged Bird Legacy, LLC, which holds the copyright notice on her official site, and the book itself is back in print from Haymarket Books. Quote the line briefly with attribution rather than reproducing the full passage.","checked":"29 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 29 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -871,6 +879,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

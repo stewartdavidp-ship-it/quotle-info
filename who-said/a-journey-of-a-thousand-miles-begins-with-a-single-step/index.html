@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-journey-of-a-thousand-miles-begins-with-a-single-step","url":"https://quotle.info/who-said/a-journey-of-a-thousand-miles-begins-with-a-single-step/","quote":"A journey of a thousand miles begins with a single step","claim":"Lao Tzu said: \"A journey of a thousand miles begins with a single step\"","rating":4,"verdict":"Mostly supported","answer":"Mostly. This one is real. The sentence closes the second paragraph of chapter 64 of the Tao Te Ching, and it reads in Chinese 千里之行，始於足下. James Legge's 1891 translation gives it as \"the journey of a thousand li commenced with a single step\". Two things drifted on the way to the version people quote. A li is not a mile — it is roughly a third of one — so \"a thousand miles\" triples the distance Laozi wrote. And the Chinese 始於足下 says the journey begins beneath one's feet; \"with a single step\" is already Legge's interpretation of that. The thought is his, the source is certain, and the English is a century of polishing.","credit":"Lao Tzu — “The journey of a thousand li commenced with a single step.” Tao Te Ching, ch. 64, trans. James Legge (1891). The familiar “thousand miles… single step” is a modernised rendering; the Chinese says “begins beneath one's feet.” Via quotle.info","comparison":"The journey of a thousand li commenced with a single step.","citation":"Laozi, The Tâo Teh King, chap. 64, in The Sacred Books of China: The Texts of Tâoism, Part I, trans. James Legge, Sacred Books of the East 39 (Oxford: Clarendon Press, 1891), 107–8. Chinese text: 道德經 (王弼本), chap. 64, Chinese Wikisource.","rights":"Public domain, on both counts. The Chinese original is ancient. The English shown is James Legge's translation, first published in 1891 by the Clarendon Press at Oxford as volume 39 of the Sacred Books of the East — four decades before the 1931 US public-domain cutoff, and Legge himself died in 1897. Quote it freely. One caution: the exact sentence most people reproduce (\"a thousand miles… begins with a single step\") is not Legge's and is not traceable to any one pre-1931 edition, so if you need a citable text, use Legge's wording rather than the popular one.","checked":"3 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -859,6 +867,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

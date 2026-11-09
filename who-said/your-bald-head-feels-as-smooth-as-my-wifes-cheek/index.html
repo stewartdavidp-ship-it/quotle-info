@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -510,6 +512,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -556,6 +561,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -612,7 +618,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"your-bald-head-feels-as-smooth-as-my-wifes-cheek","url":"https://quotle.info/who-said/your-bald-head-feels-as-smooth-as-my-wifes-cheek/","quote":"Your Bald Head Feels as Smooth as My Wife's Cheek","claim":"\"Your Bald Head Feels as Smooth as My Wife's Cheek\"","rating":1,"verdict":"Not supported","answer":"The comparison began as an anonymous barber-shop joke. It was printed in July 1924 as \"your head feels just like my wife's cheek,\" and the earliest named person is S. H. Hale, who told it about a barber who worked for him. Adams's name was attached only in a privately printed 1934 joke book. There he says a cruder version as the heckler, and Marc Connelly gets the comeback (Quote Investigator).","credit":"Not Franklin P. Adams. An anonymous barber-shop joke, printed in the Roswell Daily Record on July 12, 1924 as “your head feels just like my wife’s cheek.” A 1934 joke book cast Adams as the heckler, not the wit. — Quotle.info · Verbatim: “Don't you know, your head feels just like my wife's cheek.”","comparison":"Don't you know, your head feels just like my wife's cheek.","citation":"\"Local Snap Shots,\" Roswell Daily Record (Roswell, NM), July 12, 1924, 4. Adams–Connelly version: J. Mortimer Hall, Anecdota Americana: Second Series (Boston: Humphrey Adams, 1934), 85. Both cited in Quote Investigator, \"Your Bald Head Feels as Smooth as My Wife's Cheek,\" March 28, 2015.","rights":"The popular wording comes from no identifiable work, so no rights status is claimed for it. The earliest printed form, an anonymous 1924 newspaper item, was published before 1931. The Adams version comes from a privately printed 1934 joke book.","checked":"1 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -841,6 +849,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

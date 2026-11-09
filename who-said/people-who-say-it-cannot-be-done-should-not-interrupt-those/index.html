@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -504,6 +506,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -550,6 +555,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -606,7 +612,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"people-who-say-it-cannot-be-done-should-not-interrupt-those","url":"https://quotle.info/who-said/people-who-say-it-cannot-be-done-should-not-interrupt-those/","quote":"People Who Say It Cannot Be Done Should Not Interrupt Those Who Are Doing It","claim":"Confucius said: \"People Who Say It Cannot Be Done Should Not Interrupt Those Who Are Doing It\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator found \"no substantive support\" for the Confucius attribution, and traced the saying instead to an unsigned filler item in the American humor magazine Puck on 24 December 1902: \"Things move along so rapidly nowadays that people saying: 'It can't be done,' are always being interrupted by somebody doing it.\" The modern wording is a much later reshaping whose author is unknown; the \"Confucius say\" form is first documented in March 1962, and the George Bernard Shaw credit — first documented in 2004 — is, in QI's word, spurious.","credit":"Not Confucius. The earliest known version is an unsigned filler item in Puck magazine, 24 December 1902: \"Things move along so rapidly nowadays that people saying: 'It can't be done,' are always being interrupted by somebody doing it.\" The \"Confucius say\" form is first documented in March 1962; the George Bernard Shaw credit, first documented in 2004, is spurious. — traced by Quote Investigator","comparison":"","citation":"Earliest documented in: filler item, Puck, vol. 52 (24 December 1902), quote page 2. Traced in \"Quote Origin: People Who Say It Cannot Be Done Should Not Interrupt Those Who Are Doing It,\" Quote Investigator, 26 January 2015 (updated 5 January 2025).","rights":"No rights status can honestly be asserted for the wording on this page. The 1902 Puck filler and its 1903 reprints are long in the public domain in the United States, but that is a different sentence. The familiar modern wording is an anonymous reshaping whose author, date and place of first composition are all unidentified — the earliest instance Quote Investigator documents is from 2004, well inside the copyright term, and even that one is a re-quotation rather than an origin. Treat it as unsourced and unclearable.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -849,6 +857,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

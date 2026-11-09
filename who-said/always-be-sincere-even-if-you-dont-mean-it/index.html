@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"always-be-sincere-even-if-you-dont-mean-it","url":"https://quotle.info/who-said/always-be-sincere-even-if-you-dont-mean-it/","quote":"Always be sincere, even if you don't mean it","claim":"Harry S. Truman said: \"Always be sincere, even if you don't mean it\"","rating":1,"verdict":"Not supported","answer":"No. The line is an anonymous American joke of the early 1950s. Its earliest documented appearance is a \"Modest Maidens\" comic strip of 23 July 1951, and from April 1954 newspapers printed it as the property of Mortimer Snerd, Edgar Bergen's ventriloquist dummy. Truman's name attached to it decades later, in a reference book that supplied no citation.","credit":"not Harry S. Truman. An anonymous American gag line: earliest documented 23 July 1951 in the \"Modest Maidens\" comic strip (Corpus Christi Times); the exact wording appears in a 1960 West Virginia University bulletin, credited to Mortimer Snerd. The Truman attribution is disputed in Ralph Keyes, The Quote Verifier (2006), p. 224. Via quotle.info","comparison":"","citation":"Barry Popik, \"Always be sincere, even if you don't mean it,\" barrypopik.com, 18 September 2012. Earliest documented form: \"Modest Maidens\" comic strip by Jay Alan, Corpus Christi Times, 23 July 1951, 15. The exact modern wording appears, credited to Mortimer Snerd, in Engineering Experiment Station Bulletin, issues 57–58 (Morgantown: West Virginia University, 1960), 24. The attribution to Truman is disputed in Ralph Keyes, The Quote Verifier: Who Said What, Where, and When (New York: St. Martin's Press, 2006), 224.","rights":"No identifiable authored work is the origin of this wording. The earliest documented appearance is a 1951 newspaper comic strip carrying a variant, and the exact modern sentence surfaces in 1960 credited to a comedy character — both well after the 1931 United States public-domain cut-off, and neither established as the source. Because the coiner and the originating work are both unknown, quotle.info asserts no copyright status for this sentence.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -843,6 +851,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

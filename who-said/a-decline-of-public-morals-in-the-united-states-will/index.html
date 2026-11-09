@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -515,6 +517,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -561,6 +566,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -617,7 +623,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-decline-of-public-morals-in-the-united-states-will","url":"https://quotle.info/who-said/a-decline-of-public-morals-in-the-united-states-will/","quote":"A decline of public morals in the United States will probably be marked by the abuse of the power of impeachment as a means of crushing political adversaries or ejecting them from office","claim":"\"A decline of public morals in the United States will probably be marked by the abuse of the power of impeachment as a means of crushing political adversaries or ejecting them from office\"","rating":1,"verdict":"Not supported","answer":"The thought is Tocqueville's; the sentence is not. This wording comes from American Constitutional Law (1889) by the American jurist J. I. Clark Hare — with one silent edit. Hare wrote, in reported speech and without a citation, that \"it was long since remarked by De Tocqueville\" that a decline of public morals would probably be marked by the abuse of impeachment; the version in circulation changes that \"would\" to \"will\" and drops the reporting clause. Tocqueville's own line, in Henry Reeve's translation of Democracy in America, reads: \"When the American republics begin to degenerate it will be easy to verify the truth of this observation, by remarking whether the number of political impeachments augments.\"","credit":"Not Tocqueville's words — J. I. Clark Hare, American Constitutional Law, vol. 1 (Boston: Little, Brown, 1889), p. 211, paraphrasing Tocqueville in indirect discourse and citing nothing. Tocqueville's own sentence, in Henry Reeve's translation of Democracy in America, vol. 1, ch. 7: \"When the American republics begin to degenerate it will be easy to verify the truth of this observation, by remarking whether the number of political impeachments augments.\" · Verbatim: “It was long since remarked by De Tocqueville that a decline of public morals in the United States would probably be marked by the abuse of the power of impeachment as a means of crushing political adversaries or ejecting them from office.”","comparison":"It was long since remarked by De Tocqueville that a decline of public morals in the United States would probably be marked by the abuse of the power of impeachment as a means of crushing political adversaries or ejecting them from office.","citation":"J. I. Clark Hare, American Constitutional Law, vol. 1 (Boston: Little, Brown, and Company, 1889), 211 — paraphrasing Alexis de Tocqueville, Democracy in America, vol. 1, ch. 7, trans. Henry Reeve (London: Saunders and Otley, 1835).","rights":"Both texts are long out of copyright in the United States. Hare's American Constitutional Law was published by Little, Brown and Company in 1889, and Henry Reeve's English translation of Democracy in America dates from the 1830s — the Project Gutenberg edition reproduces the London: Saunders and Otley, 1835 title page and adds editorial notes dated 1874. No modern translation or modern rendering is involved.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

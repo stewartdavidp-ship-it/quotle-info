@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"in-three-words-i-can-sum-up-everything-ive-learned-about","url":"https://quotle.info/who-said/in-three-words-i-can-sum-up-everything-ive-learned-about/","quote":"In three words I can sum up everything I've learned about life: it goes on","claim":"Robert Frost said: \"In three words I can sum up everything I've learned about life: it goes on\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. This is very probably Frost, and it is worth knowing why we cannot say more than that. It is not from a poem, an essay or a letter: it comes from an interview the journalist Ray Josephs published on 5 September 1954, in the This Week Magazine section of the Cincinnati Enquirer. Josephs asked Frost what the most important thing he had learned about life was, and reports the answer. Quote Investigator finds substantive evidence that Frost said it — while pointing out that its accuracy depends entirely on Josephs, who is the only witness. Wikiquote files it the same way, as \"Attributed in\" a later anthology rather than in anything Frost published.","credit":"attributed to Robert Frost. The earliest known source is an interview by the journalist Ray Josephs published on 5 September 1954 in the This Week Magazine section of the Cincinnati Enquirer, around Frost's eightieth birthday. Quote Investigator finds substantive evidence Frost said it, but notes the accuracy rests on Josephs as the only witness; Frost never wrote it down, and the familiar colon replaces his full stop. Via Quotle.info","comparison":"","citation":"Earliest documented appearance: Ray Josephs, in the This Week Magazine section of the Cincinnati Enquirer, 5 September 1954, p. 2, col. 1 — \"In three words, I can sum up everything I've learned about life. It goes on.\" Also collected as Ray Josephs, \"Robert Frost's Secret,\" in Words to Live By, ed. William Nichols (New York: Simon and Schuster, 1959), 172–73. Chronology and assessment: Quote Investigator, \"Quote Origin: In Three Words, I Can Sum Up Everything I've Learned About Life. It Goes On,\" 1 April 2018, quoteinvestigator.com.","rights":"In copyright. The remark was spoken in 1954 and first published that September in a newspaper magazine supplement — well after the 1931 cut-off for United States public domain, so neither the words nor the article carrying them are free of rights. This is separate from Frost's early poetry: A Boy's Will (1913), North of Boston (1914) and Mountain Interval (1916) are long out of copyright and freely readable, but a 1954 interview is not.","checked":"13 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 13 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -848,6 +856,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

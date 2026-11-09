@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"patience-persistence-and-perspiration-make-an-unbeatable","url":"https://quotle.info/who-said/patience-persistence-and-perspiration-make-an-unbeatable/","quote":"Patience, persistence and perspiration make an unbeatable combination for success","claim":"Napoleon Hill said: \"Patience, persistence and perspiration make an unbeatable combination for success\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Credited to Hill on every major quotation site, and circulated by his own foundation — but no book, speech, letter or article has ever been cited for it. The words \"perspiration\" and \"unbeatable\" appear nowhere in the full texts of The Law of Success (1928) or Think and Grow Rich (1937), so the line is consistent with Hill's themes but pinned to none of his known pages.","credit":"attributed to Napoleon Hill (1883–1970). No primary source has ever been cited; the wording does not appear in 'The Law of Success' (1928) or 'Think and Grow Rich' (1937). Via Quotle.info","comparison":"","citation":"No primary source identified. Circulated under Napoleon Hill's name by quotation aggregators and by the Napoleon Hill Foundation, which posts it (as “Patience, persistence, and perspiration make for an unbeatable combination for success”) without citation. The wording does not occur in the full texts of Napoleon Hill, The Law of Success (Meriden, CT: Ralston University Press, 1928) or Think and Grow Rich (1937).","rights":"We cannot classify the rights, because we cannot identify the work. If the sentence turned out to come from The Law of Success (1928) it would be public domain in the United States; if it came from Think and Grow Rich (1937) or any of Hill's later books, courses or columns, it would be in copyright and controlled by the Napoleon Hill Foundation, which asserts rights in Hill's writings and trademarks his name. Since no source has been established, we assert no status.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -860,6 +868,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

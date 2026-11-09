@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"we-are-generally-the-better-persuaded-by-the-reasons-we","url":"https://quotle.info/who-said/we-are-generally-the-better-persuaded-by-the-reasons-we/","quote":"We are generally the better persuaded by the reasons we discover ourselves than by those given to us by others","claim":"Blaise Pascal said: \"We are generally the better persuaded by the reasons we discover ourselves than by those given to us by others\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The thought is genuinely Pascal's: the French sits in the Pensées as Section I, fragment 10, and is easy to confirm. But this particular English wording is not the standard translation and matches no published edition we could source — it is an uncredited rendering that circulates through quotation aggregators. W. F. Trotter's public-domain English reads \"People are generally better persuaded by the reasons which they have themselves discovered than by those which have come into the mind of others.\"","credit":"— Blaise Pascal, Pensées, Section I, fragment 10. Pascal wrote the thought, in French, but this English wording is an uncredited rendering: no translator or edition can be traced to it, and it is not W. F. Trotter's. For a citable English, use Trotter's public-domain translation: \"People are generally better persuaded by the reasons which they have themselves discovered than by those which have come into the mind of others.\" (trans. W. F. Trotter, 1910).","comparison":"","citation":"Blaise Pascal, Pensées, ed. Léon Brunschvicg, Section I, fragment 10 (Paris: Hachette). English: Blaise Pascal, Thoughts, trans. W. F. Trotter (New York: P. F. Collier & Son, 1910), fragment 10. The wording \"We are generally the better persuaded…\" corresponds to no translation we could identify.","rights":"Two things here have clear status and one does not. Pascal's French (Pensées, 1670) is long out of copyright, and W. F. Trotter's English translation was in print by 1910, comfortably before the 1931 US threshold, so it too is public domain — which is why Project Gutenberg hosts it. The wording on this page, however, is neither of those: it is an English rendering with no traceable translator or edition, so we make no claim about its status. If you need Pascal's thought in English you can reproduce freely, quote Trotter's.","checked":"15 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 15 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -865,6 +873,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

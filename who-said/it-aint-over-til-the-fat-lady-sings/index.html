@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-aint-over-til-the-fat-lady-sings","url":"https://quotle.info/who-said/it-aint-over-til-the-fat-lady-sings/","quote":"It Ain’t Over ’Til the Fat Lady Sings","claim":"Ralph Carpenter said: \"It Ain’t Over ’Til the Fat Lady Sings\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The earliest known \"opera/fat lady\" version is Carpenter's remark in the Dallas Morning News of March 10, 1976: \"The opera ain't over until the fat lady sings.\" Quote Investigator credits him only provisionally. The saying grew out of much older \"church ain't out till the singing's done\" proverbs, a 1978 report credited sportscaster Dan Cook instead, and the shorter \"It ain't over\" wording is not the form Carpenter is recorded as using.","credit":"Ralph Carpenter, Texas Tech sports information director, quoted by Sam Blair in the Dallas Morning News, March 10, 1976 (earliest known “opera/fat lady” version; provisionally credited by Quote Investigator) · Verbatim: “The opera ain't over until the fat lady sings.”","comparison":"The opera ain't over until the fat lady sings.","citation":"Sam Blair, \"A Cakewalk This Time,\" Dallas Morning News, March 10, 1976, sec. B, p. 2 (quoting Ralph Carpenter: \"The opera ain't over until the fat lady sings\"); reported by Fred Shapiro, ADS-L, September 6, 2005; discussed in Quote Investigator, \"It Ain't Over 'Til the Fat Lady Sings,\" February 10, 2015.","rights":"The earliest documented printing is a 1976 Dallas Morning News article by Sam Blair. That is a work published after 1931, so the article is treated as in copyright. The saying itself has since circulated as an anonymous proverb in many wordings.","checked":"1 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -857,6 +865,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

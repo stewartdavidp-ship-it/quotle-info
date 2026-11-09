@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"youre-dead-jim","url":"https://quotle.info/who-said/youre-dead-jim/","quote":"You're dead, Jim","claim":"\"You're dead, Jim\"","rating":1,"verdict":"Not supported","answer":"Dr. McCoy's line is \"He's dead, Jim\" — third person, about someone else. Its first documented appearance is in Star Trek: The Original Series, \"The Enemy Within\" (season 1, episode 5, aired 6 October 1966), written by Richard Matheson, where McCoy pronounces a transporter-damaged animal dead. Wikiquote lists \"You're dead, Jim\" under Misattributed: McCoy never said \"You're dead\" to Kirk.","credit":"Dr. Leonard McCoy (DeForest Kelley), Star Trek: The Original Series, \"The Enemy Within\" (1966), written by Richard Matheson. Commonly misquoted as \"You're dead, Jim,\" which was never said.","comparison":"He's dead, Jim.","citation":"\"The Enemy Within.\" Star Trek: The Original Series, season 1, episode 5. Written by Richard Matheson, directed by Leo Penn. Desilu Productions / NBC, first aired 6 October 1966.","rights":"\"The Enemy Within\" first aired on NBC on 6 October 1966 — decades after the 1930 US public-domain cutoff — so the episode and its dialogue remain in copyright. Television writing is work-for-hire: the rights sit with the studio, not with Richard Matheson or his estate. Wikipedia records the series' production companies as Desilu Productions, Paramount Television and Norway Productions, and names CBS Media Ventures as the current rights holder for the Star Trek television franchises.","checked":"16 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -825,6 +833,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

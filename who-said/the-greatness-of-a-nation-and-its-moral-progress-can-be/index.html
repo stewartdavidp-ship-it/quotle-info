@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-greatness-of-a-nation-and-its-moral-progress-can-be","url":"https://quotle.info/who-said/the-greatness-of-a-nation-and-its-moral-progress-can-be/","quote":"The greatness of a nation and its moral progress can be judged by the way its animals are treated","claim":"Mahatma Gandhi said: \"The greatness of a nation and its moral progress can be judged by the way its animals are treated\"","rating":1,"verdict":"Not supported","answer":"No. This exact sentence appears nowhere in Gandhi's writings — it is absent from his 98-volume Collected Works, and the earliest located attribution to him dates to 1980, thirty-two years after his death. Wikiquote, which lists it as Disputed, traces the underlying thought to David Strauss's The Old Faith and the New (1873 translation), though even Strauss's actual sentence reads quite differently — the familiar wording is a later, anonymous reformulation credited to no one in particular.","credit":"widely attributed to Mahatma Gandhi, but the sentence appears nowhere in his 98-volume Collected Works and has not been found credited to him before 1980, 32 years after his death. The thought traces to David Friedrich Strauss, The Old Faith and the New, trans. Mathilde Blind (New York: Henry Holt & Co., 1873), vol. 2, §71, p. 59: \"The manner in which a nation in the aggregate treats animals, is one chief measure of its real civilization.\"","comparison":"","citation":"David Friedrich Strauss, The Old Faith and the New: A Confession, trans. Mathilde Blind (New York: Henry Holt & Co., 1873), vol. 2, §71, p. 59. The wording popularly attributed to Gandhi is not documented in any of his works; the earliest attribution to Gandhi located by Wikiquote is Doris Potter, letter to the editor, The Gazette (Montreal), 18 March 1980, p. 8.","rights":"No rights status can honestly be asserted for the famous sentence, because nobody knows who wrote it or where it was first printed — it is an anonymous formulation of uncertain date, and a work that cannot be identified cannot be dated for copyright purposes. The separate matter of the documented ancestor is clearer: Mathilde Blind's English translation of Strauss, published by Henry Holt & Co. in 1873, is long out of copyright and in the public domain in the United States, so the Strauss passage quoted above may be reproduced freely. That freedom does not extend to the popular wording, which is not Strauss's text.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-your-house-was-burning-and-you-could-only-take-one-thing","url":"https://quotle.info/who-said/if-your-house-was-burning-and-you-could-only-take-one-thing/","quote":"If your house was burning and you could only take one thing with you, what would it be? I would take the fire","claim":"Paulo Coelho said: \"If your house was burning and you could only take one thing with you, what would it be? I would take the fire\"","rating":1,"verdict":"Not supported","answer":"No. The line is Jean Cocteau's. In a 1951 radio conversation with André Fraigneau — printed in Entretiens: Jean Cocteau et André Fraigneau — he was asked which object he would carry out if his house were on fire, and answered \"Je crois que j'emporterais le feu.\" Paulo Coelho did publish the anecdote, on his blog in 2007, but he named Cocteau inside it; the credit only slid onto Coelho once the retelling was clipped away from its frame.","credit":"Jean Cocteau — not Paulo Coelho. Asked in a 1951 radio conversation with André Fraigneau which object he would carry out of a burning house, Cocteau answered \"Je crois que j'emporterais le feu\" — printed in Entretiens: Jean Cocteau et André Fraigneau (Paris: U.G.E./10-18, 1965; Éditions du Rocher, 1988). Paulo Coelho retold the anecdote on his blog in 2007 and credited Cocteau by name. Chronology: Quote Investigator, 16 February 2018. — Quotle.info · Verbatim: “I would take the fire.”","comparison":"I would take the fire.","citation":"Jean Cocteau and André Fraigneau, Entretiens: Jean Cocteau et André Fraigneau (Monaco: Éditions du Rocher, 1988; first published Paris: U.G.E., \"10/18,\" 1965), transcribing radio conversations recorded in 1951. English forms as printed in The Christian Science Monitor, 1967 (\"I'd take the fire\") and The New York Times, 1988 (\"I would take the fire\"). Chronology per Quote Investigator, \"Quote Origin: I Would Carry Away the Fire,\" February 16, 2018.","rights":"This is a modern line, not an old one. Cocteau spoke it in 1951 and it was first published in Entretiens: Jean Cocteau et André Fraigneau in 1965, with a 1988 reprint from Éditions du Rocher — all well after the 1931 US public-domain cutoff, and Cocteau died in 1963, so the French text remains under his estate's control. The English wordings in circulation are uncredited translations of that copyrighted text and carry no separate public-domain status.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

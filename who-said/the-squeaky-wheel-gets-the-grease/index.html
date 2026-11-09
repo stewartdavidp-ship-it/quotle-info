@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-squeaky-wheel-gets-the-grease","url":"https://quotle.info/who-said/the-squeaky-wheel-gets-the-grease/","quote":"The Squeaky Wheel Gets the Grease","claim":"Josh Billings (Henry Wheeler Shaw) said: \"The Squeaky Wheel Gets the Grease\"","rating":1,"verdict":"Not supported","answer":"No. The proverb comes from a verse by the vaudeville comedian Cal Stewart, printed as the epigraph to Uncle Josh Weathersby's 'Punkin Centre' Stories in 1903 and signed with the name of his fictional storyteller, Josh Weathersby. We read it in the scanned 1905 edition, whose copyright page confirms the 1903 date. The long-standing credit to the humorist Josh Billings appears to be a confusion of two Joshes: Quote Investigator suggests \"some previous researcher confused the fictional character Josh Weathersby with the penname Josh Billings\". Note the familiar six-word proverb is a later condensation — Stewart's own line is \"the wheel what squeaks the loudest is the one what gets the grease\".","credit":"the modern condensation of Cal Stewart’s verse “But the wheel what squeaks the loudest / Is the one what gets the grease,” in Uncle Josh Weathersby’s “Punkin Centre” Stories (1903); not Josh Billings — traced by Quotle.info · Verbatim: “I don't believe in kickin', It aint apt to bring one peace; But the wheel what squeaks the loudest Is the one what gets the grease.”","comparison":"I don't believe in kickin', It aint apt to bring one peace; But the wheel what squeaks the loudest Is the one what gets the grease.","citation":"Stewart, Cal. Uncle Josh Weathersby's \"Punkin Centre\" Stories. Chicago: Regan Printing House, 1903, 6. Epigraph signed \"Josh Weathersby\"; page citation per Quote Investigator. Verse read by quotle.info in the 1905 Thompson & Thomas printing (Chicago), whose copyright page records \"Copyright, 1903 By W. L. Eckhardt and Calvin E. Stewart\".","rights":"Public domain in the United States. The verse was first published in 1903 — a date we confirmed from the copyright notice printed in the book itself (\"Copyright, 1903 By W. L. Eckhardt and Calvin E. Stewart\") — which is comfortably before the 1931 cut-off, and Cal Stewart died in 1919. Quote it freely.","checked":"5 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 5 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -859,6 +867,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

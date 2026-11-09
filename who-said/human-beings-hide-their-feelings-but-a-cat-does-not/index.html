@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"human-beings-hide-their-feelings-but-a-cat-does-not","url":"https://quotle.info/who-said/human-beings-hide-their-feelings-but-a-cat-does-not/","quote":"Human beings hide their feelings, but a cat does not","claim":"Ernest Hemingway said: \"Human beings hide their feelings, but a cat does not\"","rating":2,"verdict":"Needs context","answer":"Yes and no. The thought is Hemingway's only through his younger brother: Leicester Hemingway reported it in My Brother, Ernest Hemingway (1961) as \"A cat has absolute emotional honesty, Baron… People hide their feelings for various reasons, but cats never do.\" The sentence people quote today appears in Elizabeth Hamilton's 1979 book In Celebration of Cats, transcribed by Quote Investigator, where Hamilton writes it as reported speech with only 'absolute emotional honesty' inside quotation marks. No book, letter or article by Ernest Hemingway is known to contain it.","credit":"commonly credited to Ernest Hemingway, but the wording is a paraphrase. Ernest's brother Leicester Hemingway reported the remark as \"People hide their feelings for various reasons, but cats never do\" in My Brother, Ernest Hemingway (Cleveland: World Publishing, 1961), chap. 11, p. 278; the familiar \"human beings\" wording appears in Elizabeth Hamilton's In Celebration of Cats (London: David & Charles, 1979), p. 52. Traced by Quote Investigator; Wikiquote lists the sentence as disputed. Via Quotle.info · Verbatim: “A cat has absolute emotional honesty: human beings, for one reason or another, may hide their feelings, but a cat does not.”","comparison":"A cat has absolute emotional honesty: human beings, for one reason or another, may hide their feelings, but a cat does not.","citation":"Hemingway, Leicester. My Brother, Ernest Hemingway. Cleveland: The World Publishing Company, 1961, chap. 11, p. 278. Familiar \"human beings\" wording: Hamilton, Elizabeth. In Celebration of Cats. London: David & Charles, 1979, p. 52. Both citations verified with scans by Quote Investigator, \"Quote Origin: A Cat Has Absolute Emotional Honesty,\" 24 March 2026.","rights":"Both texts that carry this line are modern and under U.S. copyright: Leicester Hemingway's My Brother, Ernest Hemingway (1961) and Elizabeth Hamilton's In Celebration of Cats (1979). Ernest Hemingway is not known to have published the remark himself, so there is no earlier, public-domain printing to fall back on.","checked":"27 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

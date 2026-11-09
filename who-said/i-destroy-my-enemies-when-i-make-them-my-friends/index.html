@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-destroy-my-enemies-when-i-make-them-my-friends","url":"https://quotle.info/who-said/i-destroy-my-enemies-when-i-make-them-my-friends/","quote":"I destroy my enemies when I make them my friends","claim":"Abraham Lincoln said: \"I destroy my enemies when I make them my friends\"","rating":1,"verdict":"Not supported","answer":"No. Widely pinned on Lincoln, but there is no record of him saying or writing it. As Quote Investigator documents, the anecdote appears in print in 1818 crediting the medieval Holy Roman Emperor Sigismund, and it was not attached to Lincoln until 1940 — 75 years after his death. QI calls the saying apocryphal. The circulating form also drifts from the classic rhetorical question, \"Do I not destroy my enemies when I make them my friends?\"","credit":"Not Abraham Lincoln. This anecdote was first printed in 1818 about Emperor Sigismund (d. 1437); the Lincoln attribution only appears in 1940. Quote Investigator classifies it as apocryphal. · Verbatim: “Do I not destroy my enemies when I make them my friends?”","comparison":"Do I not destroy my enemies when I make them my friends?","citation":"Earliest documented in the Vermont Intelligencer (Bellows Falls, VT), April 1818, crediting Emperor Sigismund; first attributed to Abraham Lincoln in 1940. See Garson O'Toole, \"I Destroy My Enemies When I Make Them My Friends,\" Quote Investigator, May 13, 2020.","rights":"The exact wording cannot be tied to any single, dated work by an identifiable author — it is a centuries-old anecdote of uncertain origin, first printed in 1818 about Emperor Sigismund and only later re-credited. With no verifiable source text, no copyright status can honestly be asserted.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -836,6 +844,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

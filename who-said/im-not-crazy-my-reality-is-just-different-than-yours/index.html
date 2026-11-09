@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -509,6 +511,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -555,6 +560,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -611,7 +617,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"im-not-crazy-my-reality-is-just-different-than-yours","url":"https://quotle.info/who-said/im-not-crazy-my-reality-is-just-different-than-yours/","quote":"I'm not crazy. My reality is just different than yours","claim":"Lewis Carroll said: \"I'm not crazy. My reality is just different than yours\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator, which has examined this one directly, reports \"no substantive evidence supporting the ascription to Lewis Carroll.\" The earliest instance it located is a signature block on a Usenet message posted in January 2008 to the newsgroup alt.fiftyplus by someone using the handle Sue — and QI conjectures even she was repeating something already going round, so the originator stays anonymous. The Cheshire Cat picked up the credit in a tweet in March 2011, and Carroll's own name is attached from January 2012, when a tweet posted the line as \"Carroll – Alice in Wonderland\"; a padded-out longer wording follows in April 2012. He died in 1898.","credit":"Author unknown — not Lewis Carroll. Earliest traced appearance: an anonymous Usenet signature, January 2008. Source: Quotle.info","comparison":"","citation":"No located source. Earliest documented instance: a Usenet signature block posted to the newsgroup alt.fiftyplus in January 2008, as documented in \"Quote Origin: I'm Not Crazy. My Reality Is Just Different Than Yours,\" Quote Investigator, 16 December 2025.","rights":"No rights badge, deliberately. Carroll's own books have been out of copyright for generations, but this line is not from them, and the earliest appearance anyone has traced is an anonymous 2008 forum signature with no identifiable author and no publication we could date. There is no work here whose status we could honestly report.","checked":"17 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -842,6 +850,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

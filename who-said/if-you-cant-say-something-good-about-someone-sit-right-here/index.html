@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -524,6 +526,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -570,6 +575,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -626,7 +632,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-you-cant-say-something-good-about-someone-sit-right-here","url":"https://quotle.info/who-said/if-you-cant-say-something-good-about-someone-sit-right-here/","quote":"If You Can't Say Something Good About Someone, Sit Right Here by Me","claim":"Alice Roosevelt Longworth said: \"If You Can't Say Something Good About Someone, Sit Right Here by Me\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The pillow is genuinely hers, and the wording is documented in her own house in this exact form. The earliest known record is a Saturday Evening Post profile of Longworth, 4 December 1965, transcribed by Quote Investigator, in which the reporter describes a pillow on a chair in her sitting room embroidered with the words. What no source establishes is authorship — no source records her composing the line, and Quote Investigator concludes only that she \"definitely popularized the expression, and she may have crafted it.\" It is not Dorothy Parker's.","credit":"If you can't say something good about someone, sit right here by me. — attributed to Alice Roosevelt Longworth (1884–1980). Earliest documented as a motto embroidered on a pillow in her Washington sitting room, reported in The Saturday Evening Post, 4 December 1965; the originator is not certain. Commonly misattributed to Dorothy Parker, for which there is no substantive evidence. Via Quotle.info","comparison":"","citation":"Jean vanden Heuvel, \"The Sharpest Wit in Washington,\" The Saturday Evening Post 238, no. 24 (December 4, 1965), start p. 30, quote p. 32 — the earliest documented appearance, describing the line as embroidered on a pillow in Alice Roosevelt Longworth's sitting room. Citation details as given in Quote Investigator, \"Quote Origin: If You Can't Say Something Good About Someone, Sit Right Here by Me\" (August 9, 2014).","rights":"No rights status can be asserted for this line with confidence. Its own authorship is undetermined — Quote Investigator finds the originator's identity not certain — so there is no identifiable author or first publication to date it from. Separately, the article in which it was first recorded appeared in The Saturday Evening Post of 4 December 1965, so its copyright renewed automatically and it remains protected; we quote only the short evidentiary sentence from it. Nothing here supports treating the line as public domain.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -860,6 +868,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

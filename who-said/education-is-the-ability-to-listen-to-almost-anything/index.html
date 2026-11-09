@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"education-is-the-ability-to-listen-to-almost-anything","url":"https://quotle.info/who-said/education-is-the-ability-to-listen-to-almost-anything/","quote":"Education is the ability to listen to almost anything without losing your temper or your self-confidence","claim":"Robert Frost said: \"Education is the ability to listen to almost anything without losing your temper or your self-confidence\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Frost really did say this — though not in these words. Addressing Dartmouth's graduating class in June 1955, he told them they had been \"broadened and enlarged to where you can listen to almost anything without losing your temper or your self-confidence.\" The tidy one-liner above is a condensation of that sentence, and the source two quotation dictionaries give for it is Reader's Digest, April 1960 — an issue no accessible archive lets us read, so the exact popular wording cannot be pinned to a primary text.","credit":"Robert Frost, \"Don't Get Converted. Stay,\" address at the Dartmouth commencement, June 1955; first published in the Dartmouth Alumni Magazine, July 1955, and reprinted in Robert Frost: Poetry and Prose (Holt, Rinehart and Winston, 1972). Frost's own wording: \"You've been broadened and enlarged to where you can listen to almost anything without losing your temper or your self-confidence.\" The familiar condensed form is credited to him in Reader's Digest, April 1960. Traced by Quotle.info","comparison":"You've been broadened and enlarged to where you can listen to almost anything without losing your temper or your self-confidence.","citation":"Robert Frost, \"Don't Get Converted. Stay: Excerpts from an Address,\" in Robert Frost: Poetry and Prose, ed. Edward Connery Lathem and Lawrance Thompson (New York: Holt, Rinehart and Winston, 1972), beginning at 419. Address delivered at the Dartmouth College commencement, June 1955; first published in the Dartmouth Alumni Magazine, July 1955. For the condensed wording, see James B. Simpson, Contemporary Quotations (1964), which cites Reader's Digest, April 1960.","rights":"The text quoted here is the one printed in Robert Frost: Poetry and Prose, which carries a 1972 copyright by Holt, Rinehart and Winston, Inc., and Frost's prose is still under active rights management by his estate. The 1955 date alone would not settle it: United States works published between 1929 and 1963 entered the public domain unless their copyright was renewed in the twenty-eighth year, so the 1972 collection, not the age of the address, is what the in-copyright status rests on. The single sentence is quoted here for identification and verification.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

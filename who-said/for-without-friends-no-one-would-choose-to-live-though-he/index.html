@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"for-without-friends-no-one-would-choose-to-live-though-he","url":"https://quotle.info/who-said/for-without-friends-no-one-would-choose-to-live-though-he/","quote":"For without friends no one would choose to live, though he had all other goods","claim":"Aristotle said: \"For without friends no one would choose to live, though he had all other goods\"","rating":5,"verdict":"Supported","answer":"Yes. This is the real opening move of Book VIII of the Nicomachean Ethics (Bekker 1155a), where Aristotle turns from virtue to friendship. The exact English you see quoted is W. D. Ross's 1925 Oxford translation — the thought and the argument are Aristotle's Greek, but these particular English words are Ross's.","credit":"Aristotle, Nicomachean Ethics, Book VIII, ch. 1 (1155a), translated by W. D. Ross (Oxford University Press, 1925). Verified at quotle.info","comparison":"","citation":"Aristotle. Nicomachean Ethics, Book VIII, ch. 1 (Bekker 1155a). In The Works of Aristotle Translated into English, vol. IX, Ethica Nicomachea, translated by W. D. Ross. Oxford: Oxford University Press, 1925.","rights":"The Greek original has been out of copyright for millennia, but rights here turn on the translation. This exact English wording is W. D. Ross's, first published in 1925 in volume IX of The Works of Aristotle Translated into English (Oxford University Press) — before 1 January 1931, so it is public domain in the United States, as Wikisource states explicitly. That status does not extend to later renderings: Rackham's 1934 Loeb and modern translations are separate, later works.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -870,6 +878,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

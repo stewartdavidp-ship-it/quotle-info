@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-youre-not-ready-to-die-for-it-take-the-word-freedom-out","url":"https://quotle.info/who-said/if-youre-not-ready-to-die-for-it-take-the-word-freedom-out/","quote":"If you're not ready to die for it, take the word 'freedom' out of your vocabulary","claim":"Malcolm X said: \"If you're not ready to die for it, take the word 'freedom' out of your vocabulary\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The line is credited to Malcolm X everywhere, but Wikiquote lists it among his Attributed quotes — not in its sourced, year-organised sections — with a bare citation to the Chicago Defender of 28 November 1962 and no page, headline or facsimile. We could not produce that newspaper page, and the scholars who quote the sentence — Manning Marable and James H. Cone among them — print it with put the word 'freedom' out of your vocabulary, not take. What he demonstrably did say, closing \"The Ballot or the Bullet\" in Detroit on 12 April 1964, is the near-twin: \"if you're not ready to pay that price don't use the word freedom in your vocabulary.\"","credit":"attributed to Malcolm X (1925–1965). Wikiquote lists it among its Attributed quotes, citing the Chicago Defender, 28 November 1962; the primary page has not been located. Scholars including Manning Marable and James H. Cone print the line as \"put the word 'freedom' out of your vocabulary.\" The closest documented wording is from \"The Ballot or the Bullet\" in Detroit, 12 April 1964: \"if you're not ready to pay that price don't use the word freedom in your vocabulary.\" Traced by Quotle.info, 4 Aug 2026.","comparison":"","citation":"Malcolm X, quoted in the Chicago Defender, 28 November 1962, as cited in Wikiquote, \"Malcolm X\" (Attributed); the primary page has not been located. The sentence appears in the scholarly literature in the variant form \"If you're not ready to die for it, put the word 'freedom' out of your vocabulary,\" in Manning Marable, Malcolm X: A Life of Reinvention, and James H. Cone, Martin & Malcolm & America: A Dream or a Nightmare.","rights":"Nothing Malcolm X said or wrote can be public domain in the United States on age alone — he was born in 1925 and died in 1965, so every possible source postdates the pre-1931 first-publication cutoff. The best-cited home for this wording, a Chicago Defender item of 28 November 1962, sits firmly in copyright; and because that page has not been produced, we cannot even establish with certainty whose rights attach. Treat the line as in-copyright and quote it as a short quotation with attribution.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -74,7 +74,7 @@ function buildSearchJs() {
 }
 
 function build() {
-  const navKeys = ['home', 'quotes', 'songs', 'themes', 'authors', 'check', 'blog'];
+  const navKeys = ['home', 'quotes', 'songs', 'themes', 'authors', 'check', 'challenge', 'blog'];
   const navHtmlByActive = {};
   for (const key of navKeys) navHtmlByActive[key] = absolutiseHrefs(NAV(key));
 

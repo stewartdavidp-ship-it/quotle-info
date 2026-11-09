@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -507,6 +509,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -553,6 +558,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -609,7 +615,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-first-sign-of-civilization-in-an-ancient-culture-was-a","url":"https://quotle.info/who-said/the-first-sign-of-civilization-in-an-ancient-culture-was-a/","quote":"The first sign of civilization in an ancient culture was a femur that had been broken and then healed","claim":"Margaret Mead said: \"The first sign of civilization in an ancient culture was a femur that had been broken and then healed\"","rating":1,"verdict":"Not supported","answer":"No. No document, letter, lecture transcript or recording of Margaret Mead saying this has ever been produced. Quote Investigator finds the earliest known telling in Fearfully and Wonderfully Made (Zondervan, 1980, p. 68) by surgeon Paul Brand and Philip Yancey, where Brand recalls a Mead lecture he attended \"early in my career\" — published two years after Mead's death, so she was never in a position to confirm or deny it. The exact sentence people quote today matches no published book: it is the wording of an anonymous internet retelling. Snopes confirms that retelling is right to credit the anecdote to physician Ira Byock, who tells it in The Best Care Possible (2012) — but in his book Mead answers simply \"A healed femur.\"","credit":"Not documented from Margaret Mead. The anecdote's earliest known telling is Paul Brand and Philip Yancey, \"Fearfully and Wonderfully Made\" (Zondervan, 1980), p. 68, published two years after Mead's death; this exact wording is an unattributed internet retelling, which credits Ira Byock's \"The Best Care Possible\" (Avery, 2012) — correctly for the anecdote, but not for these words. Sources: Quote Investigator; Wikiquote lists it as Disputed; Snopes rates it Unproven.","comparison":"","citation":"Quote Investigator, \"Quote Origin: A Healed Femur Is the Earliest Sign of True Civilization,\" July 25, 2021, citing Paul Brand and Philip Yancey, Fearfully and Wonderfully Made: A Surgeon Looks at the Human and Spiritual Body (Grand Rapids, MI: Zondervan Publishing House, 1980), 68 — the earliest match known to QI. The wording quoted here matches no published source: it is the anonymous internet retelling, which credits Ira Byock, The Best Care Possible (New York: Avery, 2012), where the anecdote is told in different words.","rights":"Every documented home for this story is modern and under copyright. The anecdote first appears in Fearfully and Wonderfully Made (Zondervan, 1980) — well after the 1931 US public-domain cut-off — and the sentence quoted here is a modern retelling whose author has never been identified, so it is not public domain either. Nothing here is attributable to a public-domain work by Margaret Mead, because no Mead source for it exists.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -858,6 +866,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

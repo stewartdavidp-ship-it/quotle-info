@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -514,6 +516,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -560,6 +565,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -616,7 +622,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"believe-only-half-of-what-you-see-and-nothing-that-you-hear","url":"https://quotle.info/who-said/believe-only-half-of-what-you-see-and-nothing-that-you-hear/","quote":"Believe only half of what you see and nothing that you hear","claim":"Edgar Allan Poe said: \"Believe only half of what you see and nothing that you hear\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator's earliest example is an 1831 naval novel by William Johnson Neale, and it judges that the saying was probably already current in the Royal Navy. Poe used a reversed variant in 1845, \"Believe nothing you hear, and only one half that you see.\" This exact wording is printed in Dinah Mulock Craik's 1858 A Woman's Thoughts about Women, where she quotes it as \"a cynical saying\" ( Quote Investigator).","credit":"is an anonymous proverb, earliest known in 1831 (William Johnson Neale). It is quoted as “a cynical saying” in Dinah Mulock Craik, A Woman’s Thoughts about Women (1858). It is often credited to Edgar Allan Poe, who used the variant “Believe nothing you hear, and only one half that you see” (1845). Source: Quotle.info","comparison":"","citation":"Anonymous proverb; earliest known in William Johnson Neale, Cavendish: Or The Patrician at Sea, vol. 1 (London: Henry Colburn and Richard Bentley, 1831), 59, as cited by Quote Investigator. Poe's variant: Edgar A. Poe, \"The System of Dr. Tarr and Prof. Fether,\" Graham's Magazine 28, no. 5 (November 1845). Exact wording: Dinah Mulock Craik, A Woman's Thoughts about Women (Columbus: Follett, Foster & Co., 1858), 166.","rights":"This exact wording is printed in Dinah Mulock Craik's A Woman's Thoughts about Women (1858), as a saying already in use. Poe's 1845 variant and Neale's 1831 version are also far older than the 1931 U.S. cutoff, so the phrase is in the public domain.","checked":"3 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

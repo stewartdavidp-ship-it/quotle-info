@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"religion-is-the-opium-of-the-people","url":"https://quotle.info/who-said/religion-is-the-opium-of-the-people/","quote":"Religion is the opium of the people","claim":"Karl Marx said: \"Religion is the opium of the people\"","rating":5,"verdict":"Supported","answer":"Yes. Marx wrote it in the introduction to A Contribution to the Critique of Hegel's Philosophy of Right, printed in the Deutsch-Französische Jahrbücher (Paris, February 1844). Page 72 of that first printing reads \"Sie ist das Opium des Volks\" — rendered \"It is the opium of the people\" in H. J. Stenning's 1926 English translation, so the famous one-liner is a faithful compression of Marx's own words rather than a sentence he set down whole.","credit":"Karl Marx, introduction to A Contribution to the Critique of Hegel's Philosophy of Right, first printed in the Deutsch-Französische Jahrbücher (Paris, February 1844), p. 72; English translation by H. J. Stenning, Selected Essays (New York: International Publishers, 1926), p. 12. Verified at quotle.info · Verbatim: “Religion is the moan of the oppressed creature, the sentiment of a heartless world, as it is the spirit of spiritless conditions. It is the opium of the people.”","comparison":"Religion is the moan of the oppressed creature, the sentiment of a heartless world, as it is the spirit of spiritless conditions. It is the opium of the people.","citation":"Karl Marx, \"Zur Kritik der Hegel'schen Rechts-Philosophie. Einleitung,\" Deutsch-Französische Jahrbücher (Paris: Bureau der Jahrbücher, 1844), 71–85, at 72. English: Karl Marx, Selected Essays, trans. H. J. Stenning (New York: International Publishers, 1926), 12.","rights":"Both layers are clear. Marx's German original was published in Paris in 1844 and has long been in the public domain. The English shown here is H. J. Stenning's translation, first published in New York by International Publishers in 1926 — before 1931, so it is public domain in the United States too. Note that the more familiar modern English wording of this passage comes from a much later translation and is not public domain; that is why we quote the 1926 text.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -876,6 +884,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

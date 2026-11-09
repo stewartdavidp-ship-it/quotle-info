@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"we-are-what-we-repeatedly-do-excellence-is-not-an-act-but-a","url":"https://quotle.info/who-said/we-are-what-we-repeatedly-do-excellence-is-not-an-act-but-a/","quote":"We are what we repeatedly do. Excellence is not an act, but a habit","claim":"Will Durant said: \"We are what we repeatedly do. Excellence, then, is not an act but a habit.\"","rating":5,"verdict":"Supported","answer":"Yes. This line really is Durant's. It appears in his 1926 bestseller The Story of Philosophy, where he is summarizing Aristotle's ethics—so the crediting to Durant is correct, even though the internet overwhelmingly pins it on Aristotle. Durant's printed sentence reads \"we are what we repeatedly do. Excellence, then, is not an act but a habit\"; the viral form simply drops the word \"then.\"","credit":"Will Durant, The Story of Philosophy (1926) — summarizing Aristotle. Often misattributed to Aristotle himself. · Verbatim: “We are what we repeatedly do. Excellence, then, is not an act but a habit.”","comparison":"We are what we repeatedly do. Excellence, then, is not an act but a habit.","citation":"Will Durant, The Story of Philosophy: The Lives and Opinions of the Greater Philosophers (New York: Simon & Schuster, 1926), chapter on Aristotle, \"Ethics and the Nature of Happiness\" (at p. 87 in the edition examined by the UMass Boston Quote/Unquote blog) — summarizing Aristotle, Nicomachean Ethics, Bk. II.4 and Bk. I.7.","rights":"The Story of Philosophy was first published in 1926, before the 1931 U.S. public-domain cutoff, so the text of that first edition is in the public domain in the United States. (Durant issued a revised edition in 1933; that later revision is a separate copyright, but the sentence appears in the 1926 original.)","checked":"16 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -854,6 +862,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

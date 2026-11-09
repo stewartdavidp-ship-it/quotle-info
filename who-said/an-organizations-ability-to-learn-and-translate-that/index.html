@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"an-organizations-ability-to-learn-and-translate-that","url":"https://quotle.info/who-said/an-organizations-ability-to-learn-and-translate-that/","quote":"An organization's ability to learn, and translate that learning into action rapidly, is the ultimate competitive business advantage","claim":"Jack Welch said: \"An organization's ability to learn, and translate that learning into action rapidly, is the ultimate competitive business advantage\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The wording is genuinely Welch's so far as anyone has documented it — it is transcribed, in this exact form, in Robert Slater's Jack Welch & the G.E. Way (McGraw-Hill, 1998), p. 12, and that is the citation Wikiquote carries. But Slater was a journalist quoting him: no speech transcript, letter to share owners or interview published under Welch's own name has been shown to contain the sentence, and GE's annual-report letters for 1997–2000 do not. Cite it as reported by Slater, not as something Welch wrote.","credit":"Jack Welch, as quoted in Robert Slater, Jack Welch & the G.E. Way (New York: McGraw-Hill, 1998), p. 12. Attributed, not verified: no source published under Welch's own name has been shown to contain this wording. Via Quotle.info · Verbatim: “At the heart of this culture is an understanding that an organization's ability to learn, and translate that learning into action rapidly, is the ultimate competitive business advantage.”","comparison":"At the heart of this culture is an understanding that an organization's ability to learn, and translate that learning into action rapidly, is the ultimate competitive business advantage.","citation":"Robert Slater, Jack Welch & the G.E. Way: Management Insights and Leadership Secrets of the Legendary CEO (New York: McGraw-Hill, 1998), 12, quoting Jack Welch. No primary source published under Welch's own name has been identified for this wording.","rights":"Nothing here is old enough to be public domain. The only work shown to contain this wording is Robert Slater's Jack Welch & the G.E. Way, published by McGraw-Hill in 1998, and Welch himself spoke and wrote entirely within the modern copyright era. Quote the sentence with attribution as fair comment; do not reproduce the surrounding passage from Slater's book.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -860,6 +868,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

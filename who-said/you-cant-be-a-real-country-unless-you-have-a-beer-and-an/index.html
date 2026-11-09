@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"you-cant-be-a-real-country-unless-you-have-a-beer-and-an","url":"https://quotle.info/who-said/you-cant-be-a-real-country-unless-you-have-a-beer-and-an/","quote":"You Can't Be a Real Country Unless You Have a Beer and an Airline","claim":"Frank Zappa said: \"You Can't Be a Real Country Unless You Have a Beer and an Airline\"","rating":5,"verdict":"Supported","answer":"Yes. This one is real. It appears in The Real Frank Zappa Book (1989), chapter 12, \"America Drinks & Goes Marching\" — Quote Investigator verified the page on paper. What circulates, though, is a trimmed and slightly altered version: in the book the line is a parenthetical aside, not a standalone maxim.","credit":"Frank Zappa, The Real Frank Zappa Book (with Peter Occhiogrosso), chapter 12, \"America Drinks & Goes Marching,\" page 231. New York: Poseidon Press, 1989. Genuine — but in the book the line is a parenthetical aside, and the popular short form is trimmed and slightly altered. Via Quotle.info · Verbatim: “Every major industrialized nation has A BEER (you can't be a Real Country unless you have A BEER and an airline—it helps if you have some kind of a football team, or some nuclear weapons, but at the very least you need A BEER).”","comparison":"Every major industrialized nation has A BEER (you can't be a Real Country unless you have A BEER and an airline—it helps if you have some kind of a football team, or some nuclear weapons, but at the very least you need A BEER).","citation":"Zappa, Frank, with Peter Occhiogrosso. The Real Frank Zappa Book. New York: Poseidon Press, 1989. Chapter 12, \"America Drinks & Goes Marching,\" 231. Page located and verified on paper by Quote Investigator in the 1999 Touchstone (Simon & Schuster) reprint, which carries the 1989 copyright.","rights":"The Real Frank Zappa Book was first published in 1989 and is firmly in copyright in the United States — nothing published that recently is public domain. Rights in the book sit with Zappa's estate, co-author Peter Occhiogrosso and publisher Simon & Schuster. Zappa's musical estate — the recordings, the publishing catalogue, the films, the Vault and his name and likeness — passed from the Zappa Family Trust, founded by Gail Zappa in 2002, to Universal Music Group in June 2022; the book is a separate literary work and was not part of that deal. Quote the sentence briefly with attribution, as here; do not reprint the chapter.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -874,6 +882,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

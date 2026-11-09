@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -504,6 +506,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -550,6 +555,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -606,7 +612,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"imagine-how-much-harder-physics-would-be-if-electrons-had","url":"https://quotle.info/who-said/imagine-how-much-harder-physics-would-be-if-electrons-had/","quote":"Imagine how much harder physics would be if electrons had feelings","claim":"Richard Feynman said: \"Imagine how much harder physics would be if electrons had feelings\"","rating":2,"verdict":"Needs context","answer":"Not confirmed. No recording, transcript, programme or published Feynman text containing this sentence has ever surfaced, and it is absent from Wikiquote's sourced collection of his words. The earliest appearance anyone has located is an epigraph on the first page of a 2010 finance paper by Andrew W. Lo and Mark T. Mueller, credited there to \"Richard Feynman, speaking at a Caltech graduation ceremony\" with no citation of any kind — twenty-two years after Feynman's death. Later quotations of the line overwhelmingly trace back to that uncited epigraph, or cite nothing at all.","credit":"widely credited to Richard Feynman, but unsourced. Its earliest known appearance in print is an uncited epigraph in Andrew W. Lo and Mark T. Mueller's paper \"WARNING: Physics Envy May Be Hazardous To Your Wealth!\" (arXiv, 13 March 2010), twenty-two years after Feynman's death. No Feynman speech, book or recording containing the line has been found. Via Quotle.info","comparison":"","citation":"Earliest documented appearance: Andrew W. Lo and Mark T. Mueller, \"WARNING: Physics Envy May Be Hazardous To Your Wealth!\" arXiv:1003.2688 (submitted 13 March 2010), opening epigraph — given there as \"Richard Feynman, speaking at a Caltech graduation ceremony,\" with no citation. No source in Feynman's own writings, lectures or recorded talks has been located.","rights":"No rights status can honestly be asserted, because no source work has been identified. If Feynman really said this at a Caltech ceremony, the wording would sit with his estate; if it originated with Lo and Mueller's 2010 epigraph or with the Gell-Mann variant, it belongs to those authors and publishers. Since the origin is unknown, treat the line as unresolved rather than free to reuse — and note that neither candidate origin is old enough to be public domain in the United States.","checked":"10 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -849,6 +857,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

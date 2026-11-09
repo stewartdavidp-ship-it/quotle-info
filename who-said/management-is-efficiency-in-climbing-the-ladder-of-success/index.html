@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"management-is-efficiency-in-climbing-the-ladder-of-success","url":"https://quotle.info/who-said/management-is-efficiency-in-climbing-the-ladder-of-success/","quote":"Management is efficiency in climbing the ladder of success; leadership determines whether the ladder is leaning against the right wall","claim":"Stephen Covey said: \"Management is efficiency in climbing the ladder of success; leadership determines whether the ladder is leaning against the right wall\"","rating":5,"verdict":"Supported","answer":"Yes. This one is real, and unusually well pinned down. It is Covey's own sentence in The Seven Habits of Highly Effective People: Restoring the Character Ethic, in the chapter on Habit 2, \"Begin With the End In Mind\" — Quote Investigator prints the whole paragraph and cites it to page 101 of the 1989 Simon and Schuster edition, \"verified with scans\", and Wikiquote's sourced section gives the same book, year and page. Two things are worth knowing anyway: the sentence immediately before it in that paragraph is not his, and the ladder-against-the-wrong-wall image turns up as newspaper filler in 1915, seventeen years before he was born.","credit":"Stephen R. Covey, The Seven Habits of Highly Effective People: Restoring the Character Ethic (New York: Simon & Schuster, 1989), p. 101 — the citation verified against scans by Quote Investigator. Note that the sentence Covey places just before it, \"Management is doing things right; leadership is doing the right things,\" is one he puts in quotation marks and credits to Peter Drucker and Warren Bennis. The older image of a ladder leaning against the wrong wall is traced by Quote Investigator to a Brooklyn Daily Eagle filler item of 30 December 1915.","comparison":"","citation":"Covey, Stephen R. The Seven Habits of Highly Effective People: Restoring the Character Ethic. New York: Simon and Schuster, 1989, p. 101 (Habit 2, \"Begin With the End In Mind\").","rights":"The Seven Habits of Highly Effective People was first published in 1989 — well after 1930 — so it remains under copyright in the United States, and this sentence with it. Quote it in the ordinary way, with attribution and a page reference; do not reproduce the surrounding passage at length. The much older 1915 newspaper wording of the same idea, quoted in the section above, is a separate text and is long in the public domain.","checked":"25 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 25 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

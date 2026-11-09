@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-is-more-important-to-know-what-sort-of-person-has-a","url":"https://quotle.info/who-said/it-is-more-important-to-know-what-sort-of-person-has-a/","quote":"It is more important to know what sort of person has a disease than to know what sort of disease a person has","claim":"Hippocrates said: \"It is more important to know what sort of person has a disease than to know what sort of disease a person has\"","rating":1,"verdict":"Not supported","answer":"No. This wording appears in none of the surviving Hippocratic writings. Quote Investigator traces the maxim to turn-of-the-century medical periodicals: the earliest close match is an address by the pathologist Henry George Plimmer, delivered 2 October 1899 and printed in St. Mary's Hospital Gazette. Woods Hutchinson popularized the saying from 1902 while crediting the Guy's Hospital physician Walter Moxon — a claim QI could not substantiate — and the only Hippocrates ascription in QI's chronology is a California newspaper health column of 8 January 1987.","credit":"commonly attributed to Hippocrates, but the line is in none of the Hippocratic writings. The earliest close match is H. G. Plimmer's address of 2 October 1899, printed in St. Mary's Hospital Gazette (London); Woods Hutchinson popularized the saying from 1902, crediting Walter Moxon, which has never been verified. Originator unknown. Via Quotle.info.","comparison":"","citation":"Earliest documented close match: H. G. Plimmer, \"On Some Motives and Methods in Medicine\" (address delivered October 2, 1899), St. Mary's Hospital Gazette (London), October 1899, 116–17; quoted in Garson O'Toole, \"Quote Origin: It Is Quite As Important To Know What Kind of a Patient the Disease Has Got As To Know What Kind of a Disease the Patient Has Got,\" Quote Investigator, July 20, 2019.","rights":"No rights status can honestly be asserted for this exact wording, because no author or source work has ever been identified for it. The documented forerunners are all safely old — Plimmer's 1899 address and the anonymous 1905 JAMA version were published long before 1931 and are in the public domain in the United States — and the ancient Hippocratic writings are of course long out of copyright, but this sentence belongs to neither.","checked":"24 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 24 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -850,6 +858,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

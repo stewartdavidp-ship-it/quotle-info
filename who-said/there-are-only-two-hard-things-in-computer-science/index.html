@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"there-are-only-two-hard-things-in-computer-science","url":"https://quotle.info/who-said/there-are-only-two-hard-things-in-computer-science/","quote":"There are only two hard things in Computer Science: cache invalidation and naming things","claim":"Phil Karlton said: \"There are only two hard things in Computer Science: cache invalidation and naming things\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The credit is almost certainly right and it rests entirely on people's word. Phil Karlton was a Netscape engineer who died in a car accident in Italy on 20 June 1997. His son, David Karlton, wrote in 2017 that his father 'touted' the phrase during his Netscape years. Colleagues remember hearing it from him. But there is no email, no memo, no slide, no mailing-list post and no recording — and the earliest instances anyone has located online are from December 2005, eight years after his death. This one cannot be closed, and it is more interesting for that.","credit":"Attributed to Phil Karlton (1947–1997) of Netscape, on his son David's attestation and his colleagues' memories. The earliest written instances located date to December 2005; nothing survives in Karlton's own hand.","comparison":"","citation":"Karlton, Phil. Spoken aphorism, Netscape, mid-1990s. Attested by David Karlton, 'Naming things is hard', karlton.org, 4 December 2017. Earliest located written instances December 2005. No document in Karlton's own hand exists.","rights":"We give no rights status because there is no fixed, authored text to attach one to — the line exists as a spoken aphorism transmitted by other people, and a single sentence of this length would in most jurisdictions fall below the threshold of copyright protection anyway. Phil Karlton died in 1997, so anything he did write is protected in the UK and EU until 2067, and David Karlton's 2017 blog post is his own. Quote the aphorism freely with the credit attached; quote the blog posts about it with attribution. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -881,6 +889,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

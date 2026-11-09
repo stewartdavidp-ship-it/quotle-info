@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"eighty-percent-of-success-is-showing-up","url":"https://quotle.info/who-said/eighty-percent-of-success-is-showing-up/","quote":"Eighty percent of success is showing up","claim":"Woody Allen said: \"Eighty percent of success is showing up\"","rating":5,"verdict":"Supported","answer":"Yes. Allen's own claim. In a letter quoted in William Safire's New York Times language column of August 13, 1989, he wrote: \"I did say that 80 percent of success is showing up.\" The earliest close match Quote Investigator has found is from 1977. It is credited to Allen but uses \"life\" instead of \"success.\"","credit":"Woody Allen (letter quoted in William Safire’s “On Language” column, New York Times, August 13, 1989; an earlier form, “Showing up is 80 percent of life,” was printed in the New York Times on August 21, 1977)","comparison":"","citation":"Woody Allen, letter to William Safire, quoted in William Safire, \"On Language,\" New York Times, August 13, 1989, SM18; transcribed in \"Showing Up Is 80 Percent of Life,\" Quote Investigator, June 10, 2013 (updated February 17, 2025), https://quoteinvestigator.com/2013/06/10/showing-up/.","rights":"The wording is documented in Allen's letter as the New York Times printed it on August 13, 1989, and in an earlier \"life\" form from 1977. Both were first published long after 1931, so the source texts are treated as in copyright. Quoting the single line, with credit, is ordinary attribution.","checked":"3 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

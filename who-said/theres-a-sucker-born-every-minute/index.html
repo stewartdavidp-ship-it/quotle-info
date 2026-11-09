@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -515,6 +517,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -561,6 +566,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -617,7 +623,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"theres-a-sucker-born-every-minute","url":"https://quotle.info/who-said/theres-a-sucker-born-every-minute/","quote":"There's a Sucker Born Every Minute","claim":"Artemus Ward said: \"There's a Sucker Born Every Minute\"","rating":1,"verdict":"Not supported","answer":"No. The line is the youngest member of a family of anonymous sayings that ran through nineteenth-century print — \"a fool born every minute\" (1806), \"a flat born every minute\" (1835) — before the 'sucker' wording surfaced, credited to nobody, in a Chicago newspaper on 2 January 1879. The first known credit to Artemus Ward is a small-town New York weekly of 6 October 1888, twenty-one years after his death, and the phrase appears nowhere in his collected works.","credit":"not Artemus Ward. An anonymous gamblers' adage; the earliest known 'sucker' printing is \"Gambling in Chicago,\" The Inter-Ocean (Chicago), 2 January 1879, where it is credited only to an unnamed \"old-timer.\" The credit to Artemus Ward first appears in The Nunda News, 6 October 1888 — twenty-one years after his death — and the line occurs nowhere in his collected works. Chronology: Quote Investigator. quotle.info","comparison":"","citation":"\"Gambling in Chicago,\" The Inter-Ocean (Chicago), January 2, 1879, p. 5, col. 2 — the earliest instance using the word \"sucker,\" located by Garson O'Toole, \"Quote Origin: There's a Sucker Born Every Minute,\" Quote Investigator, April 11, 2014. Earliest credit to Artemus Ward: \"Geneseo Suckers,\" The Nunda News (Nunda, N.Y.), October 6, 1888, p. 3, col. 4.","rights":"Every documented appearance of this saying is a nineteenth-century one — 1806 through 1892 — and all of it is long out of copyright in the United States. There is also no author to hold rights in it: the phrase entered print as anonymous gamblers' slang, and the newspapers that carried it were quoting a proverb, not coining a line.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -873,6 +881,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

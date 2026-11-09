@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"were-on-to-cincinnati","url":"https://quotle.info/who-said/were-on-to-cincinnati/","quote":"We're on to Cincinnati","claim":"Bill Belichick said: \"We're on to Cincinnati\"","rating":5,"verdict":"Supported","answer":"Yes. Confirmed in a primary source: the New England Patriots' own transcript of Belichick's press conference at Gillette Stadium on Wednesday, 1 October 2014 records the sentence \"We're on to Cincinnati.\" three times verbatim, plus two answers of \"We're getting ready for Cincinnati.\" It was his stonewall response to questions about the Patriots' 41–14 loss to Kansas City two nights earlier.","credit":"Bill Belichick, press conference at Gillette Stadium, 1 October 2014 (New England Patriots transcript). Verified at quotle.info · Verbatim: “We're on to Cincinnati. It's nothing about the past, nothing about the future. Right now we're preparing for Cincinnati.”","comparison":"We're on to Cincinnati. It's nothing about the past, nothing about the future. Right now we're preparing for Cincinnati.","citation":"Bill Belichick, press conference at Gillette Stadium, Foxborough, MA, 1 October 2014. Transcript: \"Bill Belichick Press Conference Transcript: 'We're on to Cincinnati',\" NewEnglandPatriots.com, 1 October 2014.","rights":"These are extemporaneous remarks made in 2014 and first published that year, so nothing here is in the public domain under US law — the transcript is a copyrighted work of the New England Patriots. The four-word sentence itself is almost certainly too short to be protected on its own, but we make no claim to the transcript, and quote only the exchange needed to document the attribution.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -875,6 +883,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

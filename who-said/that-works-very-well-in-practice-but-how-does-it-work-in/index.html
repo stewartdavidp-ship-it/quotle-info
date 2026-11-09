@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -504,6 +506,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -550,6 +555,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -606,7 +612,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"that-works-very-well-in-practice-but-how-does-it-work-in","url":"https://quotle.info/who-said/that-works-very-well-in-practice-but-how-does-it-work-in/","quote":"That Works Very Well in Practice, But How Does It Work In Theory?","claim":"Garret FitzGerald said: \"That Works Very Well in Practice, But How Does It Work In Theory?\"","rating":1,"verdict":"Not supported","answer":"No. This is a long-running joke about economists, not a FitzGerald original. Quote Investigator traces its earliest strong match to an unsigned 1911 magazine anecdote about a Heidelberg professor and concludes that the originator was anonymous, with later instances popularised by W. R. Rodgers, Claude T. Bissell, Sean MacReamoinn and Walter Heller. FitzGerald enters the story only in 1985, when the businessman Tony O'Reilly put a version of the line in his mouth during a comic impersonation — and his 2011 obituary in The New York Times then reported it as something FitzGerald had actually said.","credit":"Not Garret FitzGerald. The joke is anonymous: Quote Investigator's earliest strong match is an unsigned 1911 item, \"A Professional Paradox,\" in The Youth's Companion (5 October 1911), and it concludes the originator cannot be identified. Close matches follow in The New Statesman and Nation (1951), Varsity Graduate (1959), The Irish Times (1972) and The Washington Star (1979, credited to economist Walter W. Heller). FitzGerald was first linked to the line on 6 July 1985, when The Irish Times reported Tony O'Reilly delivering it as part of a comic impersonation of him; his New York Times obituary of 20 May 2011 then printed a version as FitzGerald's own remark.","comparison":"","citation":"\"A Professional Paradox.\" The Youth's Companion: For All the Family 85, no. 40 (October 5, 1911): 515 — the earliest strong match located by Quote Investigator, which concludes the quip's originator was anonymous. The line was first attached to Garret FitzGerald in Anthony O'Reilly's comic impersonation of him, reported in The Irish Times (Dublin), July 6, 1985, 14.","rights":"No rights status can honestly be asserted, because the popular wording has no identifiable author or first publication. The 1911 anecdote that supplies the joke's earliest strong match is unsigned and long out of copyright, but it uses different words; the wordings that most resemble the modern form appear in works still under copyright — The New Statesman and Nation (1951), The Irish Times (1985) and The New York Times (2011). The exact string usually quoted matches none of them.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -849,6 +857,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

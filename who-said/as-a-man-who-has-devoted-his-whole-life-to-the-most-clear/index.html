@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"as-a-man-who-has-devoted-his-whole-life-to-the-most-clear","url":"https://quotle.info/who-said/as-a-man-who-has-devoted-his-whole-life-to-the-most-clear/","quote":"As a man who has devoted his whole life to the most clear headed science, to the study of matter, I can tell you as a result of my research about atoms this much: There is no matter as such. All matter originates and exists only by virtue of a force which brings the particle of an atom to vibration and holds this most minute solar system of the atom together. We must assume behind this force the existence of a conscious and intelligent mind. This mind is the matrix of all matter","claim":"Max Planck said: \"As a man who has devoted his whole life to the most clear headed science, to the study of matter, I can tell you as a result of my research about atoms this much: There is no matter as such. All matter originates and exists only by virtue of a force which brings the particle of an atom to vibration and holds this most minute solar system of the atom together. We must assume behind this force the existence of a conscious and intelligent mind. This mind is the matrix of all matter\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Widely credited to Planck and tied to a German passage held by the Archive of the Max Planck Society. That archive catalogs the item as an undated typewritten copy with no source reference. No published work by Planck containing it has been identified, and the popular English wording is a loose translation of unknown origin.","credit":"attributed to Max Planck; known only from an undated, unsourced typescript copy in the Archive of the Max Planck Society (Va. Abt., Rep. 11, Nr. 1797). Translator unknown. Via Quotle.info","comparison":"","citation":"Attributed to Max Planck. \"Äußerungen Max Plancks über Gott,\" typewritten copy without source reference, \"von einem Kongreß in Florenz,\" undated. Archiv der Max-Planck-Gesellschaft, Va. Abt., Rep. 11, Nr. 1797. English wording of unknown translation; abridged version in Gregg Braden, The Divine Matrix (Hay House, 2007).","rights":"No first publication of this passage by Planck has been identified. The German text survives only as an undated, unsourced archive copy, and the English wording is an anonymous translation in several variants. A later book that reprints a version, such as Braden's 2007 The Divine Matrix, is itself in copyright, so no public-domain status is claimed here.","checked":"2 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 2 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -840,6 +848,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

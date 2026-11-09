@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-system-must-have-an-aim-without-an-aim-there-is-no-system","url":"https://quotle.info/who-said/a-system-must-have-an-aim-without-an-aim-there-is-no-system/","quote":"A system must have an aim. Without an aim, there is no system","claim":"W. Edwards Deming said: \"A system must have an aim. Without an aim, there is no system\"","rating":5,"verdict":"Supported","answer":"Yes. Deming wrote it in The New Economics for Industry, Government, Education, his final book, first published in 1993 by MIT's Center for Advanced Engineering Study. The sentence sits inside his definition of a system, and the wording that circulates online is his, not a paraphrase — the W. Edwards Deming Institute quotes it verbatim and puts it on p. 36 of the 2018 MIT Press third edition.","credit":"W. Edwards Deming, The New Economics for Industry, Government, Education (MIT Center for Advanced Engineering Study, 1993); p. 36 in the MIT Press third edition, 2018. Verified via quotle.info","comparison":"","citation":"Deming, W. Edwards. The New Economics for Industry, Government, Education. Cambridge, MA: Massachusetts Institute of Technology, Center for Advanced Engineering Study, 1993. Quoted at p. 50 of the 1994 MIT edition and p. 36 of the third edition (Cambridge, MA: MIT Press, 2018).","rights":"The New Economics for Industry, Government, Education was first published in 1993 and remains in print — the third edition was issued by The MIT Press in 2018 with a new introduction by Deming's grandson, Kevin Cahill. A 1993 work by an identified author is well within US copyright, so the book is not public domain; the short passage above is reproduced here as an attributed citation for verification.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -860,6 +868,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

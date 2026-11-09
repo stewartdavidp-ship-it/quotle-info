@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"will-you-have-sugar-and-cream-in-your-nose","url":"https://quotle.info/who-said/will-you-have-sugar-and-cream-in-your-nose/","quote":"Will you have sugar and cream in your nose?","claim":"J. P. Morgan said: \"Will you have sugar and cream in your nose?\"","rating":1,"verdict":"Not supported","answer":"No. Morgan never said this: in every version of the story the line is the flustered hostess's blunder, and Morgan is the guest with the famously disfigured nose. The earliest printing Quote Investigator can find is Mary Roberts Rinehart's humour piece \"Just a Touch of Celebrity\" in The Saturday Evening Post of 14 January 1928, where nobody is named — the financier is only \"Mr. Blank.\" Morgan's name was grafted on by 1936, and Anne Morrow Lindbergh, cast as the child in the tale, later said it had \"not a grain of truth in it.\"","credit":"not J. P. Morgan. In every telling the line is a hostess's blunder, not the banker's; Morgan is the guest. The earliest known printing is Mary Roberts Rinehart, \"Just a Touch of Celebrity,\" The Saturday Evening Post, 14 January 1928, where no one is named. Morgan and the Morrows were attached by 1936, twenty-three years after his death in 1913, and Anne Morrow Lindbergh said the story had \"not a grain of truth in it.\" Via Quotle.info · Verbatim: “Mr. Blank, will you have sugar and cream in your nose?”","comparison":"Mr. Blank, will you have sugar and cream in your nose?","citation":"Earliest documented in Mary Roberts Rinehart, \"Just a Touch of Celebrity,\" The Saturday Evening Post 200, no. 29 (January 14, 1928): 6, 84 (citation as documented by Quote Investigator, \"Anecdote Origin: Will You Have Sugar and Cream in Your Nose?\", October 24, 2024). Morgan first named in O. O. McIntyre, \"New York Day by Day,\" Hickory Daily Record, February 10, 1936, 4. Denial reported in Jean Strouse, \"A Reporter at Large: The Unknown J. P. Morgan,\" The New Yorker, March 29, 1999, 66, 68.","rights":"The wording's earliest documented home is a periodical from January 1928 — The Saturday Evening Post of 14 January that year, which entered the United States public domain on 1 January 2024, when the 95-year copyright term for 1928 publications expired. The anecdote itself is anonymous folklore with no identifiable owner. Two honest caveats: the 1928 text is cited here from Quote Investigator's transcription rather than from our own inspection of the issue, and the modern retellings quoted on this page (Jean Strouse's 1999 essay in particular) remain in copyright to their authors and publishers.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

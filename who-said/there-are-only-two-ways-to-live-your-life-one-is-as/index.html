@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"there-are-only-two-ways-to-live-your-life-one-is-as","url":"https://quotle.info/who-said/there-are-only-two-ways-to-live-your-life-one-is-as/","quote":"There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle","claim":"Albert Einstein said: \"There are only two ways to live your life. One is as though nothing is a miracle. The other is as though everything is a miracle\"","rating":1,"verdict":"Not supported","answer":"No. There is no Einstein source. The earliest located instance is a 1942 note kept by the American geographer Gilbert Fowler White, who wrote the saying down and attributed it to Einstein — but left no indication of where he had heard or read it. That is the whole documentary trail: a private notebook, a name, and no citation. Princeton University Press's The Ultimate Quotable Einstein files it under 'Probably Not By Einstein.'","credit":"An anonymous saying, earliest located in a 1942 private note; the idea goes back to Victorian sermons. Not Albert Einstein.","comparison":"","citation":"Anonymous saying. Earliest located instance: private note by Gilbert Fowler White, 1942, already crediting Einstein without citation. Antecedents in religious writing from 1839; Basil Wilberforce sermon, 1896.","rights":"We are omitting a rights status, because there is no attributable text to attach one to. The 19th-century religious sources are long out of copyright. The saying in its modern form has no identified author and no identified first publication, so no copyright term can be calculated — that is a gap in the record, not a grant of freedom. If you quote it, quote it as anonymous rather than as Einstein. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -859,6 +867,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

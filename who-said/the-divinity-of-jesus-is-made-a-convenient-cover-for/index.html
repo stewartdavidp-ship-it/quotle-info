@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-divinity-of-jesus-is-made-a-convenient-cover-for","url":"https://quotle.info/who-said/the-divinity-of-jesus-is-made-a-convenient-cover-for/","quote":"The \"divinity\" of Jesus is made a convenient cover for absurdity. Nowhere in the Gospels do we find a precept for Creeds, Confessions, Oaths, Doctrines, and whole carloads of other foolish trumpery that we find in Christianity","claim":"\"The \"divinity\" of Jesus is made a convenient cover for absurdity. Nowhere in the Gospels do we find a precept for Creeds, Confessions, Oaths, Doctrines, and whole carloads of other foolish trumpery that we find in Christianity\"","rating":1,"verdict":"Not supported","answer":"Adams never wrote this sentence. It is a reworded splice of two entries in his diary. On 13 February 1756 he wrote, in the margin, \"Thus mystery is made a convenient Cover for absurdity.\" On 18 February 1756 he asked where the Gospel requires \"Creeds, Confessions, Oaths, Subscriptions and whole Cartloads of other trumpery.\" The words \"divinity,\" \"Doctrines,\" \"foolish\" and \"Christianity\" were added later.","credit":"not John Adams’s wording; a modern paraphrase of his diary entries of 13 and 18 February 1756 (“Thus mystery is made a convenient Cover for absurdity”). Via Quotle.info","comparison":"","citation":"John Adams, diary entries for 13 and 18 February 1756, in The Works of John Adams, Second President of the United States, ed. Charles Francis Adams, vol. 2 (Boston: Charles C. Little and James Brown, 1850), 4–6. The popular composite wording is attributed to Adams in William Edelen, Spirit (1988), 4, per Wikiquote.","rights":"The popular wording is a modern paraphrase. Wikiquote finds it in a 1988 book, but no original work by Adams contains it, so we assert no copyright status for it. The genuine diary lines Adams wrote in 1756 were printed in The Works of John Adams, vol. 2 (1850), and are in the public domain in the US.","checked":"2 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 2 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -847,6 +855,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

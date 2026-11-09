@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-politician-is-a-man-who-understands-government-and-it","url":"https://quotle.info/who-said/a-politician-is-a-man-who-understands-government-and-it/","quote":"A politician is a man who understands government, and it takes a politician to run a government. A statesman is a politician who's been dead 10 or 15 years","claim":"Harry S. Truman said: \"A politician is a man who understands government, and it takes a politician to run a government. A statesman is a politician who's been dead 10 or 15 years\"","rating":5,"verdict":"Supported","answer":"Yes. Truman said this in impromptu remarks before the Reciprocity Club in Washington, D.C. on 11 April 1958, five years out of office, and the New York World-Telegram and Sun carried it the next morning. The citation is set out in the Library of Congress's own reference work Respectfully Quoted, which records the venue, the date and that newspaper report of 12 April 1958. The full remark begins with a line usually dropped in circulation: \"I'm proud that I'm a politician.\"","credit":"Harry S. Truman, impromptu remarks before the Reciprocity Club, Washington, D.C., 11 April 1958, as reported by the New York World-Telegram and Sun, 12 April 1958. Source: Quotle.info · Verbatim: “I’m proud that I’m a politician. A politician is a man who understands government, and it takes a politician to run a government. A statesman is a politician who’s been dead 10 or 15 years.”","comparison":"I’m proud that I’m a politician. A politician is a man who understands government, and it takes a politician to run a government. A statesman is a politician who’s been dead 10 or 15 years.","citation":"Suzy Platt, ed., Respectfully Quoted: A Dictionary of Quotations Requested from the Congressional Research Service (Washington, DC: Library of Congress, 1989), no. 1405, quoting Harry S. Truman, impromptu remarks before the Reciprocity Club, Washington, DC, April 11, 1958, as reported by the New York World-Telegram and Sun, April 12, 1958, p. 4.","rights":"Spoken in 1958 and first published that year in a newspaper report, so this is treated as in copyright. Quoting a single remark with attribution is ordinary fair use, but the remark is not public domain. Respectfully Quoted itself, as a Library of Congress publication, is a United States Government work.","checked":"12 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 12 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -835,6 +843,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

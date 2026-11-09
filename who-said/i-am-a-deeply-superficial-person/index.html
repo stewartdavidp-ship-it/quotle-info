@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-am-a-deeply-superficial-person","url":"https://quotle.info/who-said/i-am-a-deeply-superficial-person/","quote":"I am a deeply superficial person","claim":"Andy Warhol said: \"I am a deeply superficial person\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Warhol's most-quoted paradox has no documented origin. It is absent from his own books, and no speech, interview, letter or dated remark has ever been cited for it — the earliest printing we could locate is a 1984 quotation anthology that gives no source at all. It is thoroughly Warhol in spirit, and nobody else claims it, but the exact wording cannot be pinned to him.","credit":"attributed to Andy Warhol (1928–1987). No primary source: the line is absent from his own books, and the earliest printing located is Robert Byrne's 1984 quotation anthology, which cites nothing. Via Quotle.info","comparison":"","citation":"No primary source located. Earliest print appearance found: Robert Byrne, The Other 637 Best Things Anybody Ever Said (New York: Atheneum, 1984), entry 189 — printed with Warhol's name and no source. The line does not appear in The Philosophy of Andy Warhol (1975) or POPism (1980).","rights":"Because the wording cannot be tied to any published work, no copyright status can honestly be asserted. If Warhol said it, the words would belong to his estate; if the sentence was shaped by an editor or anthologist, rights would follow that publication instead. Either way, an American source from the 1960s onward would be in copyright, not public domain — so this line should never be treated as free to reuse.","checked":"24 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 24 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -849,6 +857,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

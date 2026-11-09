@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"dont-aim-at-success-the-more-you-aim-at-it-and-make-it-a","url":"https://quotle.info/who-said/dont-aim-at-success-the-more-you-aim-at-it-and-make-it-a/","quote":"Don't aim at success. The more you aim at it and make it a target, the more you are going to miss it","claim":"Viktor Frankl said: \"Don't aim at success. The more you aim at it and make it a target, the more you are going to miss it\"","rating":5,"verdict":"Supported","answer":"Yes. Frankl wrote it for the Preface to the 1992 Edition of Man's Search for Meaning — front matter added decades after the 1946 camp memoir the book is famous for — quoting the standing advice he gave his students in Europe and America. In his own text the two halves are joined by a dash, and the passage keeps going: success, like happiness, cannot be pursued; it must ensue.","credit":"Viktor E. Frankl, \"Preface to the 1992 Edition,\" Man's Search for Meaning, 4th ed. (Boston: Beacon Press, 1992), 12–13. Frankl's wording: \"Don't aim at success—the more you aim at it and make it a target, the more you are going to miss it. For success, like happiness, cannot be pursued; it must ensue…\"","comparison":"Don't aim at success—the more you aim at it and make it a target, the more you are going to miss it. For success, like happiness, cannot be pursued; it must ensue.","citation":"Viktor E. Frankl, “Preface to the 1992 Edition,” in Man's Search for Meaning, 4th ed., part one trans. Ilse Lasch (Boston: Beacon Press, 1992), 12–13.","rights":"This sentence is not from the 1946 German original, whose age might otherwise be argued about — Frankl wrote it for a preface first published in 1992, and the Beacon Press text carries the copyright line © 1959, 1962, 1984, 1992 by Viktor E. Frankl. A work first published in 1992 is firmly in copyright in the United States, and Beacon Press still publishes the book, so treat this wording as licensed material rather than public domain.","checked":"24 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 24 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

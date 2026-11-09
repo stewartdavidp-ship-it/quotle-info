@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"socialized-medicine-is-the-keystone-to-the-arch-of-the","url":"https://quotle.info/who-said/socialized-medicine-is-the-keystone-to-the-arch-of-the/","quote":"Socialized medicine is the keystone to the arch of the socialist state","claim":"Vladimir Lenin said: \"Socialized medicine is the keystone to the arch of the socialist state\"","rating":1,"verdict":"Not supported","answer":"No. Nobody has found this line in anything Lenin wrote or said. It surfaced in American medical-society literature during the fight over national health insurance. In November 1947 it was credited only to \"Communists\"; by April 1948 it was being put in Lenin's mouth. In 1949 the Library of Congress reported it could not trace it.","credit":"falsely attributed to Vladimir Lenin. It is not in his works; the line circulated in U.S. anti–health insurance literature from 1947 and was credited to Lenin by 1948. (Quotle.info)","comparison":"","citation":"Not found in Lenin's works. Unattributed form (\"Communists have proclaimed socialized medicine the keystone to the arch of the socialistic state\") quoted from Walter Steele in Journal of the South Carolina Medical Association 43, no. 11 (November 1947). Attributed to Lenin in Virginia Medical Monthly 75, no. 4 (April 1948). Library of Congress, Legislative Reference Service, letter to Sen. James E. Murray, May 2, 1949, in U.S. Senate, Subcommittee on Health, National Health Program, 1949: Hearings (Washington, DC: GPO, 1949).","rights":"The line is an anonymous invention falsely credited to Lenin, and it has no identifiable author or original work, so we make no copyright claim for it. The 1947–1948 journal passages quoted above only repeat it. Neither one is the line's source.","checked":"2 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 2 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -849,6 +857,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

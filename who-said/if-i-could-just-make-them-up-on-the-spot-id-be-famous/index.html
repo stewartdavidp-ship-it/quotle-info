@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-i-could-just-make-them-up-on-the-spot-id-be-famous","url":"https://quotle.info/who-said/if-i-could-just-make-them-up-on-the-spot-id-be-famous/","quote":"If I Could Just Make Them Up On the Spot, I'd Be Famous","claim":"Yogi Berra said: \"If I Could Just Make Them Up On the Spot, I'd Be Famous\"","rating":5,"verdict":"Supported","answer":"Yes. Berra told this one on himself. In his 2001 book When You Come to a Fork in the Road, Take It! he describes a couple visiting his museum who asked him to produce a Yogi-ism on demand, and writes that he told them he doesn't make them up on the spot — that if he could, he'd be famous. Quote Investigator finds good evidence he coined it; the crisp quoted wording everyone shares is how Sports Illustrated printed the same exchange in 2011.","credit":"Yogi Berra, recounting an exchange with visitors at the Yogi Berra Museum & Learning Center in \"When You Come to a Fork in the Road, Take It!\" (Hyperion, 2001). Berra's book tells it in reported speech; this quoted wording is how Sports Illustrated printed it on 4 July 2011. Verified via Quotle.info · Verbatim: “If I could just make 'em up on the spot, I'd be famous.”","comparison":"If I could just make 'em up on the spot, I'd be famous.","citation":"Yogi Berra with Dave Kaplan, When You Come to a Fork in the Road, Take It! Inspiration and Wisdom from One of Baseball's Greatest Heroes (New York: Hyperion, 2001); the museum passage is at quote page 138 of the Hyperion paperback edition, per Quote Investigator. The familiar quoted wording appears in Joe Posnanski, \"Where Are They Now?: Yogi Berra Will Be a Living Legend Even After He's Gone,\" Sports Illustrated, July 4, 2011, and in Jeremy Stahl, Slate, September 23, 2015.","rights":"This is a modern, in-copyright line. The work it comes from, When You Come to a Fork in the Road, Take It!, was first published on 23 May 2001, and the familiar quoted wording appeared in Sports Illustrated in 2011 — both far too recent for United States public domain. Quote the sentence with attribution; don't reproduce the surrounding passage.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -876,6 +884,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

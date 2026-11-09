@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -529,6 +531,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -575,6 +580,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -631,7 +637,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-do-not-seek-i-find","url":"https://quotle.info/who-said/i-do-not-seek-i-find/","quote":"I do not seek. I find","claim":"Pablo Picasso said: \"I do not seek. I find\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The wording is in print under Picasso's name in his lifetime — but the document behind it is contested. \"Je ne cherche pas, je trouve\" appears in \"Lettre sur l'art par Picasso\" in the Paris review Formes, no. 2 (February 1930), which the editors introduce as extracts from a text published under Picasso's name in the Moscow magazine Ogoniok (no. 20, 16 May 1926) and translated from the Russian by C. Motchoulsky (BnF Gallica). It falls short of verified for a reason deeper than the translation chain: Pierre Daix's Dictionnaire Picasso (1995) judges that Russian publication, put out by Gueorgui Iakoulov, \"une reprise piratée et émaillée d'inventions\" — a pirated reworking laced with inventions — of the authentic interview Picasso gave Marius de Zayas in 1923. So this is an interview text of doubtful provenance, not a letter Picasso wrote. English Wikiquote files the English form in its Disputed section, and Hélène Parmelin, who knew Picasso well, hedged on whether he ever said it at all.","credit":"I do not seek. I find. — attributed to Pablo Picasso. Printed in French as “Je ne cherche pas, je trouve” in “Lettre sur l'art,” Formes no. 2 (February 1930), translated from the Russian by C. Motchoulsky, from a text published under Picasso's name in the Moscow magazine Ogoniok in 1926 — which Pierre Daix identified as a pirated rework of Picasso's authentic 1923 interview with Marius de Zayas. English Wikiquote lists the English wording as disputed.","comparison":"","citation":"\"Lettre sur l'art par Picasso,\" trans. from the Russian by C. Motchoulsky, Formes: revue internationale des arts plastiques, no. 2 (February 1930): 3 (Citations vérifiées gives pp. 2, 5). Presented by the editors as extracts from a letter signed by Picasso, reprinted from Ogoniok (Moscow), no. 20, 16 May 1926 — but Pierre Daix, Dictionnaire Picasso (1995), 329–330, 488, 914, identifies that publication as a pirated, invention-laced reworking of Picasso's 1923 interview with Marius de Zayas. English Wikiquote lists the English form, \"I do not seek, I find,\" in its Disputed section.","rights":"Both publications behind this line predate 1931 and are in the public domain in the United States: the Russian text in Ogoniok (1926) and the French rendering in Formes (February 1930), translated by C. Motchoulsky. This is a US finding only — outside the US the term runs seventy years from the author's death (Picasso died in 1973), so material published under his name stays in copyright in France and the EU until 2044. The bare four-word English rendering has no identified translator and is not traceable to any one copyrighted edition. Note also that modern books and scholarly editions that reprint the essay — such as Gallimard's Propos sur l'art (1998) — carry their own copyright in those editions.","checked":"27 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -901,6 +909,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

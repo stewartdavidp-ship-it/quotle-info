@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"once-you-replace-negative-thoughts-with-positive-ones-youll","url":"https://quotle.info/who-said/once-you-replace-negative-thoughts-with-positive-ones-youll/","quote":"Once you replace negative thoughts with positive ones, you'll start having positive results","claim":"Dale Carnegie said: \"Once you replace negative thoughts with positive ones, you'll start having positive results\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator traced this sentence and concluded that Willie Nelson should be credited with it: it is the epigraph of The Tao of Willie: A Guide to the Happiness in Your Heart, written with Turk Pipkin and published by Gotham Books in 2006, on page vii. Dale Carnegie is a genuine near-miss rather than a random famous name — his How to Stop Worrying and Start Living (1948) says that turning a minus into a plus \"will replace negative thoughts with positive thoughts,\" which is a different sentence making a related point. Carnegie died in 1955; the aphorism as people share it appears in Nelson's 2006 book.","credit":"Willie Nelson, The Tao of Willie: A Guide to the Happiness in Your Heart (New York: Gotham Books, 2006), epigraph, p. vii. Not Dale Carnegie: Carnegie's How to Stop Worrying and Start Living (1948) contains a different sentence, \"it will replace negative thoughts with positive thoughts.\" Attribution history documented by Quote Investigator, 5 May 2017. Via Quotle.info","comparison":"","citation":"Willie Nelson with Turk Pipkin, The Tao of Willie: A Guide to the Happiness in Your Heart (New York: Gotham Books, 2006), vii (epigraph). Attribution history: Quote Investigator, \"Quote Origin: Once You Replace Negative Thoughts with Positive Ones, You'll Start Having Positive Results,\" 5 May 2017.","rights":"The wording belongs to a book first published in 2006, so it is firmly inside US copyright — not public domain, however freely it gets pasted onto graphics. The near-miss sentence it is confused with is no freer: Carnegie's How to Stop Worrying and Start Living was first published in 1948, also after the pre-1931 public-domain cutoff.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -870,6 +878,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

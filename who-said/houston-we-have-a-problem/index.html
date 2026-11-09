@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -514,6 +516,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -560,6 +565,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -616,7 +622,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"houston-we-have-a-problem","url":"https://quotle.info/who-said/houston-we-have-a-problem/","quote":"Houston, we have a problem","claim":"Jim Lovell said: \"Houston, we have a problem\"","rating":1,"verdict":"Not supported","answer":"No. Nobody said this in space. The real call, at 055:55:19 mission elapsed time on 13 April 1970, came from command module pilot Jack Swigert — \"Okay, Houston… we've had a problem here\" — and Lovell repeated it sixteen seconds later as \"Ah, Houston, we've had a problem. We've had a Main B Bus Undervolt.\" The present-tense \"we have a problem\" is dialogue written for Ron Howard's 1995 film Apollo 13, where Tom Hanks says it as Lovell.","credit":"Jack Swigert, Apollo 13, 13 April 1970, repeated moments later by commander Jim Lovell as \"Ah, Houston, we've had a problem.\" The familiar \"Houston, we have a problem\" is dialogue from the 1995 film Apollo 13, not a real transmission. · Verbatim: “Ah, Houston, we've had a problem. We've had a Main B Bus Undervolt.”","comparison":"Ah, Houston, we've had a problem. We've had a Main B Bus Undervolt.","citation":"Apollo 13 Technical Air-to-Ground Voice Transcription (NASA, April 1, 1970), 055:55:19–055:55:35 GET; NASA Technical Reports Server, document 20160014370. The popular wording originates in Apollo 13, directed by Ron Howard, screenplay by William Broyles Jr. and Al Reinert (Imagine Entertainment / Universal Pictures, 1995).","rights":"The rights here split cleanly along the line between what was said and what people quote. The actual transmission survives in the Apollo 13 Technical Air-to-Ground Voice Transcription (NASA, April 1970), which NASA's Technical Reports Server records as a public-use work of the U.S. Government — so \"Houston, we've had a problem\" carries no copyright encumbrance. The famous wording, however, is not from that transcript at all: it is a line of dialogue written for the 1995 film Apollo 13, a 1995 work and therefore in copyright, which is why this page classifies it conservatively as in-copyright rather than public-domain.","checked":"16 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -860,6 +868,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

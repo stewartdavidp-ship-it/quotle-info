@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"men-are-not-prisoners-of-fate-but-only-prisoners-of-their","url":"https://quotle.info/who-said/men-are-not-prisoners-of-fate-but-only-prisoners-of-their/","quote":"Men are not prisoners of fate, but only prisoners of their own minds","claim":"Franklin D. Roosevelt said: \"Men are not prisoners of fate, but only prisoners of their own minds\"","rating":5,"verdict":"Supported","answer":"Yes. Confirmed word for word in Roosevelt's Address to the Governing Board of the Pan American Union, Washington, D.C., April 14, 1939, printed in The Public Papers and Addresses of Franklin D. Roosevelt (1939 volume, War and Neutrality). He was talking about nations, not personal self-help: the Old World, he said, was not doomed to another war.","credit":"Franklin D. Roosevelt, Address to the Governing Board of the Pan American Union, Washington, D.C., April 14, 1939","comparison":"","citation":"Roosevelt, Franklin D. \"Address to the Governing Board of the Pan American Union,\" Washington, D.C., April 14, 1939. In The Public Papers and Addresses of Franklin D. Roosevelt, 1939 vol., War and Neutrality, 195–199. Online by Gerhard Peters and John T. Woolley, The American Presidency Project, https://www.presidency.ucsb.edu/node/209509.","rights":"This is an official address by a sitting U.S. President, which makes it a work of the United States Government. 17 U.S.C. § 105 says copyright protection \"is not available for any work of the United States Government,\" so the speech text is public domain, even though it dates from 1939. Editorial matter added by later compilers is a separate question.","checked":"2 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 2 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -815,6 +823,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-penalty-is-a-cowardly-way-to-score","url":"https://quotle.info/who-said/a-penalty-is-a-cowardly-way-to-score/","quote":"A penalty is a cowardly way to score","claim":"Pelé said: \"A penalty is a cowardly way to score\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Credited to Pelé everywhere and consistent with a habit ESPN's 2015 retrospective reports — it says he was not Santos's usual penalty taker, though that claim is itself unsourced — but no interview, match report or page of his own books has ever been produced for it. The oldest dated attribution we could find is an entry in Phil Shaw's The Book of Football Quotations, which files the line under 1966 without saying where or to whom he said it.","credit":"attributed to Pelé (1940–2022). No primary source has been located: Quote Investigator has never examined it, and Wikiquote's only citation is Goodreads. The earliest dated attribution found is Phil Shaw's The Book of Football Quotations, 9th ed. (Random House, 2011), p. 342, which dates the remark to 1966 without citing where it was said. Checked by Quotle.info, 27 Jul 2026.","comparison":"","citation":"No primary source located. Earliest dated attribution found: Phil Shaw, The Book of Football Quotations, 9th ed. (Random House, 2011), 342, where the line is attributed to Pelé and dated 1966 without further citation.","rights":"No first publication can be identified for this wording, so no rights status can be asserted. Do not assume it is public domain: if Pelé said it, the remark belongs to the second half of the twentieth century, and any published transcription of it — in a newspaper, a book or a quotations anthology such as Phil Shaw's 2011 edition — would be modern and in copyright to its own publisher.","checked":"27 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -860,6 +868,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-book-must-be-the-axe-for-the-frozen-sea-within-us","url":"https://quotle.info/who-said/a-book-must-be-the-axe-for-the-frozen-sea-within-us/","quote":"A book must be the axe for the frozen sea within us","claim":"Franz Kafka said: \"A book must be the axe for the frozen sea within us\"","rating":5,"verdict":"Supported","answer":"Yes. Genuinely Kafka. He wrote it in a letter to his friend Oskar Pollak dated 27 January 1904 — German original: \"ein Buch muß die Axt sein für das gefrorene Meer in uns.\" The circulated \"within us\" is a translation choice; the standard published English (Winston, 1977) reads \"inside us.\"","credit":"Franz Kafka, letter to Oskar Pollak, 27 January 1904 (German: \"ein Buch muß die Axt sein für das gefrorene Meer in uns\"; standard English translation by Richard & Clara Winston, 1977, reads \"inside us\")","comparison":"","citation":"Franz Kafka, letter to Oskar Pollak, 27 January 1904, in Letters to Friends, Family, and Editors, trans. Richard and Clara Winston (New York: Schocken Books, 1977). German original: \"ein Buch muß die Axt sein für das gefrorene Meer in uns.\"","rights":"Kafka wrote the line in German in 1904 and it entered the public domain long ago in the original; the letter was first printed in German in Briefe 1902–1924 (1958). But the widely shared English wording is a 20th-century translation — the standard rendering by Richard & Clara Winston (Letters to Friends, Family, and Editors, Schocken, 1977) reads \"the frozen sea inside us\" — so the English text you see quoted is in copyright.","checked":"16 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -854,6 +862,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

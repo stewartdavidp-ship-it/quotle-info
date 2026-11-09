@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -514,6 +516,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -560,6 +565,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -616,7 +622,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-took-me-four-years-to-paint-like-raphael-but-a-lifetime","url":"https://quotle.info/who-said/it-took-me-four-years-to-paint-like-raphael-but-a-lifetime/","quote":"It took me four years to paint like Raphael, but a lifetime to paint like a child","claim":"Pablo Picasso said: \"It took me four years to paint like Raphael, but a lifetime to paint like a child.\"","rating":2,"verdict":"Needs context","answer":"Yes and no. Picasso did say something close to this — but not this. The remark that is actually documented was made to the critic Herbert Read while Picasso was visiting an exhibition of children's drawings, and Read published it in The Times of 27 October 1956: \"When I was the age of these children I could draw like Raphael: it took me many years to learn how to draw like these children.\" It is about drawing, it says many years, and it contains no \"four years.\" The famous \"four years … a lifetime to paint like a child\" sentence has not been located in any source from Picasso's lifetime; Wikiquote files it among quotes attributed from posthumous publications, its earliest cited printing being a 1998 book about drumming.","credit":"Not Picasso's words. What is documented is a remark he made at an exhibition of children's drawings, reported by Herbert Read in The Times, 27 October 1956, p. 7 (cited variously as Read's article \"Picasso at 75\" and as a letter from Read to the paper): \"When I was the age of these children I could draw like Raphael: it took me many years to learn how to draw like these children.\" The popular \"four years … a lifetime to paint like a child\" version has not been found in any source from Picasso's lifetime; the earliest datable printing located is Modern Drummer, 1989. — Quotle.info","comparison":"When I was the age of these children I could draw like Raphael: it took me many years to learn how to draw like these children.","citation":"Herbert Read, The Times (London), 27 October 1956, 7 — cited variously as Read's article \"Picasso at 75\" and, by Oxford University Press, as a letter from Read to the paper; the remark is recorded in Susan Ratcliffe, ed., Oxford Essential Quotations, 4th ed. (Oxford: Oxford University Press, published online 2016), s.v. \"Pablo Picasso.\" The popular \"four years … a lifetime to paint like a child\" wording is not in that source; the earliest datable printing located is Modern Drummer 13 (1989), 50, with the same wording in Peter Erskine and Rick Mattingly, The Drum Perspective (1998), 73 — the source cited by Wikiquote.","rights":"The famous \"four years … a lifetime to paint like a child\" sentence has no identifiable author and no identifiable first publication, so no rights status can honestly be asserted for it — and it certainly cannot be called public domain. The nearest documented text, Herbert Read's report of the remark in The Times of 27 October 1956, was first published long after 1930 and is modern in-copyright newspaper material; treat any reproduction of Read's actual wording accordingly.","checked":"27 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -853,6 +861,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

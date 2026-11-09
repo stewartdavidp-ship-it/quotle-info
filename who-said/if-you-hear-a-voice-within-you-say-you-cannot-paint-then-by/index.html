@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -525,6 +527,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -571,6 +576,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -627,7 +633,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-you-hear-a-voice-within-you-say-you-cannot-paint-then-by","url":"https://quotle.info/who-said/if-you-hear-a-voice-within-you-say-you-cannot-paint-then-by/","quote":"If you hear a voice within you say you cannot paint, then by all means paint, and that voice will be silenced","claim":"Vincent van Gogh said: \"If you hear a voice within you say you cannot paint, then by all means paint, and that voice will be silenced\"","rating":3,"verdict":"Not confirmed","answer":"Yes and no. Van Gogh really did write this — in Dutch, to his brother Theo, from Drenthe on 28 October 1883 (Van Gogh Museum letter 400; Complete Letters 336), and Quote Investigator credits him for it. The English wording that circulates, though, matches none of the published translations on record: the renderings QI collects have the voice say 'you are no painter' or 'You are not a painter,' address Theo as 'lad' or 'boy,' and finish 'but only by working.'","credit":"Vincent van Gogh, letter to his brother Theo, Drenthe, 28 October 1883 (Van Gogh Museum letter 400; Complete Letters 336). The familiar English is a shortened rendering — the published translation reads: \"If you hear a voice within you saying, 'You are not a painter,' then by all means paint, boy, and that voice will be silenced, but only by working.\" — via Quotle.info","comparison":"If you hear a voice within you saying, 'You are not a painter,' then by all means paint, boy, and that voice will be silenced, but only by working.","citation":"Vincent van Gogh to Theo van Gogh, Nieuw-Amsterdam (Drenthe), 28 October 1883; Van Gogh Museum letter 400, numbered 336 in The Complete Letters of Vincent van Gogh, trans. J. van Gogh-Bonger and C. de Dood (Greenwich, Conn.: New York Graphic Society, 1958): \"If you hear a voice within you saying, 'You are not a painter,' then by all means paint, boy, and that voice will be silenced, but only by working.\" Text as transcribed by webexhibits.org from the Bulfinch Press reissue, ed. Robert Harrison (Boston: Little, Brown, 1991).","rights":"The underlying material is old: Van Gogh's 1883 Dutch letter is long out of copyright, and the 1927 English translation that Quote Investigator cites was published before 1931 and so is public domain in the United States. But the exact wording on this page matches neither that translation nor the later New York Graphic Society one, so no identifiable translator or edition can be attached to it — we assert no rights status for this particular sentence.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-is-remarkable-how-much-long-term-advantage-people-like","url":"https://quotle.info/who-said/it-is-remarkable-how-much-long-term-advantage-people-like/","quote":"It is remarkable how much long-term advantage people like us have gotten by trying to be consistently not stupid, instead of trying to be very intelligent","claim":"Charlie Munger wrote: \"It is remarkable how much long-term advantage people like us have gotten by trying to be consistently not stupid, instead of trying to be very intelligent\"","rating":5,"verdict":"Supported","answer":"Yes. Charlie Munger wrote it. Quote Investigator traces the line to Munger's letter to Wesco stockholders dated 5 March 1990, published in Wesco Financial Corporation Annual Report 1989 — the letter begins on p. 54 and this sentence sits on p. 69. Munger chaired Wesco, and the wording is his exactly as quoted. What usually goes missing when the line is repeated is not the name but the source.","credit":"Charlie Munger, letter to Wesco stockholders dated 5 March 1990, in Wesco Financial Corporation Annual Report 1989, p. 69. Via Quotle.info.","comparison":"","citation":"Charles T. Munger, letter to Wesco stockholders, dated March 5, 1990, in Wesco Financial Corporation Annual Report 1989 (1990), at 69 (letter begins at 54). Origin and citation established by Quote Investigator, \"Quote Origin: Trying To Be Consistently Not Stupid Instead of Trying To Be Very Intelligent\" (August 25, 2025). Later appearances: Andrew Kilpatrick, Of Permanent Value (1994), 228; Janet Lowe, Damn Right! (2000), 159; and Poor Charlie's Almanack, Expanded Third Edition, ed. Peter D. Kaufman (2008), in Whitney Tilson's \"Mungerisms: Charlie Unscripted\" chapter.","rights":"This is a 1990 corporate publication, not an old text: the letter is dated 5 March 1990 and appeared in Wesco Financial Corporation Annual Report 1989. Works first published in 1930 or earlier are now in the United States public domain; later works generally remain in copyright, and a 1990 corporate publication certainly does. So treat the sentence as in copyright and quote it as short attributed quotation rather than reproducing the letter.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -859,6 +867,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

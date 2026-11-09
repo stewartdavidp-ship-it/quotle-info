@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"those-who-play-with-the-devils-toys-will-be-brought-by","url":"https://quotle.info/who-said/those-who-play-with-the-devils-toys-will-be-brought-by/","quote":"Those who play with the devil's toys will be brought by degrees to wield his sword","claim":"R. Buckminster Fuller said: \"Those who play with the devil's toys will be brought by degrees to wield his sword\"","rating":1,"verdict":"Not supported","answer":"No. Thomas Fuller — the seventeenth-century English clergyman, not the twentieth-century American designer — wrote the line in The Holy State and the Profane State (1642), in his character sketch of \"The Witch.\" His words were \"the devils rattles,\" not \"the devil's toys\"; Quote Investigator found no evidence that Buckminster Fuller ever said or wrote any version of it.","credit":"NOT Buckminster Fuller. Thomas Fuller (1608–1661) wrote \"they which play with the devils rattles, will be brought by degrees to wield his sword\" in The Holy State and the Profane State (1642), Fifth Book, ch. 3, \"The Witch,\" p. 367. The \"devil's toys\" wording is a later, unsourced alteration; Quote Investigator found no evidence Buckminster Fuller ever used the line. Via Quotle.info","comparison":"they which play with the devils rattles, will be brought by degrees to wield his sword, and from making of sport they come to doing of mischief.","citation":"Fuller, Thomas. The Holy State and the Profane State. Cambridge: Printed by Roger Daniel for John Williams, 1642. The Fifth Book, chap. 3, \"The Witch,\" p. 367. Passage confirmed in the modernised edition: London: William Pickering, 1840, p. 295 (Internet Archive).","rights":"Thomas Fuller's The Holy State and the Profane State was first published in 1642 and its author died in 1661, so the text quoted here is long in the public domain worldwide; the 1840 Pickering edition we read it in is likewise free of copyright. Note that this status attaches to Fuller's actual sentence — the popular \"devil's toys\" rewording has no identifiable author or first printing at all, which is a reason to quote Fuller's wording rather than the internet's.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -877,6 +885,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

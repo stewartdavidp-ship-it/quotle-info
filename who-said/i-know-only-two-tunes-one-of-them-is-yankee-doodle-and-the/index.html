@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-know-only-two-tunes-one-of-them-is-yankee-doodle-and-the","url":"https://quotle.info/who-said/i-know-only-two-tunes-one-of-them-is-yankee-doodle-and-the/","quote":"I Know Only Two Tunes: One of Them Is Yankee Doodle, and the Other Isn't","claim":"Abraham Lincoln said: \"I Know Only Two Tunes: One of Them Is Yankee Doodle, and the Other Isn't\"","rating":1,"verdict":"Not supported","answer":"No. The \"Yankee Doodle\" wording is documented from Grant, not Lincoln: Robert C. Winthrop recalled Grant saying it beside him at a Peabody Institute concert in Baltimore, in a letter printed in George W. Childs's Recollections of General Grant (1890), page 40. But Grant did not invent it — Quote Investigator found the gag circulating anonymously in newspapers from 1839, and the one version ever recalled from Lincoln named \"Old Hundred,\" not \"Yankee Doodle.\"","credit":"not Abraham Lincoln. The \"Yankee Doodle\" wording is documented from Ulysses S. Grant, recalled by Robert C. Winthrop in a letter printed in George W. Childs, Recollections of General Grant (Philadelphia: Collins Printing House, 1890), page 40. Grant did not originate it: Quote Investigator's earliest located instance is an anonymous 1839 newspaper item using \"Old Hundred\" instead. The one version ever recalled from Lincoln — in J. Seymour Currey's Abraham Lincoln's Visit to Evanston in 1860 (1914) — also says \"Old Hundred,\" not \"Yankee Doodle.\" · Verbatim: “I only know two tunes. One is Yankee Doodle, and the other isn't.”","comparison":"I only know two tunes. One is Yankee Doodle, and the other isn't.","citation":"George W. Childs, Recollections of General Grant (Philadelphia: Collins Printing House, 1890), 40, quoting a letter from Robert C. Winthrop. Earliest instance located by Quote Investigator: an anonymous item — \"we…only know two tunes, one of which is 'Old Hundred,' and the other isn't\" — credited to the New Orleans Picayune and reprinted in the Boston Saturday Morning Transcript, 20 April 1839, and The Musical Review (New York), 4 May 1839.","rights":"Both documented sources are comfortably out of copyright in the United States. George W. Childs's Recollections of General Grant was published in Philadelphia in 1890, and J. Seymour Currey's Abraham Lincoln's Visit to Evanston in 1860 in 1914 — both well before the 1931 cutoff, and both are freely readable in full scans at the Internet Archive. The underlying joke, first traced to anonymous newspaper printings in 1839, has no identifiable rights holder.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -870,6 +878,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

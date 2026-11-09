@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"give-sorrow-words-the-grief-that-does-not-speak-whispers","url":"https://quotle.info/who-said/give-sorrow-words-the-grief-that-does-not-speak-whispers/","quote":"Give sorrow words; the grief that does not speak whispers the o'er-fraught heart and bids it break","claim":"William Shakespeare said: \"Give sorrow words; the grief that does not speak whispers the o'er-fraught heart and bids it break\"","rating":5,"verdict":"Supported","answer":"Yes. The line is Malcolm's, spoken to Macduff in Macbeth, Act 4, scene 3, moments after Ross brings word that Macduff's wife and children have been slaughtered. It was first printed in the 1623 First Folio, whose old-spelling text reads \"Giue sorrow words; the griefe that do's not speake, / Whispers the o're-fraught heart, and bids it breake.\"","credit":"William Shakespeare, Macbeth, Act 4, Scene 3 — Malcolm to Macduff. First printed in the 1623 First Folio: \"Give sorrow words; the grief that does not speak / Whispers the o'er-fraught heart and bids it break.\" Public domain. Verified via Quotle.info","comparison":"","citation":"William Shakespeare, \"The Tragedie of Macbeth,\" in Mr. William Shakespeares Comedies, Histories, & Tragedies (London, 1623), act 4, sc. 3 — old-spelling transcription, Internet Shakespeare Editions, Macbeth (Folio 1, 1623), ed. Anthony Dawson; modern-spelling text, Folger Shakespeare Library digital edition, Macbeth 4.3.","rights":"The line comes from Macbeth, first published in the 1623 First Folio — more than three centuries before the 1931 US copyright cutoff, so the text is firmly in the public domain. No translation is involved: Shakespeare wrote in English, and the wording above is the Folio's own, modernised only in spelling. Individual modern annotated editions may hold copyright in their notes and apparatus, but not in the words of the play.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -869,6 +877,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-best-time-to-plan-a-book-is-while-youre-doing-the-dishes","url":"https://quotle.info/who-said/the-best-time-to-plan-a-book-is-while-youre-doing-the-dishes/","quote":"The best time to plan a book is while you're doing the dishes","claim":"Agatha Christie said: \"The best time to plan a book is while you're doing the dishes\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Christie genuinely plotted at the kitchen sink — she said so herself in interviews, telling Parade in 1974 that she got plots \"walking, or washing up the dishes.\" But this polished wording is not hers: its earliest known appearance, traced by Quote Investigator, is a columnist's paraphrase in the Detroit Free Press of March 1954 — a sentence written about Christie, not by her.","credit":"attributed to Agatha Christie, but not her wording. The line began as a columnist's paraphrase in the Detroit Free Press, March 1954. Christie's own documented words: \"I've gotten others walking, or washing up the dishes\" (Parade, December 1974). Traced by quotle.info","comparison":"","citation":"Earliest documented in Laurena Pringle's column, Detroit Free Press, March 1954, as an indirect paraphrase (\"Writer Agatha Christie suggests that the best time to plan a book is while you're washing the dishes\"); reprinted as a standalone attributed filler quotation in The Indiana Gazette, March 1955, and the Detroit Free Press, February 1962. Christie's own first-person phrasing appears in The New York Times, October 1966, and Parade Magazine, December 1974. Paper trail assembled by Garson O'Toole, Quote Investigator, \"Quote Origin: I Got My Plots in the Tub…,\" 31 July 2017.","rights":"Not public domain — and not cleanly attributable either. Every documented form of this line is from 1931 or later: the March 1954 Detroit Free Press paraphrase, the 1955 and 1962 newspaper reprints, and Christie's own 1966 and 1974 interview remarks are all in-copyright material belonging to their respective newspapers, and Christie's writings remain under the control of her estate. But because the popular wording is a drifting newspaper condensation rather than a passage in any identifiable Christie work, we assert no definite rights status for the sentence itself. Nothing here supports a public-domain claim.","checked":"15 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 15 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -871,6 +879,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

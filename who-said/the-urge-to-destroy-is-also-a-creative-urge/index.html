@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-urge-to-destroy-is-also-a-creative-urge","url":"https://quotle.info/who-said/the-urge-to-destroy-is-also-a-creative-urge/","quote":"The urge to destroy is also a creative urge","claim":"Pablo Picasso said: \"The urge to destroy is also a creative urge\"","rating":1,"verdict":"Not supported","answer":"No. Pablo Picasso never wrote this. The line closes Bakunin's 1842 essay \"The Reaction in Germany,\" whose standard English rendering is \"The passion for destruction is a creative passion, too!\" The familiar \"urge to destroy… creative urge\" wording is a later popular paraphrase, and the Picasso credit is a modern error — boosted when Banksy captioned his 2018 shredding stunt with the line \"from Picasso.\"","credit":"Mikhail Bakunin, \"The Reaction in Germany\" (1842). Popularly paraphrased as \"The urge to destroy is also a creative urge\" and often misattributed to Pablo Picasso.","comparison":"","citation":"Mikhail Bakunin [as \"Jules Elysard\"], \"Die Reaktion in Deutschland. Ein Fragment von einem Franzosen,\" Deutsche Jahrbücher für Wissenschaft und Kunst, nos. 247–51 (October 1842); trans. \"The Reaction in Germany,\" closing line: \"The passion for destruction is a creative passion, too!\"","rights":"The line comes from Bakunin's essay first published in October 1842; Bakunin died in 1876, so the original German text and its early English translations are long in the public domain in the United States. The specific popular one-liner is a loose modern paraphrase of that public-domain sentence rather than a distinct copyrighted work.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -849,6 +857,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

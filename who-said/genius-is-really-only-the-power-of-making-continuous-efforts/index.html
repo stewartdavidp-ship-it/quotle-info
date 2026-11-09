@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"genius-is-really-only-the-power-of-making-continuous-efforts","url":"https://quotle.info/who-said/genius-is-really-only-the-power-of-making-continuous-efforts/","quote":"Genius is really only the power of making continuous efforts","claim":"Dale Carnegie said: \"Genius is really only the power of making continuous efforts\"","rating":1,"verdict":"Not supported","answer":"No. The passage is not Carnegie's. It first appears unsigned on 1 June 1895 in the Mining and Scientific Press of San Francisco, under the heading \"Keeping Everlastingly At It Brings Success,\" and Quote Investigator reports that its author remains unidentified. Carnegie's name drifted onto it only because the piece was reprinted in the posthumous Dale Carnegie's Scrapbook (1959) — where it is credited not to Carnegie but to Elbert Hubbard.","credit":"Anonymous, \"Keeping Everlastingly At It Brings Success,\" Mining and Scientific Press, vol. 70, no. 22, 1 June 1895, p. 344. Not Dale Carnegie: the 1959 Dale Carnegie's Scrapbook, edited posthumously by Dorothy Carnegie, credited the passage to Elbert Hubbard, and Quote Investigator reports the real author is still unidentified. https://quotle.info/who-said/genius-is-really-only-the-power-of-making-continuous-efforts/","comparison":"Genius is really only the power of making continuous efforts. The line between failure and success is so fine that we scarcely know when we pass it—so fine that we are often on the line and do not know it. There is no failure except in no longer trying. There is no defeat except from within, no really insurmountable barrier save our own inherent weakness of purpose.","citation":"\"Keeping Everlastingly At It Brings Success.\" Mining and Scientific Press 70, no. 22 (June 1, 1895): 344. Unsigned. Reprinted, credited only to Electrical Review, in Evelyn Briggs Baldwin, The Search for the North Pole; or, Life in the Great White World (1896), 520; and, uncredited, in An American Bible, ed. Alice Hubbard (East Aurora, NY: The Roycrofters, 1911), 304.","rights":"The item was first printed on 1 June 1895 and reprinted, still unsigned, in 1896 and 1911 — all well before the 1931 US copyright cutoff, so the text is in the public domain. Anonymity does not change that: the status turns on the date of publication, which is documented here down to volume, number and page.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -882,6 +890,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

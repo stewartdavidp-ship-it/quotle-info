@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"do-not-go-where-the-path-may-lead-go-instead-where-there-is","url":"https://quotle.info/who-said/do-not-go-where-the-path-may-lead-go-instead-where-there-is/","quote":"Do not go where the path may lead, go instead where there is no path and leave a trail","claim":"Robert Frost said: \"Do not go where the path may lead, go instead where there is no path and leave a trail\"","rating":1,"verdict":"Not supported","answer":"No. Robert Frost is one of several famous names this line gets pinned to, and Quote Investigator, whose chronology documents no source for any of them, traces the saying instead to a page of aphorisms by the American poet Muriel Strode printed in the Chicago journal The Open Court in August 1903. Strode wrote it as a vow in the first person — \"I will not follow where the path may lead…\" — and the familiar imperative wording is a later, unascribed rewrite.","credit":"Muriel Strode, \"Wind-Wafted Wild Flowers,\" The Open Court, vol. 17, no. 8 (August 1903), p. 505. Her original wording: \"I will not follow where the path may lead, but I will go where there is no path, and I will leave a trail.\" Not Robert Frost, and not Emerson — the imperative version is a later, unascribed rewrite. Via Quotle.info","comparison":"I will not follow where the path may lead, but I will go where there is no path, and I will leave a trail.","citation":"Muriel Strode, \"Wind-Wafted Wild Flowers,\" The Open Court 17, no. 8 (August 1903): 505. The popular imperative wording is a later rewrite; the earliest instance of this exact wording in Quote Investigator's chronology is a January 1992 Middle School Journal caption, while a close variant (\"Do not follow where the path may lead…\") appears without ascription in a 1983 University of Michigan Medical School yearbook.","rights":"The source we cite and quote — The Open Court, Volume 17, Number 8, August 1903 — was published in the United States long before 1931, so Muriel Strode's original text is in the public domain. One honest caveat: the familiar imperative rewrite is not Strode's wording and no author for it has ever been identified, so nothing here establishes who, if anyone, holds rights in that later phrasing.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -877,6 +885,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

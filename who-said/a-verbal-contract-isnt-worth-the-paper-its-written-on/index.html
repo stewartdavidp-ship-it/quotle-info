@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -515,6 +517,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -561,6 +566,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -617,7 +623,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-verbal-contract-isnt-worth-the-paper-its-written-on","url":"https://quotle.info/who-said/a-verbal-contract-isnt-worth-the-paper-its-written-on/","quote":"A Verbal Contract Isn't Worth the Paper It's Written On","claim":"Samuel Goldwyn said: \"A Verbal Contract Isn't Worth the Paper It's Written On\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator traces the gag to The Irish Law Times and Solicitors' Journal of 14 June 1890, which reported that Sir Bryan O'Loghlen, M.P. — in the colony of Victoria — \"gravely told the Supreme Court that 'a verbal agreement is not worth the paper it's written on.'\" QI credits O'Loghlen while noting the same joke was circulating anonymously at the time, and hypothesises that Goldwyn never used the line at all: it only became his when Alva Johnston's The Great Goldwyn (1937) printed it as a genuine Goldwynism.","credit":"not Samuel Goldwyn. The joke was in print by 14 June 1890, when The Irish Law Times and Solicitors' Journal credited Sir Bryan O'Loghlen, and in this exact wording in the Cleveland Leader of 25 April 1905. Alva Johnston's The Great Goldwyn (Random House, 1937), p. 16, was the first book to print it as Goldwyn's; a Dallas Morning News column of 12 February 1956 reported Goldwyn denying the Goldwynisms attributed to him. Source: Quote Investigator, quoteinvestigator.com/2014/01/06/verbal-contract/ · Verbatim: “A verbal agreement is not worth the paper it's written on.”","comparison":"A verbal agreement is not worth the paper it's written on.","citation":"Earliest documented in The Irish Law Times and Solicitors' Journal, 14 June 1890, 320, quoted in \"Quote Origin: A Verbal Contract Isn't Worth the Paper It's Written On,\" Quote Investigator, 6 January 2014. First attributed to Samuel Goldwyn in Alva Johnston, The Great Goldwyn (New York: Random House, 1937), 16.","rights":"The sentence itself is public domain in the United States: it is documented in print in The Irish Law Times and Solicitors' Journal in June 1890 and in this exact wording in the Cleveland Leader of April 1905 — both decades before the 1931 US copyright threshold, and both by authors long dead. Note that the excerpt shown above is a short quotation from a separate and much later work, Alva Johnston's The Great Goldwyn (Random House, 1937), reproduced here for commentary on how the misattribution began.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -869,6 +877,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

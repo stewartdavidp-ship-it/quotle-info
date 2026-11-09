@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -509,6 +511,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -555,6 +560,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -611,7 +617,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"those-who-dance-appear-insane-to-those-who-cannot-hear-the","url":"https://quotle.info/who-said/those-who-dance-appear-insane-to-those-who-cannot-hear-the/","quote":"Those who dance appear insane to those who cannot hear the music","claim":"Friedrich Nietzsche said: \"Those who dance appear insane to those who cannot hear the music\"","rating":1,"verdict":"Not supported","answer":"No. There is no source for this line in any of Nietzsche's works, and the earliest attribution to him is a 2003 Usenet post — more than a century after his death. The thought is a widespread 19th-century saying: the earliest documented version appears in Germaine de Staël's De l'Allemagne (1813), and by 1927 The Times of London was already calling it an \"old proverb.\"","credit":"Not Friedrich Nietzsche. \"Those who dance appear insane to those who cannot hear the music\" is an anonymous 19th-century saying — recorded by Germaine de Staël in 1813 and called an \"old proverb\" by 1927 — not a line from any of Nietzsche's works.","comparison":"","citation":"O'Toole, Garson. \"Those Who Dance Are Considered Insane by Those Who Can't Hear the Music.\" Quote Investigator, 5 June 2012. Earliest documented precursor: Germaine de Staël, De l'Allemagne (1813).","rights":"The exact wording is an anonymous saying with no identifiable single-author source, so no copyright status can be asserted. The earliest documented precursor — Germaine de Staël's De l'Allemagne (1813) — is long in the public domain, but it is a different phrasing, not this line.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -823,6 +831,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

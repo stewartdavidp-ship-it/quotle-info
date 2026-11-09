@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-you-absolutely-cant-tolerate-critics-then-dont-do","url":"https://quotle.info/who-said/if-you-absolutely-cant-tolerate-critics-then-dont-do/","quote":"If you absolutely can't tolerate critics, then don't do anything new or interesting","claim":"Jeff Bezos said: \"If you absolutely can't tolerate critics, then don't do anything new or interesting\"","rating":5,"verdict":"Supported","answer":"Yes. Bezos said it on stage at Recode's Code Conference 2016 on Tuesday 31 May 2016, in conversation with Recode founding editor Walt Mossberg, when Mossberg asked him about Peter Thiel secretly funding Hulk Hogan's lawsuit against Gawker. Recode's own report that night transcribes the sentence slightly shorter — without \"absolutely\" and \"then\" — so the popular wording is one of two published transcriptions of the same live remark.","credit":"Jeff Bezos — spoken at Recode's Code Conference 2016, 31 May 2016, in conversation with Walt Mossberg. Wording as transcribed by Boing Boing, 1 June 2016; Recode's same-night transcription reads \"If you can't tolerate critics, don't do anything new or interesting.\" Via Quotle.info","comparison":"","citation":"Edmund Lee, \"Jeff Bezos on Gawker vs. Peter Thiel: 'Develop a thick skin.'\" Recode, 31 May 2016; and Xeni Jardin, \"What Amazon's Jeff Bezos thinks about Peter Thiel and Hulk Hogan vs. Gawker,\" Boing Boing, 1 June 2016 — both reporting Bezos's remarks at Recode's Code Conference 2016. The \"absolutely … then\" wording is Boing Boing's transcription, which Wikiquote follows.","rights":"This is a 2016 remark, first fixed in Recode's conference recording and reporting and in Boing Boing's post of 1 June 2016 — all comfortably inside copyright in the United States. Quoting the sentence itself for identification and comment is ordinary attributed quotation; the surrounding transcript and video are not free to reproduce.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

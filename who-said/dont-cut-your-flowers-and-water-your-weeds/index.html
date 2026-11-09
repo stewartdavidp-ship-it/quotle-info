@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"dont-cut-your-flowers-and-water-your-weeds","url":"https://quotle.info/who-said/dont-cut-your-flowers-and-water-your-weeds/","quote":"Don't cut your flowers and water your weeds","claim":"Warren Buffett said: \"Don't cut your flowers and water your weeds\"","rating":1,"verdict":"Not supported","answer":"No. The metaphor is Peter Lynch's, coined in One Up On Wall Street (Simon and Schuster, 1989), where Quote Investigator's verified scan of page 245 reads \"pulling out the flowers and watering the weeds.\" Warren Buffett did write the \"cutting\" version — in Berkshire Hathaway's 1988 chairman's letter, dated 28 February 1989 — but he credited Lynch by name in the very same sentence. The tidy imperative that circulates today matches neither man's documented wording.","credit":"Not Warren Buffett. Peter Lynch coined the flowers-and-weeds metaphor in One Up On Wall Street (New York: Simon and Schuster, 1989), chap. 16, p. 245, where it reads \"pulling out the flowers and watering the weeds.\" Buffett wrote \"cutting the flowers and watering the weeds\" in Berkshire Hathaway's 1988 chairman's letter, dated 28 February 1989 — and credited Lynch in the same sentence. The imperative \"Don't cut your flowers and water your weeds\" appears in neither text. — Quotle.info","comparison":"pulling out the flowers and watering the weeds","citation":"Peter Lynch with John Rothchild, One Up On Wall Street: How To Use What You Already Know to Make Money in the Market (New York: Simon and Schuster, 1989), chap. 16, \"Designing a Portfolio,\" 245 — where the wording is \"pulling out the flowers and watering the weeds\" (citation verified with scans by Quote Investigator). The \"cutting\" wording is first documented in Warren E. Buffett, \"Chairman's Letter,\" Berkshire Hathaway Inc. 1988 Annual Report, dated 28 February 1989, which credits Lynch in the same sentence. The imperative form \"Don't cut your flowers and water your weeds\" has no documented source in either text; the earliest instance Quote Investigator records is Bob Smith, \"Timeless rules for equity investors,\" News Messenger (Marshall, Texas), 17 September 1995, 2D, where it appears as rule six.","rights":"Both documented sources are modern and still protected. One Up On Wall Street was first published by Simon & Schuster in 1989, and Buffett's 1988 chairman's letter is dated 28 February 1989 — both far later than 1931, so neither is public domain, however freely the letter is posted online. The popular imperative rewrite has no identified author of its own, which is a reason to treat it cautiously rather than a reason to treat it as free.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -877,6 +885,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

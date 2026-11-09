@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"hes-a-writer-for-the-ages-for-the-ages-of-four-to-eight","url":"https://quotle.info/who-said/hes-a-writer-for-the-ages-for-the-ages-of-four-to-eight/","quote":"He's a Writer for the Ages—For the Ages of Four to Eight","claim":"Dorothy Parker said: \"He's a Writer for the Ages—For the Ages of Four to Eight\"","rating":1,"verdict":"Not supported","answer":"No. The earliest version of this joke that anyone has found runs in the \"Patter\" column of the Reader's Digest in January 1938, and it is credited to the drama critic George Jean Nathan: \"Mr. ———— writes his plays for the ages — the ages between five and twelve.\" The wording on this page — a writer, and the ages four to eight — first appears ten years later, in Bennett Cerf's 1948 anecdote collection, where it is already attached to Parker. Quote Investigator says it \"would provisionally credit Nathan,\" and we do not go further than that.","credit":"popularly Dorothy Parker, but the earliest form of the joke (1938) is credited to George Jean Nathan. Via quotle.info · Verbatim: “Mr. ———— writes his plays for the ages — the ages between five and twelve”","comparison":"Mr. ———— writes his plays for the ages — the ages between five and twelve","citation":"\"Patter.\" Reader's Digest 32 (January 1938): 19. Earliest documented form, per Quote Investigator, credited there to George Jean Nathan and worded \"writes his plays for the ages — the ages between five and twelve.\" The \"four to eight\" wording first appears in Bennett Cerf, Shake Well Before Using (New York: Simon and Schuster, 1948), 219, already credited to Parker.","rights":"The earliest documented printing is a 1938 Reader's Digest item, and the wording used on this page comes from a 1948 book by Bennett Cerf. Both fall after 1930, so we assert no public-domain status. We have not traced whether either copyright was renewed, and we prefer to understate rather than overstate the freedom of the text. This is not legal advice.","checked":"4 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -858,6 +866,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

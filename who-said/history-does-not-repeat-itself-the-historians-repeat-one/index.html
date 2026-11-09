@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"history-does-not-repeat-itself-the-historians-repeat-one","url":"https://quotle.info/who-said/history-does-not-repeat-itself-the-historians-repeat-one/","quote":"History Does Not Repeat Itself. The Historians Repeat One Another","claim":"Oscar Wilde said: \"History Does Not Repeat Itself. The Historians Repeat One Another\"","rating":1,"verdict":"Not supported","answer":"No. The exact wording opens Beerbohm's essay \"1880\" in The Works of Max Beerbohm (1896) — but he printed it as a quotation, prefaced \"it has been said,\" explicitly disclaiming coinage. Quote Investigator finds no precise origin for the saying and no trace of it in Oscar Wilde's work; the Wilde credit surfaces only in 1912, as one half of a guess.","credit":"not Oscar Wilde. Max Beerbohm printed this exact wording in his essay \"1880,\" in The Works of Max Beerbohm (New York: Charles Scribner's Sons, 1896), 41 — but flagged it as already current with the words \"it has been said.\" Quote Investigator finds no precise origin, and none of it in Wilde's work; the earliest attachment to Wilde known to QI is a 1912 review that guessed \"either Wilde or Mr. Max Beerbohm.\"","comparison":"","citation":"Max Beerbohm, “1880,” in The Works of Max Beerbohm (New York: Charles Scribner’s Sons, 1896), 41. Quoted by Beerbohm as an existing saying. Earliest related version documented by Quote Investigator: anonymous, from the Louisville Journal, reprinted in The Charleston Daily News, June 30, 1868.","rights":"The wording quoted here is taken from The Works of Max Beerbohm, first published in 1896 — comfortably before 1931, so the text is in the public domain in the United States, and Project Gutenberg distributes it freely. The saying itself is older still and anonymous; Richard Ellmann's 1988 phrasing of it, by contrast, sits inside an in-copyright biography and is not reproduced here beyond the short quotation needed to identify the error.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -876,6 +884,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

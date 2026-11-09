@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"do-what-you-feel-in-your-heart-to-be-right-for-youll-be","url":"https://quotle.info/who-said/do-what-you-feel-in-your-heart-to-be-right-for-youll-be/","quote":"Do what you feel in your heart to be right, for you'll be criticized anyway","claim":"Eleanor Roosevelt said: \"Do what you feel in your heart to be right, for you'll be criticized anyway\"","rating":5,"verdict":"Supported","answer":"Yes. Dale Carnegie printed the line in How to Stop Worrying and Start Living (Simon and Schuster, 1948), introducing it with \"I once asked Eleanor Roosevelt how she handled unjust criticism\" and closing \"That is her advice.\" The popular version stops halfway: she went on to say \"You'll be damned if you do, and damned if you don't\" — a stock American idiom she was repeating, not coining.","credit":"Eleanor Roosevelt, quoted by Dale Carnegie in \"How to Stop Worrying and Start Living\" (New York: Simon and Schuster, 1948), pt. 6, ch. 21: \"Do what you feel in your heart to be right — for you'll be criticized anyway. You'll be damned if you do, and damned if you don't.\"","comparison":"Do what you feel in your heart to be right — for you'll be criticized anyway. You'll be damned if you do, and damned if you don't.","citation":"Dale Carnegie, How to Stop Worrying and Start Living (New York: Simon and Schuster, 1948), pt. 6, chap. 21, “Do This — and Criticism Can’t Hurt You,” quoting Eleanor Roosevelt.","rights":"The words are Eleanor Roosevelt's, but the published text that carries them is Carnegie's: How to Stop Worrying and Start Living was first published in 1948 by Simon and Schuster, which puts it well inside US copyright and outside the public domain. Quote the sentence with attribution; don't reproduce the surrounding chapter.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"good-management-consists-of-showing-average-people-how-to","url":"https://quotle.info/who-said/good-management-consists-of-showing-average-people-how-to/","quote":"Good management consists of showing average people how to do the work of superior people","claim":"John D. Rockefeller said: \"Good management consists of showing average people how to do the work of superior people\"","rating":2,"verdict":"Needs context","answer":"Not confirmed. No speech, letter, interview or book of Rockefeller's has ever been produced for this line, and his only memoir, Random Reminiscences of Men and Events (1909), contains neither \"average people\" nor \"superior people.\" Wikiquote files the quotation under Disputed, citing for the Rockefeller credit only The Harper Book of Quotations (1993) and noting that the earliest published occurrence of such remarks yet located is a 1958 conference address by Jim Low — twenty-one years after Rockefeller's death.","credit":"Disputed. \"Good management consists of showing average people how to do the work of superior people.\" is widely credited to John D. Rockefeller (1839–1937), but no source from his lifetime has been produced. Wikiquote lists it as disputed: the earliest Rockefeller credit we could verify is The Harper Book of Quotations (1993), and the earliest located occurrence of such remarks is Jim Low's 1958 address \"The Human in Public Relations.\" — Quotle.info","comparison":"","citation":"No Rockefeller source located. Credited to him in The Harper Book of Quotations (1993) by Robert I. Fitzhenry, p. 71; the earliest published occurrence of such remarks yet located is Jim Low, \"The Human in Public Relations,\" in Proceedings, Seventh Annual Meeting of the Agricultural Research Institute, October 13–14, 1958, Washington, Pt. 3, p. 83 — both as documented in \"John D. Rockefeller,\" Wikiquote, Disputed section. Attribution unverified.","rights":"The wording cannot be tied to any work by Rockefeller, so no public-domain claim can be made for it. The earliest text known to carry such remarks — a 1958 conference proceedings — falls well after the 1931 US public-domain cutoff, and the compilations that attach the line to Rockefeller (The Harper Book of Quotations, 1993; the Forbes Scrapbook editions) are themselves modern, in-copyright books. Status: uncertain.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -843,6 +851,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

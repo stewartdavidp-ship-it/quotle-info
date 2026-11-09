@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-day-without-laughter-is-a-day-wasted","url":"https://quotle.info/who-said/a-day-without-laughter-is-a-day-wasted/","quote":"A Day Without Laughter Is a Day Wasted","claim":"Charlie Chaplin said: \"A Day Without Laughter Is a Day Wasted\"","rating":1,"verdict":"Not supported","answer":"No. Chaplin never wrote or said this. The thought is a maxim by the French aphorist Nicolas Chamfort, printed posthumously from his manuscripts: Quote Investigator cites Mercure Français, 18 July 1795, p. 351, no. 60 for \"La plus perdue de toutes les journées est celle où l'on n'a pas ri.\" The compact eight-word English is nobody's documented translation — period renderings read \"the most lost of all days…\" — and the Chaplin credit is traceable to a line of movie dialogue in the 1992 thriller Shining Through. Wikiquote files the line on Chaplin's page under Misattributed.","credit":"is not Charlie Chaplin's. It is a loose modern English rendering of a maxim by the French aphorist Nicolas Chamfort (1741–1794) — \"La plus perdue de toutes les journées est celle où l'on n'a pas ri\" — printed posthumously from his manuscripts in Mercure Français, 18 July 1795, p. 351. The earliest English version located by Quote Investigator appeared in Flowers of Literature; for 1801 & 1802 (1803). The Chaplin credit traces to a line of dialogue in the 1992 film Shining Through. Source: Quote Investigator, quoteinvestigator.com/2011/07/16/laughter-day/","comparison":"La plus perdue de toutes les journées est celle où l'on n'a pas ri.","citation":"Nicolas Chamfort, \"Maximes détachées extraites des manuscrits de Champfort,\" Mercure Français: Historique, Politique et Litteraire, 18 July 1795, 351 (maxim no. 60). Earliest English rendering located by Quote Investigator: \"Laughing,\" in Flowers of Literature; for 1801 & 1802, ed. F. Prevost and F. Blagdon, vol. 1 (London: printed by J. Swan for B. Crosby and Co., 1803), 5.","rights":"Both documented sources are far older than any surviving copyright term. Chamfort's French maxim was printed in Mercure Français on 18 July 1795, and the earliest English rendering appeared in Flowers of Literature; for 1801 & 1802 in 1803 — well before the 1931 US threshold, and their authors died in the eighteenth and nineteenth centuries. The popular eight-word English phrasing has no identified translator or claimant, so no living rights attach to it either.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

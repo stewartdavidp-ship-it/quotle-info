@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"impossible-is-just-a-big-word-thrown-around-by-small-men","url":"https://quotle.info/who-said/impossible-is-just-a-big-word-thrown-around-by-small-men/","quote":"Impossible is just a big word thrown around by small men who find it easier to live in the world they've been given than to explore the power they have to change it. Impossible is not a fact. It's an opinion. Impossible is not a declaration. It's a dare. Impossible is potential. Impossible is temporary. Impossible is nothing","claim":"Muhammad Ali said: \"Impossible is just a big word thrown around by small men who find it easier to live in the world they've been given than to explore the power they have to change it. Impossible is not a fact. It's an opinion. Impossible is not a declaration. It's a dare. Impossible is potential. Impossible is temporary. Impossible is nothing\"","rating":1,"verdict":"Not supported","answer":"No. Muhammad Ali never said this. It is advertising copy: the opening line of a manifesto written in 2004 by copywriter Aimee Lehto (now Aimee Lehto Schewe) at TBWA\\Chiat\\Day to sell adidas on the \"Impossible is Nothing\" tagline — a line coined by her colleague Boyd Coyner. Ali starred in the campaign and the words were laid over his image, which is exactly how his name got welded to them.","credit":"Aimee Lehto, adidas \"Impossible is Nothing\" campaign manifesto (2004). Not Muhammad Ali, who appeared in the ads but did not write or say the line.","comparison":"","citation":"Lehto, Aimee. adidas \"Impossible is Nothing\" campaign manifesto (advertising copy, written at TBWA\\Chiat\\Day for 180/TBWA), 2004. Earliest documented in an adidas advertisement, Sports Illustrated 100, no. 5 (February 9, 2004), as cited in Quote Investigator, \"Quote Origin: Impossible Is Just a Big Word Thrown Around by Small Men . . . Impossible Is Temporary. Impossible Is Nothing,\" November 28, 2017.","rights":"This is 2004 advertising copy, so it is firmly in copyright in the United States — nothing published in 1931 or later has entered the public domain by age, and the frequent \"anonymous inspirational quote\" framing does not change that. Ownership specifically was not something we could confirm from a filing: campaign copy of this kind is normally work-for-hire belonging to the agency or client rather than the writer, so the practical rights holder is likely adidas and/or TBWA even though authorship is Lehto Schewe's. Quoting the line for commentary, criticism or attribution — as this page does — is a different matter from reusing it commercially.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -865,6 +873,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

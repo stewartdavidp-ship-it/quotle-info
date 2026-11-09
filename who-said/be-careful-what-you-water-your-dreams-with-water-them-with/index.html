@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"be-careful-what-you-water-your-dreams-with-water-them-with","url":"https://quotle.info/who-said/be-careful-what-you-water-your-dreams-with-water-them-with/","quote":"Be careful what you water your dreams with. Water them with worry and fear and you will produce weeds that choke the life from your dream","claim":"Lao Tzu said: \"Be careful what you water your dreams with. Water them with worry and fear and you will produce weeds that choke the life from your dream\"","rating":1,"verdict":"Not supported","answer":"No. The line is a modern personal-development passage. Wikiquote traces it to 'Inspired Wealth: Financial Leadership for the 21st Century' (2004) by Aileen Miga and Janice Hughes, p. 44, and notes the Laozi tag has circulated since at least 2006. It appears nowhere in the Tao Te Ching — which, as taoistic.com points out, never once discusses dreams.","credit":"Misattributed to Lao Tzu. Documented source: Aileen Miga & Janice Hughes, Inspired Wealth: Financial Leadership for the 21st Century (2004), p. 44 (per Wikiquote). · Verbatim: “Be careful what you water your dreams with. Water them with worry and fear and you will produce weeds that choke the life from your dream. Water them with optimism and solutions and you will cultivate success.”","comparison":"Be careful what you water your dreams with. Water them with worry and fear and you will produce weeds that choke the life from your dream. Water them with optimism and solutions and you will cultivate success.","citation":"Aileen Miga and Janice Hughes, Inspired Wealth: Financial Leadership for the 21st Century (2004), p. 44; documented as the source in \"Laozi\" (Misattributed), Wikiquote.","rights":"Per Wikiquote, the exact wording originates in Inspired Wealth: Financial Leadership for the 21st Century (2004) by Aileen Miga and Janice Hughes — a work first published in 2004 and therefore in copyright in the United States. It is not an ancient text, and no public-domain Laozi translation contains this line.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -840,6 +848,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

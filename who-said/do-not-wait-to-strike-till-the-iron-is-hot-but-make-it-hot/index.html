@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"do-not-wait-to-strike-till-the-iron-is-hot-but-make-it-hot","url":"https://quotle.info/who-said/do-not-wait-to-strike-till-the-iron-is-hot-but-make-it-hot/","quote":"Do not wait to strike till the iron is hot; but make it hot by striking","claim":"W. B. Yeats said: \"Do not wait to strike till the iron is hot; but make it hot by striking\"","rating":1,"verdict":"Not supported","answer":"No. No Yeats poem, play, essay or letter contains this sentence, and it appears nowhere on Wikiquote's Yeats page, which records no disputed or misattributed quotations for him at all. The exact wording first turns up in 1853, on page 227 of an American anthology called The World's Laconics, filed under the heading 'Promptness and energy' and — unlike the signed entry above it — carrying no author's name at all. That is twelve years before Yeats was born. Quote Investigator traces the extended metaphor further back still, to a letter Benjamin Franklin wrote in 1782, and finds the Yeats credit appearing for the first time in 1997, in a quote-of-the-day post on Usenet.","credit":"Not W. B. Yeats. An unsigned maxim — earliest printing 1853, in The World's Laconics, p. 227. The earliest known form of the metaphor is Benjamin Franklin's, in a letter to Richard Price of 13 June 1782.","comparison":"","citation":"Earliest documented printing of this exact wording: [Tryon Edwards], The World's Laconics: Or, The Best Thoughts of the Best Authors, comp. 'Everard Berkeley', intro. William B. Sprague (New York: M. W. Dodd, 1853), 227 — printed without attribution. Earliest known form of the metaphor: Benjamin Franklin to Richard Price, Passy, 13 June 1782, in William Morgan, Memoirs of the Life of The Rev. Richard Price (London: R. Hunter, 1815), 96. Not W. B. Yeats.","rights":"Both sources that matter here are long out of copyright in the United States. The earliest known printing of this exact wording is an American book of 1853, where it stands unsigned; the earliest known form of the metaphor is a Franklin letter of 1782, published in 1815. Anything first published before 1931 is in the US public domain, so the sentence is free to reproduce, and no author or estate has ever been in a position to claim it. The only real constraint is factual rather than legal: do not print it over the name of W. B. Yeats — or of Cromwell, either Sprague, Lamb or Hemingway. This is not legal advice.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -870,6 +878,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

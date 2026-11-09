@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"an-epigram-is-only-a-wisecrack-thats-played-carnegie-hall","url":"https://quotle.info/who-said/an-epigram-is-only-a-wisecrack-thats-played-carnegie-hall/","quote":"An Epigram is Only a Wisecrack That’s Played Carnegie Hall","claim":"Edmund Fuller said: \"An Epigram is Only a Wisecrack That’s Played Carnegie Hall\"","rating":1,"verdict":"Not supported","answer":"No. Edmund Fuller did not write this line; he printed it. Fuller was the Crown Publishers editor whose Thesaurus of Quotations (1941) gives the earliest appearance Quote Investigator located — and it credits Oscar Levant, as every later citation does whenever anyone is credited at all. Fuller is one of the candidate names Quote Investigator opens its investigation with — and his own 1943 companion volume settles it by introducing the line as Levant's. The wording drifted too: Levant's recorded line is \"a gag that's played Carnegie Hall,\" and \"wisecrack\" does not appear until 1949.","credit":"Oscar Levant, as first recorded in Edmund Fuller, ed., Thesaurus of Quotations (1941). The familiar “wisecrack” wording dates from 1949. Traced by Quotle.info · Verbatim: “An epigram is a gag that’s played Carnegie Hall.”","comparison":"An epigram is a gag that’s played Carnegie Hall.","citation":"Fuller, Edmund, ed. Thesaurus of Quotations. New York: Crown Publishers, 1941, 331. Earliest instance located by Quote Investigator, which reads \"An epigram is a gag that's played Carnegie Hall\" and credits Oscar Levant. The \"wisecrack\" wording first appears in Evan Esar, ed., The Dictionary of Humorous Quotations (Garden City, NY: Doubleday, 1949).","rights":"The earliest known printing is from 1941, well after the 1931 cutoff for the United States public domain, so this is treated as in copyright. We should be straight about the uncertainty: copyright in a 1941 or 1949 American book depended on renewal, and we did not search the renewal records, so we cannot say whether these particular volumes were renewed. Where the status is unresolved, the conservative reading is the one we publish. The single sentence is quoted for identification and criticism.","checked":"12 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 12 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -866,6 +874,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-thing-about-smart-people-is-that-they-seem-like-crazy","url":"https://quotle.info/who-said/the-thing-about-smart-people-is-that-they-seem-like-crazy/","quote":"The thing about smart people is that they seem like crazy people to dumb people","claim":"Stephen Hawking said: \"The thing about smart people is that they seem like crazy people to dumb people\"","rating":1,"verdict":"Not supported","answer":"No. There is no source for this line in Stephen Hawking's work. It appears in none of his books, lectures or documented interviews, and Wikiquote's Hawking page does not carry it in any section — not under Quotes, not even under Attributed or Misattributed. Quotation researcher Barry Popik, who compiled the citation record for this saying, states plainly that there is no evidence Hawking originated it or even said it: the earliest citation he lists is an unattributed Twitter post of 4 November 2011, and the first post crediting Hawking does not appear until 7 October 2013.","credit":"widely credited to Stephen Hawking, but there is no source for it in his work. The earliest citation on record is an unattributed tweet of 4 November 2011; the Hawking credit first appears in October 2013.","comparison":"","citation":"The earliest citation in Barry Popik's record for this saying is an unattributed Twitter post by @SecularAdvocate, 4 November 2011 (Barry Popik, \"The thing about smart people is that they seem like crazy people to dumb people,\" The Big Apple, barrypopik.com). The line is reproduced as an anonymous online comment in Robert Todd Carroll, Unnatural Acts: Critical Thinking, Skepticism, and Science Exposed! (2012), 138. No source for it exists in Stephen Hawking's published or recorded words.","rights":"The exact wording has no identified author and no identified first publication — the earliest citation on record is an anonymous 2011 Twitter post — so no copyright status can honestly be asserted for it. The texts that quote it are separate works and remain in copyright: Robert Todd Carroll's Unnatural Acts (2011–2012) and Robert Kirkman's The Walking Dead, Vol. 9 (2009), neither of which is the saying itself.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -836,6 +844,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

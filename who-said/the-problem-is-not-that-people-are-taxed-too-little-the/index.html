@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -525,6 +527,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -571,6 +576,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -627,7 +633,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-problem-is-not-that-people-are-taxed-too-little-the","url":"https://quotle.info/who-said/the-problem-is-not-that-people-are-taxed-too-little-the/","quote":"The problem is not that people are taxed too little, the problem is that government spends too much","claim":"Ronald Reagan said: \"The problem is not that people are taxed too little, the problem is that government spends too much\"","rating":2,"verdict":"Needs context","answer":"Yes and no. Reagan made exactly this argument, on the record, for years — but not in this sentence. The wording in his public papers comes from the State of the Union address of January 27, 1987: \"we don't have deficits because people are taxed too little. We have deficits because big government spends too much.\" The popular line reshapes that into \"the problem is not… the problem is…\", and we could find no speech, transcript or presidential paper that contains it — only a later book crediting it to him.","credit":"popularly credited to Ronald Reagan, but a paraphrase. What he actually said, in the State of the Union address of January 27, 1987: \"we don't have deficits because people are taxed too little. We have deficits because big government spends too much.\"","comparison":"We don't have deficits because people are taxed too little. We have deficits because big government spends too much.","citation":"Ronald Reagan, \"Address Before a Joint Session of Congress on the State of the Union,\" January 27, 1987, Ronald Reagan Presidential Library & Museum, National Archives; also in The American Presidency Project. The popular sentence is an undocumented paraphrase of this passage.","rights":"No rights status can be asserted for the popular wording, because it has no identifiable source. The passage it paraphrases — Reagan's State of the Union address of January 27, 1987 — is a work of the U.S. Government, and 17 U.S.C. § 105 provides that copyright protection is not available for such works.","checked":"29 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 29 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

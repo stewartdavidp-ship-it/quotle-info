@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-lie-gets-halfway-around-the-world","url":"https://quotle.info/who-said/a-lie-gets-halfway-around-the-world/","quote":"A lie gets halfway around the world before the truth has a chance to put its pants on","claim":"Winston Churchill said: \"A lie gets halfway around the world before the truth has a chance to put its pants on\"","rating":1,"verdict":"Not supported","answer":"No. This one is credited to two famous men, which is usually the sign that it belongs to neither. It does not. The ancestor is Jonathan Swift, in The Examiner in 1710: 'Falsehood flies, and the Truth comes limping after it.' The clothing arrives in a Portland Gazette item of 1820 — falsehood flying from Maine to Georgia while truth pulls her boots on — and by the 1850s the preacher C. H. Spurgeon was quoting it as 'the old Proverb.' Twain died in 1910 and the credit to him is first seen in 1919. Churchill's name attaches later still, and the closest real 20th-century match is Cordell Hull's memoirs of 1948.","credit":"Not Churchill and not Mark Twain. An anonymous proverb; the ancestor is Jonathan Swift, 1710.","comparison":"","citation":"Anonymous proverb. Ancestor: Jonathan Swift, The Examiner, 1710. 'Boots' form, Portland Gazette (Maine), 5 September 1820; called 'the old Proverb' by C. H. Spurgeon in the 1850s. No Churchill and no Mark Twain source exists.","rights":"The modern 'pants' wording has no located source and no single owner — a short anonymous proverb has no identifiable rights-holder. Its documented antecedents — Swift (1710), the 1820 newspaper item and Spurgeon's 1850s sermons — are all long out of copyright, so the saying is free to reproduce in those forms. Two things to keep separate: Cordell Hull's 1948 memoirs are a distinct modern book with their own status if you quote his 'breeches' sentence verbatim, and Churchill's genuine writings remain in copyright via his estate until 2035 — but since this line is not his, that term does not reach it. Nor does anything of Twain's, for the same reason. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -873,6 +881,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

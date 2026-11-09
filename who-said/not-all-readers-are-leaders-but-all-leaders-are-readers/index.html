@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"not-all-readers-are-leaders-but-all-leaders-are-readers","url":"https://quotle.info/who-said/not-all-readers-are-leaders-but-all-leaders-are-readers/","quote":"Not all readers are leaders, but all leaders are readers","claim":"\"Not all readers are leaders, but all leaders are readers\"","rating":1,"verdict":"Not supported","answer":"The thought is genuinely Truman's, but the sentence is not. What he actually put down was \"Not all readers become leaders. But all leaders must be readers\" — part of a longer note printed in Monte M. Poen's edition of Truman's unsent letters and desk notes and in Robert H. Ferrell's edition of The Autobiography of Harry S. Truman. The tidier \"not all readers are leaders, but all leaders are readers\" is a later smoothing that only turns up in books from the 1990s onward, where it is credited to Truman, Zig Ziglar and John C. Maxwell more or less interchangeably.","credit":"Harry S. Truman, printed in Strictly Personal and Confidential: The Letters Harry Truman Never Mailed, ed. Monte M. Poen (Little, Brown, 1982), and in The Autobiography of Harry S. Truman, ed. Robert H. Ferrell (1980). The widely shared \"Not all readers are leaders, but all leaders are readers\" is a later paraphrase. · Verbatim: “Not all readers become leaders. But all leaders must be readers.”","comparison":"Not all readers become leaders. But all leaders must be readers.","citation":"Harry S. Truman, \"Desk Note [1950s],\" in Strictly Personal and Confidential: The Letters Harry Truman Never Mailed, ed. Monte M. Poen (Boston: Little, Brown, 1982). The same passage is printed in The Autobiography of Harry S. Truman, ed. Robert H. Ferrell (Boulder: Colorado Associated University Press, 1980), there carrying the editorial note \"[President Truman speaking to a school group, 1960.]\" Truman's wording is \"Not all readers become leaders. But all leaders must be readers\"; \"Not all readers are leaders, but all leaders are readers\" is a later paraphrase, located in print no earlier than the 1990s.","rights":"The earliest printing we could locate for Truman's sentence is 1980, in Robert H. Ferrell's The Autobiography of Harry S. Truman, with Monte M. Poen's Strictly Personal and Confidential following in 1982 — both far too recent for the public domain, so the passage as published is in copyright. Being a president does not change that: these are personal notes and remarks issued by commercial and university presses, not federal work product. The reworded version in circulation has no identifiable author at all.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -867,6 +875,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

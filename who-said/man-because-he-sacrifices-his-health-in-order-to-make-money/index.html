@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"man-because-he-sacrifices-his-health-in-order-to-make-money","url":"https://quotle.info/who-said/man-because-he-sacrifices-his-health-in-order-to-make-money/","quote":"Man. Because he sacrifices his health in order to make money. Then he sacrifices money to recuperate his health. And then he is so anxious about the future that he does not enjoy the present; the result being that he does not live in the present or the future; he lives as if he is never going to die, and then dies having never really lived","claim":"Dalai Lama said: \"Man. Because he sacrifices his health in order to make money. Then he sacrifices money to recuperate his health. And then he is so anxious about the future that he does not enjoy the present; the result being that he does not live in the present or the future; he lives as if he is never going to die, and then dies having never really lived\"","rating":1,"verdict":"Not supported","answer":"No. The Dalai Lama never said this. As Wikiquote lists it among his misattributed lines, the passage is \"a loose adaptation\" of the prose piece \"I Dreamed I Had an Interview with God\" by James J. Lachard (a pen name of the English writer Jim Brown), later published as An Interview with God. Lachard's original reads \"that they lose their health to make money and then lose their money to restore their health… they live as if they will never die and die as if they had never lived\" — the widely shared Dalai Lama version is an expanded paraphrase of that.","credit":"Not the Dalai Lama. The line is an expanded paraphrase of \"I Dreamed I Had an Interview with God\" by James J. Lachard (pen name of Jim Brown), published as \"An Interview with God\" (ed. Reata Strickland, Simon & Schuster, 2002). Wikiquote lists it among the Dalai Lama's misattributed quotes.","comparison":"","citation":"James J. Lachard [Jim Brown], \"I Dreamed I Had an Interview with God,\" in An Interview with God, ed. Reata Strickland (New York: Simon & Schuster, 2002). Misattribution documented at Wikiquote, \"Dalai Lama (Misattributed).\"","rights":"The exact viral wording attributed to the Dalai Lama is an anonymous, expanded paraphrase with no single authoritative published source in that form, so no clean copyright status can be asserted. Its underlying source — James J. Lachard's \"An Interview with God\" (published 2002) — is a modern, in-copyright work; the Dalai Lama did not write it.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -831,6 +839,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-never-ran-my-train-off-the-track-and-i-never-lost-a","url":"https://quotle.info/who-said/i-never-ran-my-train-off-the-track-and-i-never-lost-a/","quote":"I never ran my train off the track, and I never lost a passenger","claim":"Harriet Tubman said: \"I never ran my train off the track, and I never lost a passenger\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Widely and consistently credited to Tubman, and it squares with her documented record — she truly never lost a fugitive. But the exact wording appears in neither of her authorized biographies (Sarah Bradford's 1869 life and its 1886 rewrite); its earliest documented print is a 1996 quotation anthology, so no primary source pins these words to her mouth.","credit":"Attributed to Harriet Tubman — genuine to her record but unsourced; the exact wording appears in neither her 1869 nor 1886 biography, surfacing in print only in a 1996 anthology. · Verbatim: “I was the conductor of the Underground Railroad for eight years, and I can say what most conductors can't say — I never ran my train off the track, and I never lost a passenger.”","comparison":"I was the conductor of the Underground Railroad for eight years, and I can say what most conductors can't say — I never ran my train off the track, and I never lost a passenger.","citation":"Earliest documented in print in Mary Biggs, comp., Women's Words: The Columbia Book of Quotations by Women (New York: Columbia University Press, 1996), 2; the wording is absent from Sarah H. Bradford, Scenes in the Life of Harriet Tubman (Auburn, N.Y.: W. J. Moses, 1869) and from her Harriet, the Moses of Her People (New York: Geo. R. Lockwood & Son, 1886).","rights":"The exact wording cannot be tied to any datable primary work: it is absent from both of Tubman's pre-1931 authorized biographies (1869, 1886) and surfaces in print only in modern quotation anthologies from the 1990s onward. Because the origin of the wording is unknown, no copyright status can be asserted — and it cannot be called public-domain on the strength of a specific old edition, since none contains it.","checked":"16 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -854,6 +862,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

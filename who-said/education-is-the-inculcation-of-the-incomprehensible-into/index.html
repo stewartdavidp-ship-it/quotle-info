@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"education-is-the-inculcation-of-the-incomprehensible-into","url":"https://quotle.info/who-said/education-is-the-inculcation-of-the-incomprehensible-into/","quote":"Education Is the Inculcation of the Incomprehensible Into the Ignorant by the Incompetent","claim":"John Maynard Keynes said: \"Education Is the Inculcation of the Incomprehensible Into the Ignorant by the Incompetent\"","rating":1,"verdict":"Not supported","answer":"No. Nothing Keynes wrote or published contains this line. The earliest evidence located by Quote Investigator is Sir Josiah Stamp's 1933 book Ideals of a Student, where Stamp puts the sentence in quotation marks — signalling it was already in circulation — and then argues against it. The Keynes credit surfaces only in 1962, when Abba Eban recalled hearing it from Keynes at Cambridge in the 1930s.","credit":"Origin unknown. Not documented in any work by John Maynard Keynes. Earliest evidence located by Quote Investigator: Sir Josiah Stamp, Ideals of a Student (London: E. Benn, 1933), p. 53, where Stamp quotes it as an existing saying and disagrees with it. The Keynes credit comes from Abba Eban's 1962 recollection. Via Quotle.info","comparison":"","citation":"Earliest evidence located by Quote Investigator: Josiah Stamp, Ideals of a Student (London: E. Benn, 1933), chap. 2, p. 53 — where the sentence appears inside quotation marks as an already-circulating saying that Stamp rejects. A second 1933 printing, in \"Gleanings,\" The Education Outlook 10, no. 1 (Spring 1933): 21, ascribes it to Stamp with \"indolent\" in place of \"ignorant.\" The John Maynard Keynes credit traces to Abba Eban, \"Israel in the World of Ideas,\" Jewish Frontier (October 1962): 3, recalling Keynes at Cambridge in the 1930s. No text by Keynes has been produced.","rights":"No rights status can honestly be asserted for this sentence: its author is unknown, and the earliest located printing already treats it as an existing saying in circulation. Both 1933 appearances — Stamp's Ideals of a Student and The Education Outlook — are later than the pre-1931 cutoff that would put a work clearly in the US public domain, and the Internet Archive's copy of the book is borrow-restricted rather than open, so the surrounding text of that book should be treated as protected.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

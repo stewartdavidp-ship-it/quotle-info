@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"do-not-worry-about-your-difficulties-in-mathematics","url":"https://quotle.info/who-said/do-not-worry-about-your-difficulties-in-mathematics/","quote":"Do not worry about your difficulties in Mathematics. I can assure you mine are still greater","claim":"Albert Einstein said: \"Do not worry about your difficulties in Mathematics. I can assure you mine are still greater\"","rating":5,"verdict":"Supported","answer":"Yes. Genuine, and unusually well documented. Einstein wrote it from Princeton on 7 January 1943 to Barbara Lee Wilson, an American schoolgirl who had written to him four days earlier saying she was 'a little below average in mathematics' — her letter and Einstein's reply are both printed in Dukas & Hoffmann, Albert Einstein: The Human Side (Princeton, 1979). The letter is catalogued as Einstein Archives 42-606. He wrote it in English, so unusually for an Einstein quotation there is no translator between you and his words.","credit":"—Albert Einstein, letter to Barbara Lee Wilson, 7 January 1943. Einstein Archives 42-606.","comparison":"","citation":"Einstein, Albert. Letter to Barbara Lee Wilson, 7 January 1943. Einstein Archives 42-606. First published in Helen Dukas and Banesh Hoffmann, Albert Einstein: The Human Side (Princeton: Princeton University Press, 1979); reprinted in Alice Calaprice, Dear Professor Einstein (2002).","rights":"Rights are unresolved in the United States — treat with care. Einstein died in 1955, so the text has been public domain in the UK and EU since 1 January 2026. In the US, however, the term for a letter first published decades after it was written runs from that publication, which for this letter was 1979, when it first appeared in Dukas & Hoffmann's Albert Einstein: The Human Side — a work first published before 2003, so protected through 2047 — and the Hebrew University of Jerusalem actively asserts rights in Einstein's writings. Because he wrote in English there is no separate translator's copyright, but a modern editor's notes and apparatus are their own. Quote the sentence with attribution; do not treat it as free stock content. This is not legal advice.","checked":"20 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 20 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -852,6 +860,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

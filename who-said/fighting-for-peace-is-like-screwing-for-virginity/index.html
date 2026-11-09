@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"fighting-for-peace-is-like-screwing-for-virginity","url":"https://quotle.info/who-said/fighting-for-peace-is-like-screwing-for-virginity/","quote":"Fighting for peace is like screwing for virginity","claim":"George Carlin said: \"Fighting for peace is like screwing for virginity\"","rating":1,"verdict":"Not supported","answer":"No. The line is a communal protest slogan, not a comedian's joke: it has been in print since 19 May 1968, when Omaha's Sunday World-Herald reported students picketing Armed Forces Day with a sign reading \"Fighting for peace is like raping for love.\" It appears on none of George Carlin's albums, HBO specials or books, and the credit to him seems to have taken hold only after his death in 2008.","credit":"not George Carlin. An anonymous Vietnam-era antiwar saying, in print since 19 May 1968 in the form \"Fighting for peace is like raping for love\" (Sunday World-Herald, Omaha); chronology documented by Barry Popik. Via Quotle.info","comparison":"","citation":"Barry Popik, \"Fighting for peace is like screwing for virginity,\" barrypopik.com, entry dated 16 April 2012, citing Sunday World-Herald (Omaha, NE), 19 May 1968, p. 22B, for the earliest print instance (\"Fighting for peace is like raping for love\"), and the Windsor Star Weekend Magazine, 11 November 1978, p. 20, for the earliest \"screwing for virginity\" wording in his chronology.","rights":"No rights status can honestly be asserted. The wording has no identified author and no identified first publication of its own — it circulated as an anonymous protest slogan and was recorded, in varying forms, by newspapers and books that each carry their own separate copyrights. Quoting the sentence itself is a short quotation of an ownerless saying; the surrounding passages transcribed above belong to their publishers.","checked":"3 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -839,6 +847,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

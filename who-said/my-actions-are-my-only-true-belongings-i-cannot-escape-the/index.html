@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"my-actions-are-my-only-true-belongings-i-cannot-escape-the","url":"https://quotle.info/who-said/my-actions-are-my-only-true-belongings-i-cannot-escape-the/","quote":"My actions are my only true belongings. I cannot escape the consequences of my actions","claim":"Gautama Buddha said: \"My actions are my only true belongings. I cannot escape the consequences of my actions\"","rating":1,"verdict":"Not supported","answer":"No. Both halves of this are true and they pull in different directions. The teaching is canonical: it is the fifth of the Five Remembrances, from the Upajjhatthana Sutta (Anguttara Nikaya 5.57), which Thanissaro Bhikkhu translates as \"I am the owner of my actions, heir to my actions, born of my actions, related through my actions, and have my actions as my arbitrator.\" The sentence is modern. It comes from Thích Nhất Hạnh's No Death, No Fear (Riverhead, 2002), pp. 149–150, where the remembrances are laid out as a guided breathing practice: \"Breathing in, I know that my actions of body, speech and mind are my only true belongings. Breathing out, I know I cannot escape the consequences of my actions.\" Strip the breathing and you have the quote in circulation.","credit":"Modern wording of a canonical teaching. \"My actions are my only true belongings. I cannot escape the consequences of my actions.\" is Thich Nhat Hanh's English, from No Death, No Fear: Comforting Wisdom for Life (New York: Riverhead Books, 2002), pp. 149-150, where it appears as a breathing contemplation. The teaching is the fifth of the Five Remembrances, Upajjhatthana Sutta (Anguttara Nikaya 5.57), whose canonical wording is \"I am the owner of my actions, heir to my actions.\" Traced by Quotle.info · Verbatim: “Breathing in, I know that my actions of body, speech and mind are my only true belongings. Breathing out, I know I cannot escape the consequences of my actions.”","comparison":"Breathing in, I know that my actions of body, speech and mind are my only true belongings. Breathing out, I know I cannot escape the consequences of my actions.","citation":"Thích Nhất Hạnh, No Death, No Fear: Comforting Wisdom for Life (New York: Riverhead Books, 2002), 149–50: \"Breathing in, I know that my actions of body, speech and mind are my only true belongings. Breathing out, I know I cannot escape the consequences of my actions.\" The underlying teaching is the fifth of the Five Remembrances, Upajjhatthana Sutta, Anguttara Nikaya 5.57.","rights":"Two layers here. The underlying discourse is ancient and long out of copyright. This English wording is not: it is from a 2002 book whose copyright page reads \"Copyright © 2002 by Unified Buddhist Church.\" If you want a freely reusable version of the teaching, quote a public-domain translation of Anguttara Nikaya 5.57 rather than this sentence.","checked":"20 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 20 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

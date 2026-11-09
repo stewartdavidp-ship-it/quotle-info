@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-way-to-get-started-is-to-quit-talking-and-begin-doing","url":"https://quotle.info/who-said/the-way-to-get-started-is-to-quit-talking-and-begin-doing/","quote":"The way to get started is to quit talking and begin doing","claim":"Walt Disney said: \"The way to get started is to quit talking and begin doing\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Widely — and, unusually for a feel-good internet quote, correctly — credited to Disney. It traces to a July 1957 interview with Hollywood columnist Hedda Hopper, in which Disney said \"I found the way to get started was to quit talking and begin doing it\" while describing how he pressed ahead without bank financing. The famous one-liner is a lightly trimmed paraphrase of that documented statement, so the attribution is sound even though the exact popular wording is not verbatim.","credit":"Walt Disney, paraphrased from a July 1957 interview with columnist Hedda Hopper (\"I found the way to get started was to quit talking and begin doing it\")","comparison":"","citation":"Hedda Hopper, syndicated Hollywood column, July 1957, quoting Walt Disney: \"I found the way to get started was to quit talking and begin doing it.\" As documented in Snopes, \"Did Walt Disney Say 'The Way To Get Started Is To Quit Talking'?\"","rights":"The line is documented in a July 1957 syndicated newspaper column by Hedda Hopper — first published well after 1931, so treated conservatively as in-copyright to its publisher/syndicate. (Short quotations like this are generally freely quotable, and the exact popular wording is a paraphrase not found verbatim in the column.)","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -858,6 +866,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

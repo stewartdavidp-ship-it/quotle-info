@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"to-give-real-service-you-must-add-something-which-cannot-be","url":"https://quotle.info/who-said/to-give-real-service-you-must-add-something-which-cannot-be/","quote":"To give real service you must add something which cannot be bought or measured with money, and that is sincerity and integrity","claim":"Douglas Adams said: \"To give real service you must add something which cannot be bought or measured with money, and that is sincerity and integrity\"","rating":1,"verdict":"Not supported","answer":"No. The line comes from \"Rotary's Ideal of Service,\" the convention address of Rotary International president Donald A. Adams, printed in The Rotarian in August 1926 — a different Adams entirely, and one who was speaking to a service club about business ethics. Douglas Adams was not born until 1952, and the earliest printing that credits him which Quote Investigator documents is a South Carolina newspaper page from 2002. One more wrinkle: Donald A. Adams's own sentence ended \"…and that thing is sincerity and integrity\" — the smoother wording everyone quotes today was trimmed by a newspaper in 1932.","credit":"Donald A. Adams, \"Rotary's Ideal of Service,\" The Rotarian, August 1926. Adams's 1926 text reads \"...and that thing is sincerity and integrity\"; the shortened wording comes from an Elmira Star-Gazette reprint of 6 February 1932. Commonly misattributed to Douglas Adams, who was born in 1952. Via quotle.info","comparison":"","citation":"Donald A. Adams, \"Rotary's Ideal of Service: Convention Address of the President,\" The Rotarian 29, no. 2 (August 1926): 8, quotation at 60. The familiar shortened wording first appears in \"Thoughts On Life,\" Elmira Star-Gazette (Elmira, NY), February 6, 1932, 6. Attestation chain traced by Quote Investigator, September 17, 2020.","rights":"The sentence was first published in The Rotarian in August 1926, well before the 1931 cutoff, so the text is in the public domain in the United States. The shortened wording that circulates today is a one-word deletion made by a newspaper in 1932 — a trivial alteration to an already public-domain sentence, not new authorship, so it carries no separate claim.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -864,6 +872,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

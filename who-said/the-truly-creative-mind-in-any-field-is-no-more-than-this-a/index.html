@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-truly-creative-mind-in-any-field-is-no-more-than-this-a","url":"https://quotle.info/who-said/the-truly-creative-mind-in-any-field-is-no-more-than-this-a/","quote":"The truly creative mind in any field is no more than this: a human creature born abnormally, inhumanly sensitive","claim":"Pearl S. Buck said: \"The truly creative mind in any field is no more than this: a human creature born abnormally, inhumanly sensitive\"","rating":5,"verdict":"Supported","answer":"Yes. This is genuinely Buck's, from her lecture \"The Creative Mind at Work,\" delivered as the William Vaughn Moody Foundation Lecture at the University of Chicago on 17 January 1935. Her original sentence opens \"For the truly creative mind in any field is no more than this — a human creature born abnormally, inhumanly sensitive\"; the popular version simply drops the leading \"For\" and swaps the dash for a colon.","credit":"Pearl S. Buck, \"The Creative Mind at Work,\" lecture, University of Chicago, 17 January 1935 · Verbatim: “For the truly creative mind in any field is no more than this — a human creature born abnormally, inhumanly sensitive.”","comparison":"For the truly creative mind in any field is no more than this — a human creature born abnormally, inhumanly sensitive.","citation":"Pearl S. Buck, \"The Creative Mind at Work,\" William Vaughn Moody Foundation Lecture, University of Chicago, 17 January 1935; text reprinted in Theodore F. Harris, Pearl S. Buck: A Biography, vol. 2 (New York: John Day, 1971).","rights":"\"The Creative Mind at Work\" was delivered in 1935 and its full text first published in the 1971 Harris biography — both well after 1931 — so the passage remains in copyright in the United States. Buck died in 1973; rights rest with her estate and the biography's publisher.","checked":"16 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -847,6 +855,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

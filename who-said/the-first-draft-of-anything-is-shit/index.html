@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-first-draft-of-anything-is-shit","url":"https://quotle.info/who-said/the-first-draft-of-anything-is-shit/","quote":"The first draft of anything is shit","claim":"Ernest Hemingway said: \"The first draft of anything is shit\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Hemingway never published this sentence. It survives in exactly one place: With Hemingway: A Year in Key West and Cuba, the memoir of Arnold Samuelson, who worked as Hemingway's deck hand on the Pilar for ten months from 1934. Samuelson's manuscript went unpublished in his lifetime and reached print in 1984, half a century after the conversation it records — which is why Quote Investigator calls the attribution plausible rather than proven.","credit":"Attributed to Ernest Hemingway (1899–1961). Earliest documented appearance: Arnold Samuelson, \"With Hemingway: A Year in Key West and Cuba\" (New York: Random House, 1984), p. 11, recording a conversation during Samuelson's ten months working for Hemingway, 1934–35. Quote Investigator calls the attribution plausible but not confirmed. Verified via Quotle.info, 4 Aug 2026.","comparison":"","citation":"Samuelson, Arnold. With Hemingway: A Year in Key West and Cuba. New York: Random House, 1984, p. 11. Identified by Quote Investigator as the first published evidence of the remark; the conversation it records falls within Samuelson's ten months working for Hemingway, 1934–35, which QI does not date or locate more precisely.","rights":"The only text carrying this sentence is With Hemingway: A Year in Key West and Cuba, first published by Random House in 1984 — decades after the pre-1931 threshold for US public domain — so the memoir, including the passage quoted here, is in copyright. Who holds that copyright is a separate question we have not confirmed: the library record establishes the publisher and nothing more, so treat Random House and/or Samuelson's estate as presumed holders and check the book's copyright page before any commercial reuse. Hemingway's own published work is a separate rights question again, and in any case this line appears in none of it.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -857,6 +865,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -510,6 +512,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -556,6 +561,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -612,7 +618,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-worst-form-of-inequality-is-to-try-to-make-unequal","url":"https://quotle.info/who-said/the-worst-form-of-inequality-is-to-try-to-make-unequal/","quote":"The worst form of inequality is to try to make unequal things equal","claim":"Aristotle said: \"The worst form of inequality is to try to make unequal things equal\"","rating":1,"verdict":"Not supported","answer":"No. This neat aphorism appears nowhere in Aristotle's writings. It is a modern coinage—traced by classicist Joel Christensen to roughly the mid-1970s—that actually inverts Aristotle's point. Aristotle argued that justice is proportional: equality for equals, inequality for unequals (Politics 1280a), but he never framed it as a slogan against making things equal, and this exact wording is not his.","credit":"Not Aristotle — this exact line appears in none of his works. It is a modern aphorism (c. 1970s) that distorts his real argument for proportional justice in Politics 1280a.","comparison":"","citation":"Genuine parallel: Aristotle, Politics III.9 (Bekker 1280a), trans. Benjamin Jowett (Oxford: Clarendon Press, 1885). The popular aphorism is unattested in Aristotle; earliest circulation traced to the mid-1970s per Joel Christensen, \"Fake Aristotle Fakely Rails Against Fighting Inequality,\" Sententiae Antiquae, 23 March 2019.","rights":"The popular aphorism has no identifiable source—it is a modern coinage (c. 1970s) attached to Aristotle, so no copyright or public-domain status can be honestly asserted for it. Aristotle's genuine Politics passage is ancient and in the public domain, and the Jowett translation quoted here (1885) is likewise public domain.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -833,6 +841,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

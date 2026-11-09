@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"almighty-and-most-merciful-father-we-humbly-beseech-thee-of","url":"https://quotle.info/who-said/almighty-and-most-merciful-father-we-humbly-beseech-thee-of/","quote":"Almighty and most merciful Father, we humbly beseech Thee, of Thy great goodness, to restrain these immoderate rains with which we have had to contend. Grant us fair weather for Battle","claim":"George S. Patton said: \"Almighty and most merciful Father, we humbly beseech Thee, of Thy great goodness, to restrain these immoderate rains with which we have had to contend. Grant us fair weather for Battle\"","rating":1,"verdict":"Not supported","answer":"No. Patton ordered the prayer and had it printed on cards for his troops with his signed Christmas greeting on the back. The words themselves were composed by his Third Army chief chaplain, James H. O'Neill. O'Neill said so in his own published account, and Wikiquote lists the prayer as misattributed to Patton.","credit":"composed by Chaplain James H. O'Neill at the order of Lt. Gen. George S. Patton Jr., Third Army prayer card, December 1944 (often misattributed to Patton). · Verbatim: “Almighty and most merciful Father, we humbly beseech Thee, of Thy great goodness, to restrain these immoderate rains with which we have had to contend. Grant us fair weather for Battle. Graciously hearken to us as soldiers who call upon Thee that, armed with Thy power, we may advance from victory to victory, and crush the oppression and wickedness of our enemies and establish Thy justice among men and nations.”","comparison":"Almighty and most merciful Father, we humbly beseech Thee, of Thy great goodness, to restrain these immoderate rains with which we have had to contend. Grant us fair weather for Battle. Graciously hearken to us as soldiers who call upon Thee that, armed with Thy power, we may advance from victory to victory, and crush the oppression and wickedness of our enemies and establish Thy justice among men and nations.","citation":"O'Neill, James H. \"The True Story of The Patton Prayer.\" Review of the News, October 6, 1971. The prayer itself was first printed on Third Army prayer cards in December 1944. Archived Patton Society copy: https://web.archive.org/web/20160114131514/http://www.pattonhq.com/prayer.html.","rights":"The prayer was first printed on Third Army cards in December 1944. An Army chaplain wrote it on his commander's orders, and an Army engineer unit printed it, so it may be a U.S. government work. Quotle.info has not confirmed its copyright status, so we assert none. O'Neill's 1971 magazine article telling the story is a separate work with its own rights.","checked":"2 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 2 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -843,6 +851,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"there-are-four-hundred-thousand-words-in-the-english","url":"https://quotle.info/who-said/there-are-four-hundred-thousand-words-in-the-english/","quote":"There are four hundred thousand words in the English language, and there are seven you can't say on television","claim":"George Carlin said: \"There are four hundred thousand words in the English language, and there are seven you can't say on television\"","rating":5,"verdict":"Supported","answer":"Yes. Carlin states it early in \"Seven Words You Can Never Say on Television,\" the closing track of his album Class Clown, recorded live at the Santa Monica Civic Auditorium on 27 May 1972 and released that September. Wikiquote's sourced section prints this exact wording under Class Clown (1972), cited to that recording, and follows it with the ratio — \"399,993 to 7.\"","credit":"George Carlin, \"Seven Words You Can Never Say on Television,\" on Class Clown, recorded 27 May 1972 at the Santa Monica Civic Auditorium (Little David/Atlantic, released 29 September 1972). Wording per Wikiquote's sourced Class Clown entry, cited there to the recording; transcripts of the delivered line vary slightly.","comparison":"","citation":"George Carlin, \"Seven Words You Can Never Say on Television,\" on Class Clown, recorded 27 May 1972 at the Santa Monica Civic Auditorium (Little David / Atlantic, released 29 September 1972). Wording as printed in the sourced Class Clown section of Wikiquote's George Carlin page, cited there to the recording; circulating transcripts of the routine render the delivered line variously, e.g. \"there are 7 of them that you can't say on television.\"","rights":"Class Clown was released on 29 September 1972, so both the routine and the recording sit well inside US copyright — nothing here is public domain. The sentence is reproduced above as a short citation for attribution purposes; the routine itself remains the property of Carlin's estate and its licensees.","checked":"3 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

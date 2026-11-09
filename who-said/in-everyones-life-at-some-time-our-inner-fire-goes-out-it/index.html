@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"in-everyones-life-at-some-time-our-inner-fire-goes-out-it","url":"https://quotle.info/who-said/in-everyones-life-at-some-time-our-inner-fire-goes-out-it/","quote":"In everyone's life, at some time, our inner fire goes out. It is then burst into flame by an encounter with another human being. We should all be thankful for those people who rekindle the inner spirit","claim":"Jim Valvano said: \"In everyone's life, at some time, our inner fire goes out. It is then burst into flame by an encounter with another human being. We should all be thankful for those people who rekindle the inner spirit\"","rating":1,"verdict":"Not supported","answer":"No. Jim Valvano quoted this line twice in public, and both times he credited Albert Schweitzer — he never claimed it. The thought is genuinely Schweitzer's, from his 1924 memoir Aus meiner Kindheit und Jugendzeit (Memoirs of Childhood and Youth), but this exact wording matches no published translation of it. Valvano's 1991 book prints it as \"a paraphrase from a speech by Albert Schweitzer\" that reached him on an anonymous note.","credit":"Albert Schweitzer, Memoirs of Childhood and Youth, trans. C. T. Campion (London: George Allen & Unwin, 1924), 90. The popular wording \"In everyone's life, at some time, our inner fire goes out…\" is an anonymous paraphrase, not Schweitzer's text; its earliest documented appearance is Jim Valvano's 1991 memoir, where Valvano himself credits Schweitzer. Via Quotle.info. · Verbatim: “As a rule there are in everyone all sorts of good ideas, ready like tinder. But much of this tinder catches fire, or catches it successfully, only when it meets some flame or spark from outside, i.e. from some other person. Often, too, our own light goes out, and is rekindled by some experience we go through with a fellow-man. Thus we have each of us cause to think with deep gratitude of those who have lighted the flames within us.”","comparison":"As a rule there are in everyone all sorts of good ideas, ready like tinder. But much of this tinder catches fire, or catches it successfully, only when it meets some flame or spark from outside, i.e. from some other person. Often, too, our own light goes out, and is rekindled by some experience we go through with a fellow-man. Thus we have each of us cause to think with deep gratitude of those who have lighted the flames within us.","citation":"Albert Schweitzer, Memoirs of Childhood and Youth, trans. C. T. Campion (London: George Allen & Unwin, 1924), 90. The popular wording is an anonymous paraphrase; its earliest instance documented by Quote Investigator is Jim Valvano and Curry Kirkpatrick, Valvano: They Gave Me a Lifetime Contract, and Then They Declared Me Dead (New York: Pocket Books, 1991), 239.","rights":"Two different rights questions sit on this page. Schweitzer's memoir and Campion's English translation were both first published in 1924, so that text — the excerpt shown above — is old enough to be public domain in the United States. The famous three-sentence wording is a different matter: nobody knows who wrote it, and its earliest documented appearance is inside an in-copyright 1991 book (Pocket Books / Simon & Schuster). Because its authorship and first publication cannot be established, we assert no status for it.","checked":"27 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -866,6 +874,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

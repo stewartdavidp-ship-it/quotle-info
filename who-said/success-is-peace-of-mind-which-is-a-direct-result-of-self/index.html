@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -513,6 +515,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -559,6 +564,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -615,7 +621,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"success-is-peace-of-mind-which-is-a-direct-result-of-self","url":"https://quotle.info/who-said/success-is-peace-of-mind-which-is-a-direct-result-of-self/","quote":"Success is peace of mind which is a direct result of self-satisfaction in knowing you made the effort to become the best of which you are capable","claim":"John Wooden said: \"Success is peace of mind which is a direct result of self-satisfaction in knowing you made the effort to become the best of which you are capable\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Defining success against your own effort rather than against a scoreboard is the heart of Wooden's teaching, and this sentence is the form that circulates. We could not tie that exact wording to a primary edition: Wikiquote's only sourced version of the definition comes from a 2000 television interview and reads differently.","credit":"Attributed to John Wooden (1910–2010). Widely credited, but the exact wording is not tied to a primary source. — quotle.info","comparison":"","citation":"Wooden's definition of success, popular wording; primary edition not established. Nearest sourced version: John Wooden, interview on Charlie Rose (2000), as quoted in Wikiquote, \"John Wooden.\"","rights":"Every documented published form of Wooden's definition of success dates from well after 1930, so this text is treated as in copyright. We have not identified which publication the popular wording first appeared in, so no single rights holder can be named with confidence.","checked":"26 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 26 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -830,6 +838,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

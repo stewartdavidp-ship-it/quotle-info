@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"here-are-two-tickets-for-the-opening-of-my-play-bring-a","url":"https://quotle.info/who-said/here-are-two-tickets-for-the-opening-of-my-play-bring-a/","quote":"Here are Two Tickets for the Opening of My Play. Bring a Friend—If You Have One","claim":"George Bernard Shaw said: \"Here are Two Tickets for the Opening of My Play. Bring a Friend—If You Have One\"","rating":1,"verdict":"Not supported","answer":"No. There is no letter, no playbill and no contemporary source — and both supposed correspondents denied it in writing. The earliest printing anyone has found is Walter Winchell's column of September 1946, where the joke is told of Noël Coward and Randolph Churchill; Shaw and Winston Churchill's names are attached to it only in January 1948.","credit":"Not George Bernard Shaw. The \"two tickets — bring a friend, if you have one\" exchange with Winston Churchill is unsupported: Shaw wrote in his own hand, on Derek Tatham's letter of 15 September 1949, that it was \"not only a flat lie but a political libel,\" and Churchill's office agreed the next day (Churchill Papers, CHUR 2/165/66,68, Churchill Archives Centre). The joke's earliest known printing, in Walter Winchell's column of 19 September 1946, tells it of Noël Coward and Randolph Churchill. The wording that follows is the popular form as given in Kay Halle, Irrepressible Churchill (1966), p.116 — not a wording either man wrote. — Quotle.info · Verbatim: “Am reserving two tickets for you for my premiere. Come and bring a friend—if you have one.”","comparison":"Am reserving two tickets for you for my premiere. Come and bring a friend—if you have one.","citation":"Earliest printed version located by Quote Investigator: Walter Winchell, \"Man About Town,\" Augusta Chronicle, September 19, 1946, 6 — told of Noël Coward and Randolph Churchill. Earliest Shaw–Churchill version: Bob Considine (International News Service), St. Joseph Gazette, January 12, 1948, 9. Denials: Bernard Shaw, undated annotation on Derek Tatham to Shaw, 15 September 1949, and Elizabeth Gilliatt for Winston Churchill, 16 September 1949, Churchill Papers, CHUR 2/165/66,68, Churchill Archives Centre, Cambridge.","rights":"No rights status can honestly be asserted, because the wording has no identifiable author. The line is not traceable to any work by Shaw, and the documented early tellings are anonymous newspaper items — and those 1946 and 1948 newspaper texts are post-1930, so their United States status turns on whether the copyright was renewed in its 28th year, which we have not checked. Shaw's own writings from before 1931 are a separate matter; either way, this sentence is simply not among them.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -851,6 +859,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

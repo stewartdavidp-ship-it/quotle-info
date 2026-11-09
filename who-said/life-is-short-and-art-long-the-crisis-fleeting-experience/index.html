@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"life-is-short-and-art-long-the-crisis-fleeting-experience","url":"https://quotle.info/who-said/life-is-short-and-art-long-the-crisis-fleeting-experience/","quote":"Life is short, and Art long; the crisis fleeting; experience perilous, and decision difficult","claim":"Hippocrates said: \"Life is short, and Art long; the crisis fleeting; experience perilous, and decision difficult\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. This is a real, traceable sentence: it is the opening aphorism of the Aphorisms, one of the treatises of the Hippocratic Corpus. But this exact English is the wording carried by the standard online texts — Wikisource and the Internet Classics Archive — which credit Francis Adams's 1849 translation even though his printed 1849 volume reads \"Life is short, and the Art long; the occasion fleeting; experience fallacious, and judgment difficult.\" And the byline itself cannot be verified: none of the texts in the Corpus is proven to be by Hippocrates himself.","credit":"Hippocrates, Aphorisms, sec. I, aph. 1; English text credited to Francis Adams, as carried by the Internet Classics Archive. Traditionally attributed: no work in the Hippocratic Corpus is proven to be by Hippocrates himself, and this popular wording is not Adams's printed 1849 text, which reads \"the occasion fleeting; experience fallacious, and judgment difficult.\"","comparison":"","citation":"Hippocrates. \"Aphorisms,\" sec. I, aph. 1. English text credited to Francis Adams, as carried by the Internet Classics Archive, http://classics.mit.edu/Hippocrates/aphorisms.1.i.html. Adams's printed translation — The Genuine Works of Hippocrates, vol. 2 (London: Printed for the Sydenham Society, 1849), p. 697 — reads \"the occasion fleeting; experience fallacious, and judgment difficult.\"","rights":"The Greek text dates from antiquity and has been out of copyright for centuries. The English quoted here is a nineteenth-century rendering in the Francis Adams tradition — Wikisource carries it as public domain, published well before 1931, and Adams himself died in 1861 — so it is public domain in the United States as well. Note that this applies to this rendering only: a modern translation of the same aphorism, such as a recent Loeb Classical Library volume, would be separately in copyright.","checked":"24 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 24 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -876,6 +884,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

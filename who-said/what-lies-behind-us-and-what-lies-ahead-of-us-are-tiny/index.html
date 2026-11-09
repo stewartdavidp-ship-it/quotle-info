@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"what-lies-behind-us-and-what-lies-ahead-of-us-are-tiny","url":"https://quotle.info/who-said/what-lies-behind-us-and-what-lies-ahead-of-us-are-tiny/","quote":"What lies behind us and what lies ahead of us are tiny matters compared to what lies within us","claim":"Ralph Waldo Emerson said: \"What lies behind us and what lies ahead of us are tiny matters compared to what lies within us\"","rating":1,"verdict":"Not supported","answer":"No. The maxim first appears on page 131 of Meditations in Wall Street (New York: William Morrow & Co., 1940), a book of aphorisms published anonymously with an introduction by Albert Jay Nock; the author was later identified as the stockbroker Henry Stanley Haskins. Quote Investigator, quoting Ralph Keyes's The Quote Verifier, records that no evidence can be found that Emerson said or wrote these words — and QI's own earliest located Emerson credit is 1980, ninety-eight years after Emerson died in 1882.","credit":"Henry Stanley Haskins, Meditations in Wall Street (New York: William Morrow & Co., 1940), p. 131 (popular wording; QI transcribes p. 131 as 'lies before us'). Not Ralph Waldo Emerson. · Verbatim: “What lies behind us and what lies before us are tiny matters compared to what lies within us.”","comparison":"What lies behind us and what lies before us are tiny matters compared to what lies within us.","citation":"[Henry Stanley Haskins], Meditations in Wall Street, with an introduction by Albert Jay Nock (New York: William Morrow & Co., 1940), 131. Published anonymously; the author was later identified as Haskins. Earliest documented instance per Quote Investigator, \"Quote Origin: What Lies Behind Us and What Lies Before Us are Tiny Matters Compared to What Lies Within Us,\" 11 January 2011.","rights":"The wording originates in a work first published in 1940 — well after the 1931 line that separates public-domain US publications from protected ones — so we treat it as in copyright. The irony is that the popular Emerson attribution would make the line public domain (Emerson died in 1882), which is one reason a false attribution is not a harmless error: it silently launders a modern, protected text into apparent free use. We have not examined the 1940 copyright registration or any renewal record, so this is the conservative classification rather than a settled finding.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

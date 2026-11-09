@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"storytelling-just-give-them-two-and-two-and-let-them-add-it","url":"https://quotle.info/who-said/storytelling-just-give-them-two-and-two-and-let-them-add-it/","quote":"Just give them two and two and let them add it up","claim":"Billy Wilder said: \"Just give them two and two and let them add it up\"","rating":5,"verdict":"Supported","answer":"Yes. Wilder said it aloud in a seminar at the American Film Institute; the transcript was published as the Billy Wilder chapter of Conversations with the Great Moviemakers of Hollywood's Golden Age at the American Film Institute, edited by George Stevens Jr. (Alfred A. Knopf, 2006), quote page 320, where Quote Investigator verified it on paper. One honest complication: Wilder was voicing advice he said he had learned from Ernst Lubitsch, and Quote Investigator has found no citation in which Lubitsch spoke these words — so the sentence is documented as Wilder's spoken line, credited by Wilder to someone else.","credit":"Billy Wilder, in a seminar at the American Film Institute, published in Conversations with the Great Moviemakers of Hollywood's Golden Age at the American Film Institute, ed. George Stevens Jr. (Knopf, 2006), p. 320. Wilder credited the advice to Ernst Lubitsch; no source in Lubitsch's own words has been found. Verified via quotle.info · Verbatim: “No, just give them two and two and let them add it up. They're going to do it for you. And they're going to have fun with it. They're going to play the game with you.”","comparison":"No, just give them two and two and let them add it up. They're going to do it for you. And they're going to have fun with it. They're going to play the game with you.","citation":"Billy Wilder, seminar remarks, in Conversations with the Great Moviemakers of Hollywood's Golden Age at the American Film Institute, ed. George Stevens Jr. (New York: Alfred A. Knopf, 2006), 320. The Wilder chapter is dated 13 December 1978 and, per its own footnote, contains segments from AFI seminars of 7 January 1976 and 3 March 1986. The widely circulated variant — \"A tip from Lubitsch: Let the audience add up two plus two. They'll love you forever\" — is from \"Wilder's Tips for Writers,\" in Cameron Crowe, Conversations with Wilder (New York: Alfred A. Knopf, 1999), 357.","rights":"The work carrying this line — Conversations with the Great Moviemakers of Hollywood's Golden Age at the American Film Institute — was first published in 2006, and the underlying seminar was given in Wilder's lifetime, so both the transcript and his spoken remarks are firmly within copyright under US law. The same is true of the popular 1999 wording from Cameron Crowe's Conversations with Wilder. Nothing here is public domain: quoting the sentence with attribution is ordinary fair use, but reproducing the passage at length is not.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -870,6 +878,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"happiness-depends-upon-ourselves","url":"https://quotle.info/who-said/happiness-depends-upon-ourselves/","quote":"Happiness depends upon ourselves","claim":"Aristotle said: \"Happiness depends upon ourselves\"","rating":1,"verdict":"Not supported","answer":"No. The words are J. A. K. Thomson's, from his 1955 Penguin translation of the Nicomachean Ethics. Rendering a connective sentence at I.9, he wrote \"The conclusion that happiness depends upon ourselves is in harmony with what I said in the first of these lectures\" — supplying the italicised clause to tell the reader what 'the conclusion' was. The Greek sentence it translates contains no word for happiness and no word for ourselves.","credit":"…and this will be found to agree with what we said at the outset. —Aristotle, Nicomachean Ethics I.9 (trans. W. D. Ross). The phrase \"happiness depends upon ourselves\" is J. A. K. Thomson's 1955 addition, not Aristotle's.","comparison":"","citation":"Aristotle. Nicomachean Ethics I.9, Bekker 1099b. (The English phrase 'happiness depends upon ourselves' is J. A. K. Thomson's addition in The Ethics of Aristotle, Penguin, 1955.)","rights":"Split, and the split runs the wrong way for most people's assumptions. Aristotle's Greek is public domain — quote or translate it freely. But the four English words in circulation are Thomson's 1955 translation, still in copyright (he died in 1959, so UK/EU protection runs to the end of 2029, and the US term for a 1955 publication runs considerably longer). Quote them as the object of analysis rather than as decoration. For free English on this passage use W. D. Ross's Oxford translation, which is public domain in the United States — noting that Ross died in 1971, so life-plus-70 territories should check locally. This is not legal advice.","checked":"20 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 20 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -857,6 +865,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-we-are-alone-in-the-universe-it-sure-seems-like-an-awful","url":"https://quotle.info/who-said/if-we-are-alone-in-the-universe-it-sure-seems-like-an-awful/","quote":"If we are alone in the Universe, it sure seems like an awful waste of space","claim":"Carl Sagan said: \"If we are alone in the Universe, it sure seems like an awful waste of space\"","rating":1,"verdict":"Not supported","answer":"No. Wikiquote files this exact wording under Misattributed on its Carl Sagan page, calling it a paraphrase of a line Sagan himself credited to Thomas Carlyle. Opening his own statement as a panelist at a NASA symposium at Boston University on 20 November 1972, Sagan said that Carlyle, \"upon thinking about the stars,\" had said: \"A sad spectacle. If they be inhabited, what a scope for misery and folly. If they be not inhabited, what a waste of space.\" The phrasing people actually recognise is film dialogue — Ted Arroway's \"if it is just us… seems like an awful waste of space\" in Contact (1997).","credit":"Thomas Carlyle, as quoted by Carl Sagan in his opening statement as a panelist at the symposium “Life Beyond Earth and the Mind of Man,” Boston University, 20 November 1972, printed in Life Beyond Earth and the Mind of Man, ed. Richard Berendzen, NASA SP-328 (1973), p. 5. The popular version — “If we are alone in the Universe, it sure seems like an awful waste of space” — is not a documented Sagan sentence; the closest is Ted Arroway’s line in the 1997 film Contact, written by James V. Hart and Michael Goldenberg. · Verbatim: “A sad spectacle. If they be inhabited, what a scope for misery and folly. If they be not inhabited, what a waste of space.”","comparison":"A sad spectacle. If they be inhabited, what a scope for misery and folly. If they be not inhabited, what a waste of space.","citation":"Carl Sagan, opening statement as a panelist at the symposium \"Life Beyond Earth and the Mind of Man,\" Boston University, November 20, 1972, in Life Beyond Earth and the Mind of Man, ed. Richard Berendzen, NASA SP-328 (National Aeronautics and Space Administration, 1973), 5 — where Sagan is quoting Thomas Carlyle. Carlyle's sentence appears in print in John Burroughs, Accepting the Universe: Essays in Naturalism (Houghton Mifflin, 1920), 1. The popular wording \"If we are alone in the Universe, it sure seems like an awful waste of space\" is listed as misattributed to Sagan by Wikiquote; the closest documented sentence is Ted Arroway's in Contact (Warner Bros., 1997), screenplay by James V. Hart and Michael Goldenberg.","rights":"No rights status can honestly be asserted for the popular wording, because it has no traceable source work — it is a floating paraphrase, not a sentence anyone is documented as having written. The two anchor texts do have clear status: Carlyle's exclamation as printed in John Burroughs's Accepting the Universe (1920) is public domain in the United States, while the near-identical film dialogue in Contact (Warner Bros., 1997) is a modern work and should be treated as in copyright. The 1973 symposium proceedings sit differently: NASA SP-328 was issued for sale by the Superintendent of Documents, U.S. Government Printing Office, and its front matter carries no copyright notice on the text — only a Library of Congress catalog card number, plus a separate 1959 credit for the cover photograph — so the volume is very likely public domain in the United States, though the panelists' spoken remarks may carry rights of their own.","checked":"10 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -866,6 +874,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

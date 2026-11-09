@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"when-i-see-the-worsening-degeneracy-in-our-politicians-our","url":"https://quotle.info/who-said/when-i-see-the-worsening-degeneracy-in-our-politicians-our/","quote":"When I see the worsening degeneracy in our politicians, our media, our educators, and our intelligentsia, I can't help wondering if the day may yet come when the only thing that can save this country is a military coup","claim":"Thomas Sowell said: \"When I see the worsening degeneracy in our politicians, our media, our educators, and our intelligentsia, I can't help wondering if the day may yet come when the only thing that can save this country is a military coup\"","rating":5,"verdict":"Supported","answer":"Yes. Sowell wrote this exact sentence as one item in his syndicated \"Random thoughts\" column of May 1, 2007 (Creators Syndicate). National Review Online ran the column as \"Don't Get Weak\", and Townhall and Jewish World Review ran it as \"Random thoughts\". All three archived copies contain the wording word for word.","credit":"Thomas Sowell, “Random thoughts” column, Creators Syndicate, May 1, 2007","comparison":"","citation":"Sowell, Thomas. \"Random Thoughts.\" Creators Syndicate, May 1, 2007. Published by National Review Online as \"Don't Get Weak,\" May 1, 2007.","rights":"The sentence comes from a newspaper column first published on May 1, 2007, and the National Review copy carries the line \"© 2007 Creators Syndicate, Inc.\" The column is well inside the US copyright term. Quoting this single sentence with attribution is ordinary commentary use.","checked":"2 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 2 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -825,6 +833,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
