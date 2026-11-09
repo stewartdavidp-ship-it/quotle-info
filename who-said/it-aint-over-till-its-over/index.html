@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-aint-over-till-its-over","url":"https://quotle.info/who-said/it-aint-over-till-its-over/","quote":"It ain't over till it's over","claim":"Yogi Berra said: \"It ain't over till it's over\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Berra is credited with this line everywhere, and he printed it under his own name in The Yogi Book: I Really Didn't Say Everything I Said! (Workman, 1998), dating it to the New York Mets' 1973 pennant race — but no 1973 source has been found containing that wording. Etymologist Barry Popik, whose dated chronology is the standard reference here, writes plainly that \"This exact quote hasn't been found\"; what the New York Post actually printed on 4 September 1973 was Berra saying \"Yeah, it's running out, but you're still not out of it until it's automatic.\"","credit":"Attributed to Yogi Berra. He printed the line in The Yogi Book: I Really Didn't Say Everything I Said! (Workman, 1998) and dated it to the Mets' 1973 pennant race, but no 1973 source has been found with that exact wording — the closest contemporaneous record is Berra in the New York Post, 4 September 1973, p. 64: \"Yeah, it's running out, but you're still not out of it until it's automatic.\" Chronology: Barry Popik, \"It ain't over 'til it's over,\" The Big Apple.","comparison":"","citation":"Yogi Berra, The Yogi Book: I Really Didn't Say Everything I Said! (New York: Workman Publishing, 1998), where Berra prints the line and dates it to the Mets' 1973 pennant race. No 1973 source has been found containing the exact wording; the closest contemporaneous remark on record is Berra in the New York Post, September 4, 1973, p. 64: \"Yeah, it's running out, but you're still not out of it until it's automatic.\" Citation chronology per Barry Popik, \"It ain't over 'til it's over,\" The Big Apple.","rights":"Every citation that carries the modern wording is in copyright in the United States. The only work that carries the exact wording under Berra's name is The Yogi Book: I Really Didn't Say Everything I Said! (Workman Publishing, 1998), and the newspaper citations that carry the tightening phrase — 1973, 1975, 1979, 1984 — all fall well after the 1931 US public-domain threshold. The 1892 Lawrence (KS) Daily Journal antecedent at the head of the trail is public domain, but it is a different sentence. Where the exact sentence was first coined remains undocumented, so treat the wording as in copyright rather than free to reuse.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -866,6 +874,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

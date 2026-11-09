@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-seems-as-if-anything-i-like-is-either-illegal-immoral-or","url":"https://quotle.info/who-said/it-seems-as-if-anything-i-like-is-either-illegal-immoral-or/","quote":"It Seems As If Anything I Like Is Either Illegal, Immoral, or Fattening","claim":"Alexander Woollcott coined: \"It Seems As If Anything I Like Is Either Illegal, Immoral, or Fattening\"","rating":1,"verdict":"Not supported","answer":"No. The earliest known record belongs to neither of the men usually credited: on 16 September 1933 the Albany Evening News wrote down an anecdote Alexander Woollcott had just told on his radio show, in which a St. Louis man named Frank Rand, lunching miserably on bouillon cubes and undressed lettuce, delivers the line. Fields spoke a version of it on screen the following February in Paramount's Six of a Kind, and Quote Investigator credits the saying to Rand, with Woollcott as its popularizer.","credit":"Not Alexander Woollcott, and not W. C. Fields. The earliest known record is a St. Louis man named Frank Rand, quoted on Woollcott's radio show and written down in the Albany Evening News, 16 September 1933: \"But it seems as if anything I like is either illegal or immoral or fattening.\" Fields spoke a version of it on screen in Paramount's Six of a Kind, released 9 February 1934. — quotle.info","comparison":"But it seems as if anything I like is either illegal or immoral or fattening.","citation":"\"As I Hear It\" by The Listener [identified by Quote Investigator as Mary A. O'Neill], Albany Evening News (Albany, NY), September 16, 1933, p. 14, col. 6; chronology in Quote Investigator, \"Quote Origin: It Seems As If Anything I Like Is Either Illegal, Immoral, or Fattening,\" April 9, 2013.","rights":"This line is not from an old book: its two documented appearances are a newspaper column of 16 September 1933 and a Paramount feature released 9 February 1934, both after the 1931 cut-off for U.S. public domain in 2026, so we treat the sources as in-copyright rather than assert otherwise. Whether a one-sentence quip carries its own protection is a separate question this page does not decide.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -858,6 +866,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"compound-interest-is-the-eighth-wonder-of-the-world","url":"https://quotle.info/who-said/compound-interest-is-the-eighth-wonder-of-the-world/","quote":"Compound interest is the eighth wonder of the world","claim":"John D. Rockefeller said: \"Compound interest is the eighth wonder of the world\"","rating":1,"verdict":"Not supported","answer":"No. There is no documented source in which Rockefeller says this. Quote Investigator finds its earliest close match in an advertisement for The Equity Savings & Loan Company printed in the Cleveland Plain Dealer on 27 April 1925 — \"The Eighth Wonder of the World—is compound interest\" — carrying no attribution at all, and hypothesises that an unknown advertising copywriter wrote it. QI states plainly that it has found no substantive evidence that Einstein, Baron Rothschild or John D. Rockefeller employed the saying.","credit":"Misattributed to John D. Rockefeller. No evidence he said it — Quote Investigator's earliest close match is an unattributed advertisement for The Equity Savings & Loan Company in the Cleveland Plain Dealer, 27 April 1925; the only Rockefeller credit in QI's chronology is a guest column in the Herald-Times-Reporter (Manitowoc, Wisconsin), 14 October 1981, forty-four years after his death. Source: Quote Investigator.","comparison":"","citation":"Garson O'Toole (Quote Investigator), \"Quote Origin: The Eighth Wonder of the World Is Compound Interest,\" 9 September 2019, giving as its earliest close match an advertisement for The Equity Savings & Loan Company, Cleveland Plain Dealer, 27 April 1925, quote page 26; the only Rockefeller credit in its chronology is Robert Lindwall's guest column, Herald-Times-Reporter (Manitowoc, Wisconsin), 14 October 1981, quote page 4.","rights":"No rights status can honestly be asserted for this wording, because it has no identifiable author. The nearest documented ancestor is an anonymous newspaper advertisement of 27 April 1925 — that specific ad text, published in the United States before 1931, would itself be public domain — but the popular Rockefeller-credited sentence is not the 1925 wording and has no traceable first publication of its own.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -854,6 +862,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

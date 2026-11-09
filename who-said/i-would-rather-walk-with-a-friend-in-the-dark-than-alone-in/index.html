@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-would-rather-walk-with-a-friend-in-the-dark-than-alone-in","url":"https://quotle.info/who-said/i-would-rather-walk-with-a-friend-in-the-dark-than-alone-in/","quote":"I would rather walk with a friend in the dark than alone in the light","claim":"Helen Keller said: \"I would rather walk with a friend in the dark than alone in the light\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. There is real evidence behind this one. Quote Investigator concludes that Keller did give this answer from the stage, and Joseph P. Lash's Helen and Teacher (1980) records it in her early-1920s vaudeville question-and-answer act — asked whether she desired her sight above all else, she replied \"No! No! I would rather walk with a friend in the dark than walk alone in the light.\" But two things stop this short of verified: Lash found the reply on a seventeen-page prepared Q&A list, so it was scripted rather than spontaneous, and the sentence closely tracks a religious adage already in print by 1876. No contemporaneous document in Keller's own hand has been produced, and the popular wording trims a word from the version Lash gives.","credit":"Helen Keller, attributed — her prepared reply during the early-1920s vaudeville question-and-answer act, recorded in Joseph P. Lash, \"Helen and Teacher\" (Delacorte Press, 1980), 496–498: \"No! No! I would rather walk with a friend in the dark than walk alone in the light.\" An earlier religious form, \"I would rather walk in the dark with God, than walk alone in the light,\" was in print by 1876.","comparison":"I would rather walk with a friend in the dark than walk alone in the light.","citation":"Joseph P. Lash, Helen and Teacher: The Story of Helen Keller and Anne Sullivan Macy (New York: Delacorte Press/Seymour Lawrence, 1980), 496–498, recording Helen Keller's prepared reply during her early-1920s vaudeville question-and-answer act: \"No! No! I would rather walk with a friend in the dark than walk alone in the light.\" Quote Investigator documents an earlier religious form of the saying — \"I would rather walk in the dark with God, than walk alone in the light\" — in The Christian Pioneer; A Monthly Magazine, vol. 30 (1876).","rights":"Keller's own pre-1931 books are public domain — The Story of My Life (1903) is free to read on Project Gutenberg — but none has been shown to contain this sentence, and it is absent from Wikiquote's Keller page entirely. The only text that documents the wording is Joseph P. Lash's Helen and Teacher (1980), which is still in copyright, so the line as we have it reaches us through an in-copyright work; the 1876 devotional verse behind it is public domain, but that verse reads \"with God,\" not \"with a friend.\"","checked":"10 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -867,6 +875,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

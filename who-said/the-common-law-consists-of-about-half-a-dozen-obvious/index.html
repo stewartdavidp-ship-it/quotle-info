@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-common-law-consists-of-about-half-a-dozen-obvious","url":"https://quotle.info/who-said/the-common-law-consists-of-about-half-a-dozen-obvious/","quote":"The Common Law Consists of About Half A Dozen Obvious Propositions, But Unfortunately …","claim":"\"The Common Law Consists of About Half A Dozen Obvious Propositions, But Unfortunately …\"","rating":1,"verdict":"Not supported","answer":"The line is nowhere in Oliver Wendell Holmes Jr.'s The Common Law (1881), and no evidence connects him to it. Its earliest printed text is a paper read by Judge H. C. Dowdall on 26 September 1931 and published in 1932, where the sentence sits in quotation marks with no speaker named; four months later Dowdall wrote to The Times naming Lord Sterndale as the man he had heard say it. Sterndale never published it himself, so the wording is Dowdall's recollection of a remark, not a text.","credit":"credited to Lord Sterndale (William Pickford, 1848–1923) by Judge H. C. Dowdall, letter to The Times (London), 26 January 1932. Earliest printed text: Dowdall, \"The Psychological Origins of Law,\" Report of the Centenary Meeting, British Association for the Advancement of Science (London, 1932), p. 449. Not Oliver Wendell Holmes Jr. — verified at Quotle.info · Verbatim: “The common law consists of about half a dozen obvious propositions, but unfortunately nobody knows what they are.”","comparison":"The common law consists of about half a dozen obvious propositions, but unfortunately nobody knows what they are.","citation":"H. C. Dowdall, \"The Psychological Origins of Law,\" in Report of the Centenary Meeting, British Association for the Advancement of Science, London—1931, September 23–30, Sectional Transactions H (Anthropology), paper read 26 September 1931 (London: Office of the British Association, 1932), 449. Attribution to Lord Sterndale: Judge Dowdall, letter, \"Lord Sterndale on Common Law,\" The Times (London), 26 January 1932, 8, as transcribed by Quote Investigator.","rights":"Lord Sterndale, who died in 1923, never published the line, so there is no earlier printing to point to. The earliest fixed text is Judge Dowdall's, and the volume's own title page reads \"Office of the British Association, Burlington House, London, W.1 — 1932\". In the United States that 1932 first publication is still protected: as of 2026 the public domain reaches works published before 1931, so the source text is treated here as in copyright. In the United Kingdom, its country of first publication, copyright runs for the author's life plus 70 years — Dowdall died in 1955, so his text entered the public domain on 1 January 2026, and the publisher's separate right in the typographical arrangement (25 years) lapsed in 1957. The Times letter of the same year is likewise a 1932 publication. Quoting a single sentence for commentary and attribution is a different matter from the status of the volume itself.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

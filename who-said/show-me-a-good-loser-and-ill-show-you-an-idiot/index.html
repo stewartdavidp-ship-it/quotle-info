@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"show-me-a-good-loser-and-ill-show-you-an-idiot","url":"https://quotle.info/who-said/show-me-a-good-loser-and-ill-show-you-an-idiot/","quote":"Show me a good loser and I'll show you an idiot","claim":"Leo Durocher said: \"Show me a good loser and I'll show you an idiot\"","rating":2,"verdict":"Needs context","answer":"Yes and no. Durocher really did put this thought in print — but in his 1975 autobiography Nice Guys Finish Last the sentence reads \"Show me a good loser in professional sports, and I'll show you an idiot.\" The clipped, universal version now stamped on his name was already circulating nearly twenty years earlier: in January 1956 columnist Bennett Cerf printed it as a line from Paul Gilbert. Quote Investigator concludes the whole \"show me a good loser\" family has an anonymous creator and evolved through many hands from the 1920s onward.","credit":"Leo Durocher, Nice Guys Finish Last (1975). The shorter popular form \"Show me a good loser and I'll show you an idiot\" predates him: it was printed in January 1956 by Bennett Cerf, credited to Paul Gilbert. Traced by Quotle.info. · Verbatim: “Show me a good loser in professional sports, and I'll show you an idiot.”","comparison":"Show me a good loser in professional sports, and I'll show you an idiot.","citation":"Leo Durocher with Ed Linn, Nice Guys Finish Last (New York: Simon and Schuster, 1975). Earliest documented \"idiot\" wording: Bennett Cerf, syndicated column, North Star (Oklahoma City), 26 January 1956, crediting Paul Gilbert — per Quote Investigator, \"Quote Origin: Show Me a Good Loser and I'll Show You a Loser,\" 29 June 2024.","rights":"Nothing here is public domain. Durocher's documented sentence comes from Nice Guys Finish Last, first published in 1975 and still commercially in print — comfortably inside US copyright, and the Internet Archive's scan is access-restricted accordingly. The shorter popular wording first surfaces in a 1956 newspaper column, also well after 1931, and its true originator is unknown, so no public-domain claim can be made for it either.","checked":"22 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 22 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -881,6 +889,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

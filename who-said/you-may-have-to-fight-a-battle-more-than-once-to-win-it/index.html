@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"you-may-have-to-fight-a-battle-more-than-once-to-win-it","url":"https://quotle.info/who-said/you-may-have-to-fight-a-battle-more-than-once-to-win-it/","quote":"You may have to fight a battle more than once to win it","claim":"Margaret Thatcher said: \"You may have to fight a battle more than once to win it\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. No primary source has ever been produced for this sentence. It is not in Wikiquote's sourced Thatcher material; it sits in the Disputed section, where the editors note it is \"widely attributed to Margaret Thatcher on various websites, and also appears in a number of books\" — but \"without any further source information such as date, location or any other context.\" The oldest appearance they can name is a 1989 quotation dictionary. Thatcher did say something close in 1984, and that line is sourced; this one is not.","credit":"Attributed, unsourced. \"You may have to fight a battle more than once to win it.\" is credited to Margaret Thatcher but has never been traced to a speech, interview or book. The earliest appearance named is Robert Andrews, ed., The Concise Columbia Dictionary of Quotations (New York: Columbia University Press, 1989), p. 320, which gives no source. Traced by Quotle.info","comparison":"","citation":"No primary source established. Earliest appearance named by Wikiquote: Robert Andrews, ed., The Concise Columbia Dictionary of Quotations (New York: Columbia University Press, 1989), 320 — where the line is printed without date, occasion or work. A documented related remark appears in Thatcher's Second Carlton Lecture, 26 November 1984.","rights":"No rights status is asserted, because no source work has been established. If the sentence originates in a Thatcher speech, that speech is in copyright; if it is a later compiler's condensation, the compiler's wording is in copyright too. Either way it is not public domain, and nothing here should be read as clearing it for reuse.","checked":"20 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 20 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -839,6 +847,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-only-bad-question-is-an-unasked-one","url":"https://quotle.info/who-said/the-only-bad-question-is-an-unasked-one/","quote":"The only bad question is an unasked one","claim":"Confucius said: \"The only bad question is an unasked one\"","rating":1,"verdict":"Not supported","answer":"No. It is not in the Analects, and there is no Chinese text for it — the decisive test, since the Analects is short, complete and fully concordanced in the original. What it belongs to is the modern 'there is no such thing as a stupid question' family, whose earliest dated instance anyone has produced is a Dear Abby column of 3 December 1970. Confucius does have a great deal to say about asking questions — it is one of his real preoccupations — but he never says this, and what he does say is sharper.","credit":"A modern classroom saying of unknown authorship. Not Confucius, and not in the Analects — though he does defend asking, at Analects III.15.","comparison":"","citation":"Not in the Analects in Chinese or in translation. A modern classroom saying of unknown authorship; earliest dated instance of the related 'no such thing as a stupid question' is a Dear Abby column, Milwaukee Sentinel, 3 December 1970. Genuine parallels: Analects III.15 and V.15 (Legge).","rights":"Everything genuine here is free to reuse. The Chinese Analects is ancient, and James Legge's English (1861–1893) is long out of copyright, so both the temple passage and the 'not ashamed to ask' line can be quoted without permission — which is a good reason to quote those instead of the modern slogan. Modern translations of the Analects (Waley, Lau, Slingerland, Watson and others) are all in copyright and produce different wordings. The 1970 newspaper column and Carl Sagan's book are likewise protected. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -879,6 +887,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

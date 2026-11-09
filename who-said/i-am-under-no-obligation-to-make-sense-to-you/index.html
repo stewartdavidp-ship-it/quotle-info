@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -509,6 +511,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -555,6 +560,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -611,7 +617,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-am-under-no-obligation-to-make-sense-to-you","url":"https://quotle.info/who-said/i-am-under-no-obligation-to-make-sense-to-you/","quote":"I am under no obligation to make sense to you","claim":"Lewis Carroll said: \"I am under no obligation to make sense to you\"","rating":1,"verdict":"Not supported","answer":"No. Carroll did not write this. The word \"obligation\" does not occur once in either Alice book, and across twelve of his English works it appears exactly twice — in A Tangled Tale and Sylvie and Bruno, both in ordinary senses about debts and about a reader being released from believing a story. Neither is this sentence or anything near it. The nearest genuinely documented line with this shape is Neil deGrasse Tyson's — \"The universe is under no obligation to make sense to you\" — but that is about the universe, not about a person, and we are not claiming one produced the other. Who wrote the version on the mugs, we could not establish.","credit":"Author unknown — not Lewis Carroll. The word \"obligation\" does not appear in either Alice book. Source: Quotle.info","comparison":"","citation":"No located source. The sentence appears in none of Lewis Carroll's published works, which use the word \"obligation\" twice in unrelated senses. Compare, documented: Neil deGrasse Tyson, Astrophysics for People in a Hurry (New York: W. W. Norton, 2017), 13 - \"The universe is under no obligation to make sense to you.\"","rights":"No rights badge. Carroll's writing is in the public domain, but this sentence is not his, and its actual origin is unknown to us — so there is no work whose rights we can report. A sentence of unknown modern authorship is not safe to treat as free to reuse simply because it is attached to a Victorian name.","checked":"16 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -838,6 +846,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

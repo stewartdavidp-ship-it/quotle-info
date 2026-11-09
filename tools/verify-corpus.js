@@ -357,7 +357,7 @@ check('no record is "falsely credited" to its own author', 0, selfCredit.length,
 // new Function() PARSES without executing, so browser globals are irrelevant — this only asks
 // "is this valid JavaScript", which is exactly the question that went unasked.
 const badScripts = [];
-const scanDirs = ['who-said', 'authors', 'themes', 'who-recorded', 'who-wrote', 'report', 'under-review', 'check', 'contact', 'how-we-verify', 'about'];
+const scanDirs = ['who-said', 'authors', 'themes', 'who-recorded', 'who-wrote', 'report', 'under-review', 'check', 'challenge', 'contact', 'how-we-verify', 'about'];
 const pagesToParse = [path.join(ROOT, 'index.html')];
 for (const d of scanDirs) {
   const dir = path.join(ROOT, d);
@@ -370,15 +370,20 @@ for (const d of scanDirs) {
 }
 for (const p of pagesToParse) {
   const h = fs.readFileSync(p, 'utf8');
-  for (const m of h.matchAll(/<script(?![^>]*\btype\s*=\s*"application\/ld\+json")(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)) {
-    const code = m[1];
+  for (const m of h.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/g)) {
+    const code = m[2];
     if (!code.trim()) continue;
-    try { new Function(code); } catch (e) {
+    // Inert JSON payloads and JSON-LD are data, not JS expressions. Validate them too instead
+    // of exempting them: a broken card/challenge payload is just as dead as a broken handler.
+    try {
+      if (/\btype\s*=\s*"application\/(?:ld\+)?json"/.test(m[1])) JSON.parse(code);
+      else new Function(code);
+    } catch (e) {
       badScripts.push(`${path.relative(ROOT, p)}: ${e.message}`);
     }
   }
 }
-check('every inline <script> is valid JavaScript', 0, badScripts.length,
+check('every inline script parses as its declared JavaScript or JSON type', 0, badScripts.length,
   `a script block does not parse — the whole block is dead, so nothing on that page binds: ${badScripts.slice(0, 3).join(' · ')}`);
 
 // ---- 5. the sitemap covers every page ----

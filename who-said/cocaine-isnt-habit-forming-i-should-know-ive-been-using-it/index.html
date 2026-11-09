@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"cocaine-isnt-habit-forming-i-should-know-ive-been-using-it","url":"https://quotle.info/who-said/cocaine-isnt-habit-forming-i-should-know-ive-been-using-it/","quote":"Cocaine Isn't Habit-Forming. I Should Know. I've Been Using It for Years","claim":"Tallulah Bankhead said: \"Cocaine Isn't Habit-Forming. I Should Know. I've Been Using It for Years\"","rating":2,"verdict":"Needs context","answer":"Yes and no. The line is Bankhead's, and Hammett's only role in it is that he is the man she said it to. She printed her own version in Tallulah: My Autobiography (1952), where she offers a bottle of cocaine lozenges around a party; the telling in which she shouts it at Hammett comes from Lillian Hellman's 1973 memoir Pentimento. The crisp sentence in circulation is neither — it is the wording Leslie Halliwell printed in his quotation book.","credit":"Tallulah Bankhead (1902–1968), though not in these words. Bankhead's own version is in Tallulah: My Autobiography (Harper & Brothers, 1952), pp. 100–101: \"Cocaine habit-forming? Of course not. I ought to know. I've been using it for years.\" The wording above is as printed in Leslie Halliwell's The Filmgoer's Book of Quotes (Granada, London, 1973; Arlington House, 1974), p. 15. Hammett appears in the story only as the man she said it to, in Lillian Hellman's 1973 memoir Pentimento; he never said it. Via quotle.info","comparison":"Cocaine habit-forming? Of course not. I ought to know. I've been using it for years.","citation":"Bankhead, Tallulah. Tallulah: My Autobiography. New York: Harper & Brothers, 1952, 100–101 (\"Cocaine habit-forming? Of course not. I ought to know. I've been using it for years.\"). The familiar modern wording — \"Cocaine isn't habit-forming. I should know — I've been using it for years\" — is as printed in Leslie Halliwell, The Filmgoer's Book of Quotes (London: Granada Publishing, 1973; repr. New Rochelle, NY: Arlington House, 1974), 15. Both page citations are as verified on paper by Quote Investigator.","rights":"Not public domain. The line's documented home is Tallulah: My Autobiography, published by Harper & Brothers in 1952 — comfortably inside US copyright — and the Internet Archive's scan is accordingly lending-restricted rather than open. The familiar polished wording is later, first documented in Leslie Halliwell's The Filmgoer's Book of Quotes (Granada, London, 1973; Arlington House reprint, New Rochelle, 1974), so both the sentence people quote and the book it came from remain in copyright; quote it briefly and with attribution.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -877,6 +885,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

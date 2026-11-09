@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"great-things-are-not-done-by-impulse-but-by-a-series-of","url":"https://quotle.info/who-said/great-things-are-not-done-by-impulse-but-by-a-series-of/","quote":"Great things are not done by impulse, but by a series of small things brought together","claim":"Vincent van Gogh said: \"Great things are not done by impulse, but by a series of small things brought together\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Van Gogh really did write this thought — in Dutch, to his brother Theo from The Hague on Sunday, 22 October 1882 — and the manuscript transcription is public and checkable. But the familiar English sentence matches no translation we could locate, and it quietly drops his qualifier: he wrote that the great does not happen through impulse alone.","credit":"Vincent van Gogh, letter to his brother Theo, The Hague, 22 October 1882 (letter 274; older numbering 237). Van Gogh wrote in Dutch: \"Want het groote geschiedt niet bij impulsie alleen…\" — in the Van Gogh Museum's authorized English, \"For the great doesn't happen through impulse alone, and is a succession of little things that are brought together.\" The familiar wording \"Great things are not done by impulse, but by a series of small things brought together\" drops \"alone\" and matches no identified translation; the earliest citation Quote Investigator presents for it is a United Press International column of 30 March 1988.","comparison":"","citation":"Vincent van Gogh to Theo van Gogh, The Hague, Sunday, 22 October 1882, letter 274 (older numbering 237), in Vincent van Gogh: The Letters, ed. Leo Jansen, Hans Luijten, and Nienke Bakker (Van Gogh Museum and Huygens ING, 2009), vangoghletters.org. Dutch original: \"Want het groote geschiedt niet bij impulsie alleen en is een aaneenschakeling van kleine dingen die tot elkaar gebragt zijn.\" The popular English wording corresponds to no identified translation; the earliest citation Quote Investigator presents for it is \"Today's Almanac\" (United Press International), 30 March 1988.","rights":"Van Gogh's Dutch original is his own writing from 1882 and is not the problem. The English sentence people actually share is: it corresponds to no translation we could identify, names no translator, and the earliest citation Quote Investigator presents for it is a 1988 newspaper column. The one modern English text that is clearly authorized — the Van Gogh Museum's 2009 edition of Vincent van Gogh: The Letters — reads differently and is itself in copyright. With the wording's origin unknown, we assert no public-domain status for it.","checked":"6 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 6 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -855,6 +863,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

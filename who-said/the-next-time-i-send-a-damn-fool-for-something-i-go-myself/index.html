@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-next-time-i-send-a-damn-fool-for-something-i-go-myself","url":"https://quotle.info/who-said/the-next-time-i-send-a-damn-fool-for-something-i-go-myself/","quote":"The Next Time I Send a Damn Fool for Something, I Go Myself","claim":"Samuel Goldwyn said: \"The Next Time I Send a Damn Fool for Something, I Go Myself\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator traces the remark to Michael Curtiz, the Hungarian-born director of Casablanca, whose mangled English was a standing joke on the Warner Bros. lot. Columnist Sidney Skolsky printed \"The next time I send a damn fool, I go myself\" as a Curtiz line in November 1936, and Jack Warner's 1965 memoir gives the longer wording used here. Boller and George's They Never Said It is blunter: \"It was the tongue-twisting Hungarian director Michael Curtiz, not Goldwyn, who made this priceless remark.\" The joke Curtiz walked into is older than either man's career.","credit":"not Samuel Goldwyn. Quote Investigator and Paul F. Boller Jr. and John George's They Never Said It (1989, pp. 41–42) both credit the Hungarian-American director Michael Curtiz; Sidney Skolsky printed a version of it as Curtiz's on 24 November 1936, and Jack Warner's My First Hundred Years in Hollywood (1965) gives this wording. The joke itself ran as fiction in Judge magazine on 23 November 1889. Traced by Quotle.info, quotle.info/who-said/the-next-time-i-send-a-damn-fool-for-something-i-go-myself/","comparison":"","citation":"\"The Easiest Way,\" Judge 17, no. 423 (23 November 1889): 110. Attributed to Michael Curtiz in Sheilah Graham, The Hartford Courant, 1 May 1936, 19, and in Jack L. Warner with Dean Jennings, My First Hundred Years in Hollywood (New York: Random House, 1965), 9–10; both quoted in \"Quote Origin: The Next Time I Send a Damn Fool for Something, I Go Myself,\" Quote Investigator, 29 February 2012.","rights":"We assert no rights status for this sentence. The 1889 Judge squib it descends from is long out of copyright, but that is a different wording. The line as quoted here is reported speech whose earliest printings are a 1936 newspaper column and a 1965 memoir — both after the 1931 United States public-domain threshold, and both still notionally protected as texts. Quote it as reportage and attribute it to Curtiz, not to Goldwyn.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -856,6 +864,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

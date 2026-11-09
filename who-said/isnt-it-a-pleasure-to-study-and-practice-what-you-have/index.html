@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -528,6 +530,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -574,6 +579,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -630,7 +636,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"isnt-it-a-pleasure-to-study-and-practice-what-you-have","url":"https://quotle.info/who-said/isnt-it-a-pleasure-to-study-and-practice-what-you-have/","quote":"Isn't it a pleasure to study and practice what you have learned?","claim":"Analects 1.1 records Confucius saying 學而時習之，不亦說乎 — the English wording quoted, \"Isn't it a pleasure to study and practice what you have learned?\", is A. Charles Muller's translation.","rating":5,"verdict":"Supported","answer":"Yes. This is Analects 1.1 — the opening sentence of the entire book, 學而時習之，不亦說乎, recorded as the words of \"the Master\" by Confucius's disciples. The English you see quoted, however, is not ancient: it matches A. Charles Muller's translation, which he dates to the summer of 1990.","credit":"Analects 1.1, the opening line of the Analects, spoken by Confucius (c. 551–479 BCE) and recorded by his disciples. Chinese: 學而時習之，不亦說乎. This English wording is A. Charles Muller's translation (first made summer 1990, revised 1 December 2021) and is still in copyright; James Legge's public-domain 1861 version reads \"Is it not pleasant to learn with a constant perseverance and application?\" Verified by Quotle.info, 29 July 2026.","comparison":"","citation":"Confucius, Analects 1.1 (Book 1 「學而」), in The Analects of Confucius 論語, trans. A. Charles Muller (first translated summer 1990; rev. 1 December 2021), http://www.acmuller.net/con-dao/analects.html. Public-domain alternative: Confucius, \"Confucian Analects,\" bk. 1, chap. 1, in The Chinese Classics, vol. 1, trans. James Legge (1861; 2nd ed. 1893).","rights":"The Chinese original of Analects 1.1 has been in the public domain for millennia, and James Legge's English — The Chinese Classics, vol. 1 (1861; 2nd ed. 1893) — is public domain in the United States. The exact sentence quoted here is not: it matches A. Charles Muller's translation, dated by Muller to the summer of 1990 and revised as recently as 1 December 2021, so it remains under copyright. Reprint the Legge wording if you need a free text.","checked":"29 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 29 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -883,6 +891,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

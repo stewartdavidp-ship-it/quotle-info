@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -514,6 +516,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -560,6 +565,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -616,7 +622,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"insanity-is-hereditary-you-can-get-it-from-your-children","url":"https://quotle.info/who-said/insanity-is-hereditary-you-can-get-it-from-your-children/","quote":"Insanity Is Hereditary. You Can Get It from Your Children","claim":"Ann Landers said: \"Insanity Is Hereditary. You Can Get It from Your Children\"","rating":1,"verdict":"Not supported","answer":"No. The earliest printing Quote Investigator has found is 6 April 1961, in an Oklahoma newspaper column, and it already carries the credit: \"Insanity is hereditary. You can get it from your children. —Sam Levenson.\" Walter Winchell ran it the next day as \"Sam Levenson's merciless truth\", and Levenson put it in his own 1973 memoir. It reached Ann Landers's column in 1978, in a reader's list of comic \"Laws\", where it was labelled \"Landers' Law\" and signed with her name — which is where the modern credit comes from.","credit":"Sam Levenson, credited by name in The Ada Weekly News (Ada, Oklahoma) on 6 April 1961 and by Walter Winchell the next day; Levenson used it again in his memoir In One Era and Out the Other (1973), p. 21. Not Ann Landers, whose column printed it in 1978 as \"Landers’ Law\" inside a reader-submitted list of comic maxims. In copyright.","comparison":"","citation":"Earliest located printing: Connie Nelson, \"Strayed From the Heard,\" The Ada Weekly News (Ada, OK), April 6, 1961, 4, crediting Sam Levenson. See also Walter Winchell, \"Walter Winchell's America,\" San Diego Union, April 7, 1961, A16; and Sam Levenson, In One Era and Out the Other (New York: Simon & Schuster, 1973), 21. The Ann Landers printing: Ann Landers, \"Everyone Obeys This Letter of the Laws,\" The Sun Telegram (San Bernardino, CA), March 26, 1978, C2. Chronology and citations per Garson O'Toole, Quote Investigator, \"Insanity Is Hereditary. You Can Get It from Your Children\" (September 11, 2015); the newspaper pages themselves sit in subscription archives we could not access.","rights":"First printed in a newspaper in 1961 and reused by Levenson in a 1973 book, so this is comfortably inside copyright: everything published in the United States from 1931 onward remains protected. Treat it as in copyright — quote it with attribution rather than reusing it as free text. The attribution being wrong for decades does not put it in the public domain.","checked":"30 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -873,6 +881,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

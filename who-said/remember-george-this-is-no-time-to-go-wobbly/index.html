@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -513,6 +515,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -559,6 +564,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -615,7 +621,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"remember-george-this-is-no-time-to-go-wobbly","url":"https://quotle.info/who-said/remember-george-this-is-no-time-to-go-wobbly/","quote":"Remember, George, this is no time to go wobbly","claim":"Margaret Thatcher said: \"Remember, George, this is no time to go wobbly\"","rating":2,"verdict":"Needs context","answer":"Yes and no. Thatcher did say it, and the occasion is well established: a telephone conversation with President George H. W. Bush on 26 August 1990, weeks after Iraq invaded Kuwait, when Bush was hesitating over the scale of the response. What is not established is the wording people quote. Wikipedia's account of the Anglo-American relationship renders it \"this is no time to go wobbly,\" citing Bush and Scowcroft's A World Transformed (p. 352) and Thatcher's own The Downing Street Years (pp. 823–24). Its foreign-relations article gives \"This was no time to go wobbly!\" and the Gulf War article has her \"urging Bush not to go wobbly.\" None of the three opens with \"Remember, George.\"","credit":"Right person, embellished words. \"Remember, George, this is no time to go wobbly.\" — Margaret Thatcher really did urge President George H. W. Bush not to go wobbly, in a telephone call on 26 August 1990 during the Kuwait crisis. But the documented renderings, in her memoir The Downing Street Years (1993) and in Bush and Scowcroft's A World Transformed (1998), run simply \"this is no time to go wobbly.\" The \"Remember, George\" opening is not in the record. Traced by Quotle.info","comparison":"This is no time to go wobbly.","citation":"Remark made in a Bush–Thatcher telephone conversation, 26 August 1990, during the Kuwait crisis. Documented accounts: Margaret Thatcher, The Downing Street Years (London: HarperCollins, 1993), 823–24; George H. W. Bush and Brent Scowcroft, A World Transformed (New York: Knopf, 1998), 352 — both as cited by Wikipedia, which renders the remark \"this is no time to go wobbly.\" The popular \"Remember, George\" opening appears in none of these renderings.","rights":"No rights status is asserted. The underlying remark was spoken in a private 1990 telephone call and reaches us only through later published accounts — a 1991 news report and two memoirs of 1993 and 1998, all firmly in copyright. There is no public-domain text here, and the exact wording quoted has no identified published source of its own.","checked":"20 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 20 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -845,6 +853,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

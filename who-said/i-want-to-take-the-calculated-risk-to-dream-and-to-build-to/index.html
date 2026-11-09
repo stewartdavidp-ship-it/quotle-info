@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-want-to-take-the-calculated-risk-to-dream-and-to-build-to","url":"https://quotle.info/who-said/i-want-to-take-the-calculated-risk-to-dream-and-to-build-to/","quote":"I want to take the calculated risk; to dream and to build, to fail and to succeed. I refuse to barter incentive for a dole. I prefer the challenges of life to the guaranteed existence; the thrill of fulfillment to the stale calm of utopia","claim":"Sam Walton said: \"I want to take the calculated risk; to dream and to build, to fail and to succeed. I refuse to barter incentive for a dole. I prefer the challenges of life to the guaranteed existence; the thrill of fulfillment to the stale calm of utopia\"","rating":1,"verdict":"Not supported","answer":"No. These lines are three consecutive sentences from Dean Alfange's short prose piece \"An American's Creed\" (also called simply \"My Creed\"), first published in This Week Magazine and reprinted in The Reader's Digest in October 1952. The Library of Congress's own quotation dictionary, Respectfully Quoted, prints the passage word for word under Alfange's name with that publication history. Sam Walton did not write it: it was already in Reader's Digest in October 1952, and the first Walmart did not open until July 1962.","credit":"Dean Alfange, from \"An American's Creed,\" first published in This Week Magazine and reprinted in The Reader's Digest, October 1952. Not Sam Walton, and not Thomas Paine. Via quotle.info","comparison":"","citation":"Suzy Platt, ed., Respectfully Quoted: A Dictionary of Quotations Requested from the Congressional Research Service (Washington, DC: Library of Congress, 1989), no. 71, \"Dean Alfange … creed.\" The entry records the creed as originally published in This Week Magazine and later reprinted in The Reader's Digest, October 1952, p. 10, and January 1954, p. 122.","rights":"\"An American's Creed\" is a mid-twentieth-century magazine piece: first published in This Week Magazine and reprinted in The Reader's Digest in October 1952 — well after the 1931 cut-off for United States public domain. We have not examined copyright-renewal records for the original printings, so the conservative reading applies: treat the creed as in copyright and quote only short passages with attribution.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -874,6 +882,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

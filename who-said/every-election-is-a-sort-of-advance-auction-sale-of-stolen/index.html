@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"every-election-is-a-sort-of-advance-auction-sale-of-stolen","url":"https://quotle.info/who-said/every-election-is-a-sort-of-advance-auction-sale-of-stolen/","quote":"Every election is a sort of advance auction sale of stolen goods","claim":"H. L. Mencken said: \"Every election is a sort of advance auction sale of stolen goods\"","rating":5,"verdict":"Supported","answer":"Yes. Mencken wrote it in an essay called \"Sham Battle\" in The Evening Sun of Baltimore on 26 October 1936, in the sentence \"government is a broker in pillage, and every election is a sort of advance auction sale of stolen goods.\" The essay was later reprinted in the 1956 collection A Carnival of Buncombe. Unusually for a line pinned on Mencken, the popular short form is not a paraphrase — it is his own clause, lifted intact.","credit":"H. L. Mencken, \"Sham Battle,\" The Evening Sun (Baltimore), 26 October 1936; reprinted in A Carnival of Buncombe (Johns Hopkins Press, 1956). Via Quotle.info · Verbatim: “In other words, government is a broker in pillage, and every election is a sort of advance auction sale of stolen goods.”","comparison":"In other words, government is a broker in pillage, and every election is a sort of advance auction sale of stolen goods.","citation":"Mencken, H. L. \"Sham Battle.\" The Evening Sun (Baltimore), October 26, 1936. Reprinted in A Carnival of Buncombe, edited by Malcolm Moos. Baltimore: Johns Hopkins Press, 1956. Earliest documented instance per Quote Investigator, \"Quote Origin: Every Election Is a Sort of Advance Auction Sale of Stolen Goods,\" July 1, 2014.","rights":"The line comes from a newspaper essay first published on 26 October 1936 and reprinted in a 1956 book — both well after the 1931 cut-off, so this text is treated as in copyright in the United States, not public domain. Mencken's earlier books (the Prejudices series, In Defense of Women, The American Language) are freely available, but this sentence is not from any of them.","checked":"10 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

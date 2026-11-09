@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -516,6 +518,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -562,6 +567,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -618,7 +624,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"too-much-whiskey-is-barely-enough","url":"https://quotle.info/who-said/too-much-whiskey-is-barely-enough/","quote":"Too much whiskey is barely enough","claim":"Mark Twain said: \"Too much whiskey is barely enough\"","rating":1,"verdict":"Not supported","answer":"No. There is no located Twain source for either form of this line. The version that actually circulates is longer — 'Too much of anything is bad, but too much good whiskey is barely enough' — and the short one you see on bar chalkboards is a clipping of it. We could not find either wording in Twain's published books, sketches, speeches, letters or notebooks, and no site that carries it produces a citation. The furthest back the paper trail goes is a 2014 Skyhorse anthology, Mark Twain on Common Sense, which prints it on page 37 with no source of its own — a compilation, not evidence.","credit":"Unattributed. Widely credited to Mark Twain, but no source in his writings has ever been produced.","comparison":"","citation":"Unattributed saying. No instance located in Mark Twain's books, letters, speeches or notebooks; earliest datable print appearance located is Mark Twain on Common Sense (Skyhorse, 2014), p. 37, which carries no citation.","rights":"We cannot state a rights status, because we do not know who wrote it or when — so we have left the field empty rather than guess. That matters commercially. Because the line wears Twain's name, and Twain died in 1910, businesses treat it as safely public domain and print it on glassware, T-shirts, coasters, menus and bar signage without a second thought. If the sentence is in fact a twentieth- or twenty-first-century composition by someone still living or recently dead, that assumption is wrong, and the person carrying the risk is whoever put it on the merchandise. A dead author's name on a line he did not write does not clear anyone's rights. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

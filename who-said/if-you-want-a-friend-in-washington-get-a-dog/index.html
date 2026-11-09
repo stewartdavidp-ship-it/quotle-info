@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -514,6 +516,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -560,6 +565,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -616,7 +622,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-you-want-a-friend-in-washington-get-a-dog","url":"https://quotle.info/who-said/if-you-want-a-friend-in-washington-get-a-dog/","quote":"If you want a friend in Washington, get a dog","claim":"Harry S. Truman said: \"If you want a friend in Washington, get a dog\"","rating":1,"verdict":"Not supported","answer":"No. Truman almost certainly never said this. The first known link between Truman and the saying is a line Samuel Gallu wrote for a fictional Truman in his one-man show Give 'em Hell, Harry! (Viking Press, 1975), p. 8 — and even there the wording is \"You want a friend in life, get a dog!\", not \"in Washington.\" The underlying joke is older still and anonymous: it ran as a Philadelphia Inquirer classified ad in 1911.","credit":"not Harry S. Truman. The Truman Library says it has never been able to confirm or verify that Truman wrote or said it. The first known link to Truman is a line written for a fictional Truman in Samuel Gallu's one-man show Give 'em Hell, Harry! (New York: Viking Press, 1975), p. 8: \"You want a friend in life, get a dog!\" The underlying saying — \"IF YOU WANT A FRIEND / Buy a dog\" — ran in a Philadelphia Inquirer classified ad on 19 November 1911; the \"in Washington\" form is not documented before 1985. Via Quotle.info","comparison":"You want a friend in life, get a dog!","citation":"Samuel Gallu, Give 'em Hell, Harry! (New York: Viking Press, 1975), 8 — identified by Quote Investigator as the first known connection between Truman and the saying. The saying itself is documented in print at least as early as a Philadelphia Inquirer classified advertisement, 19 November 1911, p. 2 (Barry Popik). No source in Truman's own words has ever been located.","rights":"No rights status can honestly be asserted for the popular wording, because no author or first publication has ever been identified for it. The oldest documented ancestor — an anonymous 1911 newspaper classified advertisement — would long since be in the public domain, but it is not this sentence. The nearest documented relative that does have an author, Samuel Gallu's \"You want a friend in life, get a dog!\" from Give 'em Hell, Harry! (Viking Press, 1975), is a different line and remains in copyright.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

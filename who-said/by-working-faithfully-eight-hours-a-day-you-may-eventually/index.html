@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"by-working-faithfully-eight-hours-a-day-you-may-eventually","url":"https://quotle.info/who-said/by-working-faithfully-eight-hours-a-day-you-may-eventually/","quote":"By working faithfully eight hours a day, you may eventually get to be a boss and work twelve hours a day","claim":"Robert Frost said: \"By working faithfully eight hours a day, you may eventually get to be a boss and work twelve hours a day\"","rating":1,"verdict":"Not supported","answer":"No. Barry Popik's citation chronology finds the line in print on 6 April 1923, in the syndicated humorist Robert Quillen's column \"Editorial Epigrams\" in The Evening Repository of Canton, Ohio: \"By working faithfully eight hours a day you may eventually get to be boss and work twelve hours a day.\" Frost's name is not attached until Walter Winchell's \"On Broadway\" column of 11 November 1940 — seventeen years later, printed as \"R. Frost's\" with no source — and Popik states there is no evidence Frost said it before Quillen. Wikiquote's Frost page carries no entry for it in any section.","credit":"printed by the syndicated humorist Robert Quillen (1887–1948) in his column \"Editorial Epigrams,\" The Evening Repository (Canton, OH), 6 April 1923. Credited to Robert Frost only from a Walter Winchell column of 1940, on no evidence. Via Quotle.info. · Verbatim: “By working faithfully eight hours a day you may eventually get to be boss and work twelve hours a day.”","comparison":"By working faithfully eight hours a day you may eventually get to be boss and work twelve hours a day.","citation":"Robert Quillen, \"Editorial Epigrams,\" The Evening Repository (Canton, OH), April 6, 1923, 4, col. 3. Attribution history and later citations: Barry Popik, \"By working faithfully eight hours a day you may eventually be the boss and work twelve hours,\" barrypopik.com — including Walter Winchell, \"On Broadway,\" Richmond Times-Dispatch, November 11, 1940, 7, col. 4, the first credit to \"R. Frost.\"","rights":"The earliest located text is a United States newspaper item published in 1923, and everything first published in the United States before 1929 is in the public domain there, so the epigram as Quillen printed it is free to reuse. Robert Quillen died in 1948, so life-plus-70 terms elsewhere expired at the end of 2018 as well. What is not covered is the credit: reusing the line under Robert Frost's name repeats an attribution the newspaper record does not support.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

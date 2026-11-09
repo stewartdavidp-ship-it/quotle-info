@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"my-reading-of-history-convinces-me-that-most-bad-government","url":"https://quotle.info/who-said/my-reading-of-history-convinces-me-that-most-bad-government/","quote":"My reading of history convinces me that most bad government results from too much government","claim":"Thomas Jefferson said: \"My reading of history convinces me that most bad government results from too much government\"","rating":1,"verdict":"Not supported","answer":"No. The line is Williams' own, from his 1913 Columbia University book Thomas Jefferson: His Permanent Influence on American Institutions, page 49 — a book about Jefferson, not by him. Williams actually wrote \"most bad government has grown out of too much government\"; the familiar \"results from\" wording is a later variant, and Jefferson's own name was not attached to it in print until 1950.","credit":"John Sharp Williams, Thomas Jefferson: His Permanent Influence on American Institutions (New York: Columbia University Press, 1913), 49 — \"My reading of history convinces me that most bad government has grown out of too much government.\" Not Thomas Jefferson: the Thomas Jefferson Foundation lists it as a spurious quotation, first attributed to Jefferson in print in 1950. Verified via Quotle.info, 22 Jul 2026.","comparison":"My reading of history convinces me that most bad government has grown out of too much government.","citation":"John Sharp Williams, Thomas Jefferson: His Permanent Influence on American Institutions (New York: Columbia University Press, 1913), 49.","rights":"The sentence was first published in John Sharp Williams' Thomas Jefferson: His Permanent Influence on American Institutions (Columbia University Press, 1913). A U.S. work published in 1913 is in the public domain, and the scanned copy carries the note that there are no known U.S. copyright restrictions on the text.","checked":"22 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 22 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -857,6 +865,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"this-country-has-socialism-for-the-rich-rugged","url":"https://quotle.info/who-said/this-country-has-socialism-for-the-rich-rugged/","quote":"This country has socialism for the rich, rugged individualism for the poor","claim":"Martin Luther King Jr. said: \"This country has socialism for the rich, rugged individualism for the poor\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. King made this argument, on the record, six weeks before he was killed. Speaking at the Ministers' Leadership Training Conference in Miami on 23 February 1968, in an address titled 'The Minister to the Valley', he said: the problem is that we all too often have socialism for the rich and rugged free enterprise capitalism for the poor. The version that circulates replaces 'rugged free enterprise capitalism' with 'rugged individualism' and drops the framing clause. No documented instance of King using the exact popular wording has been produced. The substance is his; the sentence has been tightened by other hands.","credit":"Martin Luther King Jr., 'The Minister to the Valley', Miami, 23 February 1968. His documented words: 'socialism for the rich and rugged free enterprise capitalism for the poor'. In copyright to the King estate.","comparison":"The problem is that we all too often have socialism for the rich and rugged free enterprise capitalism for the poor.","citation":"King, Martin Luther, Jr. 'The Minister to the Valley.' Address to the Ministers' Leadership Training Conference, Miami, Florida, 23 February 1968. The popular wording 'rugged individualism for the poor' is a compression of 'rugged free enterprise capitalism for the poor'.","rights":"King's words are in copyright, and this is not a technicality. He died in 1968; his speeches and writings are controlled by his estate, which licenses them and enforces its rights actively and successfully — including against documentary makers and publishers. Under current US terms his 1968 works are protected for decades yet. Short quotation with attribution, for comment and criticism, is the ordinary basis on which the sentence is discussed here; reproducing the speech, or putting the words on merchandise, is not. If you plan to use his text commercially, seek a licence. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -869,6 +877,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

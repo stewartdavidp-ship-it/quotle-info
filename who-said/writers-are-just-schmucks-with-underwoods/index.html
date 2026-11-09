@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"writers-are-just-schmucks-with-underwoods","url":"https://quotle.info/who-said/writers-are-just-schmucks-with-underwoods/","quote":"Writers Are Just Schmucks with Underwoods","claim":"Samuel Goldwyn said: \"Writers Are Just Schmucks with Underwoods\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator finds the earliest evidence in 1961, in the journalist Bill Davidson's Hollywood memoir The Real and the Unreal: \"one of the Warner brothers\" called all his writers, William Faulkner included, \"schmucks with typewriters.\" Faulkner worked for Jack Warner, so that is who Davidson meant. Two things keep it from being firm. Davidson published a second version months later saying \"schleps\", which QI says \"reduces the credibility of the ascription\"; and the brand-name form on this page — \"Underwoods\" — does not appear in print until 1976. The Goldwyn credit is later still, and QI calls it inadequately supported.","credit":"not Samuel Goldwyn. Quote Investigator's earliest evidence is Bill Davidson's The Real and the Unreal (Harper & Brothers, 1961), p. 242, which gives “schmucks with typewriters” and ascribes it to “one of the Warner brothers” — Jack L. Warner, Faulkner's employer. The “Underwoods” wording first appears in the Los Angeles Times of 25 July 1976. The Goldwyn credit dates from 1986 and QI calls it inadequately supported. Traced by Quotle.info, quotle.info/who-said/writers-are-just-schmucks-with-underwoods/","comparison":"schmucks with typewriters","citation":"Bill Davidson, The Real and the Unreal (New York: Harper & Brothers, 1961), 242 (as \"schmucks with typewriters\", ascribed to \"one of the Warner brothers\"). The \"Underwoods\" wording is first documented in Robert Kirsch, \"Hollywood 'Hacks' Reconsidered,\" Los Angeles Times, 25 July 1976, B1. Both cited in \"Quote Origin: Writers Are Just Schmucks with Underwoods,\" Quote Investigator, 2 April 2014.","rights":"We assert no rights status. This is a reported insult, not a passage from an authored work, and the wording on this page cannot be tied to a specific publication before 1931. The earliest printings we can name — a 1961 book and a 1976 newspaper column — are both after the United States public-domain threshold and are themselves in copyright as texts. Quote it as reportage.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

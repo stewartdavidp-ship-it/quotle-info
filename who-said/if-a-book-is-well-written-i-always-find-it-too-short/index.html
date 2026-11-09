@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-a-book-is-well-written-i-always-find-it-too-short","url":"https://quotle.info/who-said/if-a-book-is-well-written-i-always-find-it-too-short/","quote":"If a book is well written, I always find it too short","claim":"Jane Austen said: \"If a book is well written, I always find it too short\"","rating":5,"verdict":"Supported","answer":"Yes. The attribution is right and the source is almost always wrong. The line is not in Northanger Abbey, not in Sense and Sensibility and not in any letter. Quote Investigator traces it to Catharine, or the Bower, an unfinished story Austen wrote around 1792, when she was sixteen — and it is not Austen speaking in her own voice but her heroine Kitty Percival, saying it to the shallow Camilla Stanley in an argument about novels.","credit":"Jane Austen, but not from the novels. It is spoken by Kitty Percival in \"Catharine, or the Bower,\" an unfinished story Austen wrote around 1792 at the age of sixteen, first printed from the manuscript in 1951. It is commonly and wrongly cited to Northanger Abbey, to Sense and Sensibility, or to one of her letters. Via Quotle.info","comparison":"","citation":"Jane Austen, \"Catharine, or the Bower\" (written c. 1792), in Volume the Third, first printed from the manuscript as Volume the third, now first printed from the manuscript (Oxford: Clarendon Press, 1951), where the story appears as \"Kitty; or, The Bower\"; readily available in Catharine and Other Writings, ed. Margaret Anne Doody and Douglas Murray (Oxford: Oxford University Press, 1993). Attribution and misattribution history: Quote Investigator, \"Quote Origin: If a Book Is Well Written, I Always Find It Too Short,\" 8 April 2017, quoteinvestigator.com.","rights":"Deliberately unclassified. The words are Jane Austen's, written around 1792 by an author who died in 1817, so there is no author's estate in any ordinary sense — but this text is not in the same position as the six novels, which have been in print and out of copyright for generations. Catharine remained an unpublished manuscript until the Clarendon Press printed it from the manuscript in 1951, and the United States rules governing a long-unpublished work first printed in that period are not something we could resolve. Rather than guess, quotle.info asserts no rights status here. Treat the quotation as short-extract commentary, not as cleared public-domain text.","checked":"13 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 13 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -849,6 +857,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

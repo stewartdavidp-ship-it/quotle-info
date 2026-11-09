@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"things-are-more-like-they-are-now-than-they-ever-have-been","url":"https://quotle.info/who-said/things-are-more-like-they-are-now-than-they-ever-have-been/","quote":"Things are more like they are now than they ever have been","claim":"Dwight D. Eisenhower said: \"Things are more like they are now than they ever have been\"","rating":1,"verdict":"Not supported","answer":"No. The earliest version Quote Investigator has located ran in a classified advertisement in the Amarillo Daily News on 21 October 1948, credited to nobody more specific than \"some crazy guy.\" Eisenhower's name was first attached in Esquire in December 1969 — the year he died — and QI states it has found no instance of the line in his writings or in an interview.","credit":"NOT Dwight D. Eisenhower. Quote Investigator's earliest located appearance is a classified advertisement in the Amarillo Daily News, 21 October 1948, where the line is ascribed only to \"some crazy guy\" — before Eisenhower took office in 1953. The first credit to Eisenhower is a December 1969 item in Esquire, the year he died; Quote Investigator reports no instance of the saying in his writings or in an interview. The line was later re-assigned to Gerald Ford, also without documentation. — Quotle.info","comparison":"","citation":"Quote Investigator, \"Quote Origin: Things Are More Like They Are Now Than They Have Ever Been,\" January 29, 2013, quoteinvestigator.com/2013/01/29/like-ever/. Earliest appearance located there: classified advertisement, Amarillo Daily News, October 21, 1948, ascribing the line only to \"some crazy guy.\" No instance documented in Eisenhower's writings, speeches, or interviews.","rights":"No copyright status can honestly be asserted here, because the wording has no identifiable author. The earliest known appearance — a classified advertisement in the Amarillo Daily News of 21 October 1948, documented by Quote Investigator — ascribes it only to \"some crazy guy,\" and no originating work, speech or author has been located. With no known first publication to point to, quotle.info makes no public-domain or in-copyright claim.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -852,6 +860,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

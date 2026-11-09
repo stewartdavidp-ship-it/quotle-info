@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"what-a-man-can-be-he-must-be","url":"https://quotle.info/who-said/what-a-man-can-be-he-must-be/","quote":"What a man can be, he must be","claim":"Abraham Maslow said: \"What a man can be, he must be\"","rating":5,"verdict":"Supported","answer":"Yes. Confirmed against the primary text. The sentence appears in Maslow's paper \"A Theory of Human Motivation\", Psychological Review 50, no. 4 (1943), on p. 382 — in the paragraph that first defines self-actualization. The wording is exact: no paraphrase, no tidying up.","credit":"Abraham Maslow, \"A Theory of Human Motivation,\" Psychological Review 50, no. 4 (1943), p. 382 · Verbatim: “A musician must make music, an artist must paint, a poet must write, if he is to be ultimately happy. What a man can be, he must be. This need we may call self-actualization.”","comparison":"A musician must make music, an artist must paint, a poet must write, if he is to be ultimately happy. What a man can be, he must be. This need we may call self-actualization.","citation":"Maslow, A. H. \"A Theory of Human Motivation.\" Psychological Review 50, no. 4 (1943): 370–396, at p. 382. Reprinted in Motivation and Personality (New York: Harper, 1954).","rights":"\"A Theory of Human Motivation\" was first published in 1943 in Psychological Review, a journal owned by the American Psychological Association — comfortably inside the modern copyright window, so this is not a public-domain text. The 1954 Harper edition is a separate, later publication and is held as a lending-only scan at the Internet Archive. Quoting the sentence with attribution is ordinary fair use; reproducing the paper is not.","checked":"24 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 24 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -867,6 +875,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

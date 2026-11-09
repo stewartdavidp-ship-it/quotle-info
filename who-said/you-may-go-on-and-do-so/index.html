@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -515,6 +517,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -561,6 +566,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -617,7 +623,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"you-may-go-on-and-do-so","url":"https://quotle.info/who-said/you-may-go-on-and-do-so/","quote":"You may go on and do so","claim":"Rosa Parks said: \"You may go on and do so\"","rating":2,"verdict":"Needs context","answer":"Yes and no. The exchange is real. On 1 December 1955 the driver James F. Blake told Parks he was going to have her arrested, and she answered him. But the words in her own account are shorter than the version that circulates: \"You may do that.\" Wikiquote's sourced entry prints the full exchange in that form, while the longer \"You may go on and do so\" sits in the Unsourced list on its talk page, where an editor notes that her memoir Rosa Parks: My Story gives the four-word reply.","credit":"Rosa Parks answered the driver on December 1, 1955 — but her recorded words were \"You may do that,\" not \"You may go on and do so.\" — Quotle.info","comparison":"You may do that.","citation":"Rosa Parks with Jim Haskins, Rosa Parks: My Story, 116 — the page cited by Wikiquote's editors for the wording \"You may do that.\" The exchange is printed in the sourced quotations at Wikiquote, \"Rosa Parks.\" Editions consulted on the Internet Archive: Scholastic, 1994; Puffin Books, 1999 — both lending-restricted, so page 116 was not read here.","rights":"Her account of the arrest was published in Rosa Parks: My Story, written with Jim Haskins. The editions catalogued on the Internet Archive are dated 1994 and 1999, far later than the 1931 United States public-domain cutoff, so the text is firmly in copyright. The four spoken words themselves are far too short to carry a copyright of their own; what is protected is her written telling of them.","checked":"18 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 18 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -854,6 +862,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

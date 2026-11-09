@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"life-isnt-fair-but-government-must-be","url":"https://quotle.info/who-said/life-isnt-fair-but-government-must-be/","quote":"Life Isn't Fair, But Government Must Be","claim":"John F. Kennedy said: \"Life Isn't Fair, But Government Must Be\"","rating":1,"verdict":"Not supported","answer":"No. Ann Richards spoke the line on the day she was sworn in as governor of Texas, 15 January 1991; the San Antonio Express-News printed it the next morning as \"Life isn't fair, but government must be.\" Kennedy is in the story only because Richards invoked him — at his news conference of 21 March 1962 he said just three words, \"Life is unfair,\" and never the clause about government.","credit":"Ann Richards, on the day she was sworn in as governor of Texas, 15 January 1991, as reported in the San Antonio Express-News, 16 January 1991. Not John F. Kennedy: at his news conference of 21 March 1962 Kennedy said only \"Life is unfair.\" Traced by Quote Investigator. Via quotle.info","comparison":"","citation":"Bruce Davidson, \"New governor vows return of government for the people,\" San Antonio Express-News, January 16, 1991, 1A — the earliest instance of this wording located by Quote Investigator. Compare John F. Kennedy, \"The President's News Conference,\" March 21, 1962, in The American Presidency Project.","rights":"The wording dates from a 1991 speech by a state official, so it is neither old enough for the public domain nor covered by the rule that puts U.S. federal government works outside copyright — that exemption does not reach state governors. The only texts that carry the line are the copyrighted San Antonio Express-News and Houston Chronicle reports of 16 January 1991. Quote it with attribution rather than reproducing those articles.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

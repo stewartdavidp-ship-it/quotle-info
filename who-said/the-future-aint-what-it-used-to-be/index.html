@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-future-aint-what-it-used-to-be","url":"https://quotle.info/who-said/the-future-aint-what-it-used-to-be/","quote":"The future ain't what it used to be","claim":"Yogi Berra said: \"The future ain't what it used to be\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator's earliest evidence is a 1937 piece by Laura Riding and Robert Graves in their journal Epilogue: \"the future is not what it used to be\" — the first instance located in English, with Paul Valéry writing a French version the same year. The colloquial \"ain't\" wording is first documented in 1973, credited to an English professor; Yogi Berra claimed and popularised it later, and Wikiquote files it under his Misattributed section.","credit":"popularised by Yogi Berra, but not his. Quote Investigator's earliest evidence is 1937: Laura Riding and Robert Graves in the journal Epilogue (\"the future is not what it used to be\"), with a French version by Paul Valéry the same year. The \"ain't\" wording is first documented in 1973. Source: Quote Investigator, \"Quote Origin: The Future Is Not What It Used To Be\" (6 Dec 2012).","comparison":"","citation":"Laura Riding and Robert Graves, \"From a Private Correspondence on Reality,\" Epilogue (1937), as documented in \"Quote Origin: The Future Is Not What It Used To Be,\" Quote Investigator, December 6, 2012, https://quoteinvestigator.com/2012/12/06/future-not-used/. Compare Paul Valéry, \"Our Destiny and Literature,\" in Reflections on the World Today, trans. Francis Scarfe (New York: Pantheon, 1948).","rights":"No public-domain claim is made here. The exact \"ain't\" wording has no identified authored source — its earliest documented appearance is a 1973 newspaper article — and every work in the trail was first published after 1930: the 1937 Epilogue piece by Riding and Graves, Valéry's 1937 essay, the 1948 Scarfe translation and Berra's own book all remain within copyright terms in the United States.","checked":"22 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 22 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -850,6 +858,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

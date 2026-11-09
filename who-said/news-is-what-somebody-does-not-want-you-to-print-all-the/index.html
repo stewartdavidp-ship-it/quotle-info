@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -510,6 +512,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -556,6 +561,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -612,7 +618,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"news-is-what-somebody-does-not-want-you-to-print-all-the","url":"https://quotle.info/who-said/news-is-what-somebody-does-not-want-you-to-print-all-the/","quote":"News Is What Somebody Does Not Want You To Print. All the Rest Is Advertising","claim":"George Orwell said: \"News Is What Somebody Does Not Want You To Print. All the Rest Is Advertising\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator traces this family of sayings to a little framed placard on a Chicago editor's desk, reported in the New York trade weekly The Fourth Estate on 30 November 1918 — and already unattributed even then. This exact wording is documented in the London motoring weekly The Motor on 14 December 1937, credited only to an unnamed editor of a big-circulation newspaper. The earliest Orwell attribution QI finds is a January 1999 item in the New York Post, and in a different variant; QI calls the Orwell link \"very weak\" and labels the adage anonymous.","credit":"Not George Orwell. An anonymous newspaper adage: the earliest strong match documented by Quote Investigator is an unattributed placard reported in The Fourth Estate, 30 November 1918; this exact wording appears in The Motor (London), 14 December 1937, credited only to an unnamed editor. Orwell's name was first attached in 1999. — Quotle.info","comparison":"","citation":"Earliest strong match documented by Quote Investigator: filler item, The Fourth Estate: A Newspaper for the Makers of Newspapers (New York: Fourth Estate Publishing Company), 30 November 1918, p. 18, col. 4. This exact wording: \"You'll Be Interested To Know\" by \"Lacuna\" (pen name), The Motor, 14 December 1937, p. 917, col. 1. Chronology per \"Quote Origin: News Is What Somebody Does Not Want You To Print. All the Rest Is Advertising,\" Quote Investigator, 20 January 2013.","rights":"The line has no identified author, so there is no rightsholder to name. Its earliest documented ancestor — the unattributed placard text reported in The Fourth Estate on 30 November 1918 — is a pre-1931 American trade-paper item and would be out of copyright as printed, but that is a different sentence from the one quoted here. The exact popular wording is first documented in The Motor in December 1937 with no named author, so quotle.info asserts no copyright status for it.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -855,6 +863,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

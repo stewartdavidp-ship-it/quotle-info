@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -514,6 +516,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -560,6 +565,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -616,7 +622,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"my-true-religion-is-kindness","url":"https://quotle.info/who-said/my-true-religion-is-kindness/","quote":"My true religion is Kindness","claim":"Dalai Lama said: \"My true religion is Kindness\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Wikiquote lists this sentence in its main sourced section for the 14th Dalai Lama and gives the source as Kindness, Clarity, and Insight (1984), the Snow Lion collection translated and edited by Jeffrey Hopkins and Elizabeth Napper. It gives no page, and the Internet Archive's scan is lending-restricted, so we could not open the book to confirm the wording — which is why this page says attributed rather than verified. The sentiment is documented all over his work; this exact sentence is not pinned to a page.","credit":"Attributed to the 14th Dalai Lama; Wikiquote names Kindness, Clarity, and Insight (1984) as the source, with no page and the wording unconfirmed — traced by Quotle.info","comparison":"","citation":"Bstan-'dzin-rgya-mtsho, Dalai Lama XIV. Kindness, Clarity, and Insight. Translated and edited by Jeffrey Hopkins and Elizabeth Napper. Ithaca, NY: Snow Lion Publications, 1984. Named as the source by Wikiquote, which gives no page; the wording was not confirmed against the text, which is lending-restricted.","rights":"This is a living author's twentieth-century writing, so it is in copyright wherever it was first printed. The book named as its source, Kindness, Clarity, and Insight, was published in 1984 by Snow Lion Publications — half a century after the 1931 United States public-domain cut-off. Quote & cite it, but do not treat it as free to reuse.","checked":"5 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 5 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -804,6 +812,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

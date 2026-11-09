@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"who-after-all-speaks-today-of-the-annihilation-of-the","url":"https://quotle.info/who-said/who-after-all-speaks-today-of-the-annihilation-of-the/","quote":"Who, after all, speaks today of the annihilation of the Armenians?","claim":"Adolf Hitler said: \"Who, after all, speaks today of the annihilation of the Armenians?\"","rating":2,"verdict":"Needs context","answer":"Not confirmed. The dispute here is about a document, not about a fabrication. Nobody suggests the sentence was invented after the war: it was in a German text held by an American journalist in August 1939, transmitted to London that month, and published in 1942. The question is whether that text is an accurate record of what Hitler said. Three records of the 22 August 1939 speech reached the Nuremberg prosecution. Only one, document L-3, contains the sentence — and L-3 is the one that was never formally admitted into evidence. Historians of the period are genuinely divided, and we do not resolve it here.","credit":"Attributed to Adolf Hitler, Obersalzberg, 22 August 1939, in document L-3 — the only one of three records of that speech to contain it, and the one not admitted at Nuremberg.","comparison":"","citation":"Attributed to Adolf Hitler, address to Wehrmacht commanders, Obersalzberg, 22 August 1939, as recorded in document L-3 (obtained by Louis P. Lochner; printed in his What About Germany?, 1942; submitted to the Nuremberg prosecution 1945, not admitted into evidence). Not present in documents 798-PS or 1014-PS.","rights":"We do not assign a rights status here, because it cannot be established. Hitler's own German writings entered the public domain in Germany on 1 January 2016, seventy years after his death — but L-3 is not a text he wrote. It is a memorandum by an unidentified notetaker, and an unidentified author means an unresolvable term. The familiar English sentence is a translation, and a translation is a separate copyrightable work; we have not resolved the status of Lochner's. The general trap is worth stating plainly: Ralph Manheim's 1943 English translation of Mein Kampf remains in copyright even though the German original is not, so 'the German is public domain' does not license the English anyone actually quotes. Quote this sentence with attribution and with the dispute attached. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -872,6 +880,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

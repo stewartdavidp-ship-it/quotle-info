@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -515,6 +517,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -561,6 +566,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -617,7 +623,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"he-who-knows-not-and-knows-not-he-knows-not-is-a-fool-shun","url":"https://quotle.info/who-said/he-who-knows-not-and-knows-not-he-knows-not-is-a-fool-shun/","quote":"He who knows not, and knows not he knows not, is a fool; shun him. He who knows not, and knows he knows not, is simple; teach him. He who knows, and knows not he knows, is asleep; awaken him. He who knows, and knows he knows, is wise; follow him","claim":"Bruce Lee said: \"He who knows not, and knows not he knows not, is a fool; shun him. He who knows not, and knows he knows not, is simple; teach him. He who knows, and knows not he knows, is asleep; awaken him. He who knows, and knows he knows, is wise; follow him\"","rating":1,"verdict":"Not supported","answer":"No. There is no evidence Bruce Lee ever used this line. As Quote Investigator documents, the complete four-part \"knows / knows not\" saying was already printed as an \"Arabic proverb\" in The Globe of Toronto in 1885 — decades before Lee was born in 1940. Lee's name was only attached to it much later, appearing on Goodreads by 2017.","credit":"Anonymous proverb (in print as an “Arabic proverb” by 1885) — not Bruce Lee, per Quote Investigator.","comparison":"","citation":"\"A Knowsy Proverb\" [printed as an Arabic proverb], The Globe (Toronto), 15 December 1885, p. 6, col. 3; earliest full four-part version traced in Garson O'Toole, \"He Who Knows, and Knows Not He Knows, Is Asleep; Awaken Him,\" Quote Investigator, 24 September 2021.","rights":"The wording is an anonymous proverb whose full four-part English form is documented in print by 1885 (The Globe, Toronto) — well before 1931 — so the text is in the public domain in the United States. No individual author or estate holds rights to it.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -837,6 +845,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

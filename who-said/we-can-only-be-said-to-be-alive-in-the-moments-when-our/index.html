@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"we-can-only-be-said-to-be-alive-in-the-moments-when-our","url":"https://quotle.info/who-said/we-can-only-be-said-to-be-alive-in-the-moments-when-our/","quote":"We can only be said to be alive in the moments when our hearts are conscious of our treasure","claim":"Thornton Wilder wrote \"We can only be said to be alive in the moments when our hearts are conscious of our treasure.\" He did write the line — in The Woman of Andros (New York: Albert & Charles Boni, 1930), p. 36, spoken by Chrysis — but as \"we can only be said to be alive in those moments when our hearts are conscious of our treasure; for our hearts are not strong enough to love every moment.\" The wording under review changes \"those\" to \"the\" and drops the closing clause.","rating":4,"verdict":"Mostly supported","answer":"Mostly. Wilder wrote this line in his third novel, The Woman of Andros (Albert & Charles Boni, February 1930), where the courtesan Chrysis speaks it at a banquet while telling the fable of a hero allowed one day back on earth. The attribution is solid — but the wording above has drifted: Wilder wrote \"in those moments,\" not \"in the moments,\" and the full sentence continues \"…for our hearts are not strong enough to love every moment.\"","credit":"Thornton Wilder, The Woman of Andros (New York: Albert & Charles Boni, 1930), p. 36. Wilder's exact wording: \"Suddenly the hero saw that the living too are dead and that we can only be said to be alive in those moments when our hearts are conscious of our treasure; for our hearts are not strong enough to love every moment.\" Spoken by the character Chrysis. Public domain in the United States. Verified via Quotle.info.","comparison":"Suddenly the hero saw that the living too are dead and that we can only be said to be alive in those moments when our hearts are conscious of our treasure; for our hearts are not strong enough to love every moment.","citation":"Thornton Wilder, The Woman of Andros (New York: Albert & Charles Boni, 1930), 36.","rights":"The Woman of Andros was first published in February 1930 by Albert & Charles Boni in New York, and works published in the United States before 1931 are now in the public domain there. Project Gutenberg confirms the status directly, listing the book as \"Public domain in the USA\" and hosting the complete text. Readers outside the United States should check their own country's term, which may still run from Wilder's death in 1975.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -876,6 +884,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

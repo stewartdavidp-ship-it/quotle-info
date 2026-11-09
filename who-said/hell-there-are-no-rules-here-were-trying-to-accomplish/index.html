@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"hell-there-are-no-rules-here-were-trying-to-accomplish","url":"https://quotle.info/who-said/hell-there-are-no-rules-here-were-trying-to-accomplish/","quote":"Hell, there are no rules here. We're trying to accomplish something","claim":"Thomas Edison said: \"Hell, there are no rules here. We're trying to accomplish something\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Credibly credited to Edison, but there is no primary source in his own hand and the smooth sentence people quote is not the documented wording. The whole story rests on one witness: the chemist M. A. Rosanoff, who published it in Harper's Magazine in September 1932 — after Edison's death — recalling an exchange at the West Orange laboratory around 1903, where he prints the reply in dialect as \"Hell! there ain't no rules around here! We are tryin' to accomplish somep'n!\"","credit":"Attributed to Thomas Edison (1847–1931). Earliest documented account: M. A. Rosanoff, \"Edison in His Laboratory,\" Harper's Magazine 165 (September 1932): 402–403, recalling an exchange at Edison's West Orange, New Jersey laboratory around 1903, where the reply is printed as \"Hell! there ain't no rules around here! We are tryin' to accomplish somep'n!\" The familiar polished wording is a later regularization, traced by Quote Investigator to Executive Speeches, October–November 1996. Via Quotle.info.","comparison":"","citation":"M. A. Rosanoff, \"Edison in His Laboratory,\" Harper's Magazine 165 (September 1932): 402–403 — the earliest source located by Quote Investigator, where the reply is printed as \"Hell! there ain't no rules around here! We are tryin' to accomplish somep'n!\" The familiar regularized wording is traced by Quote Investigator to Executive Speeches 11, no. 2 (October–November 1996).","rights":"The only documented text of this remark sits inside a magazine article first published in September 1932, which falls on the in-copyright side of the pre-1931 line this site uses; its precise US status would turn on whether the 1932 issue's copyright was renewed, which we have not verified, so we treat it conservatively as protected. The familiar modern wording is later still — Quote Investigator traces it to a 1996 publication. Edison's spoken words are not themselves a published work, but every version in circulation descends from copyrighted print, so we quote only the short passage needed to document the attribution.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -867,6 +875,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

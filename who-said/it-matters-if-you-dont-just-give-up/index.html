@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-matters-if-you-dont-just-give-up","url":"https://quotle.info/who-said/it-matters-if-you-dont-just-give-up/","quote":"It matters if you don't just give up","claim":"Stephen Hawking said: \"It matters if you don't just give up\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Hawking published a near-identical sentence — \"It matters that you don't just give up\" — in the closing message of his final book, Brief Answers to the Big Questions (2018). The \"if\" wording asked about here is not that sentence: Wikiquote carries it only under Attributed, citing Shirley MacLaine's 1990 memoir Going Within, p. 303 — a second-hand report, not anything Hawking wrote.","credit":"Attributed to Stephen Hawking (1942–2018). His own published wording is \"It matters that you don't just give up\" — Brief Answers to the Big Questions (2018). The \"if\" variant is documented only in Shirley MacLaine's Going Within (1990), p. 303, per Wikiquote. — Quotle.info","comparison":"It matters that you don't just give up.","citation":"Hawking's published wording: Stephen Hawking, Brief Answers to the Big Questions (Hodder & Stoughton / Bantam Books, 2018) — \"It matters that you don't just give up.\" The \"if\" variant is documented only at second hand: Shirley MacLaine, Going Within: A Guide for Inner Transformation (New York: Bantam, 1990), 303, as cited in Wikiquote, \"Stephen Hawking,\" Attributed.","rights":"Both works that could carry this line are modern and firmly in copyright: Brief Answers to the Big Questions was first published on 16 October 2018, and Going Within in February 1990. Neither is anywhere near the pre-1931 cutoff for the US public domain, so the sentence should be used as a short attributed excerpt rather than treated as free text.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -864,6 +872,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

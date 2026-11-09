@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -504,6 +506,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -550,6 +555,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -606,7 +612,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-john-birch-society-is-a-good-patriotic-society-i-dont","url":"https://quotle.info/who-said/the-john-birch-society-is-a-good-patriotic-society-i-dont/","quote":"The John Birch Society is a good, patriotic society. I don't agree with what its founder said about me, but that does not detract from the fact that its membership is comprised of many fine Americans dedicated to the preservation of our libertarian Republic","claim":"Dwight D. Eisenhower said: \"The John Birch Society is a good, patriotic society. I don't agree with what its founder said about me, but that does not detract from the fact that its membership is comprised of many fine Americans dedicated to the preservation of our libertarian Republic\"","rating":1,"verdict":"Not supported","answer":"No. This wording has never been tied to anything Eisenhower said or wrote. Wikiquote lists it under Misattributed, citing an Alton Evening Telegraph editorial of 14 July 1964 and a Los Angeles Times display advertisement of 27 September 1964. Quote-forensics reference They Never Said It (1989) treats it as a fake: reporters who asked Eisenhower about the ad were told by one of his aides in Gettysburg that the quotation was \"unauthorized and incorrect.\"","credit":"Misattributed to Dwight D. Eisenhower. No speech, letter or interview contains this wording. Earliest sightings cited by Wikiquote: an editorial in the Alton Evening Telegraph, 14 July 1964, and a display advertisement in the Los Angeles Times, 27 September 1964 (Wikiquote does not name the advertiser). Listed as a fake quotation in Paul F. Boller Jr. and John George, \"They Never Said It\" (Oxford University Press, 1989), p. 24, which records the John Birch Society placing a Los Angeles Times advertisement during the 1964 campaign and an Eisenhower aide calling the quotation \"unauthorized and incorrect.\" — Quotle.info","comparison":"","citation":"Earliest sightings cited by Wikiquote: an editorial in the Alton Evening Telegraph, July 14, 1964, A-4, and a display advertisement in the Los Angeles Times, September 27, 1964, D14. Classified as a fake quotation in Paul F. Boller Jr. and John George, They Never Said It: A Book of Fake Quotes, Misquotes, and Misleading Attributions (New York: Oxford University Press, 1989), 24, whose source note cites the New York Herald Tribune, October 18, 1964.","rights":"No rights status can be asserted, because no work of authorship has been identified. The wording is not traceable to any Eisenhower speech, letter or interview; its earliest documented appearances are 1964 newspaper text of unknown authorship, so there is no identifiable author, publication or first-publication date on which a public-domain or in-copyright determination could rest. The modern reference work that debunks it — They Never Said It (Oxford University Press, 1989) — is itself in copyright, which is why only short phrases are quoted from it here.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -850,6 +858,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

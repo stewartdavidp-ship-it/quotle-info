@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-problem-with-socialism-is-that-you-eventually-run-out","url":"https://quotle.info/who-said/the-problem-with-socialism-is-that-you-eventually-run-out/","quote":"The problem with socialism is that you eventually run out of other people's money","claim":"Margaret Thatcher said: \"The problem with socialism is that you eventually run out of other people's money\"","rating":2,"verdict":"Needs context","answer":"Yes and no. The idea is hers and she put it on the record twice, but neither time in this sentence. Wikiquote's sourced Thatcher material transcribes her 1976 television interview as \"Socialist governments traditionally do make a financial mess. They always run out of other people's money. It's quite a characteristic of them,\" and adds a note in its own voice: that last sentence \"is widely paraphrased as 'The trouble/problem with socialism is that eventually you run out of other people's money.'\" The line you know is the paraphrase, not the quotation.","credit":"Paraphrase, not a quotation. What Margaret Thatcher actually said was \"Socialist governments traditionally do make a financial mess. They always run out of other people's money. It's quite a characteristic of them.\" — TV interview for Thames Television, This Week, 5 February 1976. She used an earlier version in her Conservative Party Conference speech of 10 October 1975. The familiar \"The problem with socialism is that you eventually run out of other people's money\" is a later rewording. Traced by Quotle.info","comparison":"Socialist governments traditionally do make a financial mess. They always run out of other people's money. It's quite a characteristic of them.","citation":"Margaret Thatcher, TV interview for Thames Television, This Week, 5 February 1976: \"Socialist governments traditionally do make a financial mess. They always run out of other people's money. It's quite a characteristic of them.\" An earlier version appears in her speech to the Conservative Party Conference, 10 October 1975. Both as transcribed by Wikiquote, which cites the Margaret Thatcher Foundation archive; the popular sentence is a later paraphrase.","rights":"Both documented wordings date from 1975 and 1976 — long after the 1931 cutoff for United States public domain — so the text is in copyright. A televised interview and a party conference speech carry rights of their own besides the speaker's. Quote it with attribution; do not treat it as free to reproduce at length.","checked":"20 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 20 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -856,6 +864,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

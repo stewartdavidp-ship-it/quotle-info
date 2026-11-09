@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"im-the-best-ever-im-the-most-brutal-and-vicious-and-most","url":"https://quotle.info/who-said/im-the-best-ever-im-the-most-brutal-and-vicious-and-most/","quote":"I'm the best ever. I'm the most brutal and vicious, and most ruthless champion there's ever been. There's no one that can stop me. Lennox is a conqueror? No, I'm Alexander! He's no Alexander. I'm the best ever. There's never been anybody as ruthless. I'm Sonny Liston. I'm Jack Dempsey. There's no one like me. I'm from their cloth. There is no one that can match me. My style is impetuous. My defense is impregnable, and I'm just ferocious. I want your heart. I want to eat his children. Praise be to Allah!","claim":"Mike Tyson said: \"I'm the best ever. I'm the most brutal and vicious, and most ruthless champion there's ever been. There's no one that can stop me. Lennox is a conqueror? No, I'm Alexander! He's no Alexander. I'm the best ever. There's never been anybody as ruthless. I'm Sonny Liston. I'm Jack Dempsey. There's no one like me. I'm from their cloth. There is no one that can match me. My style is impetuous. My defense is impregnable, and I'm just ferocious. I want your heart. I want to eat his children. Praise be to Allah!\"","rating":5,"verdict":"Supported","answer":"Yes. He really said it, on live television. It is the tail of Tyson's answer to Showtime's Jim Gray in the ring at Hampden Park, Glasgow, on 24 June 2000, minutes after he stopped Lou Savarese in 38 seconds — transcribed the same weekend by Boxing Chronicle and carried in the sourced section of Wikiquote. The circulating version is faithful but trimmed: the rant actually opens \"I was gonna rip his heart out.\"","credit":"Mike Tyson, post-fight interview with Jim Gray on Showtime, after stopping Lou Savarese at Hampden Park, Glasgow, 24 June 2000. Verified by Quotle.info. · Verbatim: “I was gonna rip his heart out. I'm the best ever. I'm the most brutal and vicious, and most ruthless champion there's ever been. There's no one can stop me. Lennox is a conqueror? No, I'm Alexander — he's no Alexander. I'm the best ever. There's never been anybody as ruthless. I'm Sonny Liston, I'm Jack Dempsey. There's no one like me. I'm from their cloth. There's no one that can match me. My style is impetuous, my defense is impregnable, and I'm just ferocious. I want your heart. I want to eat his children. Praise be to Allah.”","comparison":"I was gonna rip his heart out. I'm the best ever. I'm the most brutal and vicious, and most ruthless champion there's ever been. There's no one can stop me. Lennox is a conqueror? No, I'm Alexander — he's no Alexander. I'm the best ever. There's never been anybody as ruthless. I'm Sonny Liston, I'm Jack Dempsey. There's no one like me. I'm from their cloth. There's no one that can match me. My style is impetuous, my defense is impregnable, and I'm just ferocious. I want your heart. I want to eat his children. Praise be to Allah.","citation":"Mike Tyson, post-fight interview by Jim Gray, Showtime, Hampden Park, Glasgow, 24 June 2000. Transcribed contemporaneously in Chris Bushnell, \"Tyson unleashes his rage on Savarese,\" BoxingChronicle.com, 2000 (Internet Archive capture, 25 January 2001).","rights":"These are Tyson's own extemporaneous words, spoken live during a Showtime broadcast on 24 June 2000 — a work of 2000, so nothing here is public domain. Quoting a passage for reporting and commentary is ordinary practice, but the broadcast itself remains the property of the network that produced it.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -875,6 +883,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

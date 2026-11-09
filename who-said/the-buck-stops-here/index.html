@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-buck-stops-here","url":"https://quotle.info/who-said/the-buck-stops-here/","quote":"The Buck Stops Here","claim":"Harry Truman said: \"The Buck Stops Here\"","rating":3,"verdict":"Not confirmed","answer":"Yes and no. The sign on Truman's desk is real, and so is his ownership of the idea — but the words were already circulating when he got them. Quote Investigator's earliest match is a newspaper column from 2 October 1929, sixteen years before Truman became president, describing a card above a second lieutenant's desk in the war department: \"The buck stops here\" — \"and he didn't mean buck private.\" The officer is not named, and QI's verdict is that \"the creator of the expression remains unknown\". Between 1929 and 1945 QI finds the motto on at least four more desks — a brigadier general's, two captains', and the governor of Wyoming's — before any reporter saw one on Truman's, in January 1946. What Truman did was make it famous.","credit":"Not Truman's phrase. “The buck stops here” was already an anonymous US Army desk motto by October 1929, sixteen years before Truman's sign reached the Oval Office. Earliest known appearance: John Bentley, “I May Be Wrong,” The Lincoln Evening Journal, 2 October 1929, p. 13. Via quotle.info","comparison":"","citation":"John Bentley, \"I May Be Wrong,\" The Lincoln Evening Journal (Lincoln, NE), 2 October 1929, 13, col. 1. Cited in Quote Investigator, \"Quote Origin: The Buck Stops Here,\" 7 February 2015, which credits the citation to Barry Popik. For Truman's sign see Bob Considine, \"Truman Alters White House's Inner Circle\" (International News Service), Buffalo Courier-Express, 23 January 1946, 3, col. 2.","rights":"Public domain in the United States. The earliest documented appearance is a newspaper column of 2 October 1929 — comfortably before the 1931 cutoff — and the motto was anonymous and in common circulation before that. There is no identifiable author or estate to hold a right in it, and a four-word desk slogan is in any case about as far from a protectable work as writing gets. Use it freely.","checked":"3 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -856,6 +864,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

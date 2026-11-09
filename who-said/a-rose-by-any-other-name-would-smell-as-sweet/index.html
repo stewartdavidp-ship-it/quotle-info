@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-rose-by-any-other-name-would-smell-as-sweet","url":"https://quotle.info/who-said/a-rose-by-any-other-name-would-smell-as-sweet/","quote":"A rose by any other name would smell as sweet","claim":"William Shakespeare said: \"A rose by any other name would smell as sweet\"","rating":5,"verdict":"Supported","answer":"Yes. Confirmed in the primary text: Juliet speaks it in Romeo and Juliet, Act 2, Scene 2, and the first quarto of 1597 prints the words \"By any other name would smell as sweet.\" Two honest caveats travel with it: Shakespeare wrote it as two lines, not one, and the 1599 second quarto and the 1623 First Folio both read \"word\" where the popular version reads \"name.\"","credit":"Juliet, in William Shakespeare, Romeo and Juliet, Act 2, Scene 2. \"Name\" is the reading of the first quarto (London, 1597); the 1599 second quarto and the 1623 First Folio read \"by any other word would smell as sweete.\" — Quotle.info · Verbatim: “What's in a name? That which we call a rose, By any other name would smell as sweet.”","comparison":"What's in a name? That which we call a rose, By any other name would smell as sweet.","citation":"William Shakespeare, An Excellent Conceited Tragedie of Romeo and Iuliet (London: John Danter, 1597), Act 2, Scene 2: \"Whats in a name? That which we call a Rose, / By any other name would smell as sweet.\" Old-spelling text: Internet Shakespeare Editions, Romeo and Juliet (Quarto 1, 1597), ed. Roger Apfelbaum. The 1599 second quarto, the 1609 quarto and the 1623 First Folio instead read \"By any other word would smell as sweete.\"","rights":"Romeo and Juliet was first printed in London in 1597 and again in 1599, so the play's text — including this line in its original spelling — has long been in the public domain in the United States and is free to quote in full. Only the editorial apparatus of a particular modern edition (its spelling, punctuation, line numbering and notes) can carry a current copyright; Shakespeare's words cannot.","checked":"29 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 29 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -876,6 +884,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

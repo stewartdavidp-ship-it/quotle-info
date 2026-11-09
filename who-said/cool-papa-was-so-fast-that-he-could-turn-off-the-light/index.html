@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"cool-papa-was-so-fast-that-he-could-turn-off-the-light","url":"https://quotle.info/who-said/cool-papa-was-so-fast-that-he-could-turn-off-the-light/","quote":"Cool Papa was so fast that he could turn off the light switch and get into bed before the room got dark","claim":"Satchel Paige said: \"Cool Papa was so fast that he could turn off the light switch and get into bed before the room got dark\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Paige told this one about James \"Cool Papa\" Bell, and he told it more than once. Quote Investigator documents him using it in The Washington Post in April 1969 and again in Jet in July 1971. Neither account prints the smooth sentence that circulates today, and the gag was already half a century old when Paige got to it — so we record this as attributed, not verified.","credit":"Satchel Paige, on James \"Cool Papa\" Bell. Paige used the line in The Washington Post (1969) and Jet (1971), but neither prints this exact wording, and the joke was already in print in 1917. Traced by Quotle.info. · Verbatim: “Cool Papa was so fast he could get in bed before the room got dark.”","comparison":"Cool Papa was so fast he could get in bed before the room got dark.","citation":"Earliest documented instance of the joke: \"Hablarias,\" report from Fort Mifflin, Pennsylvania, The Marines Magazine, April 1917, 32. Earliest documented use by Paige about Cool Papa Bell: William Gildea, \"On Today's Scene: Paige Admits He's Feeling His Age,\" The Washington Post, April 29, 1969, D2. Both locators as given by Quote Investigator; we did not read either original.","rights":"We assert no rights status, because we cannot say where this exact wording was first published. The joke's earliest documented appearance — The Marines Magazine, April 1917 — is old enough to be in the United States public domain, but it is not this sentence. The two documented Paige versions ran in The Washington Post (1969) and Jet (1971), both far too recent for the public domain, and neither matches the wording above.","checked":"22 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 22 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-first-principle-is-that-you-must-not-fool-yourself-and","url":"https://quotle.info/who-said/the-first-principle-is-that-you-must-not-fool-yourself-and/","quote":"The first principle is that you must not fool yourself — and you are the easiest person to fool","claim":"Richard P. Feynman said: \"The first principle is that you must not fool yourself — and you are the easiest person to fool\"","rating":5,"verdict":"Supported","answer":"Yes. Feynman said it in \"Cargo Cult Science,\" Caltech's 1974 commencement address, printed that month in the institute's magazine Engineering and Science — volume 37, number 7 (June 1974), pages 10–13. The sentence appears there verbatim, and the address was later adapted as the closing chapter of Surely You're Joking, Mr. Feynman! (1985). This is one of the rare famous-scientist quotations that survives a look at the primary document intact.","credit":"The first principle is that you must not fool yourself—and you are the easiest person to fool. —Richard P. Feynman, \"Cargo Cult Science,\" Caltech commencement address, printed in Engineering and Science 37, no. 7 (June 1974), 10–13.","comparison":"The first principle is that you must not fool yourself—and you are the easiest person to fool. So you have to be very careful about that.","citation":"Feynman, Richard P. \"Cargo Cult Science.\" Engineering and Science 37, no. 7 (June 1974): 10–13. Caltech's 1974 commencement address; adapted as the final chapter of Surely You're Joking, Mr. Feynman!: Adventures of a Curious Character (New York: W. W. Norton, 1985).","rights":"This is a 1974 publication — more than four decades after the 1931 line that separates public-domain from protected work in the United States — so the text of \"Cargo Cult Science\" remains under copyright, as does the 1985 W. W. Norton book that reprints it. The passage is quoted here in brief for identification, attribution and commentary; credit belongs to Richard P. Feynman and his publishers, and Caltech makes the full article freely readable on its own library site.","checked":"10 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -879,6 +887,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

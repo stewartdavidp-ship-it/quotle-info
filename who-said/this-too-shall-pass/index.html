@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -515,6 +517,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -561,6 +566,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -617,7 +623,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"this-too-shall-pass","url":"https://quotle.info/who-said/this-too-shall-pass/","quote":"This too shall pass","claim":"the Bible said: \"This too shall pass\"","rating":1,"verdict":"Not supported","answer":"No. There is no such verse — the words appear nowhere in scripture. The saying is a Persian adage, carried in the fable of a king who asks his wise men for a motto that will hold true in prosperity and in ruin alike; Wikipedia's survey places that ring story in the 12th-century Persian poets Sanai and Attar of Nishapur, and Jewish folklore retells it with Solomon as the sage. The English wording that actually got written down is not \"this too shall pass\" but \"this also shall pass away\" — the form Walter Scott used in a letter to Lord Byron on 6 November 1813 and Edward FitzGerald printed in 1852.","credit":"is not in the Bible. It is a Persian Sufi adage — the fable of a king's consoling ring, recorded in 12th-century Persian poetry and retold in Jewish folklore with Solomon as the sage. The documented English form is \"this also shall pass away\": Walter Scott to Lord Byron, 6 November 1813, and Edward FitzGerald, \"Solomon's Seal,\" in Polonius (1852). Via quotle.info","comparison":"This also shall pass away.","citation":"Edward FitzGerald, \"Solomon's Seal,\" in Polonius: A Collection of Wise Saws and Modern Instances (1852), reprinted in Works of Edward FitzGerald (Houghton, Mifflin, 1887), 433. Earlier English telling: Walter Scott to Lord Byron, Abbotsford, 6 November 1813, in J. G. Lockhart, Memoirs of the Life of Sir Walter Scott, vol. 4 (of 10).","rights":"Every text quoted on this page is long out of copyright in the United States: Walter Scott's 1813 letter as published by Lockhart in the 1830s, Edward FitzGerald's Polonius (1852, reprinted 1887), and Lincoln's 1859 address — all first published well before 1931. The adage itself is anonymous folk material with no identifiable author or claimant, so no one holds rights in the sentence.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

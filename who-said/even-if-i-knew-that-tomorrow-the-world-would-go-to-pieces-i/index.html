@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -516,6 +518,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -562,6 +567,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -618,7 +624,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"even-if-i-knew-that-tomorrow-the-world-would-go-to-pieces-i","url":"https://quotle.info/who-said/even-if-i-knew-that-tomorrow-the-world-would-go-to-pieces-i/","quote":"Even if I knew that tomorrow the world would go to pieces, I would still plant my apple tree","claim":"Martin Luther King Jr. said: \"Even if I knew that tomorrow the world would go to pieces, I would still plant my apple tree\"","rating":1,"verdict":"Not supported","answer":"No. This line is popularly pinned on Martin Luther King Jr., and even more often on the 16th-century reformer Martin Luther — but it is found in the works of neither. Its earliest documented appearance is a German Confessing Church circular of October 1944, and the Luther scholar Martin Schloemann, who wrote a whole book about it, concluded it cannot be traced to Luther. The German original is \"Wenn ich wüsste, dass morgen die Welt unterginge, würde ich heute noch ein Apfelbäumchen pflanzen.\"","credit":"Misattributed to Martin Luther King Jr. (and to Martin Luther the reformer). The line is in neither man's works; its earliest record is a German Confessing Church circular of October 1944, author unknown.","comparison":"","citation":"Earliest documented in a circular letter of the Confessing Church, Hesse (Pastor Karl Lotz), 5 October 1944; see Martin Schloemann, Luthers Apfelbäumchen? Ein Kapitel deutscher Mentalitätsgeschichte seit dem Zweiten Weltkrieg (Göttingen: Vandenhoeck & Ruprecht).","rights":"The exact wording is a 20th-century German saying of unknown authorship, first attested only in 1944, and the English text is an anonymous modern translation. Because no original author or work can be identified, no copyright or public-domain status can be responsibly asserted.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -838,6 +846,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

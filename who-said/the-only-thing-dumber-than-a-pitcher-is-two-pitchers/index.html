@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-only-thing-dumber-than-a-pitcher-is-two-pitchers","url":"https://quotle.info/who-said/the-only-thing-dumber-than-a-pitcher-is-two-pitchers/","quote":"The only thing dumber than a pitcher is two pitchers","claim":"Ted Williams said: \"The only thing dumber than a pitcher is two pitchers\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The credit is plausible and the line is documented — but only as one man's memory. Washington Senators pitcher Bob Humphreys recalled his manager saying it, in an interview given on 6 June 2007 and printed in the Society for American Baseball Research's The National Pastime in 2009. No contemporaneous report of the remark has surfaced, and a different phrasing of the same joke appears in Ben Bradlee Jr.'s Williams biography, so the polished sentence everyone quotes cannot be pinned to a primary source.","credit":"Ted Williams (attributed) — \"The only thing dumber than a pitcher is two pitchers.\" Recalled by Washington Senators pitcher Bob Humphreys in an interview of 6 June 2007 and first printed in Steve Walker, \"Ted Williams,\" The National Pastime: Monumental Baseball (SABR, 2009). No contemporaneous source; Ben Bradlee Jr.'s The Kid records the joke in a different, question-and-answer form. Via Quotle.info","comparison":"","citation":"Steve Walker, \"Ted Williams,\" in The National Pastime: Monumental Baseball (Washington, DC: Society for American Baseball Research, 2009), quoting the author's interview with Bob Humphreys, 6 June 2007 (note 6).","rights":"The remark was spoken, not published, so rights attach to the work that carries it — Steve Walker's article in The National Pastime: Monumental Baseball, published by SABR in 2009 and still in copyright. Ben Bradlee Jr.'s The Kid (Little, Brown, 2013), which records the other phrasing, is likewise in copyright. Because no pre-1931 publication of this line exists, nothing here is in the public domain; quote the sentence with attribution rather than reproducing the surrounding passages.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -866,6 +874,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

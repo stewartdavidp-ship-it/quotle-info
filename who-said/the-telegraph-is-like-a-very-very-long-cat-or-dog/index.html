@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-telegraph-is-like-a-very-very-long-cat-or-dog","url":"https://quotle.info/who-said/the-telegraph-is-like-a-very-very-long-cat-or-dog/","quote":"The Telegraph is Like a Very, Very Long Cat (or Dog)","claim":"Albert Einstein said: \"The Telegraph is Like a Very, Very Long Cat (or Dog)\"","rating":1,"verdict":"Not supported","answer":"No. There is no evidence Einstein said this. Quote Investigator traces the joke to an anonymous newspaper item of August 1866 — two French peasants and \"an immense long dog—so long that its head is at Vienna and its tail is at Paris\" — printed thirteen years before Einstein was born. The animal became a cat, and the punchline gained the wireless twist the Einstein version turns on, in the Commercial Telegraphers Journal of April 1924, where the teller is a \"Jack\" McCloskey and Einstein is not mentioned. The earliest text QI has found attaching Einstein's name is a Usenet posting of 28 February 1985 carrying the source code of the Unix fortune program.","credit":"Not Albert Einstein. An anonymous joke: the telegraph as a very long animal is documented from August 1866 (with a dog), and the cat version appears in the Commercial Telegraphers Journal, April 1924. Einstein’s name was attached no earlier than a 1985 Unix \"fortune\" file. · Verbatim: “Well, if you had a very long cat, reaching from New York to Albany, and you trod on its tail in New York, it would throw out a wail in Albany. That’s telegraphy; and wireless is precisely the same thing without the cat.”","comparison":"Well, if you had a very long cat, reaching from New York to Albany, and you trod on its tail in New York, it would throw out a wail in Albany. That’s telegraphy; and wireless is precisely the same thing without the cat.","citation":"\"A Novel Illustration of the Telegraph.\" Providence Evening Press (Providence, RI), 31 August 1866, page 2, column 2. Earliest cat version: \"Headquarters Notes,\" Commercial Telegraphers Journal 22, no. 4 (April 1924): 143.","rights":"Free to reuse — with one caveat. Everything quoted on this page is a pre-1931 American publication: the August 1866 newspaper item, the April 1924 Commercial Telegraphers Journal passage and the 1910 Edison biography are all in the public domain in the United States and may be reproduced in full. What is not covered is the modern Einstein-attributed wording about \"a very, very long cat\", which surfaces no earlier than 1985 and has no established author. This is not legal advice.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -865,6 +873,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

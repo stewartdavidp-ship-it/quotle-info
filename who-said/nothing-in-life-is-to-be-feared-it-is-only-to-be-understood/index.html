@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"nothing-in-life-is-to-be-feared-it-is-only-to-be-understood","url":"https://quotle.info/who-said/nothing-in-life-is-to-be-feared-it-is-only-to-be-understood/","quote":"Nothing in life is to be feared, it is only to be understood","claim":"Marie Curie said: \"Nothing in life is to be feared, it is only to be understood\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Widely credited to Marie Curie and fully in character — the first sentence appears in French in a 1951 medical-journal citation and was quoted as hers by chemist Glenn T. Seaborg in 1968 — but no primary source in Curie's own hand has been located, and the familiar second sentence (\"…so that we may fear less\") appears to be Seaborg's, not hers.","credit":"attributed to Marie Curie. Credible but not pinned to a primary source; the popular second sentence (\"Now is the time to understand more, so that we may fear less\") appears to be Glenn Seaborg's, added in 1968. Quotle.info","comparison":"","citation":"Earliest located printing: «On ne doit rien craindre dans la vie—il suffit de comprendre», Laval médical 16 (1951): 569. Two-sentence form: Glenn T. Seaborg, \"Need We Fear Our Nuclear Future?\" Bulletin of the Atomic Scientists 24, no. 1 (1968): 36–42.","rights":"Provenance and rights are murky: the sentence credited to Curie is first documented in print in 1951 (she died in 1934), and the popular second sentence originates in Glenn Seaborg's 1968 article, which is not in the public domain. Treat the familiar two-sentence version as a modern composite.","checked":"7 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -843,6 +851,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

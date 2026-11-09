@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-lion-who-breaks-the-enemys-ranks-is-a-minor-hero","url":"https://quotle.info/who-said/the-lion-who-breaks-the-enemys-ranks-is-a-minor-hero/","quote":"The lion who breaks the enemy's ranks is a minor hero compared to the lion who overcomes himself","claim":"Rumi said: \"The lion who breaks the enemy's ranks is a minor hero compared to the lion who overcomes himself\"","rating":5,"verdict":"Supported","answer":"Yes. This one is real. The thought is Rumi's own — Masnavi, Book I, verse 1389, sitting inside the passage on the 'greater jihád,' the war against the self. What is not thirteenth-century is the English: the polished one-liner people share is a modern rendering credited to Camille Adams Helminski and Kabir Helminski, whereas a literal translation of the same couplet reads \"Deem of small account the lion (champion) who breaks the ranks (of the enemy): the (true) lion is he that breaks (conquers) himself.\"","credit":"Rumi, Masnavi, Book I, verse 1389. Genuine: the verse is Rumi's, in the 'greater jihad' passage. The familiar English wording is a modern rendering commonly credited to Camille Adams Helminski and Kabir Helminski (Rumi Daylight, 1990); the literal translation of Books I–II is Reynold A. Nicholson's (Luzac, 1926).","comparison":"","citation":"Jalāl al-Dīn Rūmī, Masnaví, Book I, verse 1389. English translation of Books I–II: Reynold A. Nicholson, The Mathnawí of Jalálu'ddín Rúmí, vol. 2 (London: Luzac & Co., 1926). The widely shared modern English wording is commonly credited to Rumi Daylight: A Daybook of Spiritual Guidance, trans. Camille Adams Helminski and Kabir Helminski (1990).","rights":"Two separate clocks run here. Rumi's thirteenth-century Persian is long in the public domain, and Reynold A. Nicholson's literal English translation of Books I and II — published in 1926 — is public domain in the United States. But the exact wording in circulation is a modern rendering commonly credited to Camille Adams Helminski and Kabir Helminski in 1990, and a 1990 translation is a copyrightable work in its own right. Treat the polished one-liner as in copyright and credit the translators; the 1926 literal rendering is the freely reusable text.","checked":"6 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 6 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -866,6 +874,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

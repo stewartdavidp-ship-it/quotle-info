@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"in-the-councils-of-government-we-must-guard-against-the","url":"https://quotle.info/who-said/in-the-councils-of-government-we-must-guard-against-the/","quote":"In the councils of government, we must guard against the acquisition of unwarranted influence, whether sought or unsought, by the military-industrial complex","claim":"Dwight D. Eisenhower said: \"In the councils of government, we must guard against the acquisition of unwarranted influence, whether sought or unsought, by the military-industrial complex\"","rating":5,"verdict":"Supported","answer":"Yes. Confirmed verbatim. Eisenhower spoke these words in his Farewell Radio and Television Address to the American People on 17 January 1961, delivered from the President's Office at 8:30 p.m. The sentence appears exactly as quoted in the Eisenhower Presidential Library's text of the address and in the National Archives transcript.","credit":"Dwight D. Eisenhower, Farewell Radio and Television Address to the American People, 17 January 1961. Verified verbatim against the Eisenhower Presidential Library and National Archives texts.","comparison":"","citation":"Dwight D. Eisenhower, \"Farewell Radio and Television Address to the American People,\" Washington, DC, January 17, 1961. Original record: Final TV Talk 1/17/61 (1), Box 38, Speech Series, Papers of Dwight D. Eisenhower as President, 1953–61, Dwight D. Eisenhower Presidential Library. Printed text cited by the Avalon Project as Public Papers of the Presidents, Dwight D. Eisenhower, 1960, pp. 1035–1040.","rights":"The address is a work of the United States Government — prepared and delivered by the President as part of his official duties — and under 17 U.S.C. § 105, \"copyright protection under this title is not available for any work of the United States Government.\" That is why the National Archives, the Eisenhower Presidential Library and the Avalon Project all publish the complete text openly and free of charge.","checked":"6 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 6 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -883,6 +891,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

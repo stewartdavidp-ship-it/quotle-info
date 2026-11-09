@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"imagination-rules-the-world","url":"https://quotle.info/who-said/imagination-rules-the-world/","quote":"Imagination rules the world","claim":"Napoleon Bonaparte said: \"Imagination rules the world\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The line is documented, but not in anything Napoleon wrote. His companion Emmanuel de Las Cases recorded him saying it at Longwood on Saint Helena in January 1816, and published the exchange in the Mémorial de Sainte-Hélène in 1823, after Napoleon's death — in French, as \"Oui, l'imagination gouverne le monde!\" The famous five English words are that book's 1823 translator's rendering, stripped of the sentence before it: \"This is fanaticism!\"","credit":"attributed to Napoleon Bonaparte, recorded by Emmanuel de Las Cases at Longwood, Saint Helena, January 1816, and published in Mémorial de Sainte-Hélène (1823). The French text reads \"Voilà le fanatisme! Oui, l'imagination gouverne le monde!\" · Verbatim: “This is fanaticism! Yes, imagination rules the world!”","comparison":"This is fanaticism! Yes, imagination rules the world!","citation":"Las Cases, Emmanuel, comte de. Mémorial de Sainte-Hélène: Journal de la vie privée et des conversations de l'empereur Napoléon à Sainte Hélène. Tome I, seconde partie. London: Henri Colburn et Co. and M. Bossange et Co., 1823, 110 (\"Voilà le fanatisme! Oui, l'imagination gouverne le monde!\"). English translation: Memorial de Sainte Helene: Journal of the Private Life and Conversations of the Emperor Napoleon at Saint Helena. Lexington, KY: Printed by Thomas Smith, 1823 (\"This is fanaticism! Yes, imagination rules the world!\").","rights":"Both texts quoted here were published in 1823: the French Mémorial de Sainte-Hélène (London: Henri Colburn et Co. and M. Bossange et Co.) and the English translation printed by Thomas Smith at Lexington, Kentucky. Because the work and this English rendering both appeared long before 1931, the passage is in the public domain in the United States.","checked":"27 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -882,6 +890,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

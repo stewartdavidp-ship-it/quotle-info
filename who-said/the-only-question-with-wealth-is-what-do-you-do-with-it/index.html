@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-only-question-with-wealth-is-what-do-you-do-with-it","url":"https://quotle.info/who-said/the-only-question-with-wealth-is-what-do-you-do-with-it/","quote":"The only question with wealth is, what do you do with it?","claim":"John D. Rockefeller said: \"The only question with wealth is, what do you do with it?\"","rating":1,"verdict":"Not supported","answer":"No. Wikiquote files this line in the Misattributed section of its John D. Rockefeller page and identifies it as a statement of his son, John D. Rockefeller Jr., as quoted in Raymond B. Fosdick's John D. Rockefeller, Jr., a Portrait (Harper, 1956), p. 189. The documented sentence reads \"The only question with wealth is what to do with it\" — and TIME's profile of Rockefeller Jr. on 24 September 1956 prints it as \"what you do with it.\" The circulating interrogative form, \"what do you do with it?\", matches neither exactly.","credit":"John D. Rockefeller Jr., quoted in Raymond B. Fosdick, John D. Rockefeller, Jr., a Portrait (New York: Harper, 1956), 189 (page as cited by Wikiquote); printed as \"what you do with it\" in \"Heroes: The Good Man,\" TIME, September 24, 1956. Commonly misattributed to his father, John D. Rockefeller Sr.","comparison":"The only question with wealth is what to do with it. It can be used for evil purposes or it can be an instrumentality for constructive social living.","citation":"Raymond B. Fosdick, John D. Rockefeller, Jr., a Portrait (New York: Harper, 1956), 189 (page as cited by Wikiquote), quoting John D. Rockefeller Jr.: \"The only question with wealth is what to do with it.\" The same statement is printed as \"The only question with wealth is what you do with it\" in \"Heroes: The Good Man,\" TIME, September 24, 1956.","rights":"Both documented appearances of this wording are from 1956 — Fosdick's John D. Rockefeller, Jr., a Portrait (Harper, New York) and TIME of 24 September 1956 — well after the 1931 US public-domain cutoff, so the text as published is in copyright. Quote it as a short attributed quotation rather than reproducing the surrounding passage.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

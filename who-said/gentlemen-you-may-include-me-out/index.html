@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"gentlemen-you-may-include-me-out","url":"https://quotle.info/who-said/gentlemen-you-may-include-me-out/","quote":"Gentlemen, You May Include Me Out","claim":"Samuel Goldwyn said: \"Gentlemen, You May Include Me Out\"","rating":1,"verdict":"Not supported","answer":"No. Samuel Goldwyn denied saying it. Profiled in LIFE in February 1959 he insisted he had said \"Gentlemen, I'm withdrawing from the association\" and that \"by the time I got back to the studio, it was all over town I'd said, 'Include me out.'\" Quote Investigator's earliest located instance has no Goldwyn in it at all: a February 1934 newspaper serialization of the 1933 film Let's Fall In Love, in which a producer character says \"Include me out of it.\" Alva Johnston pinned the line to Goldwyn in 1937 as \"Gentlemen, include me out\"; the longer wording asked about here first shows up in Louis Untermeyer's A Treasury of Laughter in 1946.","credit":"Not documented as Samuel Goldwyn's: he denied it to LIFE in 1959. The phrase is in print from 19 February 1934 with no name attached; this wording from Louis Untermeyer, A Treasury of Laughter (1946), p. 253. Traced by Quotle.info","comparison":"","citation":"\"Let's Fall In Love\" (serialization by arrangement with Columbia Pictures). Tyrone Daily Herald, 19 February 1934, p. 5, col. 2. Earliest instance located by Quote Investigator. This wording: Untermeyer, Louis, ed. A Treasury of Laughter. New York: Simon and Schuster, 1946, p. 253.","rights":"The passage quoted here is from A Treasury of Laughter, selected and edited by Louis Untermeyer and published by Simon and Schuster, New York, in 1946 — after the 1931 cutoff for the United States public domain — so it is treated as in copyright and only the short anecdote is reproduced, for identification, verification and criticism.","checked":"18 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 18 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -865,6 +873,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

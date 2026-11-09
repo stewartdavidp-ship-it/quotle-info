@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-love-deadlines-i-love-the-whooshing-noise-they-make-as","url":"https://quotle.info/who-said/i-love-deadlines-i-love-the-whooshing-noise-they-make-as/","quote":"I love deadlines. I love the whooshing noise they make as they go by","claim":"Douglas Adams said: \"I love deadlines. I love the whooshing noise they make as they go by\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Credited to Adams in print since at least 1994, and entirely in character — his lateness was legendary and documented. But no one has produced the occasion: the quotation researcher Barry Popik writes that it is not known when Adams first said the line, and every printing of it — the BBC's obituary, Richard Dawkins's lament, The Salmon of Doubt — reports it secondhand rather than reproducing something Adams wrote.","credit":"Attributed to Douglas Adams (1952–2001). Credited to him in print since at least 1994, but no primary source has been found and the quotation researcher Barry Popik states it is not known when Adams first said it. The earliest citation Popik records reads \"I love deadlines. I like the whooshing sound they make as they fly by\" (The Internet Yellow Pages, 1994, p. 261). The familiar wording appears in the BBC's obituary of 12 May 2001 and in The Salmon of Doubt (2002), both in reported form. Traced by Quotle.info, 9 Sep 2026.","comparison":"","citation":"Barry Popik, \"'I love deadlines; I like the whooshing sound they make as they fly by',\" barrypopik.com, June 6, 2012 — earliest credit recorded there: Harley Hahn and Rick Stout, The Internet Yellow Pages (Berkeley, CA: Osborne McGraw-Hill, 1994), 261, in the wording \"I love deadlines. I like the whooshing sound they make as they fly by.\" The familiar wording appears in BBC News, \"So long, and thanks for all the books,\" May 12, 2001, and in Douglas Adams, The Salmon of Doubt (New York: Harmony Books, 2002), both in reported form. No primary source for Adams saying it has been identified.","rights":"No work of first publication can be identified for this line, so no rights status can honestly be asserted — but it is emphatically not public domain. Every documented printing is modern: 1994 at the earliest, and the works that carry the familiar wording (the BBC's 2001 obituary, Richard Dawkins's lament, and The Salmon of Doubt, Macmillan/Harmony, 2002) are all in copyright, as is Adams's own output. Treat reuse as restricted and attribute it as reported, not sourced.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -855,6 +863,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

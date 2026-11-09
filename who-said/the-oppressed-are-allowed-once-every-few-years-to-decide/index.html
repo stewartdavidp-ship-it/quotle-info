@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-oppressed-are-allowed-once-every-few-years-to-decide","url":"https://quotle.info/who-said/the-oppressed-are-allowed-once-every-few-years-to-decide/","quote":"The oppressed are allowed once every few years to decide which particular representatives of the oppressing class shall represent and repress them in parliament","claim":"Karl Marx said: \"The oppressed are allowed once every few years to decide which particular representatives of the oppressing class shall represent and repress them in parliament\"","rating":1,"verdict":"Not supported","answer":"No. This exact sentence is Lenin's, from The State and Revolution (written August–September 1917, first published 1918), chapter 5, section 2: \"Marx grasped this essence of capitalist democracy splendidly when, in analyzing the experience of the Commune, he said that the oppressed are allowed once every few years to decide which particular representatives of the oppressing class shall represent and repress them in parliament!\" Lenin is summarising Marx in his own words — note the indirect \"he said that\", with no quotation marks — so the sentence circulating under Marx's name is Lenin's prose about Marx, not Marx's prose. Marx's own line, in The Civil War in France, runs differently: \"Instead of deciding once in three or six years which member of the ruling class was to misrepresent the people in Parliament…\"","credit":"V. I. Lenin, The State and Revolution (written 1917, first published 1918), ch. 5, sec. 2. Commonly misattributed to Karl Marx: Lenin was summarising Marx's argument in The Civil War in France (1871), where Marx's own wording is \"Instead of deciding once in three or six years which member of the ruling class was to misrepresent the people in Parliament…\"","comparison":"","citation":"V. I. Lenin, The State and Revolution (written August–September 1917; first published 1918), chap. 5, sec. 2, \"The Transition from Capitalism to Communism,\" in Lenin, Collected Works, vol. 25, pp. 381–492; English text at the Marxists Internet Archive. Compare Karl Marx, The Civil War in France (1871), which states the argument in different words.","rights":"Lenin's Russian original of 1918 is long out of copyright, but this exact English sentence belongs to a translation, and rights follow the translation. The Marxists Internet Archive credits its text to Lenin's English Collected Works, vol. 25, and Open Library catalogues that volume as Progress Publishing, 1964 — well after the 1931 US public-domain line — so we treat the wording as in copyright. We found no pre-1931 English edition carrying this phrasing.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

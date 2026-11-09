@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"real-knowledge-is-to-know-the-extent-of-ones-ignorance","url":"https://quotle.info/who-said/real-knowledge-is-to-know-the-extent-of-ones-ignorance/","quote":"Real knowledge is to know the extent of one's ignorance","claim":"Confucius said: \"Real knowledge is to know the extent of one's ignorance\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Widely credited to Confucius and genuinely Confucian in spirit — it compresses a real passage in the Analects (Book II, ch. 17), where the Master tells his disciple Zi Lu that true knowledge is to know what you know and to admit what you do not. But the catchy English wording \"Real knowledge is to know the extent of one's ignorance\" appears in no standard scholarly translation, and no primary source pins that exact phrasing.","credit":"Real knowledge is to know the extent of one's ignorance. — attributed to Confucius; a modern paraphrase of Analects 2.17","comparison":"","citation":"Confucius, The Analects, Book II (Wei Zheng), ch. 17, trans. James Legge (London, 1861): \"When you know a thing, to hold that you know it… this is knowledge.\" The wording \"Real knowledge is to know the extent of one's ignorance\" is a modern paraphrase of no fixed source.","rights":"The underlying Analects text is ancient and long in the public domain, as is James Legge's 19th-century translation. The modern paraphrase \"Real knowledge is to know the extent of one's ignorance\" has no identified author or copyright and is too short to protect.","checked":"7 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -828,6 +836,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

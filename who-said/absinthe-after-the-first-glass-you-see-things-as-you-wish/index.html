@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"absinthe-after-the-first-glass-you-see-things-as-you-wish","url":"https://quotle.info/who-said/absinthe-after-the-first-glass-you-see-things-as-you-wish/","quote":"Absinthe: After the First Glass, You See Things As You Wish They Were","claim":"Oscar Wilde said: \"Absinthe: After the First Glass, You See Things As You Wish They Were\"","rating":5,"verdict":"Supported","answer":"Yes. Wilde said it out loud, and the person who wrote it down was Ada Leverson — the friend he nicknamed Sphinx, who sheltered him in her own nursery when no hotel in London would take him. She printed the conversation in Letters to the Sphinx from Oscar Wilde in 1930, thirty years after his death, and Quote Investigator verified pages 39–40 from scans of one of the 275 copies that edition ran to. QI's conclusion is that the quotation \"is considered to be authentic\". Two things the short version loses: there is a third glass, and it is the worst one — \"finally you see things as they really are, and that is the most horrible thing in the world\" — and Wilde went on to explain himself with a top hat.","credit":"Oscar Wilde — “After the first glass, you see things as you wish they were. After the second, you see them as they are not. Finally you see things as they really are, and that is the most horrible thing in the world.” On absinthe, recorded by Ada Leverson in Letters to the Sphinx from Oscar Wilde (1930), pp. 39-40. Via quotle.info","comparison":"After the first glass, you see things as you wish they were. After the second, you see them as they are not. Finally you see things as they really are, and that is the most horrible thing in the world.","citation":"Ada Leverson, Letters to the Sphinx from Oscar Wilde: With Reminiscences of the Author (London: Duckworth, 1930), 39–40, recording a conversation with Oscar Wilde. Cited in Quote Investigator, \"Quote Origin: Absinthe: After the First Glass, You See Things As You Wish They Were,\" 20 June 2012, which verified the pages from scans of copy 240 of 275 held by the Smathers Library, University of Florida.","rights":"Public domain in the United States. The wording reaches us from Ada Leverson's Letters to the Sphinx from Oscar Wilde, first published by Duckworth in 1930 — before the 1931 cutoff, and works published in 1930 entered the US public domain on 1 January 2026. Wilde himself died in 1900, so nothing he wrote is in copyright either. Quote it freely. The one practical catch is access rather than rights: the 1930 edition ran to 275 copies and there is no public scan, so the text below is QI's transcription from library scans.","checked":"3 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -857,6 +865,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

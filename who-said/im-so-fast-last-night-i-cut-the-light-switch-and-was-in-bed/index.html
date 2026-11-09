@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"im-so-fast-last-night-i-cut-the-light-switch-and-was-in-bed","url":"https://quotle.info/who-said/im-so-fast-last-night-i-cut-the-light-switch-and-was-in-bed/","quote":"I'm so fast last night I cut the light switch and was in bed before the room was dark","claim":"\"I'm so fast last night I cut the light switch and was in bed before the room was dark\"","rating":1,"verdict":"Not supported","answer":"Ali really did use this boast — the Village Voice of 25 July 1974 printed it as \"I'm so fast last night I cut the light and hit the switch and was in bed before the room was dark,\" and The New York Times printed another version in 1975. But he did not invent it: the same gag was in print in The Marines Magazine in April 1917, and the sentence circulating under his name matches neither wording any reporter actually transcribed.","credit":"Not originally Muhammad Ali's. The boast — turning off the light and being in bed before the room goes dark — was in print by April 1917 in The Marines Magazine, was used by the vaudeville team Moran and Mack in 1919 and by Abbott and Costello in a 1945 radio script, and was applied by Satchel Paige to Cool Papa Bell in 1969. Ali's own documented version, recorded by the Village Voice on 25 July 1974: \"I'm so fast last night I cut the light and hit the switch and was in bed before the room was dark.\" Source: Quote Investigator, \"Quote Origin: When He Turned Out the Light He Was in Bed Before the Room Was Dark,\" 12 June 2013.","comparison":"I'm so fast last night I cut the light and hit the switch and was in bed before the room was dark.","citation":"Earliest instance located by Quote Investigator: Hablarias [pseud.], report from Fort Mifflin, Pennsylvania, The Marines Magazine (Marine Corps Headquarters, Washington, DC), April 1917, 32. Muhammad Ali's earliest documented version: Nick Browne, \"The Rumble in the Jungle: Ali's Camp: You Can't Get Zaire From Here,\" Village Voice (New York), July 25, 1974, 9. Both cited from Quote Investigator, \"Quote Origin: When He Turned Out the Light He Was in Bed Before the Room Was Dark,\" June 12, 2013.","rights":"No rights status can honestly be asserted for the wording on this page, because that wording cannot be tied to any published source. The joke's earliest documented appearance — The Marines Magazine, April 1917 — is old enough to be public domain in the United States, but Ali's own documented versions were printed in the Village Voice in 1974 and The New York Times in 1975, and those articles remain in copyright.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -864,6 +872,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

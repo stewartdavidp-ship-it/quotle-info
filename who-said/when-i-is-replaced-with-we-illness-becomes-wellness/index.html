@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -513,6 +515,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -559,6 +564,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -615,7 +621,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"when-i-is-replaced-with-we-illness-becomes-wellness","url":"https://quotle.info/who-said/when-i-is-replaced-with-we-illness-becomes-wellness/","quote":"When 'I' is replaced with 'we,' illness becomes wellness","claim":"Malcolm X said: \"When 'I' is replaced with 'we,' illness becomes wellness\"","rating":1,"verdict":"Not supported","answer":"No. Malcolm X died in 1965, and Quote Investigator located no instance of this wordplay before March 1984 — when Charles Roppel, a California mental-health official on a speaking tour of Louisiana, told an audience in Baton Rouge, \"Take the I out of illness, add W and E, and you have wellness.\" QI concludes that Roppel helped popularise the saying and may have coined it, and that the citations linking it to Malcolm X \"occurred late and provide only weak evidence\"; the earliest of them QI found is a tweet from December 2013.","credit":"Not Malcolm X. The earliest documented use of the illness/wellness wordplay is a speech by Charles Roppel, head of the Mental Health Promotion Branch of the California Department of Mental Health, reported in the Morning Advocate (Baton Rouge, Louisiana), 17 March 1984, p. D1: \"Take the I out of illness, add W and E, and you have wellness.\" Malcolm X died in 1965; Quote Investigator located no match before 1984 and dates the Malcolm X credit to a December 2013 tweet. Two former researchers for Columbia University's Malcolm X Project report finding no trace of the line in his writings, speeches, diaries, interviews or declassified FBI files. — Quotle.info","comparison":"Take the I out of illness, add W and E, and you have wellness","citation":"Earliest documented instance: Annabelle Armstrong, \"Speaker notes friends 'good medicine',\" Morning Advocate (Baton Rouge, LA), 17 March 1984, p. D1, col. 2, quoting Charles Roppel. Chronology established by Quote Investigator, \"Quote Origin: If You Take the 'I' Out of Illness, and Add 'We', You End Up With Wellness,\" 3 May 2020. No instance is documented in any work of Malcolm X.","rights":"No rights status can honestly be asserted for the popular wording. \"When 'I' is replaced with 'we,' illness becomes wellness\" is a later tightening with no identifiable author — a close unattributed variant appears in an October 2012 message (\"When 'I' becomes 'WE,' Illness becomes Wellness\"), and Quote Investigator documents no instance of the exact modern wording before the December 2013 tweet that credits Malcolm X. The earliest known form is a spoken remark by Charles Roppel reported in the Morning Advocate on 17 March 1984; that newspaper text is well after 1931 and would sit with its publisher, not in the public domain. Nothing here is public domain by virtue of Malcolm X, because nothing ties the line to him.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -852,6 +860,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

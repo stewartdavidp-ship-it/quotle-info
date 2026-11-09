@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-your-actions-inspire-others-to-dream-more-learn-more-do","url":"https://quotle.info/who-said/if-your-actions-inspire-others-to-dream-more-learn-more-do/","quote":"If Your Actions Inspire Others To Dream More, Learn More, Do More and Become More, You Are a Leader","claim":"John Quincy Adams said: \"If Your Actions Inspire Others To Dream More, Learn More, Do More and Become More, You Are a Leader\"","rating":1,"verdict":"Not supported","answer":"No. The poster wording is not documented anywhere before 2002, when a business book pinned it on John Quincy Adams — and Quote Investigator found no evidence Adams ever spoke or wrote it. The closest documented original is Dolly Parton's contribution to the 1997 anthology The Most Important Thing I Know, which reads differently: her version is about actions that create a legacy, and it ends \"you are an excellent leader.\"","credit":"Dolly Parton, in Lorne A. Adrain, comp., The Most Important Thing I Know (New York: Cader Books, 1997), 60–61. The shorter popular wording (\"…you are a leader\"), usually credited to John Quincy Adams, is not documented before 2002; Quote Investigator found no evidence Adams spoke or wrote it.","comparison":"","citation":"Lorne A. Adrain, comp., The Most Important Thing I Know: Life Lessons from Colin Powell, Stephen Covey, Maya Angelou, and Over 75 Other Eminent Individuals (New York: Cader Books / Andrews and McMeel, 1997), 60–61 — the earliest form documented by Quote Investigator, in Dolly Parton's own wording. The popular \"you are a leader\" variant is first documented in Pat Williams, The Paradox of Power: A Transforming View of Leadership (New York: Warner Books, 2002), 49, where it is credited to John Quincy Adams.","rights":"The sentence was first published in 1997, decades after the 1931 US public-domain cut-off, so it remains in copyright — both as Parton's own contributed text and as part of Adrain's compilation. The shorter wording that circulates under John Quincy Adams's name has no identified author at all, so nothing about that variant can be called public domain either: an unsourced rewording is not a free text, it is simply a text whose owner is unknown.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

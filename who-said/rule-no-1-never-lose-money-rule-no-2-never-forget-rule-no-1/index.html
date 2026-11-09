@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"rule-no-1-never-lose-money-rule-no-2-never-forget-rule-no-1","url":"https://quotle.info/who-said/rule-no-1-never-lose-money-rule-no-2-never-forget-rule-no-1/","quote":"Rule No. 1: Never lose money. Rule No. 2: Never forget rule No. 1","claim":"Warren Buffett said: \"Rule No. 1: Never lose money. Rule No. 2: Never forget rule No. 1\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Buffett did state the rule in his own voice — crediting the underlying discipline to his teacher Benjamin Graham in the same breath — but the tidy numbered sentence is not traceable to anything he is documented as saying or writing. Wikiquote files this exact wording under Disputed and points instead to a checkable version Buffett spoke in Omaha, printed by Forbes on 23 September 2010: \"The first rule is don't lose, and the second rule is never forget the first rule.\"","credit":"widely credited to Warren Buffett, but Wikiquote files this numbered wording under \"Disputed\" and neither Wikiquote nor Quote Investigator identifies any source containing it. The documented Buffett wording is \"The first rule is don't lose, and the second rule is never forget the first rule,\" printed by Forbes on 23 September 2010. Via Quotle.info","comparison":"","citation":"Warren Buffett, quoted in \"Jay-Z, Buffett and Forbes on Success and Giving Back,\" Forbes, 23 September 2010: \"The first rule is don't lose, and the second rule is never forget the first rule.\" The numbered \"Rule No. 1 / Rule No. 2\" wording is listed under \"Disputed\" at Wikiquote, s.v. \"Warren Buffett,\" which notes it was attributed to him by Mary Buffett and David Clark in The Tao of Warren Buffett (Scribner, 2006).","rights":"No rights status is asserted for the numbered \"Rule No. 1 / Rule No. 2\" sentence, because no first publication has been established for it — a work with an unknown origin cannot honestly be called public domain. Every documented appearance of the underlying rule is modern and under copyright to its publisher: the Forbes article of 23 September 2010 to Forbes Media, and The Tao of Warren Buffett (Scribner, 2006) to its authors and publisher.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -856,6 +864,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -504,6 +506,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -550,6 +555,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -606,7 +612,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-you-can-read-this-youve-come-too-close","url":"https://quotle.info/who-said/if-you-can-read-this-youve-come-too-close/","quote":"If You Can Read This, You've Come Too Close","claim":"Frank Sullivan coined: \"If You Can Read This, You've Come Too Close\"","rating":1,"verdict":"Not supported","answer":"No. Frank Sullivan's 1928 book Innocent Bystanding quotes a version, \"If You Can Read This You Are Too Damn Close,\" as one of the mottoes students painted on their slickers. Newspapers were already printing the joke in 1925, and Quote Investigator concludes that its creator was anonymous. The familiar \"you've come too close\" wording comes from Dorothy Parker's proposed epitaph, as Lillian Hellman reported it.","credit":"Anonymous 1920s motoring slogan (“If you can read this you are too darn close,” The Sunday Oregonian, Jan. 11, 1925); quoted by Frank Sullivan, Innocent Bystanding (1928), and later proposed by Dorothy Parker as her epitaph, per Lillian Hellman (1968–69).","comparison":"","citation":"Frank Sullivan, Innocent Bystanding (New York: Horace Liveright, 1928), 41–42, quoting the slogan \"If You Can Read This You Are Too Damn Close\" as one already in use; for anonymous 1925 newspaper sightings and the Parker epitaph, see Garson O'Toole, \"If You Can Read This, You've Come Too Close,\" Quote Investigator, October 22, 2014.","rights":"The line is an anonymous slogan with no identifiable author, so quotle.info asserts no copyright status for it. Sullivan's Innocent Bystanding was first published in 1928, before 1931, so the book is public domain in the US. But Sullivan quoted the slogan; he did not write it.","checked":"1 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -836,6 +844,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -509,6 +511,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -555,6 +560,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -611,7 +617,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"we-cannot-go-back-and-start-over-but-we-can-begin-now-and","url":"https://quotle.info/who-said/we-cannot-go-back-and-start-over-but-we-can-begin-now-and/","quote":"We cannot go back and start over, but we can begin now, and make a new ending","claim":"Zig Ziglar said: \"We cannot go back and start over, but we can begin now, and make a new ending\"","rating":1,"verdict":"Not supported","answer":"No. Zig Ziglar did use a version of this saying, but he explicitly disclaimed authorship — he credited a \"Carl Bard\" whose existence and authorship Quote Investigator could not verify. The earliest documented form of the line appears in James R. Sherman's 1982 book Rejection: \"You can't go back and make a new start, but you can start right now and make a brand new ending.\" The exact wording quoted here is a later paraphrase that traces to no specific primary source by Ziglar.","credit":"Not verified as Zig Ziglar. Ziglar used the saying but credited \"Carl Bard\"; the earliest documented form is James R. Sherman, Rejection (1982). The exact wording here is a later paraphrase of unknown origin. — Quotle.info","comparison":"","citation":"James R. Sherman, Rejection (Golden Valley, MN: Pathway Books, 1982), as identified in Garson O'Toole, \"We Cannot Go Back and Start Over, But We Can Begin Now, and Make a New Ending,\" Quote Investigator, November 5, 2015.","rights":"The exact wording quoted here is an anonymous later paraphrase tied to no identifiable first-publication, so no copyright status can be responsibly asserted. The earliest documented ancestor — James R. Sherman's Rejection (1982) — would itself be in-copyright, but its wording differs from the line quoted here.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -841,6 +849,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

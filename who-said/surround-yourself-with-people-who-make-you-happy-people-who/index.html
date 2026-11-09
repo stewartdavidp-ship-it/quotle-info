@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -504,6 +506,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -550,6 +555,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -606,7 +612,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"surround-yourself-with-people-who-make-you-happy-people-who","url":"https://quotle.info/who-said/surround-yourself-with-people-who-make-you-happy-people-who/","quote":"Surround yourself with people who make you happy. People who make you laugh, who help you when you're in need. People who genuinely care. They are the ones worth keeping in your life. Everyone else is just passing through","claim":"Karl Marx said: \"Surround yourself with people who make you happy. People who make you laugh, who help you when you're in need. People who genuinely care. They are the ones worth keeping in your life. Everyone else is just passing through\"","rating":1,"verdict":"Not supported","answer":"No. No work of Karl Marx contains this sentence, and English Wikiquote lists this exact wording in the Misattributed section of its Karl Marx page. The popular correction — that it belongs to a German composer who happened to share the name — is no better sourced than the error it replaces: nobody has produced a book, letter, interview or recording from either man. What can be documented is only where the sentence has been seen, not where it came from.","credit":"Misattributed to Karl Marx. \"Surround yourself with people who make you happy. People who make you laugh, who help you when you're in need. People who genuinely care. They are the ones worth keeping in your life. Everyone else is just passing through\" appears in no known work of Karl Marx (1818–1883). English Wikiquote lists this exact wording in the Misattributed section of its Karl Marx page; that entry was added by an anonymous editor on 9 February 2014 and cites no source. Wikiquote's note points instead to Karl Marx (1897–1985), a German composer of the same name, but supplies no source for that either, and no documented text by the composer contains the line. The sentence was already circulating under the philosopher's name by 6 April 2013, when an archived Goodreads page credited it to him with no work named. Origin unknown. Traced by Quotle.info, 9 September 2026.","comparison":"","citation":"No documented source. Earliest dated copy located: \"Surround yourself with people who make you happy…\", credited to Karl Marx with no source, Goodreads quote page, archived 6 April 2013 (Internet Archive). Listed as misattributed in Wikiquote, \"Karl Marx,\" Misattributed section, entry added 9 February 2014.","rights":"No rights status can honestly be asserted for this wording. Public-domain status attaches to a work with a known author and a known first publication, and this sentence has neither — no located source, no edition, no identifiable writer. Karl Marx's own writings have long been out of copyright, but that is beside the point here, because this line is not among them; and if it were in fact written by someone living in the modern era, it could well still be in copyright to an author nobody has yet named.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -842,6 +850,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

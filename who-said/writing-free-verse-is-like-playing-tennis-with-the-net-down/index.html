@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"writing-free-verse-is-like-playing-tennis-with-the-net-down","url":"https://quotle.info/who-said/writing-free-verse-is-like-playing-tennis-with-the-net-down/","quote":"Writing free verse is like playing tennis with the net down","claim":"Robert Frost said: \"Writing free verse is like playing tennis with the net down\"","rating":5,"verdict":"Supported","answer":"Yes. This one is real. Frost made the comparison for decades and in more than one form: Quote Investigator traces it from a February 1933 lecture in Scranton, Pennsylvania — where he likened free verse to \"playing tennis without a net or handball without a wall\" — through a 1934 letter to his daughter Lesley, to this exact wording, printed in Reginald L. Cook's 1945 article in College English. The source usually bolted onto it, an address at Milton Academy on 17 May 1935, is a different matter: reference works and Wikiquote repeat it, and Quote Investigator says flatly that it has \"not yet acquired contemporary documentation supporting the above citation\". So we credit the line and decline the footnote.","credit":"Robert Frost — genuine, though the usual \"Milton Academy, 17 May 1935\" source line is undocumented. Earliest documented use: a lecture report in The Scranton Times, 10 February 1933. Source: Quotle.info","comparison":"","citation":"Cook, Reginald L. \"Robert Frost: A Time to Listen.\" College English 7, no. 2 (November 1945), beginning at 66, quoted at 69. Earliest documented use of the simile: \"Frost Reads Poems at Century Club Meeting,\" The Scranton Times, February 10, 1933, 22, in a variant wording.","rights":"In copyright in the United States. Every documented appearance of this remark falls after the 1930 public-domain cutoff: the 1933 newspaper reports, the 1934 letter (recorded in a 1974 University of Virginia catalogue) and the 1945 College English article, itself under copyright to the National Council of Teachers of English. Frost died in 1963 and his literary estate holds his words. His pre-1931 books — A Boy's Will, North of Boston, Mountain Interval — are a different matter and are freely readable, but this sentence is not in any of them.","checked":"16 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -846,6 +854,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

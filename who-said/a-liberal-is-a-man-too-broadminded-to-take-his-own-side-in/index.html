@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -514,6 +516,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -560,6 +565,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -616,7 +622,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-liberal-is-a-man-too-broadminded-to-take-his-own-side-in","url":"https://quotle.info/who-said/a-liberal-is-a-man-too-broadminded-to-take-his-own-side-in/","quote":"A liberal is a man too broadminded to take his own side in a quarrel","claim":"Robert Frost said: \"A liberal is a man too broadminded to take his own side in a quarrel\"","rating":2,"verdict":"Needs context","answer":"Yes and no. Frost really did make this joke, but he made it in verse: in \"The Lesson for Today,\" read at Harvard on 20 June 1941 and collected in A Witness Tree (1942), his speaker calls himself liberal and explains that he is so altruistically moral he never takes his own side in a quarrel. The polished prose sentence people quote — with \"too broadminded\" — is documented nowhere in Frost; the earliest citation in Barry Popik's chronology is the Chicago Tribune of 30 November 1966, after Frost's death in January 1963.","credit":"Robert Frost made this joke in verse, in \"The Lesson for Today,\" read before Harvard's Phi Beta Kappa Society on 20 June 1941 and collected in A Witness Tree (Henry Holt, 1942), where his speaker says he is so altruistically moral he never takes his own side in a quarrel. The familiar prose wording — \"A liberal is a man too broadminded to take his own side in a quarrel\" — is not documented from Frost; the earliest citation in Barry Popik's chronology is the Chicago Tribune, 30 November 1966, after Frost's death on 29 January 1963. Via Quotle.info","comparison":"","citation":"Robert Frost, \"The Lesson for Today,\" read before the Phi Beta Kappa Society, Harvard University, 20 June 1941; collected in A Witness Tree (New York: Henry Holt and Company, 1942). The prose wording \"A liberal is a man too broadminded to take his own side in a quarrel\" is not documented in Frost; the earliest citation for it in Barry Popik, \"A liberal is a man too broad-minded to take his own side in a quarrel,\" The Big Apple (6 December 2009), is the Chicago Tribune, 30 November 1966.","rights":"The verse quoted here is Frost's own, from \"The Lesson for Today,\" first collected in A Witness Tree (Henry Holt and Company, 1942), whose United States copyright was renewed (R464848) and runs to 2038 — which is why the Internet Archive's scan is lending-restricted. The familiar prose sentence has no documented source at all, so nothing about it can be called public domain either.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -854,6 +862,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

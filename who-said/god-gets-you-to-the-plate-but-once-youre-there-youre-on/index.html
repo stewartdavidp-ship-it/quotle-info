@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"god-gets-you-to-the-plate-but-once-youre-there-youre-on","url":"https://quotle.info/who-said/god-gets-you-to-the-plate-but-once-youre-there-youre-on/","quote":"God gets you to the plate, but once you're there you're on your own","claim":"Ted Williams said: \"God gets you to the plate, but once you're there you're on your own\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The thought is genuinely Williams's and it is in print — but not in these words. David Halberstam's Summer of '49 (William Morrow, 1989) reports it as a habit of speech, \"God gets you to the plate,\" Williams would say, with no date, occasion or transcript attached; Williams's own My Turn at Bat is quoted for a different ending, \"but it's up to you what happens when you get there.\" The familiar close — \"once you're there you're on your own\" — has never been traced to a page. Baseball Almanac, which names a book or magazine for most of its Williams quotations, files this one as \"Widely Attributed.\"","credit":"attributed to Ted Williams (1918–2002). David Halberstam's Summer of '49 (1989) reports Williams saying \"God gets you to the plate,\" and his autobiography My Turn at Bat is quoted for the ending \"but it's up to you what happens when you get there.\" This familiar ending is traced to no source: Baseball Almanac lists it as \"Widely Attributed,\" and it does not appear among the English Wikiquote's sourced Williams quotations. Via Quotle.info.","comparison":"","citation":"Earliest located print appearance: Halberstam, David. Summer of '49. New York: William Morrow, 1989 — reporting \"God gets you to the plate\" as something Williams would say. A near-identical sentence is attributed to Williams's autobiography — Williams, Ted, and John Underwood. My Turn at Bat. 1969, p. 3 — in the wording \"I have a God given talent. God gets you to the plate, but it's up to you what happens when you get there\" (page number per Wikipedia's reference; not yet checked against the book). The circulating ending \"once you're there you're on your own\" is attested in neither; Baseball Almanac, \"Ted Williams Quotes,\" lists that form with its source given as \"Widely Attributed.\"","rights":"No publication can be tied to this exact wording, so its copyright status cannot be settled on its own terms — and every attested relative of it is in copyright: Williams's My Turn at Bat (1969) and Halberstam's Summer of '49 (1989) alike. Anything Williams said dates from his playing or post-playing life, well after 1931, so no route to the public domain exists here in any case. Quotle.info makes no public-domain claim for this wording.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -856,6 +864,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

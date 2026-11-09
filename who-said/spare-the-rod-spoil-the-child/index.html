@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"spare-the-rod-spoil-the-child","url":"https://quotle.info/who-said/spare-the-rod-spoil-the-child/","quote":"Spare the rod, spoil the child","claim":"the Bible said: \"Spare the rod, spoil the child\"","rating":1,"verdict":"Not supported","answer":"No. The line is a couplet from Butler's mock-heroic satire Hudibras, Part II, Canto I: \"Love is a boy by poets stil'd; / Then spare the rod and spoil the child.\" In Butler it is a dirty joke — a widow arguing that the knight deserves a whipping, since the poets call Cupid a boy — and it has nothing to do with raising children. No verse of the King James Bible contains the sentence; the nearest, Proverbs 13:24, reads \"He that spareth his rod hateth his son.\"","credit":"Not the Bible. \"Then spare the rod and spoil the child\" is Samuel Butler's line from the satirical poem Hudibras, Part II, Canto I (1664) — a joke about whipping Cupid, not a maxim about raising children. The nearest biblical wording, Proverbs 13:24 (KJV), is \"He that spareth his rod hateth his son: but he that loveth him chasteneth him betimes.\" — verified at quotle.info · Verbatim: “Love is a boy by poets stil'd; Then spare the rod and spoil the child.”","comparison":"Love is a boy by poets stil'd; Then spare the rod and spoil the child.","citation":"Samuel Butler, Hudibras, Part II, Canto I, lines 843–44 (title page dated 1664); text quoted from Hudibras, in Three Parts, Written in the Time of the Late Wars (London, 1805), Project Gutenberg ebook no. 4937.","rights":"The couplet is Samuel Butler's, first printed in Hudibras, Part II with a title page dated 1664; Butler died in 1680, and the poem has been out of copyright for centuries. The edition quoted here was published in London in 1805 and is distributed by Project Gutenberg as a public-domain text. The King James Bible verses shown alongside it were published in 1611 and are public domain in the United States.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -878,6 +886,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

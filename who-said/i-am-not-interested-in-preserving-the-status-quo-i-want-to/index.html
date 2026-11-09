@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-am-not-interested-in-preserving-the-status-quo-i-want-to","url":"https://quotle.info/who-said/i-am-not-interested-in-preserving-the-status-quo-i-want-to/","quote":"I am not interested in preserving the status quo; I want to overthrow it","claim":"Niccolò Machiavelli said: \"I am not interested in preserving the status quo; I want to overthrow it\"","rating":1,"verdict":"Not supported","answer":"No. Wikiquote files this line in its Misattributed section for Machiavelli and identifies it as Newt Gingrich's, first appearing in a Los Angeles Times article in 1991. Machiavelli, who wrote in Italian and died in 1527, did not write it — and the sentiment runs against The Prince, which treats overturning an existing order as the most dangerous thing a ruler can attempt.","credit":"Newt Gingrich, quoted in the Los Angeles Times, 25 August 1991. Commonly misattributed to Niccolò Machiavelli, who never wrote it. Via Quotle.info","comparison":"I'm not interested in preserving the status quo; I want to overthrow it.","citation":"Newt Gingrich, quoted in the Los Angeles Times, August 25, 1991; recorded as misattributed to Machiavelli in \"Niccolò Machiavelli,\" Wikiquote, \"Misattributed\" section, https://en.wikiquote.org/wiki/Niccolò_Machiavelli.","rights":"The only documented appearance of this sentence is a Los Angeles Times article of 25 August 1991, which is well after the 1931 U.S. public-domain cutoff and remains in copyright to the newspaper. Machiavelli's own works and W. K. Marriott's 1908 translation of The Prince are public domain — but this line is in neither of them, so no public-domain status attaches to it.","checked":"3 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"you-have-reached-the-pinnacle-of-success-as-soon-as-you","url":"https://quotle.info/who-said/you-have-reached-the-pinnacle-of-success-as-soon-as-you/","quote":"You Have Reached the Pinnacle of Success as Soon as You Become Uninterested in Money, Compliments, or Publicity","claim":"Thomas Wolfe said: \"You Have Reached the Pinnacle of Success as Soon as You Become Uninterested in Money, Compliments, or Publicity\"","rating":1,"verdict":"Not supported","answer":"No. Thomas Wolfe did not write this. Quote Investigator credits the line to O. A. Battista, an industrial chemist who spent decades manufacturing epigrams he trademarked as \"Quotoons\"; the earliest citation QI located is Laurence J. Peter's Peter's Quotations: Ideas for Our Time (1977), page 455, where it is credited to \"Dr. O. A. Battista.\" Wolfe died in 1938, decades before the line surfaces anywhere, and it appears in none of his books.","credit":"O. A. Battista (1917–1995), not Thomas Wolfe. Earliest citation located by Quote Investigator: Laurence J. Peter, Peter's Quotations: Ideas for Our Time (1977), p. 455, crediting \"Dr. O. A. Battista\"; displayed on the back cover of Battista's Quotoons: A Speaker's Dictionary (G. P. Putnam's Sons, 1981). Via Quotle.info","comparison":"","citation":"Earliest citation located by Quote Investigator: Laurence J. Peter, comp., Peter's Quotations: Ideas for Our Time (New York: William Morrow, 1977), 455, crediting \"Dr. O. A. Battista.\" Displayed on the back cover of Orlando A. Battista, Quotoons: A Speaker's Dictionary (New York: G. P. Putnam's Sons/Perigee, 1981). WIST additionally lists it as no. 3962 of the 1977 edition — catalogued as O. A. Battista's Quotoons: A Speaker's Dictionary (Fort Worth, TX: Research Services Corp., 1977) — a printing Quote Investigator suspects but could not confirm.","rights":"This wording is not public domain. Its earliest documented publication is 1977, in Laurence J. Peter's Peter's Quotations (William Morrow) — well after the 1931 US public-domain cutoff, so the aphorism and the Battista collections that carry it remain in copyright with Battista's estate and his publishers. Short quotation with attribution is ordinary fair use; reprinting the collection is not.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

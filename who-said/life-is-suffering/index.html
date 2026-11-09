@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -515,6 +517,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -561,6 +566,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -617,7 +623,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"life-is-suffering","url":"https://quotle.info/who-said/life-is-suffering/","quote":"Life is suffering","claim":"The Buddha (Siddhārtha Gautama) said: \"Life is suffering\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. This is a translation dispute, not a fabrication. Behind it stands a real and central passage: the First Noble Truth as set out in the Dhammacakkappavattana Sutta (Saṃyutta Nikāya 56.11). But the Pali does not contain a sentence equivalent to 'life is suffering.' It reads Idaṃ kho pana, bhikkhave, dukkhaṃ ariyasaccaṃ — 'now this, monks, is the noble truth of dukkha' — and then lists: birth, ageing, illness, death, union with what you dislike, separation from what you love, not getting what you want. Two things are lost in the squeeze: dukkha is not simply 'suffering,' and a list of conditions is not a verdict on existence.","credit":"A three-word English compression of the First Noble Truth (Saṃyutta Nikāya 56.11). The Pali names the truth of dukkha and then lists; it never says life is suffering.","comparison":"","citation":"Dhammacakkappavattana Sutta, Saṃyutta Nikāya 56.11, Pali Canon. Pali text: Mahāsaṅgīti edition (SuttaCentral). 'Life is suffering' is a modern English compression, not a translation of any sentence in it.","rights":"Mixed, so pick your text carefully. The Pali is ancient and free. Among English versions, Max Müller's 1881 Dhammapada (Sacred Books of the East X) is public domain and safe to quote, as is T. W. Rhys Davids' 1881 rendering of this sutta in the same series. Modern translations are not: Thanissaro Bhikkhu's 'stress' version is released for free distribution under its own terms rather than into the public domain, and Bhikkhu Bodhi's Wisdom Publications translations are fully in copyright. We give no blanket rights tag here because the answer differs per translator. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

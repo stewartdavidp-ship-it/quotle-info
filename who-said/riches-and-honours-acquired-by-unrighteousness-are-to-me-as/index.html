@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"riches-and-honours-acquired-by-unrighteousness-are-to-me-as","url":"https://quotle.info/who-said/riches-and-honours-acquired-by-unrighteousness-are-to-me-as/","quote":"Riches and honours acquired by unrighteousness are to me as a floating cloud","claim":"Confucius said: \"Riches and honours acquired by unrighteousness are to me as a floating cloud\"","rating":5,"verdict":"Supported","answer":"Yes. A genuine saying, recorded in the Analects, Book VII — chapter XV in James Legge's numbering, and passage 16 in the Chinese Text Project's. The Chinese reads 不義而富且貴，於我如浮雲. One caveat worth carrying: these exact English words are Legge's 1861 translation, not Confucius's.","credit":"Confucius, Analects, Book VII, ch. XV (also numbered 7.16), translated by James Legge in The Chinese Classics, vol. 1 (1861; rev. 1893). Verified against the primary text; the English wording is Legge's. · Verbatim: “With coarse rice to eat, with water to drink, and my bended arm for a pillow;—I have still joy in the midst of these things. Riches and honours acquired by unrighteousness, are to me as a floating cloud.”","comparison":"With coarse rice to eat, with water to drink, and my bended arm for a pillow;—I have still joy in the midst of these things. Riches and honours acquired by unrighteousness, are to me as a floating cloud.","citation":"Confucius. Confucian Analects, Book VII, chap. XV. In The Chinese Classics, vol. 1, translated by James Legge, 1861; revised second edition, 1893. The identical passage is numbered Analects 7.16 by the Chinese Text Project.","rights":"Both layers are free to use. The Chinese original is an ancient text, and this English wording comes from James Legge's The Chinese Classics, Vol. I — first published 1861 and revised in 1893, so comfortably before the 1931 US public-domain cutoff. Note that copyright rides on the translation, not the sage: a modern English rendering of the same passage is a separate work with its own rights, so quote Legge's version if you want it free and clear.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -875,6 +883,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

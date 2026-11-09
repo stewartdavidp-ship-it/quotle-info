@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -513,6 +515,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -559,6 +564,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -615,7 +621,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-journey-of-a-thousand-miles-begins-with-a-single-step","url":"https://quotle.info/who-said/the-journey-of-a-thousand-miles-begins-with-a-single-step/","quote":"The journey of a thousand miles begins with a single step","claim":"Confucius said: \"The journey of a thousand miles begins with a single step\"","rating":1,"verdict":"Not supported","answer":"No. The line is chapter 64 of the Tao Te Ching, ascribed to Laozi — not Confucius, to whom it is only \"erroneously\" credited. The literal Chinese, 千里之行始於足下, means \"a journey of a thousand li starts beneath one's feet\"; the familiar \"single step\" wording comes from James Legge's 1891 English translation.","credit":"Laozi (traditional), Tao Te Ching, ch. 64 — trans. James Legge, 1891. Commonly misattributed to Confucius.","comparison":"","citation":"Laozi, Tao Te Ching, ch. 64, trans. James Legge, in The Sacred Books of the East, vol. 39: The Texts of Tâoism (Oxford: Clarendon Press, 1891): \"the journey of a thousand li commenced with a single step.\"","rights":"The underlying text is the Tao Te Ching (ch. 64), a work of roughly the 4th–6th century BC. The familiar English \"single step\" wording descends from James Legge's 1891 translation (Sacred Books of the East, vol. 39), published well before 1931 and in the public domain; the common modern paraphrase (\"miles\" for \"li\") is an anonymous, unowned modernization of that public-domain rendering.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -835,6 +843,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

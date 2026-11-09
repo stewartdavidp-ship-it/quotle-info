@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-climate-is-what-you-expect-the-weather-is-what-you-get","url":"https://quotle.info/who-said/the-climate-is-what-you-expect-the-weather-is-what-you-get/","quote":"The Climate Is What You Expect; The Weather Is What You Get","claim":"Mark Twain said: \"The Climate Is What You Expect; The Weather Is What You Get\"","rating":1,"verdict":"Not supported","answer":"No. The line began life as a textbook definition: \"Climate is what on an average we may expect, weather is what we actually get,\" from Herbertson's Outlines of Physiography (London: Edward Arnold, 1901). Quote Investigator credits Herbertson and reports that \"there is no substantive evidence that Twain wrote or said the remark\" — the compact modern wording most people recite comes instead from Robert A. Heinlein's 1973 novel Time Enough for Love.","credit":"A. J. Herbertson, Outlines of Physiography (London: Edward Arnold, 1901). Widely misattributed to Mark Twain, who never wrote it; the compact modern wording appears in Robert A. Heinlein's Time Enough for Love (1973). Via quotle.info · Verbatim: “Climate is what on an average we may expect, weather is what we actually get.”","comparison":"Climate is what on an average we may expect, weather is what we actually get.","citation":"A. J. Herbertson, Outlines of Physiography: An Introduction to the Study of the Earth (London: Edward Arnold, 1901), chap. 12, \"Climate and Weather.\" Earliest documented instance of the adage per Quote Investigator, \"Quote Origin: The Climate Is What You Expect; The Weather Is What You Get,\" 24 June 2012. Compact modern wording: Robert A. Heinlein, Time Enough for Love (1973), 352.","rights":"Herbertson's Outlines of Physiography was first published by Edward Arnold in London in 1901, so its text is in the public domain in the United States and the sentence above can be quoted freely. One caution: the pared-down wording that circulates today is the one printed in Robert A. Heinlein's Time Enough for Love (1973), a novel still under copyright — Herbertson's longer original is the version that is unambiguously free.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

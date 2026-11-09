@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-way-to-make-a-million-dollars-is-to-start-a-religion","url":"https://quotle.info/who-said/the-way-to-make-a-million-dollars-is-to-start-a-religion/","quote":"The way to make a million dollars is to start a religion","claim":"L. Ron Hubbard said: \"The way to make a million dollars is to start a religion\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. This is an unusual case, and worth stating precisely: the remark is well attested and undocumented at the same time. At least four people who knew Hubbard in the 1940s independently recalled him saying a version of it — the fullest account is Sam Moskowitz, who ran the Eastern Science Fiction Association and later swore an affidavit about a meeting in Newark on 7 November 1948. But there is no recording, no manuscript and no contemporaneous note, no two witnesses give the same words, and the Church of Scientology disputes the whole thing, producing two attendees who swore he said no such thing. Believe it or not on the strength of the testimony; there is no document to settle it.","credit":"Attributed to L. Ron Hubbard on the testimony of several science-fiction contemporaries of the 1940s, including Sam Moskowitz under oath. No recording or manuscript exists, and the Church of Scientology disputes it.","comparison":"","citation":"Reported speech. Sam Moskowitz, affidavit, on a meeting of the Eastern Science Fiction Association, Newark, 7 November 1948; corroborating recollections from Lloyd Arthur Eshbach, Over My Shoulder (1983), and from Sam Merwin and Neison Himmel in Russell Miller, Bare-Faced Messiah (1987). No recording or manuscript exists; disputed by the Church of Scientology.","rights":"We give no rights status, because there is no first publication to hang one on: the sentence exists only in other people's recollections, each of which carries its own copyright. Moskowitz's affidavit and Eshbach's 1983 memoir belong to their authors and estates; the FDA interview memo, as a US government record, is not protected. Hubbard died in 1986 and his own writings are in copyright until 2056 in the UK and EU, and are policed unusually vigorously — but a sentence he is reported to have said in conversation is not a work of his. Quote it with attribution, as reported speech, and name the witness. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -880,6 +888,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

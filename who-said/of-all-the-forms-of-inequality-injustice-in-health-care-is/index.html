@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"of-all-the-forms-of-inequality-injustice-in-health-care-is","url":"https://quotle.info/who-said/of-all-the-forms-of-inequality-injustice-in-health-care-is/","quote":"Of all the forms of inequality, injustice in health care is the most shocking and inhumane","claim":"\"Of all the forms of inequality, injustice in health care is the most shocking and inhumane\"","rating":1,"verdict":"Not supported","answer":"King really did say this, on 25 March 1966, to reporters in Chicago before he addressed the second convention of the Medical Committee for Human Rights. The wording that circulates today is not the wording anyone recorded: the Associated Press account published the next day reads \"Of all the forms of inequality, injustice in health is the most shocking and the most inhuman because it often results in physical death\" — health, not health care; inhuman, not inhumane; and with a final clause the famous version drops. No transcript or recording of the speech itself has ever been located.","credit":"Reworded. Martin Luther King Jr. made this remark at a Chicago press conference on March 25, 1966, before addressing the Medical Committee for Human Rights — but the documented wording, from the Associated Press report of March 26, 1966, is \"Of all the forms of inequality, injustice in health is the most shocking and the most inhuman because it often results in physical death.\" No transcript or recording of the speech is known. — Quotle.info","comparison":"Of all the forms of inequality, injustice in health is the most shocking and the most inhuman because it often results in physical death.","citation":"Earliest documented in an Associated Press report of King's press conference in Chicago, published 26 March 1966: \"Of all the forms of inequality, injustice in health is the most shocking and the most inhuman because it often results in physical death.\" A differing rendering appeared in the Woodlawn Booster, 29 March 1966. See Charlene Galarneau, \"Getting King's Words Right,\" Journal of Health Care for the Poor and Underserved 29, no. 1 (2018): 5–8. No transcript or recording of the speech is known.","rights":"King spoke these words in 1966 and they first reached print in an Associated Press wire report of 26 March 1966 — far too recent for the public domain in the United States, where his words are administered by the King estate and the wire text belongs to the Associated Press. The reworded \"health care… inhumane\" sentence has no identified author at all, so nothing about it can be claimed as free to use.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -866,6 +874,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

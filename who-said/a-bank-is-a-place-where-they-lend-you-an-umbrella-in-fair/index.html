@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -510,6 +512,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -556,6 +561,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -612,7 +618,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-bank-is-a-place-where-they-lend-you-an-umbrella-in-fair","url":"https://quotle.info/who-said/a-bank-is-a-place-where-they-lend-you-an-umbrella-in-fair/","quote":"A bank is a place where they lend you an umbrella in fair weather and ask for it back when it begins to rain","claim":"Robert Frost said: \"A bank is a place where they lend you an umbrella in fair weather and ask for it back when it begins to rain\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator traces the idea to an unnamed bank customer quoted in The Accountant (London) on 15 April 1905, and the full saying to anonymous print in 1930; Barry Popik records this near-exact wording running unattributed in the Ottawa Citizen on 24 October 1934. Robert Frost's name was first attached in 1949, when the quotation compiler Evan Esar credited him in The Dictionary of Humorous Quotations — a reference-book ascription with no source behind it, and none has ever been found in Frost's poems, prose, letters or recorded talks.","credit":"not Robert Frost. It is an anonymous banking proverb. Quote Investigator traces the idea to a bank customer quoted in The Accountant (London), 15 April 1905, and the full saying to anonymous print by 1930; Barry Popik records this wording unattributed in the Ottawa Citizen, 24 October 1934. Frost's name first appears on it in Evan Esar's Dictionary of Humorous Quotations (1949). Mark Twain, Ambrose Bierce, Ralph Waldo Emerson and Philip La Follette have all been credited too. Via Quotle.info · Verbatim: “A bank is a place where they lend you an umbrella in fair weather and ask for it back again when it begins to rain.”","comparison":"A bank is a place where they lend you an umbrella in fair weather and ask for it back again when it begins to rain.","citation":"Earliest instance of the underlying saying, per Quote Investigator: John Moodie, \"Notes on a Banker's Accounts,\" The Accountant (London), 15 April 1905, 464 — \"You bankers only lend a man an umbrella when it is a fine day,\" there credited to an unnamed customer. The Robert Frost ascription first appears in Evan Esar, The Dictionary of Humorous Quotations (Garden City, NY: Doubleday, 1949). Chronology: Quote Investigator, \"Quote Origin: A Banker Lends You His Umbrella When It's Sunny and Wants It Back When It Rains,\" 7 April 2011, quoteinvestigator.com.","rights":"No rights status can honestly be asserted for this wording. The saying is anonymous: the versions that are safely out of copyright — the 1905 remark in The Accountant and the 1930 printings — are worded differently from the line asked about here, while this phrasing is first documented in an unattributed 1934 newspaper item and, in its Frost-credited form, in Evan Esar's Dictionary of Humorous Quotations of 1949, a compilation published in copyright. With no identifiable author and no single work that can be called its first publication, quotle.info makes no public-domain claim.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -855,6 +863,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"we-do-not-inherit-the-earth-from-our-ancestors-we-borrow-it","url":"https://quotle.info/who-said/we-do-not-inherit-the-earth-from-our-ancestors-we-borrow-it/","quote":"We Do Not Inherit the Earth from Our Ancestors; We Borrow It from Our Children","claim":"Chief Seattle said: \"We Do Not Inherit the Earth from Our Ancestors; We Borrow It from Our Children\"","rating":1,"verdict":"Not supported","answer":"No. Chief Seattle died in 1866, and this saying appears nowhere in his 1854 speech, in the supposed \"letter to President Pierce,\" or in any documented Native source. Quote Investigator finds the earliest close match in Wendell Berry's 1971 book The Unforeseen Wilderness — \"a man who knows that the world is not given by his fathers, but borrowed from his children\" — and tentatively credits Berry with the first version of a maxim that then evolved, through many hands, into the polished wording sold on posters today.","credit":"Not Chief Seattle. The earliest close match is Wendell Berry, The Unforeseen Wilderness: An Essay on Kentucky's Red River Gorge (Lexington: University Press of Kentucky, 1971), p. 26 — \"a man who knows that the world is not given by his fathers, but borrowed from his children.\" Quote Investigator tentatively credits Berry with the first version; the Chief Seattle attribution is first documented in a 1991 U.S. Council on Environmental Quality report, which gave no citation. Chief Seattle died in 1866. — Quotle.info","comparison":"","citation":"Wendell Berry, The Unforeseen Wilderness: An Essay on Kentucky's Red River Gorge (Lexington: University Press of Kentucky, 1971), ch. 2, \"The One-Inch Journey,\" 26. Identified as the earliest close match in Quote Investigator, \"Quote Origin: We Do Not Inherit the Earth from Our Ancestors; We Borrow It from Our Children,\" 22 January 2013. No documented source connects the saying to Chief Seattle.","rights":"The popular wording has no identifiable author, so no rights status can honestly be asserted for it. Its nearest documented ancestor — Wendell Berry's sentence in The Unforeseen Wilderness, first published in 1971 — is well inside copyright and remains controlled by Berry's estate and the University Press of Kentucky; quoting the short clause here is fair use for identification. Nothing about this saying is public domain by way of Chief Seattle, because nothing ties it to him.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -864,6 +872,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

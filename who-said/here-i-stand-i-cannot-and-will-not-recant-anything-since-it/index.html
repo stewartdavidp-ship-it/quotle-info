@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"here-i-stand-i-cannot-and-will-not-recant-anything-since-it","url":"https://quotle.info/who-said/here-i-stand-i-cannot-and-will-not-recant-anything-since-it/","quote":"Here I stand... I cannot and will not recant anything, since it is neither safe nor right to go against conscience","claim":"Martin Luther said: \"Here I stand... I cannot and will not recant anything, since it is neither safe nor right to go against conscience\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The refusal is genuine. It is Luther's reply at the Diet of Worms on 18 April 1521, and Wikiquote's sourced section gives this exact English from Karl Heim's The Nature of Protestantism (1963), p. 78. The opening \"Here I stand\" is disputed on Wikiquote, which says it is not in the transcripts or eyewitness accounts. It also is not part of that rendering, so the popular version joins two separate lines.","credit":"Martin Luther, reply at the Diet of Worms, 18 April 1521 (modern English translation; the opening \"Here I stand\" is disputed and not in the record) · Verbatim: “I cannot and will not recant anything, since it is neither safe nor right to go against conscience.”","comparison":"I cannot and will not recant anything, since it is neither safe nor right to go against conscience.","citation":"Martin Luther, reply at the Diet of Worms, 18 April 1521. English: Karl Heim, The Nature of Protestantism (1963), 78 (as cited by Wikiquote); also Martin Brecht, Martin Luther, trans. James L. Schaaf (Philadelphia: Fortress Press, 1985–1993), 1:460. The opening \"Here I stand\" is not in these renderings and is disputed.","rights":"Luther's 1521 words are long in the public domain, but this exact English wording comes from translations first published after 1931: Heim's The Nature of Protestantism (1963), and also Brecht's Martin Luther in Schaaf's translation. Older public-domain translations word the sentence differently. The \"Here I stand\" fragment has no single source.","checked":"3 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -856,6 +864,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

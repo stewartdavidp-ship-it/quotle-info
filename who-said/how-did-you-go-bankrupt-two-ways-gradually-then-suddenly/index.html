@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"how-did-you-go-bankrupt-two-ways-gradually-then-suddenly","url":"https://quotle.info/who-said/how-did-you-go-bankrupt-two-ways-gradually-then-suddenly/","quote":"How did you go bankrupt? Two ways. Gradually, then suddenly","claim":"Ernest Hemingway wrote the line, as Mike Campbell's dialogue in his novel The Sun Also Rises (1926), Book II, Chapter 13: Bill Gorton asks how he went bankrupt and Mike answers 'Two ways' … 'Gradually and then suddenly.' The attribution is verified; the circulating form, 'How did you go bankrupt? Two ways. Gradually, then suddenly', drops the 'and' and both speaker tags, and the words belong to a character rather than to Hemingway speaking in his own voice.","rating":5,"verdict":"Supported","answer":"Yes. Genuine Hemingway — it is dialogue from his first novel, The Sun Also Rises (Charles Scribner's Sons, 22 October 1926), Book II, Chapter 13, where the bankrupt Mike Campbell answers Bill Gorton. Two caveats travel badly: the book reads \"Gradually and then suddenly,\" and the words belong to a character, not to Hemingway speaking in his own voice.","credit":"— Ernest Hemingway, The Sun Also Rises (New York: Charles Scribner's Sons, 1926), Book II, ch. 13; quoted passage at p. 136 of the Scribner New York 1954 printing. The popular short form — \"Two ways. Gradually, then suddenly\" — drops the 'and' and both speaker tags, and the words are Mike Campbell's, not Hemingway's in his own voice. Via Quotle.info.","comparison":"\"How did you go bankrupt?\" Bill asked. \"Two ways,\" Mike said. \"Gradually and then suddenly.\"","citation":"Ernest Hemingway, The Sun Also Rises (New York: Charles Scribner's Sons, 1926), Book II, chap. 13; quoted passage at page 136 of the Scribner New York 1954 printing proofread at Wikisource — the printing Quote Investigator verified with scans (page numbering differs in the 1926 first edition). Verified 6 August 2018 by Quote Investigator; re-checked against the Wikisource scan.","rights":"The Sun Also Rises was first published on 22 October 1926 by Charles Scribner's Sons, and 1926 works entered the US public domain on 1 January 2022 — Duke's Center for the Study of the Public Domain names this novel among them. The 1926 text is therefore free to quote and reproduce in the United States.","checked":"6 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 6 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -877,6 +885,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

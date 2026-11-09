@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-black-cat-crossing-your-path-signifies-that-the-animal-is","url":"https://quotle.info/who-said/a-black-cat-crossing-your-path-signifies-that-the-animal-is/","quote":"A black cat crossing your path signifies that the animal is going somewhere","claim":"\"A black cat crossing your path signifies that the animal is going somewhere\"","rating":1,"verdict":"Not supported","answer":"Groucho Marx did say this — but he was not the first on record, and the version he said was not this one. Quote Investigator's earliest citation is from The Marion Star of 15 January 1931, where a list of mock-superstitions belongs to the actor Jack Oakie: \"A black cat crossing in front of a person signifies that the animal is going somewhere.\" Six months later, in July 1931, newspapers ran \"Groucho Marx Discourses On Superstition\" — a longer list of fifteen jokes containing all six of Oakie's. The familiar \"crossing your path\" wording appears later again, in 1936. QI ascribes the joke to Oakie only tentatively, and notes a third possibility: both men were Paramount stars, and a studio publicist may have written the whole list.","credit":"Earliest credited to Jack Oakie (The Marion Star, 15 January 1931), not Groucho Marx, who was credited with it in July 1931. Via quotle.info · Verbatim: “A black cat crossing in front of a person signifies that the animal is going somewhere.”","comparison":"A black cat crossing in front of a person signifies that the animal is going somewhere.","citation":"Earliest documented in The Marion Star (Marion, Ohio), 15 January 1931, quote page 16, credited to Jack Oakie; this wording first in Tampa Sunday Tribune, 1 November 1936, section 3, quote page 10. As documented by Quote Investigator, \"Quote Origin: A Black Cat Crossing Your Path Signifies That the Animal Is Going Somewhere\" (22 January 2019).","rights":"No copyright status is asserted. Authorship of the joke is genuinely unsettled — Quote Investigator ascribes it to Jack Oakie only tentatively and raises the possibility of an uncredited Paramount press agent — so there is no identifiable author or rights holder to attach it to. The newspaper items in which it appears date from 1931 and 1936, which is late enough that United States public-domain status cannot simply be assumed, and no renewal record has been checked.","checked":"11 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 11 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -855,6 +863,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

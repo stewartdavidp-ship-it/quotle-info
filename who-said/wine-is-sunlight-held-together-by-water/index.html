@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"wine-is-sunlight-held-together-by-water","url":"https://quotle.info/who-said/wine-is-sunlight-held-together-by-water/","quote":"Wine is sunlight, held together by water","claim":"Galileo Galilei said: \"Wine is sunlight, held together by water\"","rating":2,"verdict":"Needs context","answer":"Yes and no. Galileo left nothing like this in writing. The whole basis for the saying is a letter of Lorenzo Magalotti's, printed in his Lettere scientifiche ed erudite (Florence, 1721), p. 43: \"Mi disse una volta il buon Don Raffaello Magiotti, che il Galileo era usato di dire, che il vino è un composto d'umore, e di luce\" — the good Don Raffaello Magiotti once told me that Galileo used to say that wine is a compound of moisture and light. Wikiquote carries that saying, from the same 1721 source, as \"Wine is a mixture of moisture and light\". The version in circulation swaps moisture for water and light for sunlight and adds a verb; it is a translator's improvement on a report of a remark, and nobody has established whose.","credit":"Galileo, but not in these words. The only source for the saying is Lorenzo Magalotti, Lettere scientifiche ed erudite (Florence, 1721), p. 43, reporting what Don Raffaello Magiotti told him Galileo \"era usato di dire\": \"il vino è un composto d'umore, e di luce\" — wine is a compound of moisture and light. Nothing Galileo wrote contains it, and the English wording is an unattributed modern paraphrase. Traced by Quotle.info. · Verbatim: “Wine is a mixture of moisture and light”","comparison":"Wine is a mixture of moisture and light","citation":"Lorenzo Magalotti, Lettere scientifiche ed erudite (Florence, 1721), 43: \"Mi disse una volta il buon Don Raffaello Magiotti, che il Galileo era usato di dire, che il vino è un composto d'umore, e di luce.\" The same saying also at p. 15. Reported speech, printed 79 years after Galileo's death; no work of Galileo's contains it.","rights":"Magalotti's 1721 volume is long out of copyright and freely readable at the Internet Archive, as is Dante's text. The English sentence at the top of this page is another matter: it is a loose modern rendering by an unidentified translator, of a date nobody has established, so we assert no rights status for it rather than invent one.","checked":"22 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 22 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

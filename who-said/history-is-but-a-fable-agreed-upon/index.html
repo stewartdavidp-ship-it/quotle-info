@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"history-is-but-a-fable-agreed-upon","url":"https://quotle.info/who-said/history-is-but-a-fable-agreed-upon/","quote":"History is but a fable agreed upon","claim":"Voltaire said: \"History is but a fable agreed upon\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The line does appear in Voltaire — in the tale Jeannot et Colin (1764): \"Toutes les histoires anciennes… ne sont que des fables convenues.\" But it is spoken by a fashionable homme d'esprit hired to advise on a boy's education, who uses it to argue that history need not be studied at all — and Voltaire is mocking him. The character even credits the line to \"one of our wits.\" So it is quoted from a satire, in the wrong voice, and it was not original there either.","credit":"Toutes les histoires anciennes… ne sont que des fables convenues. —Voltaire, Jeannot et Colin (1764) — spoken by a satirised character who credits \"one of our wits.\" Public domain.","comparison":"Toutes les histoires anciennes… ne sont que des fables convenues.","citation":"Voltaire. Jeannot et Colin. 1764. (Line spoken by a character; English in The Works of Voltaire, trans. William F. Fleming, 1901.)","rights":"Free to reuse. Voltaire died in 1778, so the French original is public domain worldwide, and the standard English rendering in The Works of Voltaire (William F. Fleming, 1901) is public domain too. If you quote in English, name the translation — and if you want to be accurate as well as free, quote it the way Voltaire wrote it: as something a foolish character says. This is not legal advice.","checked":"20 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 20 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -859,6 +867,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-matters-not-who-you-love-where-you-love-why-you-love","url":"https://quotle.info/who-said/it-matters-not-who-you-love-where-you-love-why-you-love/","quote":"It matters not who you love, where you love, why you love, when you love, or how you love, it matters only that you love","claim":"John Lennon said: \"It matters not who you love, where you love, why you love, when you love, or how you love, it matters only that you love\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator traces the saying to poet and singer-songwriter Rod McKuen, who closed his public appearances by telling audiences \"it doesn't matter who you love or how you love, but that you love\" — reported in a New York Times profile of 4 April 1971. The longer five-clause version carrying Lennon's name first surfaces in a Usenet message of 28 February 1997, and QI concludes that, on current evidence, Lennon did not make the remark.","credit":"Rod McKuen, quoted by William Murray in The New York Times, 4 April 1971. The longer version — \"It matters not who you love, where you love, why you love, when you love, or how you love, it matters only that you love\" — is an anonymous elaboration first seen in February 1997; Quote Investigator finds no evidence John Lennon said it. Via Quotle.info. · Verbatim: “It doesn't matter who you love or how you love, but that you love.”","comparison":"It doesn't matter who you love or how you love, but that you love.","citation":"Murray, William. \"Says Rod McKuen: 'It Doesn't Matter Who You Love or How You Love, But That You Love!'\" The New York Times, April 4, 1971, SM32–SM33. Earliest instance located in Quote Investigator, \"Quote Origin: It Doesn't Matter Who You Love or How You Love, But That You Love,\" February 21, 2016, https://quoteinvestigator.com/2016/02/21/love-who/.","rights":"The exact wording that circulates under Lennon's name has no identifiable author — it is an anonymous online elaboration first seen in 1997 — so no copyright status can honestly be asserted for it. The saying it was built from is a different matter: Rod McKuen's spoken line as reported in The New York Times of 4 April 1971 is well inside the copyright term, and reuse of that article's text sits with the newspaper and McKuen's estate.","checked":"6 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 6 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -848,6 +856,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

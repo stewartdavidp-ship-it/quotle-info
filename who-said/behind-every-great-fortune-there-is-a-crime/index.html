@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"behind-every-great-fortune-there-is-a-crime","url":"https://quotle.info/who-said/behind-every-great-fortune-there-is-a-crime/","quote":"Behind every great fortune there is a crime","claim":"Honoré de Balzac said: \"Behind every great fortune there is a crime\"","rating":2,"verdict":"Needs context","answer":"Yes and no. Balzac did write about fortunes and crime, but not this sentence: in Le Père Goriot (serialized 1834–35) the escaped convict Vautrin tells a broke law student that a great fortune with no visible cause conceals a crime committed neatly — a claim about a subset, not about every fortune. Quote Investigator could not locate the compressed maxim in any work Balzac wrote and concludes it evolved through decades of retelling, with no single author.","credit":"is not Balzac's wording and appears in none of his works. In Le Pere Goriot (serialized 1834-35) the criminal Vautrin says, in Ellen Marriage's 1896 translation: \"The secret of a great success for which you are at a loss to account is a crime that has never been found out, because it was properly executed.\" A compressed form was already in print by 1912, credited only to an unnamed French writer, and Mario Puzo's 1969 epigraph to The Godfather fixed the modern wording under Balzac's name. — Quotle.info","comparison":"The secret of a great success for which you are at a loss to account is a crime that has never been found out, because it was properly executed.","citation":"Honoré de Balzac, \"Le Père Goriot,\" Revue de Paris 12 (1834): 258; English as Father Goriot, trans. Ellen Marriage (London: J. M. Dent, 1896), 124. The popular wording \"Behind every great fortune there is a crime\" appears in no work by Balzac; see Quote Investigator, \"Quote Origin: Behind Every Great Fortune There Is a Crime,\" 9 September 2013.","rights":"The two texts shown here are safely out of copyright: Balzac's French original was published in 1834–35, and Ellen Marriage's English translation dates from 1896 — Project Gutenberg hosts it as public domain in the USA. The famous one-liner is a different matter: it is not from either text, has no identifiable author or first publication to attach rights to, and its best-known appearance — the epigraph to The Godfather (1969) — sits in a book that remains in copyright. We therefore assert no rights status for the popular wording.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -874,6 +882,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"millions-of-people-who-have-never-died-before-will-be-killed","url":"https://quotle.info/who-said/millions-of-people-who-have-never-died-before-will-be-killed/","quote":"Millions of people who have never died before will be killed","claim":"\"Millions of people who have never died before will be killed\"","rating":1,"verdict":"Not supported","answer":"The documented line is from a 1930 letter Hemingway wrote to his friend Henry Strater: \"He advised us all to be careful as men are dying this year who have never died before\" — and the \"he\" is not Hemingway but his Key West fishing companion Edward 'Bra' Saunders, whom Hemingway credited every time he used it. The popular wording drifted twice over: first into the widely shared \"People are dying who have never died before,\" then into the apocalyptic \"Millions of people who have never died before will be killed,\" which no documented source contains.","credit":"Ernest Hemingway, letter to Henry Strater, 1930, quoting his friend Edward \"Bra\" Saunders. The popular version, \"Millions of people who have never died before will be killed,\" is not what Hemingway wrote, and it is not from any film. · Verbatim: “He advised us all to be careful as men are dying this year who have never died before.”","comparison":"He advised us all to be careful as men are dying this year who have never died before.","citation":"Ernest Hemingway to Henry Strater, 1930, quoting Edward \"Bra\" Saunders: \"He advised us all to be careful as men are dying this year who have never died before.\" Earliest documented use as reported by AFP on the authority of Sandra Spanier, General Editor, The Cambridge Edition of the Letters of Ernest Hemingway (Cambridge University Press), whose Volume 4 covers 1929–1931. Exact edition and page of the letter not independently verified.","rights":"US public domain turns on publication, not composition — and although Hemingway wrote this letter in 1930, private correspondence was not published in his lifetime. The letter reached print only in modern scholarly and selected editions well after 1930, so the pre-1931 public-domain cutoff does not reach it and the text remains in copyright to the Hemingway estate and its publishers. We have not independently verified which edition first printed this particular letter, so no edition, editor or page is asserted here.","checked":"16 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -865,6 +873,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

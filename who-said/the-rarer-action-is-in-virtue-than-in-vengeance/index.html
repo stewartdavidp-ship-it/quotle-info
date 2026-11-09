@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-rarer-action-is-in-virtue-than-in-vengeance","url":"https://quotle.info/who-said/the-rarer-action-is-in-virtue-than-in-vengeance/","quote":"The rarer action is in virtue than in vengeance","claim":"William Shakespeare said: \"The rarer action is in virtue than in vengeance\"","rating":5,"verdict":"Supported","answer":"Yes. Genuine, and locatable to the line: it is spoken by Prospero in The Tempest, Act 5, Scene 1, replying to the spirit Ariel — \"Do I take part. The rarer action is / In virtue than in vengeance.\" The play was first printed in the 1623 First Folio, where it appears in original spelling as \"the rarer Action is / In vertue, then in vengeance.\"","credit":"The rarer action is / In virtue than in vengeance. — Prospero, in William Shakespeare, The Tempest, Act 5, Scene 1. First printed in the 1623 First Folio. · Verbatim: “Though with their high wrongs I am struck to th' quick, yet with my nobler reason 'gainst my fury do I take part. The rarer action is in virtue than in vengeance.”","comparison":"Though with their high wrongs I am struck to th' quick, yet with my nobler reason 'gainst my fury do I take part. The rarer action is in virtue than in vengeance.","citation":"Shakespeare, William. The Tempest, act 5, scene 1. First printed in Mr. William Shakespeare's Comedies, Histories, & Tragedies (London, 1623). Modern text quoted from The Tempest, act 5, scene 1, The Folger Shakespeare, Folger Shakespeare Library, https://www.folger.edu/explore/shakespeares-works/the-tempest/read/5/1/.","rights":"The Tempest was first printed in the 1623 First Folio, per the Folger Shakespeare Library — more than three centuries before the 1931 US copyright threshold, so the play and this line are firmly in the public domain. A specific modern edition's editorial apparatus (notes, glosses, line numbering) can still carry its own copyright, even though Shakespeare's words do not.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -869,6 +877,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

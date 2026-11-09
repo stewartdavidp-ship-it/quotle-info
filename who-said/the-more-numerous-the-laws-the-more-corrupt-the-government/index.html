@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-more-numerous-the-laws-the-more-corrupt-the-government","url":"https://quotle.info/who-said/the-more-numerous-the-laws-the-more-corrupt-the-government/","quote":"The more numerous the laws, the more corrupt the government","claim":"Marcus Tullius Cicero said: \"The more numerous the laws, the more corrupt the government\"","rating":1,"verdict":"Not supported","answer":"No. The sentence belongs to Tacitus, not Cicero. It condenses the closing line of Annals Book III, 27 — corruptissima re publica plurimae leges — which the Latin text at Perseus carries verbatim, and which Wikiquote lists under \"Misattributed\" on its Cicero page, noting it is \"Truly from Tacitus, Annals, Book III, 27.\" No named translator produced this exact English wording: the 1876 Church & Brodribb rendering reads \"laws were most numerous when the commonwealth was most corrupt.\"","credit":"Tacitus, Annals, Book III, 27: \"laws were most numerous when the commonwealth was most corrupt\" (trans. Alfred John Church and William Jackson Brodribb, 1876). Latin: \"corruptissima re publica plurimae leges.\" The popular epigram \"The more numerous the laws, the more corrupt the government\" is a condensed English rendering of that sentence — it is not Cicero; Wikiquote lists the Cicero credit under \"Misattributed.\" Traced by Quotle.info, 27 Aug 2026.","comparison":"","citation":"Tacitus, The Annals, bk. 3, chap. 27, trans. Alfred John Church and William Jackson Brodribb (1876; London: Macmillan): \"And now bills were passed, not only for national objects but for individual cases, and laws were most numerous when the commonwealth was most corrupt.\" Latin: \"iamque non modo in commune sed in singulos homines latae quaestiones, et corruptissima re publica plurimae leges\" (Perseus Digital Library, Annales 3.27). The attribution to Cicero is listed under \"Misattributed\" on the Cicero page at Wikiquote.","rights":"Tacitus wrote the Annals in Latin around AD 105–116, so the original text is long out of copyright. The English excerpt shown here is the Church & Brodribb translation, dated 1876 in the Wikisource edition — published well before 1931 and therefore public domain in the United States. The short popular epigram has no identified translator, but it renders that same public-domain Latin sentence; we found no modern copyrighted translation it derives from.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -870,6 +878,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

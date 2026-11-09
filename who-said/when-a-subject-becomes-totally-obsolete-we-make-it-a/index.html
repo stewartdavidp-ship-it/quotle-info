@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"when-a-subject-becomes-totally-obsolete-we-make-it-a","url":"https://quotle.info/who-said/when-a-subject-becomes-totally-obsolete-we-make-it-a/","quote":"When a subject becomes totally obsolete we make it a required course","claim":"Peter Drucker said: \"When a subject becomes totally obsolete we make it a required course\"","rating":3,"verdict":"Not confirmed","answer":"Yes and no. The joke is genuinely Drucker's — he put it in print himself in The Age of Discontinuity (Harper & Row, 1969, page 193), but in different words: \"If a subject has become obsolete, the university faculty makes a required course out of it.\" The crisp one-liner people quote is not in that book; its earliest documented appearance is a 1976 appendix of Drucker remarks assembled by his biographer John J. Tarrant, per Quote Investigator.","credit":"attributed to Peter Drucker (1909–2005). Drucker printed the thought himself in The Age of Discontinuity (Harper & Row, 1969), p. 193, in different words: \"If a subject has become obsolete, the university faculty makes a required course out of it.\" The compact one-liner is documented from 1976, in the appendix of John J. Tarrant's Drucker: The Man Who Invented the Corporate Society, p. 260. Source: Quotle.info","comparison":"","citation":"Peter F. Drucker, The Age of Discontinuity: Guidelines to Our Changing Society (New York: Harper & Row, 1969), 193 — Drucker's own wording. The familiar one-liner is documented from 1976, in John J. Tarrant, Drucker: The Man Who Invented the Corporate Society (Boston: Cahners Books, 1976), appendix, 260, and in The Wharton Magazine 1, no. 1 (Fall 1976): 14.","rights":"Every documented source for this line is modern and still protected. Drucker's own wording appeared in The Age of Discontinuity (Harper & Row, 1969) and the familiar one-liner in John J. Tarrant's biography (Cahners Books, 1976) — both well past the 1931 cutoff for U.S. public domain. Quote it briefly with attribution; it is not free to reproduce at length.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -869,6 +877,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"organizations-dont-get-things-done-plans-and-programs-dont","url":"https://quotle.info/who-said/organizations-dont-get-things-done-plans-and-programs-dont/","quote":"Organizations don't get things done. Plans and programs don't get things done. Only people get things done","claim":"Colin Powell said: \"Organizations don't get things done. Plans and programs don't get things done. Only people get things done\"","rating":1,"verdict":"Not supported","answer":"No. Colin Powell put these sentences into print — and on the same page handed them to somebody else. In It Worked for Me: In Life and Leadership (2012), pp. 278–279, Powell recalls Adm. Hyman G. Rickover speaking them at a small office promotion ceremony in Washington in the early 1970s, and says their wisdom shaped his life. That memoir is the only primary source for the wording — the earliest text to fix it, and the only one that documents who spoke it: no publication under Rickover's own name is known to carry it, and Powell is candid that he could not recall who was being promoted or where the room was.","credit":"Adm. Hyman G. Rickover, as quoted by Colin Powell in It Worked for Me: In Life and Leadership (New York: Harper, 2012), 278–79. Powell heard the remarks at an office promotion ceremony in Washington in the early 1970s; no publication in Rickover's own name carries this wording. Not a Colin Powell quote. Via Quotle.info","comparison":"Organizations don't get things done. Plans and programs don't get things done. Only people get things done. Organizations, plans, and programs either help or hinder people.","citation":"Colin L. Powell, It Worked for Me: In Life and Leadership (New York: Harper, 2012), 278–79, quoting remarks by Adm. Hyman G. Rickover at an office promotion ceremony in Washington, D.C., early 1970s. No publication in Rickover's own name carries this wording.","rights":"The earliest text to fix this wording — and the only primary source for it — is Colin Powell's It Worked for Me: In Life and Leadership, first published by Harper in 2012, so the printed sentences are in copyright regardless of who first spoke them. Rickover's original remarks were extemporaneous and are not known to have been published in his own name; the circulated excerpt of his 1982 Columbia University address 'Doing a Job' (©1982 H. G. Rickover) does not carry them, and the full text of that address is not publicly available to check.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -870,6 +878,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

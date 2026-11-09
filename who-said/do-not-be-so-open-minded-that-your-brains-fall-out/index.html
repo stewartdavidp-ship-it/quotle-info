@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"do-not-be-so-open-minded-that-your-brains-fall-out","url":"https://quotle.info/who-said/do-not-be-so-open-minded-that-your-brains-fall-out/","quote":"Do not be so open-minded that your brains fall out","claim":"Carl Sagan originated the saying \"Do not be so open-minded that your brains fall out\"","rating":1,"verdict":"Not supported","answer":"No. Carl Sagan did print a version of it — \"Keeping an open mind is a virtue—but, as the space engineer James Oberg once said, not so open that your brains fall out\" (The Demon-Haunted World, 1995, ch. 10, \"The Dragon in My Garage\") — and he handed the credit away in the same breath. The polished sentence people share today is not his wording. The earliest published close match Quote Investigator located is a January 1940 newspaper report of Walter Kotschnig telling Mount Holyoke students to keep their minds open, \"but not so open that your brains fall out\" — and QI credits even him only tentatively, because a 1937 article in The Yale Law Journal shows the trope was already circulating.","credit":"not Carl Sagan. What Sagan printed in The Demon-Haunted World (Random House, 1995, chapter 10) was \"Keeping an open mind is a virtue—but, as the space engineer James Oberg once said, not so open that your brains fall out\" — a version of the saying, credited away in the same breath. Quote Investigator tentatively credits Walter Kotschnig (1901–1985), who used a close match at Smith College on 8 November 1939 and at Mount Holyoke College, as reported in the Courier News of Blytheville, Arkansas, on 27 January 1940 — while noting that Max Radin's May 1937 article in The Yale Law Journal shows the phrase was already circulating. Via Quotle.info","comparison":"","citation":"Earliest published close match: Courier News (Blytheville, AR), January 27, 1940, p. 2, reporting a speech by Walter Kotschnig at Mount Holyoke College, as documented in \"Quote Origin: Do Not Be So Open-Minded That Your Brains Fall Out,\" Quote Investigator, April 13, 2014 (updated January 24, 2025). Compare Max Radin, \"On Legal Scholarship,\" Yale Law Journal 46, no. 7 (May 1937): 1124–39, at 1133; and Carl Sagan, The Demon-Haunted World: Science as a Candle in the Dark (New York: Random House, 1995), chap. 10, where the line appears credited to James Oberg.","rights":"There is no single authored work to attach a copyright to: the modern wording is a proverb that drifted through speeches, newspapers and after-dinner talk for decades, and its earliest known user is credited only tentatively. Two things are clear enough — the 1937 and 1940 attestations sit in periodicals published well after 1930, and Carl Sagan's 1995 phrasing in The Demon-Haunted World is firmly in copyright to his estate and Random House — so nothing on this page should be treated as public domain.","checked":"10 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -870,6 +878,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

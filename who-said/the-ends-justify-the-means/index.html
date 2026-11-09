@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-ends-justify-the-means","url":"https://quotle.info/who-said/the-ends-justify-the-means/","quote":"The ends justify the means","claim":"Niccolò Machiavelli said: \"The ends justify the means\"","rating":1,"verdict":"Not supported","answer":"No. The blunt line \"the ends justify the means\" appears nowhere in The Prince or Machiavelli's other works — Wikiquote lists it under \"Misattributed\" as \"the most common mis-quotation attributed to Machiavelli\". The closest he actually wrote is a narrower observation in Chapter XVIII that people \"judge by the result.\" The proverb's real literary ancestor is Ovid.","credit":"Niccolò Machiavelli never wrote \"the ends justify the means\" — Wikiquote lists it as his most common misquotation. The phrase appears nowhere in The Prince; its nearest literary ancestor is Ovid's \"exitus acta probat\" (Heroides II.85). — Quotle.info","comparison":"","citation":"Niccolò Machiavelli, The Prince, trans. W. K. Marriott (London: J. M. Dent, 1908), ch. XVIII — the nearest genuine passage; the exact proverb is not in the text. Classical antecedent: Ovid, Heroides II.85, \"exitus acta probat.\"","rights":"The English proverb \"the ends justify the means\" has no identifiable single author or first-publication work, so no copyright status can be asserted for the phrase itself. The genuine Chapter XVIII passage quoted here is from W. K. Marriott's 1908 translation, which is public domain; Machiavelli's original Italian (1513/1532) has been public domain for centuries.","checked":"16 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -837,6 +845,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

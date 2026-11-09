@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"here-i-stand-i-can-do-no-other-god-help-me-amen","url":"https://quotle.info/who-said/here-i-stand-i-can-do-no-other-god-help-me-amen/","quote":"Here I stand; I can do no other. God help me. Amen","claim":"Martin Luther said at the Diet of Worms (18 April 1521): \"Here I stand; I can do no other. God help me. Amen\"","rating":2,"verdict":"Needs context","answer":"Not confirmed. Luther did end his reply at the Diet of Worms (18 April 1521) with \"God help me. Amen.\" The words \"Here I stand; I can do no other\" are not in the Diet transcripts or eyewitness accounts. They first appear in printed reports of the speech, and most scholars doubt he spoke them. The English wording is a later translation.","credit":"popularly credited to Martin Luther at the Diet of Worms (18 April 1521). Disputed: Luther did end with “God help me. Amen,” but the “Here I stand” words appear in printed reports of the speech, not in the Diet transcripts or eyewitness accounts. (Quotle.info)","comparison":"","citation":"German form in the standard report of the Diet: \"Acta comparationis Lutheri in Diaeta Wormatiensi,\" in D. Martin Luthers Werke, Kritische Gesamtausgabe (Weimar: Böhlau, 1883–), 7:838, as cited in Samuel L. Young, \"How Luther Became the Mythical 'Here I Stand' Hero,\" Lutheran Quarterly (Spring 2022). The words are absent from the Diet transcripts and eyewitness accounts.","rights":"The German report of the speech dates from 1521 and has long been in the public domain. English renderings such as \"Here I stand: I can do no otherwise: God help me! Amen\" (Arminian Magazine, 1778, per Young) are old enough to be free. But this exact wording, \"I can do no other,\" could not be traced to one specific translation, so quotle.info asserts no rights status for it.","checked":"1 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -844,6 +852,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

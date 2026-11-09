@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -515,6 +517,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -561,6 +566,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -617,7 +623,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"stand-for-something-or-you-will-fall-for-anything-todays","url":"https://quotle.info/who-said/stand-for-something-or-you-will-fall-for-anything-todays/","quote":"Stand for something or you will fall for anything. Today's mighty oak is yesterday's nut that held its ground","claim":"Rosa Parks said: \"Stand for something or you will fall for anything. Today's mighty oak is yesterday's nut that held its ground\"","rating":1,"verdict":"Not supported","answer":"No. This is two sayings joined end to end, and neither belongs to Rosa Parks. The first is an anonymous modern proverb: Quote Investigator finds a precursor in a 1926 Iowa church announcement and its earliest close match in a January 1945 article by the physician Gordon A. Eadie, and its survey of who gets credit — Alexander Hamilton, Eadie, Irene Dunne, Peter Marshall and others — does not mention Parks. The second sentence is generally printed as David Icke's, in the slightly different form \"Today's mighty oak is just yesterday's nut, that held its ground\", and we could find no book, article or broadcast behind it.","credit":"Unverified. This two-sentence saying is not documented to Rosa Parks. The first sentence is an anonymous modern proverb; its earliest known close match is Gordon A. Eadie, M.D., in Mental Hygiene, January 1945, p. 103. The second sentence circulates as David Icke’s, with no primary source located. — Quotle.info · Verbatim: “If they don't stand for something, they will fall for anything.”","comparison":"If they don't stand for something, they will fall for anything.","citation":"Earliest documented in Gordon A. Eadie, M.D., \"The Over-All Mental-Health Needs of the Industrial Plant, with Special Reference to War Veterans,\" Mental Hygiene 29, no. 1 (January 1945): 103 — the earliest close match to the first sentence only, per Quote Investigator. The second sentence has no located source, and neither sentence is documented to Rosa Parks.","rights":"No rights status can honestly be asserted here. The first sentence is an anonymous modern proverb with no identified author; the second has no located source at all. The 1945 Mental Hygiene article carrying the earliest close match is itself a 1945 publication and so not in the public domain in the United States — but it is evidence about the proverb's history, not a record of anything Rosa Parks said.","checked":"18 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 18 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -866,6 +874,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

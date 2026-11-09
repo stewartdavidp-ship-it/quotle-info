@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-fear-the-day-that-technology-will-surpass-our-human","url":"https://quotle.info/who-said/i-fear-the-day-that-technology-will-surpass-our-human/","quote":"I Fear the Day That Technology Will Surpass Our Human Interaction","claim":"Albert Einstein said: \"I Fear the Day That Technology Will Surpass Our Human Interaction\"","rating":1,"verdict":"Not supported","answer":"No. There is no letter, essay, interview, speech or contemporary report behind this line, and it does not appear in Alice Calaprice's The Ultimate Quotable Einstein, the standard Princeton collection. Quote Investigator finds \"no substantive evidence\" for it and concludes that Einstein wrote none of the three circulating variants. The oldest appearances anyone has been able to date are two anonymous web posts from October and November 2012, the later of them welded to a grid of nine photographs of people staring at phones.","credit":"Unverified. “I fear the day that technology will surpass our human interaction. The world will have a generation of idiots.” has never been traced to Albert Einstein, and is absent from The Ultimate Quotable Einstein (Princeton, 2010). Earliest datable appearances: anonymous web posts of 21 October and 3 November 2012, both since removed. — Quotle.info","comparison":"I fear the day that technology will surpass our human interaction. The world will have a generation of idiots.","citation":"No primary source exists. Earliest datable appearances, per Quote Investigator: a post on answerbag.com dated 21 October 2012 and an image post on imfunny.net dated 3 November 2012 — both since removed from the web. The saying does not appear in The Ultimate Quotable Einstein, ed. Alice Calaprice (Princeton: Princeton University Press, 2010).","rights":"We assert no rights status here, and that is deliberate. The wording has no identifiable author and no traceable first publication — it appears to have been composed anonymously online around 2012 — so there is nothing to place in the public domain and nobody to name as a rights holder. Calling text of unknown origin \"public domain\" would be a guess, and this site does not guess about rights.","checked":"29 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 29 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -845,6 +853,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

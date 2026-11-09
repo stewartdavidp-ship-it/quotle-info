@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"writing-about-music-is-like-dancing-about-architecture","url":"https://quotle.info/who-said/writing-about-music-is-like-dancing-about-architecture/","quote":"Writing about music is like dancing about architecture","claim":"Elvis Costello coined: \"Writing about music is like dancing about architecture\"","rating":1,"verdict":"Not supported","answer":"No. Costello really did say it — in Musician magazine no. 60, October 1983 — but he did not coin it, and in Q magazine's March 2008 issue he asked to be let off the hook in print and credited Martin Mull instead. The first close match Quote Investigator can document is a 18 February 1979 \"Bob Talbert's quotebag\" column in the Detroit Free Press, which credits Mull. No recording, script or manuscript of Mull actually saying it has ever surfaced, so QI calls him the \"leading candidate,\" not a proven author.","credit":"attributed to Martin Mull (1943–2024). Earliest close match: \"Bob Talbert's Quotebag,\" Detroit Free Press, 18 February 1979, p. 19C. Widely credited to Elvis Costello, who used it in Musician magazine in October 1983 but denied coining it in Q magazine, March 2008. Research: Quote Investigator. Via quotle.info","comparison":"","citation":"\"Bob Talbert's Quotebag,\" Detroit Free Press (Detroit, MI), 18 February 1979, 19C, col. 5 — the first close match documented in Quote Investigator, \"Quote Origin: Writing About Music is Like Dancing About Architecture,\" 8 November 2010, https://quoteinvestigator.com/2010/11/08/writing-about-music/. Elvis Costello's use: Timothy White, \"Elvis Costello: A Man Out of Time Beats the Clock,\" Musician, no. 60 (October 1983): 52.","rights":"Everything documented about this line is modern. Its first known publication is a Detroit Free Press column of 18 February 1979, and the best-known printing is Elvis Costello's in Musician in October 1983 — both far later than the 1931 US public-domain threshold, so no public-domain claim is available here. The eight-word aphorism itself is short enough that its copyright status as a standalone sentence is untested, and because no original manuscript, script or recording by Mull has ever surfaced, even the underlying authorship is a leading candidacy rather than a settled fact. Quote briefly and with attribution.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -876,6 +884,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

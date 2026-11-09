@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-all-the-girls-who-attended-the-yale-prom-were-laid-end","url":"https://quotle.info/who-said/if-all-the-girls-who-attended-the-yale-prom-were-laid-end/","quote":"If all the girls who attended the Yale prom were laid end to end, I wouldn't be at all surprised","claim":"Dorothy Parker said: \"If all the girls who attended the Yale prom were laid end to end, I wouldn't be at all surprised\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The only contemporary record is second-hand: Alexander Woollcott printed the quip on page 149 of While Rome Burns (The Viking Press, March 1934) as reported speech — \"If all the girls attending it were laid end to end, Mrs. Parker said, she wouldn't be at all surprised.\" Quote Investigator calls that 1934 credit substantive and finds no close match before it. But Parker never wrote the line herself, and the familiar first-person wording — \"who attended the Yale prom … I wouldn't be at all surprised\" — is a later smoothing of Woollcott's sentence, not a transcript.","credit":"Dorothy Parker (attributed). The earliest documented record is second-hand: Alexander Woollcott, \"Our Mrs. Parker,\" in While Rome Burns (New York: The Viking Press, 1934), 149, which reads \"And there was that wholesale libel on a Yale prom. If all the girls attending it were laid end to end, Mrs. Parker said, she wouldn't be at all surprised.\" The popular first-person wording is a later regularization; Quote Investigator finds no close match before 1934, though the \"laid end to end\" gag structure was in print by 1843. Verified at Quotle.info.","comparison":"","citation":"Alexander Woollcott, \"Our Mrs. Parker,\" in While Rome Burns (New York: The Viking Press, 1934), 149. Earliest documented appearance of the quip; Quote Investigator reports no close match before 1934. Note that Woollcott renders the remark in reported speech, not the familiar first person.","rights":"The passage that documents this quip is a 1934 publication, not a nineteenth-century one. While Rome Burns was published in March 1934 by The Viking Press, and its copyright page reads \"COPYRIGHT 1934 BY ALEXANDER WOOLLCOTT\" — comfortably inside the era where US works remain protected, so the text is treated here as in copyright and quoted only in the brief extract needed to document the attribution. Parker's spoken remark has no separate published source of her own; her literary estate passed to Martin Luther King Jr. and, after his death, to the NAACP.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -885,6 +893,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

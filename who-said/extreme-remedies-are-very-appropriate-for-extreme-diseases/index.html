@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"extreme-remedies-are-very-appropriate-for-extreme-diseases","url":"https://quotle.info/who-said/extreme-remedies-are-very-appropriate-for-extreme-diseases/","quote":"Extreme remedies are very appropriate for extreme diseases","claim":"Hippocrates said: \"Extreme remedies are very appropriate for extreme diseases\"","rating":5,"verdict":"Supported","answer":"Yes. Hippocrates, Aphorisms, Section I, no. 6 — a real sentence of the Hippocratic corpus, still there in the Greek. This particular English, though, is the uncredited wording printed under his name in Bartlett's Familiar Quotations from the tenth edition of 1876 onward — and it reads as an Englishing of the Latin school text Ad extremos morbos, extrema remedia exquisite optima, following that far more closely than any rendering made from the Greek.","credit":"Hippocrates, Aphorisms I.6 — \"Extreme remedies are very appropriate for extreme diseases.\" The sentence is genuine, but this English is the wording printed in Bartlett's Familiar Quotations, 10th ed. (Boston: Little, Brown, 1876), 599, which tracks the Latin \"Ad extremos morbos, extrema remedia exquisite optima\" rather than the Greek. Francis Adams's 1849 translation reads: \"For extreme diseases, extreme methods of cure, as to restriction, are most suitable.\" Via Quotle.info","comparison":"","citation":"Hippocrates, Aphorisms, sec. 1, no. 6, trans. Francis Adams (1849), Wikisource; popular English wording as printed in John Bartlett, Familiar Quotations, 10th ed. (Boston: Little, Brown, 1876), 599, and still at 700 in the 1892 printing.","rights":"The Greek original is ancient and long out of copyright. Both English wordings shown here come from pre-1931 United States or British publications — Francis Adams's translation of 1849 and the rendering printed in Bartlett's Familiar Quotations (Boston: Little, Brown, 1876) — so both are in the public domain in the US. A modern translation of the same aphorism would not be: rights attach to the particular English, not to Hippocrates.","checked":"24 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 24 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -874,6 +882,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

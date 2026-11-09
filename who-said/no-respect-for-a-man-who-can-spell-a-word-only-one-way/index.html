@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"no-respect-for-a-man-who-can-spell-a-word-only-one-way","url":"https://quotle.info/who-said/no-respect-for-a-man-who-can-spell-a-word-only-one-way/","quote":"No Respect for a Man Who Can Spell a Word Only One Way","claim":"Andrew Jackson said: \"No Respect for a Man Who Can Spell a Word Only One Way\"","rating":1,"verdict":"Not supported","answer":"No. The line is the punch line of a comic courtroom anecdote about an unlettered country lawyer, printed in the Jamestown Journal of 31 August 1855 and reprinted that November in Harper's New Monthly Magazine. Mark Twain was credited with it in 1875 and Andrew Jackson not until 1882 — thirty-seven years after Jackson's death — and no source in Jackson's own words has ever been found.","credit":"Anonymous — the punch line of a comic courtroom anecdote first printed in the Jamestown Journal (Jamestown, New York), 31 August 1855, and reprinted in Harper's New Monthly Magazine, November 1855, p. 860. Not Andrew Jackson, who died in 1845; the earliest Jackson credit located by Quote Investigator is 1882. Source: Quote Investigator, \"Quote Origin: No Respect for a Man Who Can Spell a Word Only One Way.\" · Verbatim: “I have no respect for a man who can spell a word only one way.”","comparison":"I have no respect for a man who can spell a word only one way.","citation":"\"Spelling Words More Than One Way,\" Jamestown Journal (Jamestown, New York), 31 August 1855, p. 3, col. 2; reprinted in Harper's New Monthly Magazine 11, no. 66 (November 1855), \"Editor's Drawer,\" p. 860. Attribution history traced in Quote Investigator, \"Quote Origin: No Respect for a Man Who Can Spell a Word Only One Way,\" 25 June 2010, updated 28 January 2025.","rights":"The 1855 anecdote excerpted above is comfortably in the public domain in the United States — Harper's New Monthly Magazine for November 1855 is long out of copyright, as is the 1882 Register. The one-line modern wording credited to Andrew Jackson, however, has never been tied to any datable work of his or anyone else's, so we assert no rights status for it.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

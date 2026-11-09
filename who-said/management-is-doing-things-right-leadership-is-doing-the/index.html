@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -526,6 +528,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -572,6 +577,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -628,7 +634,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"management-is-doing-things-right-leadership-is-doing-the","url":"https://quotle.info/who-said/management-is-doing-things-right-leadership-is-doing-the/","quote":"Management is doing things right; leadership is doing the right things","claim":"Stephen Covey said: \"Management is doing things right; leadership is doing the right things\"","rating":2,"verdict":"Needs context","answer":"Not confirmed. The exact popular sentence is documented in Covey's book, not in anyone else's: Quote Investigator locates it on page 101 of The Seven Habits of Highly Effective People (Simon & Schuster, 1989) — where Covey prints it in quotation marks and introduces it as \"In the words of both Peter Drucker and Warren Bennis.\" So Covey never claimed it, and neither man is documented writing that sentence. The nearest genuine wording is Bennis and Burt Nanus in Leaders: The Strategies for Taking Charge (1985), which Wikiquote cites at page 21: \"Managers are people who do things right and leaders are people who do the right thing.\"","credit":"not a Stephen Covey original. The sentence is printed on page 101 of Covey's The Seven Habits of Highly Effective People (Simon and Schuster, 1989), but Covey set it in quotation marks and introduced it as \"In the words of both Peter Drucker and Warren Bennis.\" Neither man is documented writing that sentence: Drucker's version contrasts efficiency with effectiveness, and the nearest genuine wording is Warren Bennis and Burt Nanus, Leaders (Harper & Row, 1985), p. 21 — \"Managers are people who do things right and leaders are people who do the right thing.\" Quote Investigator traces the underlying distinction to the Harrisburg Telegraph of 28 August 1869.","comparison":"Managers are people who do things right and leaders are people who do the right thing.","citation":"Earliest appearance of this exact wording documented by Quote Investigator: Stephen R. Covey, The Seven Habits of Highly Effective People: Restoring the Character Ethic (New York: Simon and Schuster, 1989), 101 — where Covey presents it as the words of Peter Drucker and Warren Bennis. Nearest genuine wording: Warren Bennis and Burt Nanus, Leaders: The Strategies for Taking Charge (New York: Harper & Row, 1985), 21, per Wikiquote. Chronology: “Quote Origin: Efficiency Is Concerned With Doing Things Right. Effectiveness Is Doing the Right Things,” Quote Investigator, April 9, 2021.","rights":"Both candidate sources are modern books, so nothing here is public domain in the United States: The Seven Habits of Highly Effective People was first published in 1989 and Leaders: The Strategies for Taking Charge in 1985, each far later than the 1931 threshold, and both remain in copyright. The sentence is short enough to quote with attribution, but the surrounding text is not free to reproduce — which is why the Internet Archive scan is lending-restricted rather than open.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -881,6 +889,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

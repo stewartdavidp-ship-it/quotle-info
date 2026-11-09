@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -502,6 +504,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -548,6 +553,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -604,7 +610,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"id-rather-have-roses-on-my-table-than-diamonds-on-my-neck","url":"https://quotle.info/who-said/id-rather-have-roses-on-my-table-than-diamonds-on-my-neck/","quote":"I'd rather have roses on my table than diamonds on my neck","claim":"Emma Goldman said: \"I'd rather have roses on my table than diamonds on my neck\"","rating":1,"verdict":"Not supported","answer":"No. The sentence appears in none of Goldman's published books — a full-text search of Living My Life (1931) and of Anarchism and Other Essays (1910) returns neither half of it — and Wikiquote does not list it for her in any section. Every printed appearance we could find is a modern quotation anthology or gift book that credits her with no source at all.","credit":"credited to Emma Goldman, but the line appears in none of her books and no source has ever been cited for it. Origin unknown. Via Quotle.info","comparison":"","citation":"No primary source located. The line is absent from Emma Goldman, Living My Life (New York: Alfred A. Knopf, 1931) and from Emma Goldman, Anarchism and Other Essays (1910). The earliest printed appearances found are late-twentieth-century quotation anthologies — e.g. Ashton Applewhite, Tripp Evans and Andrew Frothingham, And I Quote (1992), 83, which credits Goldman and gives no source.","rights":"Rights follow the source, and this line has no identifiable source — no work, no date, no publisher — so no public-domain status can be claimed for it. The Goldman passage shown above is a separate matter: Living My Life was published by Alfred A. Knopf in 1931 and is not treated here as public domain; it is reproduced as a short quotation for criticism and comment.","checked":"24 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 24 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -840,6 +848,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

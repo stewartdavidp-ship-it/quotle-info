@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"speak-when-youre-angry-and-youll-make-the-best-speech-youll","url":"https://quotle.info/who-said/speak-when-youre-angry-and-youll-make-the-best-speech-youll/","quote":"Speak When You're Angry and You'll Make the Best Speech You'll Ever Regret","claim":"Ambrose Bierce said: \"Speak When You're Angry and You'll Make the Best Speech You'll Ever Regret\"","rating":1,"verdict":"Not supported","answer":"No. The line is in none of Bierce's books. The earliest instance anyone has documented is a 1954 newspaper column reporting a quip Groucho Marx aimed at his quiz-show contestants: \"If you speak when angry, you'll make the best speech you'll ever regret.\" Quote Investigator credits Groucho on that evidence, while noting he was quoted secondhand — the polished wording that circulates today first appears in The Reader's Digest in September 1956, credited to \"Anonymous.\"","credit":"Widely credited to Ambrose Bierce, but the line appears in none of his works. The earliest documented instance is Groucho Marx, quoted in Eve Starr's \"Inside TV\" column, Greensboro Record, 3 November 1954. Research: Quote Investigator. · Verbatim: “If you speak when angry, you'll make the best speech you'll ever regret.”","comparison":"If you speak when angry, you'll make the best speech you'll ever regret.","citation":"Eve Starr, \"Inside TV,\" Greensboro Record (Greensboro, NC), November 3, 1954, p. B3, quoting Groucho Marx; catalogued in Garson O'Toole, \"Quote Origin: Speak When You're Angry and You'll Make the Best Speech You'll Ever Regret,\" Quote Investigator, May 17, 2014. The saying appears in no known work by Ambrose Bierce.","rights":"No first publication can be identified for this saying, so no rights status can honestly be asserted — but it is certainly not public domain by age. Every documented instance is mid-twentieth-century American: a 1954 newspaper column quoting a spoken remark, then a 1956 Reader's Digest filler credited to \"Anonymous.\" Bierce's Fantastic Fables (1899) and The Devil's Dictionary (1911; issued in part as The Cynic's Word Book, 1906) are both public domain in the United States, but neither contains this line, so their status does not transfer to it.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -856,6 +864,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

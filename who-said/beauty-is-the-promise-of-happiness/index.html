@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"beauty-is-the-promise-of-happiness","url":"https://quotle.info/who-said/beauty-is-the-promise-of-happiness/","quote":"Beauty is the promise of happiness","claim":"Edmund Burke said: \"Beauty is the promise of happiness\"","rating":1,"verdict":"Not supported","answer":"No. The line is Stendhal's, from a footnote in chapter 17 of De l'Amour (1822): \"La beauté n'est que la promesse du bonheur.\" Edmund Burke never wrote it — he died in 1797, twenty-five years before the book appeared — and the popular English wording is itself a trimmed one: the 1915 Woolf translation reads \"Beauty is only the promise of happiness.\"","credit":"Stendhal, De l'Amour (1822), ch. 17, footnote; trans. Philip Sidney Woolf & Cecil N. Sidney Woolf, On Love (New York: Brentano's, 1915). Commonly misattributed to Edmund Burke. Via Quotle.info","comparison":"Beauty is only the promise of happiness.","citation":"Stendhal [Marie-Henri Beyle]. De l'Amour. Paris, 1822. Chap. 17 (\"La beauté détrônée par l'amour\"), footnote: \"La beauté n'est que la promesse du bonheur.\" English: On Love, trans. Philip Sidney Woolf and Cecil N. Sidney Woolf (New York: Brentano's, first published 1915), chap. 17, footnote 1: \"Beauty is only the promise of happiness.\"","rights":"Both layers are clear. The French original appeared in De l'Amour in 1822, and the English wording quoted here comes from the Woolf brothers' translation first published in 1915 — both long before the 1931 US copyright threshold, and the translation is distributed by Project Gutenberg as public domain in the United States.","checked":"3 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -870,6 +878,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

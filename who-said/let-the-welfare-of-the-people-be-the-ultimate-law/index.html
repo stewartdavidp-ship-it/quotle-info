@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -516,6 +518,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -562,6 +567,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -618,7 +624,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"let-the-welfare-of-the-people-be-the-ultimate-law","url":"https://quotle.info/who-said/let-the-welfare-of-the-people-be-the-ultimate-law/","quote":"Let the welfare of the people be the ultimate law","claim":"Marcus Tullius Cicero said: \"Let the welfare of the people be the ultimate law\"","rating":5,"verdict":"Supported","answer":"Yes. Cicero wrote it, but not in English and not quite as a slogan. The line comes from De Legibus (On the Laws), Book III — a draft legal code Cicero composed for an ideal republic — where the Latin reads \"Ollis salus populi suprema lex esto\": for them, the welfare of the people shall be the supreme law. The \"them\" matters: the clause is addressed to the holders of consular power, who have just been told they answer to no one. This exact English wording, though, is of unknown authorship. Wikiquote prints it with no translator credited, and the nineteenth-century Bohn translation renders the same clause as \"for the safety of the people is the supreme law.\"","credit":"Marcus Tullius Cicero, De Legibus 3.3.8 — Latin: “Ollis salus populi suprema lex esto.” The English wording in circulation has no identified translator; the 1853 Bohn version reads “for the safety of the people is the supreme law”","comparison":"for the safety of the people is the supreme law","citation":"Cicero, De Legibus 3.3.8: \"Ollis salus populi suprema lex esto.\" Latin text: De legibus, Liber III, sec. 8 (Latin Wikisource). For a translation of known provenance, see The Treatises of M.T. Cicero (London: H. G. Bohn, 1853), which renders the clause \"for the safety of the people is the supreme law.\"","rights":"Cicero's Latin is unquestionably in the public domain — he died in 43 BC. The English wording shown is a different matter: no source consulted names its translator or the edition it came from, so quotle.info asserts no rights status for it rather than guessing. Readers who need a translation of known provenance can use the 1853 Bohn version linked above, which is public domain.","checked":"1 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

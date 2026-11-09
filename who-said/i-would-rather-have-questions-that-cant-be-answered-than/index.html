@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-would-rather-have-questions-that-cant-be-answered-than","url":"https://quotle.info/who-said/i-would-rather-have-questions-that-cant-be-answered-than/","quote":"I would rather have questions that can't be answered than answers that can't be questioned","claim":"Richard Feynman said: \"I would rather have questions that can't be answered than answers that can't be questioned\"","rating":1,"verdict":"Not supported","answer":"No. There is no evidence Richard Feynman ever said or wrote this. Quote Investigator found the Feynman-worded line only from 2014 — 26 years after his death — and traces it to an anonymous reworking of a 1995 Usenet aphorism by J. J. Hahn: \"Philosophy is questions that may never be answered. Religion is answers that may never be questioned.\" The exact wording has no identifiable author.","credit":"Anonymous (often misattributed to Richard Feynman); descended from a 1995 aphorism by J. J. Hahn. No evidence Feynman said it. — Quotle.info","comparison":"","citation":"Garson O'Toole (Quote Investigator), \"I Would Rather Have Questions That Can't Be Answered Than Answers That Can't Be Questioned,\" Quote Investigator, 22 October 2024. Earliest documented Feynman attribution: Wikiquote Talk, 18 September 2014; ancestor saying: J. J. Hahn, alt.atheism, 16 January 1995.","rights":"The exact wording is an anonymous modern coinage with no identifiable authored source, so no copyright status can be responsibly asserted. Its documented ancestor is a 1995 Usenet signature line, itself an informal, uncredited aphorism — not a published work with a clear rights holder.","checked":"16 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 16 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -829,6 +837,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

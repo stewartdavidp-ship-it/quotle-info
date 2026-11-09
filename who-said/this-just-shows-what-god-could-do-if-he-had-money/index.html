@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"this-just-shows-what-god-could-do-if-he-had-money","url":"https://quotle.info/who-said/this-just-shows-what-god-could-do-if-he-had-money/","quote":"This Just Shows What God Could Do If He Had Money","claim":"Alexander Woollcott said: \"This Just Shows What God Could Do If He Had Money\"","rating":2,"verdict":"Needs context","answer":"Not confirmed. This is a floating quip, not a Woollcott line. Quote Investigator locates its earliest known use in a letter Peter Fleming wrote on 29 September 1929 — about Long Island, not about anybody's house — and its earliest publication in The Fortnightly Review of June 1933, where the writer credited only an unnamed wag. The Woollcott credit surfaces once, in Moss Hart's memoir Act One (1959), in different wording, sixteen years after Woollcott's death; the earlier estate version, printed by Frank Case in 1940, puts the line in the mouth of a different man with a confusingly similar name, Wolcott Gibbs.","credit":"not Alexander Woollcott. A floating quip with no settled author: the earliest known use is Peter Fleming's letter of 29 September 1929 (printed in Duff Hart-Davis, Peter Fleming: A Biography, 1974), and the earliest publication is an anonymous credit in The Fortnightly Review, June 1933. Frank Case's Do Not Disturb (1940) gives the estate version to Wolcott Gibbs; the Woollcott credit appears only in Moss Hart's Act One (1959), in different wording. Chronology via Quote Investigator.","comparison":"","citation":"Earliest known instance: Peter Fleming to Rupert Hart-Davis, letter of 29 September 1929, quoted in Duff Hart-Davis, Peter Fleming: A Biography (London: Jonathan Cape, 1974), 67. Earliest publication: Ivor Brown, The Fortnightly Review (London), June 1933. Estate version: Frank Case, Do Not Disturb (New York: Frederick A. Stokes Company, 1940), 276. Woollcott credit: Moss Hart, Act One: An Autobiography (New York: Random House, 1959), 27–28. Chronology: \"Quote Origin: This Just Shows What God Could Do If He Had Money,\" Quote Investigator, 26 December 2014.","rights":"No public-domain claim is made here, because the wording cannot be tied to a specific work. The earliest located instance is an unpublished 1929 letter that did not reach print until Duff Hart-Davis's biography of Peter Fleming in 1974, and every documented printing of the line — The Fortnightly Review (1933), Frank Case's Do Not Disturb (1940), Moss Hart's Act One (1959) — falls after 1931 and belongs to its own author and publisher. The quip as a floating one-liner has no identifiable rights holder; the books that contain it do.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-disapprove-of-what-you-say-but-i-will-defend-to-the-death","url":"https://quotle.info/who-said/i-disapprove-of-what-you-say-but-i-will-defend-to-the-death/","quote":"I disapprove of what you say, but I will defend to the death your right to say it","claim":"Voltaire said: \"I disapprove of what you say, but I will defend to the death your right to say it\"","rating":1,"verdict":"Not supported","answer":"No. Voltaire never wrote or spoke these words. The sentence was composed by his English biographer Evelyn Beatrice Hall in The Friends of Voltaire (1906) as her own summary of his attitude toward the censorship of Claude-Adrien Helvétius's book De l'esprit. As Quote Investigator documents, Hall later admitted the line was \"my own expression,\" and it has never been located in any of Voltaire's works.","credit":"Evelyn Beatrice Hall, writing as S. G. Tallentyre, in The Friends of Voltaire (1906) — not Voltaire.","comparison":"","citation":"Evelyn Beatrice Hall [S. G. Tallentyre], The Friends of Voltaire (London: Smith, Elder & Co., 1906). Origin documented in Garson O'Toole, \"I Disapprove of What You Say, But I Will Defend to the Death Your Right to Say It,\" Quote Investigator, June 1, 2015.","rights":"The wording is Evelyn Beatrice Hall's, first published in The Friends of Voltaire (London, 1906). A work published before 1931 is in the public domain in the United States, so the sentence itself is free to reproduce — only the false 'Voltaire' label is the problem.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -844,6 +852,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

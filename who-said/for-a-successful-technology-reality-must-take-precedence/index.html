@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"for-a-successful-technology-reality-must-take-precedence","url":"https://quotle.info/who-said/for-a-successful-technology-reality-must-take-precedence/","quote":"For a successful technology, reality must take precedence over public relations, for nature cannot be fooled","claim":"Richard P. Feynman said: \"For a successful technology, reality must take precedence over public relations, for nature cannot be fooled\"","rating":5,"verdict":"Supported","answer":"Yes. This one is real, and unusually easy to prove. It is the closing sentence of Appendix F: Personal Observations on Reliability of Shuttle, Feynman's personal addendum to the Presidential Commission's report on the Challenger accident, published June 1986 — and NASA still hosts the full text, where the line appears verbatim.","credit":"Richard P. Feynman, \"Appendix F: Personal Observations on Reliability of Shuttle,\" Report of the Presidential Commission on the Space Shuttle Challenger Accident, vol. 2 (June 1986)","comparison":"","citation":"Richard P. Feynman, \"Appendix F: Personal Observations on Reliability of Shuttle,\" in Report of the Presidential Commission on the Space Shuttle Challenger Accident, vol. 2 (Washington, DC: The Commission, June 1986), closing sentence of the \"Conclusions\" section.","rights":"The sentence was first published in the report of a U.S. federal commission, and works of the United States Government are not subject to copyright. NASA's own catalogue record for the Commission's report carries the statement \"Work of the US Gov. Public Use Permitted\", and NASA publishes the complete text free of charge. One caveat: Feynman's 1988 book \"What Do You Care What Other People Think?\" reprints the appendix and that book is in copyright as a book — quote from the government text, not the trade edition.","checked":"10 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -869,6 +877,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

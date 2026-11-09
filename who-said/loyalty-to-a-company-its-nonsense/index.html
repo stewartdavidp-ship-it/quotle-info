@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"loyalty-to-a-company-its-nonsense","url":"https://quotle.info/who-said/loyalty-to-a-company-its-nonsense/","quote":"Loyalty to a company, it's nonsense","claim":"Jack Welch said: \"Loyalty to a company, it's nonsense\"","rating":5,"verdict":"Supported","answer":"Yes. Welch said it to Wall Street Journal reporter Janet Guyon for her front-page profile \"Combative Chief: GE Chairman Welch, Though Much Praised, Starts to Draw Critics,\" published 4 August 1988. Four independently reported books cite that article for this sentence, and one of them — Hedrick Smith's Who Stole the American Dream? — carries an endnote keyed word-for-word to it.","credit":"Jack Welch (1935–2020), chairman and CEO of General Electric, quoted by Janet Guyon in \"Combative Chief: GE Chairman Welch, Though Much Praised, Starts to Draw Critics,\" The Wall Street Journal, August 4, 1988. Verified via quotle.info","comparison":"","citation":"Janet Guyon, \"Combative Chief: GE Chairman Welch, Though Much Praised, Starts to Draw Critics,\" The Wall Street Journal, August 4, 1988. Cited for this sentence in Hedrick Smith, Who Stole the American Dream? (New York: Random House, 2012), and Steven Greenhouse, The Big Squeeze (New York: Alfred A. Knopf, 2008).","rights":"The sentence was first published in The Wall Street Journal on 4 August 1988, so the article carrying it is squarely in copyright in the United States — nothing published in 1931 or later has aged into the public domain. Welch's spoken words reached print through Janet Guyon's reporting, and the article remains behind the Journal's paid archive. Quoting the line itself for comment and attribution is ordinary fair use; reproducing the article is not.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -860,6 +868,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

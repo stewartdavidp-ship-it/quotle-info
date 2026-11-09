@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"we-keep-moving-forward-opening-new-doors-and-doing-new","url":"https://quotle.info/who-said/we-keep-moving-forward-opening-new-doors-and-doing-new/","quote":"We keep moving forward, opening new doors, and doing new things, because we're curious and curiosity keeps leading us down new paths","claim":"Walt Disney said: \"We keep moving forward, opening new doors, and doing new things, because we're curious and curiosity keeps leading us down new paths\"","rating":5,"verdict":"Supported","answer":"Yes. This one is real. The line comes from Walt Disney's own first-person message in the Walt Disney Productions Annual Report 1965, whose full text is readable at the Internet Archive. The original reads \"opening up new doors\" and is preceded by a sentence the popular version drops: \"Around here, however, we don't look backwards for very long.\"","credit":"Walt Disney, \"The Disney Team: Production,\" Walt Disney Productions Annual Report 1965. The popular short form drops the word \"up.\" Verified by quotle.info · Verbatim: “Around here, however, we don't look backwards for very long. We keep moving forward, opening up new doors and doing new things, because we're curious … and curiosity keeps leading us down new paths.”","comparison":"Around here, however, we don't look backwards for very long. We keep moving forward, opening up new doors and doing new things, because we're curious … and curiosity keeps leading us down new paths.","citation":"Walt Disney, \"The Disney Team: Production,\" in Walt Disney Productions Annual Report 1965 (Burbank, CA: Walt Disney Productions, 1965). Scanned copy and full text at the Internet Archive.","rights":"The work containing this line — the Walt Disney Productions Annual Report 1965 — was published in 1965 by an identifiable corporate publisher, so we treat it as in copyright in the United States and quote only a short excerpt for commentary and verification. Walt Disney died in 1966; nothing about his death moves a 1965 corporate publication into the public domain.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -875,6 +883,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

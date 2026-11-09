@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-these-kids-can-afford-8-cups-of-coffee-they-can-afford","url":"https://quotle.info/who-said/if-these-kids-can-afford-8-cups-of-coffee-they-can-afford/","quote":"If these kids can afford $8 cups of coffee, they can afford to pay their own student loans","claim":"Michael Jordan said: \"If these kids can afford $8 cups of coffee, they can afford to pay their own student loans\"","rating":1,"verdict":"Not supported","answer":"No. Jordan never said it. Snopes traced the exact wording to a quote meme posted on 16 August 2024 by America's Last Line of Defense (ALLOD), a Facebook network whose own page carries a \"satire/parody\" label and an intro reading \"Nothing on this page is real.\" The verdict is blunt: \"Jordan never made the statement about $8 coffees and student loans\" (Snopes, 21 Aug 2024). No interview, press conference or statement is cited by anyone sharing it, because none exists.","credit":"Not Michael Jordan. The line was written for a quote meme posted by the satire page America's Last Line of Defense on 16 August 2024; Snopes rated the claim \"Labeled Satire\" on 21 August 2024 and found Jordan never made the statement. — Quotle.info","comparison":"","citation":"America's Last Line of Defense, quote meme of Michael Jordan, Facebook, August 16, 2024; documented in Jordan Liles, \"Michael Jordan Said If Kids Can Afford $8 Coffees, They Can Pay Their Student Loans?\" Snopes, August 21, 2024, https://www.snopes.com/fact-check/michael-jordan-coffee-loans/.","rights":"There is no work by Michael Jordan to attach rights to — he did not write or say this. The wording itself was composed in August 2024 for a Facebook meme by an unnamed writer at America's Last Line of Defense, so it is neither public domain nor cleanly owned by a named author. Treat the status as unresolved: a 2024 sentence with no identified creator is not free to reuse simply because a famous face was set beside it.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -856,6 +864,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

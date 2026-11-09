@@ -212,6 +212,8 @@ ${HEAD_SCRIPT}
     <meta property="og:description" content="${attr(q.meta.ogDescription)}">
     <meta property="og:site_name" content="Quotle.info">
 ${OG_IMAGE_TAGS}
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -1199,7 +1201,9 @@ function renderAnswer(q) {
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">${JSON.stringify(shareCardData(q)).replace(/</g, '\\u003c')}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified ${esc(ans.lastVerified)} · <a href="${standingPath('how-we-verify')}">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -1332,6 +1336,30 @@ function creditLine(q) {
 // people search for, and JSON-LD already carries it as alternateName).
 function kitQuote(q) {
   return plain((q.presentation && q.presentation.verifiedQuote) || q.displayQuote);
+}
+
+// Cards and the challenge reuse the SAME scoped verdict as the page's JSON-LD. In particular,
+// confidence=disputed does not mean false: wording drift and unconfirmed authorship differ.
+function shareCardData(q) {
+  const url = canonicalUrl(q.quoteSlug);
+  const graph = buildJsonLd(q, url)['@graph'];
+  const review = graph.find((n) => n['@type'] === 'ClaimReview');
+  const faq = graph.find((n) => n['@type'] === 'FAQPage');
+  const quotation = graph.find((n) => n['@type'] === 'Quotation');
+  const quote = plain(q.displayQuote);
+  const comparison = plain(quotation.text);
+  const wordingKey = (text) => text.normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+  const rating = review.reviewRating.ratingValue;
+  return {
+    slug: q.quoteSlug, url, quote, claim: plain(review.claimReviewed), rating,
+    verdict: ({ 5: 'Supported', 4: 'Mostly supported', 3: 'Not confirmed', 2: 'Needs context', 1: 'Not supported' })[rating] || 'Needs context',
+    answer: plain(faq.mainEntity[0].acceptedAnswer.text),
+    credit: plain(creditLine(q) + verbatimNote(q, kitQuote(q))),
+    comparison: wordingKey(comparison) !== wordingKey(quote) && !(q.presentation && q.presentation.wordingUnpinned) ? comparison : '',
+    citation: plain((q.cite && q.cite.sourceCitation) || (q.answer && q.answer.sourceLine) || ''),
+    rights: plain((q.source && q.source.rightsNote) || 'Reuse rights have not been established.'),
+    checked: plain((q.answer && q.answer.lastVerified) || ''),
+  };
 }
 
 // THE SLIDE BOX MUST NOT LAUNDER A MISQUOTE.
@@ -2388,4 +2416,4 @@ const creativeWork = (w) => {
 const VERDICT_LEAD_TOKENS = ['Yes', 'Mostly', 'Yes and no', 'Not confirmed', 'No'];
 const leadToken = (v) => { const t = plain(v).trim().replace(/\.+$/, '').trim(); return t ? `${t}. ` : ''; };
 
-module.exports = { renderPage, canonicalUrl, CONFIDENCE, creditLine, plain, buildImagePrompts, realAuthorName, rightPersonWrongWords, VERDICT_LEAD_TOKENS, leadToken };
+module.exports = { renderPage, canonicalUrl, CONFIDENCE, creditLine, plain, buildImagePrompts, realAuthorName, rightPersonWrongWords, VERDICT_LEAD_TOKENS, leadToken, shareCardData };

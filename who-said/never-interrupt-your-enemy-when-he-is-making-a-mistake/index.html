@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"never-interrupt-your-enemy-when-he-is-making-a-mistake","url":"https://quotle.info/who-said/never-interrupt-your-enemy-when-he-is-making-a-mistake/","quote":"Never interrupt your enemy when he is making a mistake","claim":"Napoleon Bonaparte said: \"Never interrupt your enemy when he is making a mistake\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Napoleon is credibly credited with the idea: the oldest documented version, in Baron Antoine-Henri Jomini's Vie politique et militaire de Napoléon (Paris: Anselin, 1827), has him say of the enemy at Austerlitz, \"Quand l'ennemi fait un faux mouvement, il faut se garder de l'interrompre.\" But the famous eight-word English form matches no located primary source — Quote Investigator found no exact 1800s match, and Wikiquote files the line under \"Attributed.\"","credit":"Attributed to Napoleon Bonaparte (1769–1821). The thought is documented but the popular wording is a modern paraphrase. The earliest source, Antoine-Henri Jomini's \"Vie politique et militaire de Napoléon\" (Paris: Anselin, 1827), p. 180, reads \"Quand l'ennemi fait un faux mouvement, il faut se garder de l'interrompre\" — rendered in English by Archibald Alison in 1836 as \"when the enemy is making a false movement we must take good care not to interrupt him.\" Via Quotle.info","comparison":"","citation":"Antoine-Henri Jomini, Vie politique et militaire de Napoléon, racontée par lui-même au tribunal de César, d'Alexandre et de Frédéric (Paris: Anselin, 1827), 180; earliest English record in Archibald Alison, History of Europe from the Commencement of the French Revolution… (W. Blackwood and Sons, 1836), 476. The popular modern wording matches no located primary source.","rights":"Both works that actually carry this saying are long out of copyright in the United States: Jomini's Vie politique et militaire de Napoléon was published in Paris in 1827, and Alison's History of Europe volume containing the passage in 1836 — each far earlier than the 1931 US public-domain cutoff, and both authors died in the 1860s. The modern eight-word English paraphrase has no identified author or first publication, so no one is in a position to claim it.","checked":"27 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

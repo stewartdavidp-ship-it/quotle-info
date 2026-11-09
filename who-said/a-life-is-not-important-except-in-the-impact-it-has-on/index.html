@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-life-is-not-important-except-in-the-impact-it-has-on","url":"https://quotle.info/who-said/a-life-is-not-important-except-in-the-impact-it-has-on/","quote":"A life is not important except in the impact it has on other lives","claim":"Jackie Robinson said: \"A life is not important except in the impact it has on other lives\"","rating":5,"verdict":"Supported","answer":"Yes. Wikiquote's cited entry traces the sentence to Robinson's autobiography I Never Had It Made (New York: G. P. Putnam's Sons, 1972), written with Alfred Duckett and published in the year he died; the Simple English edition places it in the book's epilogue. His family chose it as the inscription on the Robinson family headstone at Cypress Hills Cemetery in Brooklyn, where it appears alongside his signature.","credit":"Jackie Robinson, I Never Had It Made (New York: G. P. Putnam's Sons, 1972); also the inscription on his family headstone at Cypress Hills Cemetery, Brooklyn.","comparison":"","citation":"Jackie Robinson, as told to Alfred Duckett, I Never Had It Made: An Autobiography of Jackie Robinson (New York: G. P. Putnam's Sons, 1972). Cited by Wikiquote to the book, excerpted in \"Why 'I Never Had It Made': Jackie Robinson's Own Story,\" Newsday, 5 November 1972.","rights":"I Never Had It Made was first published in 1972 — far later than the 1931 United States public-domain cutoff — so the book remains under copyright and is available at the Internet Archive on a borrow-only basis. The single sentence is quoted here for identification and commentary; the work itself is controlled by Robinson's estate, his co-author's estate, and the publisher.","checked":"25 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 25 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

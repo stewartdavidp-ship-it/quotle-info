@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -516,6 +518,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -562,6 +567,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -618,7 +624,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"yes-mexico-must-be-thoroughly-chastised-let-our-arms-now-be","url":"https://quotle.info/who-said/yes-mexico-must-be-thoroughly-chastised-let-our-arms-now-be/","quote":"Yes, Mexico must be thoroughly chastised! Let our arms now be carried with a spirit which shall teach the world that, while we are not forward for a quarrel, America knows how to crush, as well as how to expand!","claim":"Walt Whitman wrote the displayed passage as one continuous, verbatim quotation.","rating":2,"verdict":"Needs context","answer":"Whitman wrote the editorial, but this circulating passage joins separated clauses and changes “with a quarrel” to “for a quarrel.” It is an edited excerpt, not a continuous verbatim quotation.","credit":"— An edited excerpt from Walt Whitman’s 11 May 1846 editorial; omitted text and changed wording mean this is not a continuous verbatim quotation. · Verbatim: “Yes: Mexico must be thoroughly chastised! […] Let our arms now be carried with a spirit which shall teach the world that, while we are not forward with a quarrel, America knows how to crush, as well as how to expand!”","comparison":"Yes: Mexico must be thoroughly chastised! […] Let our arms now be carried with a spirit which shall teach the world that, while we are not forward with a quarrel, America knows how to crush, as well as how to expand!","citation":"Whitman, Walt. “Shall We Fight It Out?” Brooklyn Daily Eagle, May 11, 1846. Excerpted in Broadview’s “Expansion, Native American Expulsion, and Manifest Destiny,” printed pp. 188–190.","rights":"The underlying editorial was published in 1846. This page does not reproduce the modern editor’s commentary or assert clearance of unverified wording.","checked":"9 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -811,6 +819,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

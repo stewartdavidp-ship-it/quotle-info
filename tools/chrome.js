@@ -21,6 +21,7 @@ const NAV_LINKS = [
   { key: 'themes', label: 'Themes', href: '/themes/' },
   { key: 'authors', label: 'Authors', href: '/authors/' },
   { key: 'check', label: 'Check a quote', href: '/check/' },
+  { key: 'challenge', label: 'Daily challenge', href: '/challenge/' },
   // The blog lives on the Mast Managed site, not in this repo — posts are
   // authored in the Mast admin and rendered from the `blog` public projection.
   // Absolute URL on purpose: different origin.
@@ -133,6 +134,7 @@ const FOOTER = `    <footer class="site-footer">
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

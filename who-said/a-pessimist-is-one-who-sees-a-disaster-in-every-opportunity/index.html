@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-pessimist-is-one-who-sees-a-disaster-in-every-opportunity","url":"https://quotle.info/who-said/a-pessimist-is-one-who-sees-a-disaster-in-every-opportunity/","quote":"A pessimist is one who sees a disaster in every opportunity. An optimist sees opportunity in every disaster","claim":"John D. Rockefeller said: \"A pessimist is one who sees a disaster in every opportunity. An optimist sees opportunity in every disaster\"","rating":5,"verdict":"Supported","answer":"Yes. This one is real. The Detroit Free Press of 2 March 1925, in a story headlined \"John D. at 85 Plays Splendid Golf Game,\" reports Rockefeller giving exactly this definition mid‑round, after a poor start on a difficult hole. What is not his is the invention: the pessimist/optimist antithesis was already circulating in newspapers years before, and Rockefeller's contribution was swapping the usual word \"difficulty\" for the heavier \"disaster.\"","credit":"John D. Rockefeller, reported in \"John D. at 85 Plays Splendid Golf Game,\" The Detroit Free Press, 2 March 1925, p. 3. He said it mid-round, aged 85. He did not coin the joke: the earliest clean version of the pessimist/optimist antithesis is a 1919 remark by Bertram Carr, Mayor of Carlisle. Verified via Quotle.info","comparison":"","citation":"John D. Rockefeller, quoted in \"John D. at 85 Plays Splendid Golf Game,\" The Detroit Free Press (Detroit, MI), March 2, 1925, start page 1, quote page 3, column 6. Chronology and transcription: Quote Investigator, \"Quote Origin: A Pessimist Sees the Difficulty in Every Opportunity; an Optimist Sees the Opportunity in Every Difficulty,\" July 26, 2017.","rights":"The wording is documented in The Detroit Free Press of 2 March 1925. A United States newspaper published in 1925 is in the public domain in the US, so both the article and the remark it transcribes are free to quote and reproduce. Rockefeller's 1909 memoir, linked here as a cross-check, is likewise public domain.","checked":"6 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 6 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -864,6 +872,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

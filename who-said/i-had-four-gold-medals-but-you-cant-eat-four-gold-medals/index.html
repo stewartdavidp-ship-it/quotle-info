@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-had-four-gold-medals-but-you-cant-eat-four-gold-medals","url":"https://quotle.info/who-said/i-had-four-gold-medals-but-you-cant-eat-four-gold-medals/","quote":"I had four gold medals, but you can't eat four gold medals","claim":"Jesse Owens said: \"I had four gold medals, but you can't eat four gold medals\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Owens almost certainly said this, or something very close to it — ESPN's SportsCentury, the IOC's own Olympics.com, Wikipedia and Wikiquote all carry the line in his voice, and it fits a documented life. But it is a look back, not a remark from 1936: Wikiquote and Biography.com date it to a 1971 interview, and neither names the interviewer, the outlet or a transcript. The article they lean on prints the words with no date at all, so no primary source pins this exact wording.","credit":"attributed to Jesse Owens (1913–1980). Widely reported from an interview dated 1971, but the interview has never been identified and no transcript or recording has been located. Via Quotle.info · Verbatim: “People said it was degrading for an Olympic champion to run against a horse, but what was I supposed to do? I had four gold medals, but you can't eat four gold medals.”","comparison":"People said it was degrading for an Olympic champion to run against a horse, but what was I supposed to do? I had four gold medals, but you can't eat four gold medals.","citation":"Larry Schwartz, \"Owens pierced a myth,\" ESPN SportsCentury, ESPN.com (archived 12 November 2017). Wikiquote and Biography.com date the remark to a 1971 interview; no transcript, recording or contemporaneous printing has been located.","rights":"Not public domain, and not confidently classifiable either. The wording comes from an interview Owens gave in later life — dated 1971 by the sources that carry it, far past the 1931 US public-domain line — but that interview has never been identified, so there is no work, publication date or rights holder to name. The printings that actually circulate, including ESPN's SportsCentury profile, are themselves in copyright. Quote the sentence with attribution; do not treat it as rights-free.","checked":"25 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 25 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -849,6 +857,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-may-be-dangerous-to-be-americas-enemy","url":"https://quotle.info/who-said/it-may-be-dangerous-to-be-americas-enemy/","quote":"It may be dangerous to be America's enemy, but to be America's friend is fatal","claim":"Henry Kissinger said: \"It may be dangerous to be America's enemy, but to be America's friend is fatal\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. He really did say it, in November 1968, in the weeks between Nixon's election and his inauguration — but not as a standalone judgment. It is the closing clause of a conditional: if the South Vietnamese president Nguyen Van Thieu were deposed as Ngo Dinh Diem had been in 1963, then the world would conclude this. The record is William F. Buckley Jr., who set the remark down in United Nations Journal: A Delegate's Odyssey (Putnam, 1974), pp. 56–57. That is a named witness publishing six years later, not a transcript — which is why we file it as attributed rather than verified.","credit":"The full sentence, from November 1968, is a conditional: \"Word should be gotten to Nixon that if Thieu meets the same fate as Diem, the word will go out to the nations of the world that it may be dangerous to be America's enemy, but to be America's friend is fatal.\" —Henry Kissinger, quoted in William F. Buckley Jr., United Nations Journal (Putnam, 1974), pp. 56–57.","comparison":"","citation":"Kissinger, Henry. Remark of November 1968, quoted in William F. Buckley Jr., United Nations Journal: A Delegate's Odyssey (New York: Putnam, 1974), pp. 56–57.","rights":"Both layers of this are in copyright. Henry Kissinger died in 2023, so his own words are protected in the UK and EU until 2093 and, as an unpublished-then-published remark, are covered in the US as well. The passage as you read it is also Buckley's 1974 book text, which is separately in copyright to his estate and publisher. Quote the sentence for comment, criticism or reporting with attribution — that is ordinary fair dealing and fair use — but do not treat it as free stock text, and do not reproduce Buckley's surrounding pages. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -870,6 +878,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"wonder-is-the-feeling-of-a-philosopher-and-philosophy","url":"https://quotle.info/who-said/wonder-is-the-feeling-of-a-philosopher-and-philosophy/","quote":"Wonder is the feeling of a philosopher, and philosophy begins in wonder","claim":"Socrates, as written by Plato said: \"Wonder is the feeling of a philosopher, and philosophy begins in wonder\"","rating":5,"verdict":"Supported","answer":"Yes. Genuine, and traceable to the page. Socrates says it at Theaetetus 155d, and this exact English is Benjamin Jowett's, from The Dialogues of Plato, vol. III (Oxford: Clarendon Press, 1871), p. 377 — confirmed against the scanned volume. Two honest footnotes: Socrates wrote nothing, so the line is Plato's composition put in his mouth; and the quotable phrasing is the translator's, since the 1921 Loeb version renders the same clause \"wonder is the only beginning of philosophy.\"","credit":"Socrates, in Plato's Theaetetus 155d — \"Wonder is the feeling of a philosopher, and philosophy begins in wonder.\" Translated by Benjamin Jowett, The Dialogues of Plato, vol. III (Oxford: Clarendon Press, 1871), p. 377. Note: Plato composed the line; the memorable phrasing is Jowett's — the 1921 Loeb translation reads \"wonder is the only beginning of philosophy.\" Verified via quotle.info. · Verbatim: “I see, my dear Theaetetus, that Theodorus had a true insight into your nature when he said that you were a philosopher, for wonder is the feeling of a philosopher, and philosophy begins in wonder.”","comparison":"I see, my dear Theaetetus, that Theodorus had a true insight into your nature when he said that you were a philosopher, for wonder is the feeling of a philosopher, and philosophy begins in wonder.","citation":"Plato, Theaetetus 155d, in The Dialogues of Plato, translated into English with analyses and introductions by B. Jowett, 4 vols. (Oxford: at the Clarendon Press, 1871), 3:377. Compare Harold N. Fowler's translation in Plato in Twelve Volumes, Vol. 12 (Cambridge, MA: Harvard University Press, 1921): \"since wonder is the only beginning of philosophy.\"","rights":"The Greek original is ancient and long out of copyright, and the exact English shown here is Benjamin Jowett's translation, first published by the Clarendon Press at Oxford in 1871 — comfortably in the public domain in the United States, and Jowett himself died in 1893. The scanned volume carries the Internet Archive's note that there are no known US copyright restrictions on the text. That status attaches to this translation: a modern rendering of the same passage would be a separate copyright.","checked":"29 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 29 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -877,6 +885,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"you-can-always-always-give-something-even-if-it-is-only","url":"https://quotle.info/who-said/you-can-always-always-give-something-even-if-it-is-only/","quote":"You can always, always give something, even if it is only kindness!","claim":"Anne Frank said: \"You can always, always give something, even if it is only kindness!\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Wikiquote's sourced entry attributes this passage to a short piece titled \"Give!\", dated 26 March 1944, written while Anne Frank was in hiding in Amsterdam — and files it under Tales from the Secret Annex, not the diary. We are stopping short of calling it verified: every scanned edition of that collection is lending-restricted, so no primary text could be opened, and Wikiquote records this exact English wording only as a variant translation without naming its translator. The attribution to Anne Frank is not in doubt; the wording is what we could not confirm at the source.","credit":"Attributed to Anne Frank, \"Give!\", 26 March 1944 — from Tales from the Secret Annex, not from her diary. The English wording is one of two circulating translations; the translator is not established. — Quotle.info","comparison":"","citation":"Anne Frank, \"Give!\" (26 March 1944), in Tales from the Secret Annex, first published in Dutch in 1949; attributed per Wikiquote, \"Anne Frank.\" Quoted here in the English variant translation Wikiquote records. The translator of this wording is not established, and no edition of the collection was available to consult.","rights":"Firmly in copyright. Tales from the Secret Annex was first published in the Netherlands in 1949, with an expanded edition in 1960 and a complete edition in 1982 — all long after the 1931 United States public-domain cutoff — and the English translations are later still. Nothing here is free to reuse.","checked":"18 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 18 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -866,6 +874,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"run-mad-as-often-as-you-choose-but-do-not-faint","url":"https://quotle.info/who-said/run-mad-as-often-as-you-choose-but-do-not-faint/","quote":"Run mad as often as you choose, but do not faint","claim":"Jane Austen said: \"Run mad as often as you choose, but do not faint\"","rating":5,"verdict":"Supported","answer":"Yes. Genuine, early, and funnier in place than out of it. The line closes Love and Freindship — Austen's own misspelling — a burlesque of sentimental novels she finished on 13 June 1790, aged fourteen, and dated in her own hand. It is not advice from Austen but the dying speech of a character: Sophia, expiring of a \"galloping Consumption\" caught by lying fainting on wet grass, warns her friend Laura off swooning and recommends madness instead. Austen wrote chuse; the modern version tidies the spelling and softens her dash into a comma.","credit":"Jane Austen, Love and Freindship, Letter the 14th, manuscript dated 13 June 1790, when she was fourteen; first published 1922. It is spoken by the character Sophia on her deathbed, in a burlesque of sentimental novels — she is dying of a chill caught while fainting, so the advice is a joke. Modern versions spell it \"choose\". Via Quotle.info · Verbatim: “Run mad as often as you chuse; but do not faint—”","comparison":"Run mad as often as you chuse; but do not faint—","citation":"Jane Austen, \"Love and Freindship,\" Letter the 14th, in Love & Freindship and Other Early Works: Now First Published from the Original MS., preface by G. K. Chesterton (New York: Frederick A. Stokes, 1922) — \"Run mad as often as you chuse; but do not faint—\". Manuscript dated by the author \"June 13th 1790\". Scan at archive.org; full text also at Project Gutenberg.","rights":"Public domain in the United States. Jane Austen died in 1817, and this text was first published in 1922 — comfortably before the 1931 cut-off, so no publication copyright subsists. It is an English original, so no translator's rights arise either. Project Gutenberg distributes the complete work freely on the same basis.","checked":"13 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 13 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -852,6 +860,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

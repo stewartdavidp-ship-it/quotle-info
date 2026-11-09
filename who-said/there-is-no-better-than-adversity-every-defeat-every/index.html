@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"there-is-no-better-than-adversity-every-defeat-every","url":"https://quotle.info/who-said/there-is-no-better-than-adversity-every-defeat-every/","quote":"There is no better than adversity. Every defeat, every heartbreak, every loss, contains its own seed, its own lesson on how to improve your performance next time","claim":"Malcolm X said: \"There is no better than adversity. Every defeat, every heartbreak, every loss, contains its own seed, its own lesson on how to improve your performance next time\"","rating":2,"verdict":"Needs context","answer":"Not confirmed. No speech, letter, interview or book by Malcolm X has been identified for this line, and it appears nowhere in Wikiquote's Malcolm X entry — not even among the unsourced attributions. The core sentence, \"Every defeat, every heartbreak, every loss, contains its own seed, its own lesson on how to improve your performance the next time,\" circulates just as widely under the American motivational writer Og Mandino — though that credit is undocumented too. Treat the Malcolm X attribution as unsupported.","credit":"Unverified. No documented source exists for this line in Malcolm X's speeches, letters or books, and it does not appear in Wikiquote's Malcolm X entry. The core sentence — \"Every defeat, every heartbreak, every loss, contains its own seed, its own lesson on how to improve your performance the next time\" — circulates equally under motivational writer Og Mandino (1923–1996), also without a source. Attribute to neither. — Quotle.info · Verbatim: “There is no better teacher than adversity. Every defeat, every heartbreak, every loss, contains its own seed, its own lesson on how to improve your performance the next time.”","comparison":"There is no better teacher than adversity. Every defeat, every heartbreak, every loss, contains its own seed, its own lesson on how to improve your performance the next time.","citation":"No primary source located. The line circulates in quotation collections credited both to Malcolm X and to Og Mandino; see Wikiquote, \"Malcolm X\" (which does not contain it), and Goodreads, \"Quote by Og Mandino: 'Every defeat, every heartbreak, every loss, contains its own seed…'\" Accessed 4 August 2026.","rights":"Because the wording cannot be tied to any identified work, author or first publication, no copyright status can honestly be asserted. It is not safe to treat this as public domain: if the sentence does originate with a twentieth-century motivational writer such as Og Mandino, whose books date from 1968 onward, it would be in copyright to that author's estate and publisher. Quote it as unverified, and do not reproduce it as a licensed or public-domain text.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -844,6 +852,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

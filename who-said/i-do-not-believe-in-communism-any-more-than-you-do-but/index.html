@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-do-not-believe-in-communism-any-more-than-you-do-but","url":"https://quotle.info/who-said/i-do-not-believe-in-communism-any-more-than-you-do-but/","quote":"I do not believe in communism any more than you do but there is nothing wrong with the Communists in this country; several of the best friends I have got are Communists","claim":"Franklin D. Roosevelt said: \"I do not believe in communism any more than you do but there is nothing wrong with the Communists in this country; several of the best friends I have got are Communists\"","rating":1,"verdict":"Not supported","answer":"No. The exact wording appears only in Martin Dies's own account of a White House conversation, \"The Communist Threat to America,\" printed in the Congressional Record Appendix for September 22, 1950 (p. A6832). No independent record shows Roosevelt said it, and Wikiquote lists it as misattributed. Wikiquote quotes the historian Paul F. Boller Jr. calling it \"exceedingly dubious.\"","credit":"attributed to Franklin D. Roosevelt by Martin Dies, \"The Communist Threat to America,\" Congressional Record, vol. 96, Appendix, p. A6832 (September 22, 1950); uncorroborated and widely considered dubious.","comparison":"","citation":"Martin Dies, \"The Communist Threat to America,\" extension of remarks of Hon. Harold H. Velde, Congressional Record, vol. 96, Appendix (September 22, 1950): A6831–A6832. Attribution to Roosevelt rests solely on Dies's report; see Paul F. Boller Jr., Quotemanship (1967), ch. 8, p. 361, as quoted by Wikiquote.","rights":"The wording first appeared in Martin Dies's statement \"The Communist Threat to America,\" published in the Congressional Record Appendix on September 22, 1950. It is a 1931-or-later text by an identifiable private author. The Congressional Record is a government publication, but that does not clearly make inserted outside material public domain, so we treat Dies's text as in copyright.","checked":"2 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 2 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -859,6 +867,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

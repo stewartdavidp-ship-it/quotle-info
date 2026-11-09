@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"a-man-who-dares-to-waste-one-hour-of-time-has-not","url":"https://quotle.info/who-said/a-man-who-dares-to-waste-one-hour-of-time-has-not/","quote":"A man who dares to waste one hour of time has not discovered the value of life","claim":"Charles Darwin said: \"A man who dares to waste one hour of time has not discovered the value of life\"","rating":5,"verdict":"Supported","answer":"Yes. This one is genuine, and it has an address and a date. Darwin wrote it to his sister Susan from Bahia, Brazil, on 4 August 1836, aboard HMS Beagle on the last leg of the voyage home. It was printed in The Life and Letters of Charles Darwin, edited by his son Francis in 1887. One honest caveat: it is not a maxim in the original. Darwin wrote it as the tail of a longer sentence — 'I shall act as I now think—as a man who dares to waste one hour of time has not discovered the value of life' — and the quotable version simply lops off the 'as' and capitalises what follows.","credit":"Charles Darwin, letter to his sister Susan Darwin from Bahia, Brazil, 4 August 1836, written aboard HMS Beagle on the voyage home. Printed in The Life and Letters of Charles Darwin (1887), vol. I, ch. VI. · Verbatim: “I trust one part at least will turn out true, and that I shall act as I now think—as a man who dares to waste one hour of time has not discovered the value of life.”","comparison":"I trust one part at least will turn out true, and that I shall act as I now think—as a man who dares to waste one hour of time has not discovered the value of life.","citation":"Darwin, Charles. Letter to Susan Elizabeth Darwin, Bahia, Brazil, 4 August 1836. In The Life and Letters of Charles Darwin, edited by Francis Darwin, vol. I, chapter VI (\"The Voyage\"). London: John Murray, 1887.","rights":"Free to reuse. Darwin wrote the letter in 1836 and died in 1882; The Life and Letters of Charles Darwin was published in 1887, far earlier than the 1931 threshold for United States public domain, and Project Gutenberg distributes the full text on that basis. No modern translation or edited text is involved — the English quoted here is Darwin's own.","checked":"2 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 2 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -829,6 +837,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

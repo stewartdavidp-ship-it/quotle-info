@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"as-human-beings-our-job-in-life-is-to-help-people-realize","url":"https://quotle.info/who-said/as-human-beings-our-job-in-life-is-to-help-people-realize/","quote":"As human beings, our job in life is to help people realize how rare and valuable each one of us really is","claim":"Fred Rogers said: \"As human beings, our job in life is to help people realize how rare and valuable each one of us really is\"","rating":5,"verdict":"Supported","answer":"Yes. Rogers said it in \"Encouraging Creativity,\" his address to the Thiel College Honors Convocation on 13 November 1969 — a transcript the college still publishes in full. One caveat worth knowing: the two words that open the famous version, \"As human beings,\" are not in the address. That polished form was published later on PBS's official Mister Rogers' Neighborhood site, and it is the wording nearly everyone quotes.","credit":"Fred Rogers, \"Encouraging Creativity,\" Thiel College Honors Convocation, November 13, 1969. As delivered: \"Our job in life is to help people realize how rare and valuable each one of us really is.\" The widely quoted form beginning \"As human beings,\" is a lightly edited later version published by PBS. Verified via Quotle.info · Verbatim: “As human beings, our job in life is to help people realize how rare and valuable each one of us really is, that each of us has something that no one else has—or ever will have—something inside that is unique to all time. It's our job to encourage each other to discover that uniqueness and to provide ways of developing its expression.”","comparison":"As human beings, our job in life is to help people realize how rare and valuable each one of us really is, that each of us has something that no one else has—or ever will have—something inside that is unique to all time. It's our job to encourage each other to discover that uniqueness and to provide ways of developing its expression.","citation":"Rogers, Fred McFeely. \"Encouraging Creativity.\" Address at the Thiel College Honors Convocation, Greenville, PA, 13 November 1969. Transcript published by Thiel College, https://www.thiel.edu/ee2assets/Encouraging_Creativity.pdf. The widely circulated wording beginning \"As human beings,\" appears on PBS's Mister Rogers' Neighborhood site, \"Thoughts For All Ages.\"","rights":"This is a 1969 work by an identifiable author, so it is under United States copyright — nothing about it is public domain. Thiel College publishes the transcript as part of its own institutional history; that hosting is not a licence to reuse the text. Quote the sentence with attribution, and seek permission for anything longer.","checked":"18 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 18 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -875,6 +883,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

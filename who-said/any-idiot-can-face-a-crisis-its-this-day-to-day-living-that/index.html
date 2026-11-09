@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -546,6 +548,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -592,6 +597,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -648,7 +654,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"any-idiot-can-face-a-crisis-its-this-day-to-day-living-that","url":"https://quotle.info/who-said/any-idiot-can-face-a-crisis-its-this-day-to-day-living-that/","quote":"Any Idiot Can Face a Crisis; It's This Day-To-Day Living That Wears You Out","claim":"Anton Chekhov said: \"Any Idiot Can Face a Crisis; It's This Day-To-Day Living That Wears You Out\"","rating":1,"verdict":"Not supported","answer":"No. Two separate mistakes stacked up to make this quotation, and Quote Investigator takes both apart. The nearest real line is film dialogue: in The Country Girl (1954), Bing Crosby, playing the alcoholic actor Frank Elgin, says \"Just about anybody can face a crisis. It's that everyday living that's rough.\" The film was adapted from a Clifford Odets play — which is how Odets got the credit — but it was written for the screen by George Seaton, who won that year's Academy Award for it. QI checked the 1951 published text of Odets's play and found neither the film line nor the modern quotation in it, concluding that it \"would credit Seaton with the line\". The punchy wording everyone quotes is later still: it was written in 1971, by two textbook editors paraphrasing the scene from memory. Chekhov enters only because they mentioned him in the same breath.","credit":"Not Chekhov and not Odets. The nearest real line is George Seaton's, for the film The Country Girl (1954): “Just about anybody can face a crisis. It's that everyday living that's rough.” The familiar wording — “Any idiot can face a crisis; it's this day-to-day living that wears you out” — first appears in a 1971 textbook paraphrasing that scene. Via quotle.info","comparison":"Just about anybody can face a crisis. It's that everyday living that's rough.","citation":"The Country Girl, directed and written for the screen by George Seaton, based on the play by Clifford Odets (Paramount Pictures, 1954), dialogue of Frank Elgin. For the familiar wording see Peter Bauland and William Ingram, eds., The Tradition of the Theatre (Boston: Allyn and Bacon, 1971), 405. Both cited in Quote Investigator, \"Quote Origin: Any Idiot Can Face a Crisis; It's This Day-To-Day Living That Wears You Out,\" 14 June 2013. Precursor: Jean Webster, Daddy-Long-Legs (New York: The Century Company, 1912), 78–79.","rights":"In copyright in the United States, in both of its forms. The familiar wording was first published in 1971, in a textbook from Allyn and Bacon; the film line it paraphrases is Paramount Pictures dialogue from 1954, written by George Seaton. Both are long after the 1931 public-domain cutoff. The one element here that is free to use is the 1912 precursor from Jean Webster's Daddy-Long-Legs, which is public domain and linked above. Everything quoted on this page is quoted briefly for comment and criticism.","checked":"3 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -898,6 +906,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

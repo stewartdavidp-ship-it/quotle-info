@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -504,6 +506,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -550,6 +555,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -606,7 +612,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"there-are-only-two-plots-in-all-of-literature-1-a-person","url":"https://quotle.info/who-said/there-are-only-two-plots-in-all-of-literature-1-a-person/","quote":"There are only two plots in all of literature: (1) A person goes on a journey, (2) A stranger comes to town","claim":"Leo Tolstoy said: \"There are only two plots in all of literature: (1) A person goes on a journey, (2) A stranger comes to town\"","rating":1,"verdict":"Not supported","answer":"No. Tolstoy never wrote this. Quote Investigator traces the saying to the American novelist and writing teacher John Gardner: his posthumous 1984 handbook The Art of Fiction sets a student exercise using \"either a trip or the arrival of a stranger,\" and from September 1986 writers began quoting Gardner as having said those are the only two plots. QI cautions that no record of Gardner actually saying it has been found — and that the Tolstoy credit, which first surfaces in 1999, is spurious.","credit":"NOT Tolstoy. No source for it exists in his works, and Quote Investigator calls the Tolstoy link unsupported and apparently spurious. The trail runs through John Gardner's writing teaching: his posthumous handbook The Art of Fiction (Knopf, 1984) sets an exercise using \"either a trip or the arrival of a stranger,\" and the earliest articulation of the two-plots claim that Quote Investigator located is David Long in Coda: Poets & Writers Newsletter, September 1986, crediting Gardner. The Tolstoy credit first appears in The Capital Times of Madison, Wisconsin, in September 1999. Verified at Quotle.info","comparison":"","citation":"Earliest known articulation located by Quote Investigator: David Long, in \"Coda: Poets & Writers Newsletter\" (September 1986), crediting John Gardner. Catalysing text: John Gardner, The Art of Fiction: Notes on Craft for Young Writers (New York: Alfred A. Knopf, 1984). Chronology: Garson O'Toole, \"Quote Origin: There Are Only Two Plots: (1) A Person Goes on a Journey (2) A Stranger Comes to Town,\" Quote Investigator, 6 May 2015.","rights":"No copyright status can honestly be asserted for the popular one-sentence wording: it has no traceable original text, and it varies from telling to telling — a trip or a journey, a man or a person, comes to town or rides into town. The nearest documented text, John Gardner's The Art of Fiction (Alfred A. Knopf, 1984), remains in copyright to Gardner's estate and its publisher, which is why only a short phrase from it is quoted here.","checked":"10 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 10 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -856,6 +864,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

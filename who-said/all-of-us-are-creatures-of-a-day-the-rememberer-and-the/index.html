@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -528,6 +530,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -574,6 +579,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -630,7 +636,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"all-of-us-are-creatures-of-a-day-the-rememberer-and-the","url":"https://quotle.info/who-said/all-of-us-are-creatures-of-a-day-the-rememberer-and-the/","quote":"All of us are creatures of a day; the rememberer and the remembered alike","claim":"Marcus Aurelius wrote this thought at Meditations 4.35; the English wording \"All of us are creatures of a day; the rememberer and the remembered alike\" is Maxwell Staniforth's 1964 translation.","rating":5,"verdict":"Supported","answer":"Yes. This is a real line of the Meditations — Book 4, section 35, which Marcus Aurelius wrote in Koine Greek as a private note to himself. The memorable English wording, however, belongs to his translator: it is Maxwell Staniforth's 1964 Penguin Classics rendering, as documented by Quote Investigator. Earlier translators put the same thought very differently.","credit":"Marcus Aurelius, Meditations 4.35, translated by Maxwell Staniforth (Penguin Classics, 1964)","comparison":"","citation":"Marcus Aurelius, Meditations, trans. Maxwell Staniforth, Penguin Classics (London: Penguin Books, 1964), bk. 4, sec. 35, p. 72. Cf. Marcus Aurelius, The Thoughts of the Emperor M. Aurelius Antoninus, trans. George Long (London: Bell and Daldy, 1862), bk. 4, sec. 35, p. 53. Translation history documented in \"Quote Origin: All of Us Are Creatures of a Day; the Rememberer and the Remembered Alike,\" Quote Investigator, November 12, 2022.","rights":"Attribution and copyright are separate questions here, and they land differently. Marcus Aurelius's Greek original is ancient and long in the public domain, as is George Long's 1862 translation. But this specific English wording is Maxwell Staniforth's, first published by Penguin in 1964 — well after 1931 — so the sentence as quoted remains under copyright as a translation. Quote it with the translator credited; if you need a freely reusable version, use Long's.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -882,6 +890,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

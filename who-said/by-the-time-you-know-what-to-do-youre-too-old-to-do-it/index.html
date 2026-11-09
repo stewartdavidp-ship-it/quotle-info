@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"by-the-time-you-know-what-to-do-youre-too-old-to-do-it","url":"https://quotle.info/who-said/by-the-time-you-know-what-to-do-youre-too-old-to-do-it/","quote":"By the time you know what to do, you're too old to do it","claim":"Ted Williams said: \"By the time you know what to do, you're too old to do it\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Baseball people have passed this around as a Ted Williams line since at least the early 1980s — but always in a longer form that opens with a jab: \"You dumb hitters.\" The earliest printing located here is Thomas Boswell's How Life Imitates the World Series (Doubleday, 1982), where it is relayed secondhand — \"Like old Teddy Williams says…\" — and no interview, column or book by Williams containing the sentence has been found.","credit":"attributed to Ted Williams (1918–2002). Full wording documented in Thomas Boswell, How Life Imitates the World Series (Doubleday, 1982); no primary source by Williams located. Via Quotle.info · Verbatim: “You dumb hitters. By the time you know what to do, you're too old to do it.”","comparison":"You dumb hitters. By the time you know what to do, you're too old to do it.","citation":"Thomas Boswell, How Life Imitates the World Series: An Inquiry into the Game (Garden City, NY: Doubleday, 1982), relaying Ted Williams: \"You dumb hitters. By the time you know what to do, you're too old to do it.\" Also printed in Bob Chieger, Voices of Baseball: Quotations on the Summer Game (New York: New American Library, 1984), which dates the remark to 1976. No primary source written or recorded by Williams has been located.","rights":"This is a 20th-century American remark whose earliest located printings are Boswell's How Life Imitates the World Series (Doubleday, 1982) and Chieger's Voices of Baseball (New American Library, 1984) — both far too recent for the public domain, and the 1976 occasion Chieger assigns to it has not been identified. Nothing here can be treated as free to reuse on a public-domain theory; short quotation with attribution is the safe course.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -869,6 +877,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

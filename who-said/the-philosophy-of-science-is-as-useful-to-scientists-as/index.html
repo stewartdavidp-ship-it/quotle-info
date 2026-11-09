@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -509,6 +511,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -555,6 +560,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -611,7 +617,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-philosophy-of-science-is-as-useful-to-scientists-as","url":"https://quotle.info/who-said/the-philosophy-of-science-is-as-useful-to-scientists-as/","quote":"The philosophy of science is as useful to scientists as ornithology is to birds","claim":"Richard Feynman said: \"The philosophy of science is as useful to scientists as ornithology is to birds\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator found \"no substantive support\" for the Feynman attribution, and notes the line does not appear in The Quotable Feynman (Princeton University Press, 2015) — the word \"ornithology\" is absent from that book entirely. The earliest close match QI located is a speech by the physicist Steven Weinberg printed in Nature on 3 December 1987, and Weinberg went out of his way not to claim it: \"I've heard the remark (although I forget the source)…\"","credit":"Author unknown. Popularised by Steven Weinberg in Nature, 3 December 1987, who said he had forgotten the source; part of a family of sayings begun by painter Barnett Newman in 1955. Not Richard Feynman. — Quotle.info · Verbatim: “the philosophy of science is just about as useful to scientists as ornithology is to birds”","comparison":"the philosophy of science is just about as useful to scientists as ornithology is to birds","citation":"Garson O'Toole, \"Quote Origin: The Philosophy of Science Is As Useful To Scientists As Ornithology Is To Birds,\" Quote Investigator, 9 April 2023. Earliest close match: Steven Weinberg, speech printed in Nature, 3 December 1987 (attributing the remark to a forgotten source). Family originator: Barnett Newman, in Art in America, December 1955. Earliest Feynman linkage: Philip Kitcher, \"A Plea for Science Studies,\" in A House Built on Sand (Oxford University Press, 1998).","rights":"The saying has no identified author and no traceable first publication — the 1987 Nature appearance is a speaker repeating something he had heard and could not source. No copyright status can responsibly be asserted. The specific wording that circulates today does not match either of the documented 1987 or 1988 versions exactly.","checked":"9 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -842,6 +850,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

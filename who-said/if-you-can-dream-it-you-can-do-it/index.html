@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-you-can-dream-it-you-can-do-it","url":"https://quotle.info/who-said/if-you-can-dream-it-you-can-do-it/","quote":"If you can dream it, you can do it","claim":"Walt Disney said: \"If you can dream it, you can do it\"","rating":1,"verdict":"Not supported","answer":"No. Walt Disney never said this. Disney's own archivist, Dave Smith, checked and found no record of it — the line was written for Horizons, the General Electric–sponsored Epcot pavilion that opened in 1983, seventeen years after Walt's death. Imagineer Tom Fitzgerald told Smith flatly: \"I am very familiar with that line because I wrote it!\" At the ride it read \"If we can dream it, we can do it.\" A copywriter named Sheralyn Silverstein separately claims she coined the \"you\" wording in 1981 for a GE recruitment campaign — credible and endorsed by historian Jim Korkis, and GE brochures and recruitment ads printed in 1982, a year before Horizons opened, carry the exact \"you\" wording; no artifact dated to the 1981 writing itself has surfaced.","credit":"Origin disputed. Written for Epcot's Horizons (1983) as \"If we can dream it, we can do it\" by Imagineer Tom Fitzgerald; copywriter Sheralyn Silverstein claims the \"you\" wording for a 1981–82 General Electric campaign. Not Walt Disney — the Disney Archives found no record of him saying it.","comparison":"","citation":"Dave Smith, \"Ask Dave\" (D23, 27 February–12 March 2013), quoting Imagineer Tom Fitzgerald; also Dave Smith, Disney Trivia from the Vault (2012), 243. Line written for Horizons, Epcot, opened 1 October 1983, as \"If we can dream it, we can do it.\"","rights":"This is not a public-domain line. Every documented version of it is a 1980s corporate work — either a 1981 General Electric recruitment campaign written at the Marsteller agency or the 1983 Horizons script for Walt Disney Imagineering — and the two claimants disagree about which came first, so we cannot identify the originating work with confidence. Note separately that short taglines of this kind generally fall below the threshold of copyright protection in the United States regardless of authorship; the live question here is credit, not licensing.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -855,6 +863,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-problem-with-the-world-is-that-the-intelligent-people","url":"https://quotle.info/who-said/the-problem-with-the-world-is-that-the-intelligent-people/","quote":"The problem with the world is that the intelligent people are full of doubts, while the stupid ones are full of confidence","claim":"Charles Bukowski said: \"The problem with the world is that the intelligent people are full of doubts, while the stupid ones are full of confidence\"","rating":1,"verdict":"Not supported","answer":"No. This exact wording appears in none of Charles Bukowski's books or interviews. It is a modern, smoothed-over paraphrase of a line Bertrand Russell wrote in his 1933 essay \"The Triumph of Stupidity\": \"the stupid are cocksure, while the intelligent are full of doubt.\" Quote Investigator groups the sentiment across Yeats, Russell and Bukowski, but no source pins this precise sentence to Bukowski.","credit":"Not Charles Bukowski. This is a modern paraphrase of Bertrand Russell, \"The Triumph of Stupidity\" (1933): \"the stupid are cocksure, while the intelligent are full of doubt.\"","comparison":"","citation":"Bertrand Russell, \"The Triumph of Stupidity,\" San Francisco Examiner, 10 May 1933; reprinted in Mortals and Others: Bertrand Russell's American Essays, 1931–1935. Earliest documented antecedent of the paraphrase popularly mis-credited to Charles Bukowski.","rights":"The exact popular wording is an anonymous paraphrase with no identifiable published source, so no rights status can be asserted for it. The documented antecedent — Russell's 1933 essay \"The Triumph of Stupidity\" — was first published in 1933 and would itself be handled as in-copyright (Bertrand Russell estate / The Bertrand Russell Peace Foundation).","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -835,6 +843,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

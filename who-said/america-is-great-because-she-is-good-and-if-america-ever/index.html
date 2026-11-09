@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -510,6 +512,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -556,6 +561,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -612,7 +618,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"america-is-great-because-she-is-good-and-if-america-ever","url":"https://quotle.info/who-said/america-is-great-because-she-is-good-and-if-america-ever/","quote":"America is great because she is good, and if America ever ceases to be good, she will cease to be great","claim":"Colin Powell said: \"America is great because she is good, and if America ever ceases to be good, she will cease to be great\"","rating":1,"verdict":"Not supported","answer":"No. Colin Powell was one of the public figures who quoted this line and credited it to Alexis de Tocqueville — and Tocqueville never wrote it either. The earliest printing anyone has documented is a Labor Day message by Rev. John McDowell, reported in The Herald and Presbyter of 6 September 1922, in the form \"America is great because America is good…\" — and it is already credited to Tocqueville there, with no documentation, so the earliest known printing is also the earliest known instance of the false credit and the line's author remains unidentified.","credit":"Not Colin Powell. \"America is great because she is good, and if America ever ceases to be good, she will cease to be great\" has no known author. Powell was one of many public figures who quoted it and credited Alexis de Tocqueville — but it is not in Democracy in America. The earliest documented printing of the full wording is a Labor Day message by Rev. John McDowell in The Herald and Presbyter, 6 September 1922, in the form \"America is great because America is good…\" — and it already credits Tocqueville there, with no documentation. — Quotle.info","comparison":"","citation":"Clarence G. Reynolds, \"New York Letter\" (quoting a Labor Day message by Rev. John McDowell), The Herald and Presbyter, September 6, 1922, p. 8, col. 3 — the earliest documented printing of the full wording, where McDowell already credits it to Alexis de Tocqueville without documentation, per Barry Popik, \"America is great because she is good.\" Not found in Alexis de Tocqueville, Democracy in America (first published 1835).","rights":"The exact wording asked about here — \"she is good… she will cease to be great\" — has no identified author and no traced first publication, so no copyright status can honestly be asserted for it. The closest documented printing, the \"America is good\" version in The Herald and Presbyter of 6 September 1922, was published in the United States before 1931 and would itself be in the public domain.","checked":"30 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 30 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -848,6 +856,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

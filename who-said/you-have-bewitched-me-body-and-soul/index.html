@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"you-have-bewitched-me-body-and-soul","url":"https://quotle.info/who-said/you-have-bewitched-me-body-and-soul/","quote":"You have bewitched me, body and soul","claim":"Jane Austen said: \"You have bewitched me, body and soul\"","rating":1,"verdict":"Not supported","answer":"No. Mr Darcy's second proposal in Joe Wright's Pride & Prejudice (2005), screenplay credited to Deborah Moggach. What makes this one interesting is that most of the speech is Austen: \"You are too generous to trifle with me… if your feelings are still what they were last April, tell me so at once\" is chapter 58, almost verbatim. The clause everyone quotes — \"you have bewitched me, body and soul\" — is the part that is not in the book.","credit":"Jane Austen did not write “You have bewitched me, body and soul.” It is Darcy’s line in the 2005 film of Pride & Prejudice, screenplay credited to Deborah Moggach. The rest of that speech is adapted almost verbatim from the novel’s chapter 58 — this clause is the screenwriter’s addition. Via quotle.info · Verbatim: “If, however, your feelings have changed, I would have to tell you: you have bewitched me, body and soul, and I love… I love… I love you.”","comparison":"If, however, your feelings have changed, I would have to tell you: you have bewitched me, body and soul, and I love… I love… I love you.","citation":"Pride & Prejudice, directed by Joe Wright, screenplay by Deborah Moggach (Universal Pictures / StudioCanal / Working Title Films, 2005). Dialogue as transcribed at Wikiquote. The surrounding speech adapts Jane Austen, Pride and Prejudice (1813), chap. 58; the quoted clause does not appear there.","rights":"In copyright. We are deliberately not naming a rights holder: screen writing is work for hire, so the rights sit with the production and not the credited writer, and we could not reach a source that states the film's copyright line, so we would rather leave the field empty than guess at it. The half of the speech that comes from Austen's 1813 novel is public domain and free to quote; the famous clause is not.","checked":"11 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 11 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -851,6 +859,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

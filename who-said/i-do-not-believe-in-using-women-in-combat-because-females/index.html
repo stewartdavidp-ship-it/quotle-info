@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -513,6 +515,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -559,6 +564,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -615,7 +621,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-do-not-believe-in-using-women-in-combat-because-females","url":"https://quotle.info/who-said/i-do-not-believe-in-using-women-in-combat-because-females/","quote":"I do not believe in using women in combat, because females are too fierce","claim":"Margaret Mead said: \"I do not believe in using women in combat, because females are too fierce\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Widely credited to Mead, and consistent with a position she demonstrably held — but the polished one-liner is cited only as it appears in a 1977 quotation anthology, not in anything Mead is known to have written. The closest primary text anyone has produced is her own \"Remarks about the Military Draft\" (June 1968), collected in Margaret Mead, Some Personal Views (1979), which looks back on having said that women in combat \"might be too fierce.\"","credit":"attributed to Margaret Mead (1901–1978). Widely credited to Mead but not pinned to any of her own writings; documented as quoted in Lloyd Cory, comp., Quote Unquote (1977), p. 364. Mead's own \"Remarks about the Military Draft\" (June 1968), in Margaret Mead, Some Personal Views, ed. Rhoda Métraux (New York: Walker, 1979), 35–36, does say: \"That is what I meant by saying that women in combat might be too fierce.\" Via Quotle.info","comparison":"","citation":"Margaret Mead, as quoted in Lloyd Cory, comp., Quote Unquote (1977), 364 — the only citation attached to this wording; no Mead original has been produced. Compare Margaret Mead, \"Remarks about the Military Draft\" (June 1968), in Margaret Mead, Some Personal Views, ed. Rhoda Métraux (New York: Walker, 1979), 35–36.","rights":"Nothing on this page is public domain. The nearest primary text — Mead's June 1968 \"Remarks about the Military Draft,\" collected in Margaret Mead, Some Personal Views (Walker, 1979) — is a twentieth-century work still in copyright, and the compact one-liner is documented only in a 1977 quotation anthology. Since no pre-1931 publication of this wording exists, treat the sentence as in-copyright: quote it briefly, with attribution.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -845,6 +853,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"two-things-define-you-your-patience-when-you-have","url":"https://quotle.info/who-said/two-things-define-you-your-patience-when-you-have/","quote":"Two things define you: your patience when you have nothing and your attitude when you have everything","claim":"George Bernard Shaw said: \"Two things define you: your patience when you have nothing and your attitude when you have everything\"","rating":1,"verdict":"Not supported","answer":"No. This one carries two famous credits and zero sources. It is not in George Bernard Shaw's plays, prefaces or letters, and it is not listed among his quotations anywhere that cites a text. It is equally absent from the compiled sayings of Imam Ali ibn Abi Talib — not in Nahj al-Balagha, not in the standard collections. The earliest instance we can date is a 2013 blog post, and it was already labelled 'Unknown' then. Both famous names arrived afterwards, in comment threads.","credit":"Anonymous. Earliest located instance 2013, already unattributed. Not George Bernard Shaw, and not Imam Ali.","comparison":"","citation":"Anonymous. Earliest located instance 10 September 2013, already credited 'Unknown'. No source exists for either the George Bernard Shaw or the Imam Ali attribution.","rights":"We are giving no rights status for this one, because you cannot clear rights in a text whose author and date of first publication are both unknown. If it was written by an anonymous internet user around 2013, someone owns it and nobody can name them; there is no basis for calling it public domain. Practical advice: quote it as anonymous, do not print it on merchandise, and do not credit Shaw or Imam Ali, which is the error this page exists to fix. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -872,6 +880,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"that-brain-of-mine-is-something-more-than-merely-mortal-as","url":"https://quotle.info/who-said/that-brain-of-mine-is-something-more-than-merely-mortal-as/","quote":"That brain of mine is something more than merely mortal, as time will show","claim":"Ada Lovelace said: \"That brain of mine is something more than merely mortal, as time will show\"","rating":5,"verdict":"Supported","answer":"Yes. Real — and unusually well documented. Lovelace wrote it to Charles Babbage in a letter docketed Wednesday, 5 July [1843], now British Library Add MSS 37192, fol. 349, and transcribed in Dorothy Stein's Ada: A Life and a Legacy (MIT Press, 1985), p. 110. The popular version stops one clause early: in the manuscript the sentence runs on into a joke about her own failing health.","credit":"That brain of mine is something more than merely mortal; as time will show — Ada Lovelace, letter to Charles Babbage, 5 July 1843 (British Library, Add MSS 37192, fol. 349). Verified at quotle.info","comparison":"That brain of mine is something more than merely mortal; as time will show; (if only my breathing & some other et-ceteras do not make too rapid a progress towards instead of from mortality).","citation":"Ada Lovelace to Charles Babbage, Wednesday, 5 July [1843], British Library, Additional MSS 37192, fol. 349; transcribed in Dorothy Stein, Ada: A Life and a Legacy (Cambridge, MA: MIT Press, 1985), 110.","rights":"Honest answer: we cannot settle this. The letter was written in 1843 by an author who died in 1852, so the text carries no living authorial interest — but rights in the United States turn on first publication, and we could not establish when this passage first appeared in print. The earliest appearance we verified is Dorothy Stein's Ada: A Life and a Legacy (MIT Press, 1985); US law treats long-unpublished pre-1978 manuscripts idiosyncratically, so we will not assert public domain on a source we have not dated. The manuscript itself is held by the British Library (Add MSS 37192); Stein's transcription and editorial apparatus are her own work and remain in copyright.","checked":"15 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 15 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -861,6 +869,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

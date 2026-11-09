@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"last-words-are-for-fools-who-havent-said-enough","url":"https://quotle.info/who-said/last-words-are-for-fools-who-havent-said-enough/","quote":"Last words are for fools who haven't said enough","claim":"Karl Marx said: \"Last words are for fools who haven't said enough\"","rating":1,"verdict":"Not supported","answer":"No. The line is printed everywhere as Marx's answer to his housekeeper, who supposedly asked whether he had a last word for posterity — but it appears in no letter, memoir or newspaper report left by the people who were in the house. Friedrich Engels, who was there that afternoon and wrote to a comrade the next day, described a man who slipped away in silence: at the graveside on 17 March 1883 he said Marx \"had been left alone for scarcely two minutes\" and was found already gone.","credit":"Karl Marx is popularly said to have snapped \"Go on, get out! Last words are for fools who haven't said enough\" at his housekeeper. No witness account records it. Friedrich Engels, at Marx's graveside on 17 March 1883, said Marx \"had been left alone for scarcely two minutes\" and was found already gone — no last words of his are recorded by anyone present. Checked by Quotle.info.","comparison":"Go on, get out! Last words are for fools who haven't said enough.","citation":"No primary source located: the wording appears in no contemporary account of Marx's death. It circulates through popular quotation anthologies — e.g. Gyles Brandreth, Famous Last Words and Tombstone Humour (New York: Sterling, 1989). Cf. Frederick Engels, letter to Friedrich Adolph Sorge, London, 15 March 1883, and Engels's speech at the grave of Karl Marx, Highgate Cemetery, 17 March 1883 (printed in Der Sozialdemokrat, 22 March 1883).","rights":"No work, letter, speech or newspaper report has ever been tied to this wording, so there is no first-publication date against which its copyright status could be judged — which is exactly why we do not label it public domain. Marx's own writings and Engels's 1883 accounts of his death are long out of copyright; this sentence is simply unsourced.","checked":"9 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 9 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -846,6 +854,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

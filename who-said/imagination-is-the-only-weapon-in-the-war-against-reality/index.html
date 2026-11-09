@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"imagination-is-the-only-weapon-in-the-war-against-reality","url":"https://quotle.info/who-said/imagination-is-the-only-weapon-in-the-war-against-reality/","quote":"Imagination is the only weapon in the war against reality","claim":"Lewis Carroll said: \"Imagination is the only weapon in the war against reality\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator credits the American essayist Benjamin De Casseres, who used the thought in an essay on Shelley published in The Poetry Journal in 1916: \"In the sublime war of man against Reality man has but one weapon, the imagination.\" The tight modern sentence is a later compression of that — by 1966 it was being printed as a dictionary definition — and the credit drifted along the way, first to the French philosopher Jules de Gaultier in a 1935 Reader's Digest filler, then, in the 2010s, to Lewis Carroll and to C. S. Lewis.","credit":"Not Lewis Carroll. The thought is Benjamin De Casseres, \"Shelley\", The Poetry Journal, 1916 — \"In the sublime war of man against Reality man has but one weapon, the imagination.\" The shorter sentence is a later rewrite. Traced by Quotle.info","comparison":"In the sublime war of man against Reality man has but one weapon, the imagination.","citation":"Benjamin De Casseres, \"Shelley,\" The Poetry Journal 6, no. 1 (July 1916): 20 — cited as documented in \"Quote Origin: In the Sublime War of Humanity Against Reality, Humanity Has But One Weapon, The Imagination,\" Quote Investigator, 31 October 2022. The compressed wording quoted on this page is a later, anonymous rewrite of that sentence.","rights":"No rights badge, and the reason is specific. De Casseres's 1916 essay was published well before 1931 and is out of copyright in the United States — but the sentence quoted here is not that essay's sentence. It is an anonymous later compression with no identifiable author and no first publication we could date, so there is no work whose status we can honestly attach to the line as people quote it.","checked":"17 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -858,6 +866,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

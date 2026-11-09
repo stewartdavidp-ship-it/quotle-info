@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -513,6 +515,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -559,6 +564,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -615,7 +621,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"an-anecdote-is-a-revealing-account-of-an-incident-that","url":"https://quotle.info/who-said/an-anecdote-is-a-revealing-account-of-an-incident-that/","quote":"An Anecdote Is A Revealing Account of an Incident That Never Occurred in the Life of Some Famous Person","claim":"Bennett Cerf said: \"An Anecdote Is A Revealing Account of an Incident That Never Occurred in the Life of Some Famous Person\"","rating":1,"verdict":"Not supported","answer":"No. Bennett Cerf really did print this sentence — in his syndicated newspaper column \"Try and Stop Me\" on 28 October 1965, where he swapped \"revealing\" in for \"brief.\" He did not write it. Quote Investigator traces the joke back through Evan Esar to an unsigned entry in the New York humour weekly Life on 12 September 1912, and concludes that its creator is anonymous.","credit":"Anonymous. Earliest known printing unsigned in Life (New York), 12 September 1912, as \"a brief account of an incident that never occurred in the life of some famous man.\" Bennett Cerf printed this \"revealing\" wording in his syndicated column \"Try and Stop Me\" on 28 October 1965, but did not originate it. Source: Quote Investigator.","comparison":"","citation":"\"Life's Lucid Lexicon,\" Life (New York) 60, no. 1559 (September 12, 1912): 1774, unsigned. The \"revealing\" wording is first documented in Bennett Cerf, \"Try and Stop Me,\" Reading Eagle (Reading, PA), October 28, 1965, 18. Citation trail assembled by Garson O'Toole, Quote Investigator, September 23, 2010.","rights":"The joke itself is old enough to be free: the 1912 Life printing — \"a brief account — some famous man\" — was published well before 1931 and is public domain in the United States. This exact wording is not that one. The \"revealing…famous person\" form is first documented in Bennett Cerf's syndicated column of 28 October 1965, so the sentence as quoted here should be treated as in copyright. No rightsholder is established: the wording is anonymous in origin, so whatever right subsists in the 1965 column as published would sit with the newspaper syndicate that ran it — not with Cerf, who did not write the line.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -854,6 +862,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

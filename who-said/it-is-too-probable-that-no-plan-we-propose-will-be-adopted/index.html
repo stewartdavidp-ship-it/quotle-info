@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-is-too-probable-that-no-plan-we-propose-will-be-adopted","url":"https://quotle.info/who-said/it-is-too-probable-that-no-plan-we-propose-will-be-adopted/","quote":"It is too probable that no plan we propose will be adopted. Perhaps another dreadful conflict is to be sustained","claim":"George Washington said: \"It is too probable that no plan we propose will be adopted. Perhaps another dreadful conflict is to be sustained\"","rating":2,"verdict":"Needs context","answer":"Not confirmed. These sentences survive in exactly one place: Gouverneur Morris's Oration, upon the Death of General Washington, delivered at New York on 31 December 1799 and printed there in 1800, where Morris presents them as Washington's words spoken informally before the Federal Convention had even reached a quorum. James Madison's Convention notes have nothing like them — Wikiquote records that they are absent from Madison's summary of 25 May 1787 — and Henry Cabot Lodge concluded the wording was Morris's own — while George Bancroft accepted the passage as genuine.","credit":"Attributed to George Washington, but documented only in Gouverneur Morris, \"An Oration, upon the Death of General Washington\" (New-York: John Furman, 1800), 20–21 — a eulogy delivered 31 December 1799. The words do not appear in Madison's Convention notes; Henry Cabot Lodge judged the language Morris's own, though George Bancroft accepted it as genuine. — Quotle.info · Verbatim: “It is too probable that no plan we propose will be adopted. Perhaps another dreadful conflict is to be sustained. If to please the people, we offer what we ourselves disapprove, how can we afterwards defend our work? Let us raise a standard to which the wise and the honest can repair. The event is in the hand of God.”","comparison":"It is too probable that no plan we propose will be adopted. Perhaps another dreadful conflict is to be sustained. If to please the people, we offer what we ourselves disapprove, how can we afterwards defend our work? Let us raise a standard to which the wise and the honest can repair. The event is in the hand of God.","citation":"Gouverneur Morris, An Oration, upon the Death of General Washington, Delivered at the Request of the Corporation of the City of New-York, on the 31st Day of December, 1799 (New-York: Printed by John Furman, 1800), 20–21. Reprinted in Max Farrand, ed., The Records of the Federal Convention of 1787, vol. 3 (New Haven: Yale University Press, 1911). No source earlier than this oration is known.","rights":"The text quoted here comes from the 1800 New-York printing of Morris's oration. Published in 1800 and written in English, it is long out of copyright in the United States; Lodge's George Washington, quoted above, is likewise public domain and freely readable at Project Gutenberg.","checked":"27 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -884,6 +892,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

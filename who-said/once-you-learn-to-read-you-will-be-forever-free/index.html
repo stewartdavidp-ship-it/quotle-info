@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"once-you-learn-to-read-you-will-be-forever-free","url":"https://quotle.info/who-said/once-you-learn-to-read-you-will-be-forever-free/","quote":"Once you learn to read, you will be forever free","claim":"Frederick Douglass said: \"Once you learn to read, you will be forever free\"","rating":2,"verdict":"Needs context","answer":"Yes and no. The thought is genuinely Douglass's, but the sentence is not. This exact wording appears in none of his books, speeches, or letters. It is a modern, poster-friendly compression of Chapters VI–VII of his 1845 Narrative, where he wrote \"I understood the pathway from slavery to freedom\" and recorded his enslaver's warning that reading would \"forever unfit him to be a slave.\" The Harriet Beecher Stowe Center describes the popular line as \"a summarization of a longer, deeper reading of Douglass's words.\"","credit":"Frederick Douglass never wrote this exact sentence. It is a modern paraphrase of his 1845 Narrative of the Life of Frederick Douglass, where he wrote: \"From that moment, I understood the pathway from slavery to freedom.\"","comparison":"","citation":"Frederick Douglass, Narrative of the Life of Frederick Douglass, an American Slave (Boston: Anti-Slavery Office, 1845), ch. VI–VII. The exact sentence \"Once you learn to read, you will be forever free\" is a modern paraphrase not present in Douglass's text.","rights":"Douglass's 1845 Narrative is firmly in the public domain, but the circulating sentence is not in that book — it is an undated modern paraphrase with no identifiable single author, so no copyright status can be honestly asserted for the wording itself. If you need public-domain text, quote Douglass's actual words (\"I understood the pathway from slavery to freedom\") from the 1845 Narrative rather than the poster line.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -842,6 +850,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

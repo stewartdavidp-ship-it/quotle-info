@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"they-riot-in-the-streets-inflamed-with-wild-notions-their","url":"https://quotle.info/who-said/they-riot-in-the-streets-inflamed-with-wild-notions-their/","quote":"They Riot in the Streets Inflamed with Wild Notions; Their Morals Are Decaying","claim":"Plato said: \"They Riot in the Streets Inflamed with Wild Notions; Their Morals Are Decaying\"","rating":1,"verdict":"Not supported","answer":"No. Plato did not write this. Quote Investigator has found no substantive evidence for him, and the earliest instance it can locate is only from 1967 — when Theodore M. Hesburgh, then president of the University of Notre Dame, opened a commencement address at Manchester College in Indiana by reading it out already attributed to \"Plato (427-347 B.C.)\". So Hesburgh is not the author either: QI's view is that he probably saw an earlier printed instance somewhere, though where is not certain. From there it passed to a newspaper editors' convention in 1968, to a Supreme Court justice, to the Congressional Record, and to Isaac Asimov's Book of Facts. Nobody along that chain produced a source, because there is no Greek original to produce.","credit":"not Plato. No dialogue, letter or fragment has ever been cited for it. The earliest documented appearance is Theodore M. Hesburgh's commencement address at Manchester College, Indiana, on 12 June 1967, printed in the University of Notre Dame pamphlet Thoughts IV (1968), p. 29 — where it is already labelled \"Plato (427-347 B.C.)\". Quote Investigator finds no substantive citation for Plato and identifies no author. Traced by Quotle.info. · Verbatim: “What is happening to our young people? They disrespect their elders. They disobey their parents. They ignore the laws. They riot in the streets inflamed with wild notions. Their morals are decaying. What is to become of them?”","comparison":"What is happening to our young people? They disrespect their elders. They disobey their parents. They ignore the laws. They riot in the streets inflamed with wild notions. Their morals are decaying. What is to become of them?","citation":"Theodore M. Hesburgh, \"Service: The Great Modern Prayer\" (commencement address, Manchester College, North Manchester, Indiana, 12 June 1967), in Thoughts IV: Five Addresses Delivered During 1967 by Theodore M. Hesburgh, President of the University of Notre Dame (Notre Dame, IN: University of Notre Dame, 1968), 29 — the earliest located instance, where the passage is already credited to Plato. No source in Plato has ever been identified. Dates, pages and transcriptions per Quote Investigator, \"Quote Origin: They Riot in the Streets Inflamed with Wild Notions; Their Morals Are Decaying,\" 13 December 2014, https://quoteinvestigator.com/2014/12/13/riot/.","rights":"There is no ancient Greek original here, so nothing about this passage is public-domain by age. The oldest text it can be traced to is Hesburgh's 1967 address as printed in a University of Notre Dame pamphlet in 1968 — well after the pre-1931 cutoff for automatic US public domain — and the title-case wording displayed at the top of this page is Quote Investigator's own 2014 article heading. Treat the passage as modern, in-copyright text of unidentified authorship, and do not reuse it as a Plato quotation at all.","checked":"6 Oct 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 6 Oct 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

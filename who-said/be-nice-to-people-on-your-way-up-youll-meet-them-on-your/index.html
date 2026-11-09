@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"be-nice-to-people-on-your-way-up-youll-meet-them-on-your","url":"https://quotle.info/who-said/be-nice-to-people-on-your-way-up-youll-meet-them-on-your/","quote":"Be Nice to People on Your Way Up. You'll Meet Them On Your Way Down","claim":"Jimmy Durante originated the saying \"Be Nice to People on Your Way Up. You'll Meet Them On Your Way Down\"","rating":1,"verdict":"Not supported","answer":"No. The line is Wilson Mizner's. It was already in print on 5 July 1932, in a San Francisco Chronicle item that credits \"Wilson Miznor\" — a misspelling — advising a rising film star; Durante's version comes in an MGM picture released in September 1933. Walter Winchell, who broadcast the saying that same week and is often given the credit himself, handed it back to Mizner in his own syndicated column two days later.","credit":"Be nice to people on your way up because you'll meet 'em on your way down. — Wilson Mizner, as printed in Alva Johnston's New Yorker profile \"Legend of a Sport,\" 10 October 1942. Commonly misattributed to Jimmy Durante, who spoke a version in the 1933 MGM film \"Broadway to Hollywood\"; the saying was already in print on 5 July 1932 crediting Mizner. Via quotle.info","comparison":"Be nice to people on your way up because you'll meet 'em on your way down.","citation":"Alva Johnston, \"Profiles: Legend of a Sport—Part I,\" The New Yorker, October 10, 1942, 21. Earliest known citation of the saying: \"Directs Traveler On Road to Fame,\" San Francisco Chronicle, July 5, 1932, 9, where it is credited to \"Wilson Miznor\" (Wilson Mizner); see Quote Investigator, \"Quote Origin: Be Nice to People on Your Way Up. You'll Meet Them On Your Way Down,\" rev. December 21, 2014, last updated September 30, 2024.","rights":"Mizner's remark was spoken, and every documented form of it reaches us through someone else's printed page. The earliest is a San Francisco Chronicle item of 5 July 1932 and the familiar wording comes from Alva Johnston's New Yorker profile of 10 October 1942 — both published well after 1930, so we treat the text as in-copyright rather than public domain and quote only the short passages needed to document the attribution.","checked":"8 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -871,6 +879,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

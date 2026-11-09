@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -517,6 +519,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -563,6 +568,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -619,7 +625,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-mind-is-everything-what-you-think-you-become","url":"https://quotle.info/who-said/the-mind-is-everything-what-you-think-you-become/","quote":"The mind is everything. What you think you become","claim":"Gautama Buddha said: \"The mind is everything. What you think you become\"","rating":1,"verdict":"Not supported","answer":"No. This line has the unusual distinction of two famous owners and no source. It is not in the Pali canon — not the Dhammapada, not the Nikayas. It is also not Gandhi in this wording, though a close cousin of it genuinely circulates under his name. The earliest documented English instance is reported in Ralph Waldo Trine's In Tune with the Infinite (1897), a New Thought bestseller that later fed straight into Think and Grow Rich and the whole positive-thinking industry. That lineage matters: this is a law-of-attraction sentence wearing a monk's robe.","credit":"Not the Buddha and not Gandhi. No canonical source exists; the earliest documented English instance is reported in Ralph Waldo Trine, In Tune with the Infinite (1897). The Dhammapada (1, trans. Müller) actually reads: \"All that we are is the result of what we have thought: it is founded on our thoughts, it is made up of our thoughts.\"","comparison":"","citation":"Not canonical. No Pali source; not Gandhi in this wording. Earliest documented English instance reported in Ralph Waldo Trine, In Tune with the Infinite (1897). Compare Dhammapada 1–2, trans. F. Max Müller (1881).","rights":"The excerpt above is safe to reuse: Müller's 1881 translation is long out of copyright everywhere, which is exactly why we quote him rather than a modern translator whose text would still be protected. The quotation on this page is a different matter — it is modern prose of unestablished authorship, so there is no clean public-domain claim to make about it. Quote the Dhammapada freely; quote the maxim as an anonymous modern saying. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -863,6 +871,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

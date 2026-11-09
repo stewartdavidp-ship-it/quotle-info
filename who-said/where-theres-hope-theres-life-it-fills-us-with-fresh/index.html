@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"where-theres-hope-theres-life-it-fills-us-with-fresh","url":"https://quotle.info/who-said/where-theres-hope-theres-life-it-fills-us-with-fresh/","quote":"Where there's hope, there's life. It fills us with fresh courage and makes us strong again","claim":"Anne Frank said: \"Where there's hope, there's life. It fills us with fresh courage and makes us strong again\"","rating":5,"verdict":"Supported","answer":"Yes. This is genuine, and it can be dated exactly. Anne Frank wrote it on Tuesday 6 June 1944 — D-Day — after the radio reached the annexe with news of the Normandy landings. The Dutch runs: \"We weten het ook nu nog niet, maar de hoop doet ons herleven, maakt ons weer moedig, maakt ons weer sterk\" — literally \"we still do not know, but hope revives us, makes us brave again, makes us strong again.\" It sits in the entry as published in Het Achterhuis (Contact, Amsterdam, 1947). One honest caveat: the English sentence in circulation is a translator's rendering, and we could not establish which of the diary's two English translations it comes from.","credit":"Anne Frank, diary entry of Tuesday 6 June 1944, the day of the Normandy landings. The Dutch original, in Het Achterhuis (Contact, Amsterdam, 1947), reads: \"We weten het ook nu nog niet, maar de hoop doet ons herleven, maakt ons weer moedig, maakt ons weer sterk.\" The line is usually quoted without its opening \"But,\" and usually with no date at all. Via Quotle.info","comparison":"","citation":"Anne Frank, Het Achterhuis: Dagboekbrieven 14 Juni 1942 – 1 Augustus 1944 (Amsterdam: Contact, 1947), entry of Dinsdag, 6 Juni 1944 — \"We weten het ook nu nog niet, maar de hoop doet ons herleven, maakt ons weer moedig, maakt ons weer sterk.\" Full text at archive.org. English translations: Barbara Mooyaart-Doubleday (New York: Doubleday, 1952) and Susan Massotty (1995); the translation behind the wording quoted here is not established.","rights":"In copyright, and the English wording doubly so. Copyright in Anne Frank's writings passed under Otto Frank's will to the Anne Frank Fonds of Basel. The Dutch text of the 1947 edition entered the public domain in the European Union on 1 January 2016, seventy years after the author's death — but that is an EU rule and does not decide United States status, and in any case the line quoted here is not the Dutch. It is an English translation, first published no earlier than 1952, and a translation carries its own copyright. Quoted here as short-extract commentary on the source's provenance.","checked":"13 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 13 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -850,6 +858,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

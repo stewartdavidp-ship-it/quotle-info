@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-a-man-should-importune-me-to-give-a-reason-why-i-loved","url":"https://quotle.info/who-said/if-a-man-should-importune-me-to-give-a-reason-why-i-loved/","quote":"If a man should importune me to give a reason why I loved him, I find it could no otherwise be expressed, than by making answer, because it was he, because it was I","claim":"Michel de Montaigne said: \"If a man should importune me to give a reason why I loved him, I find it could no otherwise be expressed, than by making answer, because it was he, because it was I\"","rating":5,"verdict":"Supported","answer":"Yes. Genuine, and traceable to the page. The sentence comes from Montaigne's essay Of Friendship (Essais, Book I, first published 1580), where he is writing about his dead friend Étienne de La Boétie. This exact English wording is Charles Cotton's translation as revised by William Carew Hazlitt — confirmed word for word in the 1877 text at Project Gutenberg.","credit":"Michel de Montaigne, \"Of Friendship,\" Essais, Book I (1580). English from the Charles Cotton translation, revised by William Carew Hazlitt, 1877 — chapter XXVII. Verified at Project Gutenberg.","comparison":"","citation":"Michel de Montaigne, \"Of Friendship,\" chap. 27 in Essays of Michel de Montaigne, Volume 6, trans. Charles Cotton, ed. William Carew Hazlitt (1877). First published in French as \"De l'amitié,\" Essais, Book I (1580).","rights":"Everything in play here is long out of copyright in the United States. The French Essais first appeared in 1580, Florio's English translation in 1603, and the Charles Cotton translation quoted above in the revision edited by William Carew Hazlitt in 1877 — all far earlier than the 1931 threshold, which is why the full text is freely readable at Project Gutenberg. Note that modern twentieth-century translations of the same sentence are not public domain; the wording on this page is the pre-1931 one.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -875,6 +883,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

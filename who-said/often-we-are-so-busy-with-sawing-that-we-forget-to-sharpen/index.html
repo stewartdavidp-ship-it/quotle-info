@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -519,6 +521,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -565,6 +570,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -621,7 +627,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"often-we-are-so-busy-with-sawing-that-we-forget-to-sharpen","url":"https://quotle.info/who-said/often-we-are-so-busy-with-sawing-that-we-forget-to-sharpen/","quote":"Often we are so busy with sawing that we forget to sharpen the saw","claim":"Stephen Covey said: \"Often we are so busy with sawing that we forget to sharpen the saw\"","rating":2,"verdict":"Needs context","answer":"Yes and no. The idea belongs to Covey — it is the whole of his seventh habit, which FranklinCovey still publishes as \"Sharpen the Saw®\". The sentence does not. Covey's own aphorism, in print since 1970, runs \"We must never become too busy sawing to take time to sharpen the saw.\" This reworded version carries no citation anywhere: Wikiquote files it under Disputed, and Open Library's full-text search of scanned books returns no match at all.","credit":"commonly credited to Stephen Covey, but not his wording. Wikiquote lists it under \"Disputed\" with no citation, and it returns no match in Open Library's full-text book corpus. Covey's documented sentence is: \"We must never become too busy sawing to take time to sharpen the saw.\" — Stephen R. Covey, Spiritual Roots of Human Relations (Salt Lake City: Deseret Book, 1970). Provenance detailed at quotle.info","comparison":"We must never become too busy sawing to take time to sharpen the saw.","citation":"No source exists for the popular wording: Wikiquote, \"Stephen Covey,\" lists it under Disputed without citation, and Open Library's full-text search returns no match. The closest documented original is Stephen R. Covey, Spiritual Roots of Human Relations (Salt Lake City: Deseret Book, 1970): \"We must never become too busy sawing to take time to sharpen the saw.\" The parable form appears in The 7 Habits of Highly Effective People (New York: Simon & Schuster, 1989), Habit 7.","rights":"No rights status can honestly be asserted for this exact sentence, because nobody has identified who wrote it or where it first appeared — it is an anonymous rewording with no located source, and a quotation that cannot be traced cannot be declared public domain. The wording it derives from is a different matter: Covey's \"We must never become too busy sawing to take time to sharpen the saw\" is published text from Spiritual Roots of Human Relations (Deseret Book, 1970) and The 7 Habits of Highly Effective People (Simon & Schuster, 1989), both firmly inside US copyright, which is why this page quotes only the short passages under examination.","checked":"25 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 25 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -871,6 +879,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

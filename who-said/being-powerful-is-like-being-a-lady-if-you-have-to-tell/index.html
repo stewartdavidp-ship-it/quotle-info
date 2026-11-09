@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -513,6 +515,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -559,6 +564,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -615,7 +621,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"being-powerful-is-like-being-a-lady-if-you-have-to-tell","url":"https://quotle.info/who-said/being-powerful-is-like-being-a-lady-if-you-have-to-tell/","quote":"Being powerful is like being a lady. If you have to tell people you are, you aren't","claim":"Margaret Thatcher said: \"Being powerful is like being a lady. If you have to tell people you are, you aren't\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator's chronology finds the earliest direct quotation in Newsweek for 27 September 1976, opening a profile of the Alaskan Teamsters leader Jesse Carr, who is quoted saying \"Being powerful is like being a lady. If you have to tell people you are, you ain't.\" An indirect version was already in a Fairbanks newspaper in October 1975. Thatcher was first credited with it in 1984, in a business-quotation compilation that gave no source, and QI reports it has found no citation showing a direct quotation from her.","credit":"Being powerful is like being a lady. If you have to tell people you are, you ain’t. —Jesse Carr, head of Teamsters Union Local 959, quoted in Newsweek, 27 September 1976; not Margaret Thatcher","comparison":"Being powerful is like being a lady. If you have to tell people you are, you ain’t.","citation":"Tom Nicholson and Peter S. Greenberg, \"The Strongman of Alaska,\" Newsweek, September 27, 1976, p. 77, quoting Jesse Carr, head of Teamsters Union Local 959, Anchorage; per Garson O'Toole, \"Quote Origin: Being Powerful Is Like Being a Lady. If You Have To Tell People You Are, You Aren't,\" Quote Investigator, July 29, 2025.","rights":"The wording quoted above was first published in Newsweek on 27 September 1976 — far later than the 1931 cut-off for the United States public domain — so it is in copyright. Jesse Carr spoke the words; the published text is the magazine's.","checked":"19 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 19 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -831,6 +839,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -525,6 +527,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -571,6 +576,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -627,7 +633,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"always-do-sober-what-you-said-youd-do-drunk-that-will-teach","url":"https://quotle.info/who-said/always-do-sober-what-you-said-youd-do-drunk-that-will-teach/","quote":"Always do sober what you said you'd do drunk. That will teach you to keep your mouth shut","claim":"Ernest Hemingway said: \"Always do sober what you said you'd do drunk. That will teach you to keep your mouth shut\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Hemingway is widely and credibly credited with this line, which is said to come from a private letter of \"rules for life\" he sent to his publisher Charles Scribner Jr. in the 1950s. But that letter has never been published, the evidence is second-hand — Malcolm Forbes printed it in 1961, Scribner recalled it in a 1990 memoir — and the two accounts word it differently, so no primary source pins this exact phrasing.","credit":"attributed to Ernest Hemingway (1899–1961), reportedly from a letter of \"rules for life\" sent to his publisher Charles Scribner Jr. in the 1950s. The letter has never been published; the earliest documented printing is Forbes magazine, September 1961. Charles Scribner Jr.'s own 1990 memoir words it \"what you said you'd do when you were drunk.\" Attributed, not verified. Via Quotle.info","comparison":"","citation":"Earliest documented printing per Quote Investigator: Malcolm S. Forbes in Forbes magazine, September 1961. See Quote Investigator, \"Quote Origin: Always Do Sober What You Said You'd Do Drunk. That Will Teach You To Keep Your Mouth Shut,\" June 10, 2022. Compare Charles Scribner Jr., In the Company of Writers: A Life in Publishing (New York: Charles Scribner's Sons, 1990), 64.","rights":"This is not a pre-1931 published work. The line is said to come from a private Hemingway letter of the 1950s whose earliest documented printing is Forbes in September 1961, and the fullest citable version appears in a memoir published in 1990. Both are comfortably inside US copyright, and an author's unpublished letters remain the property of the estate — so treat this as in-copyright, not public domain.","checked":"4 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 4 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -865,6 +873,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

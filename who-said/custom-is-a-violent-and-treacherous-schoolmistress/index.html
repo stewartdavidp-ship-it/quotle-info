@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"custom-is-a-violent-and-treacherous-schoolmistress","url":"https://quotle.info/who-said/custom-is-a-violent-and-treacherous-schoolmistress/","quote":"Custom is a violent and treacherous schoolmistress","claim":"Michel de Montaigne said: \"Custom is a violent and treacherous schoolmistress\"","rating":5,"verdict":"Supported","answer":"Yes. The thought is Montaigne's, from Of custom, and that we should not easily change a law received (Essays, Book I, Chapter XXII), and his French reads \"Car c'est à la verité une violente et traistresse maistresse d'escole, que la coustume.\" This exact English wording is Charles Cotton's translation of 1685–86, edited by William Carew Hazlitt — confirmed verbatim in the Project Gutenberg text and on Wikisource.","credit":"Michel de Montaigne, Essays, Book I, Ch. XXII, \"Of custom, and that we should not easily change a law received,\" trans. Charles Cotton (1685–86), ed. W. C. Hazlitt. Verified at quotle.info · Verbatim: “For, in truth, custom is a violent and treacherous schoolmistress.”","comparison":"For, in truth, custom is a violent and treacherous schoolmistress.","citation":"Michel de Montaigne, \"Of custom, and that we should not easily change a law received,\" in Essays of Michel de Montaigne, Book I, chap. XXII, trans. Charles Cotton (1685–86), ed. William Carew Hazlitt (1877); Project Gutenberg ebook no. 3584.","rights":"Montaigne's Essais first appeared in 1580, and the Charles Cotton translation that supplies this exact English wording dates from 1685–86, edited by William Carew Hazlitt in 1877 — original and translation alike are long in the public domain in the United States, which is why Project Gutenberg distributes the text freely. Be aware that a modern twentieth-century translation of the same sentence would carry its own translator's copyright; the wording quoted on this page does not.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -884,6 +892,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -510,6 +512,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -556,6 +561,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -612,7 +618,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"death-begins-in-the-colon","url":"https://quotle.info/who-said/death-begins-in-the-colon/","quote":"Death begins in the colon","claim":"Hippocrates said: \"Death begins in the colon\"","rating":1,"verdict":"Not supported","answer":"No. Etymologist Barry Popik's chronology finds the sentence first in a colon-therapy advertisement in the Daily News-Record of Miami, Oklahoma, dated 24 September 1944 — not in Hippocrates, and not in a text by any of the other men credited with it. Popik notes the line is pinned on both Hippocrates and the Nobel laureate Élie Metchnikoff, but that \"it's not clear what writing of theirs is most similar to the saying.\"","credit":"not Hippocrates. No text by Hippocrates has been identified containing it; the earliest appearance documented by etymologist Barry Popik is a colon-therapy advertisement in the Daily News-Record (Miami, Oklahoma), 24 September 1944. Élie Metchnikoff's The Prolongation of Life (English translation, 1908), often named as the source, does not contain the phrase. — Quotle.info","comparison":"","citation":"Earliest documented in an advertisement for Dr. J. P. Van Horn, Daily News-Record (Miami, OK), September 24, 1944, p. 5, col. 5; chronology compiled in Barry Popik, \"Death begins in the colon,\" BarryPopik.com, September 12, 2011. Compare Élie Metchnikoff, The Prolongation of Life: Optimistic Studies, English translation edited by P. Chalmers Mitchell (New York: G. P. Putnam's Sons, 1908), which does not contain the phrase.","rights":"No author or work of origin has been established, so no rights status can honestly be asserted for the sentence. The earliest documented carrier is an unsigned 1944 American newspaper advertisement; Élie Metchnikoff's The Prolongation of Life (English translation, 1908) is old enough to be public domain in the United States but does not contain the phrase, so it cannot be the source that clears it.","checked":"24 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 24 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -855,6 +863,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

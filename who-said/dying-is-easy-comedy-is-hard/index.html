@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -513,6 +515,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -559,6 +564,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -615,7 +621,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"dying-is-easy-comedy-is-hard","url":"https://quotle.info/who-said/dying-is-easy-comedy-is-hard/","quote":"Dying is Easy. Comedy is Hard","claim":"Edmund Kean said: \"Dying is Easy. Comedy is Hard\"","rating":1,"verdict":"Not supported","answer":"No. Edmund Kean died in 1833, and Quote Investigator reports that it has \"not located any solid support\" for crediting him. The earliest published account QI has found is from 1966, and it is about a different actor entirely — Edmund Gwenn, whose deathbed reply to the director George Seaton was first printed as \"Not nearly as difficult as playing comedy.\" The neat modern wording arrived decades later, and QI concludes the exact phraseology \"may be lost.\"","credit":"not Edmund Kean, who died in 1833. The earliest published account, in Neil and Margaret Rau's \"Act Your Way to Successful Living\" (1966), tells it of the actor Edmund Gwenn, whose deathbed reply to director George Seaton was \"Not nearly as difficult as playing comedy.\" The terse modern wording was popularised by the 1982 film \"My Favorite Year.\" Source: Quote Investigator. Via Quotle.info","comparison":"","citation":"Rau, Neil, and Margaret Rau. Act Your Way to Successful Living. New York: Prentice-Hall, 1966, 145–46. Earliest published account located by Quote Investigator, \"Quote Origin: Dying is Easy. Comedy is Hard,\" 26 October 2010; the wording there is \"Not nearly as difficult as playing comedy.\"","rights":"No status can honestly be asserted here. This exact seven-word wording cannot be tied to any pre-1931 work: the earliest account of the underlying anecdote that Quote Investigator located is a 1966 book that phrases it quite differently, and the best-known instance of the terse form is dialogue in the 1982 film My Favorite Year, which remains in copyright to its screenwriters and studio. Because the adage's wording evolved anonymously across retellings, there is no identifiable first publication of this sentence to assign a public-domain date to — so we claim none.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -857,6 +865,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

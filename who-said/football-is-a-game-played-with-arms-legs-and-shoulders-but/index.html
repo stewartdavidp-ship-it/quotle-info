@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"football-is-a-game-played-with-arms-legs-and-shoulders-but","url":"https://quotle.info/who-said/football-is-a-game-played-with-arms-legs-and-shoulders-but/","quote":"Football is a game played with arms, legs and shoulders but mostly from the neck up","claim":"Knute Rockne said: \"Football is a game played with arms, legs and shoulders but mostly from the neck up\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. This sounds exactly like Rockne and may well be his, but nobody can show where he said it. The only citation Wikiquote offers is Great Quotes from Great Sports Heroes (1997) by Peggy Anderson, page 35 — a quotation anthology published sixty-six years after Rockne died, and the kind of book that collects sayings rather than sourcing them. We searched the Library of Congress newspaper archive for the phrase and found no instance of it at all, in his lifetime or after. Nothing suggests the attribution is wrong; there is simply nothing behind it yet.","credit":"Attributed to Knute Rockne; earliest known citation is Great Quotes from Great Sports Heroes (1997), p. 35 — no contemporary source located","comparison":"","citation":"Attributed to Knute Rockne; earliest citation located is Peggy Anderson, Great Quotes from Great Sports Heroes (1997), 35, as cited by Wikiquote. No contemporary source has been found.","rights":"No rights status is asserted. We cannot tie the sentence to any work, speech or publication, so there is no first publication to date and no rights holder to name. The only text we can point to is a 1997 anthology, which is firmly in copyright but is plainly not the origin. quotle.info makes no public-domain claim here.","checked":"28 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 28 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -830,6 +838,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -505,6 +507,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -551,6 +556,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -607,7 +613,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"the-oldest-shortest-words-yes-and-no-are-those-which","url":"https://quotle.info/who-said/the-oldest-shortest-words-yes-and-no-are-those-which/","quote":"The oldest, shortest words — yes and no — are those which require the most thought","claim":"Pythagoras said: \"The oldest, shortest words — yes and no — are those which require the most thought\"","rating":1,"verdict":"Not supported","answer":"No. No ancient text has Pythagoras saying this, and none of his writings survive. Wikiquote lists it as disputed. The earliest instance it found is in Grist in 1965, and the line appears to be a misconstrual of Ausonius's story that the reborn Pythagoras answered babblers only \"yes\" or \"no.\"","credit":"popularly attributed to Pythagoras, but no ancient source contains it; earliest located in Grist, 1965 (per Wikiquote), and probably a misreading of an anecdote in Ausonius.","comparison":"","citation":"Earliest located in print: Grist (National Conference on State Parks magazine), 1965, as cited in \"Pythagoras,\" Wikiquote, Disputed section. Compare Ausonius, letter to Paulinus, in Ausonius, trans. Hugh G. Evelyn White, vol. 2 (London: William Heinemann; New York: G. P. Putnam's Sons, 1921), letter XXIX.","rights":"The popular wording has no identifiable author. Its earliest located appearance is a 1965 periodical, so we make no public-domain claim for it. The Ausonius passages quoted on this page come from Hugh G. Evelyn White's Loeb translation (vol. 1, 1919; vol. 2, 1921), which was published before 1931 and is public domain in the US. They are not the source of the modern wording.","checked":"3 Nov 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 3 Nov 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -836,6 +844,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

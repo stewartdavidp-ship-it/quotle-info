@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"so-im-ugly-so-what-i-never-saw-anyone-hit-with-his-face","url":"https://quotle.info/who-said/so-im-ugly-so-what-i-never-saw-anyone-hit-with-his-face/","quote":"So I'm Ugly. So What? I Never Saw Anyone Hit with His Face","claim":"Yogi Berra originated the “never saw anyone hit with his face” retort about his looks, popularly quoted as “So I’m ugly. So what? I never saw anyone hit with his face.” — a later compression of the wording documented from 1948 on.","rating":5,"verdict":"Supported","answer":"Yes. The quip is genuinely his. The earliest printing Quote Investigator documents is the Berra chapter of sportswriter Milton Gross's 1948 book Yankee Doodles, and Berra printed it himself in The Yogi Book (1998) and When You Come to a Fork in the Road, Take It! (copyright 2001). Only the neat modern wording is new — the closing clause is his word for word, but the punchy \"So I'm ugly. So what?\" opener replaces the set-up he actually used.","credit":"Yogi Berra, quoted in Milton Gross, Yankee Doodles (Boston: House of Kent Publishing Co., 1948), 115. The tidy modern form now in circulation, “So I’m ugly. So what? I never saw anyone hit with his face,” is a later compression of this; its closing clause matches Berra’s own wording in When You Come to a Fork in the Road, Take It! (Hyperion, copyright 2001), 112.","comparison":"It don't matter if you're ugly in this racket. All you have to do is hit the ball and I never saw anybody hit one with his face.","citation":"Milton Gross, \"Beauty's Only Skin Deep,\" in Yankee Doodles (Boston: House of Kent Publishing Co., 1948), 115. Berra's own later wording: Yogi Berra with Dave Kaplan, When You Come to a Fork in the Road, Take It! (New York: Hyperion, copyright 2001), 112.","rights":"Berra's own retellings are plainly in copyright — The Yogi Book (Workman, 1998) and When You Come to a Fork in the Road, Take It! (Hyperion, copyright 2001). For the 1948 first printing, Milton Gross's Yankee Doodles, we have not established whether the US copyright was renewed, so we have not established that it entered the public domain either — treat the line as in copyright. Quoting the sentence with attribution is ordinary fair comment; reproducing the surrounding pages is not.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -874,6 +882,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

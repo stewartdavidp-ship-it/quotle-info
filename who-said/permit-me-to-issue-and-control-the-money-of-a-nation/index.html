@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"permit-me-to-issue-and-control-the-money-of-a-nation","url":"https://quotle.info/who-said/permit-me-to-issue-and-control-the-money-of-a-nation/","quote":"Permit me to issue and control the money of a nation, and I care not who makes its laws","claim":"Mayer Amschel Rothschild said: \"Permit me to issue and control the money of a nation, and I care not who makes its laws\"","rating":1,"verdict":"Not supported","answer":"No. There is no Rothschild source — no letter, ledger, diary, speech, memoir or newspaper report. Mayer Amschel Rothschild died in 1812. The earliest located printing of the saying, in 1908, attaches it to no one in particular; the first version naming him appears in 1935, in Gertrude M. Coogan's Money Creators, with no citation. The dates later attached to it range from 1790 to 1863 — several of them after he was dead. This line is a staple of antisemitic conspiracy writing, and the plain factual answer is that it has no documented origin at all.","credit":"An anonymous saying, in print unattributed by 1908 and credited to Mayer Amschel Rothschild only from 1935 — 123 years after his death. No Rothschild source exists.","comparison":"","citation":"Anonymous saying; earliest located printing 1908, unattributed. First credited to Mayer Amschel Rothschild in Gertrude M. Coogan, Money Creators (1935), without citation. No Rothschild source exists.","rights":"We give no rights status because the saying has no identified author or first publication to attach one to. A single sentence of this length is in any case below the threshold of copyright protection in most jurisdictions, and the 1908 printing is long out of copyright anywhere. The 1935 book that first attached Rothschild's name is a different matter — quote from it sparingly and with attribution. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -873,6 +881,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

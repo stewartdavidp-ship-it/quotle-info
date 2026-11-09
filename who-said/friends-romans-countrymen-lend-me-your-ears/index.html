@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"friends-romans-countrymen-lend-me-your-ears","url":"https://quotle.info/who-said/friends-romans-countrymen-lend-me-your-ears/","quote":"Friends, Romans, countrymen, lend me your ears","claim":"William Shakespeare said: \"Friends, Romans, countrymen, lend me your ears\"","rating":5,"verdict":"Supported","answer":"Yes. The opening line of Mark Antony's funeral oration in Julius Caesar, Act 3, scene 2 — a play believed to have been written and first performed in 1599. It survives only because Shakespeare's colleagues printed it in the First Folio of 1623; no quarto edition predates the Folio, so that volume is the play's only authoritative text. The wording is confirmed identically across independent modern editions.","credit":"William Shakespeare, Julius Caesar, Act 3, scene 2 (written 1599; first printed in the First Folio, 1623). Spoken by Mark Antony, not by Caesar. Verified at quotle.info · Verbatim: “Friends, Romans, countrymen, lend me your ears; I come to bury Caesar, not to praise him.”","comparison":"Friends, Romans, countrymen, lend me your ears; I come to bury Caesar, not to praise him.","citation":"William Shakespeare, The Tragedy of Julius Caesar, act 3, scene 2, first published in the First Folio (London, 1623); text as printed in The Tragedy of Julius Caesar, ed. Lawrence Mason, Yale edition, 1919.","rights":"Julius Caesar was first published in the First Folio of 1623, centuries before any surviving copyright interest could attach, so the play and this line are firmly in the public domain in the United States. The comparison text quoted above, the 1919 Yale edition edited by Lawrence Mason, was itself published before 1931 and is public domain as well.","checked":"29 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 29 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

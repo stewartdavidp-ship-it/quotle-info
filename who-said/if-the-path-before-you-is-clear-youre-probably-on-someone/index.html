@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -511,6 +513,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -557,6 +562,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -613,7 +619,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"if-the-path-before-you-is-clear-youre-probably-on-someone","url":"https://quotle.info/who-said/if-the-path-before-you-is-clear-youre-probably-on-someone/","quote":"If the path before you is clear, you're probably on someone else's","claim":"Joseph Campbell said: \"If the path before you is clear, you're probably on someone else's\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Campbell gets the credit everywhere this line appears, and the thought behind it is not merely his in spirit — he published it. In Pathways to Bliss he writes, \"You enter the forest at the darkest point, where there is no path. Where there's a way or path, it is someone else's path; each human being is a unique phenomenon\" (p. xxvi, as his own estate cites it at the Joseph Campbell Foundation), and The Hero's Journey puts it as \"If there is a path it is someone else's path and you are not on the adventure.\" What nobody has produced is the compressed one-liner: those exact words are cited to no book, lecture, interview or letter, and they are absent from Wikiquote's Campbell entry, while Quote Investigator has never investigated it. It is a paraphrase of a documented original.","credit":"attributed to Joseph Campbell (1904–1987), and a compression of something he did publish. Campbell wrote: “You enter the forest at the darkest point, where there is no path. Where there's a way or path, it is someone else's path; each human being is a unique phenomenon” (Pathways to Bliss, New World Library, 2004, p. xxvi), and “If there is a path it is someone else's path and you are not on the adventure” (The Hero's Journey, 1990). The one-line version quoted online is cited to no work of his. Source: Quotle.info","comparison":"","citation":"Paraphrase. The documented original is Joseph Campbell, Pathways to Bliss: Mythology and Personal Transformation (New World Library, 2004), p. xxvi: \"You enter the forest at the darkest point, where there is no path. Where there's a way or path, it is someone else's path; each human being is a unique phenomenon.\" Campbell states the same point in The Hero's Journey: Joseph Campbell on His Life and Work (HarperCollins, 1990), retelling the knights of the Queste del Saint Graal: \"If there is a path it is someone else's path and you are not on the adventure.\" The popular one-line wording appears in neither and has not been traced to any work by Campbell.","rights":"The circulating one-liner is an unattributed paraphrase, so no rights status attaches to it as such. Campbell's actual sentences are in copyright: Pathways to Bliss was published by New World Library in 2004, The Hero's Journey by HarperCollins in 1990, and The Power of Myth by Doubleday in 1988. His literary legacy is administered by the Joseph Campbell Foundation, established in 1991 by his widow Jean Erdman and his longtime editor Robert Walter.","checked":"24 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 24 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -852,6 +860,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

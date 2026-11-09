@@ -159,6 +159,7 @@ ${HEAD_SCRIPT}
     <meta property="og:url" content="${canonical}">
     <meta property="og:site_name" content="Quotle.info">
 ${OG_IMAGE_TAGS}
+    <link rel="stylesheet" href="/assets/audience.css">
 ${jsonld}    ${FONTS}
 ${headExtra}    <style>
 ${ROOT_CSS}${_baseCss()}${CHROME_CSS}
@@ -212,6 +213,12 @@ const homeBody = `        <header class="hero">
             <p class="lede">Before you put a quote on a slide or in print: Quotle.info traces it to its <strong>real source</strong> — who actually said it — and tells you whether it&rsquo;s <strong>cleared to reproduce</strong> (public domain, or still under copyright). The part an AI usually gets wrong.</p>
             <p class="stat"><b>${total}</b> quotes fact&#8209;checked &mdash; ${CORPUS.quotes.byConfidence.verified} verified, ${CORPUS.quotes.byConfidence.attributed} attributed, ${CORPUS.quotes.byConfidence.disputed} flagged as misquoted &mdash; each traced as far as the record allows, with its reuse rights marked</p>
         </header>
+        <section class="challenge-promo" aria-labelledby="daily-challenge-h">
+            <p class="feat-kicker">Three claims. One daily challenge.</p>
+            <h2 id="daily-challenge-h">Real or misquoted?</h2>
+            <p>Spot the genuine quotes, the mistaken credits and the claims we can&rsquo;t confirm. Then see the evidence.</p>
+            <a class="aud-btn aud-btn-primary" href="/challenge/">Play today&rsquo;s challenge &rarr;</a>
+        </section>
 ${FEATURED.length ? `        <section class="featured" aria-label="Notable reattributions">
             <p class="feat-kicker">Not who you think</p>
             <div class="feat-grid">

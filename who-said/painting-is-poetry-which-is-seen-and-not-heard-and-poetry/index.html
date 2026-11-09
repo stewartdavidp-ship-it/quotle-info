@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"painting-is-poetry-which-is-seen-and-not-heard-and-poetry","url":"https://quotle.info/who-said/painting-is-poetry-which-is-seen-and-not-heard-and-poetry/","quote":"Painting is poetry which is seen and not heard, and poetry is a painting which is heard but not seen","claim":"Leonardo da Vinci said: \"Painting is poetry which is seen and not heard, and poetry is a painting which is heard but not seen\"","rating":5,"verdict":"Supported","answer":"Yes. Genuinely his. The Italian — La pittura è una poesia che si vede e non si sente, e la poesia è una pittura che si sente e non si vede — opens the chapter Differenza che ha la pittura con la poesia in the Trattato della pittura, the treatise assembled from his notebooks after his death. The English is a translation, and we could not establish who made it.","credit":"Painting is poetry which is seen and not heard, and poetry is a painting which is heard but not seen. — Leonardo da Vinci, Trattato della pittura, chapter “Differenza che ha la pittura con la poesia” (compiled by Francesco Melzi before 1542; first printed 1651). English wording is a translation; translator unidentified. Via Quotle.info","comparison":"Painting is poetry which is seen and not heard, and poetry is a painting which is heard but not seen. These two arts, you may call them both either poetry or painting, have here interchanged the senses by which they penetrate to the intellect.","citation":"Leonardo da Vinci, Trattato della pittura, compiled by Francesco Melzi before 1542 from Leonardo's notebooks (Vatican Library, Codex Urbinas Latinus 1270); first printed in abridged form by Raffaelo du Fresne, 1651. Text cited from the edition of Gaetano Milanesi (Rome: Unione Cooperativa Editrice, 1890), part one, chap. 16, \"Differenza che ha la pittura con la poesia.\" English wording as given in Wikiquote; translator unidentified.","rights":"Leonardo's Italian is long out of copyright, and the edition quoted above — Gaetano Milanesi's Trattato della pittura (Rome: Unione Cooperativa Editrice, 1890) — is public domain in the United States. Rights in a translation attach to the translation itself, though, and we could not establish who produced this exact English wording or when it first appeared, so we make no public-domain claim for the English.","checked":"6 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 6 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -868,6 +876,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

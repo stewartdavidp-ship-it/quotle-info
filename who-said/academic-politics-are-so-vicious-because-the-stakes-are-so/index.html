@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"academic-politics-are-so-vicious-because-the-stakes-are-so","url":"https://quotle.info/who-said/academic-politics-are-so-vicious-because-the-stakes-are-so/","quote":"Academic Politics Are So Vicious Because the Stakes Are So Small","claim":"Henry Kissinger coined: \"Academic Politics Are So Vicious Because the Stakes Are So Small\"","rating":1,"verdict":"Not supported","answer":"No. Quote Investigator finds no evidence that Kissinger coined this: the earliest full statements in print — a February 1969 speech by Columbia philosopher Charles Frankel and a 1970 essay by Dwight Waldo — both present it as a joke already in circulation, with no author attached. The saying has been called Sayre's Law since 1973, when Charles Issawi's Issawi's Laws of Social Motion and a December 1973 Wall Street Journal column independently credited Columbia's Wallace S. Sayre — and Sayre's colleague Herbert Kaufman confirmed that origin four years later, in an Autumn 1977 letter to PS — but no text written by Sayre himself has ever been produced; Kissinger enters the record only in an August 1977 magazine editorial.","credit":"not Henry Kissinger. The saying was already an anonymous academic joke in print by February 1969, and has been known as Sayre's Law after Columbia political scientist Wallace S. Sayre (1905–1972) since 1973. Kissinger was first credited with it by a New Republic editorial in August 1977; he repeated the line but did not coin it. Quotle.info","comparison":"","citation":"Charles Frankel, \"Education and the Barricades,\" speech delivered 17 February 1969, in Official Report of the 1969 Annual Convention of the American Association of School Administrators (Washington, DC: AASA, 1969), 75 — cited as the earliest direct evidence by Quote Investigator, \"Quote Origin: Academic Politics Are So Vicious Because the Stakes Are So Small,\" 18 August 2013.","rights":"No rights status can honestly be asserted, because the wording has no identifiable author or first publication. The individual printings that carry it — Frankel's 1969 convention speech, Issawi's 1973 book, the 1973 and 1983 Wall Street Journal columns, Kaufman's 1977 letter — are all post-1930 and remain with their respective authors and publishers, but the one-line proverb itself belongs to no traceable source. Only the 1765 Samuel Johnson precursor quoted above is unambiguously public domain.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -865,6 +873,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-awoke-only-to-find-that-the-rest-of-the-world-is-still","url":"https://quotle.info/who-said/i-awoke-only-to-find-that-the-rest-of-the-world-is-still/","quote":"I awoke, only to find that the rest of the world is still asleep","claim":"Leonardo da Vinci said: \"I awoke, only to find that the rest of the world is still asleep\"","rating":1,"verdict":"Not supported","answer":"No. The real sentence is neither first-person nor by Leonardo. In his 1910 study Leonardo da Vinci and a Memory of His Childhood (English trans. 1916), Freud described Leonardo as \"a man who awoke too early in the darkness, while the others were all still asleep\" — a simile he expressly credited to Dmitry Merezhkovsky. The popular \"I awoke…\" version is an anonymous modern rewrite found in none of Leonardo's notebooks. As Leonardo scholar Martin Kemp put it, \"about 80% of the Leo 'quotes' on the internet are not by him. This is not amongst the 20%.\"","credit":"Misattributed to Leonardo da Vinci. The line is an anonymous first-person rewrite of Sigmund Freud's 1910 description of Leonardo — \"a man who awoke too early in the darkness, while the others were all still asleep\" — a simile Freud credited to novelist Dmitry Merezhkovsky. It appears in none of Leonardo's own writings.","comparison":"","citation":"Sigmund Freud, Leonardo da Vinci and a Memory of His Childhood (1910; English translation, 1916), crediting the simile to Dmitry Merezhkovsky, The Romance of Leonardo da Vinci (1900–1901). No such line appears in Leonardo da Vinci's own writings.","rights":"The exact first-person wording is an anonymous modern paraphrase with no identifiable author or source, so no copyright status can be responsibly asserted. The underlying third-person simile appeared in Freud's essay (German 1910, English 1916) and, earlier, in Merezhkovsky's novel (1900–1901) — but the circulating quote matches neither text verbatim.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -835,6 +843,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

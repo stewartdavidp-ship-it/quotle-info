@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"christianity-neither-is-nor-ever-was-a-part-of-the","url":"https://quotle.info/who-said/christianity-neither-is-nor-ever-was-a-part-of-the/","quote":"Christianity neither is, nor ever was a part of the common law","claim":"Thomas Jefferson said: \"Christianity neither is, nor ever was a part of the common law\"","rating":5,"verdict":"Supported","answer":"Yes. Genuine, and the wording is close to exact. It is the conclusion of section 873 of Jefferson's legal commonplace book, written when he was a law student in the 1760s and sent to Thomas Cooper under a covering letter of 10 February 1814. It was printed after his death as an appendix, 'Whether Christianity is Part of the Common Law?', to his Reports of Cases Determined in the General Court of Virginia (1829). One detail the popular version loses: the full sentence begins 'we may safely affirm (though contradicted by all the judges and writers on earth)' the covering letter.","credit":"—Thomas Jefferson, legal commonplace book §873, sent to Thomas Cooper, 10 February 1814.","comparison":"","citation":"Jefferson, Thomas. Legal commonplace book, §873; enclosed with his letter to Thomas Cooper, 10 February 1814. Printed as 'Whether Christianity is Part of the Common Law?' in Reports of Cases Determined in the General Court of Virginia (1829).","rights":"Public domain worldwide. Jefferson died in 1826 and the text was published in 1829, so it is out of copyright everywhere by a wide margin — quote it freely. The only caution is editorial: the annotations on Founders Online are copyright Princeton University Press, so cite Jefferson's words rather than the editors' notes. This is not legal advice.","checked":"21 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 21 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -869,6 +877,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

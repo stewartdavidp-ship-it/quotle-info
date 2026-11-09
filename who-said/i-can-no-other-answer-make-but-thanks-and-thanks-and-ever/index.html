@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"i-can-no-other-answer-make-but-thanks-and-thanks-and-ever","url":"https://quotle.info/who-said/i-can-no-other-answer-make-but-thanks-and-thanks-and-ever/","quote":"I can no other answer make but thanks, and thanks, and ever thanks","claim":"William Shakespeare said: \"I can no other answer make but thanks, and thanks, and ever thanks\"","rating":4,"verdict":"Mostly supported","answer":"Mostly. Genuinely Shakespeare: the line is Sebastian's, spoken to Antonio in Twelfth Night, Act 3, Scene 3, first printed in the 1623 First Folio. One caveat worth knowing — the Folio prints a short line, \"thankes; and euer oft,\" and the third \"thanks\" — the one after \"and ever\" — that makes the famous triple was supplied by a later editor.","credit":"I can no other answer make but thanks, and thanks, and ever thanks. — William Shakespeare, Twelfth Night, Act 3, Scene 3 (Sebastian to Antonio); first printed in the First Folio, 1623. The third \"thanks\" is an editor's completion of a short line in the Folio.","comparison":"I can no other answer make but thanks, and thanks, and ever thanks; and oft good turns are shuffled off with such uncurrent pay.","citation":"William Shakespeare, \"Twelfth Night, or What You Will,\" Act 3, Scene 3 (written c. 1601–1602; first printed in the First Folio, 1623). The received reading \"and thanks, and ever thanks; and oft\" is an editorial emendation of the Folio's \"thankes; and euer oft\"; see Twelfth Night, Folger Shakespeare Library digital edition, textual note 3.3.16.","rights":"Twelfth Night was written around 1601–1602 and first printed in the 1623 First Folio, so the play is centuries into the public domain. The familiar \"and ever thanks\" reading is an editorial completion that entered the text through the post-1709 editorial tradition — the Folger credits only \"Ed.,\" which it defines as an editor from Rowe's 1709 edition onward — so that wording is long out of copyright too. The notes, glosses and layout of any modern edition remain its publisher's.","checked":"29 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 29 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -866,6 +874,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

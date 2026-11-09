@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -522,6 +524,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -568,6 +573,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -624,7 +630,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"life-is-too-important-to-be-taken-seriously","url":"https://quotle.info/who-said/life-is-too-important-to-be-taken-seriously/","quote":"Life Is Too Important To Be Taken Seriously","claim":"G. K. Chesterton coined: \"Life Is Too Important To Be Taken Seriously\"","rating":1,"verdict":"Not supported","answer":"No. The joke is Wilde's, but not in these words. Lord Darlington says it in Act I of Lady Windermere's Fan (staged 1892, published 1893) as \"life is far too important a thing ever to talk seriously about it\" — the point being about talking, not about taking. Quote Investigator finds that G. K. Chesterton dropped the \"talk\" when he paraphrased the play in 1902, and that compressed sentence — not Wilde's — is what now circulates under both men's names.","credit":"a compression of Oscar Wilde, not his wording. Wilde's line, spoken by Lord Darlington in Act I of Lady Windermere's Fan (staged 1892, published 1893), is \"life is far too important a thing ever to talk seriously about it.\" G. K. Chesterton dropped the \"talk\" when paraphrasing the play in 1902. Via Quotle.info. · Verbatim: “Because I think that life is far too important a thing ever to talk seriously about it.”","comparison":"Because I think that life is far too important a thing ever to talk seriously about it.","citation":"Wilde, Oscar. Lady Windermere's Fan: A Play About a Good Woman. London: Elkin Mathews and John Lane, 1893, 14–15 (Act I). The compressed modern wording is earliest documented in G. K. Chesterton and W. Robertson Nicoll, Robert Louis Stevenson (London: Hodder and Stoughton, 1902), 20–21, and recurs in Chesterton, The Ball and the Cross (New York: John Lane, 1909), 16; pagination per Quote Investigator, \"Quote Origin: Life Is Too Important To Be Taken Seriously,\" 26 July 2015.","rights":"Every authored source that carries this line predates 1931 and is in the public domain in the United States: Wilde's Lady Windermere's Fan (Elkin Mathews and John Lane, 1893) and Vera; or, The Nihilists (privately printed, 1902), and Chesterton's Robert Louis Stevenson (Hodder and Stoughton, 1902) and The Ball and the Cross (John Lane, 1909). The compressed popular wording has no separate authored source to protect.","checked":"27 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 27 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -870,6 +878,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"mathematics-is-the-language-with-which-god-has-written-the","url":"https://quotle.info/who-said/mathematics-is-the-language-with-which-god-has-written-the/","quote":"Mathematics is the language with which God has written the universe","claim":"\"Mathematics is the language with which God has written the universe\"","rating":1,"verdict":"Not supported","answer":"There is a real passage behind this, in Il Saggiatore (1623), and Galileo really did say the universe is written in the language of mathematics. But he wrote it the other way round — philosophy is the book, mathematics is the language it is set in — and the Italian original does not mention God at all.","credit":"A paraphrase, not Galileo's sentence. What he wrote, in Il Saggiatore (1623), is: \"Philosophy is written in that great book which ever lies before our eyes — I mean the universe — but we cannot understand it if we do not first learn the language and grasp the symbols, in which it is written. This book is written in the mathematical language...\" (trans. E. A. Burtt, The Metaphysical Foundations of Modern Physical Science, London: Kegan Paul, Trench, Trubner, 1925). God does not appear in the Italian.","comparison":"Philosophy is written in that great book which ever lies before our eyes — I mean the universe — but we cannot understand it if we do not first learn the language and grasp the symbols, in which it is written. This book is written in the mathematical language, and the symbols are triangles, circles, and other geometrical figures, without whose help it is impossible to comprehend a single word of it; without which one wanders in vain through a dark labyrinth.","citation":"Galileo Galilei, Il Saggiatore (Rome, 1623), in Le opere di Galileo Galilei, Edizione Nazionale, ed. Antonio Favaro, vol. 6 (Florence: Tipografia di G. Barbèra, 1896); English wording from Edwin Arthur Burtt, The Metaphysical Foundations of Modern Physical Science (London: Kegan Paul, Trench, Trübner & Co., 1925). The popular sentence \"Mathematics is the language with which God has written the universe\" is a paraphrase with no located source.","rights":"The status covers the passage quoted on this page — Galileo's 1623 Italian and the English translation shown — not the paraphrase in the headline. Il Saggiatore was published in Rome in 1623, and the wording we print is E. A. Burtt's, from a book whose title page is dated 1925 — comfortably before the 1931 threshold for US public domain. The popular sentence has no identified source, so no rights claim is made for it.","checked":"23 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 23 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -857,6 +865,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

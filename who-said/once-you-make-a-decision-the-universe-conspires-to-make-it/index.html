@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -513,6 +515,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -559,6 +564,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -615,7 +621,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"once-you-make-a-decision-the-universe-conspires-to-make-it","url":"https://quotle.info/who-said/once-you-make-a-decision-the-universe-conspires-to-make-it/","quote":"Once you make a decision, the universe conspires to make it happen","claim":"Ralph Waldo Emerson said: \"Once you make a decision, the universe conspires to make it happen\"","rating":1,"verdict":"Not supported","answer":"No. Emerson never wrote this. Wikiquote files the line under Misattributed, records that no prior occurrence of the statement has been located anywhere before 2001, and says it \"seems to be derived from\" a line in Paulo Coelho's The Alchemist (1988), p. 22: \"When you want something, all the universe conspires in helping you to achieve it.\" The popular Emerson wording is a loose reworking of that sentence — not Coelho's exact words either — and its earliest documented appearance under Emerson's name is a 2001 self-help anthology.","credit":"is NOT by Ralph Waldo Emerson. Wikiquote lists it as misattributed, with no prior occurrence of the statement located anywhere before 2001. It seems derived from Paulo Coelho, The Alchemist (1988; trans. Alan R. Clarke, first English publication 1993), p. 22 per Wikiquote's citation (edition unspecified): \"When you want something, all the universe conspires in helping you to achieve it.\" The earliest located attribution to Emerson is John F. Brown, The Gift of Depression (2001), p. 56. — Quotle.info","comparison":"","citation":"Coelho, Paulo. The Alchemist. Translated by Alan R. Clarke. Originally published as O Alquimista (Rio de Janeiro: Editora Rocco, 1988); first English publication HarperSanFrancisco, 1993. Page 22 per Wikiquote's citation, which names no edition — Wikiquote notes that page numbers vary among editions. Earliest located attribution of the reworded line to Emerson: John F. Brown, The Gift of Depression: Twenty-one Inspirational Stories Sharing Experience, Strength, and Hope (2001), p. 56.","rights":"Two separate things are in play. The popular \"Emerson\" wording has no identified author and no traceable source, so no rights status can honestly be asserted for it — and it is certainly not public domain merely because it carries a 19th-century name. The sentence actually shown above is Coelho's: O Alquimista was first published in 1988 and Alan R. Clarke's English translation in 1993, so both the original and this translation are firmly in copyright in the United States, and it is quoted here briefly for purposes of identification and commentary.","checked":"14 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 14 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -853,6 +861,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

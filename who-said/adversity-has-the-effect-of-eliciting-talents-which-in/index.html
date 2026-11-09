@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"adversity-has-the-effect-of-eliciting-talents-which-in","url":"https://quotle.info/who-said/adversity-has-the-effect-of-eliciting-talents-which-in/","quote":"Adversity has the effect of eliciting talents which in prosperous circumstances would have lain dormant","claim":"Horace said: \"Adversity has the effect of eliciting talents which in prosperous circumstances would have lain dormant\"","rating":2,"verdict":"Needs context","answer":"Yes and no. The familiar English sentence appears in no standard translation of Horace, and the quote sites that spread it cite no source — Goodreads even flags it as community-submitted and \"not verified.\" The genuine Horatian thought is in the Satires (II.8): \"res adversae nudare solent, celare secundae\" — adversity lays bare a man's genius, prosperity conceals it. This one-liner is a loose modern paraphrase of that line, reworded and stripped of its context; the idea is Horace's, the wording is not.","credit":"Paraphrase of Horace, Satires 2.8.73–74 — not a verbatim quotation","comparison":"","citation":"Horace, Satires (Sermones) 2.8.73–74 (c. 30 BC); cf. Satires, Epistles and Ars Poetica, trans. H. Rushton Fairclough, Loeb Classical Library (Cambridge, MA: Harvard University Press, 1926). The popular English sentence is a modern paraphrase and is not found in this or other standard translations.","rights":"The displayed English sentence is an anonymous modern paraphrase with no identifiable translator and no pre-1931 printing we could locate, so we assert no copyright status for it. Horace's underlying Latin is in the public domain, as are older prose translations of the Satires — but this particular wording is not traceable to any of them.","checked":"8 Jul 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 8 Jul 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -839,6 +847,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

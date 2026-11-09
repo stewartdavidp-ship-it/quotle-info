@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -518,6 +520,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -564,6 +569,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -620,7 +626,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"living-is-like-tearing-through-a-museum-not-until-later-do","url":"https://quotle.info/who-said/living-is-like-tearing-through-a-museum-not-until-later-do/","quote":"Living is like tearing through a museum. Not until later do you really start absorbing what you saw, thinking about it, looking it up in a book, and remembering — because you can't take it all in at once","claim":"Audrey Hepburn said: \"Living is like tearing through a museum. Not until later do you really start absorbing what you saw, thinking about it, looking it up in a book, and remembering — because you can't take it all in at once\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Credited to Hepburn on every major quotation site, and never challenged by any researcher — but the trail stops at a single citation: Audrey Hepburn: A Bio-Bibliography (1994) by David Hofstede, a compiled reference work published the year after she died. Wikiquote's own citation reads only \"as quoted in,\" and no interview, letter, broadcast, or date has ever been attached to the line.","credit":"Attributed to Audrey Hepburn (1929–1993), not verified. The only source anyone cites is David Hofstede, \"Audrey Hepburn: A Bio-Bibliography\" (Greenwood Press, 1994), published the year after her death; no interview, letter, or broadcast has ever been named. Quotle.info, last verified 18 Aug 2026.","comparison":"","citation":"David Hofstede, Audrey Hepburn: A Bio-Bibliography, Bio-Bibliographies in the Performing Arts (Greenwood Press, 1994). Cited by both Wikiquote and WIST Quotations as the source of this quotation; no earlier appearance has been located, and no original interview, letter, or broadcast is named.","rights":"The work this sentence originally came from has not been identified, so no rights status can be asserted — but it is certainly not public domain. The earliest appearance anyone points to is a 1994 book, and if the words are genuinely Hepburn's they are a twentieth-century spoken remark whose rights would sit with her estate; Hofstede's printed text is separately in copyright to its author and publisher. Treat the line as quotable only under fair use, with attribution.","checked":"18 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 18 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -862,6 +870,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

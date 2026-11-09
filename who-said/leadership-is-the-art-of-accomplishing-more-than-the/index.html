@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"leadership-is-the-art-of-accomplishing-more-than-the","url":"https://quotle.info/who-said/leadership-is-the-art-of-accomplishing-more-than-the/","quote":"Leadership is the art of accomplishing more than the science of management says is possible","claim":"Colin Powell said: \"Leadership is the art of accomplishing more than the science of management says is possible\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. Powell genuinely owned this idea — but the famous wording is not the wording he used. In his 2003 Leadership Lecture at the State Department he said: \"My own personal definition is that leadership is the art of getting people to do more than the science of management says is possible.\" The circulating \"accomplishing more\" version is documented in Oren Harari's books about Powell; Harari's own source note traces it to Powell's memoir My American Journey (1995), p. 258 — a page reference we have not been able to confirm. No Powell speech or transcript we found uses the \"accomplishing more\" wording.","credit":"Leadership is the art of getting people to do more than the science of management says is possible. — Colin Powell, 2003 Leadership Lecture, U.S. Department of State, 28 October 2003. (The widely shared \"accomplishing more\" wording is a variant documented in Oren Harari's books about Powell; Harari cites it to Powell's memoir My American Journey, 1995, p. 258 — a page reference we have not been able to confirm.)","comparison":"Leadership is the art of getting people to do more than the science of management says is possible.","citation":"Colin L. Powell, \"2003 Leadership Lecture: Why Leadership Matters In The Department of State\" (remarks, Dean Acheson Auditorium, Washington, DC, October 28, 2003), U.S. Department of State — where Powell's wording is \"the art of getting people to do more than the science of management says is possible.\" The popular \"accomplishing more\" wording closes the Prologue of Oren Harari, The Leadership Secrets of Colin Powell (New York: McGraw-Hill, 2002), whose source notes cite it to Colin Powell with Joseph E. Persico, My American Journey (New York: Random House, 1995), p. 258 — a page reference we have not been able to confirm — and appears as an uncited front-matter epigraph in Harari, The Powell Principles (New York: McGraw-Hill, 2003).","rights":"Two different sentences with two different rights answers. Powell's own documented wording comes from a lecture delivered on 28 October 2003 and published as a U.S. Department of State transcript — a work of the U.S. Government, and so uncopyrightable under 17 U.S.C. §105. The circulating \"accomplishing more\" variant is another matter: its earliest verified printings are Oren Harari's McGraw-Hill books of 2002 (© The McGraw-Hill Companies) and 2003 (© Oren Harari), both firmly in copyright. Harari's 2002 notes cite the line to Powell's My American Journey (Random House, 1995), p. 258, which would move it into a different rights bucket again — but we have not been able to confirm that page, so we treat the Harari titles as the controlling identifiable source and classify the variant conservatively as in copyright.","checked":"17 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 17 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -867,6 +875,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

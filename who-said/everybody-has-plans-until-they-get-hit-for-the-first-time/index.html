@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -520,6 +522,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -566,6 +571,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -622,7 +628,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"everybody-has-plans-until-they-get-hit-for-the-first-time","url":"https://quotle.info/who-said/everybody-has-plans-until-they-get-hit-for-the-first-time/","quote":"Everybody has plans until they get hit for the first time","claim":"Mike Tyson said: \"Everybody has plans until they get hit for the first time\"","rating":5,"verdict":"Supported","answer":"Yes. Tyson said it to the Associated Press on 19 August 1987, brushing off the plan Tyrell Biggs had announced for beating him — the wire report transcribes the sentence in exactly this wording, and Quote Investigator finds no earlier instance. This is the real line; the famous \"punched in the mouth\" version is a later rewrite by other people.","credit":"Mike Tyson, on Tyrell Biggs's pre-fight strategy — \"Everybody has plans until they get hit for the first time.\" Associated Press wire report, 19 August 1987; earliest attestation traced by Quote Investigator. The popular \"punched in the mouth\" wording is a later variant.","comparison":"","citation":"Rick Warner, \"Tall Man Tyrell Biggs Thinks His Height Will Add New Dimension to Fight\" (Associated Press), The Times and Democrat (Orangeburg, SC), 19 August 1987. Quote Investigator cites the same-day AP dispatch as \"Biggs Has Plans for Tyson,\" Oroville Mercury-Register (Oroville, CA), 19 August 1987, 1B. Chronology: Quote Investigator, \"Quote Origin: Everybody Has Plans Until They Get Hit for the First Time,\" 25 August 2021.","rights":"This is a 1987 remark, first published in an Associated Press wire report that same August — more than half a century after the 1930 US public-domain cutoff, so neither Tyson's words nor the report that carried them is public domain. Quoting a single sentence with attribution is ordinary practice, but nothing on this page should be treated as free to reprint at length.","checked":"7 Aug 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Aug 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -856,6 +864,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

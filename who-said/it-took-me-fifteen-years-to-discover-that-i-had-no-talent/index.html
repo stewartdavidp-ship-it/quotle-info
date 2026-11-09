@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -512,6 +514,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -558,6 +563,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -614,7 +620,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"it-took-me-fifteen-years-to-discover-that-i-had-no-talent","url":"https://quotle.info/who-said/it-took-me-fifteen-years-to-discover-that-i-had-no-talent/","quote":"It Took Me Fifteen Years to Discover That I Had No Talent for Writing. Did You Quit?","claim":"Groucho Marx said: \"It Took Me Fifteen Years to Discover That I Had No Talent for Writing. Did You Quit?\"","rating":1,"verdict":"Not supported","answer":"No. Groucho Marx has no documented claim on this line at all. The joke was already in print as an unsigned dialogue in the humour magazine Puck on 28 February 1912 — about failing at poetry, over \"nearly ten years,\" not fifteen. It was pinned on Mark Twain in 1946 and on Robert Benchley in 1949, and the snappy second line — \"Did you quit?\" — appears in no period source at all: it is the headline Quote Investigator wrote over its own 2012 investigation.","credit":"Not Groucho Marx. The joke first appeared as an unsigned dialogue in Puck, vol. 71 (28 February 1912), p. 5, under the title \"Couldn't Afford To Then\" — and it was about poetry, over \"nearly ten years,\" not fifteen. Walter Winchell credited it to Mark Twain in January 1946; Reader's Digest credited it to Robert Benchley in September 1949, four years after Benchley's death. The second line, \"Did you quit?\", is the headline of Quote Investigator's 2012 article, not wording from any period source. — Quotle.info · Verbatim: “SCRIBBLER.—It took me nearly ten years to learn that I couldn't write poetry. FRIEND.—Gave it up then, did you? SCRIBBLER.—Oh, no. By that time I had a reputation.”","comparison":"SCRIBBLER.—It took me nearly ten years to learn that I couldn't write poetry. FRIEND.—Gave it up then, did you? SCRIBBLER.—Oh, no. By that time I had a reputation.","citation":"\"Couldn't Afford To Then.\" Puck 71 (February 28, 1912): 5, col. 3. Unsigned. Earliest printing located by Quote Investigator, \"Dialogue Origin: 'It Took Me Fifteen Years to Discover That I Had No Talent for Writing.' 'Did You Quit?'\" October 9, 2012, which also traces the Twain credit to Walter Winchell's column of January 26, 1946 and the Benchley credit to Reader's Digest 55 (September 1949): 118.","rights":"No rights status can honestly be asserted for the wording on this page. The 1912 Puck ancestor is long out of copyright, but that is not the sentence people quote. The familiar \"fifteen years… too famous\" wording is first documented in Reader's Digest in September 1949 and in Nathaniel Benchley's 1955 McGraw-Hill biography — both well after 1931 — with no identifiable author behind the phrasing itself, and the paired second line is a 2012 editorial headline. Treat it as of uncertain status rather than assuming it is free to reuse.","checked":"1 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 1 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -860,6 +868,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>

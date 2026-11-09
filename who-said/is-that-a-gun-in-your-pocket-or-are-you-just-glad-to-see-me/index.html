@@ -22,6 +22,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Quotle.info — Real quote? Cleared to use? Verified provenance and reuse rights.">
     <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="/assets/audience.css">
+    <script src="/assets/audience.js" defer></script>
 
     <!-- Schema.org: Quotation + WebPage (emitted from the record; @ids derive from the canonical URL) -->
     <script type="application/ld+json">
@@ -521,6 +523,9 @@
         .disp-btn:focus-visible { outline: 2px solid var(--sage); outline-offset: 2px; }
         .disp-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 600; width: 232px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 15px 16px 13px; box-shadow: 0 14px 44px rgba(0,0,0,0.4); display: none; }
         .disp-panel.open { display: block; }
+        /* The wrapped mobile nav can put Aa near either edge. Anchor the panel to the viewport
+           so an added navigation link cannot push display settings outside the screen. */
+        @media (max-width:600px) { .disp-panel { position:fixed; top:auto; bottom:16px; left:16px; right:16px; width:auto; max-width:360px; margin-left:auto; } }
         .disp-panel .dph { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em; color: var(--text-muted); margin-bottom: 9px; }
         .disp-panel .dph.mt { margin-top: 15px; }
         .disp-row { display: flex; gap: 6px; }
@@ -567,6 +572,7 @@
             <a class="nav-link" href="/themes/">Themes</a>
             <a class="nav-link" href="/authors/">Authors</a>
             <a class="nav-link" href="/check/">Check a quote</a>
+            <a class="nav-link" href="/challenge/">Daily challenge</a>
             <a class="nav-link" href="https://quotle.runmast.com/">Blog</a>
             <a class="nav-play" href="https://gameshelf.co/quotle/">Play Quotle &rarr;</a>
             <div class="disp">
@@ -623,7 +629,9 @@
             <div class="actions">
                 <button class="act-btn" id="copyBtn" type="button">Copy quote</button>
                 <button class="act-btn" id="shareBtn" type="button">Share</button>
+                <button class="act-btn" id="cardBtn" type="button" hidden>Make a fact-check card</button>
             </div>
+            <script type="application/json" id="quote-card-data">{"slug":"is-that-a-gun-in-your-pocket-or-are-you-just-glad-to-see-me","url":"https://quotle.info/who-said/is-that-a-gun-in-your-pocket-or-are-you-just-glad-to-see-me/","quote":"Is That a Gun in Your Pocket, or Are You Just Glad to See Me?","claim":"Mae West said: \"Is That a Gun in Your Pocket, or Are You Just Glad to See Me?\"","rating":3,"verdict":"Not confirmed","answer":"Not confirmed. The line really is hers — just not from the film everyone names. Quote Investigator finds no rival claimant and concludes the joke family originated with West, but its earliest located evidence is a 1958 book recalling a 1944 Broadway ad-lib in which the object was a sword, and the famous \"gun in your pocket\" wording is first printed — with no citation attached — in a 1967 compilation of her sayings. West speaks it on screen only in Sextette (1978).","credit":"Mae West — attributed. The earliest evidence located by Quote Investigator is Art Cohn's \"The Nine Lives of Michael Todd\" (Random House, 1958), p. 193, reporting a 1944 Broadway ad-lib in the form \"Lieutenant, is that your sword or are you just glad to see me?\" The \"gun in your pocket\" wording is first printed, uncited, in \"The Wit and Wisdom of Mae West\" (G. P. Putnam's Sons, 1967), p. 59, and West speaks it on screen in Sextette (1978). It is not from \"She Done Him Wrong\" or any of her pre-1967 films. Via quotle.info","comparison":"","citation":"Earliest evidence located by Quote Investigator: Art Cohn, The Nine Lives of Michael Todd (New York: Random House, 1958), 193, reporting a 1944 stage ad-lib in the form \"Lieutenant, is that your sword or are you just glad to see me?\" The wording \"Is that a gun in your pocket, or are you just glad to see me?\" is first printed, without citation, in The Wit and Wisdom of Mae West, ed. Joseph Weintraub (New York: G. P. Putnam's Sons, 1967), 59, and is spoken by West in Sextette, dir. Ken Hughes (1978).","rights":"Every documented appearance of this line is from 1958 or later, so nothing here is old enough to be public domain in the United States. The earliest evidence is Art Cohn's The Nine Lives of Michael Todd (Random House, 1958); the exact wording is first printed in The Wit and Wisdom of Mae West (G. P. Putnam's Sons, 1967) and spoken in the 1978 film Sextette. Treat the line as in copyright and quote it as a short attributed quotation.","checked":"7 Sep 2026"}</script>
             <p class="answer-foot">
                 <span aria-hidden="true">🕓</span> Last verified 7 Sep 2026 · <a href="/how-we-verify/">how we verify</a> · <a href="#fix">spot an error?</a>
             </p>
@@ -873,6 +881,7 @@
             <a href="/about/">About</a>
             <a href="/how-we-verify/">How we verify</a>
             <a href="/check/">Check a quote</a>
+            <a href="/challenge/">Daily challenge</a>
             <a href="/contact/">Contact</a>
             <a href="/privacy/">Privacy</a>
             <a href="/terms/">Terms</a>
