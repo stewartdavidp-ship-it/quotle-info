@@ -17,6 +17,10 @@ still said "Local" weeks after the move; two files disagreeing on the same measu
 copies of `toRecord` that must be hand-synced). If you find this file and the README disagreeing,
 **the README wins and the disagreement is a bug to report.**
 
+## Available-agent runtime (authorized 9 November 2026)
+
+When the legacy `Workflow` tool is unavailable, use `workflows/CODEX-WAVE.md` and `agent-bridge.js` with the host’s available agents. David explicitly authorized this process update. Read that route alongside README’s seven stages; preserve the same research, independent audit, skeptic, completeness and release gates. Do not stop solely because the old launcher is absent. The stop-and-report rule still applies to other undocumented mismatches.
+
 ## 1. Which wave is this?
 
 | what they said | what to run |

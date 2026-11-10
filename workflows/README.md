@@ -271,7 +271,7 @@ Consequences worth knowing before you spend agents here:
 | `generate-songs.js` | Workflow | **Songs:** research each queued song → dossier. args `{items:[...], verifiedDate, dateModified}` |
 | `prep-songs.js` | node CLI | **Songs:** journal → ingest-ready records (toRecord + escaping + stub + LYRIC + axis checks). |
 
-Workflow scripts run via the `Workflow` tool (`{scriptPath, args}`); they can't `require()` repo modules
+Legacy Workflow scripts run via the `Workflow` tool (`{scriptPath, args}`); they can't `require()` repo modules
 (sandbox), so `generate.js` has an INLINE `toRecord` that must stay in sync with `prep-wave.js`'s copy.
 The Workflow launch result prints a **Transcript dir** — its `journal.jsonl` is the input to the node CLIs.
 
@@ -336,6 +336,9 @@ year*. Everything else is audit.js's job. Measure any new heuristic's false-posi
 before shipping it; a flag that is mostly wrong just teaches everyone to ignore flags.
 
 ## One wave, end to end
+
+**Codex / current host (David, 9 Nov 2026):** use [CODEX-WAVE.md](CODEX-WAVE.md) to execute these same stages with available agents. `Workflow` below is the legacy launcher; the source prompts, schemas and downstream gates remain authoritative. The native adapter replaces the launcher, not the editorial process.
+
 ```bash
 # 0. Pick the model of wave. TRACK A (misattributions):
 Workflow harvest-candidates.js  args={authors:[<magnet authors NOT yet harvested>], perAuthor:12}
