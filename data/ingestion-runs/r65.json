@@ -1,0 +1,2241 @@
+{
+  "wave": "r65",
+  "verifiedDate": "9 Nov 2026",
+  "dateModified": "2026-11-09",
+  "runtime": "codex-agents",
+  "processPRs": [
+    1243,
+    1244,
+    1245
+  ],
+  "requested": 100,
+  "newRecords": 100,
+  "modifiedExistingRecords": 0,
+  "confidence": {
+    "verified": 19,
+    "attributed": 51,
+    "disputed": 30
+  },
+  "siteTotals": {
+    "quotes": 2950,
+    "authors": 1386,
+    "songs": 115,
+    "playableGameQuotes": 875,
+    "queuedCandidates": 31
+  },
+  "audit": {
+    "initialPass": 57,
+    "initialFail": 43,
+    "skepticConfirmed": 54,
+    "skepticRefuted": 1,
+    "finalPass": 100,
+    "unresolvedHighOrBlocker": 0
+  },
+  "game": {
+    "added": [
+      {
+        "slug": "by-all-means-lets-be-open-minded-but-not-so-open-minded",
+        "gender": "Male",
+        "category": "Science",
+        "period": "1900s",
+        "difficulty": 6,
+        "hint": "He helped popularize a gene-centered view of evolution.",
+        "location": "England",
+        "year": "1996"
+      }
+    ],
+    "pending": [
+      {
+        "slug": "people-now-feel-they-should-document-their-life-rather-than",
+        "author": "Bill Murray",
+        "status": "new_pending",
+        "missing": [
+          "location"
+        ],
+        "reason": "The source dates the Guardian interview to2018 but explicitly describes a telephone conversation without locating Murray at the time. London and Edinburgh listed in the article are future tour venues, not the location of these words."
+      },
+      {
+        "slug": "behold-platos-man",
+        "author": "Diogenes of Sinope",
+        "status": "audit_downgrade",
+        "missing": [
+          "verified exact wording"
+        ],
+        "reason": "Excluded because exact-wording verification is being downgraded after the audit: the linked Hicks text says Here is Plato’s man, not Behold. It must not enter the verified-only game."
+      },
+      {
+        "slug": "i-am-a-citizen-of-the-world",
+        "author": "Diogenes of Sinope",
+        "status": "new_pending",
+        "missing": [
+          "location",
+          "year"
+        ],
+        "reason": "Laërtius6.63records a later transmitted anecdote without dating or locating this particular exchange. Diogenes’s ancient period, birthplace, or residence cannot supply an event date/location."
+      },
+      {
+        "slug": "elementary-my-dear-holmes-elementary",
+        "author": "Edwin Blum and William A. Drake",
+        "status": "new_pending",
+        "missing": [
+          "grounded writing location",
+          "grounded writing/utterance date"
+        ],
+        "reason": "The record verifies film dialogue and the film’s release year, but does not establish the location or exact year/decade of the writers composing these words. A film setting, production country, filming location, or release year is not interchangeable with the screenwriter’s writing location/date. The credit is also a joint contribution, so the game must preserve that authorship rather than silently assign the line to one writer or actor."
+      },
+      {
+        "slug": "every-action-you-take-is-a-vote-for-the-type-of-person-you",
+        "author": "James Clear",
+        "status": "new_pending",
+        "missing": [
+          "location",
+          "year"
+        ],
+        "reason": "The verified wording appears on the author’s website, but the inspected page does not establish where or when this particular sentence was composed. Author residence and book-publication metadata cannot substitute for that evidence."
+      },
+      {
+        "slug": "habits-are-the-compound-interest-of-self-improvement",
+        "author": "James Clear",
+        "status": "new_pending",
+        "missing": [
+          "location",
+          "year"
+        ],
+        "reason": "The verified wording appears on the author’s website, but the inspected page does not establish where or when this particular sentence was composed. Author residence and book-publication metadata cannot substitute for that evidence."
+      },
+      {
+        "slug": "father-forgive-them-for-they-know-not-what-they-do",
+        "author": "Jesus, as recorded in the Gospel of Luke",
+        "status": "new_pending",
+        "missing": [
+          "grounded event/wording date",
+          "grounded wording location"
+        ],
+        "reason": "The record verifies Luke23:34in the KingJames translation and expressly distinguishes it from a historical transcript. It does not establish a defensible exact year/decade for the spoken event, or date/location for composing this English wording. The narrated scene location is not a verified translation-writing location."
+      },
+      {
+        "slug": "heres-looking-at-you-kid",
+        "author": "Julius J. Epstein, Philip G. Epstein &amp; Howard Koch",
+        "status": "new_pending",
+        "missing": [
+          "grounded writing location",
+          "grounded writing/utterance date"
+        ],
+        "reason": "The record verifies film dialogue and the film’s release year, but does not establish the location or exact year/decade of the writers composing these words. A film setting, production country, filming location, or release year is not interchangeable with the screenwriter’s writing location/date. The credit is also a joint contribution, so the game must preserve that authorship rather than silently assign the line to one writer or actor."
+      },
+      {
+        "slug": "i-love-you-i-know",
+        "author": "Leigh Brackett, Lawrence Kasdan and Harrison Ford",
+        "status": "new_pending",
+        "missing": [
+          "grounded writing location",
+          "grounded writing/utterance date"
+        ],
+        "reason": "The record verifies film dialogue and the film’s release year, but does not establish the location or exact year/decade of the writers composing these words. A film setting, production country, filming location, or release year is not interchangeable with the screenwriter’s writing location/date. The credit is also a joint contribution, so the game must preserve that authorship rather than silently assign the line to one writer or actor. Ford’s documented contribution is Han’s reply only; the full two-person exchange has separate writing/performance contributions."
+      },
+      {
+        "slug": "she-is-too-fond-of-books-and-it-has-turned-her-brain",
+        "author": "Louisa May Alcott",
+        "status": "new_pending",
+        "missing": [
+          "location"
+        ],
+        "reason": "The novel and1873publication are documented, but the inspected record/source does not locate where Alcott wrote this sentence. The fictional scene, Alcott’s residence, and the publisher’s city cannot be substituted for writing location."
+      },
+      {
+        "slug": "im-gonna-make-him-an-offer-he-cant-refuse",
+        "author": "Mario Puzo and Francis Ford Coppola",
+        "status": "new_pending",
+        "missing": [
+          "grounded writing location",
+          "grounded writing/utterance date"
+        ],
+        "reason": "The record verifies film dialogue and the film’s release year, but does not establish the location or exact year/decade of the writers composing these words. A film setting, production country, filming location, or release year is not interchangeable with the screenwriter’s writing location/date. The credit is also a joint contribution, so the game must preserve that authorship rather than silently assign the line to one writer or actor."
+      },
+      {
+        "slug": "escape-competition-through-authenticity",
+        "author": "Naval Ravikant",
+        "status": "standing_pending_unchanged",
+        "missing": [
+          "location",
+          "year"
+        ],
+        "reason": "Standing pending item from earlier wave: official-page heading does not establish the location of composition or first utterance, or its exact year. Unchanged and not part ofr65."
+      },
+      {
+        "slug": "seek-wealth-not-money-or-status",
+        "author": "Naval Ravikant",
+        "status": "standing_pending_unchanged",
+        "missing": [
+          "location",
+          "year"
+        ],
+        "reason": "Standing pending item from earlier wave: official-page heading does not establish the location of composition or first utterance, or its exact year. Unchanged and not part ofr65."
+      },
+      {
+        "slug": "ill-get-you-my-pretty-and-your-little-dog-too",
+        "author": "Noel Langley, Florence Ryerson & Edgar Allan Woolf",
+        "status": "new_pending",
+        "missing": [
+          "grounded writing location",
+          "grounded writing/utterance date"
+        ],
+        "reason": "The record verifies film dialogue and the film’s release year, but does not establish the location or exact year/decade of the writers composing these words. A film setting, production country, filming location, or release year is not interchangeable with the screenwriter’s writing location/date. The credit is also a joint contribution, so the game must preserve that authorship rather than silently assign the line to one writer or actor."
+      },
+      {
+        "slug": "all-weve-got-is-cotton-and-slaves-and-arrogance",
+        "author": "Sidney Howard",
+        "status": "new_pending",
+        "missing": [
+          "grounded writing location",
+          "grounded writing/utterance date"
+        ],
+        "reason": "The record verifies film dialogue and the film’s release year, but does not establish the location or exact year/decade of the writers composing these words. A film setting, production country, filming location, or release year is not interchangeable with the screenwriter’s writing location/date."
+      },
+      {
+        "slug": "a-census-taker-once-tried-to-test-me-i-ate-his-liver-with",
+        "author": "Ted Tally",
+        "status": "new_pending",
+        "missing": [
+          "grounded writing location",
+          "grounded writing/utterance date"
+        ],
+        "reason": "The record verifies film dialogue and the film’s release year, but does not establish the location or exact year/decade of the writers composing these words. A film setting, production country, filming location, or release year is not interchangeable with the screenwriter’s writing location/date."
+      },
+      {
+        "slug": "i-do-wish-we-could-chat-longer-but-im-having-an-old-friend",
+        "author": "Ted Tally",
+        "status": "new_pending",
+        "missing": [
+          "grounded writing location",
+          "grounded writing/utterance date"
+        ],
+        "reason": "The record verifies film dialogue and the film’s release year, but does not establish the location or exact year/decade of the writers composing these words. A film setting, production country, filming location, or release year is not interchangeable with the screenwriter’s writing location/date."
+      },
+      {
+        "slug": "gentlemen-its-been-a-privilege-flying-with-you",
+        "author": "William Broyles Jr. and Al Reinert",
+        "status": "new_pending",
+        "missing": [
+          "grounded writing location",
+          "grounded writing/utterance date"
+        ],
+        "reason": "The record verifies film dialogue and the film’s release year, but does not establish the location or exact year/decade of the writers composing these words. A film setting, production country, filming location, or release year is not interchangeable with the screenwriter’s writing location/date."
+      },
+      {
+        "slug": "alone-bad-friend-good",
+        "author": "William Hurlbut and John L. Balderston",
+        "status": "new_pending",
+        "missing": [
+          "grounded writing location",
+          "grounded writing/utterance date"
+        ],
+        "reason": "The record verifies film dialogue and the film’s release year, but does not establish the location or exact year/decade of the writers composing these words. A film setting, production country, filming location, or release year is not interchangeable with the screenwriter’s writing location/date. The credit is also a joint contribution, so the game must preserve that authorship rather than silently assign the line to one writer or actor."
+      },
+      {
+        "slug": "we-belong-dead",
+        "author": "William Hurlbut and John L. Balderston",
+        "status": "new_pending",
+        "missing": [
+          "grounded writing location",
+          "grounded writing/utterance date"
+        ],
+        "reason": "The record verifies film dialogue and the film’s release year, but does not establish the location or exact year/decade of the writers composing these words. A film setting, production country, filming location, or release year is not interchangeable with the screenwriter’s writing location/date. The credit is also a joint contribution, so the game must preserve that authorship rather than silently assign the line to one writer or actor."
+      }
+    ]
+  },
+  "checks": {
+    "regressionTests": 18,
+    "corpusInvariants": 51,
+    "reviewSpineChecks": 16,
+    "browserCardLayouts": 100,
+    "browserPngDownloads": 5,
+    "browserJsErrors": 0,
+    "contentScanNewFindings": 0
+  },
+  "records": [
+    {
+      "id": 0,
+      "slug": "by-all-means-lets-be-open-minded-but-not-so-open-minded",
+      "confidence": "verified",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "db72682b0b5badfb6b2f4a4ba61610e0f5f0dda44f4616958b093b83eabf32a5"
+    },
+    {
+      "id": 1,
+      "slug": "those-who-stand-for-nothing-fall-for-anything",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "JSON-LD ClaimReview.reviewRating; FAQ answer; quote-card-data.rating/answer",
+          "claim": "The named person said the displayed sentence is rated 1/False and answered No.",
+          "sourceLink": "https://quoteinvestigator.com/2014/02/18/stand-fall/",
+          "problem": "The cited source reports missing or weak evidence and does not authenticate the named attribution. The visible record is qualified, but the machine-readable verdict and card turn absence of authentication into a categorical false verdict.",
+          "fix": "Keep confidence disputed if needed, but set schema.claimRatingValue=3, schema.claimRatingName=\"Not confirmed\", schema.verdictLead=\"Not confirmed.\"; preserve the named claim and the evidence limits. Rebuild and verify card/FAQ/ClaimReview agree. Do not invent an alternative author."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "edb6edbb93696b553b6104d7e89bcf31c8b24ccd1cf9706e63df42923ed62b76"
+    },
+    {
+      "id": 2,
+      "slug": "it-is-easy-you-just-chip-away-the-stone-that-doesnt-look",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "JSON-LD ClaimReview.reviewRating; FAQ answer; quote-card-data.rating/answer",
+          "claim": "The named person said the displayed sentence is rated 1/False and answered No.",
+          "sourceLink": "https://quoteinvestigator.com/2014/06/22/chip-away/",
+          "problem": "The cited source reports missing or weak evidence and does not authenticate the named attribution. The visible record is qualified, but the machine-readable verdict and card turn absence of authentication into a categorical false verdict.",
+          "fix": "Keep confidence disputed if needed, but set schema.claimRatingValue=3, schema.claimRatingName=\"Not confirmed\", schema.verdictLead=\"Not confirmed.\"; preserve the named claim and the evidence limits. Rebuild and verify card/FAQ/ClaimReview agree. Do not invent an alternative author."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "95e1f8c86d5127a6b4023d45a7cbaaf6fcb738b7e2a8340e7bf99e0a2f67d895"
+    },
+    {
+      "id": 3,
+      "slug": "people-ask-me-to-predict-the-future-when-all-i-want-to-do",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "58c8b1328b9b7776fcb4075d5c310d11d7cc377c8ba497ef0ba6653c182182b9"
+    },
+    {
+      "id": 4,
+      "slug": "if-you-knew-how-much-work-went-into-it-you-would-not-call",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "JSON-LD ClaimReview.reviewRating; FAQ answer; quote-card-data.rating/answer",
+          "claim": "The named person said the displayed sentence is rated 1/False and answered No.",
+          "sourceLink": "https://en.wikiquote.org/wiki/Michelangelo#Disputed",
+          "problem": "The cited source reports missing or weak evidence and does not authenticate the named attribution. The visible record is qualified, but the machine-readable verdict and card turn absence of authentication into a categorical false verdict.",
+          "fix": "Keep confidence disputed if needed, but set schema.claimRatingValue=3, schema.claimRatingName=\"Not confirmed\", schema.verdictLead=\"Not confirmed.\"; preserve the named claim and the evidence limits. Rebuild and verify card/FAQ/ClaimReview agree. Do not invent an alternative author."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "9bcd68cb3ee89130369abfc75e9bf045ae641d2820cab29fabd1c2541a968620"
+    },
+    {
+      "id": 5,
+      "slug": "its-alive-its-alive",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "39c850c93715fc0e008f05c5b49301e6793c45597e7efd224aa28440c7444a29"
+    },
+    {
+      "id": 6,
+      "slug": "writing-is-like-prostitution-first-you-do-it-for-fun-then",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "blocker",
+          "location": "JSON-LD claimReviewed; FAQ; quote-card-data.claim/answer",
+          "claim": "Anthony Bourdain said this joke — False / No.",
+          "sourceLink": "https://quoteinvestigator.com/2011/01/17/for-pleasure-for-money/",
+          "problem": "The cited QI article explicitly documents Bourdain using a version in a 2010 TIME interview. The prose correctly disputes origination, but the rated claim denies a documented utterance.",
+          "fix": "Set schema.claimVerb=\"coined\" (or a full schema.claimReviewed about origination), leaving the historical correction intact. Make the FAQ question and answer explicitly distinguish use from coinage; do not rate his documented repetition false."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "294891ee28212a4b3f37ec252ff82009cafc16704323d9f42a173e63c4f1f69b"
+    },
+    {
+      "id": 7,
+      "slug": "leave-the-gun-take-the-cannoli",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [
+        {
+          "severity": "medium",
+          "location": "Provenance trail, second item",
+          "claim": "ACMI describes the improvisation and Sheridan suggestion.",
+          "sourceLink": "https://en.wikiquote.org/wiki/The_Godfather",
+          "problem": "The second trail item attaches its ACMI-specific account to Wikiquote. The claim is true in the separately linked, independently fetched ACMI article, but the adjacent citation does not supply that production history.",
+          "fix": "Point this trail item directly to https://www.acmi.net.au/stories-and-ideas/the-godfather-leave-the-gun-take-the/; retain the transcript link for the spoken line."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "789eb1b9b2c97265c2ecc4f384ec61fafbbddc3344910255b459166ab7749f39"
+    },
+    {
+      "id": 8,
+      "slug": "be-open-to-a-world-where-you-may-not-understand-or-agree",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "JSON-LD ClaimReview.reviewRating; FAQ answer; quote-card-data.rating/answer",
+          "claim": "The named person said the displayed sentence is rated 1/False and answered No.",
+          "sourceLink": "https://ca.news.yahoo.com/posts-claim-anthony-bourdain-said-020000418.html",
+          "problem": "Snopes rates the claim Unproven. The visible record is qualified, but the machine-readable verdict and card turn absence of authentication into a categorical false verdict.",
+          "fix": "Keep confidence disputed if needed, but set schema.claimRatingValue=3, schema.claimRatingName=\"Not confirmed\", schema.verdictLead=\"Not confirmed.\"; preserve the named claim and the evidence limits. Rebuild and verify card/FAQ/ClaimReview agree. Do not invent an alternative author."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "fef524cd7e57c8d9bae08a37c1dba4a7fc4ab03c73cfb0c9b9ffc4eb81df8330"
+    },
+    {
+      "id": 9,
+      "slug": "lips-red-as-the-rose-hair-black-as-ebony-skin-white-as-snow",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "6b5aaa1fa320d7006277ee1221ab1c8c25ecc2530ce645bb10c841d3646c5eff"
+    },
+    {
+      "id": 10,
+      "slug": "dont-call-me-a-saint-i-dont-want-to-be-dismissed-so-easily",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "ebc9e28e27082b68b5502932557f7cefa45c95df64a9ed47587b0050edffb0bd"
+    },
+    {
+      "id": 11,
+      "slug": "my-whole-life-so-far-my-whole-experience-has-been-that-our",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "9c39e153ce14969a2dfafe40f16c0d8a58d5ed98dd3e9dee8f28ca2c6c5c727f"
+    },
+    {
+      "id": 12,
+      "slug": "we-have-all-known-the-long-loneliness-and-we-have-learned",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "6b470940bcec55d1db3018397f3fb71857ce02e2ec98c639ceb78751ee2cb39e"
+    },
+    {
+      "id": 13,
+      "slug": "he-who-never-quotes-is-never-quoted",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "38cf011f0cb4c733c0c886b1d0feeef550e53964936860685af54256a1238afe"
+    },
+    {
+      "id": 14,
+      "slug": "wisdom-is-the-right-use-of-knowledge-to-know-is-not-to-be",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "cc37808744e8fc3a014d11a7a1d56437b37b8a6685b3b45e014d98962ef29df4"
+    },
+    {
+      "id": 15,
+      "slug": "ill-have-what-shes-having",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "JSON-LD claimReviewed; FAQ; quote-card-data.claim",
+          "claim": "Nora Ephron said I’ll have what she’s having — rated False.",
+          "sourceLink": "https://achievement.org/achiever/nora-ephron/",
+          "problem": "The primary interview itself records Ephron saying these words while recounting Crystal’s suggestion. The intended correction concerns authorship of the punch line, not whether Ephron ever spoke the six words.",
+          "fix": "Scope schema.claimReviewed or claimVerb to wrote/created the film punch line. Preserve Crystal’s specific contribution and Estelle Reiner’s performance; avoid a categorical claim that Ephron never said the words."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "a39e184091d3d433c6fafa00bc1c728b02b4c79d9dbb72235710f8d921e9164d"
+    },
+    {
+      "id": 16,
+      "slug": "with-any-child-entering-adolescence-one-hunts-for-signs-of",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "00cd47897083340e3238726323adc3c3262c21c802e8b7609b82d0790f6d2a83"
+    },
+    {
+      "id": 17,
+      "slug": "humanity-is-showing-signs-of-breaking-free-from-the-matrix",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "d248a7891df40b0749cfb5e7d0df28932ceeba6a2579b544cac894a22da16894"
+    },
+    {
+      "id": 18,
+      "slug": "the-enemy-is-anybody-whos-going-to-get-you-killed-no-matter",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "ab279ad13696c5538f2b660e05877894d299d330db92532d2c690bcb7f773f03"
+    },
+    {
+      "id": 19,
+      "slug": "the-years-are-too-short-the-days-are-too-long",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "07f7c55c013308ee8c1e3f230ad724f431ae4cb9916d61f6790556b75a5fa8a7"
+    },
+    {
+      "id": 20,
+      "slug": "grammar-is-a-piano-i-play-by-ear-since-i-seem-to-have-been",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [
+        {
+          "severity": "medium",
+          "location": "Answer source-line and second provenance item",
+          "claim": "Wikiquote attributes the grammar line; The Marginalian dates the essay to December1976.",
+          "sourceLink": "https://www.themarginalian.org/2012/10/16/why-i-write-joan-didion/",
+          "problem": "The two adjacent citations are reversed: the Wikiquote-specific statement links to The Marginalian, while the Marginalian-specific date discussion links to Wikiquote. Both sources were fetched and support their own halves, so this is a traceability defect rather than an invented fact.",
+          "fix": "Attach the Wikiquote statement to https://en.wikiquote.org/wiki/Joan_Didion#Quotes and the Marginalian publication-date statement to its own article. Preserve the explicit date discrepancy rather than selecting an unsupported exact year."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "2f0ba91008b2db531484dd8b95f0a83baeb9bb5f8965719a1480f424a1e61c4e"
+    },
+    {
+      "id": 21,
+      "slug": "we-tell-ourselves-stories-in-order-to-live",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "497187d329ddc1c00d4a2dad50dcf049970e3a387b379363d522221fd38d4833"
+    },
+    {
+      "id": 22,
+      "slug": "everything-is-copy",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "blocker",
+          "location": "JSON-LD claimReviewed; FAQ; quote-card-data.claim/answer",
+          "claim": "Nora Ephron said Everything is copy — False / No.",
+          "sourceLink": "https://achievement.org/achiever/nora-ephron/",
+          "problem": "The fetched Academy interview contains Nora repeating the maxim while crediting her mother. The current No directly contradicts both the source and the visible source-line admitting Nora used it.",
+          "fix": "Set schema.claimVerb=\"coined\" or full claimReviewed about inventing the maxim, and keep the limited family-provenance evidence. If FAQ still asks who said it, use schema.faqAnswer to state that Nora repeated it and credited Phoebe; do not claim Phoebe conclusively invented it."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "f54eff6ccbb8f3e39267ced1b6e722bf3cf13c1cd4005bbfa6d3cd62271018c9"
+    },
+    {
+      "id": 23,
+      "slug": "the-optimist-thinks-this-is-the-best-of-all-possible-worlds",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "JSON-LD claimReviewed; quote-card-data.claim",
+          "claim": "The bare aphorism is rated 1/False without its Oppenheimer attribution.",
+          "sourceLink": "https://en.wikiquote.org/wiki/Robert_Oppenheimer#Misattributed",
+          "problem": "Because schema.claimQuoteText differs from quotationText and creditedTo is absent, the rendered claim loses the disputed person. The card consequently labels a bare philosophical sentence false even though the correction is about Oppenheimer’s credit and Cabell’s earlier wording.",
+          "fix": "Set creditedTo to \"J. Robert Oppenheimer\" and/or schema.claimReviewed to the explicit Oppenheimer attribution being tested. Retain the actual Cabell wording and verify the resulting claim and FAQ name the right subject."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "01ace03f13023767672ee765181d41c71c0f7a6bd6e67b0fec4b6b34b3607893"
+    },
+    {
+      "id": 24,
+      "slug": "a-melancholy-can-be-sweet-its-not-a-mean-thing-but-its",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "d3515a6d7e5ba5d794867a07b761e353b5b1bc7ce074399015a80b6a18ce296f"
+    },
+    {
+      "id": 25,
+      "slug": "people-now-feel-they-should-document-their-life-rather-than",
+      "confidence": "verified",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "8faa30911ea0174cd0f23eef5dcca831a4ddc643df03a6cfffcd890209749ff0"
+    },
+    {
+      "id": 26,
+      "slug": "it-is-the-client-who-knows-what-hurts-what-directions-to-go",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "0ff4f9a2f272ec95f09becf513e1e372e76d67f0db9ee472eec5ae761eb6b234"
+    },
+    {
+      "id": 27,
+      "slug": "the-curious-paradox-is-that-when-i-accept-myself-just-as-i",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "b5dc70d2c17f5432c5eab6f81fd7c40fa0d6db221872f640056bf91f71d78956"
+    },
+    {
+      "id": 28,
+      "slug": "contentment-is-the-only-real-wealth",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "5eab84cf22ada52302ac7b5f37ef9418b587831d9b31bcb9276e04cb7acdb0c3"
+    },
+    {
+      "id": 29,
+      "slug": "home-is-where-i-work-and-i-work-everywhere",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "f9003208bf3b6cc10df9ea3e3bc9ce3fa3d90c528bc85dae814cb9b67128936b"
+    },
+    {
+      "id": 30,
+      "slug": "my-factories-may-make-an-end-of-war-sooner-than-your",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "5c5be971407a9048b26e25a87ae64ba38a788353e4984f146f0d0b20f86b0455"
+    },
+    {
+      "id": 31,
+      "slug": "i-support-police-over-blm-dont-put-them-down",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [
+        {
+          "severity": "medium",
+          "location": "Answer authorDates; author.metaLine",
+          "claim": "Proverb of unknown authorship",
+          "sourceLink": "https://politifact.com/factchecks/2021/feb/04/blog-posting/denzel-washington-praised-police-he-didnt-say/",
+          "problem": "The author-role metadata describes a contemporary fabricated political endorsement/headline as a proverb. The fetched fact-check concerns a specific viral attribution claim, not a traditional proverb.",
+          "fix": "Replace the role metadata with \"Unidentified author of the viral attribution\" or equivalent. Keep the debunk and representative denial unchanged."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "384e9603959d1999ceded5671008595109605b449486fcdc06d261f92a3f75c0"
+    },
+    {
+      "id": 32,
+      "slug": "ive-never-met-anyone-braver-smarter-or-who-cares-more-about",
+      "confidence": "disputed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [
+        {
+          "severity": "medium",
+          "location": "Answer authorDates; author.metaLine",
+          "claim": "Proverb of unknown authorship",
+          "sourceLink": "https://leadstories.com/hoax-alert/2026/10/fact-check-denzel-washington-did-not-say-he-never-met-anyone-braver-smarter-or-who-cares-more-about-america-than-donald-trump.html",
+          "problem": "The author-role metadata describes a contemporary fabricated political endorsement/headline as a proverb. The fetched fact-check concerns a specific viral attribution claim, not a traditional proverb.",
+          "fix": "Replace the role metadata with \"Unidentified author of the viral attribution\" or equivalent. Keep the debunk and representative denial unchanged."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "f9d6d758324e4990df348f5ce49ffe597326cb168fe3035fe68a17b873f0d708"
+    },
+    {
+      "id": 33,
+      "slug": "he-who-sees-the-past-as-surprise-free-is-bound-to-have-a",
+      "confidence": "attributed",
+      "researcher": "/root/research_65a",
+      "auditor": "/root/research_65c",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "aff3f7ed3e86a61470339560674b5ae065802ee5fd0d3e68264727af58761a40"
+    },
+    {
+      "id": 34,
+      "slug": "i-am-continually-fascinated-at-the-difficulty-intelligent",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "5d07446032ed259e99c83c7d96f696e26edbeec4298895b7f47caacf4546bf69"
+    },
+    {
+      "id": 35,
+      "slug": "insane-people-are-always-sure-theyre-just-fine-its-only-the",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "292cfaca433e08d2e6ac3614eeb64ac9cde1cd52a7bc8a43ff44e3647b720ca4"
+    },
+    {
+      "id": 36,
+      "slug": "grief-changes-shape-but-it-never-ends",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "d51810c21a62382b1f03d6f497219e08f665bf6e896d2df6b825e9c0b6b8a162"
+    },
+    {
+      "id": 37,
+      "slug": "we-know-that-the-wages-of-secrecy-are-corruption",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "d7c91e7805e77355f1a17a233013ef17e5b12fbf395fe0e435e8951e200ec983"
+    },
+    {
+      "id": 38,
+      "slug": "we-may-be-likened-to-two-scorpions-in-a-bottle-each-capable",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "35adf1b042406e3419f3cc69abaa0f961c8d192c5685d8b87ab9fd4598fbc59c"
+    },
+    {
+      "id": 39,
+      "slug": "as-in-the-focus-of-a-magnifying-glass-play-contains-all",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "a67a24b9205d6266a9eac782e6385801c1ceb1372b6226934e87fac64c68eb59"
+    },
+    {
+      "id": 40,
+      "slug": "through-others-we-become-ourselves",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "5f98d97d5f7a5d0a9f101a5a2f62f9223ec3e1adca448757bd74d9fb23aa9dc1"
+    },
+    {
+      "id": 41,
+      "slug": "it-is-sometimes-easier-to-make-the-world-a-better-place",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "c6795b5dee65455c0dfd8dcac4b466f4c4fbe904bae7aa73808848ff5e0a31d7"
+    },
+    {
+      "id": 42,
+      "slug": "people-predict-very-little-and-explain-everything",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "1b3fec027739e8419664b882f42c394dfb61ca6f535a93d89dbeff10584e49b5"
+    },
+    {
+      "id": 43,
+      "slug": "the-secret-to-doing-good-research-is-always-to-be-a-little",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "4ac5e04a6ebc5825f615fd61da0582ebf1e3005d8ad5bbd959b7b10aba71921b"
+    },
+    {
+      "id": 44,
+      "slug": "the-foundation-of-every-state-is-the-education-of-its-youth",
+      "confidence": "disputed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+          "claim": "Diogenes said: \"The foundation of every state is the education of its youth\"",
+          "sourceLink": "https://tile.loc.gov/storage-services/service/gdc/gdclccn/05/03/54/44/05035444/05035444.pdf",
+          "problem": "The visible answer expressly says the Diogenes credit is not confirmed and does not establish which Dionysius is meant, but JSON-LD calls the claim False, FAQ begins No, and the card rates1. A different inscription credit does not by itself prove a universal negative about Diogenes’s words.",
+          "fix": "Use the existing per-record unconfirmed/wording-unpinned presentation so ClaimReview, FAQ, and card say Not confirmed/rating3. Keep the observed inscription credit as evidence without turning it into a proved origin."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "f305ae69ca87c447f8107514b581b93cafe8abb11c60b4efe23afe0b5705401b"
+    },
+    {
+      "id": 45,
+      "slug": "we-have-two-ears-and-one-mouth-so-that-we-can-listen-twice",
+      "confidence": "disputed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "fe601a8a5862ab69152213c27fc192756282495593c18fbaf5f04db216abb207"
+    },
+    {
+      "id": 46,
+      "slug": "one-original-thought-is-worth-a-thousand-mindless-quotings",
+      "confidence": "disputed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+          "claim": "Diogenes said: \"One original thought is worth a thousand mindless quotings\"",
+          "sourceLink": "https://web.archive.org/web/20140118110535/https://www.nytimes.com/1996/04/07/magazine/on-language-worth-a-thousand-words.html",
+          "problem": "The visible source conclusion establishes a modern Safire occurrence but explicitly does not establish an ancient source or first authorship. JSON-LD/FAQ/card nevertheless render a definitive False/No against Diogenes. Absence of an ancient source is a limit, not positive proof that he never said it.",
+          "fix": "Retain the modern-use evidence and the source-access limitations. Use the existing per-record unconfirmed/wording-unpinned presentation to suppress the definitiveFalse/No and avoid presenting Safire as the proven originator."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "7189969e06a0c90e91b28b7fc413555560e34d5ef2fd4901345b829a4ac6900c"
+    },
+    {
+      "id": 47,
+      "slug": "if-they-kill-me-i-will-rise-again-in-the-people-of-el",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "be2d2c24ae2fccee333ab9af7610a323ccc849fb006578dae4620d23f56c96cd"
+    },
+    {
+      "id": 48,
+      "slug": "i-am-looking-for-an-honest-man",
+      "confidence": "disputed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "28c195f75e93b71256da72b14d28de63ee4da399267a048e303423b6be8b756a"
+    },
+    {
+      "id": 49,
+      "slug": "i-do-not-know-whether-there-are-gods-but-there-ought-to-be",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "3292328ea4b446c89bae052430988c3dd3a7575cfbbb42505d966fec9a2b3b12"
+    },
+    {
+      "id": 50,
+      "slug": "man-is-the-most-intelligent-of-the-animals-and-the-most",
+      "confidence": "disputed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "8d2091bbdec6cf9c9f6807b91cdad3020fd2cfe34b76304b1c73e3d737313734"
+    },
+    {
+      "id": 51,
+      "slug": "discourse-on-virtue-and-they-pass-by-in-droves-whistle-and",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "8e155b3009ac8765d9cbe57e2cca4f5f667a71d1cc3e3846e6bbdbdc1ed9b5f9"
+    },
+    {
+      "id": 52,
+      "slug": "of-what-use-is-a-philosopher-who-doesnt-hurt-anybodys",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "c9d25ee192d58ead4b062094d3554f02516ce1523b84293454109759e1ceae81"
+    },
+    {
+      "id": 53,
+      "slug": "the-art-of-being-a-slave-is-to-rule-ones-master",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "477c813cdc2af55bbd4bd2162653826e4ed96e32f02fa6a1a0242a4707ca4534"
+    },
+    {
+      "id": 54,
+      "slug": "every-action-you-take-is-a-vote-for-the-type-of-person-you",
+      "confidence": "verified",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "b11e4ed1ca2dc5116af28aa31da9cd2fbb7ac3dbad850e6294dac29b0df26733"
+    },
+    {
+      "id": 55,
+      "slug": "habits-are-the-compound-interest-of-self-improvement",
+      "confidence": "verified",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "e0b1e710b7f35bb7e9eda7571a57bcb7a12093a2dd2a25753af232b5c7397212"
+    },
+    {
+      "id": 56,
+      "slug": "behold-platos-man",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "blocker",
+          "location": "Rights block and citation; JSON-LD copyrightNotice; card rights",
+          "claim": "This English wording belongs to the identified1925 Hicks translation, published before1931.",
+          "sourceLink": "https://en.wikisource.org/wiki/Lives_of_the_Eminent_Philosophers/Book_VI",
+          "problem": "The claimed exact English translation is wrong. Freshly fetched6.40 reads “Here is Plato’s man.” The displayed Behold version is present only in Wikiquote among the linked sources. Therefore the page’s verified-exact-Hicks claim and its public-domain badge for that exact version are not supported.",
+          "fix": "Keep the displayed search wording but downgrade to attributed with uncertain/prose-only rights, explain that Hicks has Here is Plato’s man, and retain the actual Hicks line as an explicitly scoped comparison. Alternatively independently locate a pre1931 edition that really has Behold and cite it. Do not assert that the Wikiquote variant is Hicks’s wording."
+        },
+        {
+          "severity": "high",
+          "location": "Provenance excerpt and primary-wording label; FAQ/card rating5",
+          "claim": "Behold Plato’s man! is primary wording checked in Hicks1925.",
+          "sourceLink": "https://en.wikisource.org/wiki/Lives_of_the_Eminent_Philosophers/Book_VI",
+          "problem": "The source excerpt presents the popular variant as if fetched from the linked Hicks text. This is not merely punctuation: Behold and Here is are different translations. Wikiquote supplies the popular version but is not an independently checked1925 primary page.",
+          "fix": "Change source.excerpt to the actual Hicks words Here is Plato’s man. Mark the popular exact English variant unconfirmed while retaining that the underlying bird anecdote is documented."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "f458367ac699d7b1fc90556e48be9fe9b54a5700dfc8c214dda913edfa30176e"
+    },
+    {
+      "id": 57,
+      "slug": "i-am-a-citizen-of-the-world",
+      "confidence": "verified",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "55e765f172ed2720bbf295e9b54ce1cf03a810736818a0a3fe9d952442396f57"
+    },
+    {
+      "id": 58,
+      "slug": "stand-a-little-out-of-my-sunshine",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "21b1ae9824c975ed008f2e13f0adb188e6e5e99afb7e420e55e9b57baa953a64"
+    },
+    {
+      "id": 59,
+      "slug": "you-can-get-much-further-with-a-kind-word-and-a-gun-than",
+      "confidence": "disputed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+          "claim": "Willie Sutton said: \"You Can Get Much Further with a Kind Word and a Gun than with a Kind Word Alone\"",
+          "sourceLink": "https://quoteinvestigator.com/2013/11/03/kind-gun/",
+          "problem": "The body rejects Sutton as the originator on a hypothesis favoring Corey, while the machine claim asks whether Sutton SAID the words and answers False/No. Origin and use are different claims; a1988 attribution is also not proof that Sutton never repeated them.",
+          "fix": "Scope any finding to origination explicitly using the existing claim verb support, or use an unconfirmed/rating3 said-claim. Preserve Corey’s authorship as QI’s hypothesis, not a certainty, and state that Sutton’s use is unverified."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "734a8fff13825b7074bacd1f8e15989592ace08ee3f87ff91b5d6a151ca2d9ba"
+    },
+    {
+      "id": 60,
+      "slug": "live-fast-die-young-and-leave-a-beautiful-corpse",
+      "confidence": "disputed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+          "claim": "James Dean said: \"Live Fast, Die Young, and Leave a Beautiful Corpse\"",
+          "sourceLink": "https://quoteinvestigator.com/2013/01/31/live-fast/",
+          "problem": "The body and QI explicitly allow that Dean may have used the slogan. Yet the ClaimReview claim is James Dean SAID the words, ratedFalse, with FAQ/card No. The1920 evidence disproves Dean’s origination, not his possible later use.",
+          "fix": "Scope the review to Dean having coined/originated the saying, or keep the said-claim unconfirmed/rating3. Preserve the provisional status of Luce’s authorship."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "a93d24665a2088915920f85b94ad36f21e9d0fc26c2d1957b24952a27621a1d0"
+    },
+    {
+      "id": 61,
+      "slug": "french-have-taken-umbrage-english-have-taken-cognizance",
+      "confidence": "disputed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+          "claim": "James Matthew Barrie said: \"French Have Taken Umbrage. English Have Taken Cognizance\"",
+          "sourceLink": "https://quoteinvestigator.com/2011/04/21/french-take-umbrage/",
+          "problem": "The prose correctly calls the displayed text a compressed headline and says Barrie used a different version, but the FAQ/card treat an unverified exact Barrie sentence as a provedFalse/No. The source traces a joke family rather than demonstrating that Barrie never uttered these words.",
+          "fix": "Keep the page’s explanation that the title is a compressed search formulation; use wording-unpinned/unconfirmed presentation for the exact sentence, rather than a definitiveFalse attribution."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "97e7202aea836aec626102ff9cd3e28d8a8fec32bf74f4547c6ef1e386ec3e82"
+    },
+    {
+      "id": 62,
+      "slug": "everybody-steals-in-commerce-and-industry-ive-stolen-a-lot",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "e7fdd349f59cb35769edc1101c417fdc2c4169ce8bab044452f19ca716fab906"
+    },
+    {
+      "id": 63,
+      "slug": "i-rob-banks-because-thats-where-the-money-is",
+      "confidence": "attributed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "d6e8f96d11560973ad0e94f401575a0aad74ae0964b8f93922e5c5da868f5d75"
+    },
+    {
+      "id": 64,
+      "slug": "confused-on-a-higher-level-and-about-more-important-things",
+      "confidence": "disputed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+          "claim": "Bernt Oksendal said: \"Confused on a Higher Level and About More Important Things\"",
+          "sourceLink": "https://quoteinvestigator.com/2010/07/11/confused/",
+          "problem": "QI establishes that Øksendal reproduced the passage as an anonymous posted saying. The page’s body correctly denies his origination, but its machine claim that Øksendal SAID the fragment is ratedFalse. Reproducing a quote and inventing it are distinct.",
+          "fix": "Scope the claim to Øksendal’s origination, and preserve Kelley as the documented earlier passage author. Do not declare Øksendal’s documented quotation/use false. If the exact isolated fragment is the claim, mark its form unconfirmed."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "897ef4ed82d8beb6bb7a01b94591b61f6622ca65d4dcef86b0861a4a0c16e9a6"
+    },
+    {
+      "id": 65,
+      "slug": "three-things-can-happen-when-you-pass-and-two-of-them-are",
+      "confidence": "disputed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+          "claim": "Darrell Royal said: \"Three Things Can Happen When You Pass and Two of Them Are Bad\"",
+          "sourceLink": "https://quoteinvestigator.com/2011/10/04/pass-3-things/",
+          "problem": "QI quotes Royal using a version in his1963book and says Royal popularized it, while this page’s ClaimReview asks whether Royal SAID it and ratesFalse. FAQ/card No contradict the very source the page cites. Royal’s later attribution of origination to Hayes does not erase his own use.",
+          "fix": "Scope the claim to Royal’s coinage, explaining Hayes is QI’s recommended credit, or treat a Royal-use claim as supported with a wording caveat. The said-claim must not beFalse."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "43ce612e276ce8942d5916a8a38b65e5314fa4007a5c45917f17cbf1bdc71fa6"
+    },
+    {
+      "id": 66,
+      "slug": "you-can-avoid-reality-but-you-cannot-avoid-the-consequences",
+      "confidence": "disputed",
+      "researcher": "/root/research_65b",
+      "auditor": "/root/research_65a",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+          "claim": "Josiah Stamp said: \"You Can Avoid Reality, But You Cannot Avoid the Consequences of Avoiding Reality\"",
+          "sourceLink": "https://quoteinvestigator.com/2015/04/30/reality/",
+          "problem": "The prose says the exact formulation’s origin is unpinned; QI only gives weaker related Stamp wording. The rendered ClaimReview/FAQ/card nevertheless mark the exact Stamp attribution definitivelyFalse/No rather than unconfirmed. The source does not establish a proven alternative author or a definitive fabrication.",
+          "fix": "Use existing per-record unconfirmed/wording-unpinned presentation for the exact sentence, keepAnonymous as an unresolved origin, and distinguish Stamp’s weaker precursor from the popular modern formulation."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "e02034ca6a2055b309a3759a82e391214ee651be168555795a0e7eaafec05b3e"
+    },
+    {
+      "id": 67,
+      "slug": "the-strength-of-the-team-is-each-individual-member-the",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The team and its members depend on one another.",
+          "sourceLink": "https://www.bluesparrowbooks.org/blogs/quote-of-the-day/who-s-on-your-team",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "27e429d22a77239b8fa5a130934e1c51f7d9ba6648235162faec0c4af8abedbd"
+    },
+    {
+      "id": 68,
+      "slug": "she-is-too-fond-of-books-and-it-has-turned-her-brain",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Misattribution · item evidence link",
+          "claim": "Liz Smith later quoted it with credit to Alcott",
+          "sourceLink": "https://www.gutenberg.org/files/4770/4770-h/4770-h.htm",
+          "problem": "The item combines the genuine novel wording with a later Liz Smith transmission claim but points its Check the evidence link to the novel, which cannot establish the later history. QI supports that history.",
+          "fix": "Link the Liz Smith/wording-variant history to https://quoteinvestigator.com/2015/02/17/fond/ and keep the Gutenberg link for the original Alcott sentence only."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "d1846cbda952747aa74177228e06c85526887370fbfe7b029bd39f2582b8ebd5"
+    },
+    {
+      "id": 69,
+      "slug": "know-your-lines-and-dont-bump-into-the-furniture",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "3efb27737b80db5e47851e9076e1794c147f615afffad3b12a529479be2ab322"
+    },
+    {
+      "id": 70,
+      "slug": "you-miss-100-of-the-shots-you-dont-take",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "JSON-LD · Quotation.dateCreated",
+          "claim": "1983",
+          "sourceLink": "https://www.espn.com/nhl/story/_/id/14621635/nhl-55-shades-great-facts-wayne-gretzky-55th-birthday",
+          "problem": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+          "fix": "Omit schema.dateCreated for this unpinned displayed wording. Preserve the dated precursor in source.docMeta and prose; do not invent a new date."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "ef8ea6bd07b9c0884359bda519bc77a428a6baf24d3589a14d20ee009dcdb5a5"
+    },
+    {
+      "id": 71,
+      "slug": "revenge-is-a-dish-best-served-cold",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The proverb recommends delaying retaliation rather than acting in anger.",
+          "sourceLink": "https://quoteinvestigator.com/2025/03/05/revenge-cold/",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        },
+        {
+          "severity": "high",
+          "location": "JSON-LD · Quotation.dateCreated",
+          "claim": "1841",
+          "sourceLink": "https://quoteinvestigator.com/2025/03/05/revenge-cold/",
+          "problem": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+          "fix": "Omit schema.dateCreated for this unpinned displayed wording. Preserve the dated precursor in source.docMeta and prose; do not invent a new date."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "e1c6dacf136959d174c148e91dfa30352ff03e7a69eabfdbdba059ec330a0f23"
+    },
+    {
+      "id": 72,
+      "slug": "the-market-can-remain-irrational-longer-than-you-can-remain",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "JSON-LD · Quotation.dateCreated",
+          "claim": "1986",
+          "sourceLink": "https://quoteinvestigator.com/2011/08/09/remain-solvent/",
+          "problem": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+          "fix": "Omit schema.dateCreated for this unpinned displayed wording. Preserve the dated precursor in source.docMeta and prose; do not invent a new date."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "60b056316dcae333300c752d76936f9a307a3de68e8cae5e51e8df2b6d90d9eb"
+    },
+    {
+      "id": 73,
+      "slug": "there-is-nothing-so-disastrous-as-a-rational-investment",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "A remembered Keynes remark, not an authenticated verbatim transcript.",
+          "sourceLink": "https://quoteinvestigator.com/2011/08/08/rational-investment/",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        },
+        {
+          "severity": "high",
+          "location": "JSON-LD · Quotation.dateCreated",
+          "claim": "1963",
+          "sourceLink": "https://quoteinvestigator.com/2011/08/08/rational-investment/",
+          "problem": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+          "fix": "Omit schema.dateCreated for this unpinned displayed wording. Preserve the dated precursor in source.docMeta and prose; do not invent a new date."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "eb19131f6a0e99a33cf9aa2a7576e057eb1d61c0d17e70745378ac02d948c51f"
+    },
+    {
+      "id": 74,
+      "slug": "if-you-steal-from-one-author-its-plagiarism-if-you-steal",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "JSON-LD · Quotation.dateCreated",
+          "claim": "1929",
+          "sourceLink": "https://quoteinvestigator.com/2010/09/20/plagiarism/",
+          "problem": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+          "fix": "Omit schema.dateCreated for this unpinned displayed wording. Preserve the dated precursor in source.docMeta and prose; do not invent a new date."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "b9548a6f72452c38874e2fbc4382178329dec0d4fb0fc8dc9bc4d4bbe949eb1a"
+    },
+    {
+      "id": 75,
+      "slug": "a-story-should-have-a-beginning-a-muddle-and-an-end",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "JSON-LD · Quotation.dateCreated",
+          "claim": "1909",
+          "sourceLink": "https://quoteinvestigator.com/2011/09/20/beginning-muddle/",
+          "problem": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+          "fix": "Omit schema.dateCreated for this unpinned displayed wording. Preserve the dated precursor in source.docMeta and prose; do not invent a new date."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "d49c15e60434e96b4cea64537667152ffc8b653de693ec26f2864b3f24752a80"
+    },
+    {
+      "id": 76,
+      "slug": "drunk-on-the-idea-that-love-only-love-could-heal-our",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "bd85a0f7fcbd4e91cf508f872823dfbd04ceffacaf699f706e1beb5b9ee8f889"
+    },
+    {
+      "id": 77,
+      "slug": "if-tetris-has-taught-me-anything-its-that-errors-pile-up",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "947d26ec86a5ade3bcb830701576ad0f636e8e2ace9ae55cbc7970f2070a66a7"
+    },
+    {
+      "id": 78,
+      "slug": "capitalism-the-nastiest-of-men-for-the-nastiest-of-motives",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "A satirical description of private motives producing public benefits.",
+          "sourceLink": "https://quoteinvestigator.com/2011/02/23/capitalism-motives/",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        },
+        {
+          "severity": "high",
+          "location": "JSON-LD · Quotation.dateCreated",
+          "claim": "1941",
+          "sourceLink": "https://quoteinvestigator.com/2011/02/23/capitalism-motives/",
+          "problem": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+          "fix": "Omit schema.dateCreated for this unpinned displayed wording. Preserve the dated precursor in source.docMeta and prose; do not invent a new date."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "78c47208bc608f4df47f1fa963199320f55d1d3f6442ea05f14dce3ac0f5b3e7"
+    },
+    {
+      "id": 79,
+      "slug": "modern-man-drives-a-mortgaged-car-over-a-bond-financed",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "JSON-LD · Quotation.dateCreated",
+          "claim": "1957",
+          "sourceLink": "https://quoteinvestigator.com/2012/08/07/mortgaged-car/",
+          "problem": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+          "fix": "Omit schema.dateCreated for this unpinned displayed wording. Preserve the dated precursor in source.docMeta and prose; do not invent a new date."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "f6de334a538d21e072c6994ae45188db36fca5561518792ba93d1e42c80965ba"
+    },
+    {
+      "id": 80,
+      "slug": "a-different-world-cannot-be-built-by-indifferent-people",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "ed76f5d9a392a149187cb6b424c9ddde0b29b42c829179a924802a845516101e"
+    },
+    {
+      "id": 81,
+      "slug": "you-have-to-kiss-a-lot-of-frogs-to-find-your-prince",
+      "confidence": "attributed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "An early version uses toads rather than frogs.",
+          "sourceLink": "https://quoteinvestigator.com/2013/06/05/kiss-frogs/",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        },
+        {
+          "severity": "high",
+          "location": "JSON-LD · Quotation.dateCreated",
+          "claim": "1975",
+          "sourceLink": "https://quoteinvestigator.com/2013/06/05/kiss-frogs/",
+          "problem": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+          "fix": "Omit schema.dateCreated for this unpinned displayed wording. Preserve the dated precursor in source.docMeta and prose; do not invent a new date."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "b13efbdd0ce2e199b5212c311f1db562d55a026919434d25c95a0b8155093755"
+    },
+    {
+      "id": 82,
+      "slug": "father-forgive-them-for-they-know-not-what-they-do",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "c041a00bcc19d81eff20de86c53f4639a1895c3267ceaee27b462989d1919348"
+    },
+    {
+      "id": 83,
+      "slug": "he-that-hath-no-rule-over-his-own-spirit-is-like-a-city",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "PASS",
+      "initialIssues": [],
+      "finalVerdict": "PASS",
+      "recordSha256": "fd892a5a0a31e6e8870dc5fc8147ddbd643da94c0ea80faba3aeb08773a4aef5"
+    },
+    {
+      "id": 84,
+      "slug": "alone-bad-friend-good",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/Bride_of_Frankenstein",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        },
+        {
+          "severity": "high",
+          "location": "Author · bio and answer credit role",
+          "claim": "Hurlbut and Balderston share screenplay credit",
+          "sourceLink": "https://en.wikipedia.org/wiki/Bride_of_Frankenstein",
+          "problem": "The cited production source gives screenplay credit to William Hurlbut; Hurlbut and John L. Balderston share story/adaptation credit. The page falsely describes both as credited screenwriters.",
+          "fix": "State the roles accurately: Hurlbut screenplay, Hurlbut/Balderston story/adaptation. Either name Hurlbut as screenwriter while retaining the other contribution, or label the joint credit as screenplay/story contributions throughout."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "2a169e151e12961ee6759ca2115f756c89e45eb15f2faea9ae051c99ae3a9146"
+    },
+    {
+      "id": 85,
+      "slug": "fire-bad",
+      "confidence": "disputed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/Bride_of_Frankenstein",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        },
+        {
+          "severity": "high",
+          "location": "Author · bio and answer credit role",
+          "claim": "Hurlbut and Balderston share screenplay credit",
+          "sourceLink": "https://en.wikipedia.org/wiki/Bride_of_Frankenstein",
+          "problem": "The cited production source gives screenplay credit to William Hurlbut; Hurlbut and John L. Balderston share story/adaptation credit. The page falsely describes both as credited screenwriters.",
+          "fix": "State the roles accurately: Hurlbut screenplay, Hurlbut/Balderston story/adaptation. Either name Hurlbut as screenwriter while retaining the other contribution, or label the joint credit as screenplay/story contributions throughout."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "cf1ccec4e2ba7ab3d9237dbff4eb81a5ac1e7036e0063ae6e96558e232cd6b56"
+    },
+    {
+      "id": 86,
+      "slug": "its-not-personal-its-strictly-business",
+      "confidence": "disputed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/The_Godfather",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "e59f06691e9ce43c2ee0a4544651c4f1c6c24105a521b7619c8e8bb7379522da"
+    },
+    {
+      "id": 87,
+      "slug": "never-take-sides-against-the-family",
+      "confidence": "disputed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/The_Godfather",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "633aa190ad334e964051a233228b658c697ad170f11550a378262adde162484f"
+    },
+    {
+      "id": 88,
+      "slug": "we-belong-dead",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/Bride_of_Frankenstein",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        },
+        {
+          "severity": "high",
+          "location": "Author · bio and answer credit role",
+          "claim": "Hurlbut and Balderston share screenplay credit",
+          "sourceLink": "https://en.wikipedia.org/wiki/Bride_of_Frankenstein",
+          "problem": "The cited production source gives screenplay credit to William Hurlbut; Hurlbut and John L. Balderston share story/adaptation credit. The page falsely describes both as credited screenwriters.",
+          "fix": "State the roles accurately: Hurlbut screenplay, Hurlbut/Balderston story/adaptation. Either name Hurlbut as screenwriter while retaining the other contribution, or label the joint credit as screenplay/story contributions throughout."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "ec1485e648c07e91598cb11b1200ccec5143a2e189e8309a322ad25a492cf61e"
+    },
+    {
+      "id": 89,
+      "slug": "what-we-have-here-is-a-failure-to-communicate",
+      "confidence": "disputed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/Cool_Hand_Luke",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "c2c2a65eb50ea175eb6a48336012476d9e5a7773c64a8aa8ec2132853ae27018"
+    },
+    {
+      "id": 90,
+      "slug": "you-want-the-truth-you-cant-handle-the-truth",
+      "confidence": "disputed",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/A_Few_Good_Men",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "1eab9b057d058b9ba72c021732964ac47ef8b72e2b0be9d10bb640d0cb287297"
+    },
+    {
+      "id": 91,
+      "slug": "a-census-taker-once-tried-to-test-me-i-ate-his-liver-with",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/The_Silence_of_the_Lambs_(film)",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "62a67c491311cad7655189b9cab3ac147a691305477f7b1dced0ef0c1c974e63"
+    },
+    {
+      "id": 92,
+      "slug": "all-weve-got-is-cotton-and-slaves-and-arrogance",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/Gone_with_the_Wind_(film)",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "92d413910fa703efbc39e343d329305c8a1971cd9376cbae967818ecd9837c68"
+    },
+    {
+      "id": 93,
+      "slug": "elementary-my-dear-holmes-elementary",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/The_Adventures_of_Sherlock_Holmes_(film)",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "cdc4cd75007f99eb97937497e49daf3589cda57a727922491f56fa5dd83b93ba"
+    },
+    {
+      "id": 94,
+      "slug": "gentlemen-its-been-a-privilege-flying-with-you",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/Apollo_13_(film)",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "8e9575a6746843e2db3ae3a6bf57fc4f29dec570ade6ac34e94337e824bca3c2"
+    },
+    {
+      "id": 95,
+      "slug": "heres-looking-at-you-kid",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/Casablanca_(film)",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "dd0b4e8de0da13ea730974e8ec76a01bc85e8d5c9773c98fbc6138b3ee5ad4ca"
+    },
+    {
+      "id": 96,
+      "slug": "i-do-wish-we-could-chat-longer-but-im-having-an-old-friend",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/The_Silence_of_the_Lambs_(film)",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "529a89bb82424f1c4303e00606a5c17ba31ff00ef87dbfbd086f5327c286df8f"
+    },
+    {
+      "id": 97,
+      "slug": "i-love-you-i-know",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "PASS",
+      "initialIssues": [
+        {
+          "severity": "minor",
+          "location": "Hero / share-card quote",
+          "claim": "I love you.\" / \"I know",
+          "sourceLink": "https://www.lucasfilm.com/news/defining-moments-i-know/",
+          "problem": "The display quote has unmatched straight quotation marks from the batch encoding. The dialogue is genuine, but this punctuation looks truncated and propagates to titles and cards.",
+          "fix": "Use a balanced display form such as “I love you.” / “I know.” without changing the slug or the scoped Ford contribution."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "dc5a53aa2db225391cec83928fc42e05684b6efe562b35679d9b65368763f814"
+    },
+    {
+      "id": 98,
+      "slug": "ill-get-you-my-pretty-and-your-little-dog-too",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/The_Wizard_of_Oz_(1939_film)",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "69e4137fed0896aafb50fc6be77ff887a65338ea2ade6db2f27567e45f66d103"
+    },
+    {
+      "id": 99,
+      "slug": "im-gonna-make-him-an-offer-he-cant-refuse",
+      "confidence": "verified",
+      "researcher": "/root/research_65c",
+      "auditor": "/root/research_65b",
+      "initialVerdict": "FAIL",
+      "initialIssues": [
+        {
+          "severity": "high",
+          "location": "Provenance · source excerpt",
+          "claim": "The cited transcription distinguishes the dialogue from later retellings.",
+          "sourceLink": "https://en.wikiquote.org/wiki/The_Godfather",
+          "problem": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+          "fix": "Replace with a short actual fetched source excerpt, or explicitly mark the block as an editorial synopsis/not a quotation in source.excerptNote."
+        }
+      ],
+      "finalVerdict": "PASS",
+      "recordSha256": "faa33734e6dd75705be97df8b3601a492006dd7f7bfdbbec73913c45ea504902"
+    }
+  ],
+  "skepticHistory": [
+    {
+      "slug": "the-strength-of-the-team-is-each-individual-member-the",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "she-is-too-fond-of-books-and-it-has-turned-her-brain",
+      "location": "Misattribution · item evidence link",
+      "finding": "The item combines the genuine novel wording with a later Liz Smith transmission claim but points its Check the evidence link to the novel, which cannot establish the later history. QI supports that history.",
+      "standsUp": true,
+      "reasoning": "The local why field attaches a LizSmith transmission claim to the1873novel link. The fetched novel supports Alcott’s words, not a twentieth-century columnist’s use. Independently opened QI2015fond article explicitly documents Smith’s1995quotation with Alcott credit; that is the appropriate source for the later-history clause."
+    },
+    {
+      "slug": "you-miss-100-of-the-shots-you-dont-take",
+      "location": "JSON-LD · Quotation.dateCreated",
+      "finding": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+      "standsUp": true,
+      "reasoning": "ESPN dates a never-take version to1983. The page instead displays don’t-take and assigns1983 to that Quotation without preserving the dated source wording in quotationText. The prose itself admits that limit. The source date may remain in the prose; omission from the exact-wording Quotation fixes the unsupported precision."
+    },
+    {
+      "slug": "revenge-is-a-dish-best-served-cold",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "revenge-is-a-dish-best-served-cold",
+      "location": "JSON-LD · Quotation.dateCreated",
+      "finding": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+      "standsUp": true,
+      "reasoning": "QI’s1841attestation is French in Sue’s novel. Its English translations and later English variants are separately dated;1841does not document the exact displayed English sentence. The source date may remain in the prose; omission from the exact-wording Quotation fixes the unsupported precision."
+    },
+    {
+      "slug": "the-market-can-remain-irrational-longer-than-you-can-remain",
+      "location": "JSON-LD · Quotation.dateCreated",
+      "finding": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+      "standsUp": true,
+      "reasoning": "QI’s1986Shilling sentence uses plural Markets and a lot longer than you and I. The displayed singular shorter form is not the exact dated quotation, yet dateCreated1986belongs to its Quotation node. The source date may remain in the prose; omission from the exact-wording Quotation fixes the unsupported precision."
+    },
+    {
+      "slug": "there-is-nothing-so-disastrous-as-a-rational-investment",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "there-is-nothing-so-disastrous-as-a-rational-investment",
+      "location": "JSON-LD · Quotation.dateCreated",
+      "finding": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+      "standsUp": true,
+      "reasoning": "QI’s1963report has more suicidal than and an explicit memory disclaimer. It separately traces so disastrous as to1967. The page assigns1963to the later displayed formulation. The source date may remain in the prose; omission from the exact-wording Quotation fixes the unsupported precision."
+    },
+    {
+      "slug": "if-you-steal-from-one-author-its-plagiarism-if-you-steal",
+      "location": "JSON-LD · Quotation.dateCreated",
+      "finding": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+      "standsUp": true,
+      "reasoning": "QI’s1929newsletter version uses copy/fromonebook/manybooks. The displayed steal/fromoneauthor variant is not that exact1929wording, although the Quotation is assigned1929. The source date may remain in the prose; omission from the exact-wording Quotation fixes the unsupported precision."
+    },
+    {
+      "slug": "a-story-should-have-a-beginning-a-muddle-and-an-end",
+      "location": "JSON-LD · Quotation.dateCreated",
+      "finding": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+      "standsUp": true,
+      "reasoning": "QI’s1909sketch says a beginning,a muddle,and an end about musical-comedy form. It does not contain the displayed general prescriptive sentence A story should have. Dating that full display sentence1909overstates the source. The source date may remain in the prose; omission from the exact-wording Quotation fixes the unsupported precision."
+    },
+    {
+      "slug": "capitalism-the-nastiest-of-men-for-the-nastiest-of-motives",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "capitalism-the-nastiest-of-men-for-the-nastiest-of-motives",
+      "location": "JSON-LD · Quotation.dateCreated",
+      "finding": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+      "standsUp": true,
+      "reasoning": "QI’s1941Robinson passage has great merit,nastiest motives of nasty people,ultimate benefit of society. It is a precursor rather than the displayed sentence. dateCreated1941is attached to the unpinned displayed wording. The source date may remain in the prose; omission from the exact-wording Quotation fixes the unsupported precision."
+    },
+    {
+      "slug": "modern-man-drives-a-mortgaged-car-over-a-bond-financed",
+      "location": "JSON-LD · Quotation.dateCreated",
+      "finding": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+      "standsUp": true,
+      "reasoning": "QI’s1957CyPeace citation begins Modern man is one who drives. It distinguishes the1958modernversion beginning Modern man drives. The page assigns1957to the displayed modernversion. The source date may remain in the prose; omission from the exact-wording Quotation fixes the unsupported precision."
+    },
+    {
+      "slug": "you-have-to-kiss-a-lot-of-frogs-to-find-your-prince",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "you-have-to-kiss-a-lot-of-frogs-to-find-your-prince",
+      "location": "JSON-LD · Quotation.dateCreated",
+      "finding": "The date is attached to the displayed Quotation text, but the prose/source identifies only an earlier variant, foreign-language antecedent or approximate reported wording. The exact displayed text is not established at that date.",
+      "standsUp": true,
+      "reasoning": "QI’s1975needlepoint says toads and before you meet the handsome prince. It does not document the exact displayed frogs/tofindyourprince version in1975. The source date may remain in the prose; omission from the exact-wording Quotation fixes the unsupported precision."
+    },
+    {
+      "slug": "alone-bad-friend-good",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "alone-bad-friend-good",
+      "location": "Author · bio and answer credit role",
+      "finding": "The cited production source gives screenplay credit to William Hurlbut; Hurlbut and John L. Balderston share story/adaptation credit. The page falsely describes both as credited screenwriters.",
+      "standsUp": true,
+      "reasoning": "The freshly fetched production-credit infobox explicitly separates Screenplay by William Hurlbut from Story by William Hurlbut/JohnL.Balderston. The local bio says the two share screenplay credit, which collapses distinct credited roles."
+    },
+    {
+      "slug": "fire-bad",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "fire-bad",
+      "location": "Author · bio and answer credit role",
+      "finding": "The cited production source gives screenplay credit to William Hurlbut; Hurlbut and John L. Balderston share story/adaptation credit. The page falsely describes both as credited screenwriters.",
+      "standsUp": true,
+      "reasoning": "The freshly fetched production-credit infobox explicitly separates Screenplay by William Hurlbut from Story by William Hurlbut/JohnL.Balderston. The local bio says the two share screenplay credit, which collapses distinct credited roles."
+    },
+    {
+      "slug": "its-not-personal-its-strictly-business",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "never-take-sides-against-the-family",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "we-belong-dead",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "we-belong-dead",
+      "location": "Author · bio and answer credit role",
+      "finding": "The cited production source gives screenplay credit to William Hurlbut; Hurlbut and John L. Balderston share story/adaptation credit. The page falsely describes both as credited screenwriters.",
+      "standsUp": true,
+      "reasoning": "The freshly fetched production-credit infobox explicitly separates Screenplay by William Hurlbut from Story by William Hurlbut/JohnL.Balderston. The local bio says the two share screenplay credit, which collapses distinct credited roles."
+    },
+    {
+      "slug": "what-we-have-here-is-a-failure-to-communicate",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "you-want-the-truth-you-cant-handle-the-truth",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "a-census-taker-once-tried-to-test-me-i-ate-his-liver-with",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "all-weve-got-is-cotton-and-slaves-and-arrogance",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "elementary-my-dear-holmes-elementary",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "gentlemen-its-been-a-privilege-flying-with-you",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "heres-looking-at-you-kid",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "i-do-wish-we-could-chat-longer-but-im-having-an-old-friend",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "ill-get-you-my-pretty-and-your-little-dog-too",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "im-gonna-make-him-an-offer-he-cant-refuse",
+      "location": "Provenance · source excerpt",
+      "finding": "The rendered source-quotation block contains an editorial synopsis, not a literal excerpt from the named source. There is no synopsis label telling readers these words are the editor’s.",
+      "standsUp": true,
+      "reasoning": "Freshly fetched source does not contain the record’s editorial sentence. The rendered HTML puts it inside the same styled p.excerpt used for source quotation, immediately above a source link, with no synopsis qualification. This is a concrete quote-presentation error, not disagreement about the summary’s general meaning."
+    },
+    {
+      "slug": "those-who-stand-for-nothing-fall-for-anything",
+      "location": "JSON-LD ClaimReview.reviewRating; FAQ answer; quote-card-data.rating/answer",
+      "finding": "The cited source reports missing or weak evidence and does not authenticate the named attribution. The visible record is qualified, but the machine-readable verdict and card turn absence of authentication into a categorical false verdict.",
+      "standsUp": true,
+      "reasoning": "Confirmed. The rendered claim tests Alexander Hamilton saying the words and returns False/No, while QI identifies an anonymous modern proverb and gives no substantive Hamilton evidence. The page itself limits its conclusion to absent support. A Not confirmed verdict accurately preserves that evidentiary limit."
+    },
+    {
+      "slug": "it-is-easy-you-just-chip-away-the-stone-that-doesnt-look",
+      "location": "JSON-LD ClaimReview.reviewRating; FAQ answer; quote-card-data.rating/answer",
+      "finding": "The cited source reports missing or weak evidence and does not authenticate the named attribution. The visible record is qualified, but the machine-readable verdict and card turn absence of authentication into a categorical false verdict.",
+      "standsUp": false,
+      "reasoning": "The proposed certainty criticism is not independently established. QI does more than report a missing source: its conclusion explicitly describes the successive credits, including Michelangelo, as spurious attributions forming part of an evolving joke. The page mirrors that specialist finding. A more cautious verdict is an editorial option, but this audit finding overstates that the cited source supplies only weak/absent evidence."
+    },
+    {
+      "slug": "if-you-knew-how-much-work-went-into-it-you-would-not-call",
+      "location": "JSON-LD ClaimReview.reviewRating; FAQ answer; quote-card-data.rating/answer",
+      "finding": "The cited source reports missing or weak evidence and does not authenticate the named attribution. The visible record is qualified, but the machine-readable verdict and card turn absence of authentication into a categorical false verdict.",
+      "standsUp": true,
+      "reasoning": "Confirmed. The fetched Wikiquote disputed section documents modern unsourced appearances, not an authenticated contemporary Michelangelo source. The rendered FAQ nonetheless starts No and the rating says False. The visible source limitations support Not confirmed rather than a categorical denial."
+    },
+    {
+      "slug": "writing-is-like-prostitution-first-you-do-it-for-fun-then",
+      "location": "JSON-LD claimReviewed; FAQ; quote-card-data.claim/answer",
+      "finding": "The cited QI article explicitly documents Bourdain using a version in a 2010 TIME interview. The prose correctly disputes origination, but the rated claim denies a documented utterance.",
+      "standsUp": true,
+      "reasoning": "Confirmed scope error. QI explicitly reports Bourdain using the joke in a 2010 TIME interview while assigning probable earlier construction to Molnár. The rendered claim tests Bourdain said rather than originated/coined, and the FAQ starts No even while admitting repetition. The origin claim must be scoped separately from utterance."
+    },
+    {
+      "slug": "leave-the-gun-take-the-cannoli",
+      "location": "Provenance trail, second item",
+      "finding": "The second trail item attaches its ACMI-specific account to Wikiquote. The claim is true in the separately linked, independently fetched ACMI article, but the adjacent citation does not supply that production history.",
+      "standsUp": true,
+      "reasoning": "Confirmed. The second provenance item specifically invokes ACMI and Sheridan’s suggestion but links to the Wikiquote transcript. The independently fetched ACMI article contains that account; the cited Wikiquote page does not supply it. Reanchoring the item to ACMI fixes the traceability issue."
+    },
+    {
+      "slug": "be-open-to-a-world-where-you-may-not-understand-or-agree",
+      "location": "JSON-LD ClaimReview.reviewRating; FAQ answer; quote-card-data.rating/answer",
+      "finding": "Snopes rates the claim Unproven. The visible record is qualified, but the machine-readable verdict and card turn absence of authentication into a categorical false verdict.",
+      "standsUp": true,
+      "reasoning": "Confirmed. The fetched Snopes republication expressly rates the claim Unproven and says information may later emerge. The rendered rating False and FAQ No are more categorical than that source and conflict with the page’s own evidence-limit explanation."
+    },
+    {
+      "slug": "ill-have-what-shes-having",
+      "location": "JSON-LD claimReviewed; FAQ; quote-card-data.claim",
+      "finding": "The primary interview itself records Ephron saying these words while recounting Crystal’s suggestion. The intended correction concerns authorship of the punch line, not whether Ephron ever spoke the six words.",
+      "standsUp": true,
+      "reasoning": "Confirmed scope error. In the Academy interview Nora repeats the words while recounting Crystal’s suggestion. She disclaims credit for creating the punch line. The rendered claim and No test whether she said them, a different proposition from whether she wrote/invented the film line. Scope the evaluated claim to creative origination."
+    },
+    {
+      "slug": "grammar-is-a-piano-i-play-by-ear-since-i-seem-to-have-been",
+      "location": "Answer source-line and second provenance item",
+      "finding": "The two adjacent citations are reversed: the Wikiquote-specific statement links to The Marginalian, while the Marginalian-specific date discussion links to Wikiquote. Both sources were fetched and support their own halves, so this is a traceability defect rather than an invented fact.",
+      "standsUp": true,
+      "reasoning": "Confirmed. The first statement explicitly names Wikiquote’s citation yet points to The Marginalian; the second explicitly attributes the December1976 dating to The Marginalian yet points to Wikiquote, which labels1975. Both pages were fetched. The date discrepancy is honestly stated, but the adjacent links are reversed."
+    },
+    {
+      "slug": "everything-is-copy",
+      "location": "JSON-LD claimReviewed; FAQ; quote-card-data.claim/answer",
+      "finding": "The fetched Academy interview contains Nora repeating the maxim while crediting her mother. The current No directly contradicts both the source and the visible source-line admitting Nora used it.",
+      "standsUp": true,
+      "reasoning": "Confirmed. The primary Academy interview has Nora uttering Everything is copy while explaining that her mother said it. The rendered claim tests Nora said, rates False and begins the FAQ No. Distinguish documented repetition from the family source and avoid claiming either woman proved to have coined it."
+    },
+    {
+      "slug": "the-optimist-thinks-this-is-the-best-of-all-possible-worlds",
+      "location": "JSON-LD claimReviewed; quote-card-data.claim",
+      "finding": "Because schema.claimQuoteText differs from quotationText and creditedTo is absent, the rendered claim loses the disputed person. The card consequently labels a bare philosophical sentence false even though the correction is about Oppenheimer’s credit and Cabell’s earlier wording.",
+      "standsUp": true,
+      "reasoning": "Confirmed in rendered bytes and card payload. The evaluated claim contains only the aphorism, without Oppenheimer’s name, yet receives False. The fetched Wikiquote correction concerns Oppenheimer attribution and a Cabell antecedent, not a factually false philosophical proposition. The claim must name the disputed attribution or explicitly scope the wording test."
+    },
+    {
+      "slug": "i-support-police-over-blm-dont-put-them-down",
+      "location": "Answer authorDates; author.metaLine",
+      "finding": "The author-role metadata describes a contemporary fabricated political endorsement/headline as a proverb. The fetched fact-check concerns a specific viral attribution claim, not a traditional proverb.",
+      "standsUp": true,
+      "reasoning": "Confirmed. PolitiFact examines a contemporary blog headline falsely quoting a political comparison, including a representative’s denial. The record’s authorDates/metaLine call it a proverb, which misclassifies the kind of material. Retain the fact-check and replace only the role description."
+    },
+    {
+      "slug": "ive-never-met-anyone-braver-smarter-or-who-cares-more-about",
+      "location": "Answer authorDates; author.metaLine",
+      "finding": "The author-role metadata describes a contemporary fabricated political endorsement/headline as a proverb. The fetched fact-check concerns a specific viral attribution claim, not a traditional proverb.",
+      "standsUp": true,
+      "reasoning": "Confirmed. Lead Stories examines a viral contemporary endorsement claim and reproduces the representative’s denial. It is not an established traditional proverb. The author-role metadata should describe the unidentified maker of the viral claim rather than a proverb author."
+    },
+    {
+      "slug": "the-foundation-of-every-state-is-the-education-of-its-youth",
+      "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+      "finding": "The visible answer expressly says the Diogenes credit is not confirmed and does not establish which Dionysius is meant, but JSON-LD calls the claim False, FAQ begins No, and the card rates1. A different inscription credit does not by itself prove a universal negative about Diogenes’s words.",
+      "standsUp": true,
+      "reasoning": "I independently downloaded the LOC PDF and extracted its text. Printed page13 credits the sentence to DIONYSIUS. The page itself admits that this is only an inscription credit and the Diogenes attribution is unconfirmed, yet its fresh HTML card says No/rating1. The inscription establishes a competing credit, not a conclusive ancient attribution or proof of non-use by Diogenes. The mismatch is real."
+    },
+    {
+      "slug": "one-original-thought-is-worth-a-thousand-mindless-quotings",
+      "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+      "finding": "The visible source conclusion establishes a modern Safire occurrence but explicitly does not establish an ancient source or first authorship. JSON-LD/FAQ/card nevertheless render a definitive False/No against Diogenes. Absence of an ancient source is a limit, not positive proof that he never said it.",
+      "standsUp": true,
+      "reasoning": "The independently fetched archived New York Times column contains Safire playfully attributing the phrase to Diogenes and immediately inflating the number again. This documents a 1996 modern use and does not supply an ancient source. The rendered page itself states those limits but its card and machine verdict categorically deny the Diogenes claim. Unconfirmed is the supported scope unless separate contrary evidence is found."
+    },
+    {
+      "slug": "behold-platos-man",
+      "location": "Rights block and citation; JSON-LD copyrightNotice; card rights",
+      "finding": "The claimed exact English translation is wrong. Freshly fetched6.40 reads “Here is Plato’s man.” The displayed Behold version is present only in Wikiquote among the linked sources. Therefore the page’s verified-exact-Hicks claim and its public-domain badge for that exact version are not supported.",
+      "standsUp": true,
+      "reasoning": "The freshly fetched Wikisource text at the plucked-fowl anecdote says “Here is Plato's man.” It does not say Behold. The local rendered excerpt uses Behold and its rights note expressly assigns that English wording to the1925 Hicks translation. That exact-edition assertion is false. This finding establishes a source/translation mismatch; it does not independently prove that the four-word Behold variant is copyright-protected. Correcting to the actual Hicks text or separately identifying a real pre1931 translation is necessary."
+    },
+    {
+      "slug": "behold-platos-man",
+      "location": "Provenance excerpt and primary-wording label; FAQ/card rating5",
+      "finding": "The source excerpt presents the popular variant as if fetched from the linked Hicks text. This is not merely punctuation: Behold and Here is are different translations. Wikiquote supplies the popular version but is not an independently checked1925 primary page.",
+      "standsUp": true,
+      "reasoning": "The freshly fetched Wikisource text at the plucked-fowl anecdote says “Here is Plato's man.” It does not say Behold. The local rendered excerpt uses Behold and its rights note expressly assigns that English wording to the1925 Hicks translation. That exact-edition assertion is false. This finding establishes a source/translation mismatch; it does not independently prove that the four-word Behold variant is copyright-protected. Correcting to the actual Hicks text or separately identifying a real pre1931 translation is necessary."
+    },
+    {
+      "slug": "you-can-get-much-further-with-a-kind-word-and-a-gun-than",
+      "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+      "finding": "The body rejects Sutton as the originator on a hypothesis favoring Corey, while the machine claim asks whether Sutton SAID the words and answers False/No. Origin and use are different claims; a1988 attribution is also not proof that Sutton never repeated them.",
+      "standsUp": true,
+      "reasoning": "The independently fetched QI chronology includes a 1988 Sutton attribution and treats Corey's authorship as a hypothesis. It does not establish that Sutton never used the sentence. The local card rates “Willie Sutton said” false while the source-line disputes only his origination. The finding accurately identifies the different questions; a scoped coinage claim or unconfirmed use claim is needed."
+    },
+    {
+      "slug": "live-fast-die-young-and-leave-a-beautiful-corpse",
+      "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+      "finding": "The body and QI explicitly allow that Dean may have used the slogan. Yet the ClaimReview claim is James Dean SAID the words, ratedFalse, with FAQ/card No. The1920 evidence disproves Dean’s origination, not his possible later use.",
+      "standsUp": true,
+      "reasoning": "The freshly fetched QI conclusion explicitly allows that Dean may have used the slogan and identifies an earlier1920 version with provisional Luce attribution. The local card nevertheless says No to “James Dean said” rather than testing his origination. The finding stands; the source does not support denying possible later use."
+    },
+    {
+      "slug": "french-have-taken-umbrage-english-have-taken-cognizance",
+      "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+      "finding": "The prose correctly calls the displayed text a compressed headline and says Barrie used a different version, but the FAQ/card treat an unverified exact Barrie sentence as a provedFalse/No. The source traces a joke family rather than demonstrating that Barrie never uttered these words.",
+      "standsUp": true,
+      "reasoning": "The independently fetched QI article traces the joke family to1782 and quotes a different Barrie version in1889. The local prose calls its displayed headline a compression, yet the machine/card question treats that exact Barrie sentence as proved false. The source does not establish such an exact utterance or positively disprove it. The supported correction is wording-unpinned/unconfirmed, retaining the earlier joke history."
+    },
+    {
+      "slug": "confused-on-a-higher-level-and-about-more-important-things",
+      "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+      "finding": "QI establishes that Øksendal reproduced the passage as an anonymous posted saying. The page’s body correctly denies his origination, but its machine claim that Øksendal SAID the fragment is ratedFalse. Reproducing a quote and inventing it are distinct.",
+      "standsUp": true,
+      "reasoning": "QI independently fetched here identifies the posted-saying attribution in Øksendal's textbook and the earlier Kelley passage. The local source-line acknowledges Øksendal reproduced it, but the card gives No to “Bernt Oksendal said” rather than to a claim of invention. That is a genuine use-versus-coinage mismatch. The correction must not imply he never quoted the saying."
+    },
+    {
+      "slug": "three-things-can-happen-when-you-pass-and-two-of-them-are",
+      "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+      "finding": "QI quotes Royal using a version in his1963book and says Royal popularized it, while this page’s ClaimReview asks whether Royal SAID it and ratesFalse. FAQ/card No contradict the very source the page cites. Royal’s later attribution of origination to Hayes does not erase his own use.",
+      "standsUp": true,
+      "reasoning": "The freshly fetched QI article documents the saying in Royal's1963 book and says he popularized it, while recommending Hayes based on Royal's later attribution. The local card denies Royal said the words. The documented use directly contradicts that categorical denial; coinage must be distinguished from use."
+    },
+    {
+      "slug": "you-can-avoid-reality-but-you-cannot-avoid-the-consequences",
+      "location": "ClaimReview claimReviewed/reviewRating; FAQ answer; share-card claim/rating",
+      "finding": "The prose says the exact formulation’s origin is unpinned; QI only gives weaker related Stamp wording. The rendered ClaimReview/FAQ/card nevertheless mark the exact Stamp attribution definitivelyFalse/No rather than unconfirmed. The source does not establish a proven alternative author or a definitive fabrication.",
+      "standsUp": true,
+      "reasoning": "The independently fetched QI article focuses on an unlocated exact Rand quotation and lists Stamp only as a weaker precursor about responsibility. The local source-line says the exact formulation is unpinned, but its machine/card claim names Stamp and rates his exact words false. The exact attribution is unconfirmed rather than disproved. In addition, the reviewed claimant should be chosen from the actual attribution being checked, not inferred from a QI topic tag."
+    }
+  ]
+}
