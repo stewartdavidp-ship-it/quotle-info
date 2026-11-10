@@ -25,6 +25,10 @@ Use the actual New York date from `node tools/et-date.js`, not the example date.
 
 Every quote gets actual source research, source-fetch evidence, honest confidence and independently determined rights. Preserve an evidence file naming each fetched URL, the claim it supports, access limitations and a short supporting excerpt or paraphrase. Never mark a failed fetch as verified. Use fewer links rather than inventing four relevant sources. Observe applicable source quotation limits, including cumulative quotations when several records cite one copyrighted source. A title in a candidate feed is not automatically a verbatim historic quotation. No forced invented author/date/translation to fill a slot.
 
+`source.excerpt` renders as a quotation: it must contain literal words from the fetched source, never an editor-written synopsis. For copyrighted sources, a short two-to-five-word excerpt plus explanatory prose elsewhere is preferable to an invented quotation. Identify its source and limitations in `excerptNote`. Do not copy an aggregator's variant into an identified historic translation without checking that translation's actual words.
+
+After prep, inspect the rendered ClaimReview, FAQ and card payload as well as prose. “Used these words” and “originated these words” are different claims: a documented repeater must not receive a False verdict for saying them. Scope origin findings with supported per-record claim/verdict fields. An unresolved attribution needs an uncertainty verdict rather than a definitive No. A dated precursor does not date a later unpinned wording; omit `schema.dateCreated` when that connection is unproved. These are content corrections, never reasons to weaken the schema or generator gates.
+
 Each completed research result is an object:
 
 ```json
