@@ -76,9 +76,9 @@ function runSourceGates() {
   }
   // CI uses this same entry point, so audience regressions must also stop publication.
   try {
-    execFileSync(process.execPath, ['--test', path.join(__dirname, 'audience.test.js')], { stdio: 'inherit' });
+    execFileSync(process.execPath, ['--test', path.join(__dirname, 'audience.test.js'), path.join(__dirname, '../workflows/agent-bridge.test.js')], { stdio: 'inherit' });
   } catch (_) {
-    console.error('\n  ✗ Audience regression tests failed — fix them before building.\n');
+    console.error('\n  ✗ Regression tests failed — fix them before building.\n');
     process.exit(1);
   }
 }
