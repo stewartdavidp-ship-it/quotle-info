@@ -110,6 +110,7 @@ const hubTokens = (name) => new Set(
 // next session can re-check the judgement rather than inherit it.
 const DISTINCT_HUBS = new Set([
   'amos | amos-tversky',                         // biblical prophet/book, and the twentieth-century psychologist
+  'amos | amos-bronson-alcott',                   // biblical prophet/book, and the nineteenth-century American educator
   'george-h-w-bush | george-w-bush',               // father and son
   'john-d-rockefeller | john-d-rockefeller-jr',    // father and son
   'stephen-covey | stephen-m-r-covey',             // Stephen R. Covey and his eldest son
